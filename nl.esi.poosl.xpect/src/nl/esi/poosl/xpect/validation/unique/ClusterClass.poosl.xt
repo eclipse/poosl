@@ -1,0 +1,40 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+import "../imports/import.poosl"
+import "../imports/import3.poosl"
+
+// No Error when using unique id
+// XPECT noIssues
+cluster class uniqueClusterClass()
+ports	
+instances
+	someInstance: importProcessClass()
+channels
+
+//XPECT errors --> "There is another process or cluster class with the same name importClusterClass in import.poosl" at "importClusterClass"
+cluster class importClusterClass() 
+ports	
+instances
+	someInstance: importProcessClass()
+channels
+
+//XPECT errors --> "There is another process or cluster class with the same name clusterClass in ClusterClass.poosl.xt" at "clusterClass"
+cluster class clusterClass() 
+ports	
+instances
+	someInstance: importProcessClass()
+channels
+
+//XPECT errors --> "There is another process or cluster class with the same name clusterClass in ClusterClass.poosl.xt" at "clusterClass"
+cluster class clusterClass() 
+ports	
+instances
+	someInstance: importProcessClass()
+channels
+
+//XPECT errors --> "There is another process or cluster class with the same name importClusterClass3 in import31.poosl" at "importClusterClass3"
+cluster class importClusterClass3() 
+ports	
+instances
+	someInstance: importProcessClass()
+channels

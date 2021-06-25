@@ -1,0 +1,64 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+import "../imports/import.poosl"
+import "../imports/import3.poosl"
+ 
+//XPECT noIssues
+process class uniqueProcessClass()
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |  
+		skip
+
+//Same Process class identifier in the same file
+//XPECT errors --> "There is another process or cluster class with the same name processClass in ProcessClass.poosl.xt" at "processClass"	
+process class processClass()
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |  
+		skip
+		
+//Same Process class identifier in the same file
+//XPECT errors --> "There is another process or cluster class with the same name processClass in ProcessClass.poosl.xt" at "processClass"
+process class processClass()
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |  
+		skip
+
+
+// Error when using id for a process that already is used by imported process class
+// XPECT errors --> "There is another process or cluster class with the same name importProcessClass in import.poosl" at "importProcessClass"
+process class importProcessClass()
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |  
+		skip
+		
+// Error when using id for a process that already is used by imported process class
+// XPECT errors --> "There is another process or cluster class with the same name importProcessClass3 in import31.poosl" at "importProcessClass3"
+process class importProcessClass3()
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |  
+		skip

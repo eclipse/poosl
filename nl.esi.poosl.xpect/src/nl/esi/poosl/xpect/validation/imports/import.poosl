@@ -1,0 +1,57 @@
+ 
+data class importDataClass extends Object
+variables	
+methods
+
+process class importPortProcessClass()
+ports
+In
+messages
+In?integer(Integer)	
+variables	
+init
+	someMethod()() 
+methods
+	someMethod()() | i : Integer |   
+		In?integer(i)	
+
+cluster class importClusterClass()
+ports	
+instances
+	someInstance: importProcessClass()
+channels
+
+
+process class importProcessClass() 
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		
+		
+		
+
+		process class someClass()
+ports
+	Out
+messages
+	Out!message(Integer)
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | i : Integer |
+	Out!message(i);
+		skip
+
+				
+			
+		
+
+	
+	

@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_0xOUsD9EEeWqI5T62C2nUQ,_r5J-sN-HEeSGR4qac-ot4g,_BwlHUB7pEeWW8tYfmHmITA,__IJ8MD9YEeWqI5T62C2nUQ
+Element-Name: StackTrace Variable Inspect Array
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _1KLiYGKSEeWNjrYsdd1NjA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 3/3/16 3:29 PM
+Tags: StrackTrace Variable Error
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view StackTrace | get-list | select "1 .*"
+get-view "StackTrace Variables" | get-tree | select "<unnamed>"
+wait 20
+get-view "StackTrace Variables" | get-tree | get-item "<unnamed>" | expand
+with [get-view "StackTrace Variables" | get-tree] {
+    get-item "<unnamed>/\\[1\\]" | get-property "values['Name']" -raw true | contains "[1]" | verify-true
+    get-item "<unnamed>/\\[1\\]" | get-property "values['Value']" -raw true | contains"nil" | verify-true
+    get-item "<unnamed>/\\[2\\]" | get-property "values['Name']" -raw true | contains "[2]" | verify-true
+    get-item "<unnamed>/\\[2\\]" | get-property "values['Value']" -raw true | contains "nil" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

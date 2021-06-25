@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: nl.esi.poosl.xtext.tests
+Bundle-Vendor: TNO ESI
+Bundle-Version: 4.2.2.qualifier
+Bundle-SymbolicName: nl.esi.poosl.xtext.tests;singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: nl.esi.poosl.xtext,
+ nl.esi.poosl.model,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.testing,
+ org.eclipse.xtext.xbase.testing
+Import-Package: org.apache.log4j,
+ org.junit;version="4.5.0",
+ org.junit.runner;version="4.5.0",
+ org.junit.runner.manipulation;version="4.5.0",
+ org.junit.runner.notification;version="4.5.0",
+ org.junit.runners;version="4.5.0",
+ org.junit.runners.model;version="4.5.0",
+ org.hamcrest.core
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: nl.esi.poosl.xtext.tests;x-internal=true
+Automatic-Module-Name: nl.esi.poosl.xtext.tests

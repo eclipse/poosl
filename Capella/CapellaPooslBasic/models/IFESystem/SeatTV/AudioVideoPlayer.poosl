@@ -1,0 +1,53 @@
+importlib "distributions.poosl"
+
+process class AudioVideoPlayer
+ports
+	InAudio
+	OutAudio
+	InControl
+	InInterruptionCommand
+messages
+	InAudio?BeginAnnouncement(Integer)
+	InAudio?EndAnnouncement(Integer)
+	OutAudio!BeginAnnouncement(Integer)
+	OutAudio!EndAnnouncement(Integer)
+	OutAudio!BeginVideo(Integer)
+	OutAudio!EndVideo(Integer)
+	InControl?StartVideo(Integer, Integer)
+	InInterruptionCommand?Interrupt()
+	InInterruptionCommand?Resume()
+variables
+	lastTraceStartTime : Real
+init
+	Initialise()()
+methods
+	Initialise()()
+		interrupt
+			PlayVideos()()
+		with (
+			InInterruptionCommand?Interrupt();
+			HandleInterruption()();
+			lastTraceStartTime := currentTime
+		)
+
+	PlayVideos()() | videoID : Integer, length : Integer |
+		InControl?StartVideo(videoID, length);
+		delay 1; // internal processing time
+		lastTraceStartTime := currentTime;
+		OutAudio!BeginVideo(videoID);
+		delay length; // playtime of video
+		OutAudio!EndVideo(videoID);
+		PlayVideos()()
+
+	HandleInterruption()() | id : Integer |
+		sel
+			InAudio?BeginAnnouncement(id);
+			delay 1; // internal processing time
+			OutAudio!BeginAnnouncement(id);
+			InAudio?EndAnnouncement(id);
+			delay 1; // internal processing time
+			OutAudio!EndAnnouncement(id);
+			HandleInterruption()()
+		or
+			InInterruptionCommand?Resume()
+		les

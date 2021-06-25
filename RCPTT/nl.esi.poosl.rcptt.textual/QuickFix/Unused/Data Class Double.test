@@ -1,0 +1,41 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Data Class Double
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _6JnlwON7EeSZttsAewanYQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/14/16 1:54 PM
+Tags: Data, Double, QuickFix
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+type-text "data class Packet \n"
+type-text "variables\n"
+type-text "methods\n"
+type-text "\n"
+type-text "data class Packet \n"
+type-text "variables\n"
+type-text "methods\n"
+}
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 5 19
+    key-type "M1+1"
+}
+get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
+    | select "Remove the currently selected class" | click -default
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 5 3
+   }
+get-editor "model.poosl" | get-text-viewer | get-property text | equals "data class Packet \n"
+    + "variables\n"
+    + "methods" | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

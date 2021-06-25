@@ -1,0 +1,141 @@
+/*XPECT_SETUP nl.esi.poosl.xpect.scoping.PooslScopingTest END_SETUP */
+
+// Basicclasses should be in scope to extend from
+// XPECT scope at Object --> Array, Boolean, Char, FileIn, FileOut, Integer, Nil, Object, Observer,  RandomGenerator, Real, Socket, String, newDataClass
+data class newDataClass extends Object
+variables
+ ID : String
+methods
+// For data input parameter declaration dataclass and basicclasses should be in scope
+// XPECT scope at Integer --> Array, Boolean, Char, FileIn, FileOut, Integer, Nil, Object, Observer,  RandomGenerator, Real, Socket, String, newDataClass
+	getID(second: Integer) 
+// For data return type dataclasses and basicclasses should be in scope
+// XPECT scope at Integer --> Array, Boolean, Char, FileIn, FileOut, Integer, Nil, Object, Observer,  RandomGenerator, Real, Socket, String, newDataClass	
+	: Integer
+		ID := "1";
+// In data method class vars and method vars should be in scope
+// XPECT scope at second --> ID, second
+		return second
+
+//Ports and MessageSignatures
+
+process class messagePortScopeProcess()
+ports	
+	Out,  
+	In	
+messages
+
+// MessageSignaturesend send, Ports in class should be in scope for portreference   
+// XPECT scope at Out --> In, Out
+// MessageSignature, Ports in class should be in scope for portreference   
+// XPECT scope at Integer --> newDataClass, Array, Boolean, Char, FileIn, FileOut, Integer, Nil, Object, Observer, RandomGenerator, Real, Socket, String
+	Out!Message(Integer)
+// MessageSignaturesend receive, Ports in class should be in scope for portreference   
+// XPECT scope at In --> In, Out
+	In?Message(Integer) 
+variables	
+	ID : Integer
+init
+// XPECT scope at Initialise -->  Initialise, SendPacket, getMessage
+	Initialise()()  
+methods 
+	/* Initializes the process class. */
+	Initialise()()  
+		ID + 1;
+		SendPacket()()
+	/* Send a message */
+	SendPacket()() | p : Integer |		
+		p := new(Integer);
+		// MessageSignature refrence variable has the correct variables in scope		 
+		// XPECT scope at p --> ID, p
+		Out!Message(p);		
+		getMessage()()
+
+
+	getMessage()() |i : Integer|
+	//   MessageSignature reference, port reference has all class ports
+	//	 XPECT scope at In --> In, Out
+
+		In?Message(i)
+	
+	
+// Variable scope		
+process class varScopeProcess(	
+	IdleTime,SecondTime : Integer)
+ports	
+messages
+variables	
+	// New basic classes and the newDataClass should be in scope
+// XPECT scope at Integer --> newDataClass, Array, Boolean, Char, FileIn, FileOut, Integer, Nil, Object, Observer, RandomGenerator, Real, Socket, String
+	ID : Integer
+init          
+// XPECT scope at Initialise --> Initialise
+	Initialise()()  
+methods 
+	/* Initializes the process class. */
+	Initialise()()
+		SendPacket(IdleTime)(ID)
+	/* Send a message */
+	SendPacket(iParam : Integer)(oParam : Integer) | p : Integer,  s : String |  
+	 	s := new(String); 		
+		p := new(Integer); 		
+		// Class variable and method variable methods are in scope
+	// XPECT scope at oParam --> ID, IdleTime, iParam, oParam, p, s, SecondTime
+		p := iParam + oParam + SecondTime
+	
+
+	process class difPorts()
+	ports
+	Put,
+	Get			
+	messages
+	Put?Message(Integer) 
+	Get!Message(Integer)
+	variables
+		
+	init
+		someMethod()()
+	methods
+		someMethod()() | i : Integer |
+		Get!Message(1);
+		Put?Message(i)
+
+cluster class clusterInstancesClass()
+ports
+Out,
+In
+instances
+// clusteProcessen en clusters zijn in scope als instance class
+// XPECT scope at messagePortScopeProcess --> clusterInstancesClass, messagePortScopeProcess, varScopeProcess, difPorts
+ someInstance : difPorts()
+ // parameters of class should be in scope
+// XPECT scope at IdleTime --> IdleTime, SecondTime
+ parmInstance : varScopeProcess(IdleTime := 2 , SecondTime :=3)
+channels
+// Cluster, all external ports of class should be in scope 
+// XPECT scope at In --> In, Out
+// Cluster, all instances should be in scope
+// XPECT scope at someInstance --> parmInstance, someInstance
+// Cluster, Ports of instance should have ports of class in scope
+// XPECT scope at Get --> Get, Put
+	{In, someInstance.Get}
+	{Out, someInstance.Put}		
+
+system
+instances
+// system,processen en clusters zijn in scope als instance class
+// XPECT scope at messagePortScopeProcess -->  clusterInstancesClass, difPorts, messagePortScopeProcess, varScopeProcess
+  someInstance : messagePortScopeProcess()
+  difInstance : difPorts()
+channels
+// system, all instances should be in scope
+// XPECT scope at someInstance --> difInstance, someInstance
+{someInstance.
+// system, all ports of class should be in scope
+// XPECT scope at In --> In, Out
+In, difInstance.
+// system,  Ports of instance should have ports of class in scope
+// XPECT scope at Get --> Get, Put
+Get}
+{someInstance.Out, difInstance.Put}
+	

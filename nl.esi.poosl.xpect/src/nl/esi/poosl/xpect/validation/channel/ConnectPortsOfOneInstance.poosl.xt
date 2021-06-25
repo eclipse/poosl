@@ -1,0 +1,41 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.channel.PooslValidationChannelTest END_SETUP */
+
+process class ProcessPQ()
+ports
+	p
+	q
+messages
+	p!m
+	q?m
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()()
+		par
+			p!m
+		and
+			q?m
+		rap
+
+cluster class Cluster()
+ports
+	p,
+	q
+instances
+	procPQ : ProcessPQ()
+channels
+	{ p, procPQ.p }
+	{ q, procPQ.q }
+
+system
+instances
+	c : Cluster()
+channels
+/* XPECT warnings ---
+ "On this internal channel, process port c/procPQ[ProcessPQ].p can send message 'm' with 0 parameter(s), but no process port can receive it" at "{ c.p, c.q }"
+ "On this internal channel, process port c/procPQ[ProcessPQ].q can receive message 'm' with 0 parameter(s), but no process port can send it" at "{ c.p, c.q }"
+ "Unused channel (all connected ports belong to the same instance, so communication is impossible)" at "{ c.p, c.q }"
+--- */
+	{ c.p, c.q } // should give three warnings

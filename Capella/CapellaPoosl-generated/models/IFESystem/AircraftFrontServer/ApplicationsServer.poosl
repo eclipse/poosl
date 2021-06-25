@@ -1,0 +1,38 @@
+@Source("In-Flight Entertainment System::In-Flight Entertainment System::Logical Architecture::IFE System::Aircraft Front Servers::Applications Server")
+process class ApplicationsServer
+ports
+	InAudio
+	OutAudio
+	OutInterruptionCommand
+	Trace
+messages
+	InAudio?BeginAnnouncement(Integer)
+	InAudio?EndAnnouncement(Integer)
+	OutAudio!BeginAnnouncement(Integer)
+	OutAudio!EndAnnouncement(Integer)
+	OutInterruptionCommand!Resume()
+	OutInterruptionCommand!Interrupt()
+	OutInterruptionCommand?ConfirmInterrup()
+	Trace!AnnouncementAtApplicationsServer(Integer, Real, Real)
+variables
+
+init
+	Idle()()
+methods
+	Idle()() | id : Integer |
+		InAudio?BeginAnnouncement(id);
+		delay 1; // internal processing time
+		Trace!AnnouncementAtApplicationsServer(id, currentTime - 1.0, currentTime);
+		OutInterruptionCommand!Interrupt();
+		OutInterruptionCommand?ConfirmInterrup();
+		delay 1;
+		OutAudio!BeginAnnouncement(id);
+		ProcessAudio()()
+
+	ProcessAudio()() | id : Integer |
+		InAudio?EndAnnouncement(id);
+		delay 1; // internal processing time
+		Trace!AnnouncementAtApplicationsServer(id, currentTime - 1.0, currentTime);
+		OutAudio!EndAnnouncement(id);
+		OutInterruptionCommand!Resume();
+		Idle()()

@@ -1,0 +1,38 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_eJkWsFVnEea5R70fIjiNMA
+Element-Name: SoCInterconnects
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _zNV7wFpOEeWVIdXlfxjrJw
+Runtime-Version: 2.5.0.202001211718
+Save-Time: 10/30/20 10:45 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+file-poosl-debug "nl.esi.poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl"
+select-root-click-record
+click-resume
+wait 50
+get-view Console | get-button Terminate | click
+try -times 10 -delay 50 -command {
+	with [get-view Console] {
+		get-button Terminate | get-property enablement | equals false | verify-true
+		// HINT: label output is slightly since eclipse 2020-06
+		//get-label "<terminated> mesh.poosl [POOSL Simulation] [Seed: 1]" | assert-non-empty
+		get-label | get-text | contains "<terminated> mesh.poosl [POOSL Simulation] [Seed: 1]" | verify-true
+	}
+} -finally {
+	with [get-view Console] {
+		get-button Terminate | get-property enablement | equals false | verify-true
+		// HINT: label output is slightly since eclipse 2020-06
+		//get-label "<terminated> mesh.poosl [POOSL Simulation] [Seed: 1]" | assert-non-empty
+		get-label | get-text | contains "<terminated> mesh.poosl [POOSL Simulation] [Seed: 1]" | verify-true
+		get-text-viewer | get-property text | contains terminated | verify-false
+	}
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

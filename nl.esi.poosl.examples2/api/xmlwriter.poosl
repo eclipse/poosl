@@ -1,0 +1,139 @@
+import "basic.poosl"
+import "dictionary.poosl"
+
+/* http://www.es.ele.tue.nl/~mgeilen/shesim/lib/xml/xmlwriter.zip */
+
+data class XMLList extends Array
+variables
+	capacity: Integer, count: Integer
+methods
+add(o: Object): XMLList
+if count == capacity then self grow fi;
+count := count + 1;
+self put(count, o);
+return self
+
+count(): Integer
+return count
+
+grow(): XMLList
+capacity := 2*capacity;
+self size(capacity);
+return self
+
+init( cap: Integer): XMLList
+count := 0;
+capacity := cap;
+self size(capacity);
+return self
+
+
+data class XMLDocument extends Object
+variables
+	element: XMLElement
+methods
+init(): XMLDocument
+return self
+
+printString(): String
+	return self xmlString
+
+setElement( e: XMLElement): XMLDocument
+element := e;
+return self
+
+xmlString(): String
+	return "<?xml version='1.0' encoding='ISO-8859-1'?>" 
+		cr 
+		append(element xmlString(0))
+
+
+data class XMLElement extends Object
+variables
+	attributes: Dictionary, children: XMLList, name: String
+methods
+addAttribute(attributeName: String, value: String): XMLElement
+	attributes atPut(attributeName, value);
+	return self
+
+addElement(e: XMLElement): XMLElement
+	children add(e);
+	return self
+
+addText(t: XMLText): XMLElement
+	children add(t);
+	return self
+
+getAttribute(attributeName: String): String
+	return attributes at(attributeName)
+
+getAttributes(): Dictionary
+	return attributes
+
+indentation(level: Integer): String
+	| res: String, i: Integer |
+	res := "";
+	i := 0;
+	while i<level do
+		res append("  ");
+		i := i +1
+	od;
+ 	return res
+
+init(elName: String): XMLElement
+	name := elName;
+	attributes := new(Dictionary) init();
+	children := new(XMLList) init(10);
+	return self
+
+
+printString(): String
+		return self xmlString(0)
+
+xmlString(level: Integer): String
+ 	return self indentation(level) + "<" + name + " " + self xmlStringAttributes + ">" cr  +
+		self xmlStringChildren(level+1) +
+		self indentation(level) + "</" + name + ">"
+
+xmlStringAttributes(): String
+	| res: String, atts: Array, att: String, i: Integer |
+	res := "";
+	atts := attributes keys;
+	i := 1;
+	while i <= atts getSize do
+		if i>1 then res append(" ") fi;
+		att := atts get(i);
+		res append(att)
+			append("='")
+			append(attributes at(att))
+			append("'");
+		i := i + 1
+	od;
+	return res
+
+
+xmlStringChildren(level: Integer): String
+	| res: String, chld: Object, i: Integer |
+	res := "";
+	i := 1;
+	while i <= children count do
+		chld := children get(i);
+		res append(chld xmlString(level)) cr;
+		i := i + 1
+	od;
+	return res
+
+
+data class XMLText extends Object
+variables
+	text: String
+methods
+init(s: String): XMLText
+text := s;
+return self
+
+printString(): String
+	return "XMLText with: " + text printString
+
+xmlString(): String
+	return text

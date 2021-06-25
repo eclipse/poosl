@@ -1,0 +1,47 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Process Variable Undeclared class
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _IaOZoOjXEeSZ96htjnTzFw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 1/10/18 4:42 PM
+Tags: Process, Message, QuickFix
+Testcase-Type: ecl
+Verifications: _qFbJEOTeEeS0itSwbx-n-w,_dVWa4FP7Eea5R70fIjiNMA
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Verification if a bug hasnt returned. Dont give a proposal too create a message when the type is unknown.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer | type-text "process class someClass\n"
+    + "ports\n"
+    + "messages\n"
+    + "variables\n"
+    + "init\n"
+    + "someMethod()()\n"
+    + "methods\n"
+    + "someMethod()()\n"
+    + "var1"
+
+get-editor "model.poosl" | get-text-viewer | get-property "markers['9'][0].text" 
+    | equals "Variable 'var1' is not declared." | verify-true
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 9 5
+    key-type "M1+1"
+    key-type Down
+    key-type Enter 
+}
+//get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table | select "Create class variable 'var1'" 
+//    | select "Create class variable 'var1'" | click -default
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

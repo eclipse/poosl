@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: POOSL Xtext
+Bundle-Vendor: TNO ESI
+Bundle-Version: 4.2.2.qualifier
+Bundle-SymbolicName: nl.esi.poosl.xtext.util
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+  org.eclipse.xtext.generator
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: nl.esi.poosl.xtext.util

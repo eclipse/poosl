@@ -1,0 +1,24 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+data class parentData extends Object
+variables
+methods
+	minus(o : Object) : Object | |
+		return o
+
+data class someClass extends parentData
+variables
+methods
+	//"minus" should not be the same as "-"
+	//XPECT noIssues
+	-(i : Integer) : Integer | |
+		return i
+	//XPECT noIssues
+	- : Integer
+	//XPECT noIssues
+		return 0
+	minus() : Integer
+		return 0
+	//XPECT warnings --> "Parameter types (Integer) are not equal to, or supertypes of, the parameter types (Object) of the overridden method in class parentData" at "s : Integer"
+	minus(s : Integer) : Integer
+		return s
+  

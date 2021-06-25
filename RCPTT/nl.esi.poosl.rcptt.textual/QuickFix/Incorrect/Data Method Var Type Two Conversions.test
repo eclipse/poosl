@@ -1,0 +1,41 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Data Method Var Type Two Conversions
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _eC2FYEm7Eea18PiEOcOxrA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/14/16 2:39 PM
+Tags: Process, Method, QuickFix
+Testcase-Type: ecl
+Verifications: _EciusEm9Eea18PiEOcOxrA
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Create a process class with a port thats receives message but dont specify a message for the port
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer | type-text "data class someClass extends Object\n"
+ + "variables\n"
+ + "	s : String\n"
+ + "methods\n"
+ + "someMethod() : Object | |\n"
+ + "	return self otherMethod(s, s)\n"
+ + "otherMethod(i : Integer, a : Integer) : Object | |\n"
+ + "	return i + a\n"
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 6 29
+    key-type "M1+1"
+    hover-text 6 27 -with M1
+}
+get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table | select "Apply conversion methods" 
+    | click -default
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

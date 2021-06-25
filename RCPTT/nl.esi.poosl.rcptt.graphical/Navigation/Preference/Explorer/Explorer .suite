@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Explorer 
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _pNNQsNpMEeWr3a7wWrF4WQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 2/23/16 6:43 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_FFlCkNpJEeWr3a7wWrF4WQ	// kind: 'test' name: 'With System Open Class Diagram' path: 'With System Open Class Diagram.test'
+_exxGUJRgEeWdZoPrrryMIA	// kind: 'test' name: 'With System Open Structure Diagram' path: 'With System Open Structure Diagram.test'
+_OX3fsJRgEeWdZoPrrryMIA	// kind: 'test' name: 'With System Open Textual' path: 'With System Open Textual.test'
+_NNUlwNpJEeWr3a7wWrF4WQ	// kind: 'test' name: 'Without System With Main Open Struct' path: 'Without System With Main Open Struct.test'
+_pT-g0JRgEeWdZoPrrryMIA	// kind: 'test' name: 'Without System/Main Open Class Diagram' path: 'Without System_Main Open Class Diagram.test'
+_rk4zgJRgEeWdZoPrrryMIA	// kind: 'test' name: 'Without System/Main Open Textual' path: 'Without System_Main Open Textual.test'
+_X7UlMJRbEeWdZoPrrryMIA	// kind: 'test' name: 'Saved With System Open Class Diagram' path: 'Saved With System Open Class Diagram.test'
+_webHkJRbEeWdZoPrrryMIA	// kind: 'test' name: 'Saved With System Open Structure Diagram' path: 'Saved With System Open Structure Diagram.test'
+__J3tUJQkEeWsHLzSvkw_VA	// kind: 'test' name: 'Saved With System Open Textual ' path: 'Saved With System Open Textual .test'
+_jWoM8NpOEeWr3a7wWrF4WQ	// kind: 'test' name: 'Saved Without System With Main Open Struct' path: 'Saved Without System With Main Open Struct.test'
+_oNEOAJReEeWdZoPrrryMIA	// kind: 'test' name: 'Saved Without System/Main Open Class Diagram' path: 'Saved Without System_Main Open Class Diagram.test'
+_uEkz8JReEeWdZoPrrryMIA	// kind: 'test' name: 'Saved Without System/Main Open Textual' path: 'Saved Without System_Main Open Textual.test'
+_HPlQcNpTEeWr3a7wWrF4WQ	// kind: 'test' name: 'Save Dont Ask' path: 'Save Dont Ask.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

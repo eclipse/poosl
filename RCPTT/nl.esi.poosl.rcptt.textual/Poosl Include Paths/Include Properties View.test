@@ -1,0 +1,18 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_Z-EO4BuREeeKSO4xt8npOw,_0FsCkBuSEeeKSO4xt8npOw,_OnCaUBuTEeeKSO4xt8npOw
+Element-Name: Include Properties View
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _qvzGsBuREeeKSO4xt8npOw
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 4/7/17 3:11 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-window "Properties for poosl" | get-table | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

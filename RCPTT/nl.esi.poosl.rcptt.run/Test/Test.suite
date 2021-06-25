@@ -1,0 +1,22 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Test
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _SAefAFAPEeelWq6Y3GDIQQ
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 6/13/17 10:58 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_CkHpQFAQEeelWq6Y3GDIQQ	// kind: 'test' name: 'Debug Configuration' path: 'Debug Configuration.test'
+_AeYr0FAQEeelWq6Y3GDIQQ	// kind: 'test' name: 'Run Configration' path: 'Run Configration.test'
+_WPvfUFAQEeelWq6Y3GDIQQ	// kind: 'test' name: 'Error' path: 'Error.test'
+_Y06x0FAQEeelWq6Y3GDIQQ	// kind: 'test' name: 'Multiple' path: 'Multiple.test'
+_UoB6oFAQEeelWq6Y3GDIQQ	// kind: 'test' name: 'Passed' path: 'Passed.test'
+_VibtYFAQEeelWq6Y3GDIQQ	// kind: 'test' name: 'Skipped' path: 'Skipped.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

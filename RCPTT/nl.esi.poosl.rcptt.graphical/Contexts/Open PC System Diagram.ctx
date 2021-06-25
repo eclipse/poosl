@@ -1,0 +1,24 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: Open PC System Diagram
+Element-Type: context
+Element-Version: 2.0
+Id: _MoNOUOqKEeSdDvHJCJiyYA
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 3:41 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-view "Project Explorer" | get-menu -path "Filters and Customization..." | click
+with [get-window "Filters and Customization"] {
+    get-tab-folder | get-tab-item Content | click
+    get-table | get-item "Sirius Content Management" | check
+    get-button OK | click
+}
+get-view "Project Explorer" | get-tree 
+    | select "nl.esi.poosl.examples/representations.aird/POOSL viewpoint/Cluster diagram/System \\(producer_consumer.poosl\\)" 
+    | double-click
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

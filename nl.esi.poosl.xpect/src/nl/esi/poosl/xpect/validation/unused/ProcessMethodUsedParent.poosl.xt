@@ -1,0 +1,45 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+// Process Methods 
+
+import "../imports/ProcessMethodUsedParent.poosl"
+
+ process class childProcessClass() extends parentProcessClass
+ ports 	
+ messages 	 
+ variables 	
+ init
+ 	parentMethod()()  
+ methods 	
+		// someVar should have an unused warning,  secondMethod should not have a warning, 
+		// XPECT warnings --> "Variable is not used" at "someVar"		
+		secondMethod(someVar : Object)() ||  
+		skip  
+		
+process class parentProcessClass()
+ports	
+messages	
+variables	
+init
+	parentMethod()()
+methods
+	parentMethod()() | |
+	secondMethod(nil)()
+		
+	secondMethod(someVar : Object)() ||
+	someVar 
+	
+	//---- Imported
+	
+ process class childImportProcessClass() extends parentImportProcessClass
+ ports 	
+ messages 	 
+ variables 	
+ init
+ 	parentMethod()()   
+ methods 	
+		// Method should not have a warning, someVar should still have an unused warning
+		// XPECT warnings --> "Variable is not used" at "someVar"		
+		secondMethod(someVar : Object)() ||  
+		skip  
+		

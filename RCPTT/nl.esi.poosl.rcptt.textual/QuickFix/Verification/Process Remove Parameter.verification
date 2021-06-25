@@ -1,0 +1,34 @@
+--- RCPTT verification ---
+Format-Version: 1.0
+Element-Name: Process Remove Parameter
+Element-Type: verification
+Element-Version: 2.0
+Id: _gJsDYFP-Eea5R70fIjiNMA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/27/16 3:46 PM
+Verification-Type: org.eclipse.rcptt.verifications.text
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Verification of the text after using the remove variable (parameter) quickfix. Comparing the style migth result in an incorrect error. It is receommended to ignore the text styling in this test case. 
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC1ltFq2zAUhu8Heweh
+QWkvYseOndhpvFK6FTrICN0Y29VwbMXRJlueJCcZ9OF3HCeN0l3M8jABIR3/Ot/5D7KV2c0uZ2hDhKS8
+iLBjDTEiRcJTWmQRrtRqEOCbt69fzbjILJIwWkpiiaRUyoJNdEWTWMFOaSmyU9PPMHzRwmiX0+lzcrdO
+DrhCTiEe4bVS5dS2t9utxfPMAoL9df5wlLQBPuc4Cusce7F9JrZrMUZFnJMILwRPiJTokeR8Q9AiFhBW
+RGBE0wh/zz7Id9/uF4P3JPYfJ8PVww/6cX6LkSSMJIqLCGdEDUhKYY4uflVcXec8JcwqOZesCaAnVItq
+6mBDybZO3tRbHuAJi2GUPCd39ezyCl282d1el1wo2UxzkMUZOaw2saDxkh2XtKCqmdUp5kSteXp5dcyS
+79cHKQzhS9UT/E4PG8VPWr6MQUeyggvySf1m+/OgREUwnAaEZhJiUA0jRabWEZ5gtOKFqpXQ4iVnaaMD
+5QoyZIJXRXrHGfRMEGiz48KOJatAHPjYPmqlioVacMhLC3jkYJRwVuX1yTyIZnZDPqtiv21fxLEe56we
+MJHHDP+bErSgBCeK37frsEU9zui/bTteG46ncUYdQX4LkDvpu8Ou2bkauaeCXAPjGmbcBqM1OOjF98jM
+t9fR98jsAHua77AX356Zb3/UzbeOGbbh+CeO14tx39B42M24hmnzgo8d7UsyNOCMDe8DjTPuiGnF0T5Y
+/VyEEzPjgfZGub6B84nZVegMw75PcGh4Geq3oWfgXONAir9AM7vTH2DY+QdQSwcIkzIkFFUCAABiCwAA
+UEsBAhQAFAAICAgAAAAhAJMyJBRVAgAAYgsAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEA
+AAAAUEsFBgAAAAABAAEAPwAAAJQCAAAAAA==
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--

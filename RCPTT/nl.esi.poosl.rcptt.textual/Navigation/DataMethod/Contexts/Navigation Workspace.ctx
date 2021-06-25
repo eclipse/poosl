@@ -1,0 +1,75 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: Navigation Workspace
+Element-Type: context
+Element-Version: 2.0
+Id: _7aQ7wP76EeSf_PFiy2GHdA
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 5/20/15 4:35 PM
+Tags: Navigation
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Contains a data in a seperate file
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSFkEEOwiAURNeaeIeGvaA7F7Qm1rg0
+JuoBEH4qpoUGqOnxBUpt6sYdb5j/Z4Du+6bO3mCs1CpHW7xBGSiuhVRVju6303qH9sVqSVujX8DdESw3
+snXe7dUFVayBoqyBqctgoCRK4Y7rpgHlCkrGU1DTIhuBzOjRyVpcW+CBEpZ+lCkRlRSnTYWB17K1gHsH
+vcOdxPbJDIiBD2EQzFTFTzJTdaGDTUzmAiW/aUkZ6/ho1xlI7gH+NzlHXygS/XHttOj7/PmvfgBQSwcI
+ydVtJsYAAACUAQAAUEsBAhQAFAAICAgAAAAhAMnVbSbGAAAAlAEAAAgAAAAAAAAAAAAAAAAAAAAAAC5j
+b250ZW50UEsFBgAAAAABAAEANgAAAPwAAAAAAA==
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65--
+------=_contents/CleanProject/models/packet.poosl-6958938e-59bc-35d9-9017-20b5ec6de1ff
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/models/packet.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSNkLtOxDAQRWsi5R+uUu1DYvtFVKyE
+XIG0JaJw4kliCHbkmSzk77GTwIaOziMdn3tnjBaNqtPM6HX1TgL6EnKG8VS+USV5dtHB6rIjzrObww7K
+kBMrI1h8IAPr2BqCxvP0/Ra7QwTVCUcoJ9RQyLMPktabRXAmYUhLiMxFdwPB19PcrwVM8pO0UVfXNj5n
+Ls8iNeXcQ+EuDYFkCA5MXT1HPf4rqrlGrUv/+tRptj0E0kKz8CzBumaRSqsFlsGt/3Qox4kwVA5NkyDx
+vmPUPqRbiXZVdKQeY09/j9ZHpyzm4xKReixFNsVLgX3aZQ3uUbwW229QSwcIJVRhHvMAAADHAQAAUEsB
+AhQAFAAICAgAAAAhACVUYR7zAAAAxwEAAAgAAAAAAAAAAAAAAAAAAAAAAC5jb250ZW50UEsFBgAAAAAB
+AAEANgAAACkBAAAAAA==
+------=_contents/CleanProject/models/packet.poosl-6958938e-59bc-35d9-9017-20b5ec6de1ff--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSVkstOwzAQRfdI/IPlPTZ0QVGUUKGK
+1wIUxKLsKuNMg6ljR/G0CX/PJE3SqgseO3t8z52ZK8ezprBsC1Uw3iX8QpxzBk77zLg84RtcnV3x2fXp
+SeyrXIC2pgwgKl0iCo2NqH21DqXSEC2G09w7hAZZU5ho9J20vtTJhYjqCf9ALCMp67oWvsgFmcu3p8dB
+8kuvER80Ld7pJOnkqOPMqYLUz2prcoU0CFvs30yW8OVUvUzrdHp5C6+rZXpnvib3D9kNZ6jycAhyioCx
+WLe7OewudC0r/wkaQ99nbkG5dFfjvYZUK2NhkIgeoZAb0BtU75aqWG2AywPC24yS65nCZ2DD3vDIsnsW
+pffB/uh6hFEIa8A/cLHsxxm2lsPau0zkPpRY/veXEPQNUEsHCOTAH4InAQAAggIAAFBLAQIUABQACAgI
+AAAAIQDkwB+CJwEAAIICAAAIAAAAAAAAAAAAAAAAAAAAAAAuY29udGVudFBLBQYAAAAAAQABADYAAABd
+AQAAAAA=
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
+------=_contents/CleanProject/models/model.poosl-88c4f0db-cff5-3086-a386-70ec493375af
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/models/model.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnS9Vs1O20AQPjtS3mGak01DED0GoaqF
+iw8VqCD1vNiTZFV7bXnXoVB431Z9ic7ueu2141BQSyNE7J3/+b6ZDc/LolIwK1nyFdWiLAqZzaaT6SRl
+ikGSMSlBoVRWDvhNoUgl2NfpZMsqzm4ylNNJjmpTpHJgmxUJy15gDPQ5OgCWkt4xHBxNJwE9hzEsIRYK
+11hF3SMJgwpVXQmI4S0c69hlVSRIgW34y6pI6wSrcDohr9c8R0gxY3fABdygukUUUFqdFHKyY2uUJmyc
+Zmj0u8DknHolrasNl0B/aoNQiOwOtOgEuNKHtSRvq6KColbrgot163phS7qola7Znhl/FwPNVu/NJ3sQ
+2q5FvbaR4RXSWwaizm+QAq5MRjslNXHjc795XHClD+mLXHCJYRRGHhbk3cnuUTrHXXed04F9YMKcEnwn
++uWKML80uTuxyVqkwPrF9hXhAUpKtqHOQ+dW4G3osSoCw4/zyEYrnUpH2ggkqjhFobi6G9F8UquHQATf
+wSZB/4lv8GiVNFe84r4wogGD2w3PkFhGREByLlINr26ioEGg0knbq973YSgaOgZG4300wY7g8F9+Gq8H
+em68KVIbpkBVTMgVVnJAqv7AfaylPyaXerkYc38suEiKfGQsYjF/wur5wxQP/Dvv7wezNP+L0Qs6draT
+dN20aHeOnKS/YwYGQS/FcQKas77Z/yZCUghZUx1DHII+E86smlnSDSGMx+dtzn0U0T3SXx3exuk44sEI
+5vrYhzEYLEVzcE8nV6oih/qgQTcIPmOCfIv9bdbCbBJpVAY4j5iO7Lcm8inM4Gf2Y4u/ZhbuIS/cEiph
+3a0st4tGs7SC1yGJKfssq6Uiens0yQtaYxKYAFaWGU+Y4oUw5OFSaajormLtBU16+kJwpGnRDpKeZ6fu
+9MI2g5fc7aalY/e7FrRctfx/0QKzWM3/YL1vkemPWWb6gQupmEjQS8W1ihq3U07QSpfdj56uRrqx3G3S
+6GvQmiaOO2yly1YxbIyTDROCwG00iY9i3kEXC3hsJVTPvE1oQW9a5lJ4JT4aOhTlYYZbzEDeEX9ykCUm
+fOVo6Kq0wn0d/+AR16DY0Ekatu7swV0wvB7uMNcH513k50536L4rtwuhlZZadS8oJFtoYIaRHQqeWg+l
+HpC/AVBLBwh19HJpYgMAACAMAABQSwECFAAUAAgICAAAACEAdfRyaWIDAAAgDAAACAAAAAAAAAAAAAAA
+AAAAAAAALmNvbnRlbnRQSwUGAAAAAAEAAQA2AAAAmAMAAAAA
+------=_contents/CleanProject/models/model.poosl-88c4f0db-cff5-3086-a386-70ec493375af--

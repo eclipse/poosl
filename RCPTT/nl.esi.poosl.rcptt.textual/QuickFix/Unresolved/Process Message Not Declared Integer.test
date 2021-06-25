@@ -1,0 +1,45 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Process Message Not Declared Integer
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _wlOWwOQdEeSZttsAewanYQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/27/16 3:07 PM
+Tags: Process, Message, QuickFix
+Testcase-Type: ecl
+Verifications: _Fyt3AFP7Eea5R70fIjiNMA
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Create a process class with a port thats receives message but dont specify a message for the port
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer | type-text "process class someClass\n"
+    + "ports\n"
+    + "In\n"
+    + "messages\n"
+    + "variables\n"
+    + "init\n"
+    + "someMethod()()\n"
+    + "methods\n"
+    + "someMethod()()  | i : Integer |\n"
+    + "In?Message(i)"
+
+get-editor "model.poosl" | get-text-viewer | get-property "markers['10'][0].text" 
+    | equals "No receive message Message of port In with 1 variables" | verify-true
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 10 14
+    key-type "M1+1"
+}
+get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
+    | select "Extend the message declarations based on all statements in this process" | click -default
+get-editor "model.poosl" | get-text-viewer | key-type "M1+s"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

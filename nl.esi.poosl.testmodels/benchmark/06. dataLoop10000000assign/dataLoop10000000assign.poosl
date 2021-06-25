@@ -1,0 +1,22 @@
+// one process executing a data loop with 10000000 iterations, in each iteration 10 times x:=1 statement.
+
+process class A ()
+ports
+	
+messages
+
+variables
+	x: Integer
+init
+	start()()
+methods
+start()() | i: Integer |
+ 	{i:=0;
+	while i<10000000 do i:=i+1;x:=1;x:=1;x:=1;x:=1;x:=1;x:=1;x:=1;x:=1;x:=1;x:=1 od}
+
+
+system
+instances
+	A: A()
+channels
+

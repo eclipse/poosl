@@ -1,0 +1,89 @@
+importlib "UnitTester.poosl"
+importlib "structures.poosl"
+
+data class MyDataClassStringAttribute extends Object
+variables
+	name: String
+methods
+	setName(arg : String) : Object
+		name := arg;
+		return self
+	printString() : String
+		return name
+
+data class MyDataClassIntegerAttribute extends Object
+variables
+	name: Integer
+methods
+	setName(arg : Integer) : Object
+		name := arg;
+		return self
+	printString() : String
+		return name printString
+
+
+process class Tester
+ports
+messages
+variables
+	w : UnitTester
+init
+	test()()
+methods
+	test()()
+	/* run the testing procedures in data class Test */
+		w := new(UnitTester) init();
+		testSet()() ;
+		w writeLine("all Set tests done!");
+		w writeLine("all tests passed!");
+		w report()
+	testSet()() | s: Set, obj: Object | 
+		s := new(Set);
+		w assertEquals(s size, 0, "");
+		obj := new(MyDataClassStringAttribute) setName("aap"); 
+		s add(obj);
+		w assertEquals(s size, 1, "");
+		s add(obj);
+		w assertEquals(s size, 1, "");
+		obj := new(MyDataClassStringAttribute) setName("noot");
+		s add(obj);
+		w assertEquals(s size, 2, "");
+		s add(obj);
+		w assertEquals(s size, 2, "");
+		s clear();
+		w assertEquals(s size, 0, "");
+		obj := new(MyDataClassIntegerAttribute) setName(4);
+		s add(obj);
+		w assertEquals(s size, 1, "");
+		s add(obj);
+		w assertEquals(s size, 1, "");
+		obj := new(MyDataClassIntegerAttribute) setName(2);
+		s add(obj);
+		w assertEquals(s size, 2, "");
+		s add(obj);
+		w assertEquals(s size, 2, "");
+		s clear();
+		w assertEquals(s size, 0, "");
+		s add("aap");
+		w assertEquals(s size, 1, "");
+		s add("aap");
+		w assertEquals(s size, 1, "");
+		s add("noot");
+		w assertEquals(s size, 2, "");
+		s add("noot");
+		w assertEquals(s size, 2, "");
+		s clear();
+		w assertEquals(s size, 0, "");
+		s add(1);
+		w assertEquals(s size, 1, "");
+		s add(1);
+		w assertEquals(s size, 1, "");
+		s add(2);
+		w assertEquals(s size, 2, "");
+		s add(2);
+		w assertEquals(s size, 2, "")
+system
+instances
+	tester: Tester()
+channels
+	

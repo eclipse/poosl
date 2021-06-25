@@ -1,0 +1,25 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Import
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _59nvoP-fEeSf_PFiy2GHdA
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 4/7/17 3:05 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_36YkMP-tEeSf_PFiy2GHdA	// kind: 'test' name: 'Cyclic Import' path: 'Cyclic Import.test'
+_OXuRwP-fEeSf_PFiy2GHdA	// kind: 'test' name: 'From Different Folder' path: 'From Different Folder.test'
+__CUVYP-bEeSf_PFiy2GHdA	// kind: 'test' name: 'Import Cluster' path: 'Import Cluster.test'
+_9k244P-bEeSf_PFiy2GHdA	// kind: 'test' name: 'Import Data' path: 'Import Data.test'
+_LsMykP-SEeSf_PFiy2GHdA	// kind: 'test' name: 'Import Process' path: 'Import Process.test'
+_43LsAP-fEeSf_PFiy2GHdA	// kind: 'test' name: 'Incorrect Path' path: 'Incorrect Path.test'
+_F797gP-hEeSf_PFiy2GHdA	// kind: 'test' name: 'Second Import' path: 'Second Import.test'
+_VoGsYGOTEeaOApqarGCklQ	// kind: 'test' name: 'Import Relative and File not platform' path: 'Import Relative and File not platform.test'
+_QHVFMBuPEeeKSO4xt8npOw	// kind: 'test' name: 'ImportLib' path: 'ImportLib.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

@@ -1,0 +1,32 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g,_uJFO8P1MEeSY2Ma_ry9BIw,_6YxvkOIeEeaHF4Utzt6ADQ
+Element-Name: Editing while Debugging Continue
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _M_aq4OgNEeSUFO5-NwwB0Q
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/21/18 4:23 PM
+Tags: Edit Debug Continue
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Edit a resource of a model that is already running. When trying to save this resource select continue in the popup window. The debug window should not change and still hold only 1 model with 2 child nodes.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-window "Save during debug session" | get-button "Continue debugging" | click
+
+with [get-view Debug | get-tree] {
+    get-property "getItems().length" | equals 1 | verify-true
+    get-property "getItems().TreeItem[0].getItems().length" | equals 1 | verify-true
+}
+click-terminate
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

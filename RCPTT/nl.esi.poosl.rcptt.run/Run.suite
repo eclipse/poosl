@@ -1,0 +1,22 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Run
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _giZLAOf8EeS02qlAIvBOkg
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 6/13/17 10:09 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_H-rm0OgLEeSUFO5-NwwB0Q	// kind: 'test' name: 'Editing a running model' path: 'Editing a running model.test'
+_-QrD8P1UEeSY2Ma_ry9BIw	// kind: 'test' name: 'Run from Project Explorer' path: 'Run from Project Explorer.test'
+_oTjaMOf8EeS02qlAIvBOkg	// kind: 'test' name: 'System Spec missing' path: 'System Spec missing.test'
+_JqgJEOgDEeSUFO5-NwwB0Q	// kind: 'test' name: 'Validation Error' path: 'Validation Error.test'
+_hz248O5JEeSm7umqZJi-ag	// kind: 'suite' name: 'Generate' path: 'Generate/Generate.suite'
+_SAefAFAPEeelWq6Y3GDIQQ	// kind: 'suite' name: 'Test' path: 'Test/Test.suite'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

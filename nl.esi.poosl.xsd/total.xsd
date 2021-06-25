@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="total" targetNamespace="uri:poosl" xmlns="uri:poosl" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:include id="rotalumisrequest" schemaLocation="rotalumisrequest.xsd"/>
+<xs:include id="rotalumisresponse" schemaLocation="rotalumisresponse.xsd"/>
+<xs:include id="pooslmodel" schemaLocation="pooslmodel.xsd"/>
+</xs:schema>

@@ -1,0 +1,22 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_h9zZ8JRfEeWdZoPrrryMIA
+Element-Name: Without System With Main Open Textual
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _1w6RgNr_EeWr3a7wWrF4WQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 2/24/16 3:09 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree 
+    | select "nl.esi.poosl.examples/models-complex/MPSoC/platform.poosl" |  get-menu "Open Textual Editor" | click
+
+
+get-tab-folder -index 2 | get-property activePage | equals "platform.poosl" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xpect
+Bundle-SymbolicName: nl.esi.poosl.xpect
+Bundle-Version: 4.2.2.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ org.xpect.xtext.lib,
+ org.eclipse.emf.codegen,
+ org.eclipse.xtext.xbase,
+ org.xpect,
+ nl.esi.poosl.xtext,
+ nl.esi.poosl.xtext.ui,
+ nl.esi.poosl.model,
+ org.eclipse.xtext.builder
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: nl.esi.poosl.xpect

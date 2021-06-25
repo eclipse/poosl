@@ -1,0 +1,148 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+// ----------------- Data class variables	
+
+data class dataClass extends Object
+variables
+	//XPECT warnings --> "Variable is not used" at "i"   
+	i : Integer  
+	//XPECT warnings --> "Variable is not used" at "p"   
+	p : Integer 
+methods
+// DataClass local, Error local variable with the same name
+//XPECT errors --> "There is another variable in scope with the same name i" at "i"
+   enter() : Integer | i,z : Integer |
+   		z;
+		return i
+		//Error input parameter name already taken
+// DataClass local, Error return parameter with the same name
+//XPECT errors --> "There is another variable in scope with the same name i" at "i"
+ exit (i:Integer) : Integer |  | 
+ return i
+ // DataClass local, error when there are 2 methods with same name
+ // XPECT errors --> "There is another method with the same name dataDouble and number of parameters" at "dataDouble" 
+ dataDouble : Integer ||
+ 	return 1
+ // DataClass local, error when there are 2 methods with same name
+ // XPECT errors --> "There is another method with the same name dataDouble and number of parameters" at "dataDouble" 
+ dataDouble : Integer ||
+ 	return 1
+ 
+  data class parantDataClass extends Object
+variables
+word : String
+second : String 
+methods
+	getWord : String | third : String|
+		return word + second +third
+	getInteger(i : Integer) :Integer
+		return i
+	
+
+data class childDataClass extends parantDataClass
+variables
+// DataClass parent scope, Error return parameter with the same name
+// XPECT errors --> "There is another variable in scope with the same name word" at "word"
+word : String
+methods
+	// DataClass parent scope localmethod var, Error return parameter with the same name
+	// XPECT errors --> "There is another variable in scope with the same name second" at "second"
+	getMethod() : String | second: String |
+		return word
+    // Data class parent method, already taken with different return type
+	// XPECT warnings --> "Return type Integer is not equal to, or subtype of, the return type String of the overridden method in class parantDataClass" at "Integer"
+	getWord : Integer
+	return 1
+	
+	
+data class superParentDataClass1 extends Object
+variables
+b : String
+methods
+
+data class parentDataClass1 extends superParentDataClass1
+variables
+//XPECT errors --> "There is another variable in scope with the same name b" at "b"
+b : Integer
+methods
+ 	
+data class childDataClass1 extends parentDataClass1
+variables
+
+methods
+//Use the most local variable b which as an Integer TODO shouldnt this not give any issues local b is integer
+//XPECT warnings --> "Method body of type String is not compatible with method return type Integer" at "Integer"
+ someMethod() : Integer | |
+ 	return b
+ 	
+data class parentDataClass2 extends Object
+variables
+b : String
+methods
+ 	
+data class dataClass2 extends parentDataClass2
+variables
+//XPECT errors --> "There is another variable in scope with the same name b" at "b"
+b : Integer
+methods
+//Use the most local variable b which as an Integer
+//XPECT noIssues
+ someMethod() : String | |
+ 	return b
+
+	
+// -------- Process Class variables
+ process class parentReceiveSendStatementClass()
+ ports 	 
+ 	Out, Put
+ messages
+ 	Out!integer(Integer)
+ 	Put!integer(Integer) 
+ variables
+ 	ID : Integer
+ 	first : Integer
+ init
+ 	someMethod()()
+ methods
+ 	someMethod()() | |
+ 		ID+first;
+ 		Out!integer(1);
+ 		Put!integer(1);
+ 		skip
+ 
+		
+ process class receiveSendStatementClass() extends parentReceiveSendStatementClass
+ ports
+ 	
+ messages
+ 	
+ variables
+ 	child : Integer
+ 	// Process Variable local, error when variable already exists
+ 	// XPECT errors --> "There is another variable in scope with the same name child" at "child"
+ 	child : Integer
+ 	// Process Variable from parent, error when variable already exists
+ 	// XPECT errors --> "There is another variable in scope with the same name ID" at "ID"
+ 	ID : Integer
+ 	
+ init
+ 	someMethod()()
+ methods
+ 	// Process Variable in method from parent, error when variable already exists
+ 	// XPECT errors --> "There is another variable in scope with the same name first" at "first"
+ 	someMethod()() |first : Integer |
+ 		Out!integer(1);
+ 		// Process Method local, giving variable two times as parameter
+ 		// XPECT warnings --> "Variable first is assigned more than once" at "first"
+ 		checkUniqueOutputVariables()(first, 
+ 		// Process Method local, giving variable two times as parameter
+ 		// XPECT warnings --> "Variable first is assigned more than once" at "first" 		
+ 		first);
+ 		skip
+ 	checkUniqueOutputVariables()(outPut,A: Integer) 	
+ 		outPut := 2;
+ 		A := 1
+ 		
+ 		
+ 
+	

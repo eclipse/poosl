@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_MoNOUOqKEeSdDvHJCJiyYA
+Element-Name: System to System
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _BNuvEOqKEeSdDvHJCJiyYA
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 4/24/15 4:53 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "System (producer_consumer.poosl)" | get-diagram -index 1] {
+    with [get-edit-part -name "System (producer_consumer.poosl)" | get-edit-part -name System | get-edit-part 
+        -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+        mouse-press 1 1 button1 -height 254 -width 192
+        mouse-release 1 1 button1  -height 254 -width 192
+    }  
+    get-menu "Open Textual Editor" | click
+}
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    get-property "getSelectionRange().x" | equals 3724 | verify-true
+    get-property "getSelectionRange().y" | equals 6 | verify-true
+    get-property "getSelectionText()" | equals system | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

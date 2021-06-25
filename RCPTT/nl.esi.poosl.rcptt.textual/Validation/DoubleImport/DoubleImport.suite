@@ -1,0 +1,19 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: DoubleImport
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _QsFsgPp8EeaYharRj9FY-Q
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 2/24/17 11:58 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_mt8IMPp-EeaYharRj9FY-Q	// kind: 'test' name: 'DoubleCluster' path: 'DoubleCluster.test'
+_cG6fIPp-EeaYharRj9FY-Q	// kind: 'test' name: 'DoubleData' path: 'DoubleData.test'
+_i6TegPp-EeaYharRj9FY-Q	// kind: 'test' name: 'DoubleProcesss' path: 'DoubleProcesss.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

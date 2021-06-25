@@ -1,0 +1,40 @@
+importlib "UnitTester.poosl"
+importlib "json.poosl"
+
+process class Tester
+ports
+messages
+variables
+	w : UnitTester
+init
+	test()()
+methods
+	test()()
+	/* run the testing procedures in data class Test */
+		w := new(UnitTester) init();
+		testSet()() ;
+		w writeLine("all tests passed!");
+		w report()
+	testSet()()
+		testConversion(1, "1")();
+		testConversion(1.0, "1.0")();
+		testConversion(1E3, "1000")();
+		testConversion(1.0E3, "1000.0")();
+		testConversion(1E+3, "1000")();
+		testConversion(1.0E+3, "1000.0")();
+		testConversion(1.0E-3, "0.001")()
+		
+		
+		
+	testConversion(pooslObject: Object, jsonString: String)() | json: JSON, o: Object, s: String |
+		json := new(JSON);
+		s := json convert(pooslObject);			
+		w assertEquals(s, jsonString, "");
+		o := json parse(s);
+		w assertEquals(o, pooslObject, "")
+
+system
+instances
+	tester: Tester()
+channels
+	

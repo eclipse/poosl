@@ -1,0 +1,25 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+/* Data class that models a stack of carts. It isolates the data processing from process class CartShed. */
+data class CartStack
+variables
+	Carts : Stack
+methods
+	init() : CartStack | |
+		// Shopping Carts should extend Object even if not defined and no warning should show
+		// XPECT noIssues
+		Carts push(new(ShoppingCart) init()) ;
+		return self
+
+data class Stack extends Object
+variables
+methods
+	push(O : Object) : Stack | |
+		O + 1 ;  
+		return self
+  
+data class ShoppingCart
+variables
+methods
+	init() : ShoppingCart 
+		return self 

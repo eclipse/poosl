@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+  <extension point="org.eclipse.sirius.componentization">
+    <component class="nl.esi.poosl.sirius.Activator"
+               id="nl.esi.poosl.sirius"
+	       name="poosl">
+    </component>
+  </extension>
+  <extension
+        point="org.eclipse.sirius.externalJavaAction">
+     <javaActions
+           actionClass="nl.esi.poosl.sirius.ExternalCalls"
+           id="externalcall">
+     </javaActions>
+  </extension>
+  <extension
+        point="org.eclipse.ui.menus">
+     <menuContribution
+           allPopups="false"
+           locationURI="popup:#TextEditorContext?after=generatexml">
+        <separator
+              name="nl.esi.poosl.sirius.beforegraph"
+              visible="true">
+        </separator>
+        <command
+              commandId="nl.esi.poosl.commands.sirius.editor.opencompositestructurediagram"
+              id="graphicaleditor"
+              label="Open Composite Structure Diagram"
+              style="push"
+              tooltip="Opens the graphical editor of this object">
+           
+        </command>        
+        <command
+              commandId="nl.esi.poosl.commands.sirius.editor.openclassdiagram" 
+              id="editoropenclassdiagram"
+              label="Open Class Diagram"
+              style="push"
+              tooltip="Opens the graphical editor of this object">
+           <visibleWhen
+                 checkEnabled="false">
+              <with
+                    variable="activeEditorInput">
+                 <reference
+                       definitionId="nl.esi.poosl.xtext.ui.visiblewhenpoosl">
+                 </reference>
+              </with>
+           </visibleWhen>
+        </command>
+        <separator
+              name="nl.esi.poosl.sirius.aftergraph"
+              visible="true">
+        </separator>
+     </menuContribution>
+       <menuContribution
+          allPopups="true"
+          locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+          <command
+             commandId="nl.esi.poosl.commands.sirius.explorer.opentextualeditor"
+             label="Open Textual Editor"
+             style="push"
+              tooltip="Opens the textual editor">
+             <visibleWhen checkEnabled="false">
+	             <with
+	                   variable="selection">
+	                <iterate
+	                      ifEmpty="false"
+	                      operator="or">
+	                   <reference
+	                         definitionId="nl.esi.poosl.sirius.visiblewhen">
+	                   </reference>
+	                </iterate>
+	                
+	             </with>
+	          </visibleWhen>
+       </command>
+       <command
+             commandId="nl.esi.poosl.commands.sirius.explorer.openclassdiagram"
+             label="Open Class Diagram"
+             style="push"
+              tooltip="Opens class diagram editor of this object">
+             <visibleWhen checkEnabled="false">
+	             <with
+	                   variable="selection">
+	                <iterate
+	                      ifEmpty="false"
+	                      operator="or">
+	                   <reference
+	                         definitionId="nl.esi.poosl.sirius.visiblewhen">
+	                   </reference>
+	                </iterate>
+	                
+	             </with>
+	          </visibleWhen>
+       </command>
+       <command
+             commandId="nl.esi.poosl.commands.sirius.explorer.opensystemdiagram"
+             label="Open Composite Structure Diagram"
+             style="push"
+              tooltip="Opens composite structure diagram editor of this file">
+             <visibleWhen checkEnabled="false">
+	             <with
+	                   variable="selection">
+	                <iterate
+	                      ifEmpty="false"
+	                      operator="or">
+	                   <reference
+	                         definitionId="nl.esi.poosl.sirius.visiblewhen">
+	                   </reference>
+	                </iterate>
+	                
+	             </with>
+	          </visibleWhen>
+       </command>
+    </menuContribution>
+  </extension>
+  <extension
+        point="org.eclipse.ui.commands">
+     <command
+           defaultHandler="nl.esi.poosl.sirius.handlers.GraphicalEditorHandler"
+           id="nl.esi.poosl.commands.sirius.editor.opengraphicaleditor"
+           name="Open Graphical Editor">
+     </command>
+     <command
+           defaultHandler="nl.esi.poosl.sirius.handlers.GraphicalEditorHandler"
+           id="nl.esi.poosl.commands.sirius.editor.opencompositestructurediagram"
+           name="Open Composite Structure Diagram">
+     </command>
+     <command
+           defaultHandler="nl.esi.poosl.sirius.handlers.GraphicalEditorHandler"
+           id="nl.esi.poosl.commands.sirius.editor.openclassdiagram"
+           name="Open Class Diagram">
+     </command>
+     <command
+           defaultHandler="nl.esi.poosl.sirius.handlers.TextualEditorHandler"
+           id="nl.esi.poosl.commands.sirius.opentextualeditor"
+           name="Open Textual Editor">
+     </command>
+     <command
+           defaultHandler="nl.esi.poosl.sirius.handlers.ProjectExplorerHandler"
+           id="nl.esi.poosl.commands.sirius.explorer.openclassdiagram"
+           name="Open Class Diagram">
+     </command>
+     <command
+           defaultHandler="nl.esi.poosl.sirius.handlers.ProjectExplorerHandler"
+           id="nl.esi.poosl.commands.sirius.explorer.opensystemdiagram"
+           name="Open Composite Structure Diagram">
+     </command>
+     <command
+           defaultHandler="nl.esi.poosl.sirius.handlers.ProjectExplorerHandler"
+           id="nl.esi.poosl.commands.sirius.explorer.opentextualeditor"
+           name="Open Textual Editor">
+     </command>     
+	   <command
+	         description="Paste the resouce and all of its diagrams"
+	         id="PooslPasteAction"
+         name="Paste (including diagrams)">
+     </command>
+	  <command
+	        description="Copy the resource and all of its diagrams"
+	        id="PooslCopyAction"
+	        name="Copy (including Diagrams)">
+	     </command>
+      <command
+            description="Delete the resource and all of its diagrams"
+            id="nl.esi.poosl.sirius.edit.delete"
+            name="Delete (including Diagrams)">
+     </command> 
+  </extension>
+  <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           commandId="nl.esi.poosl.commands.sirius.editor.opengraphicaleditor">
+     </handler>
+  </extension>
+  <extension
+        point="org.eclipse.ui.bindings">
+     <key
+           commandId="nl.esi.poosl.commands.sirius.editor.opengraphicaleditor"
+           contextId="org.eclipse.xtext.ui.XtextEditorScope"
+           schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+           sequence="F2">
+     </key>
+     <key
+           commandId="nl.esi.poosl.commands.sirius.opentextualeditor"
+           contextId="org.eclipse.sirius.diagram.ui.diagramContext"
+           schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+           sequence="F2">
+     </key>
+  </extension>
+
+ <extension
+       point="org.eclipse.core.expressions.definitions">
+    <definition
+          id="nl.esi.poosl.sirius.visiblewhen">
+       <adapt
+             type="org.eclipse.core.resources.IResource">
+          <test
+                forcePluginActivation="true"
+                property="org.eclipse.core.resources.extension"
+                value="poosl">
+          </test>
+       </adapt>
+    </definition>
+ </extension>
+ 
+ 	<extension point="org.eclipse.ui.navigator.navigatorContent">
+	<navigatorContent
+			id="nl.esi.poosl.navigator.navigatorContent"
+			activeByDefault="true"
+			icon="icons/poosl_simulation.gif"			
+			name="Poosl Content Management"
+			contentProvider="nl.esi.poosl.sirius.navigator.PooslCommonContentProvider"   
+			labelProvider="nl.esi.poosl.sirius.navigator.PooslLabelProvider"							
+			priority="highest" >						
+			<enablement>
+					<adapt
+						type="org.eclipse.core.resources.IResource">					
+					</adapt>
+			</enablement>
+				
+			<actionProvider 				
+				class="nl.esi.poosl.sirius.navigator.PooslNaviActionProvider"
+				id="nl.esi.poosl.PooslNaviActionProvider"
+				overrides="org.eclipse.jdt.ui.navigator.actions.OpenActions"				 
+              	priority="highest">
+				<enablement>
+              <and>
+                 <instanceof
+                       value="org.eclipse.core.resources.IResource">
+                 </instanceof>
+                 <test
+                       forcePluginActivation="true"
+                       property="org.eclipse.core.resources.extension"
+                       value="poosl">
+                 </test>
+              </and>
+           </enablement>
+		</actionProvider>
+
+        <actionProvider
+              class="nl.esi.poosl.sirius.navigator.edit.PooslEditActionProvider"
+			  id="nl.esi.poosl.PooslEditActionProvider"/> 						           	
+		</navigatorContent>
+	</extension>
+ 
+ <extension
+        point="org.eclipse.ui.navigator.viewer">
+		<viewerContentBinding
+           viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+			<includes>    	
+				<contentExtension
+          			pattern="nl.esi.poosl.navigator.navigatorContent">
+				</contentExtension>
+			</includes>
+		</viewerContentBinding>
+	</extension>  
+	
+	<extension point="org.eclipse.ui.preferencePages">
+	    <page
+	        category="nl.esi.poosl.xtext.Poosl"
+	        class="nl.esi.poosl.sirius.preferences.EditorPreferencePage"
+	        id="nl.esi.poosl.sirius.preferences.editor"
+	        name="Graphical Behavior">
+  		</page>    
+	</extension>
+ <extension
+       point="nl.esi.poosl.rotalumisclient.debuginformer">
+    <client
+          class="nl.esi.poosl.sirius.debug.GraphicalDebugListener">
+    </client>
+ </extension>
+ <extension
+       point="org.eclipse.sirius.ecore.extender.PermissionProvider">
+    <permissionprovider
+          priority="high"
+          providerClass="nl.esi.poosl.sirius.permissions.PooslPermissionProvider">
+    </permissionprovider>
+ </extension>
+ <extension
+       point="org.eclipse.sirius.diagram.ui.formatDataManager">
+    <formatDataManagerProvider
+          class="nl.esi.poosl.sirius.layout.PooslFormatDataManagerProvider"
+          id="nl.esi.poosl.sirius.formatDataManagerProvider">
+    </formatDataManagerProvider>
+ </extension>
+ <extension
+       point="org.eclipse.ltk.core.refactoring.renameParticipants">
+    <renameParticipant
+          class="nl.esi.poosl.sirius.navigator.rename.PooslFileRenameParticipant"
+          id="nl.esi.poosl.sirius.pooslfilerenameparticipant"
+          name="pooslfilerenameparticipant">
+          <enablement>
+          <with variable="affectedNatures">
+	  	    <iterate operator="or">
+	  	      <equals value="org.eclipse.xtext.ui.shared.xtextNature"/>
+	  	    </iterate>
+	  	  </with>
+          </enablement>
+    </renameParticipant>
+ </extension>
+</plugin>

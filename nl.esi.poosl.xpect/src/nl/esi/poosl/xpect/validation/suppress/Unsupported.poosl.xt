@@ -1,0 +1,92 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.suppress.PooslValidationSuppressTest END_SETUP */
+
+//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+@UnRecognized
+data class DataClass extends Object
+variables	
+methods
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	@UnRecognized
+	someMethod() : Object |  |
+		return nil
+
+//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+@UnRecognized	
+process class someClass()
+ports	
+messages
+	
+variables
+
+init
+	someMethod()()
+methods
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	@UnRecognized
+	someMethod()() | |	
+		skip
+	
+
+//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+@UnRecognized
+cluster class secondClass()
+ports
+	p
+instances
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	@UnRecognized
+	someInstance : someClass2()
+channels
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	@UnRecognized
+	{ p, someInstance.p }
+
+system
+instances
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	@UnRecognized
+	someInstance : someClass3() 
+	someInstance2 : someClass3() 
+channels
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	@UnRecognized
+ 	{ someInstance.p, someInstance2.p }	
+
+		
+@suppresswarnings
+data class DataClass2 extends Object
+variables	
+methods
+	@suppresswarnings	
+	someMethod() : Object |  |
+		return nil
+		
+process class someClass2()
+ports
+	p
+messages
+	p!a
+variables
+
+init
+	someMethod()()
+methods	
+	someMethod()() | |
+		p!a;
+		skip
+		
+process class someClass3()
+ports
+	p
+messages
+	p!a
+	p?a
+variables
+
+init
+	someMethod()()
+methods	
+	someMethod()() | |
+		p?a;
+		p!a;
+		skip

@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: Multiple Executions Shopping
+Element-Type: context
+Element-Version: 2.0
+Id: _gteH8OdfEeS02qlAIvBOkg
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/21/18 3:15 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+with [get-editor "ShoppingCarts.poosl" | get-text-viewer] {   
+    get-menu "Debug As/.* POOSL Simulation" | click
+}
+get-view Debug | get-tree | select "ShoppingCarts.poosl \\[Simulated time: 0\\]/system/customers"
+
+
+with [get-view "Execution Tree" | get-tree] {
+    select "\\/system\\/customers/Initialise\\(NumberOfCustomers\\)\\(\\)" | type-text 1
+    select "\\/system\\/customers/parallel/if CustomerID > 1 then Initialise\\(CustomerID - 1\\)\\(\\) fi" | type-text 1
+    select "\\/system\\/customers/parallel/Initialise\\(CustomerID - 1\\)\\(\\)" | type-text 1
+    select "\\/system\\/customers/parallel/if CustomerID > 1 then Initialise\\(CustomerID - 1\\)\\(\\) fi" | type-text 1
+    select "\\/system\\/customers/parallel/Initialise\\(CustomerID - 1\\)\\(\\)" | type-text 1
+    select "\\/system\\/customers/parallel/if CustomerID > 1 then Initialise\\(CustomerID - 1\\)\\(\\) fi" | type-text 1
+    select "\\/system\\/customers/parallel/Initialise\\(CustomerID - 1\\)\\(\\)" | type-text 1
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated poosl -->
+      <editor
+            id="nl.esi.poosl.presentation.PooslEditorID"
+            name="%_UI_PooslEditor_label"
+            icon="icons/full/obj16/PooslModelFile.gif"
+            extensions="poosl"
+            class="nl.esi.poosl.presentation.PooslEditor"
+            contributorClass="nl.esi.poosl.presentation.PooslActionBarContributor">
+      </editor>
+   </extension>
+</plugin>

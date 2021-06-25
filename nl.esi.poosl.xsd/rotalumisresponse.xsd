@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="uri:poosl" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="rotalumisrequest" targetNamespace="uri:poosl" elementFormDefault="qualified">
+  <xs:include id="rotalumisapitypes" schemaLocation="rotalumisapitypes.xsd"/>
+  <xs:element name="response">
+    <xs:complexType>
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <!-- Storage API -->
+        <xs:element name="load" type="t_load_response"/>
+        <!-- Compiler API -->
+        <xs:element name="compile" type="t_compile_response"/>
+        <!-- Debug API -->
+        <xs:element name="list_files" type="t_list_files_response"/>
+        <xs:element name="get_position" type="t_get_position_response"/>
+        <!-- Model API -->
+        <xs:element name="list_classes" type="t_list_classes_response"/>
+        <xs:element name="get_top_level_specification" type="t_get_top_level_specification_response"/>
+        <!-- Execution engine API -->
+        <xs:element name="instantiate" type="t_instantiate_response"/>
+        <xs:element name="command" type="t_command_response"/>
+        <xs:element name="execution_state" type="t_execution_state_change_response"/>
+        <xs:element name="get_transitions" type="t_get_transitions_response"/>
+        <xs:element name="perform_transition" type="t_perform_transition_response"/>
+        <xs:element name="inspect" type="t_inspect_response"/>
+        <xs:element name="create_breakpoint" type="t_create_breakpoint_response"/>
+        <xs:element name="enable_breakpoint" type="t_enable_breakpoint_response"/>
+        <xs:element name="disable_breakpoint" type="t_disable_breakpoint_response"/>
+        <xs:element name="delete_breakpoint" type="t_delete_breakpoint_response"/>
+        <xs:element name="set_variable" type="t_set_variable_response"/>
+        <!-- Execution engine events API -->
+        <xs:element name="eengine_event_setup" type="t_eengine_event_setup_response"/>
+        <xs:element name="communication_event" type="t_communication_event"/>
+        <xs:element name="eengine_event_error" type="t_eengine_event_error_response"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <!-- Storage API -->
+  <!-- Load response -->
+  <xs:complexType name="t_load_response">
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element name="result" type="t_file_io_result"/>
+      <xs:element name="error" type="xs:string"/>
+      <!-- alternative to result is only needed if t_file_io_result gives insufficient 
+				flexibility -->
+      <xs:element name="contents" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="t_file_io_result">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK"/>
+      <xs:enumeration value="file does not exist"/>
+      <xs:enumeration value="cannot create file"/>
+      <xs:enumeration value="disk full"/>
+      <xs:enumeration value="timed out"/>
+      <!-- what else? -->
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Compiler API -->
+  <!-- Compile response (compile a POOSL syntax string into its memory representation) -->
+  <xs:complexType name="t_compile_response">
+    <xs:sequence>
+      <xs:element name="error" type="xs:string"/>
+      <!-- contains a more elaborate explanation of any errors encountered while 
+				compiling the POOSL syntax string -->
+      <xs:element name="handle" type="xs:integer"/>
+      <!-- handle to the created memory representation -->
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Model API -->
+  <!-- list all classes in the model -->
+  <xs:complexType name="t_list_classes_response">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:group ref="t_class_with_handle"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_list_files_response">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="file">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="handle" type="xs:integer"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- list top-level specification -->
+  <xs:complexType name="t_get_top_level_specification_response">
+    <xs:sequence>
+      <xs:element name="result" type="t_object_query_result"/>
+      <xs:group ref="t_class_with_handle"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="t_class_with_handle">
+    <xs:sequence>
+      <xs:element name="class_name" type="t_class_name" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="handle" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:simpleType name="t_object_query_result">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ok"/>
+      <!-- for failed object by name search -->
+      <xs:enumeration value="unknown object"/>
+      <!-- for failed object by handle search -->
+      <xs:enumeration value="unknown handle"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Execution engine API -->
+  <!-- Instantiate response -->
+  <xs:complexType name="t_instantiate_response">
+    <xs:sequence>
+      <xs:element name="result" type="t_instantiate_result"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="t_instantiate_result">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ok"/>
+      <xs:enumeration value="invalid specification"/>
+      <xs:enumeration value="unknown handle"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Command response -->
+  <xs:complexType name="t_command_response">
+    <xs:attribute name="type" type="t_command"/>
+    <xs:attribute name="result" type="t_command_result"/>
+  </xs:complexType>
+  <!-- Get transitions from current state to the next states -->
+  <xs:complexType name="t_get_transitions_response">
+    <xs:sequence>
+      <xs:element name="transitions" type="t_transition_list"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Perform state transition request -->
+  <xs:complexType name="t_perform_transition_response">
+    <xs:sequence>
+      <xs:element name="result" type="t_perform_transition_response_result">
+			</xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="t_perform_transition_response_result">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ok"/>
+      <xs:enumeration value="inexecutable"/>
+      <xs:enumeration value="invalid transition"/>
+      <xs:enumeration value="invalid handle"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Inspect response -->
+  <xs:complexType name="t_inspect_response">
+    <xs:sequence>
+      <xs:element name="name" type="t_instance_name" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="handle" type="xs:integer"/>
+      <xs:element name="result" type="t_object_query_result"/>
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:element name="process" type="t_inspect_process"/>
+        <xs:element name="data" type="t_inspect_data"/>
+        <xs:element name="cluster" type="t_inspect_cluster"/>
+        <xs:element name="model" type="t_inspect_model"/>
+        <xs:element name="system" type="t_inspect_system"/>
+        <xs:element name="channel" type="t_inspect_channel"/>
+        <xs:element name="stackframe" type="t_stackframe"/>
+        <xs:element name="variable" type="t_inspect_variable"/>
+        <xs:element name="variable_context" type="t_inspect_variable_context"/>
+        <xs:element name="transition" type="t_inspect_transition"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- inspect process -->
+  <xs:complexType name="t_inspect_process">
+    <xs:sequence>
+      <xs:element name="instance_variables" type="t_var_list"/>
+      <xs:element name="execution_tree" type="t_executiontree"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_inspect_port">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="up_channel" type="t_inspect_channel" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="down_channel" type="t_inspect_channel" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="is_root" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- model -->
+  <xs:complexType name="t_inspect_model">
+    <xs:sequence>
+      <xs:element name="instance" maxOccurs="unbounded" minOccurs="1" type="t_inspect_instance"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- cluster -->
+  <xs:complexType name="t_inspect_instance">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="type" type="t_instance_type"/>
+      <xs:element name="process_path" type="xs:string"/>
+      <xs:element name="cluster" type="t_inspect_cluster" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="port" type="t_inspect_port" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_inspect_cluster">
+    <xs:sequence>
+      <xs:element name="channel" maxOccurs="unbounded" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="output_port" type="xs:string" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="instance" maxOccurs="unbounded" minOccurs="1" type="t_inspect_instance"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_inspect_system">
+    <xs:sequence>
+      <xs:element name="channel" maxOccurs="unbounded" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="output_port" type="xs:string" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="instance" maxOccurs="unbounded" minOccurs="1" type="t_inspect_instance"/>
+      <xs:element name="port" type="t_inspect_port" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="execution_tree" type="t_executiontree"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- channel -->
+  <xs:complexType name="t_inspect_channel">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="is_root" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- stackframe -->
+  <xs:complexType name="t_stackframe">
+    <xs:sequence>
+      <xs:element name="dataclass_handle" type="xs:integer"/>
+      <xs:element name="dataclass_name" type="t_class_name"/>
+      <xs:element name="method_name" type="xs:string"/>
+      <xs:element name="local_variables" type="t_var_list"/>
+      <xs:element name="downframe" type="xs:integer"/>
+      <xs:element name="upframe" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- variable context -->
+  <xs:complexType name="t_inspect_variable_context">
+    <xs:sequence>
+      <xs:element name="variable" type="t_variable" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- variable -->
+  <xs:complexType name="t_inspect_variable">
+    <xs:sequence>
+      <xs:element name="handle" type="xs:integer"/>
+      <xs:element name="object" type="xs:integer"/>
+      <xs:element name="type" type="t_class_name"/>
+      <xs:element name="literal" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- data_object -->
+  <xs:complexType name="t_inspect_data">
+    <xs:sequence>
+      <xs:element name="handle" type="xs:integer"/>
+      <xs:element name="type" type="t_class_name"/>
+      <xs:element name="literal" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="variables" type="t_var_list" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- transition -->
+  <xs:complexType name="t_inspect_transition">
+    <xs:sequence>
+      <xs:element name="transition" type="t_transition"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Execution_state_change response -->
+  <xs:complexType name="t_execution_state_change_response">
+    <xs:sequence>
+      <xs:element name="breakpoints" type="t_breakpoint" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="error" type="t_error_info" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="transition" type="t_transition" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="state" type="xs:string"/>
+      <xs:element name="time" type="xs:decimal"/>
+      <xs:element name="minimal_time_step" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Execution engine event Communication event -->
+  <xs:complexType name="t_eengine_event_setup_response">
+    <xs:sequence>
+      <xs:element name="result" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_communication_event">
+    <xs:sequence>
+      <xs:element name="simulation_time" type="xs:decimal"/>
+      <xs:element name="sender" type="t_communcation_event_node"/>
+      <xs:element name="receiver" type="t_communcation_event_node"/>
+      <xs:element name="message" type="t_communication_event_message"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_eengine_event_error_response">
+    <xs:sequence>
+      <xs:element name="error" type="xs:string"/>
+      <xs:element name="stmt_handle" type="xs:int"/>
+      <xs:element name="process_path" type="xs:string"/>
+      <xs:element name="stacktrace" type="t_error_stacktrace"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_communcation_event_node">
+    <xs:sequence>
+      <xs:element name="process_path" type="xs:string"/>
+      <xs:element name="stmt_handle" type="xs:integer"/>
+      <xs:element name="port_name" type="t_port_name"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_error_stacktrace">
+    <xs:sequence>
+      <xs:element name="stackframe" type="t_error_stackframe" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_error_stackframe">
+    <xs:sequence>
+      <xs:element name="method" type="xs:string"/>
+      <xs:element name="stmt_handle" type="xs:string"/>
+      <xs:element name="variable_context_global" type="t_var_list"/>
+      <xs:element name="variable_context_local" type="t_var_list"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:int"/>
+  </xs:complexType>
+  <xs:complexType name="t_communication_event_message">
+    <xs:sequence>
+      <xs:element name="name" type="t_identifier"/>
+      <xs:element name="parameters" type="t_communication_event_parameter"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_communication_event_parameter">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="parameter">
+        <xs:complexType>
+          <xs:attribute name="value" type="xs:string"/>
+          <xs:attribute name="type" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- breakpoint -->
+  <xs:complexType name="t_breakpoint">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="breakpoint" type="t_breakpoint_info"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- breakpoint info -->
+  <xs:complexType name="t_breakpoint_info">
+    <xs:sequence>
+      <xs:element name="name" type="t_identifier"/>
+      <xs:element name="breakpoint_id" type="xs:integer"/>
+      <xs:element name="stmt_handle" type="xs:int"/>
+      <xs:element name="is_active" type="xs:boolean"/>
+      <xs:element name="hit_count" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- error -->
+  <xs:complexType name="t_error_info">
+    <xs:sequence>
+      <xs:element name="stmt_handle" type="xs:int"/>
+      <xs:element name="message" type="xs:string"/>
+      <xs:element name="process_path" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="node" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--Breakpoint responses -->
+  <xs:complexType name="t_create_breakpoint_response">
+    <xs:sequence>
+      <xs:element name="name" type="t_identifier"/>
+      <xs:element name="breakpoint_id" type="xs:integer"/>
+      <!-- automatically generated id to the created breakpoint -->
+      <xs:element name="result" type="xs:string"/>
+      <xs:element name="stmt_handle" type="xs:int"/>
+      <xs:element name="position" type="t_source_position"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_enable_breakpoint_response">
+    <xs:sequence>
+      <xs:element name="result" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_disable_breakpoint_response">
+    <xs:sequence>
+      <xs:element name="result" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_delete_breakpoint_response">
+    <xs:sequence>
+      <xs:element name="result" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_var_list">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="variable" type="t_variable"/>
+    </xs:sequence>
+    <xs:attribute type="xs:integer" name="local" use="optional"/>
+    <xs:attribute type="xs:integer" name="global" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="t_variable">
+    <xs:sequence>
+      <xs:element name="name" type="t_identifier"/>
+      <xs:element name="class" type="t_class_name" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="handle" type="xs:integer"/>
+      <xs:element name="type" type="xs:string"/>
+      <xs:element name="literal" type="xs:string"/>
+      <xs:element name="object" type="xs:integer"/>
+      <xs:element name="variables" type="t_sublist"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_sublist">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="local" type="xs:integer"/>
+        <xs:attribute name="global" type="xs:integer"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="t_method">
+    <xs:sequence>
+      <xs:element name="name" type="t_method_name" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="handle" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_executiontree">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="sequential" type="t_executiontree_statements"/>
+        <xs:element name="method_call" type="t_executiontree_method_call"/>
+        <xs:element name="parallel" type="t_executiontree_statements"/>
+        <xs:element name="select" type="t_executiontree_statements"/>
+        <xs:element name="statement" type="t_executiontree_base"/>
+        <xs:element name="expression" type="t_executiontree_expression"/>
+        <xs:element name="process_method_call" type="t_executiontree_base"/>
+        <xs:element name="message_send" type="t_executiontree_message_send"/>
+        <xs:element name="message_receive" type="t_executiontree_message_receive"/>
+        <xs:element name="guard" type="t_executiontree_base"/>
+        <xs:element name="while" type="t_executiontree_base"/>
+        <xs:element name="abort" type="t_executiontree_base"/>
+        <xs:element name="interrupt" type="t_executiontree_base"/>
+        <xs:element name="skip" type="t_executiontree_base"/>
+        <xs:element name="delay" type="t_executiontree_base"/>
+        <xs:element name="sequence_of_expressions" type="t_executiontree_base"/>
+        <xs:element name="assignment" type="t_executiontree_base"/>
+        <xs:element name="data_method_call" type="t_executiontree_base"/>
+        <xs:element name="constant" type="t_executiontree_base"/>
+        <xs:element name="variable" type="t_executiontree_base"/>
+        <xs:element name="binary_operation" type="t_executiontree_base"/>
+        <xs:element name="unary_operation" type="t_executiontree_base"/>
+        <xs:element name="self" type="t_executiontree_base"/>
+        <xs:element name="nil" type="t_executiontree_base"/>
+        <xs:element name="current_time" type="t_executiontree_base"/>
+        <xs:element name="if" type="t_executiontree_base"/>
+        <xs:element name="new" type="t_executiontree_base"/>
+        <xs:element name="return" type="t_executiontree_base"/>
+        <xs:element name="switch" type="t_executiontree_base"/>
+      </xs:choice>
+      <xs:element name="execution_tree" type="t_executiontree" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="sourcecode_index_start" type="xs:nonNegativeInteger" use="required"/>
+    <xs:attribute name="sourcecode_index_end" type="xs:nonNegativeInteger" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="t_executiontree_statements">
+    <xs:complexContent>
+      <xs:extension base="t_executiontree_base">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="statement" type="xs:integer"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="t_executiontree_method_call">
+    <xs:complexContent>
+      <xs:extension base="t_executiontree_base">
+        <xs:attribute name="name" type="t_identifier" use="required"/>
+        <xs:attribute name="state" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="t_executiontree_message_send">
+    <xs:complexContent>
+      <xs:extension base="t_executiontree_base">
+        <xs:attribute name="port" type="xs:string"/>
+        <xs:attribute name="message" type="xs:string"/>
+        <xs:attribute name="parameter_count" type="xs:integer"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="t_executiontree_message_receive">
+    <xs:complexContent>
+      <xs:extension base="t_executiontree_base">
+        <xs:attribute name="port" type="xs:string"/>
+        <xs:attribute name="message" type="xs:string"/>
+        <xs:attribute name="parameter_count" type="xs:integer"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="t_executiontree_expression">
+    <xs:complexContent>
+      <xs:extension base="t_executiontree_base">
+			</xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="t_executiontree_base">
+    <xs:attribute name="process" type="xs:integer"/>
+    <xs:attribute name="parent" type="xs:integer"/>
+    <xs:attribute name="handle" type="xs:integer"/>
+    <xs:attribute name="global" type="xs:integer"/>
+    <xs:attribute name="local" type="xs:integer"/>
+    <xs:attribute name="stmt_handle" type="xs:int"/>
+  </xs:complexType>
+  <xs:complexType name="t_set_variable_response">
+    <xs:sequence>
+      <xs:element name="result" type="t_set_variable_result"/>
+      <xs:element name="var_handle" type="t_handle_id"/>
+      <xs:element name="list_handle" type="t_handle_id"/>
+      <xs:element name="error" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--
+    Result of position request on a stmt_handle.
+    Returns a range in the source files that can span across file.
+  -->
+  <xs:complexType name="t_get_position_response">
+    <xs:sequence>
+      <xs:element type="xs:int" name="stmt_handle"/>
+      <xs:element type="t_source_position" name="begin"/>
+      <xs:element type="t_source_position" name="end"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- enumeration  of possible result on t_command -->
+  <xs:simpleType name="t_command_result">
+    <xs:restriction base="xs:string">
+      <!-- OK -->
+      <xs:enumeration value="ok"/>
+      <!-- No design was loaded -->
+      <xs:enumeration value="no design loaded"/>
+      <!-- Execution was stopped on breakpoint hit -->
+      <xs:enumeration value="breakpoint hit"/>
+      <!-- Execution was stopped on an error -->
+      <xs:enumeration value="error"/>
+      <!-- Unknown request. -->
+      <xs:enumeration value="unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,24 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Debug Examples Complex
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _-CzqcFpDEeWVIdXlfxjrJw
+Runtime-Version: 2.0.0.201506242315
+Save-Time: 10/15/15 1:26 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_zKkUkFpOEeWVIdXlfxjrJw	// kind: 'test' name: 'ATMSwitch' path: 'ATMSwitch.test'
+_zLEq4FpOEeWVIdXlfxjrJw	// kind: 'test' name: 'Fisher' path: 'Fisher.test'
+_zLm2YFpOEeWVIdXlfxjrJw	// kind: 'test' name: 'MarsRover' path: 'MarsRover.test'
+_zMRkwFpOEeWVIdXlfxjrJw	// kind: 'test' name: 'MPSoc' path: 'MPSoc.test'
+_zMyiIFpOEeWVIdXlfxjrJw	// kind: 'test' name: 'PARProtocol' path: 'PARProtocol.test'
+_zNV7wFpOEeWVIdXlfxjrJw	// kind: 'test' name: 'SoCInterconnects' path: 'SoCInterconnects.test'
+_zN4HQFpOEeWVIdXlfxjrJw	// kind: 'test' name: 'TeenageHomework' path: 'TeenageHomework.test'
+_zOXPcFpOEeWVIdXlfxjrJw	// kind: 'test' name: 'Wireless' path: 'Wireless.test'
+_iMO70HMTEeWfnqGXk_ItXA	// kind: 'test' name: 'TraceExample' path: 'TraceExample.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

@@ -1,0 +1,45 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_NkdtcORDEeSZttsAewanYQ
+Element-Name: DebugView with Vending
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _fuYNAOTvEeS0itSwbx-n-w
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/25/18 3:52 PM
+Tags: Debug, View, Perspective, Switch
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "VendingMachine.poosl" | editor-poosl-debug
+
+with [get-view Debug | get-tree] {
+	expand-all
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 0 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals customer | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getItemCount()" | equals 0 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getText()" | equals vendingMachine | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 2 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals "VendingMachine.poosl [Simulated time: 0]" | verify-true
+    get-property "getItemCount()" | equals 1 | verify-true
+}
+click-terminate
+with [get-view Debug | get-tree] {
+	expand-all
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 0 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals "<terminated> customer" 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getItemCount()" | equals 0 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getText()" | equals "<terminated> vendingMachine" 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 2 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals "<terminated> VendingMachine.poosl" | verify-true
+    get-property "getItemCount()" | equals 1 | verify-true
+}
+click-remove-terminated-launches
+get-view Debug | get-tree | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

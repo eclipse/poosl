@@ -1,0 +1,21 @@
+import "./AircraftFrontServer/AircraftFrontServer.poosl"
+import "./SeatTV/SeatTV.poosl"
+import "./tracing.poosl"
+
+@Source("In-Flight Entertainment System::In-Flight Entertainment System::Logical Architecture::IFE System")
+cluster class IFESystem
+ports
+	InAudio
+	OutAudio
+	InControl
+instances
+	aircraftFrontServer : AircraftFrontServer
+	seatTV : SeatTV
+	tracing : Tracing
+channels
+	{ InAudio, aircraftFrontServer.InAudio }
+	{ aircraftFrontServer.OutAudio, seatTV.InAudio }
+	{ aircraftFrontServer.OutInterruptionCommand, seatTV.InInterruptionCommand }
+	{ OutAudio, seatTV.OutAudio }
+	{ InControl, seatTV.InControl }
+	{ tracing.Input, aircraftFrontServer.Trace, seatTV.Trace }

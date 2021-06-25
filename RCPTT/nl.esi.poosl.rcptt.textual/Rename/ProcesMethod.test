@@ -1,0 +1,60 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _pPT2MHjAEeaJ2L29rpch3A,_8DR5QHjFEeaJ2L29rpch3A
+Element-Name: ProcesMethod
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _QdXsIHj4EeaJ2L29rpch3A
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/13/16 11:58 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "main.poosl" | get-text-viewer] {
+    hover-text 34 20
+    set-caret-pos 34 20
+    hover-text 34 33
+    get-menu "Rename Element" | click
+    key-type BackSpace -times 9
+    type-text cs
+    key-type Enter
+    set-caret-pos 35 6
+    select-range 35 5 35 8
+    hover-text 35 7 -with Left
+    set-caret-pos 35 9
+    select-range 35 5 35 9
+    hover-text 6 18 -with "M2+M3"
+    get-property "getSelectionText()" | equals locs | verify-true
+
+    set-caret-pos 34 13
+    get-menu "Rename Element" | click
+    key-type BackSpace -times 4
+    type-text mainMethod
+    key-type Enter
+    set-caret-pos 34 13   
+    select-range 34 9 34 19
+    get-property "getSelectionText()" | equals mainMethod | verify-true
+
+    set-caret-pos 34 37
+    type-text ";"
+    key-type Enter
+    type-text "parentMethod()()"
+    set-caret-pos 35 15
+
+    get-menu "Rename Element" | click
+    type-text Rename
+    key-type Enter
+    key-type "M1+s"
+}
+get-view "Project Explorer" | get-tree | select "CleanProject/models/parent.poosl" | double-click
+with [get-editor "parent.poosl" | get-text-viewer] {
+
+    select-range 17 5 17 23
+}
+get-editor "parent.poosl" | get-text-viewer | get-property "getSelectionText()" | equals parentRenameMethod 
+    | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

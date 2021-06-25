@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Launch configuration</title>
+	</head>
+	<body>
+		<h1>Launch Configuration</h1>
+		
+		<a id="debugging_multiple"/><h2>Debugging multiple POOSL models simultaneously</h2>
+		<p>
+		It is possible to run multiple POOSL simulations at once. To connect to the simulator, the debugger uses a TCP/IP port. This port is set in the run configuration created when you run or debug a model for the first time. The default TCP/IP port is 10001. In order to debug multiple models at the same time, the used TCP/IP ports should be unique.
+		</p>
+		<p>
+		To change the port, continue reading at "<a href="#change_settings">Change launch configuration settings</a>".
+		</p>
+
+		<a id="stack_size"/><h2>Setting a maximum stack size</h2>
+		<p>
+		When simulating POOSL models with many recursive calls of data methods, it may be necessary to increase the maximum stack size. The default setting is 8 MB.
+		</p>
+		<p>
+		To change the maximum stack size, continue reading at "<a href="#change_settings">Change launch configuration settings</a>".
+		</p>
+
+		<a id="setting_seed"/><h2>Setting a seed for resolving non-determinism</h2>
+		<p>
+		The non-determinism in POOSL models has to be resolved by the simulator. The POOSL IDE offers the option to set the seed that is used by the simulator for resolving non-determinism. There are two options, either manually set a fixed seed, or choose a random seed each time a simulation is started. The user can make an independent choice for every single launch configuration. The default choice is to use the fixed seed 1.
+		</p>
+		<p>
+		The seed that is used for a specific simulation can be seen in the headline of the Console view. In particular this can be useful when using a random seed.
+		</p>
+		<p>
+		To change the seed, continue reading at "<a href="#change_settings">Change launch configuration settings</a>".
+		</p>
+		
+		<a id="setting_external_conf"/><h2>Setting external port configuration</h2>
+		<p>
+		For the simulation of a POOSL model that contains one or more external system ports, the simulator requires an External Port Configuration file.
+		Similar to setting the POOSL model itself, the External Port Configuration file is set by providing a path to the configuration file. 
+		The configuration file has to have the INI format. By default, an INI file in the same directory as the POOSL model will be recognized and set as the External Port Configuration file.		
+		</p>
+		<p>
+		To change the External Port Configuration file, continue reading at "<a href="#change_settings">Change launch configuration settings</a>".
+		For information on how to make use of external ports, continue reading at "<a href="../language/Cosimulation.html">Co-simulation</a>".
+		</p>
+
+		<a id="change_settings"/><h2>Change launch configuration settings</h2>
+		<p>
+		To change the settings for a specific launch configuration follow these steps:
+		<ol>
+			<li>Click on the arrow next to either the Eclipse Run or Debug button.</li>
+			<li>Choose "Run" or "Debug Configurations..." </li>
+			<img src="img/right_click_configuration.png"/>
+			<li>From the Run or Debug configurations, choose your configuration and change the settings.</li>
+			<img src="img/debug_configuration.png"/>
+			<li>Click Apply to save the changes and Run or Debug to start the simulation.</li>
+		</ol>
+		</p>
+		
+		<a id="outside_workspace"/><h2>Run and Debug models located outside the workspace</h2>
+		<p>
+		Models that are outside the workspace can be selected and run or debugged just like models inside the workspace.
+		</p>
+		<img src="img/select_external_model.png"/>
+		<p> 
+		You may choose to this when, for example, a model is too large to be imported into the workspace. 
+		Two features will be disabled during debugging with a model outside the workspace:
+		<ol>
+		  <li>
+		  <b>Automatic selection and highlighting in the editor.</b> When selecting a statement in the  <a href="execution_tree_view.html">PET View</a> no editor will be opened .
+		  </li>
+		  <li>
+		  <b>Opening a Communication Diagram</b>. The <img src="img/icon_open_communication_diagram.png"/><a href="Communication_diagram.html">communication diagram</a> option will be disabled and appear grey in the context menu of the <a href="debug_view.html">Debug View</a>.
+		  </li>
+		</ol>	
+		</p>
+	</body>
+</html>

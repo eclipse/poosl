@@ -1,0 +1,109 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _lVE1EONVEeSZttsAewanYQ,_sw_zwOmaEeS5bKpaEaRSAA
+Element-Name: creating
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _1Qe6IONbEeSZttsAewanYQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 3/1/16 4:26 PM
+Tags: Graphical, Create, Class Diagram
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+	set-caret-pos 29 6
+	key-type F2
+}
+with [get-editor "Classes (producer_consumer.poosl)"] {
+	get-diagram -index 1 | get-edit-part -name "Classes (producer_consumer.poosl)" | mouse-move 801 135 -height 661
+		-width 802
+	with [get-palette] {
+		get-palette-entry "Cluster Class" | mouse-move 12 5 -height 37 -width 125
+		get-palette-entry "Process Class" | mouse-move 65 9 -height 37 -width 125
+		with [get-palette-entry "Data Class"] {
+			mouse-move 63 17 button1 -height 37 -width 125
+			mouse-press 63 17 button1 -height 37 -width 125
+			mouse-release 63 17 button1 524288 -height 37 -width 125
+		}
+	}
+	with [get-diagram -index 1 | get-edit-part -name "Classes (producer_consumer.poosl)"] {
+		mouse-move 791 81 -height 661 -width 802
+		mouse-move 138 228 button1 -height 661 -width 802
+		mouse-press 138 228 button1 -height 661 -width 802
+		mouse-release 138 228 button1 524288 -height 661 -width 802
+	}
+}
+get-window -class NameDialog | get-button OK | click
+with [get-editor "Classes (producer_consumer.poosl)"] {
+	with [get-diagram -index 1 | get-edit-part -name "Classes (producer_consumer.poosl)"] {
+		mouse-move 136 260 -height 661 -width 802
+		mouse-move 798 243 -height 661 -width 802
+	}
+	with [get-palette] {
+		get-palette-entry Variable | mouse-move 25 16 -height 23 -width 125
+		get-palette-entry System | mouse-move 90 12 -height 23 -width 125
+		with [get-palette-entry Inheritance] {
+			mouse-move 48 15 button1 -height 37 -width 125
+			mouse-press 48 15 button1 -height 37 -width 125
+			mouse-release 48 15 button1 524288 -height 37 -width 125
+			mouse-hover 48 15 -height 37 -width 125
+		}
+	}
+	with [get-diagram -index 1 | get-edit-part -name "Classes (producer_consumer.poosl)"] {
+		mouse-move 241 242 -height 661 -width 802
+		with [get-edit-part -name newDataClass | get-edit-part -className DNodeListNameEditPart] {
+			mouse-hover 66 9 -height 16 -width 91
+			mouse-move 66 9 button1 -height 16 -width 91
+			mouse-press 66 9 button1 -height 16 -width 91
+			mouse-release 66 9 button1 524288 -height 16 -width 91
+		}
+		with [get-edit-part -name Packet | get-edit-part -className DNodeListViewNodeListCompartment2EditPart] {
+			get-edit-part -name "getIdentity(): Integer" | mouse-hover 87 6 -height 16 -width 115
+			mouse-move 133 0 button1 -height 66 -width 163
+			mouse-press 133 0 button1 -height 66 -width 163
+		}
+	}
+	with [get-diagram -index 1] {
+		with [get-edit-part -name "Classes (producer_consumer.poosl)"] {
+			get-edit-part -name Packet | get-edit-part -className DNodeListViewNodeListCompartment2EditPart
+				| mouse-release 133 0 button1 524288 -height 66 -width 163
+			mouse-move 61 114 -height 661 -width 802
+			mouse-hover 61 114 -height 661 -width 802
+			mouse-move 105 236 -height 661 -width 802
+			mouse-hover 105 236 -height 661 -width 802
+		}
+		with [get-figure "1/7"] {
+			mouse-hover 0 31 -height 40 -width 100
+			mouse-move 0 31 button1 -height 40 -width 100
+			mouse-press 0 31 button1 -height 40 -width 100
+			mouse-release 0 31 button1 524288 -height 40 -width 100
+			mouse-hover 0 31 -height 40 -width 100
+		}
+		with [get-edit-part -name "Classes (producer_consumer.poosl)"] {
+			mouse-move 140 252 -height 661 -width 802
+			with [get-edit-part -name newDataClass | get-edit-part
+				-className DNodeListViewNodeListCompartment2EditPart] {
+				mouse-move 67 4 button1 -height 12 -width 91
+				mouse-press 67 4 button1 -height 12 -width 91
+				mouse-release 67 4 button1 524288 -height 12 -width 91
+				mouse-hover 67 4 -height 12 -width 91
+				mouse-press 67 4 button1 -height 12 -width 91
+				mouse-release 67 4 button1 524288 -height 12 -width 91
+				mouse-press 67 4 button1 -height 12 -width 91
+				mouse-double-click 67 4 button1 -height 12 -width 91
+				mouse-release 67 4 button1 524288 -height 12 -width 91
+			}
+		}
+	}
+}
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+	get-property "styleAtCaret.startPos.line" | equals 120 | verify-true
+	get-property "styleAtCaret.length" | equals 14 | verify-true
+	get-property "styleAtCaret.text" | equals " newDataClass " | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>nl.esi.poosl.rcptt.runner.textual</artifactId>
+	<groupId>nl.esi.poosl.rcptt</groupId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<packaging>rcpttTest</packaging>
+	
+	<properties>		
+		<!-- We had issues when the target directory was one of the subdiretories
+		     of the checkout poosl git repo and running with Jenkins -->
+		<build-directory>${project.basedir}/../../../rcptt-target/textual</build-directory>
+		
+		<!-- The eclipse runtime we want to test our plugin -->
+		<auth-path>C:\opt\eclipse\eclipse-2020-09\eclipse</auth-path>
+		
+		<!-- The poosl plugin we want to test -->
+		<injection-site>file:/${project.basedir}/../../nl.esi.poosl.updatesite/target/repository/</injection-site>
+	</properties>
+	
+	
+	<build>
+		<directory>${build-directory}</directory>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.rcptt</groupId>
+				<artifactId>rcptt-maven-plugin</artifactId>
+				<version>2.3.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<runner>
+						<version>2.5.0</version>
+						<vmArgs>
+							<vmArg>-Xms512m</vmArg>
+							<vmArg>-Xmx512m</vmArg>
+							<vmArg>-XX:MaxMetaspaceSize=128m</vmArg>
+						</vmArgs>
+					</runner>
+
+					<aut>
+						<explicit>${auth-path}</explicit>
+						<injections>
+							<injection>
+								<site>${injection-site}</site>
+							</injection>
+						</injections>
+					</aut>
+					
+					<testOptions>
+						<testExecTimeout>240</testExecTimeout>
+					</testOptions>
+					
+					<suites>
+						<suite>Editing</suite>
+					</suites>
+					
+					<projects>
+						<project>${project.basedir}/../nl.esi.poosl.rcptt</project>
+						<project>${project.basedir}/../nl.esi.poosl.rcptt.textual</project>
+					</projects>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>rcptt-snapshots</id>
+			<name>RCPTT Maven Snapshots repository</name>
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+			<url>https://repo.eclipse.org/content/repositories/rcptt-snapshots/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>rcptt-releases</id>
+			<name>RCPTT Maven repository</name>
+			<url>https://repo.eclipse.org/content/repositories/rcptt-releases/</url>
+		</pluginRepository>
+	</pluginRepositories>	
+</project>

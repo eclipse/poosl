@@ -1,0 +1,47 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _uIVNsACREeW6OtP6PNhTFg,_0H48YACREeW6OtP6PNhTFg,_9pcyMACREeW6OtP6PNhTFg
+Element-Name: Class Create Cluster
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _MUQ2QACREeW6OtP6PNhTFg
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 3/29/17 12:12 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "Classes (model.poosl)"] {
+    with [get-palette] {       
+        with [get-palette-entry "Cluster Class"] {          
+            mouse-press 105 29 button1 -height 37 -width 125
+            mouse-release 105 29 button1 524288 -height 37 -width 125           
+        }
+    }
+    with [get-diagram -index 1 | get-edit-part -name "Classes (model.poosl)"] {
+        mouse-move 819 156 button1 -height 650 -width 1102
+        mouse-press 819 156 button1 -height 650 -width 1102
+        mouse-release 819 156 button1 524288 -height 650 -width 1102
+    }
+}
+with [get-window -class NameDialog] {
+    get-editbox -after [get-label "Name:"] | set-text newClusterClass
+    get-button OK | click
+}
+with [get-editor "Classes (model.poosl)" | get-diagram -index 1] {
+    with [get-edit-part -name "Classes (model.poosl)"] {       
+        get-edit-part -name newClusterClass | assert-non-empty        
+    }
+    key-type F2
+}
+get-editor "model.poosl" | get-text-viewer | get-property text | contains "cluster class newClusterClass\n"
+    + "ports\n\n"
+    + "instances\n\n"
+    + "channels" | verify-true
+
+    
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+     <groupId>nl.esi.poosl</groupId>
+     <artifactId>nl.esi.poosl.maven</artifactId>
+     <!-- You should change this and the MANIFEST.MF to your versioning scheme -->
+     <version>4.2.2-SNAPSHOT</version>
+     <relativePath>../nl.esi.poosl.maven/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>nl.esi.poosl.updatesite</artifactId>
+  <packaging>eclipse-repository</packaging>
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.eclipse.tycho</groupId>
+      <artifactId>tycho-p2-repository-plugin</artifactId>
+      <version>${tycho-version}</version>
+      <configuration>
+        <includeAllDependencies>false</includeAllDependencies>
+        <createArtifactRepository>true</createArtifactRepository>
+        <compress>true</compress>
+      </configuration>
+    </plugin>
+ </plugins>
+ </build>
+</project> 

@@ -1,0 +1,286 @@
+package nl.esi.poosl.xtext.tests.formatting
+
+import com.google.inject.Inject
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.formatter.FormatterTestHelper
+import org.junit.Test
+import org.junit.runner.RunWith
+import nl.esi.poosl.xtext.tests.PooslInjectorProvider 
+
+@RunWith(XtextRunner)
+@InjectWith(PooslInjectorProvider) 
+class PCFormatTest {
+
+	@Inject extension FormatterTestHelper
+
+	@Test 
+	def void format() {
+
+		assertFormatted[
+			toBeFormatted='''
+			// This example demonstrates most elementary POOSL concepts.
+			// It models a Producer and a Consumer that communicate messages via a Bus.
+			
+			// -----------------------------------------------------------------------------
+			
+			/* Data class for a Packet that stores an identity. */
+			data class Packet extends Object
+			variables
+				/* Identity stored inside a Packet. */
+				ID : Integer
+			methods
+				/* Sets the ID value of the packet. */
+				setIdentity(I : Integer) : Packet
+					ID := I ;
+					return self
+				/* Gets the ID value of the packet. */
+				getIdentity : Integer
+					return ID
+				/* Creates the String value that is shown by the debugging tools for instances of type Packet. */
+				printString : String
+					return("[" + ID printString + "]")
+			
+			// -----------------------------------------------------------------------------
+			
+			/* Process class that produces messages. */
+			process class Producer(
+				/* Time delay in between produced messages */
+				IdleTime : Integer)
+			ports
+				/* This is the only port; it is used for outgoing messages. */
+				Out
+			messages
+				/* Outgoing message */
+				Out!Message(Packet)
+			variables
+				/* Serial number of the produced messages. */
+				ID : Integer
+			init
+				Initialise()()
+			methods
+				/* Initializes the process class. */
+				Initialise()()
+					ID := 1 ;
+					SendPacket()()
+				/* Send a message */
+				SendPacket()() | p : Packet |
+					p := new(Packet) setIdentity(ID) ;
+					Out!Message(p) { ID := ID + 1 } ;
+					Idle()()
+				/* Wait a while before sending the next message */
+				Idle()()
+					delay(IdleTime) ;
+					SendPacket()()
+			
+			// -----------------------------------------------------------------------------
+			
+			/* Process class that transfers messages. */
+			process class Bus
+			ports
+				/* Port that is used for incoming messages. */
+				In,
+				/* Port that is used for outgoing messages. */
+				Out
+			messages
+				/* Incoming message */
+				In?Message(Packet),
+				/* Outgoing message */
+				Out!Message(Packet)
+			variables
+				p : Packet
+			init
+				Transfer()()
+			methods
+				/* Transfer messages */
+				Transfer()()
+					In?Message(p) ;
+					Out!Message(p) ;
+					Transfer()()
+			
+			// -----------------------------------------------------------------------------
+			
+			/* Process class that consumes messages. */
+			process class Consumer
+			ports
+				/* This is the only port; it is used for incoming messages. */
+				In
+			messages
+				/* Incoming message */
+				In?Message(Packet)
+			variables
+				ID : Integer
+			init
+				ReceivePacket()()
+			methods
+				/* Receive messages */
+				ReceivePacket()() | p : Packet |
+					In?Message(p) { ID := p getIdentity } ;
+					ReceivePacket()()
+			
+			// -----------------------------------------------------------------------------
+			
+			/* Cluster class that models an application consisting of a Producer and a Consumer. */
+			cluster class ProducerConsumer(
+				/* Time delay in between produced messages */
+				IdleTime : Integer)
+			ports
+				/* Port that is used for incoming messages. */
+				In,
+				/* Port that is used for outgoing messages. */
+				Out
+			instances
+				/* Producer of messages */
+				Producer : Producer(IdleTime := IdleTime)
+				/* Consumer of messages */
+				Consumer : Consumer()
+			channels
+				{ In, Consumer.In }
+				{ Out, Producer.Out }
+			
+			// -----------------------------------------------------------------------------
+			
+			/* Top-level system specification */ 
+			system
+			instances
+				/* Application that produces and consumes messages */
+				ProducerConsumer : ProducerConsumer(IdleTime := 2)
+				/* Bus that transfers messages */
+				Bus : Bus()
+			channels
+				{ Bus.In, ProducerConsumer.Out }
+				{ Bus.Out, ProducerConsumer.In }'''
+			
+			expectation ='''
+			// This example demonstrates most elementary POOSL concepts.
+			// It models a Producer and a Consumer that communicate messages via a Bus.
+			// -----------------------------------------------------------------------------
+			/* Data class for a Packet that stores an identity. */
+			data class Packet extends Object
+			variables
+				/* Identity stored inside a Packet. */
+				ID : Integer
+			methods
+				/* Sets the ID value of the packet. */
+				setIdentity(I : Integer) : Packet
+					ID := I;
+					return self
+			
+				/* Gets the ID value of the packet. */
+				getIdentity : Integer
+					return ID
+			
+				/* Creates the String value that is shown by the debugging tools for instances of type Packet. */
+				printString : String
+					return ("[" + ID printString + "]")
+			
+			// -----------------------------------------------------------------------------
+			/* Process class that produces messages. */
+			process class Producer(
+					/* Time delay in between produced messages */
+					IdleTime : Integer)
+			ports
+				/* This is the only port; it is used for outgoing messages. */
+				Out
+			messages
+				/* Outgoing message */
+				Out!Message(Packet)
+			variables
+				/* Serial number of the produced messages. */
+				ID : Integer
+			init
+				Initialise()()
+			methods
+				/* Initializes the process class. */
+				Initialise()()
+					ID := 1;
+					SendPacket()()
+			
+				/* Send a message */
+				SendPacket()() | p : Packet |
+					p := new(Packet) setIdentity(ID);
+					Out!Message(p) {ID := ID + 1};
+					Idle()()
+			
+				/* Wait a while before sending the next message */
+				Idle()()
+					delay (IdleTime);
+					SendPacket()()
+			
+			// -----------------------------------------------------------------------------
+			/* Process class that transfers messages. */
+			process class Bus
+			ports
+				/* Port that is used for incoming messages. */
+				In,
+				/* Port that is used for outgoing messages. */
+				Out
+			messages
+				/* Incoming message */
+				In?Message(Packet),
+				/* Outgoing message */
+				Out!Message(Packet)
+			variables
+				p : Packet
+			init
+				Transfer()()
+			methods
+				/* Transfer messages */
+				Transfer()()
+					In?Message(p);
+					Out!Message(p);
+					Transfer()()
+			
+			// -----------------------------------------------------------------------------
+			/* Process class that consumes messages. */
+			process class Consumer
+			ports
+				/* This is the only port; it is used for incoming messages. */
+				In
+			messages
+				/* Incoming message */
+				In?Message(Packet)
+			variables
+				ID : Integer
+			init
+				ReceivePacket()()
+			methods
+				/* Receive messages */
+				ReceivePacket()() | p : Packet |
+					In?Message(p) {ID := p getIdentity};
+					ReceivePacket()()
+			
+			// -----------------------------------------------------------------------------
+			/* Cluster class that models an application consisting of a Producer and a Consumer. */
+			cluster class ProducerConsumer(
+					/* Time delay in between produced messages */
+					IdleTime : Integer)
+			ports
+				/* Port that is used for incoming messages. */
+				In,
+				/* Port that is used for outgoing messages. */
+				Out
+			instances
+				/* Producer of messages */
+				Producer : Producer(IdleTime := IdleTime)
+				/* Consumer of messages */
+				Consumer : Consumer()
+			channels
+				{ In, Consumer.In }
+				{ Out, Producer.Out }
+			
+			// -----------------------------------------------------------------------------
+			/* Top-level system specification */
+			system
+			instances
+				/* Application that produces and consumes messages */
+				ProducerConsumer : ProducerConsumer(IdleTime := 2)
+				/* Bus that transfers messages */
+				Bus : Bus()
+			channels
+				{ Bus.In, ProducerConsumer.Out }
+				{ Bus.Out, ProducerConsumer.In }'''			
+		]
+	}
+
+}

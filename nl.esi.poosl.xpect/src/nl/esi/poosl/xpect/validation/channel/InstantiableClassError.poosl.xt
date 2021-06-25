@@ -1,0 +1,40 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.channel.PooslValidationChannelTest END_SETUP */
+
+system
+instances
+// XPECT warnings --> "Unconnected port 'p' hierarchically connects only process port ins[inClass].p" at "ins : inClass()"
+ins : inClass()
+out : outClass()
+channels
+/* XPECT issues ---
+	 "Instance 'in' is not declared." at "in"
+	 "Internal channel hierarchically connects only process port out[outClass].p" at "{in.p , out.p }"
+	 "Port 'p' is not declared." at "p" 
+--- */
+{in.p , out.p }       
+
+process class inClass() 
+ports
+p
+messages
+p?p()
+variables 
+
+init
+someMethod()()
+methods
+someMethod()() | |
+p?p()
+
+process class outClass()
+ports
+p
+messages
+p!p()
+variables
+
+init
+someMethod()()
+methods
+someMethod()() | |
+p!p()

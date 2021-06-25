@@ -1,0 +1,58 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+	
+	process class returnClas()
+	ports		
+	messages		
+	variables		
+	init
+		someMethod()()
+	methods	
+		someMethod()() | |			
+		// return only allowed in Data Classes
+		// XPECT errors --> "Expression "return" is only allowed in data classes" at "return 4"
+		return 4 
+
+		data class returnDataClass extends Object
+variables
+methods
+ 	someMethod : Integer
+ 	// WarnLocationOfReturn,Warning when return is not at the end of the method,
+ 	// XPECT warnings --> ""return" is not at the end of the method body" at "return 4"
+	 	return 4; 	 
+	 			
+		while true do
+		// WarnLocationOfReturn, Warning when return is not at the end in while loop
+		// XPECT warnings --> ""return" is not at the end of the method body" at "return 4"
+ 		return 4
+		od; 
+		
+		if true then
+			// WarnLocationOfReturn, Warning when return is not at the end in if then 
+ 			// XPECT warnings --> ""return" is not at the end of the method body" at "return 3"
+	 		return 3
+			else
+			// WarnLocationOfReturn, Warning when return is not at the end if else  
+ 			// XPECT warnings --> ""return" is not at the end of the method body" at "return 4"
+	 		return 4
+		fi;
+		return 4	
+		
+data class returnInReturnDataClass extends Object
+variables
+methods
+ 	otherMethod : Integer 	
+	 	return if true then
+	 			// warnLocationOfReturn, return in return expression, if then loop	 			
+	 			// XPECT warnings --> ""return" is nested inside another "return"" at "return 4"
+	 			return 4
+	 			else
+	 			// warnLocationOfReturn, return in return expression, if else loop
+	 			// XPECT warnings --> ""return" is nested inside another "return"" at "return 4"
+	 			return 4
+	 		fi  	
+	 someMethod : Integer 	
+	 	return while true do
+	 	// warnLocationOfReturn, return in return expression, while loop
+	 	// XPECT warnings --> ""return" is nested inside another "return"" at "return 4"
+			return 4
+			od

@@ -1,0 +1,39 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihIHEMT_EeWbAfcxAheu3Q,_1XTYUMT-EeWbAfcxAheu3Q,_LivfwMT_EeWbAfcxAheu3Q,_8wj4gPa-Eeeuat46uHh0bg
+Element-Name: Existing diagram, cluster
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _YNSYYMUCEeWbAfcxAheu3Q
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 3:47 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer" 
+    | select "producer_consumer.poosl [Simulated time: 0]/system/ProducerConsumer" | get-menu "Open Communication Diagram" | click
+with [get-editor "<COMM>Cluster ProducerConsumer (producer_consumer.poosl) [/system/ProducerConsumer]" | get-diagram -index 1 | get-edit-part 
+    -name "<COMM>Cluster ProducerConsumer (producer_consumer.poosl) [/system/ProducerConsumer]"] {
+    mouse-move 287 374 -height 437 -width 685
+    with [get-edit-part -name ProducerConsumer | get-edit-part 
+        -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+        mouse-move 308 200 -height 349 -width 481
+        mouse-move 444 45 -height 349 -width 481
+    }
+}
+with [get-editor "<COMM>Cluster ProducerConsumer (producer_consumer.poosl) [/system/ProducerConsumer]" | get-diagram -index 1 | get-edit-part 
+    -name "<COMM>Cluster ProducerConsumer (producer_consumer.poosl) [/system/ProducerConsumer]" | get-edit-part -name ProducerConsumer 
+    | get-edit-part -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+    get-edit-part -name "Producer : Producer" | get-edit-part -className SquareEditPart | get-property backgroundColor 
+        | equals "#EDC97A" | verify-true
+    get-edit-part -name "Consumer : Consumer" | get-edit-part -className SquareEditPart | get-property backgroundColor 
+        | equals "#EDC97A" | verify-true
+    get-edit-part -name "extraCluster : ExtraCluster" | get-edit-part -className SquareEditPart 
+        | get-property backgroundColor | equals "#EDC97A" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

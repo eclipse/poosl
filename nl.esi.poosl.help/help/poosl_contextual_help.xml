@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="help_editor" title="About Poosl Editor">
+      <description>The POOSL editor provides you with POOSL specific text editing support. This includes syntax highlighting, hovers, navigation, validation and content assist (&lt;CTRL&gt;+&lt;SPACE&gt;). Press F2 or use the context menu to switch between the textual and graphical editors.</description>
+      <topic href="html/creating_models/creating_models.html" label="Creating models"/>
+      <topic href="html/creating_models/opening_model.html" label="Opening models"/>
+      <topic href="html/creating_models/editing_models.html" label="Editing models"/>
+      <topic href="html/language/BasicClasses.html" label="Basic classes"/>
+   </context>
+   <context id="help_stacktrace_variables" title="About StackTrace Variables">
+      <description>This POOSL view shows the values of all parameters and variables that are accessible at the stackframe that is selected in the StackTrace View.</description>
+      <topic href="html/simulating_models/stacktrace_variables_view.html" label="Stack Variables View"/>
+   </context>
+   <context id="help_stacktrace" title="About StackTrace">
+      <description>This POOSL view shows detailed information of the stacktrace and the error.</description>
+      <topic href="html/simulating_models/stacktrace_view.html" label="Stacktrace View"/>
+   </context>
+   <context id="help_pet" title="About Execution Tree">
+      <description>This POOSL view shows the Execution Tree of the process selected in the Debug view. It is only available if the corresponding debug session is suspended. Black nodes are currently blocked, blue nodes can perform a time step, and red nodes can perform any other step.</description>
+      <topic href="html/simulating_models/execution_tree_view.html" label="Execution Tree view"/>
+   </context>
+   <context id="help_sequence_diagram" title="About Sequence Diagram">
+      <description>This POOSL view shows the synchronous messages that have been communicated between processes. At the left side, also the simulated time is shown. The context is determined by the debug session that is selected in the Debug view. The displayed messages and processes are influenced by local settings and global preferences.</description>
+      <topic href="html/simulating_models/sequence_diagram_view.html" label="Sequence Diagram view"/>
+   </context>
+   <context id="help_debug" title="About Debug">
+      <description>This POOSL view shows the running debug sessions in combination with their instances. For the suspended debug sessions, it also shows the simulated time and the processes that can perform a step (blue denotes a time step, red denotes any other step). Right click a process for the options to perform a process step or open a process window. Right click a cluster for the option to open its communication diagram.</description>
+      <topic href="html/simulating_models/debug_view.html" label="Debug view"/>
+      <topic href="html/simulating_models/process_window.html" label="Process Window"/>
+      <topic href="html/simulating_models/communication_diagram.html" label="Communication Diagram"/>
+   </context>
+   <context id="help_variables" title="About Variables">
+      <description>This POOSL view shows the values of all parameters and variables that are accessible at the node that is selected in the Execution Tree view.</description>
+      <topic href="html/simulating_models/variables_view.html" label="Variables view"/>
+   </context>
+   <context id="help_debug_configuration" title="About POOSL Simulation">
+      <description>This dialog allows you to select the simulated model and some settings of the simulator. Non-determinism in POOSL models is resolved by the simulator based on a seed; either a fixed seed can be selected, or a seed is randomly computed when starting the simulation. To debug multiple POOSL simulations at the same time, the used server port must be different.</description>
+      <topic href="html/simulating_models/launch_configuration.html" label="Launch configuration"/>
+   </context>
+   <context id="help_preferences_sequence_diagram" title="About Sequence Diagram">
+      <description>This dialog allows you to set the maximum number of message communications that is stored per debug session. This influences the Sequence Diagram view.</description>
+      <topic href="html/simulating_models/sequence_diagram_view.html" label="Sequence Diagram view"/>
+      <topic href="html/preferences/preferences.html" label="Preferences"/>
+   </context>
+   <context id="help_preferences_simulator" title="About Simulator">
+      <description>This dialog allows you to set the amount of logging that is performed for the communication between the POOSL IDE and the simulator. This is only useful when experiencing technical problems.</description>
+      <topic href="html/preferences/preferences.html" label="Preferences"/>
+   </context>
+   <context id="help_preferences_basic_classes" title="About Basic Classes">
+      <description>This dialog allows you to select a POOSL file that contains custom basic classes. It is recommended that you use the default basic classes.</description>
+      <topic href="html/preferences/preferences.html" label="Preferences"/>
+   </context>
+   <context id="help_preferences_graphical_behavior" title="About Graphical Behavior">
+      <description>This dialog allows you to set the behavior when double clicking a &quot;.poosl&quot; file in the project explorer. It also allows  you to set the behavior when performing a double click within the graphical editor.</description>
+      <topic href="html/preferences/preferences.html" label="Preferences"/>
+      <topic href="html/creating_models/opening_model.html" label="Opening models"/>
+   </context>
+   <context id="help_properties_includepaths" title="Poosl Include Paths">
+      <description>This view shows the Poosl include paths.</description>
+      <topic href="html/creating_models/change_propagation.html" label="Change Propagation"/>
+      <topic href="html/language/Imports.html" label="Poosl Imports"/>
+   </context>
+</contexts>

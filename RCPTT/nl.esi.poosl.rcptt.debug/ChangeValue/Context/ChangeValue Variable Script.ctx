@@ -1,0 +1,48 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: ChangeValue Variable Script
+Element-Type: context
+Element-Version: 2.0
+Id: _gp5b4LSSEeapedkHH5Hcfw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/21/18 11:27 AM
+Tags: Variable, Script
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Using the Variable Workspace and Workbench, it will perform 2 executions to get to the method of the processclass that should contain all kinds of variables.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+wait 50
+get-editor "Variables.poosl" | get-editbox | get-menu "Debug As/.* POOSL Simulation" | click
+wait 50
+get-view Debug | get-tree | select "Variables.poosl \\[Simulated time: 0\\]/system/someInstance"
+with [get-view "Execution Tree" | get-tree] {
+	select "\\/system\\/someInstance/initialize\\(\\)\\(\\)" | key-type Enter
+	click -default
+	select "\\/system\\/someInstance/someMethod\\(nil\\)\\(childVar\\)" | key-type Enter
+	click -default
+	select "\\/system\\/someInstance/someMethod\\(nil\\)\\(childVar\\)/sequential/methodInt := childInt \\+ methodIn"
+}
+
+with [get-view Variables | get-tree] {
+	get-items
+	get-property "getItems().TreeItem[0].getText()" | equals parentInt | verify-true
+	get-property "getItems().TreeItem[1].getText()" | equals parentVar | verify-true
+	get-property "getItems().TreeItem[2].getText()" | equals childInt | verify-true
+	get-property "getItems().TreeItem[3].getText()" | equals customData | verify-true
+	get-property "getItems().TreeItem[4].getText()" | equals c | verify-true
+	get-property "getItems().TreeItem[5].getText()" | equals s | verify-true
+	get-property "getItems().TreeItem[6].getText()" | equals r | verify-true
+	get-property "getItems().TreeItem[7].getText()" | equals b | verify-true
+	get-property "getItems().TreeItem[8].getText()" | equals i | verify-true
+	get-property "getItems().TreeItem[9].getText()" | equals childVar | verify-true
+	get-property "getItems().TreeItem[10].getText()" | equals custData | verify-true
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

@@ -1,0 +1,159 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>nl.esi.poosl</groupId>
+		<artifactId>nl.esi.poosl.maven</artifactId>
+		<version>4.2.2-SNAPSHOT</version>
+		<relativePath>../nl.esi.poosl.maven/pom.xml</relativePath>
+	</parent>
+	<artifactId>nl.esi.poosl.xpect</artifactId>
+	<packaging>eclipse-plugin</packaging>
+
+	<properties>
+		<memory-settings>-Xmx1G</memory-settings>
+		<target-platform>eclipse_4_4_2-xtext_2_9_2</target-platform>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- configure a target platform to make sure all dependencies are 
+							available -->
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>target-platform-configuration</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+
+						<target>
+							<artifact>
+								<groupId>nl.esi.poosl</groupId>
+								<artifactId>nl.esi.poosl.target.${rotalumis-type}</artifactId>
+								<version>${project.version}</version>
+							</artifact>
+						</target>
+						<environments>
+							<environment>
+								<os>linux</os>
+								<ws>gtk</ws>
+								<arch>x86</arch>
+							</environment>
+							<environment>
+								<os>linux</os>
+								<ws>gtk</ws>
+								<arch>x86_64</arch>
+							</environment>
+							<environment>
+								<os>win32</os>
+								<ws>win32</ws>
+								<arch>x86</arch>
+							</environment>
+							<environment>
+								<os>win32</os>
+								<ws>win32</ws>
+								<arch>x86_64</arch>
+							</environment>
+						</environments>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-surefire-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<systemProperties>
+							<xpectTestTitlePostfix>.${target-platform}</xpectTestTitlePostfix>
+							<xpectTestTitleShowEnvironment>true</xpectTestTitleShowEnvironment>
+						</systemProperties>
+						<reportsDirectory>${project.build.directory}/surefire-reports-plugin</reportsDirectory>
+						<useUIHarness>true</useUIHarness>
+						<useUIThread>false</useUIThread>
+						<argLine>${memory-settings}</argLine>
+						<dependencies>
+							<dependency>
+								<type>eclipse-plugin</type>
+								<artifactId>org.eclipse.xtext.logging</artifactId>
+							</dependency>
+						</dependencies>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<!-- make sure surefire finds our test classes even though they are in 
+			the "src" folder -->
+		<testOutputDirectory>target/classes</testOutputDirectory>
+
+		<plugins>
+
+			<!-- use tycho -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<!-- configure a target platform to make sure all dependencies are available -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+			</plugin>
+
+			<!-- Compile Xtend-Classes -->
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Use maven surefire (not tycho surefire!) to run tests as plain JUnit 
+				tests (not Plug-In JUnit tests!) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.16</version>
+				<configuration>
+					<includes>
+						<include>**/*AllPooslXpectTests.java</include>
+					</includes>
+					<systemProperties>
+						<xpectTestTitlePostfix>.${target-platform}</xpectTestTitlePostfix>
+						<xpectTestTitleShowEnvironment>true</xpectTestTitleShowEnvironment>
+					</systemProperties>
+					<reportsDirectory>${project.build.directory}/surefire-reports-standalone</reportsDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.16</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,36 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+// Error when Boolean is extended
+// XPECT errors --> "Data class Boolean cannot be extended as super class" at "Boolean"
+data class bClass extends Boolean
+variables	
+methods
+
+// Error when Char is extended
+// XPECT errors --> "Data class Char cannot be extended as super class" at "Char"
+data class cClass extends Char
+variables	
+methods
+	
+// Error when Integer is extended
+// XPECT errors --> "Data class Integer cannot be extended as super class" at "Integer"
+data class iClass extends Integer
+variables	
+methods
+	
+// Error when Nil is extended
+// XPECT errors --> "Data class Nil cannot be extended as super class" at "Nil"
+data class nClass extends Nil
+variables	
+methods
+	
+// Error when Real is extended
+// XPECT errors --> "Data class Real cannot be extended as super class" at "Real" 
+data class rClass extends Real
+variables	
+methods 
+	
+
+	
+
+

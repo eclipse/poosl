@@ -1,0 +1,88 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+data class someClass extends Object
+variables
+
+methods
+	//XPECT noIssues 
+	@Test
+	someMethod() : Object | |
+		return nil
+
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"Returnn\""
+	@Test("Returnn")
+	someMethod1() : Object | |
+		return nil
+
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"Return\""
+	@Test("Return")
+	someMethod2() : Object | |
+		return nil
+
+	//XPECT noIssues
+	@Test()
+	someMethod3() : Object | |
+		return nil
+		
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"\""
+	@Test("")
+	someMethod4() : Object | |
+		return nil	
+
+data class someClass2 extends Object
+variables
+
+methods
+	//XPECT noIssues 
+	@Test
+	someMethod() : Object | |
+		return nil
+
+	//XPECT noIssues 
+	@Error("Returnn")
+	someMethod1() : Object | |
+		return nil
+
+	//XPECT noIssues 
+	@Error("Return")
+	someMethod2() : Object | |
+		return nil
+
+	//XPECT noIssues
+	@Error()
+	someMethod3() : Object | |
+		return nil
+		
+	//XPECT noIssues
+	@Error("")
+	someMethod4() : Object | |
+		return nil
+		
+data class someClass3 extends Object
+variables
+
+methods
+	//XPECT noIssues 
+	@Skip
+	someMethod() : Object | |
+		return nil
+
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"Returnn\""
+	@Skip("Returnn")
+	someMethod1() : Object | |
+		return nil
+
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"Return\""
+	@Skip("Return")
+	someMethod2() : Object | |
+		return nil
+
+	//XPECT noIssues
+	@Skip()
+	someMethod3() : Object | |
+		return nil
+		
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"\""
+	@Skip("")
+	someMethod4() : Object | |
+		return nil

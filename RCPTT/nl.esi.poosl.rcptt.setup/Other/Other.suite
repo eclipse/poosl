@@ -1,0 +1,19 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Other
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _zD6Z4OgGEeSUFO5-NwwB0Q
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 5/21/15 9:55 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_scgS8OgEEeSUFO5-NwwB0Q	// kind: 'test' name: 'Right Click Menu Editor ' path: 'Right Click Menu Editor .test'
+_9pvJEOgGEeSUFO5-NwwB0Q	// kind: 'test' name: 'Right Click Menu File Project Explorer' path: 'Right Click Menu File Project Explorer.test'
+_UG068P7hEeSf_PFiy2GHdA	// kind: 'test' name: 'Legacy Import' path: 'Legacy Import.test'
+_xq_LUP8AEeSf_PFiy2GHdA	// kind: 'test' name: 'File Import' path: 'File Import.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

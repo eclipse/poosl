@@ -1,0 +1,16 @@
+import "./AircraftInterface.poosl"
+import "./ApplicationsServer.poosl"
+
+cluster class AircraftFrontServer
+ports
+	InAudio
+	OutAudio
+	OutInterruptionCommand
+instances
+	aircraftInterface : AircraftInterface()
+	applicationsServer : ApplicationsServer()
+channels
+	{ InAudio, aircraftInterface.InAudio }
+	{ OutAudio, applicationsServer.OutAudio }
+	{ OutInterruptionCommand, applicationsServer.OutInterruptionCommand }
+	{ aircraftInterface.OutAudio, applicationsServer.InAudio }

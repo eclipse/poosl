@@ -1,0 +1,37 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Cluster Instance Not Exist
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _7Zic0OQ8EeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 1/10/18 5:25 PM
+Tags: Cluster, Instance, QuickFix
+Testcase-Type: ecl
+Verifications: _BnK14FP2Eea5R70fIjiNMA
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer| type-text "cluster class someClass() \n"
+	+ "ports\n"
+    + "instances\n"
+    + "someInstance: someOtherClass()\n"
+    + "channels" 
+
+get-editor "model.poosl" | get-text-viewer | get-property "markers['4'][0].text" 
+    | equals "InstantiableClass 'someOtherClass' is not declared." | verify-true
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 4 31
+    key-type "M1+1"
+    key-type Down
+    key-type Enter
+}
+//get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
+//    | select "Create process class 'someOtherClass'" | click -default
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

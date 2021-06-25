@@ -1,0 +1,99 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+	
+	process class receiveMessageClass()
+	ports
+		In
+	messages
+	In?integer(Integer)		
+	variables		
+	init
+		someMethod()()
+	methods
+		someMethod()() ||		
+			otherMethod()(); 
+			secondMethod()(); 		  
+			thirdMethod()();
+			fourthMethod()(); 
+			// Error for not existing receive statement
+			// XPECT errors --> "No receive message integer of port In with 0 variables" at "In?integer()" 
+			In?integer()
+		otherMethod()() | i	: Integer |
+			// No Error for correct receive statement
+			// XPECT noIssues
+			In?integer(i)
+		secondMethod()() | i : String |
+		// Warning wrong type in receive statement
+		// XPECT warnings --> "Variable of type String is incompatible with declaration type Integer" at "i"
+			In?integer(i)
+		thirdMethod()()| i : Integer | 			
+			// No Error for correct post receive statement
+			// XPECT noIssues
+			In?integer(i) {i+1}
+		fourthMethod()()| i : Integer | 
+			// Warning at incorrect post receive statement			
+			// XPECT warnings --> "Expression of type String is not compatible with variable of type Integer" at "i := "text""
+			In?integer(i) {i := "text"}
+			
+	
+	process class sendMessageClass()
+	ports
+		Out
+	messages
+	Out!integer(Integer)		
+	variables		
+	init
+		someMethod()()
+	methods
+		someMethod()() ||		
+			otherMethod()(); 
+			secondMethod()(); 		
+			thirdMethod()(); 
+			fourthMethod()();
+			// Error for not existing receive statement			
+			// XPECT errors --> "No send message integer of port Out with 0 arguments" at "Out!integer()"
+			Out!integer()
+		otherMethod()() | i	: Integer |
+			// No Error for correct send statement
+			// XPECT noIssues
+			Out!integer(i)
+		secondMethod()() | i : String |
+		// Warning wrong type in send statement
+		// XPECT warnings --> "Argument of type String is incompatible with declaration type Integer" at "i"
+			Out!integer(i)
+		thirdMethod()()| i : Integer | 			
+			// No Error for correct post send statement
+			// XPECT noIssues
+			Out!integer(i) {i+1}
+		fourthMethod()()| i : Integer | 
+			// Warning at incorrect post send statement			
+			// XPECT warnings --> "Expression of type String is not compatible with variable of type Integer" at "i := "text""
+			Out!integer(i) {i := "text"}
+			
+			
+			
+	process class OperatingSystem()
+ports
+	Processor,
+	Task  	
+messages 
+	Processor!Use(Boolean),
+	// Warning 
+	// XPECT warnings --> "No receive statement for this message" at "Task?Use(String)"  
+		Task?Use(String)    
+		Task!Use(String)   
+variables	   
+init
+	Initialise()()  
+methods
+	Initialise()() | InUse : Boolean |
+	// No warning for checktypesSendMessage after fix not getting both receive and send message for the check 
+	// XPECT noIssues   
+		Processor!Use(InUse);  
+		// Warning 
+		// XPECT errors --> "No receive message Use of port Processor with 1 variables" at "Processor?Use(InUse)"
+			Processor?Use(InUse);
+			// Warning 
+		// XPECT warnings --> "Argument of type Boolean is incompatible with declaration type String" at "InUse"
+			Task!Use(InUse)            
+	

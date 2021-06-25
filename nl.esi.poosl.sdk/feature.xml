@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="nl.esi.poosl.sdk"
+      label="POOSL IDE"
+      version="4.2.2.qualifier"
+      provider-name="TNO ESI">
+
+   <description>
+      This plug-in contains a full POOSL IDE with validation, quickfixes and debug possibilities.
+   </description>
+
+   <copyright>
+      Copyright (c) 2019, ESI (TNO). All rights
+reserved.
+   </copyright>
+
+   <license url="">
+      Copyright (c) 2019, ESI (TNO). All rights reserved.
+ 
+Use of this software in binary form, without modification and without
+redistribution, is permitted provided that the following conditions are met:
+ 
+1. All advertising materials mentioning features or use of this software
+    must display the following acknowledgement: This product includes
+    software developed by ESI (TNO).
+ 
+2. Neither the name of ESI (TNO) nor the
+    names of its contributors may be used to endorse or promote products
+    derived from this software without specific prior written permission.
+ 
+THIS SOFTWARE IS PROVIDED BY ESI (TNO) &apos;&apos;AS IS&apos;&apos;
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ESI (TNO)
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+This product includes software developed by the Electronic Systems Group at
+the Department of Electrical Engineering of Eindhoven University of Technology.
+   </license>
+
+   <url>
+      <discovery label="Rotalumis release" url="http://www.es.ele.tue.nl/rotalumis/repository/integration/"/>
+   </url>
+
+   <requires>
+      <import plugin="nl.esi.poosl.xtext"/>
+      <import plugin="org.eclipse.ui.workbench"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.jobs"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="nl.esi.poosl.model"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.expressions"/>
+      <import plugin="nl.esi.poosl.generatedxmlclasses"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.ide" version="3.9.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources" version="3.8.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.registry"/>
+      <import plugin="org.apache.commons.lang"/>
+      <import plugin="nl.esi.poosl.rotalumisclient"/>
+      <import plugin="org.eclipse.xtext.ui"/>
+      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.ui.shared"/>
+      <import plugin="org.eclipse.xtext.builder"/>
+      <import plugin="org.antlr.runtime"/>
+      <import plugin="org.eclipse.xtext.common.types.ui"/>
+      <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
+      <import plugin="org.eclipse.compare"/>
+      <import plugin="nl.esi.poosl.model.edit"/>
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.apache.log4j"/>
+      <import plugin="org.apache.commons.logging"/>
+      <import plugin="org.eclipse.xtext.util"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.xtext.common.types"/>
+      <import plugin="org.eclipse.xtext.xbase.lib"/>
+      <import plugin="org.eclipse.team.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.ui.console"/>
+      <import plugin="org.eclipse.swt"/>
+      <import plugin="org.junit"/>
+      <import plugin="nl.esi.poosl.xtext.ui"/>
+      <import plugin="org.eclipse.ui.navigator"/>
+      <import plugin="org.eclipse.ui.navigator.resources"/>
+      <import plugin="org.eclipse.xtext" version="2.12.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.core.runtime" version="3.10.0" match="greaterOrEqual"/>
+      <import plugin="nl.esi.poosl.xtext.util"/>
+      <import plugin="org.eclipse.xtext.ide"/>
+      <import plugin="org.eclipse.xtext.xbase.ide"/>
+      <import plugin="org.eclipse.xtext.generator"/>
+      <import plugin="nl.tue.rotalumis.executables" version="4.1.0.201911181023" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.e4.ui.workbench" version="1.3.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.e4.ui.model.workbench" version="1.1.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.e4.ui.di" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.forms" version="3.6.200" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.e4.core.di" version="1.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.platform" version="4.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.edit"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.eclipse.emf.edit.ui"/>
+      <import plugin="org.eclipse.emf.common.ui"/>
+      <import plugin="org.eclipse.emf.transaction"/>
+      <import plugin="org.eclipse.sirius" version="3.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.common.acceleo.mtl" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.common.xtext" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.diagram" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.diagram.ui" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.diagram.ui.ext" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.ui" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.ui.ext" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.diagram.formatdata" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.ext.base" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.ext.draw2d" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.sirius.ecore.extender" version="4.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide.application"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.8.0" match="greaterOrEqual"/>
+      <import plugin="javax.annotation" version="1.3.5" match="greaterOrEqual"/>
+      <import plugin="javax.xml"/>
+   </requires>
+
+   <plugin
+         id="nl.esi.poosl.transformations"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.pooslproject"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.xtext.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.generatedxmlclasses"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.xtext"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.xtext.ide"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.xtext.util"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.rotalumisclient"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.help"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="nl.esi.poosl.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.model.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="nl.esi.poosl.sirius"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.persistence.moxy"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.xml.bind-api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.persistence.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.persistence.asm"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

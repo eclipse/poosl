@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="nl.esi.poosl.pooslproject"
+            name="POOSL">
+      </category>
+      <wizard
+            category="nl.esi.poosl.pooslproject"
+            class="nl.esi.poosl.pooslproject.PooslNewProjectWizard"
+            finalPerspective="nl.esi.poosl.normalperspective"
+            icon="icons/add_poosl_project.gif"
+            id="nl.esi.poosl.pooslproject.projectwizard"
+            name="POOSL Project"
+            preferredPerspectives="nl.esi.poosl.normalperspective"
+            project="true">
+      </wizard>
+      <wizard
+            category="nl.esi.poosl.pooslproject"
+            class="nl.esi.poosl.pooslproject.PooslNewModelWizard"
+            finalPerspective="nl.esi.poosl.normalperspective"
+            icon="icons/add_poosl_file.gif"
+            id="nl.esi.poosl.pooslproject.filewizard"
+            name="POOSL Model"
+            preferredPerspectives="nl.esi.poosl.normalperspective"
+            project="false">
+      </wizard>
+       <wizard
+            category="nl.esi.poosl.pooslproject"
+            class="nl.esi.poosl.pooslproject.PooslNewModelWithSystemWizard"
+            finalPerspective="nl.esi.poosl.normalperspective"
+            icon="icons/add_poosl_file.gif"
+            id="nl.esi.poosl.pooslproject.filewithsystemwizard"
+            name="POOSL Model with System"
+            preferredPerspectives="nl.esi.poosl.normalperspective"
+            project="false">
+      </wizard>
+   </extension>
+   <!-- This extension can be used to add a Poosl project icon to the projects in the resource viewer.
+   However this is not yet supported by xtext because they use a image decorator instead of the projectnatureimages extension point.
+	<extension
+       id="nl.esi.poosl.rotalumisclient.pooslnature"
+       name="POOSL Nature"
+       point="org.eclipse.core.resources.natures">
+    <runtime>
+       <run
+             class="nl.esi.poosl.rotalumisclient.PooslNature">
+       </run>
+    </runtime>
+ </extension>
+ <extension
+       point="org.eclipse.ui.ide.projectNatureImages">
+    <image
+          icon="icons/poosl_project.gif"
+          id="nl.esi.poosl.rotalumisclient.pooslnatureimage"
+          natureId="nl.esi.poosl.rotalumisclient.pooslnature">
+    </image>
+ </extension> -->
+</plugin>

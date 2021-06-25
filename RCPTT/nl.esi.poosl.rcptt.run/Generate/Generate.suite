@@ -1,0 +1,22 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Generate
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _hz248O5JEeSm7umqZJi-ag
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 11/30/15 3:17 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_FIEikO5MEeSm7umqZJi-ag	// kind: 'test' name: 'Generate Documentation Empty' path: 'Generate Documentation Empty.test'
+_tMXXYO5LEeSm7umqZJi-ag	// kind: 'test' name: 'Generate Documentation PC' path: 'Generate Documentation PC.test'
+_E4aEAO5OEeSm7umqZJi-ag	// kind: 'test' name: 'Generate Rotalumis XML Empty' path: 'Generate Rotalumis XML Empty.test'
+_X7ciAO5MEeSm7umqZJi-ag	// kind: 'test' name: 'Generate Rotalumis XML PC' path: 'Generate Rotalumis XML PC.test'
+_hwGBAO5OEeSm7umqZJi-ag	// kind: 'test' name: 'Generate SheSim XML PC' path: 'Generate SheSim XML PC.test'
+_THCzEJdqEeW9e7WhQQEB6g	// kind: 'test' name: 'Generate Rotalumis Cyclic XML Empty' path: 'Generate Rotalumis Cyclic XML Empty.test'
+_VNilgJdqEeW9e7WhQQEB6g	// kind: 'test' name: 'Generate SheSim Cyclic XML PC' path: 'Generate SheSim Cyclic XML PC.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

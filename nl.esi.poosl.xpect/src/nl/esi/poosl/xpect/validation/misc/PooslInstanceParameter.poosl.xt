@@ -1,0 +1,36 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+process class SuperClass(p:Object)
+ports
+
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p
+		
+
+process class ChildClass extends SuperClass
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+cluster class somesClass()
+ports
+	
+instances
+//XPECT noIssues
+	instance: ChildClass(p := nil)
+channels

@@ -1,0 +1,29 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_3u4PMONbEeSZttsAewanYQ,_DS-RMOgBEeSUFO5-NwwB0Q
+Element-Name: Right Click Menu Editor 
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _scgS8OgEEeSUFO5-NwwB0Q
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 8/10/17 1:29 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+with [get-editor "model.poosl" | get-text-viewer] {
+	get-menu "Debug As" | assert-non-empty
+	get-menu "Run As" | assert-non-empty
+	get-menu "Debug As/.* POOSL Simulation" | assert-non-empty
+	get-menu "Run As/.* POOSL Simulation" | assert-non-empty
+	get-menu "Generate Documentation" | assert-non-empty
+	get-menu "Generate Legacy Rotalumis XML" | assert-non-empty
+	get-menu "Generate Legacy SHESim XML" | assert-non-empty
+	get-menu "Open Composite Structure Diagram" | assert-non-empty
+	get-menu "Open Class Diagram" | assert-non-empty
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

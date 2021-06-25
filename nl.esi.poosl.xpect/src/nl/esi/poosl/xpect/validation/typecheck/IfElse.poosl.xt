@@ -1,0 +1,111 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+data class ifElseClass
+variables	
+methods	
+
+// Data return type if, return always wrong type in if statement	
+// XPECT warnings --> "Method body of type String is not compatible with method return type Integer" at "Integer"
+returnIfElse () : Integer
+	if true then
+
+		return "if"
+	else
+		return "if" 
+	fi 	 
+// XPECT noIssues	 
+	returnif () : Integer
+		if true then
+			return 1
+		else
+			return "else"
+		fi 
+// XPECT noIssues	
+	returnElse () : Integer
+		if true then
+			return "else"
+		else
+			return 1
+		fi 
+// XPECT noIssues			
+	returnIfStatment() : Integer
+	return if true then
+		"ds" 
+	fi
+	
+	
+	
+process class ifClass()
+ports	
+messages	
+variables	
+init
+	initMethod()()
+methods
+	initMethod()()
+		someMethod1()();
+		someMethod2()();
+		someMethod3()();
+		someMethod4()();
+		someMethod5()();
+		someMethod6()()
+	someMethod1()() | x: String |
+		if true then
+			skip;
+			x := if true then
+					"String"
+				else
+					"String"
+				fi
+			fi
+	someMethod2()() | x: String |
+		if true then
+			skip;
+			x := if true then
+					"String"
+				else
+					5
+				fi
+			fi
+	someMethod3()() | x: String |
+		if true then
+			skip;
+			x := if true then
+					5
+				else
+					"String"
+				fi
+			fi
+	someMethod4()() | x: String |
+		if true then
+			skip;
+			// If expressie incompatible
+			// XPECT warnings --> "Expression of type Integer is not compatible with variable of type String" at "x := if true then	5 else 5 fi"
+			x := if true then
+					5
+				else
+					5
+				fi
+			fi
+	someMethod5()() | x: Object|
+		if true then
+			skip;
+			
+			x := if true then
+					"String"
+				else
+					"String"
+				fi
+			fi
+	someMethod6()() | x: Object|
+	// If expressie compatible
+	// XPECT noIssues
+		if true then
+			skip;
+			
+			x := if true then
+					5
+				else
+					5
+				fi
+			fi	

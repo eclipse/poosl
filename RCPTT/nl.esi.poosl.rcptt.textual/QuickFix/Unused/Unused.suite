@@ -1,0 +1,24 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Unused
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _8ScDwEmrEea18PiEOcOxrA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/14/16 2:06 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_6JnlwON7EeSZttsAewanYQ	// kind: 'test' name: 'Data Class Double' path: 'Data Class Double.test'
+_JCVucOQ1EeSZttsAewanYQ	// kind: 'test' name: 'Data method duplicate' path: 'Data method duplicate.test'
+_qepXION6EeSZttsAewanYQ	// kind: 'test' name: 'Data Variable Not Used' path: 'Data Variable Not Used.test'
+_g34KwOQ2EeSZttsAewanYQ	// kind: 'test' name: 'Instantiable Double Name' path: 'Instantiable Double Name.test'
+_n2gpQOQUEeSZttsAewanYQ	// kind: 'test' name: 'Process Instance Variable Not Used' path: 'Process Instance Variable Not Used.test'
+_Dv6OsOQ5EeSZttsAewanYQ	// kind: 'test' name: 'Process Method Unused' path: 'Process Method Unused.test'
+_hCH2cOQ3EeSZttsAewanYQ	// kind: 'test' name: 'Cluster Channels Unused' path: 'Cluster Channels Unused.test'
+_sUpMgEm6Eea18PiEOcOxrA	// kind: 'test' name: 'Cluster Class Double' path: 'Cluster Class Double.test'
+_452O8Em5Eea18PiEOcOxrA	// kind: 'test' name: 'Process Class Double' path: 'Process Class Double.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

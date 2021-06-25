@@ -1,0 +1,63 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Cluster Channels Merge instance
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _FJ2B8EmvEea18PiEOcOxrA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/14/16 1:50 PM
+Tags: Cluster, Channel, QuickFix
+Testcase-Type: ecl
+Verifications: _OrnTIEmvEea18PiEOcOxrA
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer| type-text "cluster class someClass() \n"
+	+ "ports\n"
+    + "In\n"
+    + "Out\n"
+    + "instances\n"
+    + "someInstance: someOtherClass()\n"
+    + "otherInstance: otherClass()\n"
+    + "channels\n"
+    + "{ In, someInstance.In }\n"
+    + "{ otherInstance.Out, someInstance.In }\n\n"
+    
+ 
+ get-editor "model.poosl" | get-text-viewer| type-text "\tprocess class someOtherClass\n"
+    + "ports\n"
+    + "In\n"
+    + "messages\n"
+    + "In?Message(Integer)\n"
+    + "variables\n"
+    + "i : Integer\n"
+    + "init\n"
+    + "someMethod()()\n"
+    + "methods\n"
+    + "someMethod()()\n"
+    + "In?Message(i)\n\n"
+    
+ get-editor "model.poosl" | get-text-viewer| type-text "\tprocess class otherClass\n"
+    + "ports\n"
+    + "Out\n"
+    + "messages\n"
+    + "Out!Message(Integer)\n"
+    + "variables\n"
+    + "init\n"
+    + "someMethod()()\n"
+    + "methods\n"
+    + "someMethod()()\n"
+    + "Out!Message(1)"
+
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 10 27
+    key-type "M1+1"
+}
+get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
+    | select "Merge all channels that are connected to this instance port" | click -default
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

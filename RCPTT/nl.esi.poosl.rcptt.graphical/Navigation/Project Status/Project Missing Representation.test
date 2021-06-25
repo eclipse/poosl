@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _myxUwNovEeWr3a7wWrF4WQ,_hmR-AOgJEeSUFO5-NwwB0Q
+Element-Name: Project Missing Representation
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _ul4rwNovEeWr3a7wWrF4WQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 3/4/16 12:42 PM
+Tags: Graphical, Class Diagram
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+wait 50
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    set-caret-pos 1 1
+    key-type F2
+}
+with [get-tab-folder -index 2] {
+    get-property tabCount | equals 2 | verify-true       
+}
+
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

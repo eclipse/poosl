@@ -1,0 +1,26 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Debug
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _uPiOoONVEeSZttsAewanYQ
+Manually-Ordered: true
+Runtime-Version: 2.4.0.201808022310
+Save-Time: 1/29/19 1:46 PM
+Tags: Debug, Test Suite
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_ZD8y4OkBEeSkTJCY7hn1FA	// kind: 'suite' name: 'Breakpoint' path: 'Breakpoint/Breakpoint.suite'
+_ofGjID9BEeWqI5T62C2nUQ	// kind: 'suite' name: 'Debug Other' path: 'Other/Debug Other.suite'
+_qA0OsOUGEeSZacs1KESTcQ	// kind: 'suite' name: 'DebugView' path: 'DebugView/DebugView.suite'
+_oj-dQOUGEeSZacs1KESTcQ	// kind: 'suite' name: 'PETView' path: 'PETView/PETView.suite'
+_cxOfYD9EEeWqI5T62C2nUQ	// kind: 'suite' name: 'StackFrameView' path: 'StackFrameView/StackFrameView.suite'
+_WEgmADBtEeW29Z9sVV_ISA	// kind: 'suite' name: 'Thread Window' path: 'Thread Window/Thread Window.suite'
+_Zgcm4OgrEeSUFO5-NwwB0Q	// kind: 'suite' name: 'VariableView' path: 'VariableView/VariableView.suite'
+_AKqzoLSWEeapedkHH5Hcfw	// kind: 'suite' name: 'Change Value' path: 'ChangeValue/Change Value.suite'
+_5mS78CMJEemTAfKT-AIu5w	// kind: 'suite' name: 'External' path: 'External/External.suite'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

@@ -1,0 +1,45 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g,_VBDK0OdkEeS02qlAIvBOkg
+Element-Name: PrintString Error
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _xyMKAGsxEeWQOZzWhIAWWw
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 3/1/16 4:55 PM
+Tags: Debug, RC, Step, Printstring
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+// change printstring to return(\"[\" + ID printString error(\"ohoh\")  + \"]\")"
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+  set-caret-pos 1 1
+    key-type Down -times 20   
+	key-type "M2+ARROW_RIGHT" -times 36
+    key-type Del
+    type-text "return(\"[\" + ID printString error(\"ohoh\")  + \"]\")"
+    key-type "M1+s"
+    get-menu "Debug As/.* POOSL Simulation" | click
+}
+
+// Send 5 messages
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]"
+with [get-button "Communication Step (F7)"] {
+    click
+    click
+    click
+    click
+    click
+}
+
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 4\\]/Bus"
+with [get-view Variables | get-tree] {
+    get-item p | get-property "values['Name']" | equals p | verify-true
+    get-item p | get-property "values['Value']" | equals "Error executing: Packet::printString (id=38)" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

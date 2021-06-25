@@ -1,0 +1,23 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_mzBKsOmgEeS5bKpaEaRSAA
+Element-Name: Palette 9 tools
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _AwCYQOmfEeS5bKpaEaRSAA
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 6/29/15 2:50 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "Classes (producer_consumer.poosl)" | get-palette | get-palette-entry Nodes | get-figure "1/0/0" 
+    | get-property childrenCount | equals 4 | verify-true
+ get-editor "Classes (producer_consumer.poosl)" | get-palette | get-palette-entry Attributes | get-figure "1/0/0" 
+    | get-property childrenCount | equals 3 | verify-true
+  get-editor "Classes (producer_consumer.poosl)" | get-palette | get-palette-entry Relations | get-figure "1/0/0" 
+    | get-property childrenCount | equals 2 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

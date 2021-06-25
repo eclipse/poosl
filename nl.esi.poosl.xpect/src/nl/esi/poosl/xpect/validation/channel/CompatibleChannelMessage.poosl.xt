@@ -1,0 +1,47 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.channel.PooslValidationChannelTest END_SETUP */
+
+cluster class someClass()
+ports
+	
+instances
+	someInstance1: someClass1()
+	someInstance2: someClass2()
+channels
+	//receiving message parameter type is a subtype
+	//XPECT noIssues
+	{someInstance1.p, someInstance2.p}
+	//receiving message parameter type is a subtype
+	//XPECT noIssues
+	{someInstance1.q, someInstance2.q}
+
+process class someClass1()
+ports
+	p,q
+messages
+	p!m(Integer)
+	q?m(Object)
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | v:Object |
+		p!m(3);
+		q?m(v)
+
+process class someClass2()
+ports
+	p,q
+messages
+	p?m(Object)
+	q!m(Integer)
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | v:Object|
+		p?m(v);
+		q!m(3)
+	
+

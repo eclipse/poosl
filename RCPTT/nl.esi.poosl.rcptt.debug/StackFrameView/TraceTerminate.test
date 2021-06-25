@@ -1,0 +1,33 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_0xOUsD9EEeWqI5T62C2nUQ,_r5J-sN-HEeSGR4qac-ot4g,_BwlHUB7pEeWW8tYfmHmITA,__IJ8MD9YEeWqI5T62C2nUQ
+Element-Name: TraceTerminate
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _2HAZ4D9aEeWqI5T62C2nUQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/27/16 11:45 AM
+Tags: StrackTrace Error
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Clear all fields when model is terminated
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+click-terminate
+with [get-view StackTrace] {
+    get-editbox -after [get-label "Error Message:"] | get-property text | equals "" | verify-false
+    get-list | get-property "getItems().length" | equals 0 | verify-false
+}
+get-view StackTrace | get-list | select "1 .*"
+with [get-view "StackTrace Variables"] {
+    get-tree | get-property itemCount | equals 0 | verify-false    
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

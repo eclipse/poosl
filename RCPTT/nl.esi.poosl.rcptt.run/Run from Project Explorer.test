@@ -1,0 +1,31 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_ldH90ONVEeSZttsAewanYQ
+Element-Name: Run from Project Explorer
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _-QrD8P1UEeSY2Ma_ry9BIw
+Runtime-Version: 2.0.0.201506242315
+Save-Time: 6/29/15 5:55 PM
+Tags: Run Project Explorer
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Run a model from right click on a file in the project explorer
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree 
+    | select "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    | get-menu "Run As/.* POOSL Simulation" | click
+get-view Console | get-button Terminate | click
+wait 20
+get-view Console | get-text-viewer | get-property text 
+    | equals "" | verify-false
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

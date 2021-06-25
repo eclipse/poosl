@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+         point="org.eclipse.ui.importWizards">
+		<category
+            id="nl.esi.poosl.xml.importWizards.importXML"
+            name="POOSL">
+		</category>
+		<wizard
+            category="nl.esi.poosl.xml.importWizards.importXML"
+            class="nl.esi.poosl.legacysupport.xml2xtext.ImportWizard"
+            id="nl.esi.poosl.xml.importWizards.ImportWizard"
+            name="Import Legacy SHESim XML as Poosl">
+			<description>
+				Import a legacy XML file from the local file system into the workspace and convert it to a .poosl file
+			</description>
+		</wizard>
+	</extension>
+	<extension
+         point="org.eclipse.ui.menus">
+        <menuContribution
+			allPopups="true"
+			locationURI="popup:#TextEditorContext?endof=additions">
+			<command
+				commandId="nl.esi.poosl.commands.generatexml"
+				id="generatexml"
+				label="Generate Legacy Rotalumis XML"
+				style="push">
+				<visibleWhen checkEnabled="false">
+					<with
+						variable="activeEditorInput">
+						<reference
+							definitionId="nl.esi.poosl.xtext.ui.visiblewhenpoosl">
+						</reference>
+					</with>
+				</visibleWhen>
+			</command>
+		</menuContribution>		
+		<menuContribution
+          allPopups="true"
+          locationURI="popup:#TextEditorContext?after=generatexml">
+			<command
+				 commandId="nl.esi.poosl.commands.generatexml"
+				 id="generatexml"
+				 label="Generate Legacy SHESim XML"
+				 style="push">
+				<visibleWhen checkEnabled="false">
+					<with variable="activeEditorInput">
+						<reference
+							definitionId="nl.esi.poosl.xtext.ui.visiblewhenpoosl">
+						</reference>
+					</with>
+				</visibleWhen>
+				<parameter
+					  name="nl.esi.poosl.commands.generatexml.shesim"
+					  value="true">
+				</parameter>
+		   </command>
+   		</menuContribution>
+   		<menuContribution
+			allPopups="true"
+			locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?endof=additions">
+			<command
+				commandId="nl.esi.poosl.commands.generatexml"
+				label="Generate Legacy Rotalumis XML"
+				style="push">
+				<visibleWhen checkEnabled="false">
+					<with
+						variable="selection">
+						<iterate
+							ifEmpty="false"
+							operator="or">
+							<reference
+								definitionId="nl.esi.poosl.xtext.ui.visiblewhenpoosl">
+							</reference>
+						</iterate>	                
+					</with>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution
+			  allPopups="true"
+			  locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?endof=additions">
+			<command
+				 commandId="nl.esi.poosl.commands.generatexml"
+				 label="Generate Legacy SHESim XML"
+				 style="push">
+				<visibleWhen checkEnabled="false">
+					<with
+						variable="selection">
+						<iterate
+							ifEmpty="false"
+							operator="or">
+							<reference
+								definitionId="nl.esi.poosl.xtext.ui.visiblewhenpoosl">
+							</reference>
+						</iterate>	                
+					</with>
+				</visibleWhen>
+				<parameter
+					name="nl.esi.poosl.commands.generatexml.shesim"
+					value="true">
+				</parameter>
+			</command>
+		</menuContribution>		
+	</extension>
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler
+			class="nl.esi.poosl.legacysupport.poosl2xml.CommandHandler"
+			commandId="nl.esi.poosl.commands.generatexml">
+		</handler>    
+	</extension>
+	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			categoryId="nl.esi.poosl.legacy"
+			id="nl.esi.poosl.commands.generatexml"
+			name="Generate Legacy Rotalumis XML">
+			<commandParameter
+				id="nl.esi.poosl.commands.generatexml.shesim"
+				name="SHESim xml"
+				optional="true">
+			</commandParameter>
+		</command>
+		<category
+			id="nl.esi.poosl.legacy"
+			name="POOSL Legacy">
+		</category>   
+	</extension>
+</plugin>

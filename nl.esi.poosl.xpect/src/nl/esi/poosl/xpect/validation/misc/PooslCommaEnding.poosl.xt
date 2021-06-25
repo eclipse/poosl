@@ -1,0 +1,39 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+system
+instances
+	s : someClass()
+	s2 : someClass()
+channels
+	{s.p, s2.p}	
+	
+
+process class someClass()
+ports
+	//XPECT noIssues
+	p,
+messages
+	//XPECT noIssues
+	p!p(),
+	//XPECT noIssues
+	p?p(),
+variables
+	//XPECT noIssues
+	var : Integer,
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		var;
+		p!p();
+		p?p()
+	
+	
+	
+data class someClass extends Object
+variables
+	//XPECT noIssues
+	var : Integer,	
+methods
+ someMethod() : Object | |
+ 	return var

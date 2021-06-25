@@ -1,0 +1,51 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g,_ZB3rEOkIEeSkTJCY7hn1FA
+Element-Name: Disable Breakpoint while debugging
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _YivEsP1kEeSY2Ma_ry9BIw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 8/10/17 3:41 PM
+Tags: Breakpoint Debug disable
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+disable breakpoint while simulation has already started. simulation should not stop at the breakpoint
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// time = is time in ms the simulation should wait to check if the breakpoint is hit
+let [val time 50] {
+
+	get-editor "producer_consumer.poosl" | get-editbox | get-menu "Debug As/.* POOSL Simulation" | click
+	get-view Debug | get-tree | select "producer_consumer.poosl .*"
+	click-record-communications
+	with [get-view Breakpoints | get-tree] {
+		get-items
+		get-item "produce.*" | uncheck
+	}
+
+	click-resume
+	wait $time
+
+	// PET view shows "No information.."
+	get-view "Execution Tree" | get-tree | get-property "getItems().TreeItem[0].getText()" | equals "No information t" +
+		"o display." | verify-true
+
+	// Debug view selection still selects root
+	get-view Debug | get-tree | get-property "selection[0].path[0]" | equals "producer_consumer.poosl" | verify-true
+
+	// Resume button can not be selected while simulation is still running
+	get-button "Resume (F8)" | get-property enablement | equals false | verify-true
+	click-terminate
+}
+
+click-remove-terminated-launches
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

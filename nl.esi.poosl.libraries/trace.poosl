@@ -1,0 +1,1702 @@
+/* This library provides an interface to the TRACE tool available through http://trace.esi.nl It allows for configurable
+ *    visualization of Gantt charts and design spaces. The library consists of two classes: a (container) data class and a proces class that
+ *    allow for interfacing with TRACE through files (Gantt chart visualization and design space visualization) or
+ *    sockets for Gantt chart visualization (visualization of dependencies through a socket is not yet supported by TRACE).
+ * 
+ *    Notice that TRACE requires to first provide a configuration before providing Gantt chart or design space visualization
+ *    data, which is checked by the methods / interface provided by this library. Furthermore, this library allows to provide
+ *    Gantt chart data following two patterns: using the original TRACE approach of providing start and end times for claims
+ *    at once or providing start and end times for claims separately. An overview of the provided classes is given below.
+ * 
+ *    Data class Trace provides the following methods to configure TRACE through a file:
+ *    - time(Shift: Integer, Unit: String, DisplayFormat: String) -> Configures the time axis settings
+ *    - attribute(Name: String, Describing, Labeling, Filtering, Grouping, Coloring: Boolean) -> Defines an attribute
+ *    - context(Name: String, Attributes: Set) -> Defines a context for a set of attributes
+ *    - quantity(Name, Unit: String) -> Defines a quantity
+ *    - color(Name, Color: String) -> Defines a color value
+ *    - filter(Attribute: String, Values: Set) -> Defines a filter for the provided values
+ *    - writeConfiguration(FileName: String) -> Writes the configuration to file
+ *    - writeConfiguration(HostName : String, PortNumber : Integer) -> Writes the configuration to socket
+ * 
+ *    Data class Trace provides the following methods for visualizing design-spaces through a file:
+ *    - writeQuantity(FileName: String, ReferencedTraces: Set) -> Writes the quantity file pre-amble (with optional references to a (set of) trace file(s))
+ *    - result(Quantity: String, Value: Object) -> Writes the value for a quantity to the quantity file
+ * 
+ *    Data class Trace provides the following methods for visualizing Gantt charts through a file:
+ *    - writeTrace(FileName: String) -> Write the trace file pre-amble
+ *    - writeTrace() -> Write the trace pre-amble to socket
+ *    - fullResource(Name: String, Capacity: Object, Unit: String, Context: String, AttributeValues: Map) -> Constructs the string corresponding to a full claim resource (This string can be written to the trace file by using method write)
+ *    - amountResource(Name: String, Capacity: Object, Unit: String, Context: String, AttributeValues: Map) -> Constructs the string corresponding to a claim amount resource (This string can be written to the trace file by using method write)
+ *    - offsetResource(Name: String, Capacity: Object, Unit: String, Context: String, AttributeValues: Map, Offset: Object) -> Constructs the string corresponding to a claim amount with offset resource (This string can be written to the trace file by using method write)
+ *    - fullClaim(Resource: String, StartTime, StopTime: Real, Context: String, AttributeValues: Map) -> Constructs the string corresponding to a claim on a full claim resource (This string can be written to the trace file by using method write). Note the Claim ID is the first number in the returned String Out obtainable through: Out splitOn('\t') at(2) toInteger
+ *    - amountClaim(Resource: String, StartTime, StopTime: Real, Context: String, AttributeValues: Map, Amount: Object) -> Constructs the string corresponding to a claim on a claim amount resource (This string can be written to the trace file by using method write). Note the Claim ID is the first number in the returned String Out obtainable through: Out splitOn('\t') at(2) toInteger
+ *    - offsetClaimStart(Resource: String, StartTime: Real, Context: String, AttributeValues: Map, Amount: Object, Offset: Object) -> Constructs the string corresponding to a claim on a claim amount with offset resource (This string can be written to the trace file by using method write). Note the Claim ID is the first number in the returned String Out obtainable through: Out splitOn('\t') at(2) toInteger
+ *    - fullClaimStart(Resource: String, StartTime: Real, Context: String, AttributeValues: Map) -> Registers a claim on a full claim resource (Returns the claim ID)
+ *    - fullClaimStop(ClaimID: Integer, StopTime: Real) -> Constructs the string corresponding to a registered claim on a full claim resource (This string can be written to the trace file by using method write)
+ *    - amountClaimStart(Resource: String, StartTime: Real, Context: String, AttributeValues: Map, Amount: Object) -> Registers a claim on a claim amount resource (Returns the claim ID)
+ *    - amountClaimStop(ClaimID: Integer, StopTime: Real) -> Constructs the string corresponding to a registered claim on a claim amount resource (This string can be written to the trace file by using method write)
+ *    - offsetClaimStart(Resource: String, StartTime: Real, Context: String, AttributeValues: Map, Amount: Object, Offset: Object) -> Registers a claim on a claim amount with offset resource (Returns the claim ID)
+ *    - offsetClaimStop(ClaimID: Integer, StopTime: Real) -> Constructs the string corresponding to a registered claim on a claim amount with offset resource (This string can be written to the trace file by using method write)
+ *    - dependency(FromClaim, ToClaim: Integer, Type: Integer, Context: String, AttributeValues: Map) -> Constructs the string corresponding to a dependency between claims (This string can be written to the trace file by using method write). The dependency types are 0) end of FromClaim to beginning of ToClaim, 1) end of FromClaim to end of ToClaim, 2) beginning of FromClaim to beginning of ToClaim, 3) beginning of FromClaim to end of ToClaim
+ * 
+ *    Process class TraceProcess allows to interface with TRACE through a file (both process parameters should be nil) or a socket (process parameters should be set)
+ * 
+ *    Process class TraceProcess provides the following messages to configure TRACE:
+ *    - Trace?Time(Shift, Unit, DisplayFormat) -> Configures the time axis settings
+ *    - Trace?Attribute(Name, Describing, Labeling, Filtering, Grouping, Coloring) -> Defines an attribute
+ *    - Trace?Context(Name, Attributes) -> Defines a context for a set of attributes
+ *    - Trace?Quantity(Name, Unit) -> Defines a quantity
+ *    - Trace?Color(Name, Color) -> Defines a color value
+ *    - Trace?Filter(Attribute, Values) -> Defines a filter for the provided values
+ *    - Trace?WriteConfiguration(FileName) -> Writes the configuration to file (only if both process parameter values are nil)
+ *    - Trace?WriteConfiguration -> Streams the configuration through the socket (only if the process parameter values are set)
+ * 
+ *    Process class TraceProcess provides the following methods for visualizing design-spaces through a file (only if both process parameter values are nil):
+ *    - Trace?WriteQuantity(FileName, ReferencedTraces) -> Writes the quantity file pre-amble (with optional references to a (set of) trace file(s))
+ *    - Trace?Result(Quantity, Value) -> Writes the value for a quantity to the quantity file
+ * 
+ *    Process class TraceProcess provides the following methods for visualizing Gantt charts:
+ *    - Trace?WriteTrace(FileName) -> Write the trace file pre-amble to file (only if both process parameter values are nil)
+ *    - Trace?WriteTrace -> Streams the trace pre-amble through the socket (only if the process parameter values are set)
+ *    - Trace?FullResource(Name, Capacity, Unit, Context, AttributeValues) -> Defines a full claim resource (and writes it to file / streams it through the socket)
+ *    - Trace?AmountResource(Name, Capacity, Unit, Context, AttributeValues) -> Defines a claim amount resource (and writes it to file / streams it through the socket)
+ *    - Trace?OffsetResource(Name, Capacity, Unit, Context, AttributeValues, Offset) -> Defines a claim amount with offset resource (and writes it to file / streams it through the socket)
+ *    - Trace?FullClaim(Resource, StartTime, StopTime, Context, AttributeValues) -> Adds a claim on a full claim resource (and writes it to file / streams it through the socket). Note the Claim ID is optionally available through message Trace!ClaimID(ClaimID)
+ *    - Trace?AmountClaim(Resource, StartTime, StopTime, Context, AttributeValues, Amount) -> Adds a claim on a claim amount resource (and writes it to file / streams it through the socket). Note the Claim ID is optionally available through message Trace!ClaimID(ClaimID)
+ *    - Trace?OffsetClaim(Resource, StartTime, StopTime, Context, AttributeValues, Amount, Offset) -> Adds a claim on a claim amount with offset resource (and writes it to file / streams it through the socket). Note the Claim ID is optionally available through message Trace!ClaimID(ClaimID)
+ *    - Trace!ClaimID(ClaimID) -> Optionally returns the claim ID in response to Trace?FullClaim, Trace?AmountClaim, and Trace?OffsetClaim and returns the claim ID in response to Trace?FullClaimStart, Trace?AmountClaimStart, and Trace?OffsetClaimStart
+ *    - Trace?FullClaimStart(Resource, StartTime, Context, AttributeValues) -> Registers a claim on a full claim resource. The Claim ID is returned through message Trace!ClaimID(ClaimID)
+ *    - Trace?FullClaimStop(ClaimID, StopTime) -> Adds a registered claim on a full claim resource (and writes it to file / streams it through the socket)
+ *    - Trace?AmountClaimStart(Resource, StartTime, Context, AttributeValues, Amount) -> Registers a claim on a claim amount resource. The Claim ID is returned through message Trace!ClaimID(ClaimID)
+ *    - Trace?AmountClaimStop(ClaimID, StopTime) -> Adds a registered claim on a claim amount resource (and writes it to file / streams it through the socket)
+ *    - Trace?OffsetClaimStart(Resource, StartTime, Context, AttributeValues, Amount, Offset) -> Registers a claim on a full claim amount with offset resource. The Claim ID is returned through message Trace!ClaimID(ClaimID)
+ *    - Trace?OffsetClaimStop(ClaimID, StopTime) -> Adds a registered claim on a claim amount with offset resource (and writes it to file / streams it through the socket)
+ *    - Trace?Dependency(FromClaim, ToClaim, Type, Context, AttributeValues) -> Adds a dependency (and writes it to file / streams it through the socket). Note that visualization of dependencies is not yet supported in case of using a socket
+ * 
+ */
+import "structures.poosl"
+
+/* This process class allows for a streaming Socket connection to TRACE or the use of files. Using the streaming approach requires to specify a PortNumber (POOSL Model acts as Server) or both a HostName and PortNumber (POOSL Model acts as Client). In case both are nil, files are to be used  */
+process class TraceProcess(HostName : String, PortNumber : Integer)
+ports
+	Trace
+messages
+	Trace?Time(Integer, String, String),
+	Trace?Attribute(String, Boolean, Boolean, Boolean, Boolean, Boolean),
+	Trace?Context(String, Set),
+	Trace?Quantity(String, String),
+	Trace?Color(String, String),
+	Trace?Filter(String, Set),
+	Trace?WriteConfiguration(String),
+	Trace?WriteConfiguration,
+	Trace?WriteQuantity(String, Set),
+	Trace?Result(String, Object),
+	Trace?WriteTrace(String),
+	Trace?WriteTrace,
+	Trace?FullResource(String, Object, String, String, Map),
+	Trace?AmountResource(String, Object, String, String, Map),
+	Trace?OffsetResource(String, Object, String, String, Map, Object),
+	Trace?FullClaim(String, Real, Real, String, Map),
+	Trace?AmountClaim(String, Real, Real, String, Map, Object),
+	Trace?OffsetClaim(String, Real, Real, String, Map, Object, Object),
+	Trace?FullClaimStart(String, Real, String, Map),
+	Trace?AmountClaimStart(String, Real, String, Map, Object),
+	Trace?OffsetClaimStart(String, Real, String, Map, Object, Object),
+	Trace?FullClaimStop(Integer, Real),
+	Trace?AmountClaimStop(Integer, Real),
+	Trace?OffsetClaimStop(Integer, Real),
+	Trace?Dependency(Integer, Integer, Integer, String, Map),
+	Trace!Claim(Integer)
+variables
+	Streaming : Boolean
+	Trace : Trace
+init
+	Init()()
+methods
+	Init()()
+		Streaming := (PortNumber != nil) & (PortNumber isOfType("Integer"));
+		Trace := new(Trace);
+		Configure()()
+
+	Configure()() | Shift : Integer, Unit, DisplayFormat, Name, Color, Attribute, FileName : String, Configured,
+			Describing, Labeling, Filtering, Grouping, Coloring : Boolean, Attributes, Values : Set |
+		Configured := false;
+		sel
+			Trace?Time(Shift, Unit, DisplayFormat) {Trace time(Shift, Unit, DisplayFormat)} // Change the time formatting
+		or
+			Trace?Attribute(Name, Describing, Labeling, Filtering, Grouping, Coloring) {Trace attribute(Name,
+				Describing, Labeling, Filtering, Grouping, Coloring)} // Define an attribute
+		or
+			Trace?Context(Name, Attributes) {Trace context(Name, Attributes)} // Define a context
+		or
+			Trace?Quantity(Name, Unit) {Trace quantity(Name, Unit)} // Define a quantity
+		or
+			Trace?Color(Name, Color) {Trace color(Name, Color)} // Define a color
+		or
+			Trace?Filter(Attribute, Values) {Trace filter(Attribute, Values)} // Define a filter
+		or
+			[!Streaming] Trace?WriteConfiguration(FileName) {
+				Trace writeConfiguration(FileName);
+				Configured := true
+			} // Write configuration to file
+		or
+			[Streaming] Trace?WriteConfiguration; // Stream configuration through socket
+			Trace writeConfiguration(HostName, PortNumber);
+			Configured := true
+		les;
+		if !Configured then
+			Configure()()
+		else
+			par
+				Trace()()
+			and
+				Quantity()()
+			rap
+		fi
+
+	Quantity()() | FileName, Quantity : String, Value : Object, ReferencedTraces : Set |
+		sel
+			Trace?WriteQuantity(FileName, ReferencedTraces) {Trace writeQuantity(FileName, ReferencedTraces)} // Write preamble to quantity file
+		or
+			Trace?Result(Quantity, Value) {Trace result(Quantity, Value)} // Add result for quantity to file
+		les;
+		Quantity()()
+
+	Trace()() | FileName : String |
+		if !Streaming then
+			Trace?WriteTrace(FileName) {Trace writeTrace(FileName)} // Write trace preamble to file
+		else
+			Trace?WriteTrace; // Stream trace preamble through socket
+			Trace writeSocket(Trace getTraceString())
+		fi;
+		par
+			Resource()()
+		and
+			Claim()()
+		and
+			ClaimStop()()
+		and
+			Dependency()()
+		rap
+
+	Resource()() | Name, Unit, Context, Resource : String, Capacity, Offset : Object, AttributeValues : Map |
+		sel
+			Trace?FullResource(Name, Capacity, Unit, Context, AttributeValues) {Resource := Trace fullResource(Name,
+				Capacity, Unit, Context, AttributeValues)} // Define a full claim resource
+		or
+			Trace?AmountResource(Name, Capacity, Unit, Context, AttributeValues) {Resource := Trace amountResource(Name,
+				Capacity, Unit, Context, AttributeValues)} // Define an amount claim resource
+		or
+			Trace?OffsetResource(Name, Capacity, Unit, Context, AttributeValues, Offset) {Resource := Trace
+				offsetResource(Name, Capacity, Unit, Context, AttributeValues, Offset)} // Define an amount with offset claim resource
+		les;
+		Resource()()
+
+	Claim()() | Resource, Context, Claim : String, ClaimID : Integer, StartTime, StopTime : Real, Amount,
+			Offset : Object, AttributeValues : Map |
+		sel
+			sel
+				Trace?FullClaim(Resource, StartTime, StopTime, Context, AttributeValues) {Claim := Trace
+					fullClaim(Resource, StartTime, StopTime, Context, AttributeValues)} // Add claim of full claim resource
+			or
+				Trace?AmountClaim(Resource, StartTime, StopTime, Context, AttributeValues, Amount) {Claim := Trace
+					amountClaim(Resource, StartTime, StopTime, Context, AttributeValues, Amount)} // Add claim of amount claim resource
+			or
+				Trace?OffsetClaim(Resource, StartTime, StopTime, Context, AttributeValues, Amount, Offset) {Claim :=
+					Trace offsetClaim(Resource, StartTime, StopTime, Context, AttributeValues, Amount, Offset)} // Add claim of amount with offset resource
+			les;
+			ClaimID := Claim splitOn('\t') at(2) toInteger;
+			abort
+				Trace!Claim(ClaimID)
+			with delay 0
+		or
+			sel
+				Trace?FullClaimStart(Resource, StartTime, Context, AttributeValues) {ClaimID := Trace
+					fullClaimStart(Resource, StartTime, Context, AttributeValues)} // Add start of claim for full claim resource
+			or
+				Trace?AmountClaimStart(Resource, StartTime, Context, AttributeValues, Amount) {ClaimID := Trace
+					amountClaimStart(Resource, StartTime, Context, AttributeValues, Amount)} // Add start of claim for amount claim resource
+			or
+				Trace?OffsetClaimStart(Resource, StartTime, Context, AttributeValues, Amount, Offset) {ClaimID := Trace
+					offsetClaimStart(Resource, StartTime, Context, AttributeValues, Amount, Offset)} // Add start of claim for amount with offset resource
+			les;
+			Trace!Claim(ClaimID)
+		les;
+		Claim()()
+
+	ClaimStop()() | Claim : String, ClaimID : Integer, StopTime : Real |
+		sel
+			Trace?FullClaimStop(ClaimID, StopTime) {Claim := Trace fullClaimStop(ClaimID, StopTime)} // Finalize started claim for amount claim resource
+		or
+			Trace?AmountClaimStop(ClaimID, StopTime) {Claim := Trace amountClaimStop(ClaimID, StopTime)} // Finalize started claim for amount claim resource
+		or
+			Trace?OffsetClaimStop(ClaimID, StopTime) {Claim := Trace offsetClaimStop(ClaimID, StopTime)} // Finalize started claim for amount with offset resource
+		les;
+		ClaimStop()()
+
+	Dependency()() | FromClaim, ToClaim, Type : Integer, Context, Dependency : String, AttributeValues : Map |
+		Trace?Dependency(FromClaim, ToClaim, Type, Context, AttributeValues) {Dependency := Trace dependency(FromClaim,
+			ToClaim, Type, Context, AttributeValues)}; // Add a dependency
+		Dependency()()
+
+/* This data class provides a container for process class TraceProcess. It can also be used for generating TRACE files at any place in a model although perhaps somewhat cumbersome. Note the Claim ID for methods fullClaim, amountClaim and offsetClaim is the first number in the returned String Out obtainable through: Out splitOn('\t') at(2) toInteger */
+data class Trace
+variables
+	ConfigurationFileName, TraceFileName, QuantityFileName : String,
+	TimeScaleShift : Integer,
+	TimeScaleUnit : String,
+	TimeDisplayFormat : String,
+	ListOfAttributes, ListOfContexts, ListOfQuantities, ListOfColors, ListOfFilters, ListOfResources : Array,
+	PendingClaims : Map,
+	Claim : Integer
+	Streaming : Boolean // Keeps track of whether or not Trace is streaming or file mode. Set by the two writeConfiguration methods, respectively.
+	Socket : Socket
+	HostName_ : String
+	PortNumber_ : Integer
+methods
+// Methods for End-Users
+	/* Configures the details for the time axis. If this method is not used to initialize a Trace, the default scale shift is 0, the default unit is "seconds" and the default display format is "%3g" */
+	time(Shift : Integer, Unit : String, DisplayFormat : String) : Trace
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Shift = nil) | (Shift isOfType("Integer") not) then
+			self error("First parameter for method \"time\" of Trace must be an Integer")
+		fi;
+		if (Unit = nil) | (Unit isOfType("String") not) then
+			self error("Second parameter for method \"time\" of Trace must be a String")
+		fi;
+		if (DisplayFormat = nil) | (DisplayFormat isOfType("String") not) then
+			self error("Third parameter for method \"time\" of Trace must be a String")
+		fi;
+		TimeScaleShift := Shift;
+		TimeScaleUnit := Unit;
+		TimeDisplayFormat := DisplayFormat;
+		return self
+
+	/* Defines an attribute for describing, labeling, filtering, grouping and/or coloring purposes */
+	attribute(Name : String, Describing, Labeling, Filtering, Grouping, Coloring : Boolean) : Trace
+			| Attribute : Array |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Name = nil) | (Name isOfType("String") not) then
+			self error("First parameter for method \"attribute\" of Trace must be a String")
+		fi;
+		if self getAttributeID(Name) != 0 then
+			self error("Attribute \"" + Name +
+				"\" in first parameter for method \"attribute\" of Trace has already been defined")
+		fi;
+		if (Describing = nil) | (Describing isOfType("Boolean") not) then
+			self error("Second parameter for method \"attribute\" of Trace must be a Boolean")
+		fi;
+		if (Labeling = nil) | (Labeling isOfType("Boolean") not) then
+			self error("Third parameter for method \"attribute\" of Trace must be a Boolean")
+		fi;
+		if (Filtering = nil) | (Filtering isOfType("Boolean") not) then
+			self error("Fourth parameter for method \"attribute\" of Trace must be a Boolean")
+		fi;
+		if (Grouping = nil) | (Grouping isOfType("Boolean") not) then
+			self error("Fifth parameter for method \"attribute\" of Trace must be a Boolean")
+		fi;
+		if (Coloring = nil) | (Coloring isOfType("Boolean") not) then
+			self error("Sixth parameter for method \"attribute\" of Trace must be a Boolean")
+		fi;
+		Attribute := new(Array) resize(6);
+		Attribute putAt(1, Name) putAt(2, Describing) putAt(3, Labeling) putAt(4, Filtering) putAt(5, Grouping) putAt(6,
+			Coloring);
+		ListOfAttributes resize(ListOfAttributes size + 1);
+		ListOfAttributes putAt(ListOfAttributes size, Attribute);
+		return self
+
+	/* Defines a context for the given attributes  */
+	context(Name : String, Attributes : Set) : Trace | Context : Array, Attribute : String, ID : Integer, i : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Name = nil) | (Name isOfType("String") not) then
+			self error("First parameter for method \"context\" of Trace must be a String")
+		fi;
+		if self getContextID(Name) != 0 then
+			self error("Context \"" + Name +
+				"\" in first parameter for method \"context\" of Trace has already been defined")
+		fi;
+		if (Attributes = nil) | (Attributes isOfType("Set") not) then
+			self error("Second parameter for method \"context\" of Trace must be a non-empty Set of Strings")
+		fi;
+		if Attributes size = 0 then
+			self error("Second parameter for method \"context\" of Trace must be a non-empty Set of Strings")
+		fi;
+		i := Attributes iterator;
+		while i isDone not do
+			Attribute := i element;
+			if (Attribute = nil) | (Attribute isOfType("String") not) then
+				self error("Second parameter for method \"context\" of Trace must be a non-empty Set of Strings")
+			fi;
+			ID := self getAttributeID(Attribute);
+			if ID = 0 then
+				self error("Attribute \"" + Attribute +
+					"\" in second parameter for method \"context\" of Trace is not found")
+			fi;
+			i advance
+		od;
+		Context := new(Array) resize(2);
+		Context putAt(1, Name) putAt(2, Attributes);
+		ListOfContexts resize(ListOfContexts size + 1);
+		ListOfContexts putAt(ListOfContexts size, Context);
+		return self
+
+	/* Adds a quantity to the configuration */
+	quantity(Name, Unit : String) : Trace | Quantity : Array |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if self getQuantityID(Name) != 0 then
+			self error("Quantity \"" + Name + "\" in first parameter of method \"quantity\" has already been defined")
+		fi;
+		Quantity := new(Array) resize(2);
+		Quantity putAt(1, Name) putAt(2, Unit);
+		ListOfQuantities resize(ListOfQuantities size + 1);
+		ListOfQuantities putAt(ListOfQuantities size, Quantity);
+		return self
+
+	/* Defines a color */
+	color(Name, Color : String) : Trace | ColorDefinition : Array, i, ascii : Integer |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Name = nil) | (Name isOfType("String") not) then
+			self error("First parameter for method \"color\" of Trace must be a String")
+		fi;
+		if self getColorID(Name) != 0 then
+			self error("Color \"" + Name +
+				"\" in first parameter for method \"color\" of Trace has already been defined")
+		fi;
+		if (Color = nil) | (Color isOfType("String") not) then
+			self error("Second parameter for method \"color\" of Trace must be a String")
+		fi;
+		if Color size != 6 then
+			self error("Second parameter for method \"color\" must represent a 6-digit hexadecimal color code")
+		else
+			i := 1;
+			while i <= 6 do
+				ascii := Color at(i) asciiIndex;
+				if (((ascii >= 48) & (ascii <= 57)) | ((ascii >= 65) & (ascii <= 70)) | ((ascii >= 97) & (ascii <=
+					102))) not then
+					self error("Second parameter for method \"color\" must represent a 6-digit hexadecimal color code")
+				fi;
+				i := i + 1
+			od
+		fi;
+		ColorDefinition := new(Array) resize(2);
+		ColorDefinition putAt(1, Name) putAt(2, Color);
+		ListOfColors resize(ListOfColors size + 1);
+		ListOfColors putAt(ListOfColors size, ColorDefinition);
+		return self
+
+	/* Defines a filter for the provided values of the given attribute */
+	filter(Attribute : String, Values : Set) : Trace | Filter : Array, ID : Integer, i : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Attribute = nil) | (Attribute isOfType("String") not) then
+			self error("First parameter for method \"filer\" of Trace must be a String")
+		fi;
+		ID := self getAttributeID(Attribute);
+		if ID = 0 then
+			self error("Attribute \"" + Attribute + "\" in first parameter for method \"filter\" of Trace is not found")
+		fi;
+		if (Values = nil) | (Values isOfType("Set") not) then
+			self error("Second parameter for method \"filter\" of Trace must be a non-empty Set of Strings")
+		fi;
+		if Values size = 0 then
+			self error("Second parameter for method \"filter\" of Trace must be a non-empty Set of Strings")
+		fi;
+		i := Values iterator;
+		while i isDone not do
+			if (i element = nil) | (i element isOfType("String") not) then
+				self error("Second parameter for method \"filter\" of Trace must be a non-empty Set of Strings")
+			fi;
+			i advance
+		od;
+		Filter := new(Array) resize(2);
+		Filter putAt(1, ID) putAt(2, Values);
+		ListOfFilters resize(ListOfFilters size + 1);
+		ListOfFilters putAt(ListOfFilters size, Filter);
+		return self
+
+	/* Writes the configuration file */
+	writeConfiguration(FileName : String) : Trace | File : FileOut |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (FileName = nil) | (FileName isOfType("String") not) then
+			self error("First parameter for method \"writeConfiguration\" of Trace must be a String")
+		fi;
+		ConfigurationFileName := FileName;
+		if (ListOfAttributes size = 0) | (ListOfContexts size = 0) then
+			self error("No attributes and contexts existed at calling method \"writeConfiguration\" of Trace")
+		fi;
+		File := new(FileOut) destination(ConfigurationFileName) open;
+		File write(self getConfigurationString());
+		File close;
+		Streaming := false; // Using this method assumes we will not be in streaming mode.
+		return self
+
+	/* Writes the configuration file to a socket connected to the provided host name and port number. If host name is set to nil,
+	 * the socket will be in server mode. */
+	writeConfiguration(HostName : String, PortNumber : Integer) : Trace
+		Streaming := true; // Using this method assumes we will be in streaming mode.
+		self connect(HostName, PortNumber);
+		self writeSocket(self getConfigurationString());
+		return self
+
+	/* Writes the preamble of the quantity file */
+	writeQuantity(FileName : String, ReferencedTraces : Set) : Trace | Out : String, SplitName : Array, File : FileOut,
+			i : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (FileName = nil) | (FileName isOfType("String") not) then
+			self error("First parameter for method \"writeQuantity\" must be a String")
+		fi;
+		SplitName := FileName splitOn('.');
+		if SplitName size > 1 then
+			if SplitName at(SplitName size) != "eqf" then
+				self
+					error("First parameter for method \"writeQuantity\" of Trace must be a file name with extension \".eqf\"")
+			fi
+		else
+			self
+				error("First parameter for method \"writeQuantity\" of Trace must be a file name with extension \".eqf\"")
+		fi;
+		QuantityFileName := FileName;
+		if ConfigurationFileName = nil then
+			self
+				error("Call of method \"writeQuantity\" of Trace must be preceded by call of method \"writeConfiguration\"")
+		fi;
+		if (ReferencedTraces = nil) | (ReferencedTraces isOfType("Set") not) then
+			self
+				error("Second parameter for method \"writeQuantity\" must be a Set of file names with extension \".etf\"")
+		fi;
+		i := ReferencedTraces iterator;
+		while i isDone not do
+			if (i element = nil) | (i element isOfType("String") not) then
+				self
+					error("Second parameter for method \"writeQuantity\" must be a Set of file name(s) with extension \".etf\"")
+			fi;
+			SplitName := i element splitOn('.');
+			if SplitName size > 1 then
+				if SplitName at(SplitName size) != "etf" then
+					self
+						error("Second parameter for method \"writeQuantity\" must be a Set of file name(s) with extension \".etf\"")
+				fi
+			else
+				self
+					error("Second parameter for method \"writeQuantity\" must be a Set of file name(s) with extension \".etf\"")
+			fi;
+			i advance
+		od;
+		Out := "ConfigurationID\t" + ConfigurationFileName + "\n";
+		Out concat("ConfigurationSource\t" + ConfigurationFileName + "\n");
+		if ReferencedTraces size != 0 then
+			Out concat("TraceReference");
+			i := ReferencedTraces iterator;
+			while i isDone not do
+				Out concat("\t" + i element);
+				i advance
+			od
+		fi;
+		File := new(FileOut) destination(QuantityFileName) open;
+		File write(Out lf);
+		File close;
+		return self
+
+	/* Writes a result to the quantity file */
+	result(Quantity : String, Value : Object) : Trace | Out : String, Q : Integer, File : FileOut |
+		if (Quantity = nil) | (Quantity isOfType("String") not) then
+			self error("First parameter for method \"result\" of Trace must be a String")
+		fi;
+		Q := self getQuantityID(Quantity);
+		if Q = 0 then
+			self error("Quantity \"" + Quantity + "\" in first parameter for method  \"result\" of Trace is not found")
+		fi;
+		if (Value = nil) | ((Value isOfType("Integer") not) & (Value isOfType("Real") not)) then
+			self error("Second parameter for method \"result\" of Trace must be a Real or Integer")
+		fi;
+		if QuantityFileName = nil then
+			self error("Call of method \"result\" of Trace must be preceded by call of method \"writeQuantity\"")
+		fi;
+		Out := "Q\t" + Q printString + "\t" + Value printString + "\n";
+		File := new(FileOut) destination(QuantityFileName) append;
+		File write(Out);
+		File close;
+		return self
+
+	/* Writes the preamble of the trace to file */
+	writeTrace(FileName : String) : Trace | SplitName : Array, File : FileOut |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (FileName = nil) | (FileName isOfType("String") not) then
+			self error("First parameter for method \"writeTrace\" must be a String")
+		fi;
+		SplitName := FileName splitOn('.');
+		if SplitName size > 1 then
+			if SplitName at(SplitName size) != "etf" then
+				self error("Parameter for method \"writeTrace\" of Trace must be a file name with extension \".etf\"")
+			fi
+		else
+			self error("Parameter for method \"writeTrace\" of Trace must be a file name with extension \".etf\"")
+		fi;
+		TraceFileName := FileName;
+		if ConfigurationFileName = nil then
+			self
+				error("Call of method \"writeTrace\" of Trace must be preceded by call of method \"writeConfiguration\"")
+		fi;
+		File := new(FileOut) destination(TraceFileName) open;
+		File write(self getTraceString());
+		File close;
+		return self
+
+	/* Writes the preamble of the trace to socket. Assumes writeConfiguration has already been called to configure
+	 * the host name and port number of the connection */
+	writeTrace() : Trace
+		if Socket = nil then
+			self error("It is required to call writeConfiguration before writeTrace.")
+		fi;
+		self writeSocket(self getTraceString());
+		return self
+
+	/* Writes resource, claim or dependency data to the trace file */
+	writeFile(Data : String) : Trace | File : FileOut |
+		if TraceFileName = nil then
+			self error("Calling method \"write\" of Trace must be preceded by a call of method \"writeTrace\"")
+		fi;
+		File := new(FileOut) destination(TraceFileName) append;
+		File write(Data);
+		File close;
+		return self
+
+	/* Writes the provided string to the socket. Throws an error if connect has not been called first.
+	 * If connect has been called previously, but the connection has been lost, it attempts to reconnect. */
+	writeSocket(configuration : String) : Trace
+		if (Socket = nil) then
+			self error("Method connect must be called before any call to method writeSocket.")
+		fi;
+		if !(Socket isConnected) then
+			self connect(HostName_, PortNumber_)
+		fi;
+		Socket writeLine(configuration);
+		return self
+
+	/* Establish network connection using socket either as a host or a client */
+	connect(HostName : String, PortNumber : Integer) : Trace
+		if (PortNumber = nil) then
+			self error("Port number must not be nil.")
+		fi;
+		// Store host name and port number in case it becomes necessary to reconnect automatically.
+		HostName_ := HostName;
+		PortNumber_ := PortNumber;
+		Socket := new(Socket);
+		// Connect either as server or client
+		if HostName = nil then // Socket Server
+			Socket acceptFrom(PortNumber);
+			while !(Socket isConnected()) do
+				nil
+			od
+		else // Socket Client
+			Socket connectTo(HostName, PortNumber);
+			while !(Socket isConnected()) do
+				// If connection fails we need to request a re-connect.
+				// so if rotalumis is running, it will get connection refused.
+				// and stop connecting. isDisconnected is true when no longer connecting.
+				if Socket isDisconnected() then
+					Socket connectTo(HostName, PortNumber)
+				fi
+			od
+		fi;
+		return self
+
+	/* Defines a full claim resource and returns it as a string.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. */
+	fullResource(Name : String, Capacity : Object, Unit : String, Context : String, AttributeValues : Map) : String |
+			Resource : Array,
+			C : Integer,
+			i : Iterator |
+		if (Name = nil) | (Name isOfType("String") not) then
+			self error("First parameter for method \"fullResource\" of Trace must be a String")
+		fi;
+		if self getResourceID(Name) != 0 then
+			self error("Resource \"" + Name +
+				"\" in first parameter for method \"fullResource\" of Trace has already been defined")
+		fi;
+		if (Capacity = nil) | ((Capacity isOfType("Integer") not) & (Capacity isOfType("Real") not)) then
+			self error("Second parameter for method \"fullResource\" of Trace must be an Integer or Real")
+		fi;
+		if (Unit = nil) | (Unit isOfType("String") not) then
+			self error("Third parameter for method \"fullResource\" of Trace must be a String")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Fourth parameter for method \"fullResource\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in fourth parameter for method \"fullResource\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self error("Fifth parameter for method \"fullResource\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self error("Fifth parameter for method \"fullResource\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self
+					error("Fifth parameter for method \"fullResource\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fifth parameter for method \"fullResource\" of Trace is not found for Context \"" + Context +
+					"\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fifth parameter for method \"fullResource\" of Trace lacks a value for attribute \"" + i
+					element + "\"")
+			fi;
+			i advance
+		od;
+		Resource := new(Array) resize(6);
+		Resource putAt(1, Name) putAt(2, Capacity) putAt(3, Unit) putAt(4, "Full") putAt(5, Context) putAt(6,
+			AttributeValues);
+		ListOfResources resize(ListOfResources size + 1);
+		ListOfResources putAt(ListOfResources size, Resource);
+		if Streaming then
+			self writeSocket(self writeResource(Resource))
+		else
+			self writeFile(self writeResource(Resource))
+		fi;
+		return self writeResource(Resource)
+
+	/* Defines an amount claim resource and returns it as a string.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. */
+	amountResource(Name : String, Capacity : Object, Unit : String, Context : String, AttributeValues : Map) : String |
+			Resource : Array,
+			C : Integer,
+			i : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Name = nil) | (Name isOfType("String") not) then
+			self error("First parameter for method \"amountResource\" of Trace must be a String")
+		fi;
+		if self getResourceID(Name) != 0 then
+			self error("Resource \"" + Name +
+				"\" in first parameter for method \"amountResource\" of Trace has already been defined")
+		fi;
+		if (Capacity = nil) | ((Capacity isOfType("Integer") not) & (Capacity isOfType("Real") not)) then
+			self error("Second parameter for method \"amountResource\" of Trace must be an Integer or Real")
+		fi;
+		if (Unit = nil) | (Unit isOfType("String") not) then
+			self error("Third parameter for method \"amountResource\" of Trace must be a String")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Fourth parameter for method \"amountResource\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in fourth parameter for method \"amountResource\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self error("Fifth parameter for method \"amountResource\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self error("Fifth parameter for method \"amountResource\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self
+					error("Fifth parameter for method \"amountResource\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fifth parameter for method \"amountResource\" of Trace is not found for Context \"" + Context
+					+ "\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fifth parameter for method \"amountResource\" of Trace lacks a value for attribute \"" + i
+					element + "\"")
+			fi;
+			i advance
+		od;
+		Resource := new(Array) resize(6);
+		Resource putAt(1, Name) putAt(2, Capacity) putAt(3, Unit) putAt(4, "Amount") putAt(5, Context) putAt(6,
+			AttributeValues);
+		ListOfResources resize(ListOfResources size + 1);
+		ListOfResources putAt(ListOfResources size, Resource);
+		if Streaming then
+			self writeSocket(self writeResource(Resource))
+		else
+			self writeFile(self writeResource(Resource))
+		fi;
+		return self writeResource(Resource)
+
+	/* Defines an offset resource and returns it as a string.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. */
+	offsetResource(Name : String, Capacity : Object, Unit : String, Context : String, AttributeValues : Map,
+			Offset : Object) : String | Resource : Array, C : Integer, i : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Name = nil) | (Name isOfType("String") not) then
+			self error("First parameter for method \"offsetResource\" of Trace must be a String")
+		fi;
+		if self getResourceID(Name) != 0 then
+			self error("Resource \"" + Name +
+				"\" in first parameter for method \"offsetResource\" of Trace has already been defined")
+		fi;
+		if (Capacity = nil) | ((Capacity isOfType("Integer") not) & (Capacity isOfType("Real") not)) then
+			self error("Second parameter for method \"offsetResource\" of Trace must be an Integer or Real")
+		fi;
+		if (Unit = nil) | (Unit isOfType("String") not) then
+			self error("Third parameter for method \"offsetResource\" of Trace must be a String")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Fourth parameter for method \"offsetResource\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in fourth parameter for method \"offsetResource\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self error("Fifth parameter for method \"offsetResource\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self error("Fifth parameter for method \"offsetResource\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self
+					error("Fifth parameter for method \"offsetResource\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fifth parameter for method \"offsetResource\" of Trace is not found for Context \"" + Context
+					+ "\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fifth parameter for method \"offsetResource\" of Trace lacks a value for attribute \"" + i
+					element + "\"")
+			fi;
+			i advance
+		od;
+		if (Offset = nil) | ((Offset isOfType("Integer") not) & (Offset isOfType("Real") not)) then
+			self error("Sixth parameter for method \"offsetResource\" of Trace must be an Integer or Real")
+		fi;
+		Resource := new(Array) resize(7);
+		Resource putAt(1, Name) putAt(2, Capacity) putAt(3, Unit) putAt(4, "Offset") putAt(5, Context) putAt(6,
+			AttributeValues) putAt(7, Offset);
+		ListOfResources resize(ListOfResources size + 1);
+		ListOfResources putAt(ListOfResources size, Resource);
+		if Streaming then
+			self writeSocket(self writeResource(Resource))
+		else
+			self writeFile(self writeResource(Resource))
+		fi;
+		return self writeResource(Resource)
+
+	/* Creates the start of a full claim. Returns the claim ID that can be used as reference for finalizing the claim and creating dependencies */
+	fullClaimStart(Resource : String, StartTime : Real, Context : String, AttributeValues : Map) : Integer | R,
+			C : Integer, i : Iterator, StartedClaim : Array |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Resource = nil) | (Resource isOfType("String") not) then
+			self error("First parameter for method \"fullClaimStart\" of Trace must be a String")
+		fi;
+		R := self getResourceID(Resource);
+		if R = 0 then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"fullClaimStart\" of Trace is not found")
+		fi;
+		if ListOfResources at(R) at(4) != "Full" then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"fullClaimStart\" of Trace is not a full claim resource")
+		fi;
+		if (StartTime = nil) | (StartTime isOfType("Real") not) then
+			self error("Second parameter for method \"fullClaimStart\" of Trace must be a Real")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Third parameter for method \"fullClaimStart\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in third parameter for method \"fullClaimStart\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self
+				error("Fourth parameter for method \"fullClaimStart\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self
+				error("Fourth parameter for method \"fullClaimStart\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self
+					error("Fourth parameter for method \"fullClaimStart\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fourth parameter for method \"fullClaimStart\" of Trace is not found for Context \"" +
+					Context + "\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fourth parameter for method \"fullClaimStart\" of Trace lacks a value for attribute \"" + i
+					element + "\"")
+			fi;
+			i advance
+		od;
+		Claim := Claim + 1;
+		StartedClaim := new(Array) resize(4);
+		StartedClaim putAt(1, R) putAt(2, StartTime) putAt(3, C) putAt(4, AttributeValues);
+		PendingClaims putAt(Claim, StartedClaim);
+		return Claim
+
+	/* Creates the start of an amount claim. Returns the claim ID that can be used as reference for finalizing the claim and creating dependencies */
+	amountClaimStart(Resource : String, StartTime : Real, Context : String, AttributeValues : Map,
+			Amount : Object) : Integer | R, C : Integer, i : Iterator, StartedClaim : Array |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Resource = nil) | (Resource isOfType("String") not) then
+			self error("First parameter for method \"amountClaimStart\" of Trace must be a String")
+		fi;
+		R := self getResourceID(Resource);
+		if R = 0 then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"amountClaimStart\" of Trace is not found")
+		fi;
+		if ListOfResources at(R) at(4) != "Amount" then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"amountClaimStart\" of Trace is not an amount claim resource")
+		fi;
+		if (StartTime = nil) | (StartTime isOfType("Real") not) then
+			self error("Second parameter for method \"amountClaimStart\" of Trace must be a Real")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Third parameter for method \"amountClaimStart\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in third parameter for method \"amountClaimStart\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self
+				error("Fourth parameter for method \"amountClaimStart\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self
+				error("Fourth parameter for method \"amountClaimStart\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self
+					error("Fourth parameter for method \"amountClaimStart\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fourth parameter for method \"amountClaimStart\" of Trace is not found for Context \"" +
+					Context + "\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fourth parameter for method \"amountClaimStart\" of Trace lacks a value for attribute \"" +
+					i element + "\"")
+			fi;
+			i advance
+		od;
+		if (Amount = nil) | ((Amount isOfType("Integer") not) & (Amount isOfType("Real") not)) then
+			self error("Fifth parameter for method \"amountClaimStart\" of Trace must be a Real or Integer")
+		fi;
+		Claim := Claim + 1;
+		StartedClaim := new(Array) resize(5);
+		StartedClaim putAt(1, R) putAt(2, StartTime) putAt(3, C) putAt(4, AttributeValues) putAt(5, Amount);
+		PendingClaims putAt(Claim, StartedClaim);
+		return Claim
+
+	/* Creates the start of an amount with offset claim. Returns the claim ID that can be used as reference for finalizing the claim and creating dependencies */
+	offsetClaimStart(Resource : String, StartTime : Real, Context : String, AttributeValues : Map, Amount : Object,
+			Offset : Object) : Integer | R, C : Integer, i : Iterator, StartedClaim : Array |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Resource = nil) | (Resource isOfType("String") not) then
+			self error("First parameter for method \"offsetClaimStart\" of Trace must be a String")
+		fi;
+		R := self getResourceID(Resource);
+		if R = 0 then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"offsetClaimStart\" of Trace is not found")
+		fi;
+		if ListOfResources at(R) at(4) != "Offset" then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"offsetClaimStart\" of Trace is not an amount with offset claim resource")
+		fi;
+		if (StartTime = nil) | (StartTime isOfType("Real") not) then
+			self error("Second parameter for method \"offsetClaimStart\" of Trace must be a Real")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Third parameter for method \"offsetClaimStart\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in third parameter for method \"offsetClaimStart\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self
+				error("Fourth parameter for method \"offsetClaimStart\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self
+				error("Fourth parameter for method \"offsetClaimStart\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self
+					error("Fourth parameter for method \"offsetClaimStart\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fourth parameter for method \"offsetClaimStart\" of Trace is not found for Context \"" +
+					Context + "\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fourth parameter for method \"offsetClaimStart\" of Trace lacks a value for attribute \"" +
+					i element + "\"")
+			fi;
+			i advance
+		od;
+		if (Amount = nil) | ((Amount isOfType("Integer") not) & (Amount isOfType("Real") not)) then
+			self error("Fifth parameter for method \"offsetClaimStart\" of Trace must be a Real or Integer")
+		fi;
+		if (Offset = nil) | ((Offset isOfType("Integer") not) & (Offset isOfType("Real") not)) then
+			self error("Sixth parameter for method \"offsetClaim\" of Trace must be a Real or Integer")
+		fi;
+		if Offset + Amount > ListOfResources at(R) at(2) then
+			self
+				error("Offset in sixth parameter for method \"offsetClaim\" of Trace plus amount in sixth parameter must not be larger than capacity of resource \""
+					+ Resource + "\"")
+		fi;
+		Claim := Claim + 1;
+		StartedClaim := new(Array) resize(6);
+		StartedClaim putAt(1, R) putAt(2, StartTime) putAt(3, C) putAt(4, AttributeValues) putAt(5, Amount) putAt(6,
+			Offset);
+		PendingClaims putAt(Claim, StartedClaim);
+		return Claim
+
+	/* Finalizes a full claim and returns it as a String.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. */
+	fullClaimStop(ClaimID : Integer, StopTime : Real) : String | StartedClaim : Array, Out : String, i : Iterator |
+		if (ClaimID = nil) | (ClaimID isOfType("Integer") not) then
+			self error("First parameter for method \"fullClaimStop\" of Trace must be an Integer")
+		fi;
+		StartedClaim := PendingClaims at(ClaimID);
+		PendingClaims removeAt(ClaimID);
+		if StartedClaim = nil then
+			self error("Claim identifier in first parameter for method \"fullClaimStop\" of Trace is not found")
+		fi;
+		if StartedClaim size != 4 then
+			self
+				error("Claim in second parameter for method \"fullClaimStop\" of Trace is not the start of a full claim")
+		fi;
+		if (StopTime = nil) | (StopTime isOfType("Real") not) then
+			self error("Second parameter for method \"fullClaimStop\" of Trace must be a Real")
+		fi;
+		if StartedClaim at(2) > StopTime then
+			self
+				error("Stop time in second parameter for method \"fullClaimStop\" of Trace must not be smaller than the start time "
+					+ StartedClaim at(2) printString + " of claim " + ClaimID printString)
+		fi;
+		if TraceFileName = nil then
+			self error("Call of method \"fullClaimStop\" of Trace must be preceded by call of method \"writeTrace\"")
+		fi;
+		Out := "C\t" + ClaimID printString + "\t" + StartedClaim at(1) printString + "\t" + StartedClaim at(2)
+			printString + "\t" + StopTime printString + "\t0\t" + StartedClaim at(3) printString;
+		i := ListOfContexts at(StartedClaim at(3)) at(2) iterator;
+		while i isDone not do
+			Out concat("\t" + StartedClaim at(4) at(i element));
+			i advance
+		od;
+		if Streaming then
+			self writeSocket(Out lf)
+		else
+			self writeFile(Out lf)
+		fi;
+		return Out lf
+
+	/* Finalizes an amount claim and returns it as a String.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. */
+	amountClaimStop(ClaimID : Integer, StopTime : Real) : String | StartedClaim : Array, Out : String, i : Iterator |
+		if (ClaimID = nil) | (ClaimID isOfType("Integer") not) then
+			self error("First parameter for method \"amountClaimStop\" of Trace must be an Integer")
+		fi;
+		StartedClaim := PendingClaims at(ClaimID);
+		PendingClaims removeAt(ClaimID);
+		if StartedClaim = nil then
+			self error("Claim identifier in first parameter for method \"amountClaimStop\" of Trace is not found")
+		fi;
+		if StartedClaim size != 5 then
+			self
+				error("Claim in second parameter for method \"amountClaimStop\" of Trace is not the start of an amount claim")
+		fi;
+		if (StopTime = nil) | (StopTime isOfType("Real") not) then
+			self error("Second parameter for method \"amountClaimStop\" of Trace must be a Real")
+		fi;
+		if StartedClaim at(2) > StopTime then
+			self
+				error("Stop time in second parameter for method \"amountClaimStop\" of Trace must not be smaller than the start time "
+					+ StartedClaim at(2) printString + " of claim " + ClaimID printString)
+		fi;
+		if TraceFileName = nil then
+			self error("Call of method \"amountClaimStop\" of Trace must be preceded by call of method \"writeTrace\"")
+		fi;
+		Out := "C\t" + ClaimID printString + "\t" + StartedClaim at(1) printString + "\t" + StartedClaim at(5)
+			printString + "\t" + StartedClaim at(2) printString + "\t" + StopTime printString + "\t0\t" + StartedClaim
+				at(3) printString;
+		i := ListOfContexts at(StartedClaim at(3)) at(2) iterator;
+		while i isDone not do
+			Out concat("\t" + StartedClaim at(4) at(i element));
+			i advance
+		od;
+		if Streaming then
+			self writeSocket(Out lf)
+		else
+			self writeFile(Out lf)
+		fi;
+		return Out lf
+
+	/* Finalizes an amount with offset claim and returns it as a String.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. */
+	offsetClaimStop(ClaimID : Integer, StopTime : Real) : String | StartedClaim : Array, Out : String, i : Iterator |
+		if (ClaimID = nil) | (ClaimID isOfType("Integer") not) then
+			self error("First parameter for method \"offsetClaimStop\" of Trace must be an Integer")
+		fi;
+		StartedClaim := PendingClaims at(ClaimID);
+		PendingClaims removeAt(ClaimID);
+		if StartedClaim = nil then
+			self error("Claim identifier in first parameter for method \"offsetClaimStop\" of Trace is not found")
+		fi;
+		if StartedClaim size != 6 then
+			self
+				error("Claim in second parameter for method \"offsetClaimStop\" of Trace is not the start of an amount with offset claim")
+		fi;
+		if (StopTime = nil) | (StopTime isOfType("Real") not) then
+			self error("Second parameter for method \"offsetClaimStop\" of Trace must be a Real")
+		fi;
+		if StartedClaim at(2) > StopTime then
+			self
+				error("Stop time in second parameter for method \"offsetClaimStop\" of Trace must not be smaller than the start time "
+					+ StartedClaim at(2) printString + " of claim " + ClaimID printString)
+		fi;
+		if TraceFileName = nil then
+			self error("Call of method \"offsetClaimStop\" of Trace must be preceded by call of method \"writeTrace\"")
+		fi;
+		Out := "C\t" + ClaimID printString + "\t" + StartedClaim at(1) printString + "\t" + StartedClaim at(5)
+			printString + "\t" + StartedClaim at(6) printString + "\t" + StartedClaim at(2) printString + "\t" +
+			StopTime printString + "\t0\t" + StartedClaim at(3) printString;
+		i := ListOfContexts at(StartedClaim at(3)) at(2) iterator;
+		while i isDone not do
+			Out concat("\t" + StartedClaim at(4) at(i element));
+			i advance
+		od;
+		if Streaming then
+			self writeSocket(Out lf)
+		else
+			self writeFile(Out lf)
+		fi;
+		return Out lf
+
+	/* Converts a dependency to a String.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. */
+	dependency(FromClaim, ToClaim : Integer, Type : Integer, Context : String, AttributeValues : Map) : String
+			| Out : String, C : Integer, i : Iterator |
+		if (FromClaim = nil) | (FromClaim isOfType("Integer") not) then
+			self error("First parameter for method \"dependency\" of Trace must be an Integer")
+		fi;
+		if (FromClaim < 1) | (FromClaim > Claim) then
+			self error("First parameter for method \"dependency\" of Trace must be in [1, " + Claim printString + "]")
+		fi;
+		if (ToClaim = nil) | (ToClaim isOfType("Integer") not) then
+			self error("Second parameter for method \"dependency\" of Trace must be an Integer")
+		fi;
+		if (ToClaim < 1) | (ToClaim > Claim) then
+			self error("Second parameter for method \"dependency\" of Trace must be in [1, " + Claim printString + "]")
+		fi;
+		if FromClaim = ToClaim then
+			self error("First and second parameter for method \"dependency\" of Trace must differ")
+		fi;
+		if (Type != 0) & (Type != 1) & (Type != 2) & (Type != 3) then
+			self error("Third parameter for method \"dependency\" of Trace must be in [0, 3]")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Fourth parameter for method \"dependency\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in fourth parameter for method \"dependency\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self error("Fifth parameter for method \"dependency\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self error("Fifth parameter for method \"dependency\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self error("Fifth parameter for method \"dependency\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fifth parameter for method \"dependency\" of Trace is not found for Context \"" + Context +
+					"\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fifth parameter for method \"dependency\" of Trace lacks a value for attribute \"" + i
+					element + "\"")
+			fi;
+			i advance
+		od;
+		if TraceFileName = nil then
+			self error("Call of method \"dependency\" of Trace must be preceded by call of method \"writeTrace\"")
+		fi;
+		Out := "D\t" + FromClaim printString + "\t" + ToClaim printString + "\t" + Type printString + "\t" + C
+			printString;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			Out concat("\t" + AttributeValues at(i element));
+			i advance
+		od;
+		if Streaming then
+			self writeSocket(Out lf)
+		else
+			self writeFile(Out lf)
+		fi;
+		return Out lf
+
+	/* Creates a complete full claim and returns it as a String.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. The Claim ID is the first number in the returned String Out obtainable through: Out splitOn('\t') at(2) toInteger */
+	fullClaim(Resource : String, StartTime, StopTime : Real, Context : String, AttributeValues : Map) : String
+			| Out : String, R, C : Integer, i : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Resource = nil) | (Resource isOfType("String") not) then
+			self error("First parameter for method \"fullClaim\" of Trace must be a String")
+		fi;
+		R := self getResourceID(Resource);
+		if R = 0 then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"fullClaim\" of Trace is not found")
+		fi;
+		if ListOfResources at(R) at(4) != "Full" then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"fullClaim\" of Trace is not a full claim resource")
+		fi;
+		if (StartTime = nil) | (StartTime isOfType("Real") not) then
+			self error("Second parameter for method \"fullClaim\" of Trace must be a Real")
+		fi;
+		if (StopTime = nil) | (StopTime isOfType("Real") not) then
+			self error("Third parameter for method \"fullClaim\" of Trace must be a Real")
+		fi;
+		if StartTime > StopTime then
+			self
+				error("Start time in second parameter for method \"fullClaim\" of Trace must not be larger than stop time in third parameter")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Fourth parameter for method \"fullClaim\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context + "\" in fourth parameter for method \"fullClaim\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self error("Fifth parameter for method \"fullClaim\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self error("Fifth parameter for method \"fullClaim\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self error("Fifth parameter for method \"fullClaim\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fifth parameter for method \"fullClaim\" of Trace is not found for Context \"" + Context +
+					"\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fifth parameter for method \"fullClaim\" of Trace lacks a value for attribute \"" + i
+					element + "\"")
+			fi;
+			i advance
+		od;
+		if TraceFileName = nil then
+			self error("Call of method \"fullClaim\" of Trace must be preceded by call of method \"writeTrace\"")
+		fi;
+		Claim := Claim + 1;
+		Out := "C\t" + Claim printString + "\t" + R printString + "\t" + StartTime printString + "\t" + StopTime
+			printString + "\t0\t" + C printString;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			Out concat("\t" + AttributeValues at(i element));
+			i advance
+		od;
+		if Streaming then
+			self writeSocket(Out lf)
+		else
+			self writeFile(Out lf)
+		fi;
+		return Out lf
+
+	/* Creates a complete amount claim and returns it as a String.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. The Claim ID is the first number in the returned String Out obtainable through: Out splitOn('\t') at(2) toInteger */
+	amountClaim(Resource : String, StartTime, StopTime : Real, Context : String, AttributeValues : Map,
+			Amount : Object) : String | Out : String, R, C : Integer, i : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Resource = nil) | (Resource isOfType("String") not) then
+			self error("First parameter for method \"amountClaim\" of Trace must be a String")
+		fi;
+		R := self getResourceID(Resource);
+		if R = 0 then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"amountClaim\" of Trace is not found")
+		fi;
+		if ListOfResources at(R) at(4) != "Amount" then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"amountClaim\" of Trace is not an amount claim resource")
+		fi;
+		if (StartTime = nil) | (StartTime isOfType("Real") not) then
+			self error("Second parameter for method \"amountClaim\" of Trace must be a Real")
+		fi;
+		if (StopTime = nil) | (StopTime isOfType("Real") not) then
+			self error("Third parameter for method \"amountClaim\" of Trace must be a Real")
+		fi;
+		if StartTime > StopTime then
+			self
+				error("Start time in second parameter for method \"amountClaim\" of Trace must not be larger than stop time in third parameter")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Fourth parameter for method \"amountClaim\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in fourth parameter for method \"amountClaim\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self error("Fifth parameter for method \"amountClaim\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self error("Fifth parameter for method \"amountClaim\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self
+					error("Fifth parameter for method \"amountClaim\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fifth parameter for method \"amountClaim\" of Trace is not found for Context \"" + Context +
+					"\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fifth parameter for method \"amountClaim\" of Trace lacks a value for attribute \"" + i
+					element + "\"")
+			fi;
+			i advance
+		od;
+		if (Amount = nil) | ((Amount isOfType("Integer") not) & (Amount isOfType("Real") not)) then
+			self error("Sixth parameter for method \"amountClaim\" of Trace must be a Real or Integer")
+		fi;
+		if TraceFileName = nil then
+			self error("Call of method \"amountClaim\" of Trace must be preceded by call of method \"writeTrace\"")
+		fi;
+		Claim := Claim + 1;
+		Out := "C\t" + Claim printString + "\t" + R printString + "\t" + Amount printString + "\t" + StartTime
+			printString + "\t" + StopTime printString + "\t0\t" + C printString;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			Out concat("\t" + AttributeValues at(i element));
+			i advance
+		od;
+		if Streaming then
+			self writeSocket(Out lf)
+		else
+			self writeFile(Out lf)
+		fi;
+		return Out lf
+
+	/* Creates a complete offset claim and returns it as a String.
+	 * If writeConfiguration(FileName) has previously been called, indicating non-streaming execution,
+	 * the string is also written to file. The Claim ID is the first number in the returned String Out obtainable through: Out splitOn('\t') at(2) toInteger */
+	offsetClaim(Resource : String, StartTime, StopTime : Real, Context : String, AttributeValues : Map, Amount : Object,
+			Offset : Object) : String | Out : String, R, C : Integer, i : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (Resource = nil) | (Resource isOfType("String") not) then
+			self error("First parameter for method \"offsetClaim\" of Trace must be a String")
+		fi;
+		R := self getResourceID(Resource);
+		if R = 0 then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"offsetClaim\" of Trace is not found")
+		fi;
+		if ListOfResources at(R) at(4) != "Offset" then
+			self error("Resource \"" + Resource +
+				"\" in first parameter for method \"fullClaim\" of Trace is not an offset claim resource")
+		fi;
+		if (StartTime = nil) | (StartTime isOfType("Real") not) then
+			self error("Second parameter for method \"offsetClaim\" of Trace must be a Real")
+		fi;
+		if (StopTime = nil) | (StopTime isOfType("Real") not) then
+			self error("Third parameter for method \"offsetClaim\" of Trace must be a Real")
+		fi;
+		if StartTime > StopTime then
+			self
+				error("Start time in second parameter for method \"offsetClaim\" of Trace must not be larger than stop time in third parameter")
+		fi;
+		if (Context = nil) | (Context isOfType("String") not) then
+			self error("Fourth parameter for method \"offsetClaim\" of Trace must be a String")
+		fi;
+		C := self getContextID(Context);
+		if C = 0 then
+			self error("Context \"" + Context +
+				"\" in fourth parameter for method \"offsetClaim\" of Trace is not found")
+		fi;
+		if (AttributeValues = nil) | (AttributeValues isOfType("Map") not) then
+			self error("Fifth parameter for method \"offsetClaim\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		if AttributeValues size = 0 then
+			self error("Fifth parameter for method \"offsetClaim\" of Trace must be a non-empty Map of String pairs")
+		fi;
+		i := AttributeValues iterator;
+		while i isDone not do
+			if (i key = nil) | (i key isOfType("String") not) | (i value = nil) | (i value isOfType("String") not) then
+				self
+					error("Fifth parameter for method \"offsetClaim\" of Trace must be a non-empty Map of String pairs")
+			fi;
+			if ListOfContexts at(C) at(2) excludes(i key) then
+				self error("Attribute \"" + i key +
+					"\" in fifth parameter for method \"offsetClaim\" of Trace is not found for Context \"" + Context +
+					"\"")
+			fi;
+			i advance
+		od;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			if AttributeValues includesKey(i element) not then
+				self error("Fifth parameter for method \"offsetClaim\" of Trace lacks a value for attribute \"" + i
+					element + "\"")
+			fi;
+			i advance
+		od;
+		if (Amount = nil) | ((Amount isOfType("Integer") not) & (Amount isOfType("Real") not)) then
+			self error("Sixth parameter for method \"offsetClaim\" of Trace must be a Real or Integer")
+		fi;
+		if (Offset = nil) | ((Offset isOfType("Integer") not) & (Offset isOfType("Real") not)) then
+			self error("Seventh parameter for method \"offsetClaim\" of Trace must be a Real or Integer")
+		fi;
+		if Offset + Amount > ListOfResources at(R) at(2) then
+			self
+				error("Offset in seventh parameter for method \"offsetClaim\" of Trace plus amount in sixth parameter must not be larger than capacity of resource \""
+					+ Resource + "\"")
+		fi;
+		if TraceFileName = nil then
+			self error("Call of method \"offsetClaim\" of Trace must be preceded by call of method \"writeTrace\"")
+		fi;
+		Claim := Claim + 1;
+		Out := "C\t" + Claim printString + "\t" + R printString + "\t" + Amount printString + "\t" + Offset printString
+			+ "\t" + StartTime printString + "\t" + StopTime printString + "\t0\t" + C printString;
+		i := ListOfContexts at(C) at(2) iterator;
+		while i isDone not do
+			Out concat("\t" + AttributeValues at(i element));
+			i advance
+		od;
+		if Streaming then
+			self writeSocket(Out lf)
+		else
+			self writeFile(Out lf)
+		fi;
+		return Out lf
+
+// Methods for implementation
+	init : Trace
+		ListOfAttributes := new(Array);
+		ListOfContexts := new(Array);
+		ListOfQuantities := new(Array);
+		ListOfColors := new(Array);
+		ListOfFilters := new(Array);
+		ListOfResources := new(Array);
+		self time(0, "seconds", "%3g");
+		PendingClaims := new(Map);
+		Claim := 0;
+		return self
+
+	getAttributeID(Attribute : String) : Integer | i : Integer, NF : Boolean |
+		NF := true;
+		i := 1;
+		while NF & (i <= ListOfAttributes size) do
+			if ListOfAttributes at(i) at(1) = Attribute then
+				NF := false
+			else
+				i := i + 1
+			fi
+		od;
+		return if NF then
+			0
+		else
+			i
+		fi
+
+	getContextID(Context : String) : Integer | i : Integer, NF : Boolean |
+		NF := true;
+		i := 1;
+		while NF & (i <= ListOfContexts size) do
+			if ListOfContexts at(i) at(1) = Context then
+				NF := false
+			else
+				i := i + 1
+			fi
+		od;
+		return if NF then
+			0
+		else
+			i
+		fi
+
+	getQuantityID(Quantity : String) : Integer | i : Integer, NF : Boolean |
+		NF := true;
+		i := 1;
+		while NF & (i <= ListOfQuantities size) do
+			if ListOfQuantities at(i) at(1) = Quantity then
+				NF := false
+			else
+				i := i + 1
+			fi
+		od;
+		return if NF then
+			0
+		else
+			i
+		fi
+
+	getColorID(Color : String) : Integer | i : Integer, NF : Boolean |
+		NF := true;
+		i := 1;
+		while NF & (i <= ListOfColors size) do
+			if ListOfColors at(i) at(1) = Color then
+				NF := false
+			else
+				i := i + 1
+			fi
+		od;
+		return if NF then
+			0
+		else
+			i
+		fi
+
+	getResourceID(Resource : String) : Integer | i : Integer, NF : Boolean |
+		NF := true;
+		i := 1;
+		while NF & (i <= ListOfResources size) do
+			if ListOfResources at(i) at(1) = Resource then
+				NF := false
+			else
+				i := i + 1
+			fi
+		od;
+		return if NF then
+			0
+		else
+			i
+		fi
+
+	getConfigurationString() : String | Out : String, i : Integer, j : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if (ListOfAttributes size = 0) | (ListOfContexts size = 0) then
+			self error("No attributes and contexts existed at calling method \"writeConfiguration\" of Trace")
+		fi;
+		if ConfigurationFileName = nil then
+			ConfigurationFileName := "configuration.txt"
+		fi; // Must be set to not be nil (Streaming Case)
+		// Pre-Amble
+		Out := "ConfigurationVersion\tV0.1\n";
+		Out concat("ConfigurationName\t" + ConfigurationFileName + "\n");
+		Out concat("ConfigurationID\t" + ConfigurationFileName + "\n");
+		Out concat("TimeScaleShift\t" + TimeScaleShift printString + "\n");
+		Out concat("TimeScaleUnit\t" + TimeScaleUnit + "\n");
+		Out concat("TimeDisplayFormat\t" + TimeDisplayFormat + "\n");
+		// Attributes
+		i := 1;
+		while i <= ListOfAttributes size do
+			Out concat("Attribute\t" + i printString + "\t" + ListOfAttributes at(i) at(1) + "\tString");
+			if ListOfAttributes at(i) at(2) then
+				Out concat("\tDescribing")
+			fi;
+			if ListOfAttributes at(i) at(3) then
+				Out concat("\tLabeling")
+			fi;
+			if ListOfAttributes at(i) at(4) then
+				Out concat("\tFiltering")
+			fi;
+			if ListOfAttributes at(i) at(5) then
+				Out concat("\tGrouping")
+			fi;
+			if ListOfAttributes at(i) at(6) then
+				Out concat("\tColoring")
+			fi;
+			Out lf;
+			i := i + 1
+		od;
+		// Contexts
+		i := 1;
+		while i <= ListOfContexts size do
+			Out concat("Context\t" + i printString + "\t" + ListOfContexts at(i) at(1));
+			j := ListOfContexts at(i) at(2) iterator;
+			while j isDone not do
+				Out concat("\t" + self getAttributeID(j element) printString);
+				j advance
+			od;
+			Out lf;
+			i := i + 1
+		od;
+		// Colors
+		i := 1;
+		while i <= ListOfColors size do
+			Out concat("ColorDefinition\t" + ListOfColors at(i) at(1) + "\t#" + ListOfColors at(i) at(2) + "\n");
+			i := i + 1
+		od;
+		// Filters
+		i := 1;
+		while i <= ListOfFilters size do
+			Out concat("FilteringValues\t" + ListOfFilters at(i) at(1) printString);
+			j := ListOfFilters at(i) at(2) iterator;
+			while j isDone not do
+				Out concat("\t" + j element);
+				j advance
+			od;
+			Out lf;
+			i := i + 1
+		od;
+		// Quantities
+		i := 1;
+		while i <= ListOfQuantities size do
+			Out concat("Quantity\t" + i printString + "\t" + ListOfQuantities at(i) at(1) + "\t" + ListOfQuantities
+				at(i) at(2) + "\n");
+			i := i + 1
+		od;
+		return Out
+
+	/* Provides the string used by writeTrace(filename) and writeTrace() to write to file or socket, respectively */
+	getTraceString() : String | Out : String |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		if TraceFileName = nil then
+			TraceFileName := "trace.etf"
+		fi; // Must be set to not be nil (Streaming Case)
+		Out := "TraceVersion\tV0.1\n";
+		Out concat("ConfigurationID\t" + ConfigurationFileName + "\n");
+		Out concat("ConfigurationSource\t" + ConfigurationFileName + "\n");
+		return Out
+
+	writeResource(Resource : Array) : String | Out : String, ID : Integer, j : Iterator |
+		if ListOfAttributes = nil then
+			self init
+		fi;
+		Out := "R\t" + self getResourceID(Resource at(1)) printString + "\t" + Resource at(2) printString + "\t" +
+			Resource at(3) + "\t";
+		if Resource at(4) = "Full" then
+			Out concat(0 printString)
+		fi;
+		if Resource at(4) = "Amount" then
+			Out concat(1 printString)
+		fi;
+		if Resource at(4) = "Offset" then
+			Out concat("2\t" + Resource at(7) printString)
+		fi;
+		ID := self getContextID(Resource at(5));
+		Out concat("\t" + ID printString);
+		j := ListOfContexts at(ID) at(2) iterator;
+		while j isDone not do
+			Out concat("\t" + Resource at(6) at(j element));
+			j advance
+		od;
+		return Out lf

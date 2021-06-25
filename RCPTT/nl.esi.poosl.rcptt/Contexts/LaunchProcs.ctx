@@ -1,0 +1,105 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: LaunchProcs
+Element-Type: context
+Element-Version: 2.0
+Id: _-6xq0Nf8Eea3P5Zs0ralfQ
+Runtime-Version: 2.3.0.201806262310
+Save-Time: 8/7/19 7:50 AM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+proc "launch-debug" [val name] [val file] [val port] {
+	get-menu "Run/Debug Configurations..." | click
+		with [get-window "Debug Configurations"] {
+			launch-conf -name $name -port $port -file $file
+		    get-button Debug | click
+		}
+}
+
+proc "launch-debug-external" [val name] [val file] [val port] [val ini] {
+	get-menu "Run/Debug Configurations..." | click
+		with [get-window "Debug Configurations"] {
+			launch-ini -name $name -port $port -file $file -ini $ini
+		    get-button Debug | click
+		}
+}
+
+proc "add-launch-debug" [val name] [val file] [val port] {
+	get-menu "Run/Debug Configurations..." | click
+		with [get-window "Debug Configurations"] {
+			launch-conf -name $name -port $port -file $file
+		    get-button Close | click
+		}
+}
+
+proc "launch-run" [val name] [val file] [val port] {
+	get-menu "Run/Run Configurations..." | click
+		with [get-window "Run Configurations"] {
+			launch-conf -name $name -port $port -file $file
+		    get-button Run | click
+		}
+}
+
+proc "add-launch-run" [val name] [val file] [val port] {
+	get-menu "Run/Run Configurations..." | click
+		with [get-window "Run Configurations"] {
+			launch-conf -name $name -port $port -file $file
+		    get-button Close | click
+		}
+}
+
+proc "launch-conf" [val name] [val file] [val port] {
+	get-tree | select "POOSL Simulation" | get-menu "New Configuration" | click
+    with [get-editbox -after [get-label "Name:"]] {
+        set-text $name
+    }  
+    set-dialog-result File [concat "platform:/resource/" $file] 
+    get-window "Debug Configurations" | get-group "Model:" | get-button Browse | click 
+
+    get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text $port
+    get-button Apply | click
+}
+
+proc "launch-ini" [val name] [val file] [val port] [val ini] {
+	get-tree | select "POOSL Simulation" | get-menu "New Configuration" | click
+    with [get-editbox -after [get-label "Name:"]] {
+        set-text $name
+    }  
+    set-dialog-result File [concat "platform:/resource/" $file] 
+    get-window "Debug Configurations" | get-group "Model:" | get-button Browse | click 
+    
+    set-dialog-result File [concat "platform:/resource/" $ini]
+    get-window "Debug Configurations" | get-group "External port configuration:" | get-button Browse | click 
+
+    get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text $port
+    get-button Apply | click
+}
+
+proc "launch-debug-source" [val name] [val file] [val port] {
+	get-menu "Run/Debug Configurations..." | click
+		with [get-window "Debug Configurations"] {
+			launch-conf -name $name -port $port -file $file
+			add-examples-source
+		    get-button Debug | click
+		}
+}
+
+proc "add-examples-source" {
+	 get-tab-folder | get-tab-item Source | click
+    get-button "Add..." | click
+    with [get-window "Add Source"] {
+        get-table | select Project
+        get-button OK | click
+        with [get-window "Selection Needed"] {
+            get-table | get-item "nl.esi.poosl.examples" | check
+            get-button OK | click
+        }
+    }
+    get-tab-folder |  get-tab-item Simulator | click
+}
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

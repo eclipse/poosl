@@ -1,0 +1,41 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: Clean Workspace
+Element-Type: context
+Element-Version: 2.0
+Id: _PHpGMLV7EeapedkHH5Hcfw
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 11/28/16 4:00 PM
+
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACFkEEOwiAURNeaeIeG
+vaA7F7Qm1rg0JuoBEH4qpoUGqOnxBUpt6sYdb5j/Z4Du+6bO3mCs1CpHW7xBGSiuhVRVju6303qH9sVq
+SVujX8DdESw3snXe7dUFVayBoqyBqctgoCRK4Y7rpgHlCkrGU1DTIhuBzOjRyVpcW+CBEpZ+lCkRlRSn
+TYWB17K1gHsHvcOdxPbJDIiBD2EQzFTFTzJTdaGDTUzmAiW/aUkZ6/ho1xlI7gH+NzlHXygS/XHttOj7
+/PmvfgBQSwcIydVtJsYAAACUAQAAUEsBAhQAFAAICAgAAAAhAMnVbSbGAAAAlAEAAAgACQAAAAAAAAAA
+AAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAAUBAAAAAA==
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65--
+------=_contents/CleanProject/models/main.poosl-c457d547-74bc-3a00-b4d5-f278496d8b93
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/models/main.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAADAFBLBwgAAAAAAgAA
+AAAAAABQSwECFAAUAAgICAAAACEAAAAAAAIAAAAAAAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRV
+VAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAQQAAAAAA
+------=_contents/CleanProject/models/main.poosl-c457d547-74bc-3a00-b4d5-f278496d8b93--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVkU9LxDAQxe+C3yHk
+bqKCKKV1D4tYwYU9ud6kptMaN/9IprYf33S3aRcPirfM8Htv5k3y1aAV+QIfpDUFvWKXlIARtpamLWiH
+zcUdXd2fn+XWtwyEki4A88IhMoED663fB1cJyHbptbYGYUAyaJnNvtejb5xkQhb7Bf1AdBnnfd8zq1sW
+zfnr5ikhf8ya5YkZ5QeOR47PHCWm0pFeK6gM2S1tWRf0bVu6x83zy+0DVA7qfVnelKLpacxKSC7GEAYP
+RSydt58gMJwabo89OjGRaqSChLBJEq85gOiwelexi74Dyk8UVtXxRJNG2xpUWAx/WOpKGuasDep3Uz65
+puV52v4YjS/Zcv7fX42ib1BLBwhX+XvzDQEAADICAABQSwECFAAUAAgICAAAACEAV/l78w0BAAAyAgAA
+CAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAATAEAAAAA
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--

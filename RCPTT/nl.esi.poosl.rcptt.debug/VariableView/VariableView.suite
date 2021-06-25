@@ -1,0 +1,26 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: VariableView
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _Zgcm4OgrEeSUFO5-NwwB0Q
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 5/20/15 11:18 AM
+Tags: Variable
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_gInNsOgrEeSUFO5-NwwB0Q	// kind: 'test' name: 'Local Variable PC' path: 'Local Variable PC.test'
+_zZRUIOgtEeSUFO5-NwwB0Q	// kind: 'test' name: 'Detail View Variable' path: 'Detail View Variable.test'
+_x76IkP7GEeSf_PFiy2GHdA	// kind: 'test' name: 'Class Parameter Child' path: 'Class Parameter Child.test'
+_-4R7kP7KEeSf_PFiy2GHdA	// kind: 'test' name: 'Class Parameter Parent' path: 'Class Parameter Parent.test'
+_ZtAiUP7LEeSf_PFiy2GHdA	// kind: 'test' name: 'Instance Variable Child' path: 'Instance Variable Child.test'
+_bGrrAP7LEeSf_PFiy2GHdA	// kind: 'test' name: 'Instance Variable Parent' path: 'Instance Variable Parent.test'
+_m3nbEP7OEeSf_PFiy2GHdA	// kind: 'test' name: 'Local Variable' path: 'Local Variable.test'
+_rlIacP7LEeSf_PFiy2GHdA	// kind: 'test' name: 'Method Parameter In' path: 'Method Parameter In.test'
+_tbZ_kP7LEeSf_PFiy2GHdA	// kind: 'test' name: 'Method Parameter Out' path: 'Method Parameter Out.test'
+_ekNd4P4zEeSf_PFiy2GHdA	// kind: 'test' name: 'Method Variables PC' path: 'Method Variables PC.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Debug Other
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _ofGjID9BEeWqI5T62C2nUQ
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 2/28/17 3:16 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_UhDLIFreEeW-So5dxnWiMA	// kind: 'test' name: 'Concurrent Run and Debug' path: 'Concurrent Run and Debug.test'
+_sVvS8P1VEeSY2Ma_ry9BIw	// kind: 'test' name: 'Debug from Project Explorer' path: 'Debug from Project Explorer.test'
+_M_aq4OgNEeSUFO5-NwwB0Q	// kind: 'test' name: 'Editing while Debugging Continue' path: 'Editing while Debugging Continue.test'
+_KnN54OgMEeSUFO5-NwwB0Q	// kind: 'test' name: 'Editing while Debugging Relaunch' path: 'Editing while Debugging Relaunch.test'
+_uSgqIONVEeSZttsAewanYQ	// kind: 'test' name: 'Start Debug RightClick' path: 'Start Debug RightClick.test'
+_uS5EoONVEeSZttsAewanYQ	// kind: 'test' name: 'Stepping' path: 'Stepping.test'
+_UAsaoA0YEeaiAIW4k7PpxQ	// kind: 'test' name: 'Switch Case' path: 'Switch Case.test'
+_Y9hd0A0UEeaiAIW4k7PpxQ	// kind: 'test' name: 'Switch no Case/Default' path: 'Switch no Case_Default.test'
+_zEwMwOF4EeaHF4Utzt6ADQ	// kind: 'test' name: 'EndListCommas' path: 'EndListCommas.test'
+_2WxS8OF_EeaHF4Utzt6ADQ	// kind: 'test' name: 'CustomBasicClasses' path: 'CustomBasicClasses.test'
+_uNsvMP28Eea0C9TgAMMSpg	// kind: 'test' name: 'DelayNil' path: 'DelayNil.test'
+_c4WQIP3AEea0C9TgAMMSpg	// kind: 'test' name: 'DelayNegativ' path: 'DelayNegativ.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

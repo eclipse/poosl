@@ -1,0 +1,22 @@
+import "./Aircraft/Aircraft.poosl"
+import "./IFESystem/IFESystem.poosl"
+import "./Passenger/Passenger.poosl"
+import "./monitor.poosl"
+
+/* https://wiki.polarsys.org/Capella/Samples/IFE
+ * https://download.eclipse.org/capella/samples/IFE/Capella_IFE_Sample_Model_1.0_Highlights.pdf
+ */
+system
+ports
+
+instances
+	aircraft : AircraftProcess
+	ifeSystem : IFESystem
+	passenger : Passenger
+	monitor : Monitor(iterations := -1) // to simulate behavior and find deadlocks
+	// monitor : Monitor(iterations := 20)	// to terminate latency computations after a while
+channels
+	{ aircraft.OutAudio, ifeSystem.InAudio }
+	{ ifeSystem.OutAudio, passenger.InAudio }
+	{ passenger.OutControl, ifeSystem.InControl }
+	{ monitor.Input, aircraft.Monitor, passenger.Monitor }

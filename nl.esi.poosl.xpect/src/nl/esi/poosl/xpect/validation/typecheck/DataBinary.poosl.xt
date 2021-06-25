@@ -1,0 +1,83 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+data class superClass extends Object
+variables	
+methods		
+
+	// warning wrong type is return at binary method
+	// XPECT warnings --> "Method body of type Integer is not compatible with method return type childString" at "childString"
+	*(i : childString) : childString
+	i := "";
+	return 1	
+	
+	data class binaryParameterClass extends superClass
+	variables
+		
+	methods
+	// warning when wrong paremeter is declared in binary method	
+	// // XPECT warnings --> "Parameter types (Integer) are not equal to, or supertypes of, the parameter types (childString) of the overridden method in class superClass" at "text : Integer"
+	* (text : Integer) : childString
+	text := 1;
+	return "text"	
+	
+	data class binaryReturn extends superClass
+	variables		
+	methods	
+	// warning when wrong paremeter is declared in unary method
+	//XPECT warnings --> "Return type Integer is not equal to, or subtype of, the return type childString of the overridden method in class superClass" at "Integer"
+	* (text : childString) : Integer
+	text := "";
+	return 1	
+	
+		
+	data class binarySuperTypeClass extends superClass
+	variables		
+	methods
+	// No warning when supertype is used as paremeter
+	// XPECT noIssues
+	* (text : String) : childString 
+	text := "";
+	return ""
+		
+	data class binarySubtypeClass extends superClass
+	variables		
+	methods	
+	// No warning when subtype of return type is used
+	// XPECT noIssues
+	* (text : childString) : secondChild 
+	text := "";
+	return "" 
+
+process class Tester
+ports
+messages 
+variables
+init 
+	testInteger()()
+methods 
+	testInteger()()	 
+		5 +(-(5));  
+		//If this causes errors unary and binary return types are mixed up
+		//XPECT noIssues
+		10 - 10 
+		
+//---- Test Classes
+data class childString extends String
+	variables		
+	methods
+	
+data class secondChild extends childString
+	variables		
+	methods		
+	
+data class binOperationClass extends Object
+variables
+a : String
+b : Object
+methods
+someMethod() : Integer
+//XPECT warnings --> "No binary operation '+' defined for left expression of type String and right expression of type Integer" at "a + 1"
+return a + 1
+otherMethod() :Boolean
+return b !== 1 
+		

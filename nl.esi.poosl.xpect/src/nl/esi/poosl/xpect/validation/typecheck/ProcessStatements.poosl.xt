@@ -1,0 +1,63 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+
+	process class statementClass()
+ports	 
+messages	
+variables
+i : Integer	
+s : String
+r : Real
+init
+	assignMethod()()
+methods
+	assignMethod()() | |
+	// Warning at wrong type assignment
+	// XPECT warnings --> "Expression of type String is not compatible with variable of type Integer" at "i := "text""
+		i := "text";
+		// Avoid not used method warnings
+		ifMethod()();
+		delayMethod()();
+		guardMethod()();
+		whileMethod()()
+	ifMethod()()
+	// Warning at if statement when no compatible with boolean
+	// XPECT warnings --> "Condition of type Integer is incompatible with type Boolean" at "i + 1"
+		if i + 1 then
+			skip
+		fi;		
+	// No Warning at if statement with boolean statement
+	// XPECT noIssues  
+		if i > 1 then
+			skip
+		fi
+	delayMethod()()		
+	// Warning when delay parameter not an integer or real
+	// XPECT warnings --> "Delay of type String is incompatible with type Integer and Real" at "s"
+		delay s;
+ 	// No Warning when delay parameter is a real
+	// XPECT noIssues
+		delay r;
+		
+	// No Warning when delay parameter is an integer
+	// XPECT noIssues
+		delay i
+	guardMethod()()
+	// Warning when guard type is not boolean
+	// XPECT warnings --> "Guard of type Integer is incompatible with type Boolean" at "i+1"
+	[i+1] skip;
+	// No Warning when guard type is boolean
+	// XPECT noIssues
+	[i>1] skip
+	whileMethod()()
+	// Warning at if statement when no compatible with boolean
+	// XPECT warnings --> "Condition of type Integer is incompatible with type Boolean" at "i + 1"
+	while i+1 do
+		skip
+	od;
+	// No Warning at while statement with boolean statement
+	// XPECT noIssues
+	while i<1 do
+		skip
+	od 
+	

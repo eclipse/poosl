@@ -1,0 +1,17 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Graph Debug Editing
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _AptOsMXFEeWbAfcxAheu3Q
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 1/28/16 2:45 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_TIs8kMWkEeWbAfcxAheu3Q	// kind: 'test' name: 'Close opened Diagram' path: 'Close opened Diagram.test'
+_efo_oMWkEeWbAfcxAheu3Q	// kind: 'test' name: 'Dialog after Editing Diagram' path: 'Dialog after Editing Diagram.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

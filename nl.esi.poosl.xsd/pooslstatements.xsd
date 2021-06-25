@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="pooslstatements" targetNamespace="uri:poosl"
+	xmlns="uri:poosl" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	<!-- already included from pooslmodel.xsd. Including twice causes problem 
+		according to sche validation. <xs:include id="poosltypes" schemaLocation="http://www.es.ele.tue.nl/poosl/xml/poosltypes.xsd 
+		"/> -->
+
+	<xs:simpleType name="t_binary_operator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="+" />
+			<xs:enumeration value="-" />
+			<xs:enumeration value="*" />
+			<xs:enumeration value="/" />
+			<xs:enumeration value="=" />
+			<xs:enumeration value="!=" />
+			<xs:enumeration value="==" />
+			<xs:enumeration value="!==" />
+			<xs:enumeration value="&amp;" />
+			<xs:enumeration value="|" />
+			<xs:enumeration value="&lt;" />
+			<xs:enumeration value="&gt;" />
+			<xs:enumeration value="&gt;=" />
+			<xs:enumeration value="&lt;=" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="t_unary_operator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="-" />
+			<xs:enumeration value="!" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="t_expressions">
+		<xs:choice minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="sequence_of_expressions" type="t_expressions" />
+			<xs:element name="assignment" type="t_assignment" />
+			<xs:element name="data_method_call" type="t_data_method_call" />
+			<xs:element name="constant" type="t_constant" />
+			<xs:element name="variable" type="t_variable_ref" />
+			<xs:element name="binary_operation" type="t_binary_operation" />
+			<xs:element name="unary_operation" type="t_unary_operation" />
+			<xs:element name="self" type="t_empty" />
+			<xs:element name="nil" type="t_empty" />
+			<xs:element name="current_time" type="t_current_time" />
+			<xs:element name="if" type="t_if_expression" />
+			<xs:element name="while" type="t_while_expression" />
+			<xs:element name="switch" type="t_switch_expression" />
+			<xs:element name="new" type="t_object_creation" />
+			<xs:element name="return" type="t_expression" />
+		</xs:choice>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_expression">
+		<xs:complexContent>
+			<xs:restriction base="t_expressions">
+				<xs:choice minOccurs="1" maxOccurs="1">
+					<xs:element name="sequence_of_expressions" type="t_expressions" />
+					<xs:element name="assignment" type="t_assignment" />
+					<xs:element name="data_method_call" type="t_data_method_call" />
+					<xs:element name="constant" type="t_constant" />
+					<xs:element name="variable" type="t_variable_ref" />
+					<xs:element name="binary_operation" type="t_binary_operation" />
+					<xs:element name="unary_operation" type="t_unary_operation" />
+					<xs:element name="self" type="t_empty" />
+					<xs:element name="nil" type="t_empty" />
+					<xs:element name="current_time" type="t_current_time" />
+					<xs:element name="if" type="t_if_expression" />
+					<xs:element name="while" type="t_while_expression" />
+					<xs:element name="switch" type="t_switch_expression" />
+					<xs:element name="new" type="t_object_creation" />
+					<xs:element name="return" type="t_expression" />
+				</xs:choice>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_assignment">
+		<xs:complexContent>
+			<xs:extension base="t_expression">
+				<xs:attribute name="variable_name" type="t_variable_name"
+					use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_data_method_call">
+		<xs:sequence>
+			<xs:element name="receiver" type="t_expression" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="argument" type="t_expression" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="method_name" type="t_data_method_name"
+			use="required" />
+		<xs:attribute name="super" type="t_boolean" use="required" />
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_constant">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type" type="t_constant_type" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_current_time">
+	</xs:complexType>
+
+	<xs:complexType name="t_variable_ref">
+		<xs:attribute name="name" type="t_variable_name" />
+	</xs:complexType>
+
+	<xs:complexType name="t_binary_operation">
+		<xs:sequence>
+			<xs:element name="left_operand" type="t_expression" />
+			<xs:element name="right_operand" type="t_expression" />
+		</xs:sequence>
+		<xs:attribute name="operator" type="t_binary_operator" />
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_unary_operation">
+		<xs:sequence>
+			<xs:element name="operand" type="t_expression" />
+		</xs:sequence>
+		<xs:attribute name="operator" type="t_unary_operator" />
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_if_expression">
+		<xs:sequence>
+			<xs:element name="condition" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="then" type="t_expression" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="else" type="t_expression" minOccurs="0"
+				maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_while_expression">
+		<xs:sequence>
+			<xs:element name="condition" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="body" type="t_expression" minOccurs="1"
+				maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_switch_expression">
+		<xs:sequence>
+			<xs:element name="control_expression" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="case" type="t_switch_case_expression"
+				minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="default" type="t_expression"
+				minOccurs="0" maxOccurs="1" />
+
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_switch_case_expression">
+		<xs:sequence>
+			<xs:element name="value_expression" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="body" type="t_expression" 
+			    minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_object_creation">
+		<xs:attribute name="data_class" type="t_class_name" />
+	</xs:complexType>
+
+	<xs:complexType name="t_statements">
+		<xs:choice minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="sequence_of_statements" type="t_statements" />
+			<xs:element name="parallel_statements" type="t_statements" />
+			<xs:element name="select_statements" type="t_statements" />
+			<xs:element name="expression" type="t_expression" />
+			<xs:element name="process_method_call" type="t_process_method_call" />
+			<xs:element name="message_send" type="t_message_send" />
+			<xs:element name="message_receive" type="t_message_receive" />
+			<xs:element name="guard" type="t_guard" />
+			<xs:element name="if" type="t_if_statement" />
+			<xs:element name="while" type="t_while_statement" />
+			<xs:element name="abort" type="t_abort" />
+			<xs:element name="interrupt" type="t_interrupt" />
+			<xs:element name="skip" type="t_empty" />
+			<xs:element name="delay" type="t_expression" />
+			<xs:element name="switch" type="t_switch_statement" />
+		</xs:choice>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_statement">
+		<xs:complexContent>
+			<xs:restriction base="t_statements">
+				<xs:choice minOccurs="1" maxOccurs="1">
+					<xs:element name="sequence_of_statements" type="t_statements" />
+					<xs:element name="parallel_statements" type="t_statements" />
+					<xs:element name="select_statements" type="t_statements" />
+					<xs:element name="expression" type="t_expression" />
+					<xs:element name="process_method_call" type="t_process_method_call" />
+					<xs:element name="message_send" type="t_message_send" />
+					<xs:element name="message_receive" type="t_message_receive" />
+					<xs:element name="guard" type="t_guard" />
+					<xs:element name="if" type="t_if_statement" />
+					<xs:element name="while" type="t_while_statement" />
+					<xs:element name="abort" type="t_abort" />
+					<xs:element name="interrupt" type="t_interrupt" />
+					<xs:element name="skip" type="t_empty" />
+					<xs:element name="delay" type="t_expression" />
+					<xs:element name="switch" type="t_switch_statement" />
+				</xs:choice>
+				<xs:attribute name="stmt_handle" type="xs:int" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_process_method_call">
+		<xs:sequence>
+			<xs:element name="argument" type="t_expression" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="return_variable" type="t_variable_name"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="method_name" type="t_method_name"
+			use="required" />
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_initial_process_method_call">
+		<xs:complexContent>
+			<xs:restriction base="t_process_method_call">
+				<xs:sequence>
+					<xs:element name="argument" type="t_expression"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="return_variable" type="t_variable_name"
+						minOccurs="0" maxOccurs="0" />
+				</xs:sequence>
+				<xs:attribute name="method_name" type="t_method_name"
+					use="required" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_message_receive">
+		<xs:sequence>
+			<xs:element name="variable" type="t_variable_name"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="condition" type="t_expression"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="atomic_expression" type="t_expression"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="port" type="t_port_name" />
+			<!-- We would like to have in the future port expressions evaluating to 
+				a string: <xs:element name="port" type="t_expression"/> -->
+		</xs:sequence>
+		<xs:attribute name="message_name" type="t_message_name" />
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_message_send">
+		<xs:sequence>
+			<xs:element name="argument" type="t_expression" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="atomic_expression" type="t_expression"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="port" type="t_port_name" />
+			<!-- We would like to have in the future port expressions evaluating to 
+				a string: <xs:element name="port" type="t_expression"/> -->
+		</xs:sequence>
+		<xs:attribute name="message_name" type="t_message_name" />
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_guard">
+		<xs:sequence>
+			<xs:element name="expression" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="statement" type="t_statement" minOccurs="1"
+				maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_if_statement">
+		<xs:sequence>
+			<xs:element name="condition" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="then" type="t_statement" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="else" type="t_statement" minOccurs="0"
+				maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_while_statement">
+		<xs:sequence>
+			<xs:element name="condition" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="body" type="t_statement" minOccurs="1"
+				maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_abort">
+		<xs:sequence>
+			<xs:element name="normal_behavior" type="t_statement"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="aborting_behavior" type="t_statement"
+				minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_interrupt">
+		<xs:sequence>
+			<xs:element name="normal_behavior" type="t_statement"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="interrupting_behavior" type="t_statement"
+				minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_switch_statement">
+		<xs:sequence>
+			<xs:element name="control_expression" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="case" type="t_switch_case_statement"
+				minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="default" type="t_statement" minOccurs="0"
+				maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="t_switch_case_statement">
+		<xs:sequence>
+			<xs:element name="value_expression" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="body" type="t_statement" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="stmt_handle" type="xs:int" />
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,102 @@
+importlib "json.poosl"
+import "libraries/extended_json.poosl"
+
+data class Special
+variables Counter: Integer
+methods
+counter : Integer
+	return Counter
+printString : String
+	if Counter = nil then Counter := 0 else Counter := Counter + 1 fi;
+	return Counter printString
+
+data class One extends Array
+variables
+methods
+supercall(I: Integer, O: Object) : One
+	self ^putAt(I, O);
+	return self
+
+data class Two extends Map
+variables
+methods
+supercall(K, V: Object) : Two
+	self ^putAt(K, V);
+	return self
+
+process class Test
+ports
+messages
+variables X,Y,Test: Object
+init Run()()
+methods
+Run()()
+X := new(Bag) add("X") add("X") add("Y") add("Z");
+Test := Y printString = "Bag{[2 * \"X\"], [1 * \"Y\"], [1 * \"Z\"]}";
+Y := X iterator advance;
+Test := Y printString = "Iterator on Bag to \"X\"";
+if !Test then nil error("Test on line 37 failed") fi;					// Tests inheritance tree for prinstring of BagIterator
+
+X := new(Map) putAt("X", "Y");
+Test := X printString = "Map{[\"X\", \"Y\"]}";
+if !Test then nil error("Test on line 41 failed") fi;					// Tests inheritance tree for printString of Map
+
+X := new(Set) add("X") add("X") add("Y");
+Test := X printString = "Set{\"X\", \"Y\"}";
+if !Test then nil error("Test on line 45 failed") fi;					// Tests self^ calls for non-primitive class Set
+
+X := new(Special);								// Manual inspection of X after executing this expression should return 0
+Test := X counter = nil;
+if !Test then nil error("Test on line 49 failed") fi;					// Tests possibility of side effect in printString
+X printString; X printString; X printString; 	// Manual inspection of X after executing these expression should return 3
+Test := X counter = 2; 							// Manual inspection of X after executing this expression should return 3
+if !Test then nil error("Test on line 52 failed") fi;					// Tests possibility of side effect in printString
+Test := X printString = "3";
+if !Test then nil error("Test on line 54 failed") fi;					// Tests possibility of side effect in printString
+																		// Manual inspections test that inspections do no cause side effects
+
+X := "'\\xFF'" toChar asString;											// inspection of X after executing using this expression should return "ÿ" 
+Test := X = "ÿ";
+if !Test then nil error("Test on line 59 failed") fi;					// Tests correctness of print String of Char in range 128 - 255 with ISO 8859-1 encoding 
+
+X := new(JSON) parse("3e-4");
+Test := X = 3.0e-4;
+if !Test then nil error("Test on line 63 failed") fi;					// Tests correctness of toReal in JSON parser
+
+X := new(JSON) parse("\"\\f\\b\\t\\r\\//\\n\\\\\\u0045\"");
+Test := X = "\f\b\t\r//\n\\E";
+if !Test then nil error("Test on line 67 failed") fi;					// Tests correctness of conversion for special characters
+
+X := "'\\xf0'" toChar asString;											// inspection of X after executing using this expression should return "ð" 
+Test := X = "ð";
+if !Test then nil error("Test on line 71 failed") fi;					// Tests correctness of print String of Char in range 128 - 255 with ISO 8859-1 encoding 
+
+X := new(Array) resize(3) putAt(1, 3.0e-4) putAt(2, true) putAt(3, "\t\r//\n\\E");
+Y := new(JSON) parse("[3e-4,true,\"\\t\\r\\//\\n\\\\\\u0045\"]");
+Test := X = Y;
+if !Test then nil error("Test on line 76 failed") fi;					// Combines some tests for JSON parser
+
+X := new(ExtendedJSON) convert(X) printString;
+Y := new(JSON) convert(Y);
+Test := X = Y;
+if !Test then nil error("Test on line 81 failed") fi;					// Tests self^ for primitive class Array
+
+X := new(Map) putAt("1", true) putAt("2", nil) putAt("3", 3.14e5);
+Y := new(ExtendedJSON) convert(X) printString;
+Test := X = new(JSON) parse(Y);
+if !Test then nil error("Test on line 86 failed") fi;					// Tests self^ for non-primitive class Map
+
+X := new(One) resize(1) supercall(1, true);
+Test := X printString = "Array(true)";
+if !Test then nil error("Test on line 90 failed") fi;					// Tests self^ for non-primitive class Array
+
+X := new(Two) supercall(1, true);
+Test := X printString = "Map{[1, true]}";
+if !Test then nil error("Test on line 94 failed") fi;					// Tests self^ for non-primitive class Map
+
+skip
+
+system
+instances Test: Test()
+channels
+	

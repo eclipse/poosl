@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_PHpGMLV7EeapedkHH5Hcfw,_TTc_ULV7EeapedkHH5Hcfw
+Element-Name: Statement switch
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _4irVULZHEeapedkHH5Hcfw
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 3/29/17 1:56 PM
+Testcase-Type: ecl
+Verifications: _55tu0LZJEeapedkHH5Hcfw
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "main.poosl" | get-text-viewer | type-text "process class   someClass()" + 
+"ports	" +
+"messages	" +
+"variables	" +
+"init" + 
+"	someMethod()()" +
+"methods" +
+"	someMethod()() | |" +
+"		  		switch    1    +   1 do			case 1   +   1    then		1   +   1		default			1   +   1 	od "
+
+get-editor "main.poosl" | get-text-viewer | get-menu "Source/Format" | click
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

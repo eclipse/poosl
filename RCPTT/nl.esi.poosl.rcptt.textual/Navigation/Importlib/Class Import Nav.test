@@ -1,0 +1,48 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_ZJx58BuLEeeKSO4xt8npOw,_q_oWoBuKEeeKSO4xt8npOw
+Element-Name: Class Import Nav
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _y5ZA0BuNEeeKSO4xt8npOw
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 4/7/17 2:35 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    hover-text 8 27 -with M1
+    set-caret-pos 8 26
+    open-declaration
+}
+get-editor "model.poosl" -index 1 | get-text-viewer | get-property "getSelectionText()" | equals clusterClass | verify-true
+
+
+get-editor "model.poosl"  -index 1 | close
+with [get-editor "model.poosl"] {
+    with [get-text-viewer] {
+        set-caret-pos 9 25
+        open-declaration
+    }
+    click
+}
+get-editor "model.poosl" -index 1 | get-text-viewer | get-property "getSelectionText()" | equals processClass | verify-true
+get-editor "model.poosl"  -index 1 | close
+
+
+
+
+with [get-editor "model.poosl"] {
+    with [get-text-viewer] {
+        set-caret-pos 23 29
+        open-declaration
+    }
+    click
+}
+get-editor "model.poosl" -index 1 | get-text-viewer | get-property "getSelectionText()" | equals dataClass | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

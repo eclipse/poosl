@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="poosltypes" targetNamespace="uri:poosl" xmlns="uri:poosl" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xs:simpleType name="t_message_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="read" />
+      <xs:enumeration value="write" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="t_boolean">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="true" />
+      <xs:enumeration value="false" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="t_typed_variable">
+    <xs:attribute name="name" type="t_variable_name" use="required" />
+    <xs:attribute name="type" type="t_poosl_type" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="t_poosl_type_attribute">
+    <xs:attribute name="type" type="t_poosl_type" use="required" />
+  </xs:complexType>
+  
+  <xs:simpleType name="t_poosl_type">
+    <xs:restriction base="t_class_name" />
+  </xs:simpleType>
+
+  <xs:simpleType name="t_variable_name">
+    <xs:restriction base="t_identifier" />
+  </xs:simpleType>
+
+  <xs:simpleType name="t_data_method_name">
+    <xs:union memberTypes="t_identifier t_operator"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="t_operator">
+    <xs:restriction base="xs:string">
+      <xs:pattern
+		value="!|\+|\-|\*|/|!=|==|!==|&amp;|\||&lt;|&gt;|&lt;=|&gt;=|="/>
+    </xs:restriction>
+  </xs:simpleType>	
+  
+  <xs:complexType name="t_empty">
+  	<xs:attribute name="stmt_handle" type="xs:int"/>
+  </xs:complexType>
+  
+</xs:schema>

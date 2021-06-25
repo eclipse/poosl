@@ -1,0 +1,76 @@
+/** This example demonstrates how processes can invoke remote procedures using JSON-RPC.
+ *
+ *  For questions and feedback contact:
+ *  benny.akesson@tno.nl
+ **/
+
+importlib "SocketProcess.poosl"
+import "../../../JsonRPC.poosl"
+
+process class Model()
+ports
+	/* This is the only port; it is used for sending and receiving messages over the socket. */
+	Port
+messages
+	/* Received message over the socket. */
+	Port?Received(String),
+	/* Message to be sent over the socket. */
+	Port!Send(String)
+variables
+	console : Console
+	observer : Observer
+init
+	Init()()
+methods
+	/* Initializes the process class. */
+	Init()() | parameters, numbers : Array, result : Object |
+		console := new(Console);
+		observer := new(Observer) register();
+
+		// Sum two numbers
+		parameters := new(Array) resize(2) putAt(1, 20.5) putAt(2, 10);
+		rpc("sum_two_numbers", parameters)(result);
+		console writeLine("Result of 20.5 + 10 is " + result printString);
+		result assert(result = 30.5, "Incorrect result from RPC to sum_two_numbers()");
+
+		// Sort an array of numbers
+		numbers := new(Array) resize(3) putAt(1, 3) putAt(2, 2) putAt(3, 1);
+		parameters := new(Array) resize(1) putAt(1, numbers);
+		rpc("sort", parameters)(result);
+		console writeLine("Sorting [3, 2, 1] results in " + result printString);
+
+		// Retrieve contact information
+		rpc("contact_info", nil)(result);
+		console writeLine("Contact information: " + result printString);
+
+		// Kill the simulation
+		observer halt()
+
+	/* Make a remote procedure call to the given method with the provided parameters */
+	rpc(method : String, parameters : Array)(result : Object) | rpc : Request, received : String, response : Response |
+		rpc := new(Request);
+		response := new(Response);
+
+		rpc setMethod(method);
+		rpc setParameters(parameters);
+
+		Port!Send(rpc toJSON);
+		/* Note that SocketProcess adds an additional newline. */
+		Port?Received(received);
+		response fromJSON(received);
+		if response isError then
+			console writeLine(response getErrorMessage)
+		fi;
+		result := response getResult
+
+// -----------------------------------------------------------------------------
+
+/* Top-level system specification */
+system
+instances
+	/* Model side of the protocol. */
+	Model : Model()
+	/* Socket connection for the Model process. */
+	ModelSocket : SocketProcess(HostName := "localhost", PortNumber := 9999)
+channels
+	{ Model.Port, ModelSocket.Port }

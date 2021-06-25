@@ -1,0 +1,17 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+// checkImportUriIsValid, Show error when uri points to nonexisting file
+// XPECT errors --> "Invalid import URI: "../imports/WrongImportExample.poosl" (some example URI formats: "../folder/file.poosl", "file:///C:/folder/file.poosl") URI can not point to a linked resource (linked resources are shown in the Project explorer with a shortcut icon)" at ""../imports/WrongImportExample.poosl""
+import "../imports/WrongImportExample.poosl"
+
+// checkImportUriIsValid, Show error when uri is invalid
+// XPECT errors --> "Invalid import URI: "../imports/import..poosl" (some example URI formats: "../folder/file.poosl", "file:///C:/folder/file.poosl") URI can not point to a linked resource (linked resources are shown in the Project explorer with a shortcut icon)" at ""../imports/import..poosl""
+import "../imports/import..poosl"  
+
+// checkImportUriIsValid, Show error when uri does not point to poosl model
+// XPECT errors --> "Invalid import URI: "../imports/notpoosl.java" (some example URI formats: "../folder/file.poosl", "file:///C:/folder/file.poosl") URI can not point to a linked resource (linked resources are shown in the Project explorer with a shortcut icon)" at ""../imports/notpoosl.java""
+import "../imports/notpoosl.java"  
+
+// checkImportUriIsValid, Show no error when uri is valid
+// XPECT noIssues
+import "../imports/import.poosl"  

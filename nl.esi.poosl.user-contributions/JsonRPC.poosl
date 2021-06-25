@@ -1,0 +1,85 @@
+importlib "structures.poosl"
+importlib "json.poosl"
+
+/** This file contains two data classes, Request and Response, that implements
+ *  remote procedure calls (RPCs) following a subset of the JSON-RPC 2.0 standard:
+ *  http://www.jsonrpc.org/specification
+
+ *  Requests can be turned into JSON messages that can be processed by a
+ *  JSON-RPC 2.0 compatible server. Response can parse the returned JSON
+ *  message and extract the result of the RPC, or detect errors.
+
+ *  Limitations:
+ *   - Does not support notifications
+ *   - Does not support batching of requests
+
+ *  For questions and feedback contact:
+ *  benny.akesson@tno.nl
+ **/
+/* Data class that creates a JSON-RPC 2.0 request. */
+data class Request extends Object
+variables
+	method : String
+	parameters : Array
+methods
+	/* Serializes the request into a JSON string, following the JSON-RPC 2.0 standard */
+	toJSON() : String | map : Map, json : JSON |
+		map := new(Map);
+		json := new(JSON);
+		/* Necessary fields prescribed by the standard.*/
+		map putAt("id", 1); // Ideally, this should be a globally incrementing ID.
+		map putAt("jsonrpc", "2.0");
+		map putAt("method", method);
+		map putAt("params", parameters);
+		return json convert(map)
+
+	/* Sets the name of the method to invoke in the RPC to be the string passed as a parameter. */
+	setMethod(Method : String) : Request | str : String |
+		if Method = nil then
+			self error("JSON-RPC method name may not be nil.")
+		fi;
+		if Method size() > 3 then
+			str := Method subString(1, 4);
+			Method assert(str != "rpc.", "Method names starting with 'rpc.' " + " are for rpc-internal methods only.")
+		fi;
+		method := Method;
+		return self
+
+	/* Sets the provided array as parameters of the RPC. */
+	setParameters(Parameters : Array) : Request
+		parameters := Parameters;
+		return self
+
+// -----------------------------------------------------------------------------
+/* Data class that parses the result from a JSON-RPC 2.0 response. */
+data class Response extends Object
+variables
+	result : Map
+methods
+	/* Parses the string passed as a parameter and returns a JSON object */
+	fromJSON(Result : String) : Response | json : JSON |
+		json := new(JSON);
+		result := json parse(Result);
+		return self
+
+	/* Returns a boolean indicated whether or not an error has occurred during the RPC. */
+	isError() : Boolean
+		return result includesKey("error")
+
+	/* Returns an error message in case an error occurred. Otherwise, nil is returned. */
+	getErrorMessage() : String | str : String |
+		if self isError then
+			str := result at("error") at("message")
+		else
+			str := nil
+		fi;
+		return str
+
+	/* Returns the result of the RPC as an object. If an error occurred during the RPC, nil is returned */
+	getResult() : Object | o : Object |
+		if self isError then
+			o := nil
+		else
+			o := result at("result")
+		fi;
+		return o

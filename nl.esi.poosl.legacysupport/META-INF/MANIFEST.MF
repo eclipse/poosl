@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: POOSL Legacy Support
+Bundle-SymbolicName: nl.esi.poosl.legacysupport;singleton:=true
+Bundle-Version: 4.2.2.qualifier
+Bundle-Activator: nl.esi.poosl.legacysupport.Activator
+Bundle-Vendor: TNO ESI
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Import-Package: org.eclipse.jface.text,
+ org.osgi.framework;version="1.3.0"
+Bundle-ActivationPolicy: lazy
+Export-Package: nl.esi.poosl.legacysupport.xml2xtext
+Require-Bundle: org.eclipse.equinox.registry,
+ com.google.inject,
+ org.eclipse.emf.ecore,
+ nl.esi.poosl.model,
+ nl.esi.poosl.xtext,
+ nl.esi.poosl.xtext.ui,
+ org.eclipse.swt,
+ org.eclipse.jface,
+ org.eclipse.ui.workbench,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ nl.esi.poosl.generatedxmlclasses,
+ jakarta.xml.bind-api
+Automatic-Module-Name: nl.esi.poosl.legacysupport

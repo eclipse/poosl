@@ -1,0 +1,97 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+//XPECT noIssues
+process class someProcessClass(someVar : Object, someotherVar : Object)
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		someVar;
+		someotherVar
+
+//XPECT errors --> "There is another variable in scope with the same name someVar" at "someVar"
+process class processClass(someVar : Object, someVar : String)
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		someVar 
+		
+process class processVariablesClass(someVar : Object)
+ports	
+messages	
+variables
+//XPECT errors --> "There is another variable in scope with the same name someVar" at "someVar"
+someVar : Object	 
+init
+	someMethod()()
+methods
+	someMethod()() | | 
+	someVar
+		 
+//XPECT warnings --> "Variable is not used" at "someVar"
+process class processMethodParamClass(someVar : Object)
+ports	
+messages	
+variables
+init
+	someMethod()()
+methods 
+	//XPECT errors --> "There is another variable in scope with the same name someVar" at "someVar"
+	someMethod()() | someVar : Object| 
+		someVar
+
+		
+//XPECT noIssues
+cluster class clusterClass(someVar : Object, someotherVar : Object)
+ports	
+instances
+someInstance: someProcessClass(someVar:= someVar ,someotherVar := someotherVar)
+channels
+
+//XPECT errors --> "There is another variable in scope with the same name someVar" at "someVar"
+cluster class clusterParamtypeClass(someVar : Object, someVar : String)
+ports	
+instances	
+channels
+
+
+
+process class UniqueParameter(i : Object)
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |		
+		i 
+		
+
+
+cluster class instClusterClass()
+ports
+	
+instances
+ 	
+ 	// Show error when parameter is instantiated more then once
+	// XPECT errors --> "There is another instantiation for the same parameter i" at "i" 
+	someInstance: UniqueParameter(i := nil, 
+	
+	// Show error when parameter is instantiated more then once
+	// XPECT errors --> "There is another instantiation for the same parameter i" at "i"
+	i := 5)
+	
+channels	
+
+
+	

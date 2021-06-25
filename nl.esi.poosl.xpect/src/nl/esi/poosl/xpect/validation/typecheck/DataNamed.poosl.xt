@@ -1,0 +1,80 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+
+
+data class superClass extends Object
+variables	
+methods	
+//Warning when wrong type is returned at named method
+// XPECT warnings --> "Method body of type Integer is not compatible with method return type childString" at "childString"
+wrongReturn (text: childString) : childString 
+	text := ""; 
+	return 1
+	
+	returnWhile() : Integer	
+		return while true do
+			"else"
+		od	
+
+	// Data method return type nil when Integer is expected
+	//XPECT noIssues
+	returnNil() : Integer
+	return nil
+	
+	// Data method return type nil when Integer is expected
+	//XPECT noIssues
+	returnNilObject() : Nil
+	return nil
+	
+		// Data method return type Integer with new(Integer)
+	//XPECT noIssues
+	returnNewInteger() : Integer
+	return new(Integer)
+	
+	data class nameParameterClass extends superClass
+	variables
+		
+	methods
+	// warning when wrong paremeter is declared
+		// XPECT warnings --> "Parameter types (Integer) are not equal to, or supertypes of, the parameter types (childString) of the overridden method in class superClass" at "text : Integer"
+	wrongReturn (text : Integer) : childString
+	text := 1;
+	return "text"	
+	
+	
+	data class namedReturnClass extends superClass
+	variables		
+	methods	
+	// warning when wrong return return type is declared
+	//XPECT warnings --> "Return type Integer is not equal to, or subtype of, the return type childString of the overridden method in class superClass" at "Integer"
+	wrongReturn (text : childString) : Integer
+	text := "";
+	return 1		
+			
+	data class namedSupertypeClass extends superClass
+	variables		
+	methods
+	// warning when wrong paremeter is given
+	// XPECT noIssues
+	wrongReturn (text : String) : childString  
+	text := "";
+	return ""
+		
+	data class namedSubtypeClass extends superClass
+	variables		
+	methods	
+	// warning when wrong return return type is declared
+	// XPECT noIssues
+	wrongReturn (text : childString) : secondChild 
+	text := "";
+	return ""	
+	
+	
+	//---- Test Classes
+data class childString extends String
+	variables		
+	methods
+	
+data class secondChild extends childString
+	variables		
+	methods		

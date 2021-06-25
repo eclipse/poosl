@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_eJkWsFVnEea5R70fIjiNMA,_lVE1EONVEeSZttsAewanYQ
+Element-Name: JobShop
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _bm1IAFpPEeWVIdXlfxjrJw
+Runtime-Version: 2.3.0.201806262310
+Save-Time: 7/15/19 2:05 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+file-poosl-debug "nl.esi.poosl.examples/models-basic/FIFOBuffer/buffer.poosl"
+select-root-click-record
+click-resume
+
+wait 50
+get-view Console | get-button Terminate | click
+
+try -times 10 -delay 50 -command {
+	get-view Console | get-button Terminate | get-property enablement | equals false | verify-true
+} -finally {
+	get-view Console | get-button Terminate | get-property enablement | equals false | verify-true
+	get-text-viewer | get-property text | contains terminated | verify-false
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

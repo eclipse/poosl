@@ -1,0 +1,17 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: Open PC System Debug Diagram
+Element-Type: context
+Element-Version: 2.0
+Id: _8BmeYMUEEeWbAfcxAheu3Q
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 1/27/16 3:48 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/ProducerConsumer" 
+    | select "producer_consumer.poosl [Simulated time: 0]/ProducerConsumer" | get-menu "Open Debug Diagram"
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

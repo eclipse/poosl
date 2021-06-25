@@ -1,0 +1,60 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3uYf8ONbEeSZttsAewanYQ,_3ttxkONbEeSZttsAewanYQ,_lVE1EONVEeSZttsAewanYQ
+Element-Name: Open Poosl File in Java Cancel
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _309pEONbEeSZttsAewanYQ
+Runtime-Version: 2.0.0.201506242315
+Save-Time: 6/29/15 6:08 PM
+Tags: Setup, Java Perspective, Edit Perspective, File, Perspective Pereference, Cancel
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Select Poosl File in Java perspective
+Click Cancel to in confirm dialog to open edit perspective.
+verify visible java perspective button
+
+Select Poosl File in Java perspective
+check remember my decision  in confirm dialog and Click Cancel 
+verify visible java perspective button
+
+Select Poosl File in Java perspective
+No dialog should open
+verify visible java perspective button
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Package Explorer" | get-tree | select "nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+    | double-click
+get-window "Confirm Perspective Switch" | get-button Cancel | click
+with [get-button Java] {    
+    get-property selected | equals true | verify-true
+}
+get-tab-folder -index 1 | get-property activePage | equals "hello_world.poosl" | verify-true
+get-editor "hello_world.poosl" | close
+get-view "Package Explorer" | get-tree | select "nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+    | double-click
+with [get-window "Confirm Perspective Switch"] {
+    get-button "Remember my decision" | check
+    get-button Cancel | click
+}
+with [get-button Java] {   
+    get-property selected | equals true | verify-true
+}
+get-tab-folder -index 1 | get-property activePage | equals "hello_world.poosl" | verify-true
+get-editor "hello_world.poosl" | close
+get-view "Package Explorer" | get-tree | select "nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+    | double-click
+with [get-button Java] {
+    
+    get-property selected | equals true | verify-true
+}
+get-tab-folder -index 1 | get-property activePage | equals "hello_world.poosl" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

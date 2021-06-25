@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: POOSL Wizards
+Bundle-SymbolicName: nl.esi.poosl.pooslproject;singleton:=true
+Bundle-Version: 4.2.2.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.ui.ide;bundle-version="3.9.0",
+ org.eclipse.core.resources;bundle-version="3.8.100",
+ org.eclipse.equinox.registry,
+ org.apache.commons.lang,
+ nl.esi.poosl.rotalumisclient
+Bundle-Vendor: TNO ESI
+Import-Package: org.eclipse.ui.internal.navigator,
+ org.eclipse.ui.navigator,
+ org.eclipse.ui.navigator.resources
+Automatic-Module-Name: nl.esi.poosl.pooslproject

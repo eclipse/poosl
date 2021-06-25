@@ -1,0 +1,44 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _pPT2MHjAEeaJ2L29rpch3A,_8DR5QHjFEeaJ2L29rpch3A
+Element-Name: ProcessClass
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _GGhNEHj4EeaJ2L29rpch3A
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/13/16 12:02 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "main.poosl" | get-text-viewer] {
+    hover-text 22 22
+    set-caret-pos 22 30
+    get-menu "Rename Element" | click
+    type-text Renamed
+    key-type Enter
+    set-caret-pos 16 11
+    select-range 16 10 16 32
+
+    get-property "getSelectionText()" | equals mainProcesClassRenamed 
+    | verify-true
+
+    set-caret-pos 22 65
+    get-menu "Rename Element" | click
+    type-text Renamed    
+    key-type Enter
+}
+
+get-view "Project Explorer" | get-tree | select "CleanProject/models/parent.poosl" | double-click
+with [get-editor "parent.poosl" | get-text-viewer] {
+    hover-text 24 19
+    set-caret-pos 8 16
+    select-range 8 15 8 39
+    get-property "getSelectionText()" | equals parentProcesClassRenamed 
+    | verify-true
+}
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

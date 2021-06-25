@@ -1,0 +1,135 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+
+process class processParamClass()
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | s : Integer|
+	// Warning at wrong input parameter input
+	// XPECT warnings --> "Input argument of type Integer is incompatible with declaration type String" at "s"
+		ParamTypeInMethod(s)();
+		
+	// XPECT warnings --> "Output variable of type Integer is incompatible with declaration type String" at "s"
+		ParamTypeOutMethod()(s)  		
+	ParamTypeInMethod(s : String)() | |
+		s := "text" 
+	ParamTypeOutMethod()(s : String) | |
+		s := "text" 	
+		
+		
+		
+process class compatibleClass()
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | intVar: Integer, objVar: Object |
+		intVar := 1;
+	// comapatible assignments assign string to int
+	//  XPECT warnings --> "Expression of type String is not compatible with variable of type Integer" at "intVar := "Test""
+		intVar := "Test";
+		
+		objVar := 1;
+		intVar := objVar;
+		
+		objVar := "Test";
+		objVar := intVar;
+		
+		paramMethod(nil, nil)(); 
+		paramMethod(1, 1)();
+		paramMethod(objVar, objVar)();
+		paramMethod(1, "Test")();
+	// comapatible assignments, processMethodCall
+	//  XPECT warnings --> "Input argument of type String is incompatible with declaration type Integer" at ""Test"" 	
+		paramMethod("Test", "Test")()	
+	paramMethod(intVar: Integer, objVar: Object)()
+		intVar := objVar
+		
+		//custom dataclasses
+		
+		
+data class parentClass extends Object
+variables		
+methods		
+	
+data class child1Class extends parentClass
+variables	
+methods		
+		
+data class child2Class extends parentClass
+variables		
+methods
+	
+process class compatibleCustomClass()
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | child1Var: child1Class, parentVar: parentClass |
+	
+		child1Var := new(child1Class);
+	// comapatible assignments custom classes, assign child to different child with same parent
+	//  XPECT warnings --> "Expression of type child2Class is not compatible with variable of type child1Class" at "child1Var := new(child2Class)" 	
+		child1Var := new(child2Class);
+		child1Var := parentVar;
+		
+				
+		parentVar := new(child1Class);
+		parentVar := new(child2Class);
+		parentVar := child1Var;
+		
+		// comapatible assignments custom classes, assign child to different child with same parent, int to custom parent
+		// XPECT warnings --> "Expression of type Integer is not compatible with variable of type parentClass" at "parentVar :=1"
+		parentVar :=1;
+		// comapatible assignments custom classes, assign child to different child with same parent, int to custom child
+		// XPECT warnings --> "Expression of type Integer is not compatible with variable of type child1Class" at "child1Var :=1"
+		child1Var :=1;
+		
+		paramMethod(nil, nil)();
+		paramMethod(new(child1Class), new(child1Class))();
+		paramMethod(parentVar, parentVar)();
+		paramMethod(new(child1Class), new(child2Class))();
+	// comapatible assignments, processMethodCall
+	//  XPECT warnings --> "Input argument of type child2Class is incompatible with declaration type child1Class" at "new(child2Class)"
+		paramMethod(new(child2Class), new(child2Class))()	
+	paramMethod(child1Var: child1Class, parentVar: parentClass )()
+		child1Var := parentVar
+		
+			
+	data class compatibleDataClass extends parentClass
+	variables		
+	methods
+	someMethod(): Integer | intVar: Integer, objVar: Object |
+		intVar := 1;
+	// comapatible assignments assign string to int
+	//  XPECT warnings --> "Expression of type String is not compatible with variable of type Integer" at "intVar := "Test""
+		intVar := "Test";
+		
+		objVar := 1;
+		intVar := objVar;
+		
+		objVar := "Test";
+		objVar := intVar;
+		
+		self paramMethod(nil, nil);
+		self paramMethod(1, 1);
+		self paramMethod(objVar, objVar);
+		self paramMethod(1, "Test");
+	// comapatible assignments, processMethodCall
+	//  XPECT warnings --> "No method 'paramMethod' defined for left expression of type compatibleDataClass with parameters of types (String, String)" at "self paramMethod("Test", "Test")"
+		self paramMethod("Test", "Test");
+		return 1
+	paramMethod(intVar: Integer, objVar: Object): Integer
+		return intVar + objVar
+		 

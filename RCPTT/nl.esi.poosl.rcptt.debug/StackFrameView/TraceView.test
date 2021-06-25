@@ -1,0 +1,41 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_0xOUsD9EEeWqI5T62C2nUQ,_r5J-sN-HEeSGR4qac-ot4g,_BwlHUB7pEeWW8tYfmHmITA,__IJ8MD9YEeWqI5T62C2nUQ
+Element-Name: TraceView
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _fHqyUD9EEeWqI5T62C2nUQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/21/18 2:45 PM
+Tags: StrackTrace Error
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-window StackTrace] {
+	assert-non-empty
+    get-tab-folder | get-property activePage | equals StackTrace | verify-true
+    get-tab-folder -index 1 | get-property activePage | equals "StackTrace Variables" | verify-true
+}
+with [get-view StackTrace] {
+    get-editbox -after [get-label "Error Message:"] | get-property text | equals "The index (4) is out of bounds. Index should be within range: 1 <= index <=  2." | verify-true
+    get-label "/system/ProducerConsumer/Producer" | assert-non-empty
+    with [get-list] {
+        get-property "getItems().length" | equals 4 | verify-true
+        get-property "getItems().String[0]" | equals "1 Array::putAt(index,datum) <native>" | verify-true
+        get-property "getItems().String[1]" | equals "2 Packet::performArrayError() (producer_consumer.poosl:28)" 
+            | verify-true
+        get-property "getItems().String[2]" | equals "3 Packet::createError() (producer_consumer.poosl:24)" 
+            | verify-true
+        get-property "getItems().String[3]" | equals "4 Producer::<process method> (producer_consumer.poosl:56)" | verify-true
+    }
+}
+with [get-view StackTrace | get-list] {
+    get-property "getSelectionCount()" | equals 1 | verify-true
+    get-property "getSelectionIndex()" | equals 1 | verify-true
+}
+get-editor "producer_consumer.poosl" | get-text-viewer | get-property "caretPosition.line" | equals 28 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

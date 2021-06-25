@@ -1,0 +1,61 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.suppress.PooslValidationSuppressTest END_SETUP */
+
+data class unusedMethodClass extends Object
+variables
+	// XPECT warnings --> "Variable is not used" at "unusedClassVar"
+	unusedClassVar : Object
+methods
+	// XPECT noIssues
+	@SuppressWarnings("unused")
+	someMethod() : Object | unusedLocalVar : Object |
+		return nil
+
+	@SuppressWarnings("typecheck")
+	typeMethod() : String | unusedLocalVar : Integer |
+		return unusedLocalVar
+
+@SuppressWarnings("unused")
+data class unusedClass extends Object
+variables
+	// XPECT noIssues
+	unusedClassVar : Object
+methods
+	// XPECT noIssues
+	@SuppressWarnings("unused")
+	someMethod() : Object | unusedLocalVar : Object |
+		return nil
+
+data class typeClass extends Object
+variables
+	// XPECT warnings --> "Variable is not used" at "unusedClassVar"
+	unusedClassVar : Object
+methods
+	@SuppressWarnings("typecheck")
+	someMethod() : Object 
+		// XPECT warnings --> "Variable is not used" at "unusedLocalVar"
+		| unusedLocalVar : Object |
+		return nil
+
+	// XPECT noIssues
+	@SuppressWarnings("typecheck")
+	typeMethod() : String | unusedLocalVar : Integer |
+		return unusedLocalVar
+
+data class someClass extends Object
+variables
+
+methods
+	@SuppressWarnings("return")
+	someMethod() : Object | |
+		//XPECT noIssues
+		nil
+
+	@SuppressWarnings("return")
+	some2Method() : Object | |
+		if true then
+			nil
+		else
+			//XPECT noIssues
+			return nil
+		fi;
+		return nil

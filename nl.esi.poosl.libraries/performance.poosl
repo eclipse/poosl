@@ -1,0 +1,840 @@
+/* API version 3.1 - Library of Performance Monitors - Embedded Systems Innovations by TNO
+ * 
+ * This library provides observers for performance analysis. It covers confidence-interval based estimation of sample averages (LongRunSampleAverage),
+ * sample variances (LongRunSampleVariance), time-weighted averages (LongRunTimeAverage), time-weighted variances (LongRunTimeVariance) and rate averages
+ * (LongRunRateAverage). Each of these observers requires initialization with method "withParameters", which takes a desired accuracy and confidence level
+ * as parameters. The actual estimation can be based on the approach of regenerative cycles or the batch-means approach. Optional method "setBatchSize"
+ * changes the default batch size of 10000 reward values in case of the batch-means approach. Reward values are registered using the "rewardRC" and
+ * "rewardBM" methods conform the approach of regenerative cycles respectively the batch-means approach. (Intermediate) results can be logged to a file by
+ * using optional method "logTo" to initialize logging and method "log" to write a new line with the status of the estimation to the file.
+ * 
+ * For more information about the techniques underlying this library, see: ftp://ftp.ics.ele.tue.nl/pub/users/btheelen/Publications/Thesis/thesis.pdf
+ * 
+ */
+/* Super Class Performance Monitor */
+data class PerformanceMonitor extends Observer
+variables
+	BatchSize : Integer,
+	Accuracy, ConfidenceLevel : Real,
+	IntervalEstimation : ConfidenceInterval,
+	LogFile : FileOut
+methods
+	// Methods for end-users
+	/* Returns true in case the estimation result reached the desired accuracy as initialized with method withParameters. Otherwise, it returns false */
+	accurate : Boolean | Accurate : Boolean |
+		Accurate := IntervalEstimation accurate(Accuracy);
+		if Accurate then
+			self complete
+		fi;
+		return Accurate
+
+	/* Returns the point estimation result */
+	result : String
+		return IntervalEstimation result printString
+
+	/* Sets the default batch size for batch-means based estimations */
+	setDefaultBatchSize : PerformanceMonitor
+		BatchSize := 10000;
+		return self
+
+	/* Returns a pretty print */
+	printString : String
+		return self printHeading lf concat(self printStatistics)
+
+	/* Writes the estimation results to the log file initialized with method logTo */
+	log : PerformanceMonitor
+		if LogFile = nil then
+			self error("Log File not initialised.")
+		else
+			LogFile append;
+			LogFile write(IntervalEstimation logStatistics tab tab concat(IntervalEstimation accurate(Accuracy)
+				printString cr lf));
+			LogFile close
+		fi;
+		return self
+
+	// Methods for implementation
+	getIntervalEstimation : ConfidenceInterval
+		return IntervalEstimation
+
+	printStatistics : String
+		if Accuracy = nil then
+			return IntervalEstimation printString
+		else
+			return IntervalEstimation printHeading concat("		Accurate:\n") concat(IntervalEstimation
+				printStatistics tab) concat(IntervalEstimation accurate(Accuracy) printString)
+		fi
+
+	logStatistics : String
+		return IntervalEstimation logHeading tab concat("Accurate:\n") concat(IntervalEstimation logStatistics tab)
+			concat(IntervalEstimation accurate(Accuracy) printString)
+
+/* Long Run Sample Average Observer */
+data class LongRunSampleAverage extends PerformanceMonitor
+variables
+	NumberOfCycles, CurrentLength : Integer,
+	Constant, AverageSquaredLength, AverageSumLengthProduct, CurrentSum, AverageSum, AverageLength,
+		AverageSquaredSum : Real,
+	TransientMode : Boolean
+methods
+	// Methods for end-users
+	/* Initializes the Long Run Sample Average observer with desired accuracy A and desired confidence level CL */
+	@Init
+	withParameters(A, CL : Real) : LongRunSampleAverage
+		if (A = nil) | (A isOfType("Real") not) then
+			self error("Accuracy parameter for Long Run Sample Average must be a Real")
+		fi;
+		if (CL = nil) | (CL isOfType("Real") not) then
+			self error("Confidence Level parameter for Long Run Sample Average must be a Real")
+		fi;
+		if (A <= 0.0) | (A >= 1.0) then
+			self error("Accuracy parameter for Long Run Sample Average must be within the interval (0.0, 1.0)")
+		fi;
+		if (CL < 0.0) | (CL >= 1.0) then
+			self error("Confidence Level parameter for Long Run Sample Average must be within the interval [0.0, 1.0)")
+		fi;
+		Accuracy := A;
+		self withConfidenceLevel(CL);
+		self register;
+		return self
+
+	/* Sets the batch size M for batch-means based estimation */
+	setBatchSize(M : Integer) : LongRunSampleAverage
+		if (M = nil) | (M isOfType("Integer") not) then
+			self error("BatchSize for Long Run Sample Average must be an Integer")
+		fi;
+		if M > 0 then
+			BatchSize := M
+		else
+			self error("BatchSize parameter for Long Run Sample Average must be larger than 0")
+		fi;
+		return self
+
+	/* Initializes the Name of the file to which estimation results are logged */
+	logTo(Name : String) : LongRunSampleAverage
+		LogFile := new(FileOut) destination(Name concat(".log")) open;
+		LogFile write("Statistics for the Long Run Sample Average " concat(Name) concat(" with Accuracy ")
+			concat(Accuracy printString) cr lf);
+		LogFile write(IntervalEstimation logHeading concat("\t\tAccurate:\n"));
+		LogFile
+			write("-------------------------------------------------------------------------------------------------------------------------\n");
+		LogFile close;
+		return self
+
+	/* Registers a new Reward for condition RecurrenceCondition conform the approach of regenerative cycles */
+	rewardRC(Reward : Object, RecurrenceCondition : Boolean) : LongRunSampleAverage | PointEstimation,
+			StandardDeviation, Variance, Factor, HalfWidth : Real |
+		if (Reward = nil) | ((Reward isOfType("Integer") not) & (Reward isOfType("Real") not)) then
+			self error("Reward for Long run Sample Average must be an Integer or Real")
+		fi;
+		if Reward isOfType("Integer") then
+			Reward := Reward asReal
+		fi;
+		if RecurrenceCondition then // Start new Cycle
+			if TransientMode then // Start with the first Cycle after completing TransientMode
+				TransientMode := false
+			else // Process the just completed Cycle
+				NumberOfCycles := NumberOfCycles + 1;
+				Factor := (NumberOfCycles - 1) asReal / NumberOfCycles asReal;
+				AverageSum := (Factor * AverageSum) + (CurrentSum / NumberOfCycles asReal);
+				AverageLength := (Factor * AverageLength) + (CurrentLength asReal / NumberOfCycles asReal);
+				AverageSquaredSum := (Factor * AverageSquaredSum) + (CurrentSum sqr / NumberOfCycles asReal);
+				AverageSquaredLength := (Factor * AverageSquaredLength) + (CurrentLength sqr asReal / NumberOfCycles
+					asReal);
+				AverageSumLengthProduct := (Factor * AverageSumLengthProduct) + ((CurrentSum * CurrentLength asReal) /
+					NumberOfCycles asReal);
+				if NumberOfCycles > 1 then // Confidence Interval undefined for Variance zero, which is the case if only one Batch has been completed yet
+					PointEstimation := AverageSum / AverageLength;
+					Variance := ((1.0 / Factor) * (AverageSquaredSum - (2.0 * PointEstimation * AverageSumLengthProduct)
+						+ (PointEstimation sqr * AverageSquaredLength)));
+					if Variance > 0.0 then
+						StandardDeviation := Variance sqrt
+					else
+						StandardDeviation := 0.0
+					fi; // Rounding errors
+					HalfWidth := (Constant * StandardDeviation) / (AverageLength * (NumberOfCycles asReal sqrt));
+					IntervalEstimation := new(ConfidenceInterval) withParameters(PointEstimation - HalfWidth,
+						PointEstimation + HalfWidth, ConfidenceLevel)
+				fi
+			fi;
+			CurrentSum := Reward; // Current Reward is part of the newly started Cycle
+			CurrentLength := 1
+		else if TransientMode not then // Continue to complete current Cycle if not in TransientMode anymore
+			CurrentSum := CurrentSum + Reward;
+			CurrentLength := CurrentLength + 1
+		fi fi;
+		return self
+
+	/* Registers a new Reward for batch-means based estimation */
+	rewardBM(Reward : Object) : LongRunSampleAverage
+		self rewardRC(Reward, (CurrentLength = 0) | (CurrentLength = BatchSize));
+		return self
+
+	// Methods for implementation
+	@Init
+	withConfidenceLevel(CL : Real) : LongRunSampleAverage
+		ConfidenceLevel := CL;
+		IntervalEstimation := new(ConfidenceInterval) withParameters(nil, nil, ConfidenceLevel);
+		Constant := (2.0 sqrt) * (self calculateInverseErfC(1.0 - ConfidenceLevel));
+		TransientMode := true;
+		NumberOfCycles := 0;
+		CurrentLength := 0;
+		AverageSum := 0.0;
+		AverageLength := 0.0;
+		AverageSquaredSum := 0.0;
+		AverageSquaredLength := 0.0;
+		AverageSumLengthProduct := 0.0;
+		self setDefaultBatchSize;
+		return self
+
+	calculateInverseErfC(y : Real) : Real | s, t, u, w, x, z : Real |
+		z := y;
+		w := 0.916461398268964 - z ln;
+		u := w sqrt;
+		s := (u ln + 0.488826640273108) / w;
+		t := 1.0 / (u + 0.231729200323405);
+		x := u * (1.0 - s * (s * 0.124610454613712 + 0.5)) - ((((-0.0728846765585675 * t + 0.269999308670029) * t +
+			0.150689047360223) * t + 0.116065025341614) * t + 0.499999303439796) * t;
+		t := 3.97886080735226 / (x + 3.97886080735226);
+		u := t - 0.5;
+		s := (((((((((0.00112648096188977922 * u + 0.000105739299623423047) * u - 0.00351287146129100025) * u -
+			0.000771708358954120939) * u + 0.00685649426074558612) * u + 0.00339721910367775861) * u -
+			0.011274916933250487) * u - 0.0118598117047771104) * u + 0.0142961988697898018) * u + 0.0346494207789099922)
+			* u + 0.00220995927012179067;
+		s := ((((((((((((s * u - 0.0743424357241784861) * u - 0.105872177941595488) * u + 0.0147297938331485121) * u +
+			0.316847638520135944) * u + 0.713657635868730364) * u + 1.05375024970847138) * u + 1.21448730779995237) * u
+			+ 1.16374581931560831) * u + 0.956464974744799006) * u + 0.686265948274097816) * u + 0.434397492331430115) *
+			u + 0.244044510593190935) * t - z * (2.718281828459045 power(x * x - 0.120782237635245222));
+		x := x + s * (x * s + 1.0);
+		return x
+
+	getCurrentLength : Integer
+		return CurrentLength
+
+	printHeading : String
+		if Accuracy = nil then
+			return "Statistics for Long Run Sample Average"
+		else
+			return "Statistics for Long Run Sample Average with Accuracy " concat(Accuracy printString)
+		fi
+
+/* Long Run Sample Variance Observer */
+data class LongRunSampleVariance extends PerformanceMonitor
+variables
+	AverageReward, AverageSquaredReward : LongRunSampleAverage
+methods
+	// Methods for end-users
+	/* Initializes the Long Run Sample Variance observer with desired accuracy A and desired confidence level CL */
+	@Init
+	withParameters(A, CL : Object) : LongRunSampleVariance
+		if (A = nil) | (A isOfType("Real") not) then
+			self error("Accuracy parameter for Long Run Sample Variance must be a Real")
+		fi;
+		if (CL = nil) | (CL isOfType("Real") not) then
+			self error("Confidence Level parameter for Long Run Sample Variance must be a Real")
+		fi;
+		if (A <= 0.0) | (A >= 1.0) then
+			self error("Accuracy parameter for Long Run Sample Variance must be within the interval (0.0, 1.0)")
+		fi;
+		if (CL < 0.0) | (CL >= 1.0) then
+			self error("ConfidenceLevel parameter for Long Run Sample Variance must be within the interval [0.0, 1.0)")
+		fi;
+		Accuracy := A;
+		ConfidenceLevel := CL;
+		AverageReward := new(LongRunSampleAverage) withConfidenceLevel((ConfidenceLevel + 1.0) / 2.0);
+		AverageSquaredReward := new(LongRunSampleAverage) withConfidenceLevel((ConfidenceLevel + 1.0) / 2.0);
+		IntervalEstimation := (AverageSquaredReward getIntervalEstimation) - ((AverageReward getIntervalEstimation)
+			sqr);
+		self setDefaultBatchSize;
+		self register;
+		return self
+
+	/* Sets the batch size M for batch-means based estimation */
+	setBatchSize(M : Object) : LongRunSampleVariance
+		if (M = nil) | (M isOfType("Integer") not) then
+			self error("BatchSize for Long Run Sample Variance must be an Integer")
+		fi;
+		if M > 0 then
+			BatchSize := M;
+			AverageReward setBatchSize(BatchSize);
+			AverageSquaredReward setBatchSize(BatchSize)
+		else
+			self error("BatchSize parameter for Long Run Sample Variance must be larger than 0")
+		fi;
+		return self
+
+	/* Initializes the Name of the file to which estimation results are logged */
+	logTo(Name : String) : LongRunSampleVariance
+		LogFile := new(FileOut) destination(Name concat(".log")) open;
+		LogFile write("Statistics for the Long Run Sample Variance " concat(Name) concat(" with Accuracy ")
+			concat(Accuracy printString) cr lf);
+		LogFile write(IntervalEstimation logHeading concat("\t\tAccurate:\n"));
+		LogFile
+			write("-------------------------------------------------------------------------------------------------------------------------\n");
+		LogFile close;
+		return self
+
+	/* Registers a new Reward for condition RecurrenceCondition conform the approach of regenerative cycles */
+	rewardRC(Reward : Object, RecurrenceCondition : Boolean) : LongRunSampleVariance
+		if (Reward = nil) | ((Reward isOfType("Integer") not) & (Reward isOfType("Real") not)) then
+			self error("Reward for Long Run Sample Variance must be an Integer or Real")
+		fi;
+		if Reward isOfType("Integer") then
+			Reward := Reward asReal
+		fi;
+		AverageReward rewardRC(Reward, RecurrenceCondition);
+		AverageSquaredReward rewardRC(Reward * Reward, RecurrenceCondition);
+		if RecurrenceCondition then
+			IntervalEstimation := (AverageSquaredReward getIntervalEstimation) - ((AverageReward getIntervalEstimation)
+				sqr)
+		fi;
+		return self
+
+	/* Registers a new Reward for batch-means based estimation */
+	rewardBM(Reward : Object) : LongRunSampleVariance
+		self rewardRC(Reward, (AverageReward getCurrentLength = 0) | (AverageReward getCurrentLength = BatchSize));
+		return self
+
+	// Methods for implementation
+	printHeading : String
+		return "Statistics for Long Run Sample Variance with Accuracy " concat(Accuracy printString)
+
+/* Long Run Time Average Observer */
+data class LongRunTimeAverage extends PerformanceMonitor
+variables
+	AverageRewardTimeProduct, AverageTime : LongRunSampleAverage,
+	PreviousReward, LastTime : Real
+methods
+	// Methods for end-users
+	/* Initializes the Long Run Time Average observer with desired accuracy A and desired confidence level CL */
+	@Init
+	withParameters(A, CL : Real) : LongRunTimeAverage
+		if (A = nil) | (A isOfType("Real") not) then
+			self error("Accuracy parameter for Long Run Time Average must be a Real")
+		fi;
+		if (CL = nil) | (CL isOfType("Real") not) then
+			self error("Confidence Level parameter for Long Run Time Average must be a Real")
+		fi;
+		if (A <= 0.0) | (A >= 1.0) then
+			self error("Accuracy parameter for Long Run Time Average must be within the interval (0.0, 1.0)")
+		fi;
+		if (CL < 0.0) | (CL >= 1.0) then
+			self error("Confidence Level parameter for Long Run Time Average must be within the interval [0.0, 1.0)")
+		fi;
+		Accuracy := A;
+		self withConfidenceLevel(CL);
+		self register;
+		return self
+
+	/* Sets the batch size M for batch-means based estimation */
+	setBatchSize(M : Object) : LongRunTimeAverage
+		if (M = nil) | (M isOfType("Integer") not) then
+			self error("BatchSize for Long Run Time Average must be an Integer")
+		fi;
+		if M > 0 then
+			BatchSize := M;
+			AverageRewardTimeProduct setBatchSize(BatchSize);
+			AverageTime setBatchSize(BatchSize)
+		else
+			self error("BatchSize parameter for Long Run Time Average must be larger than 0")
+		fi;
+		return self
+
+	/* Initializes the Name of the file to which estimation results are logged */
+	logTo(Name : String) : LongRunTimeAverage
+		LogFile := new(FileOut) destination(Name concat(".log")) open;
+		LogFile write("Statistics for the Long Run Time Average " concat(Name) concat(" with Accuracy ") concat(Accuracy
+			printString) cr lf);
+		LogFile write(IntervalEstimation logHeading concat("\t\tAccurate:\n"));
+		LogFile
+			write("-------------------------------------------------------------------------------------------------------------------------\n");
+		LogFile close;
+		return self
+
+	/* Registers a new Reward at time CurrentTime for condition RecurrenceCondition conform the approach of regenerative cycles */
+	rewardRC(Reward : Object, CurrentTime : Real, RecurrenceCondition : Boolean) : LongRunTimeAverage
+		if (Reward = nil) | ((Reward isOfType("Integer") not) & (Reward isOfType("Real") not)) then
+			self error("Reward for Long Run Time Average must be an Integer or Real")
+		fi;
+		if Reward isOfType("Integer") then
+			Reward := Reward asReal
+		fi;
+		if LastTime != nil then
+			AverageRewardTimeProduct rewardRC(PreviousReward * (CurrentTime - LastTime), RecurrenceCondition);
+			AverageTime rewardRC(CurrentTime - LastTime, RecurrenceCondition)
+		fi;
+		PreviousReward := Reward;
+		LastTime := CurrentTime;
+		if RecurrenceCondition then
+			IntervalEstimation := (AverageRewardTimeProduct getIntervalEstimation) / (AverageTime getIntervalEstimation)
+		fi;
+		return self
+
+	/* Registers a new Reward at time CurrentTime for batch-means based estimation */
+	rewardBM(Reward : Object, CurrentTime : Real) : LongRunTimeAverage
+		self rewardRC(Reward, CurrentTime, (AverageRewardTimeProduct getCurrentLength = 0) | (AverageRewardTimeProduct
+			getCurrentLength = BatchSize));
+		return self
+
+	// Methods for implementation
+	@Init
+	withConfidenceLevel(CL : Real) : LongRunTimeAverage
+		ConfidenceLevel := CL;
+		AverageRewardTimeProduct := new(LongRunSampleAverage) withConfidenceLevel((ConfidenceLevel + 1.0) / 2.0);
+		AverageTime := new(LongRunSampleAverage) withConfidenceLevel((ConfidenceLevel + 1.0) / 2.0);
+		IntervalEstimation := (AverageRewardTimeProduct getIntervalEstimation) / (AverageTime getIntervalEstimation);
+		self setDefaultBatchSize;
+		return self
+
+	getCurrentLength : Integer
+		return AverageRewardTimeProduct getCurrentLength
+
+	printHeading : String
+		if Accuracy = nil then
+			return "Statistics for Long Run Time Average"
+		else
+			return "Statistics for Long Run Time Average with Accuracy " concat(Accuracy printString)
+		fi
+
+/* Long Run Time Variance Observer*/
+data class LongRunTimeVariance extends PerformanceMonitor
+variables
+	AverageReward, AverageSquaredReward : LongRunTimeAverage
+methods
+	// Methods for end-users
+	/* Initializes the Long Run Time Variance observer with desired accuracy A and desired confidence level CL */
+	@Init
+	withParameters(A, CL : Real) : LongRunTimeVariance
+		if (A = nil) | (A isOfType("Real") not) then
+			self error("Accuracy parameter for Long Run Time Variance must be a Real")
+		fi;
+		if (CL = nil) | (CL isOfType("Real") not) then
+			self error("Confidence Level parameter for Long Run Time Variance must be a Real")
+		fi;
+		if (A <= 0.0) | (A >= 1.0) then
+			self error("Accuracy parameter for Long Run Time Variance must within the interval (0.0, 1.0)")
+		fi;
+		if (CL < 0.0) | (CL >= 1.0) then
+			self error("Confidence Level parameter for Long Run Time Variance must be within the interval [0.0, 1.0)")
+		fi;
+		Accuracy := A;
+		ConfidenceLevel := CL;
+		AverageReward := new(LongRunTimeAverage) withConfidenceLevel((ConfidenceLevel + 1.0) / 2.0);
+		AverageSquaredReward := new(LongRunTimeAverage) withConfidenceLevel((ConfidenceLevel + 1.0) / 2.0);
+		IntervalEstimation := (AverageSquaredReward getIntervalEstimation) - ((AverageReward getIntervalEstimation)
+			sqr);
+		self setDefaultBatchSize;
+		self register;
+		return self
+
+	/* Sets the batch size M for batch-means based estimation */
+	setBatchSize(M : Object) : LongRunTimeVariance
+		if (M = nil) | (M isOfType("Integer") not) then
+			self error("BatchSize parameter for Long Run Time Variance must be an Integer")
+		fi;
+		if M > 0 then
+			BatchSize := M;
+			AverageReward setBatchSize(BatchSize);
+			AverageSquaredReward setBatchSize(BatchSize)
+		else
+			self error("BatchSize parameter for Long Run Time Variance must be larger than 0")
+		fi;
+		return self
+
+	/* Initializes the Name of the file to which estimation results are logged */
+	logTo(Name : String) : LongRunTimeVariance
+		LogFile := new(FileOut) destination(Name + ".log") open;
+		LogFile write("Statistics for the Long Run Time Variance " concat(Name) concat(" with Accuracy ")
+			concat(Accuracy printString) cr lf);
+		LogFile write(IntervalEstimation logHeading concat("\t\tAccurate:\n"));
+		LogFile
+			write("-------------------------------------------------------------------------------------------------------------------------\n");
+		LogFile close;
+		return self
+
+	/* Registers a new Reward at time CurrentTime for condition RecurrenceCondition conform the approach of regenerative cycles */
+	rewardRC(Reward : Object, CurrentTime : Real, RecurrenceCondition : Boolean) : LongRunTimeVariance
+		if (Reward = nil) | ((Reward isOfType("Integer") not) & (Reward isOfType("Real") not)) then
+			self error("Reward for Long Run Time Variance must be an Integer or Real")
+		fi;
+		if Reward isOfType("Integer") then
+			Reward := Reward asReal
+		fi;
+		AverageReward rewardRC(Reward, CurrentTime, RecurrenceCondition);
+		AverageSquaredReward rewardRC(Reward * Reward, CurrentTime, RecurrenceCondition);
+		if RecurrenceCondition then
+			IntervalEstimation := (AverageSquaredReward getIntervalEstimation) - ((AverageReward getIntervalEstimation)
+				sqr)
+		fi;
+		return self
+
+	/* Registers a new Reward at time CurrentTime for batch-means based estimation */
+	rewardBM(Reward : Object, CurrentTime : Real) : LongRunTimeVariance
+		self rewardRC(Reward, CurrentTime, (AverageReward getCurrentLength = 0) | (AverageReward getCurrentLength =
+			BatchSize));
+		return self
+
+	// Methods for implementation
+	printHeading : String
+		return "Statistics for Long Run Time Variance with Accuracy " concat(Accuracy printString)
+
+/* Long Run Rate Average Observer */
+data class LongRunRateAverage extends PerformanceMonitor
+variables
+	AverageReward, AverageTime : LongRunSampleAverage,
+	LastTime : Real
+methods
+	// Methods for end-users
+	/* Initializes the Long Run Rate Average observer with desired accuracy A and desired confidence level CL */
+	@Init
+	withParameters(A, CL : Real) : LongRunRateAverage
+		if (A = nil) | (A isOfType("Real") not) then
+			self error("Accuracy parameter for Long Run Rate Average must be a Real")
+		fi;
+		if (CL = nil) | (CL isOfType("Real") not) then
+			self error("Confidence Level parameter for Long Run Rate Average must be a Real")
+		fi;
+		if (A <= 0.0) | (A >= 1.0) then
+			self error("Accuracy parameter for Long Run Rate Average must be within the interval (0.0, 1.0)")
+		fi;
+		if (CL < 0.0) | (CL >= 1.0) then
+			self error("ConfidenceLevel parameter for Long Run Rate Average must be within the interval [0.0, 1.0)")
+		fi;
+		Accuracy := A;
+		self withConfidenceLevel(CL);
+		self register;
+		return self
+
+	/* Sets the batch size M for batch-means based estimation */
+	setBatchSize(M : Integer) : LongRunRateAverage
+		if (M = nil) | (M isOfType("Integer") not) then
+			self error("BatchSize parameter for Long Run Rate Average must be an Integer")
+		fi;
+		if M > 0 then
+			BatchSize := M;
+			AverageReward setBatchSize(BatchSize);
+			AverageTime setBatchSize(BatchSize)
+		else
+			self error("BatchSize parameter for Long Run Rate Average must be larger than 0")
+		fi;
+		return self
+
+	/* Initializes the Name of the file to which estimation results are logged */
+	logTo(Name : String) : LongRunRateAverage
+		LogFile := new(FileOut) destination(Name concat(".log")) open;
+		LogFile write("Statistics for the Long Run Rate Average " concat(Name) concat(" with Accuracy ") concat(Accuracy
+			printString) cr lf);
+		LogFile write(IntervalEstimation logHeading concat("\t\tAccurate:\n"));
+		LogFile
+			write("-------------------------------------------------------------------------------------------------------------------------\n");
+		LogFile close;
+		return self
+
+	/* Registers a new Reward at time CurrentTime for condition RecurrenceCondition conform the approach of regenerative cycles */
+	rewardRC(Reward : Object, CurrentTime : Real, RecurrenceCondition : Boolean) : LongRunRateAverage
+		if (Reward = nil) | ((Reward isOfType("Integer") not) & (Reward isOfType("Real") not)) then
+			self error("Reward for Long Run Rate Average must be an Integer or Real")
+		fi;
+		if Reward isOfType("Integer") then
+			Reward := Reward asReal
+		fi;
+		if LastTime != nil then
+			AverageReward rewardRC(Reward, RecurrenceCondition);
+			AverageTime rewardRC(CurrentTime - LastTime, RecurrenceCondition)
+		fi;
+		LastTime := CurrentTime;
+		if RecurrenceCondition then
+			IntervalEstimation := (AverageReward getIntervalEstimation) / (AverageTime getIntervalEstimation)
+		fi;
+		return self
+
+	/* Registers a new Reward at time CurrentTime for batch-means based estimation */
+	rewardBM(Reward : Object, CurrentTime : Real) : LongRunRateAverage
+		self rewardRC(Reward, CurrentTime, (AverageReward getCurrentLength = 0) | (AverageReward getCurrentLength =
+			BatchSize));
+		return self
+
+	// Methods for implementation
+	@Init
+	withConfidenceLevel(CL : Real) : LongRunRateAverage
+		ConfidenceLevel := CL;
+		AverageReward := new(LongRunSampleAverage) withConfidenceLevel((ConfidenceLevel + 1.0) / 2.0);
+		AverageTime := new(LongRunSampleAverage) withConfidenceLevel((ConfidenceLevel + 1.0) / 2.0);
+		IntervalEstimation := (AverageReward getIntervalEstimation) / (AverageTime getIntervalEstimation);
+		self setDefaultBatchSize;
+		return self
+
+	printHeading : String
+		return "Statistics for Long Run Rate Average with Accuracy " concat(Accuracy printString)
+
+/* Confidence Interval */
+data class ConfidenceInterval extends Object
+variables
+	LowerBound, UpperBound, ConfidenceLevel : Real
+methods
+	// Method for implementation - algebra of confidence intervals
+	+(CI : ConfidenceInterval) : ConfidenceInterval | Lower, Upper, Level : Real |
+		Lower := self extendedPlus(LowerBound, CI getLowerBound);
+		Upper := self extendedPlus(UpperBound, CI getUpperBound);
+		Level := ConfidenceLevel + CI getConfidenceLevel - 1.0;
+		return new(ConfidenceInterval) withParameters(Lower, Upper, Level)
+
+	-(CI : ConfidenceInterval) : ConfidenceInterval
+		return self + CI negate
+
+	*(CI : ConfidenceInterval) : ConfidenceInterval | Lower, Upper, Level : Real |
+		if self extendedLowerGreaterEqualZero then
+			if CI extendedLowerGreaterEqualZero then
+				Lower := self extendedTimes(LowerBound, CI getLowerBound);
+				Upper := self extendedTimes(UpperBound, CI getUpperBound)
+			else if CI extendedUpperLessZero then
+				Lower := self extendedTimes(UpperBound, CI getLowerBound);
+				Upper := self extendedTimes(LowerBound, CI getUpperBound)
+			else
+				Lower := self extendedTimes(UpperBound, CI getLowerBound);
+				Upper := self extendedTimes(UpperBound, CI getUpperBound)
+			fi fi
+		else if self extendedUpperLessZero then
+			if CI extendedLowerGreaterEqualZero then
+				Lower := self extendedTimes(LowerBound, CI getUpperBound);
+				Upper := self extendedTimes(UpperBound, CI getLowerBound)
+			else if CI extendedUpperLessZero then
+				Lower := self extendedTimes(UpperBound, CI getUpperBound);
+				Upper := self extendedTimes(LowerBound, CI getLowerBound)
+			else
+				Lower := self extendedTimes(LowerBound, CI getUpperBound);
+				Upper := self extendedTimes(LowerBound, CI getLowerBound)
+			fi fi
+		else if CI extendedLowerGreaterEqualZero then
+			Lower := self extendedTimes(LowerBound, CI getUpperBound);
+			Upper := self extendedTimes(UpperBound, CI getUpperBound)
+		else if CI extendedUpperLessZero then
+			Lower := self extendedTimes(UpperBound, CI getLowerBound);
+			Upper := self extendedTimes(LowerBound, CI getLowerBound)
+		else
+			Lower := self extendedMin(self extendedTimes(LowerBound, CI getUpperBound), self extendedTimes(UpperBound,
+				CI getLowerBound));
+			Upper := self extendedMax(self extendedTimes(LowerBound, CI getLowerBound), self extendedTimes(UpperBound,
+				CI getUpperBound))
+		fi fi fi fi;
+		Level := ConfidenceLevel + CI getConfidenceLevel - 1.0;
+		return new(ConfidenceInterval) withParameters(Lower, Upper, Level)
+
+	/(CI : ConfidenceInterval) : ConfidenceInterval
+		return self * CI reciprocal
+
+	negate : ConfidenceInterval | Lower, Upper : Real |
+		Lower := self extendedNegate(UpperBound);
+		Upper := self extendedNegate(LowerBound);
+		return new(ConfidenceInterval) withParameters(Lower, Upper, ConfidenceLevel)
+
+	reciprocal : ConfidenceInterval | Lower, Upper : Real |
+		if (self extendedLowerLessZero) & (self extendedUpperGreaterZero) then
+			Lower := nil;
+			Upper := nil
+		else
+			Lower := self extendedReciprocal(UpperBound);
+			Upper := self extendedReciprocal(LowerBound)
+		fi;
+		return new(ConfidenceInterval) withParameters(Lower, Upper, ConfidenceLevel)
+
+	sqr : ConfidenceInterval | Lower, Upper : Real |
+		if self extendedLowerGreaterEqualZero then
+			Lower := self extendedTimes(LowerBound, LowerBound);
+			Upper := self extendedTimes(UpperBound, UpperBound)
+		else if self extendedUpperLessZero then
+			Lower := self extendedTimes(UpperBound, UpperBound);
+			Upper := self extendedTimes(LowerBound, LowerBound)
+		else
+			Lower := 0.0;
+			Upper := self extendedMax(self extendedTimes(LowerBound, LowerBound), self extendedTimes(UpperBound,
+				UpperBound))
+		fi fi;
+		return new(ConfidenceInterval) withParameters(Lower, Upper, ConfidenceLevel)
+
+	extendedPlus(x, y : Real) : Real
+		if (x = nil) | (y = nil) then
+			return nil
+		else
+			return x + y
+		fi
+
+	extendedNegate(x : Real) : Real
+		if x = nil then
+			return nil
+		else
+			return -x
+		fi
+
+	extendedTimes(x, y : Real) : Real
+		if (x = nil) | (y = nil) then
+			return nil
+		else
+			return x * y
+		fi
+
+	extendedReciprocal(x : Real) : Real
+		if x = nil then
+			return 0.0
+		else if x = 0.0 then
+			return nil
+		else
+			return 1.0 / x
+		fi fi
+
+	extendedMin(x, y : Real) : Real
+		if (x = nil) | (y = nil) then
+			return nil
+		else if x < y then
+			return x
+		else
+			return y
+		fi fi
+
+	extendedMax(x, y : Real) : Real
+		if (x = nil) | (y = nil) then
+			return nil
+		else if x > y then
+			return x
+		else
+			return y
+		fi fi
+
+	extendedLowerLessZero : Boolean
+		if LowerBound = nil then
+			return true
+		else
+			return LowerBound < 0.0
+		fi
+
+	extendedLowerGreaterEqualZero : Boolean
+		if LowerBound = nil then
+			return false
+		else
+			return LowerBound >= 0.0
+		fi
+
+	extendedUpperLessZero : Boolean
+		if UpperBound = nil then
+			return false
+		else
+			return UpperBound < 0.0
+		fi
+
+	extendedUpperGreaterZero : Boolean
+		if UpperBound = nil then
+			return true
+		else
+			return UpperBound > 0.0
+		fi
+
+	withParameters(Lower, Upper, Level : Real) : ConfidenceInterval
+		LowerBound := Lower;
+		UpperBound := Upper;
+		ConfidenceLevel := Level;
+		return self
+
+	getLowerBound : Real
+		return LowerBound
+
+	getUpperBound : Real
+		return UpperBound
+
+	getConfidenceLevel : Real
+		return ConfidenceLevel
+
+	getRelativeError : Real
+		if (LowerBound = nil) | (UpperBound = nil) then
+			return nil
+		else if LowerBound > 0.0 then
+			return (UpperBound - LowerBound) / (2.0 * LowerBound)
+		else if UpperBound < 0.0 then
+			return (LowerBound - UpperBound) / (2.0 * UpperBound)
+		else
+			return nil
+		fi fi fi
+
+	accurate(Accuracy : Real) : Boolean | RelativeError : Real |
+		RelativeError := self getRelativeError;
+		if RelativeError = nil then
+			return false
+		else
+			return RelativeError <= 1.0 - Accuracy
+		fi
+
+	result : Real
+		if (LowerBound != nil) & (UpperBound != nil) then
+			return 0.5 * (LowerBound + UpperBound)
+		else
+			return nil
+		fi
+
+	printHeading : String
+		return "Point Estimation:\tConfidence Interval:\t\t\t\t\t\tConfidence Level:\tRelative Error:"
+
+	printStatistics : String | RelativeError : Real, PrintOut : String |
+		if (LowerBound = nil) | (UpperBound = nil) then
+			PrintOut := "Not Specified" tab
+		else
+			PrintOut := (0.5 * (LowerBound + UpperBound)) printString
+		fi;
+		PrintOut tab concat("[");
+		if LowerBound = nil then
+			PrintOut concat("-inf")
+		else
+			PrintOut concat(LowerBound printString)
+		fi;
+		PrintOut concat(", ");
+		if UpperBound = nil then
+			PrintOut concat("inf")
+		else
+			PrintOut concat(UpperBound printString)
+		fi;
+		PrintOut concat("]\t");
+		PrintOut concat(ConfidenceLevel printString);
+		PrintOut tab tab tab tab;
+		RelativeError := self getRelativeError;
+		if RelativeError = nil then
+			PrintOut concat("inf\n\n\n\n")
+		else
+			PrintOut concat(RelativeError printString)
+		fi;
+		return PrintOut
+
+	printString : String
+		return self printHeading lf concat(self printStatistics)
+
+	logHeading : String
+		return "Point Estimation:\tConfidence Interval:\t\t\tConfidence Level:\tRelative Error:"
+
+	logStatistics : String | RelativeError : Real, LogOut : String |
+		if (LowerBound = nil) | (UpperBound = nil) then
+			LogOut := "Not Specified" tab
+		else
+			LogOut := (0.5 * (LowerBound + UpperBound)) printString
+		fi;
+		LogOut tab concat("[");
+		if LowerBound = nil then
+			LogOut concat("-inf")
+		else
+			LogOut concat(LowerBound printString)
+		fi;
+		LogOut concat(", ");
+		if UpperBound = nil then
+			LogOut concat("inf")
+		else
+			LogOut concat(UpperBound printString)
+		fi;
+		LogOut concat("]") tab;
+		if (LowerBound = nil) & (UpperBound = nil) then
+			LogOut tab tab tab
+		fi;
+		LogOut concat(ConfidenceLevel printString);
+		LogOut tab tab tab;
+		RelativeError := self getRelativeError;
+		if RelativeError == nil then
+			LogOut concat("inf") tab
+		else
+			LogOut concat(RelativeError printString)
+		fi;
+		return LogOut

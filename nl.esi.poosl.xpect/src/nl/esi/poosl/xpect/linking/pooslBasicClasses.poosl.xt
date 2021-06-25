@@ -1,0 +1,123 @@
+/*  XPECT_SETUP nl.esi.poosl.xpect.linking.PooslLinkingTest END_SETUP */
+
+
+// With Linking tests you can determine if an instance is in a instance of the correct object.
+process class someClass()
+ports
+messages
+variables
+// ID should be Integer Data class
+// XPECT linkedName --> Integer
+ID :Integer	
+
+// name should be String Data class
+// XPECT linkedName --> String
+name :String	
+
+// list should be Array Data class
+// XPECT linkedName --> Array
+list :Array
+
+// socket should be Socket Data class
+// XPECT linkedName --> Socket
+socket :Socket
+
+// file should be FileOut Data class
+// XPECT linkedName --> FileOut
+file :FileOut
+
+// filein should be FileIn Data class
+// XPECT linkedName --> FileIn
+filein :FileIn
+
+// random should be RandomGenerator Data class
+// XPECT linkedName --> RandomGenerator
+random :RandomGenerator
+
+// real should be Real Data class
+// XPECT linkedName --> Real
+real :Real
+
+// char should be Char Data class
+// XPECT linkedName --> Char
+char :Char
+
+// bool should be Boolean
+// XPECT linkedName --> Boolean
+bool :Boolean
+
+// empty should be Nil
+// XPECT linkedName --> Nil
+empty :Nil
+
+// custom should be dataClass
+// XPECT linkedName --> dataClass
+custom : dataClass
+
+init
+	someMethod()()
+methods
+	someMethod()() | |	
+		ID := new(Integer); 
+		list := new(Array);
+		name := new(String);
+		socket := new(Socket);
+		file := new(FileOut);
+		filein := new(FileIn);
+		random := new(RandomGenerator);
+		char := new(Char);
+		real := new(Real);
+		bool := new(Boolean);	
+		empty := new(Nil);
+		custom := new(dataClass);
+		varMethod(ID)(ID)	
+		// Inputparam is Integer
+		// XPECT linkedName --> Integer
+		// Outputparam is Integer
+		// XPECT linkedName --> Integer
+		// local is Integer
+		// XPECT linkedName --> Integer	
+	varMethod(i : Integer)(o: Integer) |l :Integer |		
+		o := i + l
+
+cluster class secondClusterClass()
+ports
+	
+instances
+	someInstance: someClass()
+channels
+		
+cluster class clusterClass()
+	ports			
+	instances
+		// Process instance in cluster
+		// XPECT linkedName --> someClass
+		processInstance: someClass()
+		// cluster instance in cluster
+		// XPECT linkedName --> secondClusterClass
+		clusterInstance: secondClusterClass()
+	channels
+		
+system
+instances
+		// Process instance in system
+		// XPECT linkedName --> someClass
+	processInstance: someClass()
+		// Cluster instance in system
+		// XPECT linkedName --> clusterClass
+	clysterInstance: clusterClass()
+channels
+
+
+data class dataClass extends Object
+variables
+// Custom dataclass, ID should be Integer Data class
+// XPECT linkedName --> Integer
+ID :Integer	
+methods
+		// Data method input parameter linking
+		// XPECT linkedName --> Integer
+	getMehod(i:Integer) : Integer	
+	return ID + i 
+			
+	

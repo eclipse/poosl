@@ -1,0 +1,48 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _lVE1EONVEeSZttsAewanYQ,_miregORDEeSZttsAewanYQ
+Element-Name: DebugView with hello
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _GyorsOTwEeS0itSwbx-n-w
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 4/17/15 12:54 PM
+Tags: Debug, View, Perspective, PC
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+
+get-editor "hello_world.poosl" | get-editbox | get-menu "Debug As/1 POOSL Simulation" | click
+with [get-view Debug | get-tree] {
+    get-property itemCount | equals 1 | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]" | get-property caption 
+        | equals "hello_world.poosl [Simulated time: 0]" | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]" | get-property childCount | equals 2 | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]/Sender" | get-property caption | equals Sender | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]/Sender" | get-property childCount | equals 0 | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]/Receiver" | get-property caption | equals Receiver | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]/Receiver" | get-property childCount | equals 0 | verify-true
+}
+get-button "Terminate (M1+F2)" | click
+get-view Debug | get-tree | get-property itemCount | equals 1 | verify-true
+with [get-view Debug | get-tree] {
+    get-item "<terminated> hello_world.poosl/<terminated> Sender" | get-property caption | equals "<terminated> Sender" 
+        | verify-true
+    get-item "<terminated> hello_world.poosl/<terminated> Sender" | get-property childCount | equals 0 | verify-true
+    get-item "<terminated> hello_world.poosl/<terminated> Receiver" | get-property caption 
+        | equals "<terminated> Receiver" | verify-true
+    get-item "<terminated> hello_world.poosl/<terminated> Receiver" | get-property childCount | equals 0 | verify-true
+}
+with [get-view Debug | get-tree] {
+    get-item "<terminated> hello_world.poosl" | get-property caption | equals "<terminated> hello_world.poosl" 
+        | verify-true
+    get-item "<terminated> hello_world.poosl" | get-property childCount | equals 2 | verify-true
+}
+get-view Debug | get-button "Remove All Terminated Launches" | click
+get-view Debug | get-tree | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

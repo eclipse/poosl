@@ -1,0 +1,19 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Channel
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _CcIl4EmsEea18PiEOcOxrA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/14/16 1:55 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_mFzZQOQXEeSZttsAewanYQ	// kind: 'test' name: 'Cluster Channels Merge ext' path: 'Cluster Channels Merge ext.test'
+_Yn0ZIONyEeSZttsAewanYQ	// kind: 'test' name: 'Cluster Unconnected External Port Channel' path: 'Cluster Unconnected External Port Channel.test'
+_KMDy0ON1EeSZttsAewanYQ	// kind: 'test' name: 'Cluster Unconnected External Port Remove' path: 'Cluster Unconnected External Port Remove.test'
+_FJ2B8EmvEea18PiEOcOxrA	// kind: 'test' name: 'Cluster Channels Merge instance' path: 'Cluster Channels Merge instance.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

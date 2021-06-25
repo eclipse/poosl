@@ -1,0 +1,39 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: DiagramToText
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _282ugOnAEeSy84egTU6BNw
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 2/23/16 2:06 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_qHZhAOmqEeSc6rZ557tE7g	// kind: 'test' name: 'Class to Cluster' path: 'Class to Cluster.test'
+_kRmyUOmqEeSc6rZ557tE7g	// kind: 'test' name: 'Class to Data' path: 'Class to Data.test'
+_o9hH0OmqEeSc6rZ557tE7g	// kind: 'test' name: 'Class to Process' path: 'Class to Process.test'
+_xOxMUOmqEeSc6rZ557tE7g	// kind: 'test' name: 'Class to Root Textual' path: 'Class to Root Textual.test'
+_sGMwAOmqEeSc6rZ557tE7g	// kind: 'test' name: 'Class to System' path: 'Class to System.test'
+_Qy_tMOpdEeSvNZsSQIZaJg	// kind: 'test' name: 'Class to Cluster Parameter' path: 'Class to Cluster Parameter.test'
+_p4JsYOpgEeSvNZsSQIZaJg	// kind: 'test' name: 'Class to Data Variable' path: 'Class to Data Variable.test'
+_Ti260OpfEeSvNZsSQIZaJg	// kind: 'test' name: 'Class to DataMethod' path: 'Class to DataMethod.test'
+_QAofUOphEeSvNZsSQIZaJg	// kind: 'test' name: 'Class to Process Parameter' path: 'Class to Process Parameter.test'
+_LOov8OphEeSvNZsSQIZaJg	// kind: 'test' name: 'Class to Process Variable' path: 'Class to Process Variable.test'
+_TI2NcOphEeSvNZsSQIZaJg	// kind: 'test' name: 'Class to ProcessMethod' path: 'Class to ProcessMethod.test'
+_kcwTgOqIEeSdDvHJCJiyYA	// kind: 'test' name: 'Cluster to Process' path: 'Cluster to Process.test'
+_5Na7geqHEeSdDvHJCJiyYA	// kind: 'test' name: 'Cluster to RootCluster' path: 'Cluster to RootCluster.test'
+_mVQtQOqIEeSdDvHJCJiyYA	// kind: 'test' name: 'Cluster to Cluster' path: 'Cluster to Cluster.test'
+_Zt5SMOqKEeSdDvHJCJiyYA	// kind: 'test' name: 'System to Cluster' path: 'System to Cluster.test'
+_XvVTwOqKEeSdDvHJCJiyYA	// kind: 'test' name: 'System to Process' path: 'System to Process.test'
+_BNuvEOqKEeSdDvHJCJiyYA	// kind: 'test' name: 'System to System' path: 'System to System.test'
+_4T0qUNonEeWr3a7wWrF4WQ	// kind: 'test' name: 'Cluster to Cluster Instance' path: 'Cluster to Cluster Instance.test'
+_541gUNonEeWr3a7wWrF4WQ	// kind: 'test' name: 'Cluster to Process Instance' path: 'Cluster to Process Instance.test'
+_2y8UINosEeWr3a7wWrF4WQ	// kind: 'test' name: 'F2 Class' path: 'F2 Class.test'
+_uK114NosEeWr3a7wWrF4WQ	// kind: 'test' name: 'F2 Cluster' path: 'F2 Cluster.test'
+_ylAUENosEeWr3a7wWrF4WQ	// kind: 'test' name: 'F2 System' path: 'F2 System.test'
+_POwKcNonEeWr3a7wWrF4WQ	// kind: 'test' name: 'System to Cluster Instance' path: 'System to Cluster Instance.test'
+_RSmRgNonEeWr3a7wWrF4WQ	// kind: 'test' name: 'System to Process Instance' path: 'System to Process Instance.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

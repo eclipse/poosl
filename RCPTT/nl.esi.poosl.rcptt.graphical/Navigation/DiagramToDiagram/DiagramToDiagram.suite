@@ -1,0 +1,18 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: DiagramToDiagram
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _0JWn4OqLEeSdDvHJCJiyYA
+Manually-Ordered: true
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 10/5/18 5:14 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_fH5K0OqMEeSdDvHJCJiyYA	// kind: 'test' name: 'Cluster to Cluster Diagram' path: 'Cluster to Cluster Diagram.test'
+_MRqrsOqMEeSdDvHJCJiyYA	// kind: 'test' name: 'System to Cluster Diagram' path: 'System to Cluster Diagram.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

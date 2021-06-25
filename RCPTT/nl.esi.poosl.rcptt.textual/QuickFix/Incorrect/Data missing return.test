@@ -1,0 +1,42 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Data missing return
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _KvLcEON3EeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 1/10/18 5:18 PM
+Tags: Data, Return, QuickFix
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+type-text "data class Packet \n"
+type-text "variables\n"
+type-text "ID : Integer\n"
+type-text "methods\n"
+type-text "getIdentity : Integer\n"
+type-text "ID \n"
+}
+with [get-editor "model.poosl"] {    
+    with [get-text-viewer] {
+        set-caret-pos 6 3
+        key-type "M1+1"
+        key-type Down
+        key-type Enter
+    }
+}
+//get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table | select "Insert \"return\"" | click 
+//    -default
+get-editor "model.poosl" | get-text-viewer | get-property text | equals "data class Packet \n"
+    + "variables\n"
+    + "ID : Integer\n"
+    + "methods\n"
+    + "getIdentity : Integer\n"
+    + "return ID" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

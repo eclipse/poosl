@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Data Class Proposal
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _fRFI8ONuEeSZttsAewanYQ
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 5/20/15 4:23 PM
+Tags: Proposal, Data
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+When using the proposal menu in an empty menu, 11 proposals  should be available.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer | key-type "M1+SPACE"
+get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table | select "data class" | click -default
+get-editor "model.poosl" | get-text-viewer | get-property text | equals "data class someClass extends Object\n"
+    + "variables\n"
+    + "\t\n"
+    + "methods" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

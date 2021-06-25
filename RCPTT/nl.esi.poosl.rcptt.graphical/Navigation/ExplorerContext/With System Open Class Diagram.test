@@ -1,0 +1,22 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_h9zZ8JRfEeWdZoPrrryMIA
+Element-Name: With System Open Class Diagram
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _g_Y_0Nr-EeWr3a7wWrF4WQ
+Runtime-Version: 2.3.0.201806262310
+Save-Time: 9/9/19 2:52 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consume" +
+	"r.poosl" | get-menu "Open Class Diagram" | click
+
+get-editor "Classes (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part -name "Classes (producer_consum" +
+	"er.poosl)" | get-property childrenCount | equals 22 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,23 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Formatter
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _7d3KkLV3EeapedkHH5Hcfw
+Manually-Ordered: true
+Runtime-Version: 2.3.0.201806262310
+Save-Time: 4/24/20 4:22 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_X8K10LZKEeapedkHH5Hcfw	// kind: 'suite' name: 'Statement' path: 'Statement/Statement.suite'
+_W40icLZKEeapedkHH5Hcfw	// kind: 'suite' name: 'Process' path: 'Process/Process.suite'
+_h7XC0LZKEeapedkHH5Hcfw	// kind: 'suite' name: 'Misc' path: 'Misc/Misc.suite'
+_U6WDkLZKEeapedkHH5Hcfw	// kind: 'suite' name: 'Expression' path: 'Expression/Expression.suite'
+_TPYWkLZKEeapedkHH5Hcfw	// kind: 'suite' name: 'Data' path: 'Data/Data.suite'
+_UBlPkLZKEeapedkHH5Hcfw	// kind: 'suite' name: 'Examples' path: 'Examples/Examples.suite'
+_J_YGoLZREeapedkHH5Hcfw	// kind: 'suite' name: 'Architectural' path: 'Architectural/Architectural.suite'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

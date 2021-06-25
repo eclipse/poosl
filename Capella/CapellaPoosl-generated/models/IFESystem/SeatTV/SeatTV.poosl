@@ -1,0 +1,21 @@
+import "./AudioVideoPlayer.poosl"
+import "./ServicesManager.poosl"
+
+@Source("In-Flight Entertainment System::In-Flight Entertainment System::Logical Architecture::IFE System::Seat TV")
+cluster class SeatTV
+ports
+	InAudio
+	InInterruptionCommand
+	InControl
+	OutAudio
+	Trace
+instances
+	audioVideoPlayer : AudioVideoPlayer
+	servicesManager : ServicesManager
+channels
+	{ InAudio, audioVideoPlayer.InAudio }
+	{ InInterruptionCommand, servicesManager.InInterruptionCommand }
+	{ InControl, audioVideoPlayer.InControl }
+	{ OutAudio, audioVideoPlayer.OutAudio }
+	{ servicesManager.OutInterruptionCommand, audioVideoPlayer.InInterruptionCommand }
+	{ Trace, audioVideoPlayer.Trace }

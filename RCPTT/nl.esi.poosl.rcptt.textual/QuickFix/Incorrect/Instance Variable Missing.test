@@ -1,0 +1,56 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Instance Variable Missing
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _kuLw8OQVEeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 8/9/17 12:08 PM
+Tags: Instance, QuickFix
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+type-text "process class someClass(number  : Integer) \n"
+type-text "ports \n"	
+type-text "messages \n"
+type-text "variables \n"
+type-text "init \n"
+type-text "someMethod()() \n"
+type-text "methods \n"
+type-text "someMethod()() | | \n"
+type-text "skip \n"
+type-text "\n"
+type-text "system \n"
+type-text "instances \n"
+type-text "	someInstance: someClass() \n"
+type-text "channels \n"
+}
+
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 13 31
+    key-type "M1+1"
+}
+get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
+    | select "Add missing parameter instantiations" | click -default
+
+get-editor "model.poosl" | get-text-viewer | get-property text | equals "process class someClass(number  : Integer) \n"
+    + "ports \n"
+    + "messages \n"
+    + "variables \n"
+    + "init \n"
+    + "someMethod()() \n"
+    + "methods \n"
+    + "someMethod()() | | \n"
+    + "skip \n\n"
+    + "system \n"
+    + "instances \n"
+    + "\tsomeInstance: someClass(number := nil) \n"
+    + "\tchannels" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,66 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.channel.PooslValidationChannelTest END_SETUP */
+
+//-----------
+process class OutIntegerProcess()
+ports
+	
+	Out
+messages	
+	Out!same(Integer)
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | | 
+		Out!same(nil)
+
+process class OutStringProcess()
+ports
+	
+	Out
+messages	
+	Out!string(String)
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | | 
+		Out!string(nil)
+		
+process class InStringProcess()
+ports
+	
+	In
+messages	
+	In?same(String)
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | s : String | 
+		In?same(s)
+		
+process class InIntegerProcess() ports 	
+	In
+messages	
+	In?integer(Integer)
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | i : Integer | 
+		In?integer(i)
+
+cluster class clusterMessageClass()
+ports
+	
+instances
+	outInstance: OutIntegerProcess() 
+	inInstance: InStringProcess() 
+channels  
+	// warnSendReceiveMismatch, different error when message signature name is the same . warningsMultipleLine
+/* XPECT warnings ---
+ "On this internal channel, the parameters of message 'inInstance[InStringProcess].In?same(String)' are not a supertype of the parameters of the following corresponding messages: outInstance[OutIntegerProcess].Out!same(Integer)" at "{outInstance.Out,  inInstance.In}"
+ "On this internal channel, the parameters of message 'outInstance[OutIntegerProcess].Out!same(Integer)' are not a subtype of the parameters of the following corresponding messages: inInstance[InStringProcess].In?same(String)" at "{outInstance.Out,  inInstance.In}"
+--- */
+	{outInstance.Out,  inInstance.In}   

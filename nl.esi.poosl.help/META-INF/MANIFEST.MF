@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: POOSL Help
+Bundle-SymbolicName: nl.esi.poosl.help;singleton:=true
+Bundle-Version: 4.2.2.qualifier
+Require-Bundle: org.eclipse.help
+Bundle-Vendor: TNO ESI

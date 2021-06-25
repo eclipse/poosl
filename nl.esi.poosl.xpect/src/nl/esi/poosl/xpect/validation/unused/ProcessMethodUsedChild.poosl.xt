@@ -1,0 +1,82 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+// Process Method defined in parent should still give warning when its overridden and used in a child class
+
+import "../imports/ProcessMethodUsedChild.poosl"
+
+process class parentProcessClass()
+ports	
+messages	
+variables	
+init    
+	someMethod()()
+methods
+//  XPECT warnings --> "Method is not used" at "unused"
+	unused()()
+		unreachable()()
+		
+		// XPECT warnings --> "Method is not used" at "unreachable"
+	unreachable()()  
+		skip
+
+	someMethod()() | |
+		overRiddenMethod2()() 
+		 
+	// This method is overridden but still should give warning
+	//  XPECT warnings --> "Method is not used" at "overRiddenMethod"
+	overRiddenMethod( 
+		// Warning on input variable not used, method is overridden 
+		// XPECT warnings --> "Variable is not used" at "input" 
+		input : String)(
+		// Warning on output variable not used, method is overridden
+		// XPECT warnings --> "Variable is not used" at "output" 
+		output : String) | 
+		//// Warning on local variable not used, method is overridden
+		// XPECT warnings --> "Variable is not used" at "local" 
+		local : String |
+		skip 
+	overRiddenMethod2()() 
+		skip
+		
+
+process class childProcessClass() extends parentProcessClass
+ports	
+messages	
+variables	
+init
+	startMethod()()  
+methods
+	startMethod()() |get : String |
+		overRiddenMethod ("")(get) 
+	overRiddenMethod(input : String)(output : String) | local : String | 
+		output := input + local
+	// XPECT warnings --> "Method is not used" at "overRiddenMethod2" 	 
+	overRiddenMethod2()()
+		skip
+	
+	
+	//--- imported
+	
+	process class parentImportProcessClass()
+ports	
+messages	
+variables	
+init    
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		// This method is overridden but still should give warning
+		// XPECT warnings --> "Method is not used" at "overRiddenMethod"
+		overRiddenMethod(  
+		// Warning on input variable not used, method is overridden 
+		// XPECT warnings --> "Variable is not used" at "input" 
+		input : String)(
+		// Warning on output variable not used, method is overridden
+		// XPECT warnings --> "Variable is not used" at "output" 
+		output : String) | 
+		//// Warning on local variable not used, method is overridden
+		// XPECT warnings --> "Variable is not used" at "local" 
+		local : String |
+		skip 
+

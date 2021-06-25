@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="nl.esi.poosl.sdk">
+      <category name="nl.esi.poosl"/>
+   </feature>
+   <feature id="nl.esi.poosl.sdk.legacysupport">
+      <category name="nl.esi.poosl"/>
+   </feature>
+   <category-def name="nl.esi.poosl" label="Poosl"/>
+</site>

@@ -1,0 +1,35 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_74QxIOqHEeSdDvHJCJiyYA
+Element-Name: Cluster to Process
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _kcwTgOqIEeSdDvHJCJiyYA
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 4/24/15 3:56 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1] {
+    with [get-edit-part -name "Cluster ProducerConsumer (producer_consumer.poosl)"] {       
+        with [get-edit-part -name ProducerConsumer | get-edit-part 
+            -className DNodeContainerViewNodeContainerCompartmentEditPart] {       
+            with [get-edit-part -name "Producer : Producer" | get-edit-part -className SquareEditPart] {               
+                mouse-press 1 1 button1 -height 100 -width 150
+                mouse-release 1 1 button1 -height 100 -width 150
+               
+            }
+        }
+    }
+    get-menu "Open Textual Editor" | click
+}
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    get-property "getSelectionRange().x" | equals 880 | verify-true
+    get-property "getSelectionRange().y" | equals 8 | verify-true
+    get-property "getSelectionText()" | equals Producer | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

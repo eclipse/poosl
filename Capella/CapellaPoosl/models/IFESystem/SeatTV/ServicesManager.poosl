@@ -1,0 +1,25 @@
+process class ServicesManager
+ports
+	InInterruptionCommand
+	OutInterruptionCommand
+messages
+	InInterruptionCommand?Resume()
+	InInterruptionCommand?Interrupt()
+	OutInterruptionCommand!Interrupt()
+	OutInterruptionCommand!Resume()
+variables
+
+init
+	Idle()()
+methods
+	Idle()()
+		InInterruptionCommand?Interrupt();
+		delay 1; // internal processing time
+		OutInterruptionCommand!Interrupt();
+		Interrupted()()
+
+	Interrupted()()
+		InInterruptionCommand?Resume();
+		delay 1; // internal processing time
+		OutInterruptionCommand!Resume();
+		Idle()()

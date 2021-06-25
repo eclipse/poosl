@@ -1,0 +1,39 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_XCZgsP-QEeSf_PFiy2GHdA,_DS-RMOgBEeSUFO5-NwwB0Q
+Element-Name: Import Relative and File not platform
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _VoGsYGOTEeaOApqarGCklQ
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 3/29/17 12:11 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "CleanProject/models/model.poosl" | double-click
+
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    type-text "import \"classes.poosl\""
+   // key-type Enter
+   // type-text "import \"file///"
+  //  type-text [get-workspace-location]     
+   // type-text "\CleanProject\models\secondImport.poosl\""
+   key-type Enter
+ type-text "import \"platform:/resource/CleanProject/models/secondImport.poosl\""  
+}
+
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 2 67
+    key-type "M1+s"
+}
+with [get-editor "model.poosl" | get-text-viewer] {
+    get-property "markers['2'][0].Type" | equals "org.eclipse.xtext.ui.editor.error" | verify-true
+    get-property "markers['1'][0].Type" | equals "org.eclipse.xtext.ui.editor.error" | verify-false
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

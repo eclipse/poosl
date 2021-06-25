@@ -1,0 +1,20 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: External
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _5mS78CMJEemTAfKT-AIu5w
+Manually-Ordered: true
+Runtime-Version: 2.4.0.201808022310
+Save-Time: 1/29/19 1:46 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_PS1g4CMKEemTAfKT-AIu5w	// kind: 'test' name: 'FileCopy' path: 'FileCopy.test'
+_QwgPICPCEemTAfKT-AIu5w	// kind: 'test' name: 'IncorretIni' path: 'IncorretIni.test'
+_TP9dwCMKEemTAfKT-AIu5w	// kind: 'test' name: 'SocketExample' path: 'SocketExample.test'
+_VKU4sCMKEemTAfKT-AIu5w	// kind: 'test' name: 'SocketExampleDistr' path: 'SocketExampleDistr.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

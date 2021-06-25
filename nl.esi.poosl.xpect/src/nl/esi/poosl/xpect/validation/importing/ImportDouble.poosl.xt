@@ -1,0 +1,27 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.importing.PooslValidationImportingTest END_SETUP */
+
+
+//Multiple imports of same file is allowed
+//XPECT noIssues
+import "import.poosl"
+//XPECT noIssues
+import "import.poosl"
+
+// Error when data class is imported more then once
+// XPECT contains --> "Data class twiceDataClass is defined in two different files: %xpect/validation/importing/importDataTwice.poosl (accessible via import "importDataTwice.poosl") and %xpect/validation/importing/importDataTwice2.poosl (accessible via import "importDataTwice2.poosl")" at "import "importDataTwice.poosl""
+import "importDataTwice.poosl" 
+// XPECT contains --> "Data class twiceDataClass is defined in two different files: %xpect/validation/importing/importDataTwice2.poosl (accessible via import "importDataTwice2.poosl") and %xpect/validation/importing/importDataTwice.poosl (accessible via import "importDataTwice.poosl")" at "import "importDataTwice2.poosl""
+import "importDataTwice2.poosl" 
+
+// Error when an instantiable class is imported more then once
+// XPECT contains --> "Process or Cluster class twiceProcessClass is defined in two different files: %xpect/validation/importing/importProcessTwice.poosl (accessible via import "importProcessTwice.poosl") and %xpect/validation/importing/importProcessTwice2.poosl (accessible via import "importProcessTwice2.poosl")" at "import "importProcessTwice.poosl""
+import "importProcessTwice.poosl"
+// XPECT contains --> "Process or Cluster class twiceProcessClass is defined in two different files: %xpect/validation/importing/importProcessTwice2.poosl (accessible via import "importProcessTwice2.poosl") and %xpect/validation/importing/importProcessTwice.poosl (accessible via import "importProcessTwice.poosl")" at "import "importProcessTwice2.poosl""
+import "importProcessTwice2.poosl" 
+
+// Error when an instantiable class is imported more then once
+// XPECT contains --> "Process or Cluster class twiceClusterClass is defined in two different files: %xpect/validation/importing/importClusterTwice.poosl (accessible via import "importClusterTwice.poosl") and %xpect/validation/importing/importClusterTwice2.poosl (accessible via import "importClusterTwice2.poosl")" at "import "importClusterTwice.poosl""
+import "importClusterTwice.poosl"
+// XPECT contains --> "Process or Cluster class twiceClusterClass is defined in two different files: %xpect/validation/importing/importClusterTwice2.poosl (accessible via import "importClusterTwice2.poosl") and %xpect/validation/importing/importClusterTwice.poosl (accessible via import "importClusterTwice.poosl")" at "import "importClusterTwice2.poosl""
+import "importClusterTwice2.poosl"
+

@@ -1,0 +1,59 @@
+importlib "structures.poosl"
+
+data class LatencyObserver extends Observer
+variables
+	count : Integer
+	sum : Real
+	numberOfIterations : Integer
+	prefix : String
+	console : Console
+methods
+	@Init
+	init(iterations : Integer, str : String) : Observer
+		count := 0;
+		sum := 0.0;
+		numberOfIterations := iterations;
+		prefix := str;
+		console := new(Console);
+		return self register
+
+	result() : String
+		return (sum / count asReal) printString
+
+	store(value : Real) : Observer
+		count := count + 1;
+		sum := sum + value;
+		if count == numberOfIterations then
+			// Note: method complete from data class Observer will stop execution of the model
+			self complete
+		fi;
+		console writeLine(prefix + self result);
+		return self
+
+process class Monitor(iterations : Integer)
+ports
+	Input
+messages
+	Input?AnnouncementSent(Integer)
+	Input?AnnouncementReceived(Integer)
+variables
+	observer : LatencyObserver
+	map : Map
+init
+	Initialise()()
+methods
+	Initialise()()
+		observer := new(LatencyObserver) init(iterations, "Monitor:   Average announcement latency from Aircraft to Passenger is ");
+		map := new(Map);
+		Idle()()
+
+	Idle()() | id : Integer |
+		sel
+			Input?AnnouncementSent(id);
+			map putAt(id, currentTime)
+		or
+			Input?AnnouncementReceived(id);
+			observer store(currentTime - (map at(id)));
+			map removeAt(id)
+		les;
+		Idle()()

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>nl.esi.poosl</groupId>
+	<artifactId>nl.esi.poosl.deploy</artifactId>
+	<version>4.2.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<parent>
+		<groupId>nl.esi.poosl</groupId>
+		<artifactId>nl.esi.poosl.maven</artifactId>		
+		<version>4.2.2-SNAPSHOT</version>
+		<relativePath>../nl.esi.poosl.maven/pom.xml</relativePath>
+	</parent>
+	
+	<name>nl.esi.poosl.deploy</name>	
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-p2-extras-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>add-repo</id>
+						<phase>install</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+						<configuration>
+							<source>
+								<repository>
+									<url>../nl.esi.poosl.updatesite/target/repository/</url>
+								</repository>
+							</source>
+							<append>true</append>
+							<destination>../currentSite-TNO/${release-type}/</destination>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-compress</artifactId>
+                        <version>1.5</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+						<!--
+							Workaround:
+							We have to create the content.xml.xz and artifacts.xml.xz manually
+							for the mirrored p2 repository, because the maven plugin tycho-p2-extras-plugin 
+							does not consider those files. It only considers the artifacts.jar and content.jar.
+						-->
+                        <id>generate-xz-files</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <target name="generate-xz-files">
+                                <taskdef resource="org/apache/ant/compress/antlib.xml" classpathref="maven.plugin.classpath"/>
+                                <unjar src="../currentSite-TNO/${release-type}/artifacts.jar" dest="../currentSite-TNO/${release-type}"/>
+                                <unjar src="../currentSite-TNO/${release-type}/content.jar" dest="../currentSite-TNO/${release-type}"/>
+                                <xz src="../currentSite-TNO/${release-type}/artifacts.xml" dest="../currentSite-TNO/${release-type}/artifacts.xml.xz"/>
+                                <xz src="../currentSite-TNO/${release-type}/content.xml" dest="../currentSite-TNO/${release-type}/content.xml.xz"/>
+								<delete file="../currentSite-TNO/${release-type}/artifacts.xml"/>
+								<delete file="../currentSite-TNO/${release-type}/content.xml"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>${project.basedir}/upload.bat</executable>
+					<arguments>
+						<argument>${release-type}</argument>				
+					</arguments>
+					<environmentVariables>
+						<POOSL_PASSWORD>${POOSL_PASSWORD}</POOSL_PASSWORD>
+					</environmentVariables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>	
+</project>

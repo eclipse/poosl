@@ -1,0 +1,23 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Class
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _GQbikHjuEeaJ2L29rpch3A
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/12/16 3:59 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_kMMWQHjvEeaJ2L29rpch3A	// kind: 'test' name: 'Data Declaration Type' path: 'Data Declaration Type.test'
+_g46noHjvEeaJ2L29rpch3A	// kind: 'test' name: 'Data MessageType' path: 'Data MessageType.test'
+_g5Ql4HjvEeaJ2L29rpch3A	// kind: 'test' name: 'Data NewExpr' path: 'Data NewExpr.test'
+_g5yxYHjvEeaJ2L29rpch3A	// kind: 'test' name: 'Data ReturnType' path: 'Data ReturnType.test'
+_g6IvoHjvEeaJ2L29rpch3A	// kind: 'test' name: 'Data SuperClass' path: 'Data SuperClass.test'
+_elSNkHjuEeaJ2L29rpch3A	// kind: 'test' name: 'Instance ClassDef' path: 'Instance ClassDef.test'
+_g6YnQHjvEeaJ2L29rpch3A	// kind: 'test' name: 'Process SuperClass' path: 'Process SuperClass.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

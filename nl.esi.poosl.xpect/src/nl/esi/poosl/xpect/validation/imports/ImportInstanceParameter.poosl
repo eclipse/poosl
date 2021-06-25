@@ -1,0 +1,26 @@
+process class SuperClass(p:Object)
+ports
+
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p
+		
+
+process class ChildClass extends SuperClass
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip

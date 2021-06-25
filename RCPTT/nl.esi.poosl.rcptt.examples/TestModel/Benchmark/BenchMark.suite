@@ -1,0 +1,24 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: BenchMark
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _IkJKsHM8EeWNsvS2ZqaobA
+Runtime-Version: 2.0.0.201506242315
+Save-Time: 10/15/15 3:00 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_kK_nYHM7EeWNsvS2ZqaobA	// kind: 'test' name: '1.Skip' path: '1.Skip.test'
+_tERVMHM7EeWNsvS2ZqaobA	// kind: 'test' name: '2.Assignment' path: '2.Assignment.test'
+_2Qo-IHM7EeWNsvS2ZqaobA	// kind: 'test' name: '3.Train' path: '3.Train.test'
+_2e6DoHM7EeWNsvS2ZqaobA	// kind: 'test' name: '4.TrainWithData' path: '4.TrainWithData.test'
+_2prwQHM7EeWNsvS2ZqaobA	// kind: 'test' name: '5.DataLoop' path: '5.DataLoop.test'
+_20bnsHM7EeWNsvS2ZqaobA	// kind: 'test' name: '6.DataLoopAssign' path: '6.DataLoopAssign.test'
+_92mp8HM7EeWNsvS2ZqaobA	// kind: 'test' name: '7.DataLoopSimple' path: '7.DataLoopSimple.test'
+_-Lt-UHM7EeWNsvS2ZqaobA	// kind: 'test' name: '8.DataLoopComplex' path: '8.DataLoopComplex.test'
+_-mjgMHM7EeWNsvS2ZqaobA	// kind: 'test' name: '9.ProcessLoop' path: '9.ProcessLoop.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

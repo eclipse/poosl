@@ -1,0 +1,21 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Importlib
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _EulCEBuAEeeKSO4xt8npOw
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 4/25/17 4:02 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_JRVXYBuHEeeKSO4xt8npOw	// kind: 'test' name: 'ImportLib' path: 'ImportLib.test'
+_G4trcBuNEeeKSO4xt8npOw	// kind: 'test' name: 'ImportLib workspace edit' path: 'ImportLib workspace edit.test'
+_QmxhoBuMEeeKSO4xt8npOw	// kind: 'test' name: 'ImportLibDouble' path: 'ImportLibDouble.test'
+_WOK9gCm6EeeNI-yi8k1BCA	// kind: 'test' name: 'Importlib Dif Location' path: 'Importlib Dif Location.test'
+_ZGR2QCm-EeeNI-yi8k1BCA	// kind: 'test' name: 'Importlib Dif NoLocation' path: 'Importlib Dif NoLocation.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

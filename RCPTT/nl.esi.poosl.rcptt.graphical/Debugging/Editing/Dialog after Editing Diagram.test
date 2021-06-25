@@ -1,0 +1,38 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihIHEMT_EeWbAfcxAheu3Q,_1XTYUMT-EeWbAfcxAheu3Q,_LivfwMT_EeWbAfcxAheu3Q
+Element-Name: Dialog after Editing Diagram
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _efo_oMWkEeWbAfcxAheu3Q
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 4:16 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer" 
+    | select "producer_consumer.poosl [Simulated time: 0]/system/ProducerConsumer" | get-menu "Open Communication Diagram" | click
+
+get-tab-folder -index 3 | get-tab-item "producer_consumer.poosl" | click
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    set-caret-pos 10 17
+    type-text " "
+    key-type "M1+s"
+}
+
+get-window "Save during debug session" | get-button "Continue debugging" | click
+
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system" 
+    | select "producer_consumer.poosl [Simulated time: 0]/system" | get-menu "Open Communication Diagram" | click
+with [get-window "Open Communication Diagram"] {
+    get-property title | equals "Open Communication Diagram" | verify-true
+    get-label "Because the model has been edited it's not possible to open a communication diagram during this debug session. Please start a new debug session to be able to open a communication diagram." 
+        | assert-non-empty
+    get-button Ok | get-property enablement | equals true | verify-true
+}
+get-window "Open Communication Diagram" | get-button Ok | click
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

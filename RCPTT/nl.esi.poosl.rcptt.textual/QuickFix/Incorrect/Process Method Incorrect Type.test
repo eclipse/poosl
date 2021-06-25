@@ -1,0 +1,57 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Process Method Incorrect Type
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _2UzDgOQvEeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 3/21/18 3:46 PM
+Tags: Process, Method, QuickFix
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Create a process class with a port thats receives message but dont specify a message for the port
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer | type-text  "process class someClass\n"
+    + "ports\n"
+    + "messages\n"
+    + "variables\n"
+    + "init\n"
+    + "someMethod()()\n"
+    + "methods\n"
+    + "someMethod()()  | i : Integer |\n"
+    + "\totherMethod(i)()\n"
+    + "otherMethod(s : String)()\n"
+    + " s:= \"s\""
+get-editor "model.poosl" | get-text-viewer | get-property "markers['9'][0].text" 
+    | equals "Input argument of type Integer is incompatible with declaration type String" | verify-true
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 9 21
+    key-type "M1+1"
+}
+with [get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table] {
+    get-items
+    select "Change types of input parameter declared in process method" | click -default
+}
+get-editor "model.poosl" | get-text-viewer | get-property text | equals "process class someClass\n"
+    + "ports\n"
+    + "messages\n"
+    + "variables\n"
+    + "init\n"
+    + "someMethod()()\n"
+    + "methods\n"
+    + "someMethod()()  | i : Integer |\n"
+    + "\totherMethod(i)()\n"
+    + "\totherMethod(s : Object)()\n"
+    + "\t s:= \"s\"" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

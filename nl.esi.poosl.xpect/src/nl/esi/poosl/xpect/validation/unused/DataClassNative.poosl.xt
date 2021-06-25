@@ -1,0 +1,15 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+native data class NativeObject
+variables
+	
+methods  
+	// Native Methods allow empty bodys	
+	//XPECT noIssues
+	native asNative() : Boolean    
+	
+	// Native Method Variables should not show unused warning  
+	//XPECT noIssues
+	native ==(o : Object) : Boolean  
+	
+

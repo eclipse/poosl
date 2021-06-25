@@ -1,0 +1,2294 @@
+/* API version 3.0 - Library of Data Structures - Embedded Systems Innovations by TNO
+ * 
+ * This library provides some common data structures, covering Map (Key-Value Dictionary), Queue (First-In-First-Out Ordering), Stack (Last-In-First-Out
+ * Ordering), Bag (Multi-Set), Set, Sequence (Bi-Directional List) and Array2D (2 Dimensional Array). A Bag is an unordered Collection that may contain duplicate
+ * instances. A Set is an unordered Collection that does not contain duplicate instances. A Sequence is an ordered Collection that may contain duplicate instances.
+ * Map, Bag, Set and Sequence are accompanied with iterators (Variables denoting iterators can be declared as of type Iterator). Iterators for Map, Bag and Set
+ * support forward advancing and also removing of the element to which is referred. Iterators for Sequences additionally support advancing in reverse direction.
+ * 
+ */
+// --- Structure Classes ---
+//
+/* Array2D (2-Dimensional Array) - Creating a new Array2D yields a 2-Dimensional Array of size (0,0) (Empty 2-Dimensional Array). Valid indices for non-empty 2-Dimensional Arrays range from 1 to the number of rows respectively columns of the 2-Dimensional Array.*/
+data class Array2D extends Object
+variables
+	RowArray : Array,
+	Rows : Integer,
+	Columns : Integer
+methods
+	// Methods for end-users
+	/* Returns the number of objects in the Array2D (rows * columns) */
+	size : Integer
+		if RowArray = nil then
+			self resize(0, 0)
+		fi;
+		return Rows * Columns
+
+	/* Returns the number of rows */
+	rows : Integer
+		if RowArray = nil then
+			self resize(0, 0)
+		fi;
+		return Rows
+
+	/* Returns the number of columns */
+	columns : Integer
+		if RowArray = nil then
+			self resize(0, 0)
+		fi;
+		return Columns
+
+	/* Changes the dimensions of the Array2D where R is the number of rows and C is the number of columns. In case R or C is smaller than the current dimensions, elements are removed. In case R or C is larger than the current dimensions, elements valued nil are added. Changes the dimensions of the Array2D where R is the number of rows and C is the number of columns. In case R or C is smaller than the current dimensions, elements are removed. In case R or C is larger than the current dimensions, elements valued nil are added. If R and C do not represent non-negative Integers, an error is generated */
+	resize(R, C : Integer) : Array2D | I : Integer |
+		if (R = nil) | (R isOfType("Integer") not) | (C = nil) | (C isOfType("Integer") not) then
+			self error("Parameters for method \"resize\" of Array2D must be Integers")
+		fi;
+		if (R < 0) | (C < 0) then
+			self error("Parameters for method \"resize\" of Array2D must not be negative")
+		fi;
+		if RowArray = nil then
+			RowArray := new(Array);
+			Rows := 0
+		fi;
+		Columns := C;
+		RowArray resize(R);
+		if Rows > R then
+			Rows := R
+		fi;
+		I := 0;
+		while I < Rows do
+			I := I + 1;
+			RowArray at(I) resize(Columns)
+		od;
+		while Rows < R do
+			Rows := Rows + 1;
+			RowArray putAt(Rows, new(Array) resize(Columns))
+		od;
+		return self
+
+	/* Returns the object located at row R and column C in case R and C are Integers within the dimensions of the Array2D. Otherwise, an error is generated */
+	at(R, C : Integer) : Object
+		if RowArray = nil then
+			self resize(0, 0)
+		fi;
+		if (R = nil) | (R isOfType("Integer") not) | (C = nil) | (C isOfType("Integer") not) then
+			self error("Parameters for method \"at\" of Array2D must be Integers")
+		fi;
+		if (R < 1) | (C < 1) | (R > Rows) | (C > Columns) then
+			self error("Index out of bounds for method \"at\" of Array2D")
+		fi;
+		return RowArray at(R) at(C)
+
+	/* Replaces the object at row R and column C with O in case R and C are Integers within the dimensions of the Array2D. Otherwise, an error is generated */
+	putAt(R, C : Integer, anObject : Object) : Array2D
+		if RowArray = nil then
+			self resize(0, 0)
+		fi;
+		if (R = nil) | (R isOfType("Integer") not) | (C = nil) | (C isOfType("Integer") not) then
+			self error("First and second parameters for method \"putAt\" of Array2D must be Integers")
+		fi;
+		if (R < 1) | (C < 1) | (R > Rows) | (C > Columns) then
+			self error("Index out of bounds for method \"putAt\" of Array2D")
+		fi;
+		RowArray at(R) putAt(C, anObject);
+		return self
+
+	/* Replaces all elements in the Array2D by object O */
+	putAll(O : Object) : Array2D | I : Integer |
+		if RowArray = nil then
+			self resize(0, 0)
+		fi;
+		I := 1;
+		while I <= Rows do
+			RowArray at(I) putAll(O);
+			I := I + 1
+		od;
+		return self
+
+	/* Returns a pretty print */
+	printString : String | Out : String, I, J : Integer |
+		if RowArray = nil then
+			self resize(0, 0)
+		fi;
+		if (Rows != 0) & (Columns != 0) then
+			Out := "Array2D[" concat(Rows printString) concat(",") concat(Columns printString) concat("]:\n");
+			I := 0;
+			while I < Rows do
+				I := I + 1;
+				J := 0;
+				Out concat("[");
+				while J < Columns do
+					J := J + 1;
+					Out concat(RowArray at(I) at(J) printString);
+					if J < Columns then
+						Out concat(", ")
+					fi
+				od;
+				Out concat("]\n")
+			od
+		else
+			Out := "Array2D[0,0]"
+		fi;
+		return Out
+
+/* Queue (First-In-First-Out Ordering) of Unbounded or Finite Size - Creating a new Queue yields a Queue of unbounded size (capacity) */
+data class Queue extends Object
+variables
+	Occupation, Size : Integer,
+	Root : StructureElement
+methods
+	// Methods for end-users
+	/* Clears the contents of the Queue (by removing all elements) */
+	clear : Queue
+		Root := new(StructureElement);
+		Root setNext(Root) setPrevious(Root);
+		Occupation := 0;
+		return self
+
+	/* Modifies the size (capacity) of the Queue. If S is smaller than the current size (capacity), elements at the tail of the Queue are removed. If S equals nil then the size (capacity) is set to unbounded. If S is not nil or an Integer smaller than 1, an error is generated */
+	resize(S : Integer) : Queue | R : StructureElement, C : Integer |
+		if S isOfType("Integer") not then
+			self error("Parameter for method \"resize\" of Queue must be an Integer")
+		fi;
+		if Root = nil then
+			self clear
+		fi;
+		if S != nil then
+			if S < 1 then
+				self error("Parameter for method \"resize\" of Queue must be positive")
+			fi;
+			if S < Occupation then
+				Occupation := S;
+				C := S;
+				R := Root next;
+				C := C - 1;
+				while C != 0 do
+					R := R next;
+					C := C - 1
+				od;
+				R setNext(Root);
+				Root setPrevious(R)
+			fi
+		fi;
+		Size := S;
+		return self
+
+	/* Returns the size (capacity) of the Queue or nil if unbounded */
+	size : Integer
+		if Root = nil then
+			self clear
+		fi;
+		return Size
+
+	/* Returns the number of elements in the Queue */
+	occupation : Integer
+		if Root = nil then
+			self clear
+		fi;
+		return Occupation
+
+	/* Returns true in case the Queue does not contain any elements. Otherwise, it returns false */
+	isEmpty : Boolean
+		if Root = nil then
+			self clear
+		fi;
+		return Occupation = 0
+
+	/* Returns true in case the size (capacity) of the Queue is bounded and equals its capacity. Otherwise, it returns false */
+	isFull : Boolean
+		if Root = nil then
+			self clear
+		fi;
+		return if Size = nil then
+			false
+		else
+			Occupation = Size
+		fi
+
+	/* Returns true in case there are no instances of O contained in the Queue. Otherwise, it returns false */
+	excludes(O : Object) : Boolean
+		return self includes(O) not
+
+	/* Returns true in case at least one instance of O is contained in the Queue. Otherwise, it returns false */
+	includes(O : Object) : Boolean | R : StructureElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		R := Root next;
+		NF := true;
+		while NF & (R != Root) do
+			if R element = O then
+				NF := false
+			fi;
+			R := R next
+		od;
+		return NF not
+
+	/* Returns the number of instances of O in the Queue */
+	count(O : Object) : Integer | R : StructureElement, C : Integer |
+		if Root = nil then
+			self clear
+		fi;
+		C := 0;
+		R := Root next;
+		while R != Root do
+			if R element = O then
+				C := C + 1
+			fi;
+			R := R next
+		od;
+		return C
+
+	/* Adds object O to the end (tail) of the Queue in case it is not full */
+	add(O : Object) : Queue | R : StructureElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Size != nil then
+			if Occupation < Size then
+				R := new(StructureElement) setNext(Root) setPrevious(Root previous) setElement(O);
+				Root previous setNext(R);
+				Root setPrevious(R);
+				Occupation := Occupation + 1
+			fi
+		else
+			R := new(StructureElement) setNext(Root) setPrevious(Root previous) setElement(O);
+			Root previous setNext(R);
+			Root setPrevious(R);
+			Occupation := Occupation + 1
+		fi;
+		return self
+
+	/* Returns the first element (head) in the Queue if it is not empty. Otherwise, it returns nil. It does not modify the Queue */
+	inspect : Object
+		if Root = nil then
+			self clear
+		fi;
+		return if Occupation != 0 then
+			Root next element
+		else
+			nil
+		fi
+
+	/* Returns the first element (head) in the Queue and removes it from the Queue if not empty. Otherwise, it returns nil */
+	remove : Object | R : StructureElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Occupation != 0 then
+			Occupation := Occupation - 1;
+			R := Root next;
+			Root setNext(R next);
+			R next setPrevious(Root);
+			return R element
+		else
+			return nil
+		fi
+
+	/* Returns a pretty print */
+	printString : String | PrintOut : String, R : StructureElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Occupation = 0 then
+			PrintOut := "Empty ";
+			if Size = nil then
+				PrintOut concat("Unbounded ")
+			fi;
+			PrintOut concat("Queue");
+			if Size != nil then
+				PrintOut concat(" [Size = ") concat(Size printString) concat("]")
+			fi
+		else
+			PrintOut := "";
+			if Size = nil then
+				PrintOut concat("Unbounded ")
+			fi;
+			PrintOut concat("Queue");
+			if Size != nil then
+				PrintOut concat(" [Size = ") concat(Size printString) concat("] {")
+			else
+				PrintOut concat(" {")
+			fi;
+			R := Root next;
+			while R != Root do
+				PrintOut concat(R printString);
+				if R next != Root then
+					PrintOut concat(", ")
+				fi;
+				R := R next
+			od;
+			PrintOut concat("}")
+		fi;
+		return PrintOut
+
+/* Stack (Last-In-First-Out Ordering) of Unbounded or Finite Size - Creating a new Stack yields a Stack of unbounded size (capacity) */
+data class Stack extends Object
+variables
+	Occupation, Size : Integer,
+	Root : StructureElement
+methods
+	// Methods for end-users
+	/* Clears the contents of the Stack (by removing all elements) */
+	clear : Stack
+		Root := new(StructureElement);
+		Root setNext(Root) setPrevious(Root);
+		Occupation := 0;
+		return self
+
+	/* Modifies the size (capacity) of the Stack. If S is smaller than the current size (capacity), elements at the tail of the Stack are removed. If S equals nil then the size (capacity) is set to unbounded. If S is not nil or an Integer smaller than 1, an error is generated */
+	resize(S : Integer) : Stack | R : StructureElement, C : Integer |
+		if S isOfType("Integer") not then
+			self error("Parameter for method \"resize\" of Stack must be an Integer")
+		fi;
+		if Root = nil then
+			self clear
+		fi;
+		if S != nil then
+			if S < 1 then
+				self error("Parameter for method \"resize\" of Stack must be positive")
+			fi;
+			if S < Occupation then
+				Occupation := S;
+				C := S;
+				R := Root next;
+				C := C - 1;
+				while C != 0 do
+					R := R next;
+					C := C - 1
+				od;
+				R setNext(Root);
+				Root setPrevious(R)
+			fi
+		fi;
+		Size := S;
+		return self
+
+	/* Returns the size (capacity) of the Stack or nil if unbounded */
+	size : Integer
+		if Root = nil then
+			self clear
+		fi;
+		return Size
+
+	/* Returns the number of elements in the Stack */
+	occupation : Integer
+		if Root = nil then
+			self clear
+		fi;
+		return Occupation
+
+	/* Returns true in case the Stack does not contain any elements. Otherwise, it returns false */
+	isEmpty : Boolean
+		if Root = nil then
+			self clear
+		fi;
+		return Occupation = 0
+
+	/* Returns true in case the size (capacity) of the Stack is bounded and equals its capacity. Otherwise, it returns false */
+	isFull : Boolean
+		if Root = nil then
+			self clear
+		fi;
+		return if Size = nil then
+			false
+		else
+			Occupation = Size
+		fi
+
+	/* Returns true in case there are no instances of O contained in the Stack. Otherwise, it returns false */
+	excludes(O : Object) : Boolean
+		return self includes(O) not
+
+	/* Returns true in case at least one instance of O is contained in the Stack. Otherwise, it returns false */
+	includes(O : Object) : Boolean | R : StructureElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		R := Root next;
+		NF := true;
+		while NF & (R != Root) do
+			if R element = O then
+				NF := false
+			fi;
+			R := R next
+		od;
+		return NF not
+
+	/* Returns the number of instances of O in the Stack */
+	count(O : Object) : Integer | R : StructureElement, C : Integer |
+		if Root = nil then
+			self clear
+		fi;
+		C := 0;
+		R := Root next;
+		while R != Root do
+			if R element = O then
+				C := C + 1
+			fi;
+			R := R next
+		od;
+		return C
+
+	/* Adds object O to the end (tail) of the Stack in case it is not full */
+	push(O : Object) : Stack | R : StructureElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Size != nil then
+			if Occupation < Size then
+				R := new(StructureElement) setNext(Root) setPrevious(Root previous) setElement(O);
+				Root previous setNext(R);
+				Root setPrevious(R);
+				Occupation := Occupation + 1
+			fi
+		else
+			R := new(StructureElement) setNext(Root) setPrevious(Root previous) setElement(O);
+			Root previous setNext(R);
+			Root setPrevious(R);
+			Occupation := Occupation + 1
+		fi;
+		return self
+
+	/* Returns the last element (tail) in the Stack if it is not empty. Otherwise, it returns nil. It does not modify the Stack */
+	inspect : Object
+		if Root = nil then
+			self clear
+		fi;
+		return if Occupation != 0 then
+			Root previous element
+		else
+			nil
+		fi
+
+	/* Returns the last element (tail) in the Stack and removes it in case the Stack is not empty. Otherwise, it returns nil */
+	pop : Object | R : StructureElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Occupation != 0 then
+			Occupation := Occupation - 1;
+			R := Root previous;
+			Root setPrevious(R previous);
+			R previous setNext(Root);
+			return R element
+		else
+			return nil
+		fi
+
+	/* Returns a pretty print */
+	printString : String | PrintOut : String, R : StructureElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Occupation = 0 then
+			PrintOut := "Empty ";
+			if Size = nil then
+				PrintOut concat("Unbounded ")
+			fi;
+			PrintOut concat("Stack");
+			if Size != nil then
+				PrintOut concat(" [Size = ") concat(Size printString) concat("]")
+			fi
+		else
+			PrintOut := "";
+			if Size = nil then
+				PrintOut concat("Unbounded ")
+			fi;
+			PrintOut concat("Stack");
+			if Size != nil then
+				PrintOut concat(" [Size = ") concat(Size printString) concat("] {")
+			else
+				PrintOut concat(" {")
+			fi;
+			R := Root next;
+			while R != Root do
+				PrintOut concat(R printString);
+				if R next != Root then
+					PrintOut concat(", ")
+				fi;
+				R := R next
+			od;
+			PrintOut concat("}")
+		fi;
+		return PrintOut
+
+/* Map (Key-Value Dictionary) - Creating a new Map yields an empty Key-Value Dictionary */
+data class Map extends Object
+variables
+	Size : Integer,
+	Root : MapElement
+methods
+	// Methods for end-users
+	/* Clears the contents of the Map (by removing all key-value pairs) */
+	clear : Map | R : MapElement |
+		if Root != nil then
+			R := Root next;
+			while R != Root do
+				R setRemoved(true);
+				R := R next
+			od
+		else
+			Root := new(MapElement) setRemoved(false)
+		fi;
+		Root setNext(Root) setPrevious(Root);
+		Size := 0;
+		return self
+
+	/* Returns true in case the Map does not contain any key-value pairs. Otherwise, it returns false */
+	isEmpty : Boolean
+		if Root = nil then
+			self clear
+		fi;
+		return Size = 0
+
+	/* Returns the number of key-value pairs in the Map */
+	size : Integer
+		if Root = nil then
+			self clear
+		fi;
+		return Size
+
+	/* Returns an iterator for traversing the Map */
+	iterator : MapIterator
+		if Root = nil then
+			self clear
+		fi;
+		return new(MapIterator) referringTo(self, Root next)
+
+	/* Returns true in case key K is included in the Map. Otherwise, it returns false */
+	includesKey(K : Object) : Boolean | R : MapElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		NF := true;
+		R := Root next;
+		while NF & (R != Root) do
+			if R key = K then
+				NF := false
+			fi;
+			R := R next
+		od;
+		return NF not
+
+	/* Returns true in case at least one instance of value V is included in the Map. Otherwise, it returns false */
+	includesValue(V : Object) : Boolean | R : MapElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		NF := true;
+		R := Root next;
+		while NF & (R != Root) do
+			if R value = V then
+				NF := false
+			fi;
+			R := R next
+		od;
+		return NF not
+
+	/* Returns a Set with all keys in the Map */
+	keys : Set | R : MapElement, S : Set |
+		if Root = nil then
+			self clear
+		fi;
+		R := Root next;
+		S := new(Set) clear;
+		while R != Root do
+			S add(R key);
+			R := R next
+		od;
+		return S
+
+	/* Returns a Bag with all values corresponding to all keys (which may contain duplicate instances) */
+	values : Bag | R : MapElement, B : Bag |
+		if Root = nil then
+			self clear
+		fi;
+		R := Root next;
+		B := new(Bag) clear;
+		while R != Root do
+			B add(R value);
+			R := R next
+		od;
+		return B
+
+	/* Returns true if M is a Map and the receiver and M contain the same key-value pairs. Otherwise, it returns false */
+	=(M : Object) : Boolean | R : MapElement, NF : Boolean |
+		if (M != nil) & M isOfType("Map") then
+			if Root = nil then
+				self clear
+			fi;
+			NF := Size = M size;
+			if NF & (Size != 0) then
+				R := Root next;
+				while NF & (R != Root) do
+					if R value != nil then // Split in two cases for efficiency
+						NF := M at(R key) = R value
+					else
+						NF := M includesKey(R key) & (M at(R key) = nil)
+					fi;
+					R := R next
+				od
+			fi;
+			return NF
+		else
+			return false
+		fi
+
+	/* Returns !(self = M) */
+	!=(M : Object) : Boolean
+		return !(self = M)
+
+	/* Modifies the Map to store value V at key K. In case key K was not yet included, it is added */
+	putAt(Key, Value : Object) : Map | R : MapElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		NF := true;
+		R := Root next;
+		while NF & (R != Root) do
+			if R key = Key then
+				R setValue(Value);
+				NF := false
+			fi;
+			R := R next
+		od;
+		if NF then
+			R := new(MapElement) setNext(Root) setPrevious(Root previous) setRemoved(false) setKey(Key) setValue(Value);
+			Root previous setNext(R);
+			Root setPrevious(R);
+			Size := Size + 1
+		fi;
+		return self
+
+	/* Returns the value at key K if such key is included in the Map. Otherwise, it returns nil */
+	at(Key : Object) : Object | R : MapElement, NF : Boolean, Value : Object |
+		if Root = nil then
+			self clear
+		fi;
+		NF := true;
+		Value := nil;
+		R := Root next;
+		while NF & (R != Root) do
+			if R key = Key then
+				Value := R value;
+				NF := false
+			fi;
+			R := R next
+		od;
+		return Value
+
+	/* Modifies the Map by removing the key-value pair with key K (if it was included) */
+	removeAt(Key : Object) : Map | R : MapElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		NF := true;
+		R := Root next;
+		while NF & (R != Root) do
+			if R key = Key then
+				NF := false;
+				R setRemoved(true);
+				R next setPrevious(R previous);
+				R previous setNext(R next);
+				Size := Size - 1
+			fi;
+			R := R next
+		od;
+		return self
+
+	/* Returns a pretty print */
+	printString : String | R : MapElement, PrintOut : String |
+		if Root = nil then
+			self clear
+		fi;
+		if Size = 0 then
+			PrintOut := "Empty Map"
+		else
+			PrintOut := "Map{";
+			R := Root next;
+			while R != Root do
+				PrintOut concat(R printString);
+				if R next != Root then
+					PrintOut concat(", ")
+				fi;
+				R := R next
+			od;
+			PrintOut concat("}")
+		fi;
+		return PrintOut
+
+	// Methods for implementation
+	resize(S : Integer) : Map // Only used by MapIterator::remove
+		if Root = nil then
+			self clear
+		fi;
+		Size := S;
+		return self
+
+	root : MapElement
+		if Root = nil then
+			self clear
+		fi;
+		return Root
+
+/* Collection - Super class for Bag, Set and Sequence */
+data class Collection extends Object
+variables
+	Root : CollectionElement,
+	Size : Integer
+methods
+	// Methods for end-users
+	/* Clears the contents of the Collection (by removing all elements) */
+	clear : Collection | R : CollectionElement |
+		if Root != nil then
+			R := Root next;
+			while R != Root do
+				R setRemoved(true);
+				R := R next
+			od
+		else
+			Root := new(CollectionElement) setCount(0) setRemoved(false)
+		fi;
+		Root setNext(Root) setPrevious(Root);
+		Size := 0;
+		return self
+
+	/* Returns true in case the Collection does not contain any elements. Otherwise, it returns false */
+	isEmpty : Boolean
+		if Root = nil then
+			self clear
+		fi;
+		return Size = 0
+
+	/* Returns the number of elements in the Collection */
+	size : Integer
+		if Root = nil then
+			self clear
+		fi;
+		return Size
+
+	/* Returns true in case O is not contained in the Collection. Otherwise, it returns false */
+	excludes(O : Object) : Boolean
+		return self includes(O) not
+
+	/* Returns true in case (no instance of) each element in C is not contained in the Collection. Otherwise, it returns false. In case C is not a Collection, an error is generated */
+	excludesAll(C : Collection) : Boolean | I : CollectionIterator, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		if (C = nil) | (C isOfType("Collection") not) then
+			self error("Parameter of method \"excludesAll\" for Collection should be a Collection")
+		fi;
+		NF := true;
+		if Size != 0 then
+			I := C iterator;
+			while NF & !(I isDone) do
+				NF := self excludes(I element); // Does not consider counting of duplicate instances
+				I advance
+			od
+		fi;
+		return NF
+
+	/* Returns true in case O is contained in the Collection. Otherwise, it returns false */
+	includes(O : Object) : Boolean | R : CollectionElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		R := Root next;
+		NF := true;
+		while NF & (R != Root) do
+			NF := R element != O;
+			R := R next
+		od;
+		return NF not
+
+	/* Returns true in case (at least one instance of) each element in C is contained in the Collection. Otherwise, it returns false. In case C is not a Collection, an error is generated */
+	includesAll(C : Collection) : Boolean | I : CollectionIterator, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		if (C = nil) | (C isOfType("Collection") not) then
+			self error("Parameter of method \"includesAll\" for Collection should be a Collection")
+		fi;
+		if Size != 0 then
+			I := C iterator;
+			NF := true;
+			while NF & !(I isDone) do
+				NF := self includes(I element); // Does not consider counting of duplicate instances
+				I advance
+			od;
+			return NF
+		else
+			return C size = 0
+		fi
+
+	/* Returns an Array that contains the elements in the Collection (with duplicate instances). In case the Collection is a Sequence, the ordering of the elements (and indices of the elements) is preserved */
+	toArray : Array | R : CollectionElement, I, J : Integer, A : Array |
+		if Root = nil then
+			self clear
+		fi;
+		A := new(Array) resize(Size);
+		R := Root next;
+		I := 1;
+		while R != Root do
+			J := R count;
+			while J != 0 do
+				A putAt(I, R element);
+				I := I + 1;
+				J := J - 1
+			od;
+			R := R next
+		od;
+		return A
+
+	/* Returns a Bag that contains all elements in the Collection (with duplicate instances) */
+	toBag : Bag | R : CollectionElement, B : Bag |
+		if Root = nil then
+			self clear
+		fi;
+		B := new(Bag) clear;
+		R := Root next;
+		while R != Root do
+			B addMultiple(R element, R count);
+			R := R next
+		od;
+		return B
+
+	/* Returns a Set that contains all elements in the Collection (without duplicate instances) */
+	toSet : Set | R : CollectionElement, S : Set |
+		if Root = nil then
+			self clear
+		fi;
+		S := new(Set) clear;
+		R := Root next;
+		while R != Root do
+			S add(R element);
+			R := R next
+		od;
+		return S
+
+	/* Returns a Sequence that contains all elements in the Collection (with duplicate instances). In case the Collection is a Sequence, the ordering of the elements (and indices of the elements) is preserved */
+	toSequence : Sequence | R : CollectionElement, I : Integer, S : Sequence |
+		if Root = nil then
+			self clear
+		fi;
+		S := new(Sequence) clear;
+		R := Root next;
+		while R != Root do
+			I := R count;
+			while I != 0 do
+				S append(R element);
+				I := I - 1
+			od;
+			R := R next
+		od;
+		return S
+
+	// Methods for implementation
+	resize(S : Integer) : Collection // Only used by CollectionIterator::remove
+		Size := S;
+		return self
+
+	root : CollectionElement
+		if Root = nil then
+			self clear
+		fi;
+		return Root
+
+/* Bag (Unordered Multi-Set) - Creating a Bag yields an empty Unordered Collection (Possibly With Duplicate Instances) */
+data class Bag extends Collection
+variables
+
+methods
+	// Methods for end-users
+	/* Returns an iterator for traversing the Bag */
+	iterator : BagIterator
+		if Root = nil then
+			self clear
+		fi;
+		return new(BagIterator) referringTo(self, Root next)
+
+	/* Modifies the Bag by clearing its contents and subsequently adding all elements of Array A */
+	fromArray(A : Array) : Bag | I : Integer |
+		self clear;
+		I := 1;
+		while I <= A size do
+			self add(A at(I));
+			I := I + 1
+		od;
+		return self
+
+	/* Returns true in case B is a Bag and the Bag and B contain the same objects in equal numbers. Otherwise, false is returned */
+	=(B : Object) : Boolean | R : CollectionElement, NF : Boolean |
+		if (B != nil) & B isOfType("Bag") then
+			if Root = nil then
+				self clear
+			fi;
+			NF := Size = B size;
+			if NF & (Size != 0) then
+				R := Root next;
+				while NF & (R != Root) do
+					NF := R count = B count(R element);
+					R := R next
+				od
+			fi;
+			return NF
+		else
+			return false
+		fi
+
+	/* Returns !(self = B) */
+	!=(B : Object) : Boolean
+		return !(self = B)
+
+	/* Returns true in case the Bag does not contain duplicate instances. Otherwise, false is returned */
+	isUnique : Boolean | R : CollectionElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		NF := true;
+		if Size > 1 then
+			R := Root next;
+			while NF & (R != Root) do
+				NF := R count = 1;
+				R := R next
+			od
+		fi;
+		return NF
+
+	/* Returns the number of duplicate instances of O in the Bag */
+	count(O : Object) : Integer | R : CollectionElement, C : Integer, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		C := 0;
+		R := Root next;
+		NF := true;
+		while NF & (R != Root) do
+			if R element = O then
+				NF := false;
+				C := R count
+			fi;
+			R := R next
+		od;
+		return C
+
+	/* Modifies and returns the Bag after adding object O */
+	add(O : Object) : Bag
+		return self addMultiple(O, 1)
+
+	/* Modifies and returns the Bag after adding N duplicate instances of O if N is a non-negative integer. Otherwise, an error is generated */
+	addMultiple(O : Object, N : Integer) : Bag | R : CollectionElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		if (N = nil) | (N isOfType("Integer") not) then
+			self error("Second parameter for method \"addMultiple\" of Bag must be an Integer")
+		fi;
+		if N < 0 then
+			self error("Second parameter for method \"addMultiple\" of Bag must not be negative")
+		fi;
+		NF := true;
+		R := Root next;
+		while NF & (R != Root) do
+			if R element = O then
+				NF := false;
+				R setCount(R count + N)
+			fi;
+			R := R next
+		od;
+		if NF then
+			R := new(CollectionElement) setNext(Root) setPrevious(Root previous) setCount(N) setRemoved(false)
+				setElement(O);
+			Root previous setNext(R);
+			Root setPrevious(R)
+		fi;
+		Size := Size + N;
+		return self
+
+	/* Removes one instance of O from the Bag (if such instance is included). It returns the Bag */
+	remove(O : Object) : Bag
+		return self removeMultiple(O, 1)
+
+	/* Removes N instances of O from the Bag (if such instances are included) if N is a non-negative Integer. If N is larger than the number of duplicate instances of O in the Bag, all duplicate instances of O are removed. It returns the Bag */
+	removeMultiple(O : Object, N : Integer) : Bag | R : CollectionElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		if (N = nil) | (N isOfType("Integer") not) then
+			self error("Second parameter for method \"removeMultiple\" of Bag must be an Integer")
+		fi;
+		if N < 0 then
+			self error("Second parameter for method \"removeMultiple\" of Bag must not be negative")
+		fi;
+		NF := true;
+		R := Root next;
+		while NF & (R != Root) do
+			if R element = O then
+				if R count <= N then
+					R setRemoved(true);
+					R next setPrevious(R previous);
+					R previous setNext(R next);
+					Size := Size - R count
+				else
+					R setCount(R count - N);
+					Size := Size - N
+				fi;
+				NF := false
+			fi;
+			R := R next
+		od;
+		return self
+
+	/* Returns the Bag after removing all duplicate instances of elements (if any) */
+	removeDuplicates : Bag | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		R := Root next;
+		while R != Root do
+			Size := Size - R count + 1;
+			R setCount(1);
+			R := R next
+		od;
+		return self
+
+	/* Returns a new Bag that contains those elements included in both the receiver and B. The number of duplicate instances becomes the sum of the number of the duplicate instances in the receiver and B. In case B is not a Bag, an error is generated */
+	+(B : Bag) : Bag
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for operator \"+\" of Bag must be a Bag")
+		fi;
+		return self deepCopy union(B)
+
+	/* Modifies the Bag by adding all elements from B. The number of duplicate instances becomes the sum of the number of the duplicate instances in the Bag and B. In case B is not a Bag, an error is generated */
+	union(B : Bag) : Bag | R, I : CollectionElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for method \"union\" of Bag must be a Bag")
+		fi;
+		I := B root next;
+		while I != B root do
+			NF := true;
+			R := Root next;
+			while NF & (R != Root) do
+				if R element = I element then
+					NF := false;
+					R setCount(R count + I count)
+				fi; // Using I as B iterator would give erroneous addition
+				R := R next
+			od;
+			if NF then
+				R := new(CollectionElement) setNext(Root) setPrevious(Root previous) setCount(I count) setRemoved(false)
+					setElement(I element);
+				Root previous setNext(R);
+				Root setPrevious(R)
+			fi;
+			Size := Size + I count;
+			I := I next
+		od;
+		return self
+
+	/* Returns a new Bag that only contains those elements of the receiver that are not included in B. The number of duplicate instances becomes the number of the duplicate instances in the receiver minus the number of duplicate instances in B (if larger than 0, otherwise they are all removed). In case B is not a Bag, an error is generated */
+	-(B : Bag) : Bag | R : CollectionElement, Subtraction : Bag |
+		if Root = nil then
+			self clear
+		fi;
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for operator \"-\" of Bag must be a Bag")
+		fi;
+		Subtraction := new(Bag);
+		R := Root next;
+		while R != Root do
+			Subtraction addMultiple(R element, R count monus(B count(R element)));
+			R := R next
+		od;
+		return Subtraction
+
+	/* Modifies the Bag by removing all elements from B. The number of duplicate instances becomes the number of the duplicate instances in the Bag minus the number of duplicate instances in B (if larger than 0, otherwise they are all removed). In case B is not a Bag, an error is generated */
+	subtract(B : Bag) : Bag | R : CollectionElement, C : Integer |
+		if Root = nil then
+			self clear
+		fi;
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for method \"subtract\" of Bag must be a Bag")
+		fi;
+		R := Root next;
+		while R != Root do
+			C := R count monus(B count(R element));
+			if C = 0 then
+				R setRemoved(true);
+				R previous setNext(R next);
+				R next setPrevious(R previous);
+				Size := Size - R count
+			else
+				Size := Size - R count + C;
+				R setCount(C)
+			fi;
+			R := R next
+		od;
+		return self
+
+	/* Modifies the Bag to become the symmetric difference of the Bag and B. This means that those elements of the Bag that are in B are removed (such that a minimum number of duplicate instances remains, if positive) and those elements in B that are not in the Bag are added (including duplicate instances). In case B is not a Bag, an error is generated */
+	difference(B : Bag) : Bag | R : CollectionElement, Intersection : Bag |
+		if Root = nil then
+			self clear
+		fi;
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for method \"difference\" of Bag must be a Bag")
+		fi;
+		Intersection := new(Bag) clear;
+		R := Root next;
+		while R != Root do
+			Intersection addMultiple(R element, R count min(B count(R element)));
+			R := R next
+		od;
+		return (self subtract(Intersection)) union(B - Intersection)
+
+	/* Modifies the Bag to contain only those elements that are contained in both the Bag and B. The number of duplicate instances becomes the minimum of the number of the duplicate instances included in the Bag and B. In case B is not a Bag, an error is generated */
+	intersection(B : Bag) : Bag | R : CollectionElement, C : Integer |
+		if Root = nil then
+			self clear
+		fi;
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for method \"intersection\" of Bag must be a Bag")
+		fi;
+		R := Root next;
+		while R != Root do
+			C := R count min(B count(R element));
+			if C = 0 then
+				R setRemoved(true);
+				R previous setNext(R next);
+				R next setPrevious(R previous);
+				Size := Size - R count
+			else
+				Size := Size - R count + C;
+				R setCount(C)
+			fi;
+			R := R next
+		od;
+		return self
+
+	/* Returns a pretty print */
+	printString : String | R : CollectionElement, PrintOut : String |
+		if Root = nil then
+			self clear
+		fi;
+		if Size = 0 then
+			PrintOut := "Empty Bag"
+		else
+			PrintOut := "Bag{";
+			R := Root next;
+			while R != Root do
+				PrintOut concat("[") concat(R count printString) concat(" * ") concat(R element printString)
+					concat("]");
+				if R next != Root then
+					PrintOut concat(", ")
+				fi;
+				R := R next
+			od;
+			PrintOut concat("}")
+		fi;
+		return PrintOut
+
+	/* Returns true in case the Bag is a strict super bag of B, where the number of duplicate instances (for each least one element) in the Bag must be strictly larger than the number of duplicate instances in B. Otherwise, false is returned. In case B is not a Bag, an error is generated */
+	>(B : Bag) : Boolean
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for operator \"<\" of Bag must be a Bag")
+		fi;
+		return !(self <= B)
+
+	/* Returns true in case the Bag is a super bag of B, where the number of duplicate instances in the Bag must be larger than or equal to the number of duplicate instances in B. Otherwise, false is returned. In case B is not a Bag, an error is generated */
+	>=(B : Bag) : Boolean
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for operator \"<=\" of Bag must be a Bag")
+		fi;
+		return B <= self
+
+	/* Returns true in case the Bag is a strict sub bag of B, where the number of duplicate instances (for each least one element) in the Bag must be strictly smaller than the number of duplicate instances in B. Otherwise, false is returned. In case B is not a Bag, an error is generated */
+	<(B : Bag) : Boolean
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for operator \"<\" of Bag must be a Bag")
+		fi;
+		return !(B <= self)
+
+	/* Returns true in case the Bag is a sub bag of B, where the number of duplicate instances in the Bag must be smaller than or equal to the number of duplicate instances in B. Otherwise, false is returned. In case B is not a Bag, an error is generated */
+	<=(B : Bag) : Boolean | R : CollectionElement, SubBag : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		if (B = nil) | (B isOfType("Bag") not) then
+			self error("Parameter for operator \"<=\" of Bag must be a Bag")
+		fi;
+		R := Root next;
+		SubBag := true;
+		while SubBag & (R != Root) do
+			SubBag := R count <= B count(R element);
+			R := R next
+		od;
+		return SubBag
+
+/* Set (Unordered Set) - Creating a new Set yields an empty Unordered Collection (Without Duplicate Instances)*/
+data class Set extends Collection
+variables
+
+methods
+	// Methods for end-users
+	/* Returns an iterator for traversing the Set */
+	iterator : CollectionIterator
+		if Root = nil then
+			self clear
+		fi;
+		return new(CollectionIterator) referringTo(self, Root next, "Set")
+
+	/* Modifies the Set by clearing its contents and subsequently adding all elements of Array A (without duplicate instances) */
+	fromArray(A : Array) : Set | I : Integer |
+		self clear;
+		I := 1;
+		while I <= A size do
+			self add(A at(I));
+			I := I + 1
+		od;
+		return self
+
+	/* Returns true in case S is a Set and the receiver and S contain the same objects. Otherwise, false is returned */
+	=(S : Object) : Boolean | R : CollectionElement, NF : Boolean |
+		if (S != nil) & S isOfType("Set") then
+			NF := Size = S size;
+			if NF & (Size != 0) then
+				R := Root next;
+				while NF & (R != Root) do
+					NF := S includes(R element);
+					R := R next
+				od
+			fi;
+			return NF
+		else
+			return false
+		fi
+
+	/* Returns !(self = S) */
+	!=(S : Object) : Boolean
+		return !(self = S)
+
+	/* Returns 1 in case O is included in the Set. Otherwise, 0 is returned */
+	count(O : Object) : Integer
+		if Root = nil then
+			self clear
+		fi;
+		if self includes(O) then
+			return 1
+		else
+			return 0
+		fi
+
+	/* Adds O to the Set if it was not yet included. Otherwise, the Set remains unchanged */
+	add(O : Object) : Set | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if self excludes(O) then
+			R := new(CollectionElement) setNext(Root) setPrevious(Root previous) setCount(1) setRemoved(false)
+				setElement(O);
+			Root previous setNext(R);
+			Root setPrevious(R);
+			Size := Size + 1
+		fi;
+		return self
+
+	/* Removes O from the Set if it was included. Otherwise, the Set remains unchanged */
+	remove(O : Object) : Set | R : CollectionElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		NF := true;
+		R := Root next;
+		while NF & (R != Root) do
+			if R element = O then
+				R setRemoved(true);
+				R next setPrevious(R previous);
+				R previous setNext(R next);
+				Size := Size - 1;
+				NF := false
+			else
+				R := R next
+			fi
+		od;
+		return self
+
+	/* Returns a new Set containing all elements of both the receiver and S (without duplicate instances). In case S is not a Set, an error is generated */
+	+(S : Set) : Set
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter of operator \"+\" for Set must be a Set")
+		fi;
+		return self deepCopy union(S)
+
+	/* Modifies the Set by adding all elements of S to it (without duplicate instances). In case S is not a Set, an error is generated */
+	union(S : Set) : Set | I : CollectionIterator |
+		if Root = nil then
+			self clear
+		fi;
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter of method \"union\" for Set must be a Set")
+		fi;
+		I := S iterator;
+		while !(I isDone) do
+			self add(I element);
+			I advance
+		od;
+		return self
+
+	/* Returns a new Set that contains only elements that are contained in the receiver but not in S (Set Difference). In case S is not a Set, an error is generated */
+	-(S : Set) : Set | R : CollectionElement, Subtraction : Set |
+		if Root = nil then
+			self clear
+		fi;
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter of operator \"-\" for Set must be a Set")
+		fi;
+		Subtraction := new(Set) clear;
+		R := Root next;
+		while R != Root do
+			if S excludes(R element) then
+				Subtraction add(R element)
+			fi;
+			R := R next
+		od;
+		return Subtraction
+
+	/* Modifies the Set to no longer include the elements in S. In case S is not a Set, an error is generated */
+	subtract(S : Set) : Set | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter of method \"subtract\" for Set must be a Set")
+		fi;
+		R := Root next;
+		while R != Root do
+			if S includes(R element) then
+				R setRemoved(true);
+				R previous setNext(R next);
+				R next setPrevious(R previous);
+				Size := Size - 1
+			fi;
+			R := R next
+		od;
+		return self
+
+	/* Modifies the Set to become the symmetric difference of the Set and S. This means that those elements of the Set that are also in S are removed and those elements in S that are not in the Set are added. In case S is not a Set, an error is generated */
+	difference(S : Set) : Set | R : CollectionElement, Intersection : Set |
+		if Root = nil then
+			self clear
+		fi;
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter for method \"difference\" of Set must be a Set")
+		fi;
+		Intersection := new(Set) clear;
+		R := Root next;
+		while R != Root do
+			if S includes(R element) then
+				Intersection add(R element)
+			fi;
+			R := R next
+		od;
+		return (self subtract(Intersection)) union(S - Intersection)
+
+	/* Modifies the Set to contain only those elements that are contained in both the Set and S. In case S is not a Set, an error is generated */
+	intersection(S : Set) : Set | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if S isOfType("Set") not then
+			self error("Parameter of method \"intersection\" for Set must be a Set")
+		fi;
+		R := Root next;
+		while R != Root do
+			if S excludes(R element) then
+				R setRemoved(true);
+				R previous setNext(R next);
+				R next setPrevious(R previous);
+				Size := Size - 1
+			fi;
+			R := R next
+		od;
+		return self
+
+	/* Returns a pretty print */
+	printString : String | PrintOut : String, R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Size = 0 then
+			PrintOut := "Empty Set"
+		else
+			PrintOut := "Set{";
+			R := Root next;
+			while R != Root do
+				PrintOut concat(R printString);
+				if R next != Root then
+					PrintOut concat(", ")
+				fi;
+				R := R next
+			od;
+			PrintOut concat("}")
+		fi;
+		return PrintOut
+
+	/* Returns true in case the Set is a strict super set of S (i.e., the Set includes all elements of S and at least one other element). Otherwise, false is returned. In case S is not a Set, an error is generated */
+	>(S : Set) : Boolean
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter for operator \"<\" of Set must be a Set")
+		fi;
+		return !(self <= S)
+
+	/* Returns true in case the Set is a super set of S (i.e., the Set includes all elements of S). Otherwise, false is returned. In case S is not a Set, an error is generated */
+	>=(S : Set) : Boolean
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter for operator \"<=\" of Set must be a Set")
+		fi;
+		return self includesAll(S)
+
+	/* Returns true in case the Set is a strict sub set of S. Otherwise, false is returned. In case S is not a Set, an error is generated */
+	<(S : Set) : Boolean
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter for operator \"<\" of Set must be a Set")
+		fi;
+		return !(self >= S)
+
+	/* Returns true in case the Set is a sub set of S (i.e., S includes all elements of the Set and at least one other element). Otherwise, false is returned. In case S is not a Set, an error is generated */
+	<=(S : Set) : Boolean
+		if (S = nil) | (S isOfType("Set") not) then
+			self error("Parameter for operator \"<=\" of Set must be a Set")
+		fi;
+		return S includesAll(self)
+
+/* Sequence (Bi-Directional List) - Creating a Sequence yields an empty Ordered Collection (Possibly With Duplicate Instances). Valid indices for non-empty Sequences range from 1 to the size of the Sequence */
+data class Sequence extends Collection
+variables
+
+methods
+	// Methods for end-users
+	/* Returns a (forward directed) iterator for traversing the Sequence */
+	iterator : SequenceIterator
+		if Root = nil then
+			self clear
+		fi;
+		return new(SequenceIterator) referringTo(self, Root next)
+
+	/* Modifies the Sequence by clearing its contents and subsequently appending all elements of Array A (with duplicate instances and preserving the ordering) */
+	fromArray(A : Array) : Sequence | I : Integer |
+		self clear;
+		I := 1;
+		while I <= A size do
+			self append(A at(I));
+			I := I + 1
+		od;
+		return self
+
+	/* Returns true in case the Sequence does not contain any duplicate instances. Otherwise, false is returned */
+	isUnique : Boolean | R, Q : CollectionElement, NF : Boolean |
+		if Root = nil then
+			self clear
+		fi;
+		NF := true;
+		if Size > 1 then
+			R := Root next;
+			while NF & (R != Root) do
+				Q := R next;
+				while NF & (Q != Root) do
+					NF := R element != Q element;
+					Q := Q next
+				od;
+				R := R next
+			od
+		fi;
+		return NF
+
+	/* Returns the number of duplicate instances of O in the Sequence */
+	count(O : Object) : Integer | R : CollectionElement, C : Integer |
+		if Root = nil then
+			self clear
+		fi;
+		C := 0;
+		R := Root next;
+		while R != Root do
+			if R element = O then
+				C := C + 1
+			fi;
+			R := R next
+		od;
+		return C
+
+	/* Adds O to the Sequence after the last position */
+	append(O : Object) : Sequence | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		R := new(CollectionElement) setNext(Root) setPrevious(Root previous) setCount(1) setRemoved(false)
+			setElement(O);
+		Root previous setNext(R);
+		Root setPrevious(R);
+		Size := Size + 1;
+		return self
+
+	/* Adds O to the Sequence before the first position */
+	prepend(O : Object) : Sequence | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		R := new(CollectionElement) setNext(Root next) setPrevious(Root) setCount(1) setRemoved(false) setElement(O);
+		Root next setPrevious(R);
+		Root setNext(R);
+		Size := Size + 1;
+		return self
+
+	/* Modifies the Sequence by replacing the element at index I with O. In case I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence, an error is generated */
+	putAt(I : Integer, O : Object) : Sequence | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if (I = nil) | (I isOfType("Integer") not) then
+			self error("First parameter for method \"putAt\" of Sequence must be an Integer")
+		fi;
+		if Size != 0 then
+			if (I < 1) | (I > Size) then
+				self error("First parameter for method \"putAt\" of Sequence must be in [1, " concat(Size printString)
+					concat("]"))
+			fi;
+			R := Root next;
+			while (I != 1) & (R != Root) do
+				R := R next;
+				I := I - 1
+			od;
+			R setElement(O)
+		else
+			self error("Method \"putAt\" of Sequence requires a Sequence of positive size")
+		fi;
+		return self
+
+	/* Modifies the Sequence by inserting element O at index I. In case I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence, an error is generated */
+	insertAt(I : Integer, O : Object) : Sequence | R, N : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if (I = nil) | (I isOfType("Integer") not) then
+			self error("First parameter for method \"insertAt\" of Sequence must be an Integer")
+		fi;
+		if Size != 0 then
+			if (I < 1) | (I > Size) then
+				self error("First parameter for method \"insertAt\" of Sequence must be in [1, " concat(Size
+					printString) concat("]"))
+			fi;
+			R := Root next;
+			while (I != 1) & (R != Root) do
+				R := R next;
+				I := I - 1
+			od;
+			N := new(CollectionElement) setNext(R) setPrevious(R previous) setCount(1) setRemoved(false) setElement(O);
+			R setPrevious(N);
+			N previous setNext(N);
+			Size := Size + 1
+		else
+			self error("Method \"insertAt\" of Sequence requires a Sequence of positive size")
+		fi;
+		return self
+
+	/* Returns the element at index I. In case I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence, an error is generated */
+	at(I : Integer) : Object | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if (I = nil) | (I isOfType("Integer") not) then
+			self error("Parameter for method \"at\" of Sequence must be an Integer")
+		fi;
+		if Size != 0 then
+			if (I < 1) | (I > Size) then
+				self error("Parameter for method \"at\" of Sequence must be in [1, " concat(Size printString)
+					concat("]"))
+			fi;
+			R := Root next;
+			while (I != 1) & (R != Root) do
+				R := R next;
+				I := I - 1
+			od;
+			return R element
+		else
+			self error("Method \"at\" of Sequence requires a Sequence of positive size");
+			return nil
+		fi
+
+	/* Returns the first element in the Sequence (or nil if it is empty) */
+	first : Object
+		if Root = nil then
+			self clear
+		fi;
+		if Size = 0 then
+			return nil
+		else
+			return Root next element
+		fi
+
+	/* Returns the last element in the Sequence (or nil if it is empty) */
+	last : Object
+		if Root = nil then
+			self clear
+		fi;
+		if Size = 0 then
+			return nil
+		else
+			return Root previous element
+		fi
+
+	/* Modifies the Sequence by removing the element at index I. In case I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence, an error is generated */
+	removeAt(I : Integer) : Sequence | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if (I = nil) | (I isOfType("Integer") not) then
+			self error("Parameter for method \"removeAt\" of Sequence must be an Integer")
+		fi;
+		if Size != 0 then
+			if (I < 1) | (I > Size) then
+				self error("Parameter for method \"removeAt\" of Sequence must be in [1, " concat(Size printString)
+					concat("]"))
+			fi;
+			R := Root next;
+			while (I != 1) & (R != Root) do
+				R := R next;
+				I := I - 1
+			od;
+			R setRemoved(true);
+			R next setPrevious(R previous);
+			R previous setNext(R next);
+			Size := Size - 1
+		else
+			self error("Method \"removeAt\" of Sequence requires a Sequence of positive size")
+		fi;
+		return self
+
+	/* Returns the Sequence after removing the first element (if not empty) */
+	removeFirst : Sequence | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Size != 0 then
+			R := Root next setRemoved(true) next;
+			Root setNext(R);
+			R setPrevious(Root);
+			Size := Size - 1
+		fi;
+		return self
+
+	/* Returns the Sequence after removing the last element (if not empty) */
+	removeLast : Sequence | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Size != 0 then
+			R := Root previous setRemoved(true) previous;
+			Root setPrevious(R);
+			R setNext(Root);
+			Size := Size - 1
+		fi;
+		return self
+
+	/* Returns a new Sequence containing all elements in the receiver succeeded by all elements of S. In case S is not a Sequence, an error is generated */
+	+(S : Sequence) : Sequence
+		if (S = nil) | (S isOfType("Sequence") not) then
+			self error("Parameter of operator \"+\" of Sequence must be a Sequence")
+		fi;
+		return self deepCopy concat(S)
+
+	/* Modifies the Sequence by appending all elements of S. In case S is not a Sequence, an error is generated */
+	concat(S : Sequence) : Sequence | I : SequenceIterator |
+		if Root = nil then
+			self clear
+		fi;
+		if (S = nil) | (S isOfType("Sequence") not) then
+			self error("Parameter of method \"concat\" of Sequence must be a Sequence")
+		fi;
+		I := S iterator;
+		while !(I isDone) do
+			self append(I element);
+			I advance
+		od;
+		return self
+
+	/* Modifies the Sequence by reversing the order of the elements */
+	reverse : Sequence | R, Q : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Size > 1 then
+			R := Root;
+			Q := R previous;
+			while Q != Root do
+				R setPrevious(R next);
+				R setNext(Q);
+				R := Q;
+				Q := Q previous
+			od;
+			R setPrevious(R next);
+			R setNext(Q)
+		fi;
+		return self
+
+	/* Modifies the Sequence by inserting all elements of S from index I onwards. In case the Sequence is not empty, an error is generated if S is not a Sequence, if I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence */
+	splice(I : Integer, S : Sequence) : Sequence | R, Q, X : CollectionElement, Y : SequenceIterator |
+		if Root = nil then
+			self clear
+		fi;
+		if Size != 0 then
+			if (S = nil) | (S isOfType("Sequence") not) then
+				self error("Second parameter of method \"splice\" of Sequence must be a Sequence")
+			fi;
+			if (I = nil) | (I isOfType("Integer") not) then
+				self error("First parameter of method \"splice\" of Sequence must be an Integer")
+			fi;
+			if (I < 1) | (I > Size) then
+				self error("First parameter for method \"splice\" of Sequence must be in [1, " concat(Size printString)
+					concat("]"))
+			fi;
+			R := Root next;
+			I := I - 1;
+			while I != 0 do
+				R := R next;
+				I := I - 1
+			od;
+			Q := R next;
+			Y := S iterator;
+			while !(Y isDone) do
+				X := new(CollectionElement) setPrevious(R) setCount(1) setRemoved(false) setElement(Y element);
+				R setNext(X);
+				R := X;
+				Size := Size + 1;
+				Y advance
+			od;
+			X setNext(Q);
+			Q setPrevious(X)
+		fi;
+		return self
+
+	/* Modifies the Sequence by swapping the elements at index I and J. In case the Sequence is not empty and I differs from J then an error is generated if either I or J is not an Integer or if I and J are smaller than 1 or greater than the size of the Sequence */
+	swap(I, J : Integer) : Sequence | R, Q : CollectionElement, NF : Boolean, C : Integer, O : Object |
+		if Root = nil then
+			self clear
+		fi;
+		if (Size > 1) & (I != J) then
+			if (I = nil) | (J = nil) | (I isOfType("Integer") not) | (J isOfType("Integer") not) then
+				self error("Parameters of method \"splice\" of Sequence must be Integers")
+			fi;
+			if (I < 1) | (I > Size) | (J < 1) | (J > Size) then
+				self error("Parameters for method \"swap\" of Sequence must be in [1, " concat(Size printString)
+					concat("]"))
+			fi;
+			if I > J then
+				C := I;
+				I := J;
+				J := C
+			fi;
+			C := 1;
+			NF := true;
+			R := Root next;
+			while NF do
+				if C = I then
+					NF := false;
+					O := R element
+				else
+					R := R next;
+					C := C + 1
+				fi
+			od;
+			NF := true;
+			Q := R next;
+			C := C + 1;
+			while NF do
+				if C = J then
+					NF := false;
+					R setElement(Q element);
+					Q setElement(O)
+				else
+					Q := Q next;
+					C := C + 1
+				fi
+			od
+		fi;
+		return self
+
+	/* Returns a new Sequence that will contain the elements of the receiver from and including index I until and including index I + L. In case the receiver is not empty, an error is generated in case I and L are not Integers, if L is negative or if I and I + L + 1 range outside the index range of the Sequence */
+	subSequence(I, L : Integer) : Sequence | R : CollectionElement, S : Sequence |
+		if Root = nil then
+			self clear
+		fi;
+		S := new(Sequence) clear;
+		if Size != 0 then
+			if (I = nil) | (L = nil) | (I isOfType("Integer") not) | (L isOfType("Integer") not) then
+				self error("Parameters of method \"subSequence\" of Sequence must be Integers")
+			fi;
+			if I <= 0 then
+				self error("First parameter of method \"subSequence\" of Sequence must be positive")
+			fi;
+			if L < 0 then
+				self error("Second parameter of method \"subSequence\" of Sequence must not be negative")
+			fi;
+			if I + L > Size + 1 then
+				self error("Sum of parameters for method \"subSequence\" of Sequence must be in [1, " concat((Size + 1)
+					printString) concat("]"))
+			fi;
+			R := Root next;
+			while (I != 1) & (R != Root) do
+				R := R next;
+				I := I - 1
+			od;
+			while (L != 0) & (R != Root) do
+				S append(R element);
+				R := R next;
+				L := L - 1
+			od
+		fi;
+		return S
+
+	/* This method searches the Sequence for the first instance of O, starting from index I. If an instance of O is found, the index (between 1 and the size of the Sequence) at which O is located is returned. In all other cases, it returns 0. In case the Sequence is not empty, an error is generated if I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence */
+	find(I : Integer, O : Object) : Integer | R : CollectionElement, NF : Boolean, Index : Integer |
+		if Root = nil then
+			self clear
+		fi;
+		Index := 0;
+		if Size != 0 then
+			if (I = nil) | (I isOfType("Integer") not) then
+				self error("First parameter for method \"find\" of Sequence must be an Integer")
+			fi;
+			if (I < 1) | (I > Size) then
+				self error("First paramete for method \"find\" of Sequence must be in [1, " concat(Size printString)
+					concat("]"))
+			fi;
+			R := Root next;
+			NF := true;
+			while (I != 1) & (R != Root) do
+				R := R next;
+				Index := Index + 1;
+				I := I - 1
+			od;
+			while NF & (R != Root) do
+				if R element = O then
+					NF := false
+				fi;
+				Index := Index + 1;
+				R := R next
+			od;
+			if NF then
+				Index := 0
+			fi
+		fi;
+		return Index
+
+	/* Returns a (forward directed) Iterator to the element at index I of the Sequence if I is an Integer not smaller than 1 and not greater than the size of the Sequence. Otherwise, either an error is generated in case the Sequence is not empty or a finalized Iterator is returned  in case the Sequence is empty */
+	iteratorAt(I : Integer) : SequenceIterator | R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Size != 0 then
+			if (I = nil) | (I isOfType("Integer") not) then
+				self error("Parameter for method \"iteratorTo\" of Sequence must be an Integer")
+			fi;
+			if (I < 1) | (I > Size) then
+				self error("Parameter for method \"iteratorTo\" of Sequence must be in [1, " concat(Size printString)
+					concat("]"))
+			fi;
+			R := Root next;
+			while (I != 1) & (R != Root) do
+				R := R next;
+				I := I - 1
+			od;
+			return new(SequenceIterator) referringTo(self, R)
+		else
+			return new(SequenceIterator) referringTo(self, Root)
+		fi
+
+	/* Returns a pretty print */
+	printString : String | PrintOut : String, R : CollectionElement |
+		if Root = nil then
+			self clear
+		fi;
+		if Size = 0 then
+			PrintOut := "Empty Sequence"
+		else
+			PrintOut := "Sequence{";
+			R := Root next;
+			while R != Root do
+				PrintOut concat(R printString);
+				if R next != Root then
+					PrintOut concat(", ")
+				fi;
+				R := R next
+			od;
+			PrintOut concat("}")
+		fi;
+		return PrintOut
+
+// --- Iterator Classes ---
+// Iterator (Abstract Super Class used by Map, Bag, Set, Sequence)
+data class Iterator extends Object
+variables
+	ReferredStructure : Object,
+	ReferredElement : Element,
+	StructureType : String
+methods
+	// Methods for end-users
+	/* Returns true in case all elements in the structure have been referred to. Otherwise, false is returned */
+	isDone : Boolean
+		return ReferredElement = ReferredStructure root
+
+	/* Modifies the Iterator to refer to the next element if there is still such element. Otherwise, the Iterator remains unchanged */
+	advance : Iterator
+		if !(self isDone) then
+			ReferredElement := ReferredElement next
+		fi;
+		if ReferredElement removed then
+			return self advance
+		else
+			return self
+		fi
+
+	/* Modifies the underlying structure by removing the element to which the Iterator is pointing (if it was not yet removed). It does not modify the Iterator */
+	remove : Iterator
+		if ReferredElement removed not & !(self isDone) then
+			ReferredElement previous setNext(ReferredElement next);
+			ReferredElement next setPrevious(ReferredElement previous);
+			ReferredElement setRemoved(true);
+			ReferredStructure resize(ReferredStructure size - 1)
+		fi;
+		return self
+
+	/* Returns a pretty print */
+	printString : String | Out : String |
+		Out := "Iterator on " concat(StructureType);
+		if ReferredElement != ReferredStructure root then
+			Out concat(" to ") concat(ReferredElement printString)
+		fi;
+		return Out
+
+	// Methods for implementation
+	referringTo(S : Object, E : Element, T : String) : Iterator
+		ReferredStructure := S;
+		ReferredElement := E;
+		StructureType := T;
+		return self
+
+	key : Object
+		self error("Method \"key\" is not defined on iterator for " + StructureType);
+		return nil
+
+	value : Object
+		self error("Method \"value\" is not defined on iterator for " + StructureType);
+		return nil
+
+	element : Object
+		self error("Method \"element\" is not defined on iterator for " + StructureType);
+		return nil
+
+	reverse : Object
+		self error("Method \"reverse\" is not defined on iterator for " + StructureType);
+		return nil
+
+// Map Iterator (Used by Map)
+/* Iterators for Maps manifest through class MapIterator. Variables denoting iterators can be declared as of type Iterator.
+ * Notice that the advance and remove methods can be combined (without side effects), as shown in this example:
+ * <pre>
+ * |M: Map, I: Iterator, P: String|
+ * M := <b>new</b>(Map) putAt(1,1) putAt(2,2) putAt(3,3) putAt(4,4);
+ * P := ""; I := M iterator;
+ * <b>while</b> !(I isDone) <b>do</b>
+ * P concat(I key printString) concat(I value printString);
+ * I remove advance						// Empties M
+ * <b>od</b>;									// P = "11223344"
+ * </pre>
+ */
+data class MapIterator extends Iterator
+variables
+
+methods
+	// Methods for end-users
+	/* Returns the key of the key-value pair to which the iterator is pointing in the Map in case the Map is not empty. Otherwise, nil is returned */
+	key : Object
+		return ReferredElement key
+
+	/* Returns the value of the key-value pair to which the iterator is pointing in the Map in case the Map is not empty. Otherwise, nil is returned */
+	value : Object
+		return ReferredElement value
+
+	// Methods for implementation
+	referringTo(S : Object, E : Element) : Iterator
+		ReferredStructure := S;
+		ReferredElement := E;
+		StructureType := "Map";
+		return self
+
+// Collection Iterator (Used by Set and Super Class for Bag, Sequence Iterators)
+/* Iterators for Sets manifest through class CollectionIterator. Variables denoting CollectionIterators can be declared as of type Iterator.
+ * Notice that the advance and remove methods can be combined (without side effects), as shown in this example:
+ * <pre>
+ * |S: Set, I: Iterator|
+ * S := <b>new</b>(Set) add(1) add(4) add(5) add(3);
+ * P := ""; I := S iterator;
+ * <b>while</b> !(I isDone) <b>do</b>
+ * P concat(I element printString);
+ * I remove advance						// Empties S
+ * <b>od</b>;									// P = "1453"
+ * </pre>
+ */
+data class CollectionIterator extends Iterator
+variables
+
+methods
+	// Methods for end-users
+	/* Returns the element to which the iterator is pointing in the Collection in case the Collection is not empty. Otherwise, nil is returned */
+	element : Object
+		return ReferredElement element
+
+// Bag Iterator (Used by Bag)
+/* Iterators for Bags manifest through class BagIterator. Variables denoting BagIterators can be declared as of type Iterator.
+ * BagIterators advance through all duplicate instances of each element in the Bag.
+ * Notice that the advance and remove methods can be combined (without side effects), as shown in this example:
+ * <pre>
+ * |B: Bag, I: Iterator, P: String|
+ * B := <b>new</b>(Bag) add(1) add(4) add(5) add(4) add(3);
+ * P := ""; I := B iterator;
+ * <b>while</b> !(I isDone) <b>do</b>
+ * P concat(I element printString);
+ * I remove advance						// Empties B
+ * <b>od</b>;									// P = "14453"
+ * </pre>
+ */
+data class BagIterator extends CollectionIterator
+variables
+	Index : Integer
+methods
+	// Methods for end-users
+	/* Modifies the Iterator to refer to the next element in the Bag if there is still such element. Otherwise, the Iterator remains unchanged */
+	advance : BagIterator
+		if !(self isDone) then
+			Index := Index - 1;
+			if Index = 0 then
+				ReferredElement := ReferredElement next;
+				Index := ReferredElement count
+			fi;
+			return if (ReferredElement removed) | (Index > ReferredElement count) then
+				self advance
+			else
+				self
+			fi
+		else
+			return self
+		fi
+
+	/* Modifies the underlying Bag by removing (one duplicate instance of) the element to which the Iterator is pointing (if it was not yet removed). It does not modify the Iterator */
+	remove : BagIterator
+		if ReferredElement removed not & !(self isDone) then
+			if ReferredElement count = 1 then
+				ReferredElement setRemoved(true);
+				ReferredElement previous setNext(ReferredElement next);
+				ReferredElement next setPrevious(ReferredElement previous)
+			else
+				ReferredElement setCount(ReferredElement count - 1)
+			fi;
+			ReferredStructure resize(ReferredStructure size - 1)
+		fi;
+		return self
+
+	/* Returns a pretty print */
+	printString : String | Out : String |
+		Out := "Iterator on " concat(StructureType);
+		if ReferredElement != ReferredStructure root then
+			Out concat(" to ") concat(ReferredElement element printString)
+		fi;
+		return Out
+
+	// Methods for implementation
+	referringTo(S : Object, E : Element) : Iterator
+		ReferredStructure := S;
+		ReferredElement := E;
+		StructureType := "Bag";
+		Index := ReferredElement count;
+		return self
+
+// Sequence Iterator (Used By Sequence)
+/* Iterators for Sequences manifest through class SequenceIterator. Variables denoting SequenceIterators can be declared as of type Iterator.
+ * SequenceIterators advance through all duplicate instances of each element in the Sequence.
+ * Notice that the advance and remove methods can be combined (without side effects), as shown in this example:
+ * <pre>
+ * |S: Sequence, I: Iterator, P: String|
+ * S := <b>new</b>(Sequence) append(1) append(4) append(5) append(4) append(3);
+ * P := ""; I := S iterator last reverse;					// Iterate in reverse direction from last element
+ * <b>while</b> !(I isDone) <b>do</b>
+ * 	P := P concat(I element printString);
+ * 	I remove advance						// Empties S
+ * <b>od</b>;									// P = "34541"
+ * </pre>
+ */
+data class SequenceIterator extends CollectionIterator
+variables
+	Reverse : Boolean
+methods
+	// Methods for end-users
+	/* Modifies the Iterator to point to the first element in the Sequence */
+	first : SequenceIterator
+		return self referringTo(ReferredStructure, ReferredStructure root next)
+
+	/* Modifies the Iterator to point to the last element in the Sequence */
+	last : SequenceIterator
+		return self referringTo(ReferredStructure, ReferredStructure root previous)
+
+	/* Modifies the Iterator to refer to the next element (for forward directed iterators) or previous element (for reversely directed iterators) in the Sequence if there is still such element. Otherwise, the Iterator remains unchanged */
+	advance : SequenceIterator
+		if !(self isDone) then
+			if Reverse then
+				ReferredElement := ReferredElement previous
+			else
+				ReferredElement := ReferredElement next
+			fi
+		fi;
+		return if ReferredElement removed then
+			self advance
+		else
+			self
+		fi
+
+	/* Modifies the underlying sequence by inserting an element referring to the specified object. The element is inserted in the sequence before the currently referred element, not considering whether the direction of the iterator is reversed.
+	 * If isDone holds for the iterator or the referred element is removed, an error is triggered. The iterator is not modified.
+	 */
+	addBefore(O : Object) : SequenceIterator | N : CollectionElement |
+		if ReferredElement removed then
+			self error("Unable to add before a removed element")
+		fi;
+		if self isDone then
+			self error("Cannot addBefore when isDone holds.")
+		fi;
+		N := new(CollectionElement) setNext(ReferredElement) setPrevious(ReferredElement previous) setCount(1)
+			setRemoved(false) setElement(O);
+		ReferredElement setPrevious(N);
+		N previous setNext(N);
+		ReferredStructure resize(ReferredStructure size + 1);
+		return self
+
+	/* Modifies the underlying sequence by inserting an element referring to the specified object. The element is inserted in the sequence after the currently referred element, not considering whether the direction of the iterator is reversed.
+	 * If isDone holds or the referred element is removed, an error is triggered. The iterator is not modified.
+	 */
+	addAfter(O : Object) : SequenceIterator | N : CollectionElement |
+		if ReferredElement removed then
+			self error("Unable to add after a removed element")
+		fi;
+		if self isDone then
+			self error("Cannot addAfter when isDone holds.")
+		fi;
+		N := new(CollectionElement) setNext(ReferredElement next) setPrevious(ReferredElement) setCount(1)
+			setRemoved(false) setElement(O);
+		ReferredElement setNext(N);
+		N next setPrevious(N);
+		ReferredStructure resize(ReferredStructure size + 1);
+		return self
+
+	/* Modifies the Iterator to advance in opposite direction */
+	reverse : SequenceIterator
+		Reverse := Reverse not;
+		return self
+
+	// Methods for implementation
+	referringTo(S : Object, E : Element) : Iterator
+		ReferredStructure := S;
+		ReferredElement := E;
+		StructureType := "Sequence";
+		Reverse := false;
+		return self
+
+// --- Element Classes ---
+// Element (Abstract super class used by Map, Queue, Stack, Bag, Set, Sequence)
+data class Element extends Object
+variables
+	Next, Previous : Element
+methods
+	// Methods for implementation
+	next : Element
+		return Next
+
+	previous : Element
+		return Previous
+
+	setNext(E : Element) : Element
+		Next := E;
+		return self
+
+	setPrevious(E : Element) : Element
+		Previous := E;
+		return self
+
+// Map Element (Used by Map)
+data class MapElement extends Element
+variables
+	Key, Value : Object,
+	Removed : Boolean
+methods
+	// Methods for implementation
+	key : Object
+		return Key
+
+	value : Object
+		return Value
+
+	removed : Boolean
+		return Removed
+
+	setKey(K : Object) : MapElement
+		Key := K;
+		return self
+
+	setValue(V : Object) : MapElement
+		Value := V;
+		return self
+
+	setRemoved(B : Boolean) : MapElement
+		Removed := B;
+		return self
+
+	printString : String
+		return "[" concat(Key printString) concat(", ") concat(Value printString) concat("]")
+
+// Structure Element (Used by Queue, Stack and super class for Bag, Set, Sequence)
+data class StructureElement extends Element
+variables
+	Element : Object
+methods
+	// Methods for implementation
+	element : Object
+		return Element
+
+	setElement(E : Object) : Element
+		Element := E;
+		return self
+
+	printString : String
+		return Element printString
+
+// Collection Element  (Used by Bag, Set, Sequence)
+data class CollectionElement extends StructureElement
+variables
+	Count : Integer,
+	Removed : Boolean
+methods
+	// Methods for implementation
+	count : Integer
+		return Count
+
+	removed : Boolean
+		return Removed
+
+	setCount(C : Integer) : CollectionElement
+		Count := C;
+		return self
+
+	setRemoved(B : Boolean) : CollectionElement
+		Removed := B;
+		return self

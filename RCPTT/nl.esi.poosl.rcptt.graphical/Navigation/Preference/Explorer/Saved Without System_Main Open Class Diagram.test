@@ -1,0 +1,21 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_j7n2gJQoEeWsHLzSvkw_VA
+Element-Name: Saved Without System/Main Open Class Diagram
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _oNEOAJReEeWdZoPrrryMIA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 2/23/16 5:58 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "nl.esi.poosl.examples/libraries/SocketProcess.poosl" | double-click
+get-editor "Classes (SocketProcess.poosl)" | get-diagram -index 1 | get-edit-part -name "Classes (SocketProcess.poosl)" 
+    | mouse-move 394 0 -height 444 -width 598
+get-tab-folder -index 2 | get-property activePage | contains "Classes (SocketProcess.poosl)" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,38 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.channel.PooslValidationChannelTest END_SETUP */
+
+process class ProcessPQ()
+ports
+	p
+	q
+messages
+	p!m
+	q?m
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()()
+		par
+			p!m
+		and
+			q?m
+		rap
+
+cluster class Cluster()
+ports
+	p
+instances
+	procPQ : ProcessPQ()
+channels
+	{ p, procPQ.p, procPQ.q }
+
+system
+instances
+/* XPECT warnings ---
+ "On unconnected port 'p', process port c/procPQ[ProcessPQ].p can send message 'm' with 0 parameter(s), but no process port can receive it" at "c : Cluster()"
+ "On unconnected port 'p', process port c/procPQ[ProcessPQ].q can receive message 'm' with 0 parameter(s), but no process port can send it" at "c : Cluster()" 
+--- */
+	c : Cluster() // should give two warnings
+channels
+

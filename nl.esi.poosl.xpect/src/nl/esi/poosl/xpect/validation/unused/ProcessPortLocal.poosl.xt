@@ -1,0 +1,44 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+process class somePClass()
+ports
+	p
+	//Process Port local not used
+	//XPECT warnings --> "Port is not used" at "p2"
+	p2	//p2 warning
+messages 
+	p!m
+	p?m
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p!m;
+		p?m
+
+process class somePClass2()
+ports
+	p
+	//Process Port local not used
+	//XPECT warnings --> "Port is not used" at "p2"
+	p2	//p2 warning 
+messages
+	p!m
+	p?m
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p!m; 
+		p?m
+
+cluster class someCClass()
+ports
+instances
+	someInstance: somePClass()
+	someInstance2: somePClass()
+channels
+	{someInstance.p, someInstance2.p}
+	{someInstance.p2, someInstance2.p2} 

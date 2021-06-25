@@ -1,0 +1,34 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_0f97UCMJEemTAfKT-AIu5w,_-6xq0Nf8Eea3P5Zs0ralfQ
+Element-Name: SocketExampleDistr
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _VKU4sCMKEemTAfKT-AIu5w
+Runtime-Version: 2.4.0.201808022310
+Save-Time: 1/29/19 1:32 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+launch-debug-external -name "server" -file "nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl" -port 10001 -ini "nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini"
+launch-debug-external -name "client" -file "nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl" -port 10002 -ini "nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini"
+with [get-view Debug | get-tree] {
+    select "Server.poosl \\[Simulated time: 0\\]/system/Server" | double-click
+    select "Server.poosl \\[Simulated time: 0\\]/system/Server" | double-click
+    select "Server.poosl \\[Simulated time: 0\\]/system/Server" | double-click
+    select "Client.poosl \\[Simulated time: 0\\]/system/Client" | double-click
+    select "Client.poosl \\[Simulated time: 0\\]/system/Client" | double-click
+    select "Client.poosl \\[Simulated time: 0\\]/system/Client" | double-click
+    select "Client.poosl \\[Simulated time: 0\\]/system/Client" | double-click
+    select "Client.poosl \\[Simulated time: 0\\]/system/Client" | double-click
+}
+get-view Debug | get-tree | get-item -path "Server.poosl \\[Simulated time: 0\\]/system" 
+    | get-property "styles[0].foregroundColor" | equals "#FF0000" | verify-true
+get-button "Terminate (M1+F2)" | click
+get-view Debug | get-tree | select "Server.poosl \\[Simulated time: 0\\]"
+get-button Terminate -index 1 | click
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

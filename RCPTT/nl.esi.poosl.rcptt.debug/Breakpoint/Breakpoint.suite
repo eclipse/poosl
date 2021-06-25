@@ -1,0 +1,27 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Breakpoint
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _ZD8y4OkBEeSkTJCY7hn1FA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 4/28/16 10:36 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_EQGwgOkBEeSkTJCY7hn1FA	// kind: 'test' name: 'Create Breakpoint ProcessMethod' path: 'Create Breakpoint ProcessMethod.test'
+_X-4BMOkBEeSkTJCY7hn1FA	// kind: 'test' name: 'Breakpoint in Breakpoint Window' path: 'Breakpoint in Breakpoint Window.test'
+_xoNL0OkBEeSkTJCY7hn1FA	// kind: 'test' name: 'Create Breakpoint DataMethod' path: 'Create Breakpoint DataMethod.test'
+_Pk5aUOkIEeSkTJCY7hn1FA	// kind: 'test' name: 'Remove Breakpoint' path: 'Remove Breakpoint.test'
+_jXZJ4OkHEeSkTJCY7hn1FA	// kind: 'test' name: 'Breakpoint Hit' path: 'Breakpoint Hit.test'
+_Wn8XgP1aEeSY2Ma_ry9BIw	// kind: 'test' name: 'Remove Breakpoint while debugging' path: 'Remove Breakpoint while debugging.test'
+_YivEsP1kEeSY2Ma_ry9BIw	// kind: 'test' name: 'Disable Breakpoint while debugging' path: 'Disable Breakpoint while debugging.test'
+_mJrtcP1iEeSY2Ma_ry9BIw	// kind: 'test' name: 'Disabled Breakpoint' path: 'Disabled Breakpoint.test'
+_qcCokP1kEeSY2Ma_ry9BIw	// kind: 'test' name: 'Enable Breakpoint while debugging' path: 'Enable Breakpoint while debugging.test'
+_nA00wP36EeSY2Ma_ry9BIw	// kind: 'test' name: 'Highlighting' path: 'Highlighting.test'
+_GoX7MP4EEeSY2Ma_ry9BIw	// kind: 'test' name: 'Highlighting Terminate' path: 'Highlighting Terminate.test'
+_5G8xAA0XEeaiAIW4k7PpxQ	// kind: 'test' name: 'Switch Breakpoint' path: 'Switch Breakpoint.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

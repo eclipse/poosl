@@ -1,0 +1,40 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g
+Element-Name: Thread window Open New
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _ZUe5EDBZEeW29Z9sVV_ISA
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/21/18 2:37 PM
+Tags: Debug, ThreadWindow
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+wait 50
+get-editor "producer_consumer.poosl" | editor-poosl-debug
+get-view Debug | get-tree | select "producer_consumer.poosl [Simulated time: 0]/system/Bus" | get-menu "Open in New Window" 
+    | click
+
+with [get-window "producer_consumer.poosl /system/Bus"] {
+    get-tab-folder | get-property activePage | equals "Execution Tree" | verify-true
+    get-tab-folder -index 1 | get-property "pages[0]" | equals Variables | verify-true
+}
+with [get-view "Execution Tree" -index 1 | get-tree] {
+    get-item "\\/system\\/Bus" | get-property caption | assert-non-empty
+    get-property itemCount | equals 1 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals "Transfer()()" | verify-true
+}
+with [get-view Variables -index 1 | get-tree] {
+    get-property "columns[0].caption" | equals Name | verify-true
+    get-property "columns[1].caption" | equals Value | verify-true
+    get-property "getData().getName()" | equals "/system/Bus/stackframe" | verify-true
+    get-property "getData().getVariables().PooslVariable[0].getName()" | equals p | verify-true
+    get-property "getData().getVariables().PooslVariable[0].getValue().getValueString()" | equals "nil" 
+        | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

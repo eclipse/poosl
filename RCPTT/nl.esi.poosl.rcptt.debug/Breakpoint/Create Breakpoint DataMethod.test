@@ -1,0 +1,19 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g
+Element-Name: Create Breakpoint DataMethod
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _xoNL0OkBEeSkTJCY7hn1FA
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 4/22/15 5:50 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "producer_consumer.poosl" | get-left-ruler | get-ruler-column AnnotationColumn | double-click-ruler 14
+get-view Breakpoints | get-tree | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

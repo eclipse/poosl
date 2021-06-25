@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CheckSize
+Bundle-SymbolicName: CheckSize
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: TNO
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.eclipse.emf.codegen.ecore;bundle-version="2.13.0",
+ nl.esi.poosl.xtext,
+ nl.esi.poosl.model
+Automatic-Module-Name: CheckSize

@@ -1,0 +1,69 @@
+importlib "trace.poosl"
+
+cluster class Tracing
+ports
+	Input
+instances
+	traceAdapter : TraceAdapter
+	traceProcess : TraceProcess(HostName := nil, PortNumber := nil)
+channels
+	{ Input, traceAdapter.Input }
+	@SuppressWarnings("unconnected") // traceProcess is a library process; not all messages need to be used by traceAdapter
+	{ traceAdapter.Trace, traceProcess.Trace }
+
+process class TraceAdapter
+ports
+	Trace
+	Input
+messages
+	Trace!Time(Integer, String, String)
+	Trace!Attribute(String, Boolean, Boolean, Boolean, Boolean, Boolean)
+	Trace!Context(String, Set)
+	Trace!WriteConfiguration(String)
+	Trace!WriteTrace(String)
+	Trace!FullResource(String, Object, String, String, Map)
+	Trace!FullClaim(String, Real, Real, String, Map)
+	Input?AnnouncementAtAircraftInterface(Integer, Real, Real)
+	Input?AnnouncementAtApplicationsServer(Integer, Real, Real)
+	Input?AnnouncementAtAudioVideoPlayer(Integer, Real, Real)
+	Input?VideoAtAudioVideoPlayer(Integer, Real, Real)
+variables
+
+init
+	Initialise()()
+methods
+	Initialise()()
+		Trace!Time(0, "s", "%5g");
+		Trace!Attribute("Name", true, false, false, true, true);
+		Trace!Attribute("ID", true, false, false, true, true);
+		Trace!Context("Component", new(Set) add("Name"));
+		Trace!Context("Announcement", new(Set) add("ID"));
+		Trace!Context("Video", new(Set) add("ID"));
+		Trace!WriteConfiguration("configuration.txt");
+		Trace!WriteTrace("trace1.etf");
+		Trace!FullResource("AircraftInterface", 1, "", "Component", new(Map) putAt("Name", "AircraftInterface"));
+		Trace!FullResource("ApplicationsServer", 1, "", "Component", new(Map) putAt("Name", "ApplicationsServer"));
+		Trace!FullResource("ServicesManager", 1, "", "Component", new(Map) putAt("Name", "ServicesManager"));
+		Trace!FullResource("AudioVideoPlayer", 1, "", "Component", new(Map) putAt("Name", "AudioVideoPlayer"));
+		Idle()()
+
+	Idle()() | id : Integer, startTime : Real, endTime : Real |
+		sel
+			Input?AnnouncementAtAircraftInterface(id, startTime, endTime);
+			Trace!FullClaim("AircraftInterface", startTime, endTime, "Announcement", new(Map) putAt("ID", "Announce." +
+				id printString))
+		or
+			Input?AnnouncementAtApplicationsServer(id, startTime, endTime);
+			Trace!FullClaim("ApplicationsServer", startTime, endTime, "Announcement", new(Map) putAt("ID", "Announce." +
+				id printString))
+		or
+			Input?AnnouncementAtAudioVideoPlayer(id, startTime, endTime);
+			Trace!FullClaim("AudioVideoPlayer", startTime, endTime, "Announcement", new(Map) putAt("ID", "Announce." +
+				id printString))
+		or
+			Input?VideoAtAudioVideoPlayer(id, startTime, endTime);
+			Trace!FullClaim("AudioVideoPlayer", startTime, endTime, "Video", new(Map) putAt("ID", "Video." + id
+				printString))
+		les;
+		Idle()()
+		

@@ -1,0 +1,316 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+
+
+/* -----------------PROCESS class acycle----------------*/
+
+//  Error on process cyclic dependencies  A -> B ->A
+// XPECT errors --> "Cyclic process class dependency: parentProcess -> childProcess -> parentProcess" at "childProcess"
+process class parentProcess() extends childProcess 
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+//  Error on process cyclic dependencies  A -> B ->A
+// XPECT errors --> "Cyclic process class dependency: childProcess -> parentProcess -> childProcess" at "parentProcess"
+
+process class childProcess() extends parentProcess
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		// Error on process cyclic dependencies  A -> A
+		// XPECT errors --> "Cyclic process class dependency: oneStepProcess -> oneStepProcess" at "oneStepProcess"
+process class oneStepProcess() extends oneStepProcess
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+		/*-------extending A->B->C->A---- */
+
+// Error on process cyclic dependencies A -> B -> C -> A
+// XPECT errors --> "Cyclic process class dependency: threeStepProcessA -> threeStepProcessC -> threeStepProcessB -> threeStepProcessA" at "threeStepProcessC"
+process class threeStepProcessA() extends threeStepProcessC
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		
+		 
+// Error on process cyclic dependencies A -> B -> C -> A
+// XPECT errors --> "Cyclic process class dependency: threeStepProcessB -> threeStepProcessA -> threeStepProcessC -> threeStepProcessB" at "threeStepProcessA"
+process class threeStepProcessB() extends threeStepProcessA
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+// Error on process cyclic dependencies A -> B -> C -> A
+// XPECT errors --> "Cyclic process class dependency: threeStepProcessC -> threeStepProcessB -> threeStepProcessA -> threeStepProcessC" at "threeStepProcessB"
+process class threeStepProcessC() extends threeStepProcessB
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+		/* ------------ Complex   A->B, A->C, C->D, D->A */
+
+		// Error complex process cyclic
+		// XPECT errors --> "Cyclic process class dependency: comStepProcessA -> comStepProcessD -> comStepProcessC -> comStepProcessA" at "comStepProcessD" 	
+process class comStepProcessA() extends comStepProcessD
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+		// Error complex process cyclic
+		// XPECT noIssues
+process class comStepProcessB() extends comStepProcessA
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+		// Error complex process cyclic
+		// XPECT errors --> "Cyclic process class dependency: comStepProcessC -> comStepProcessA -> comStepProcessD -> comStepProcessC" at "comStepProcessA" 	
+process class comStepProcessC() extends comStepProcessA
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		// Error complex process cyclic
+		// XPECT errors --> "Cyclic process class dependency: comStepProcessD -> comStepProcessC -> comStepProcessA -> comStepProcessD" at "comStepProcessC" 	
+process class comStepProcessD() extends comStepProcessC
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+/* -----------------CLUSTER class acycle----------------*/
+
+/* --- Cluster self A -> A */
+
+
+cluster class selfCluster()
+ports
+instances
+	// Error clustercyclic A -> A
+  // XPECT errors --> "Cyclic cluster class dependency: selfCluster->selfCluster" at "selfCluster"
+	someInstance : selfCluster() 
+channels
+
+/* --- Cluster two step A -> B ->A */
+
+
+cluster class firstCluster()
+ports
+instances
+//  Error on cluster cyclic dependencies  A -> B ->A
+// XPECT errors --> "Cyclic cluster class dependency: firstCluster->secondCluster->firstCluster" at "secondCluster"
+	someInstance : secondCluster()
+channels
+
+cluster class secondCluster()
+ports
+instances
+// Error on cluster cyclic dependencies  A -> B ->A
+// XPECT errors --> "Cyclic cluster class dependency: secondCluster->firstCluster->secondCluster" at "firstCluster"
+	someInstance : firstCluster()
+channels
+
+
+/* --- Cluster three step A -> B ->C -> A*/
+
+cluster class threeStepClusterA()
+ports
+instances
+//  Error on cluster cyclic dependencies A -> B ->C -> A
+// XPECT errors --> "Cyclic cluster class dependency: threeStepClusterA->threeStepClusterB->threeStepClusterC->threeStepClusterA" at "threeStepClusterB"
+	someInstance : threeStepClusterB()
+channels
+
+cluster class threeStepClusterB()
+ports
+instances
+//  Error on cluster cyclic dependencies A -> B ->C -> A
+// XPECT errors --> "Cyclic cluster class dependency: threeStepClusterB->threeStepClusterC->threeStepClusterA->threeStepClusterB" at "threeStepClusterC"
+	someInstance : threeStepClusterC()
+channels
+
+cluster class threeStepClusterC()
+ports
+instances
+//  Error on cluster cyclic dependencies A -> B ->C -> A
+// XPECT errors --> "Cyclic cluster class dependency: threeStepClusterC->threeStepClusterA->threeStepClusterB->threeStepClusterC" at "threeStepClusterA"
+	someInstance : threeStepClusterA()
+channels
+
+
+/* --- Cluster Complex A->B, A->C, C->D, A->D, D->A) */
+
+process class dummy()
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+cluster class comStepClusterA()
+ports
+instances
+//  Error on cluster cyclic dependencies
+// XPECT noIssues
+	someInstance : comStepClusterB()
+	// Error complex cluster cyclic
+	// XPECT errors --> "Cyclic cluster class dependency: comStepClusterA->comStepClusterC->comStepClusterD->comStepClusterA" at "comStepClusterC"
+ 	someOtherInstance : comStepClusterC()
+channels
+
+cluster class comStepClusterB()
+ports
+instances
+
+	someInstance : dummy()
+channels
+
+cluster class comStepClusterC()
+ports
+instances
+//  Error on cluster cyclic dependencies
+// XPECT errors --> "Cyclic cluster class dependency: comStepClusterC->comStepClusterD->comStepClusterA->comStepClusterC" at "comStepClusterD"
+	someInstance : comStepClusterD()
+channels
+		
+cluster class comStepClusterD()
+ports
+instances
+//  Error on cluster cyclic dependencies
+// XPECT errors --> "Cyclic cluster class dependency: comStepClusterD->comStepClusterA->comStepClusterC->comStepClusterD" at "comStepClusterA"
+	someInstance : comStepClusterA()
+channels		
+		
+/* -----------------DATA class acycle----------------*/
+
+
+// Error Data acyclic A -> A
+// XPECT errors --> "Cyclic data class dependency: someClass -> someClass" at "someClass"
+data class someClass extends someClass
+variables
+	
+methods
+	
+// data extending A-> B-> C-> A 
+	
+// Error Data acyclic A-> B-> C-> A
+// XPECT errors --> "Cyclic data class dependency: threeStepClassA -> threeStepClassC -> threeStepClassB -> threeStepClassA" at "threeStepClassC"
+data class threeStepClassA extends threeStepClassC
+variables	
+methods
+
+// Error Data acyclic A-> B-> C-> A
+// XPECT errors --> "Cyclic data class dependency: threeStepClassB -> threeStepClassA -> threeStepClassC -> threeStepClassB" at "threeStepClassA"
+data class threeStepClassB extends threeStepClassA
+variables	
+methods
+
+// Error Data acyclic A-> B-> C-> A
+// XPECT errors --> "Cyclic data class dependency: threeStepClassC -> threeStepClassB -> threeStepClassA -> threeStepClassC" at "threeStepClassB"
+data class threeStepClassC extends threeStepClassB
+variables	
+methods
+
+		// ------------ Data Complex   A->B, A->C, C->D, D->A 
+
+// Complex Data cyclic
+// XPECT errors --> "Cyclic data class dependency: comStepDataA -> comStepProcessD -> comStepDataC -> comStepDataA" at "comStepProcessD" 	
+data class comStepDataA extends comStepProcessD
+variables	
+methods
+
+//compl Complexex Data cyclic
+// XPECT noIssues
+data class comStepDataB extends comStepDataA
+variables	
+methods
+
+// Complex Data cyclic
+// XPECT errors --> "Cyclic data class dependency: comStepDataC -> comStepDataA -> comStepProcessD -> comStepDataC" at "comStepDataA"
+data class comStepDataC extends comStepDataA
+variables	
+methods 
+		
+// Complex Data cyclic
+/// XPECT errors --> "Cyclic data class dependency: comStepProcessD -> comStepDataC -> comStepDataA -> comStepProcessD" at "comStepDataC"
+data class comStepProcessD extends comStepDataC
+variables	
+methods
+
+
+
+/* -------------------  acyclic processmethod  ------------------- */
+process class someClass()
+ports
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+	// Warning on cyclic processmethod
+	// XPECT warnings --> "Unguarded recursive loop: someMethod()() -> someMethod()()" at "someMethod()()"		
+		someMethod()() ; // more variations on a cyclic processmethod calls are possible
+		while true do
+		// No Warning in while
+		// XPECT noIssues
+ 			someMethod()()
+		od ;
+		if true then
+		// No Warning in if
+		// XPECT noIssues
+ 			someMethod()()
+		fi		

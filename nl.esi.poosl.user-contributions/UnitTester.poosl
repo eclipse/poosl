@@ -1,0 +1,62 @@
+/** Simple Unit testing framework supporting a number of assertion methods and that can print
+ *  a brief test report to the console.
+ * 
+ *  For questions and feedback contact:
+ * 	benny.akesson@tno.nl
+ **/
+data class UnitTester extends Object
+variables
+	numberTests : Integer
+	numberFailed : Integer
+	console : Console
+methods
+	/* Initializes the UnitTester, e.g. by setting the number of executed and failed tests to 0. */
+	@Init
+	init : UnitTester
+		numberTests := 0;
+		numberFailed := 0;
+		console := new(Console);
+		return self
+
+	/* Tests that the provided condition is true and otherwise prints the provided message object to the console. */
+	assertTrue(condition : Boolean, message : String) : UnitTester
+		numberTests := numberTests + 1;
+		if !condition then
+			numberFailed := numberFailed + 1;
+			console writeError("\t" + message)
+		fi;
+		return self
+
+	/* Tests that the provided condition is false and otherwise prints the provided message object to the console. */
+	assertFalse(condition : Boolean, message : String) : UnitTester
+		numberTests := numberTests + 1;
+		if condition then
+			numberFailed := numberFailed + 1;
+			console writeError("\t" + message lf)
+		fi;
+		return self
+
+	/* Tests that the two first objects are equal and otherwise prints a message to the console. */
+	assertEquals(value : Object, expected : Object, message : String) : UnitTester
+		numberTests := numberTests + 1;
+		if value != expected then
+			numberFailed := numberFailed + 1;
+			console writeError("\t" + message + " value: " + value printString + " expected: " + expected printString
+				lf)
+		fi;
+		return self
+
+	/* Writes a brief test report to the console. If all tests since initialization were successful,
+	 * the number of successful tests are reported. Otherwise, the number of failed tests are reported.
+	 */
+	report() : UnitTester
+		if numberFailed = 0 then
+			console writeLine(numberTests printString() + " test(s) executed successfully.")
+		else
+			console writeLine(numberFailed printString() + " test(s) failed." lf)
+		fi;
+		return self
+
+	writeLine(message : String) : UnitTester
+		console writeLine(message);
+		return self

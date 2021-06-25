@@ -1,0 +1,139 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+data class someClass
+variables       
+       v: Object
+methods
+       doSomething(a,b:Integer): Object
+             return a + b + v
+
+data class someClass2 extends someClass
+variables
+methods
+// expect warning Real is not a super type of integer
+// XPECT warnings --> "Parameter types (Real, Real) are not equal to, or supertypes of, the parameter types (Integer, Integer) of the overridden method in class someClass" at "a,b:Real" 
+       doSomething(a,b:Real): Object    // typing warning! 
+             return a + b       
+
+ 
+  
+
+process class dataMethodCallProcessClass()ports
+	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | i: Integer|
+	// getAndCheckExpressionType DATA_METHOD_CALL_EXPRESSION
+	// XPECT errors --> "No method 'nonExisting' with  0 parameters defined for any data class" at "i nonExisting()"
+	i nonExisting();
+		skip
+		
+		
+
+process class BaseStation()
+ports
+messages
+
+variables
+	channelInfoTable : ChannelInfoTable
+init
+	Send(1,1)()
+methods  
+
+	Send(source, target : Integer)() | c : Integer |	
+	// XPECT noIssues
+		c := channelInfoTable enter(source, target) 
+		
+
+data class ExistingMethodNameCallClass extends Object 
+variables
+	ExecutionTimes : Map 
+methods
+	update(Task : StackedDataCallsClass) : ExistingMethodNameCallClass
+		// No warning when calling a method that exists in other data classes 	 
+		// XPECT noIssues
+		ExecutionTimes at(Task getName);       		 
+		return self     
+		
+data class ChannelInfoTable extends Array
+variables
+	freeSlot : Integer
+methods
+
+	enter(source, target : Integer) : Integer | i : Integer |
+		i := freeSlot + source + target;		
+		return i
+		
+		
+data class StackedDataCallsClass extends Object
+variables
+
+methods
+	setRemainingExecutionTime(T : Real) : StackedDataCallsClass
+		T abs;
+		return self
+			getName : String
+		return ""		
+		
+
+data class CallingStackedDataCallsClass extends Object
+variables
+	ExecutionTimes : Map, 
+	Frequency : Real 
+methods
+	
+	update(Task : StackedDataCallsClass, RunTime  : Real) : CallingStackedDataCallsClass	
+		// Only show error on the methodcall that doesnt exist and avoid error propagation	
+		// XPECT errors --> "No method 'getScenario' with  0 parameters defined for any data class" at "Task getScenario" 
+		Task setRemainingExecutionTime((ExecutionTimes at(Task getName) at(Task getScenario) / Frequency) - RunTime);
+		   
+ 
+	// Error and warnings when calling a non existing call inside a methodcall				 	    
+  /* XPECT issues --- 
+    "No method 'getScenario' with  0 parameters defined for any data class" at "Task getScenario"
+    "No method 'getScenario' with  0 parameters defined for any data class" at "Task getScenario"    
+    ---
+  */ 
+		Task setRemainingExecutionTime((ExecutionTimes at(Task getScenario) at(Task getScenario) / Frequency) - RunTime); 	  	      	    
+		return self  
+		
+data class Map extends Object
+variables
+methods
+	/* Returns the value at key K if such key is included in the Map. Otherwise, it returns nil */
+	at(Key: Object) : Object ||	
+		return Key
+		
+		data class LongRunSampleAverage
+variables
+	
+methods
+
+sample : Real | X : Real,Random:RandomGenerator| 
+		// Warning " Expression of type Boolean is not compatible with variable of type Real" should not show
+		// XPECT noIssues
+			X := 2.0 * Random random - 1.0 ;
+			return X 		
+
+	addNils() : Integer | c : Integer |
+		c := nil + nil;
+		//Show error on both non existing calls
+		/* XPECT errors --- 
+		"No method 'nonExisting' with  0 parameters defined for any data class" at "c nonExisting()"
+		"No method 'nonExisting' with  1 parameters defined for any data class" at "c nonExisting(c nonExisting())"
+		---
+		*/
+		c nonExisting(c nonExisting());
+		//Show error on both non existing calls, also calls binary method with left and right operator as null
+		/* XPECT errors --- 
+		"No method 'nonExisting' with  0 parameters defined for any data class" at "c nonExisting()"
+		"No method 'nonExisting' with  0 parameters defined for any data class" at "c nonExisting()"
+		---
+		*/
+		c := c nonExisting() + c nonExisting();
+		return c   
+
+			             

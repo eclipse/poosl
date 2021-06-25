@@ -1,0 +1,33 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_ZJx58BuLEeeKSO4xt8npOw,_q_oWoBuKEeeKSO4xt8npOw
+Element-Name: ImportLibDouble
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _QmxhoBuMEeeKSO4xt8npOw
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 4/7/17 2:23 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+	set-caret-pos 1 24
+	key-type Enter
+	type-text "import \"../import/model.poosl\""
+	key-type "M1+s"
+}
+
+with [get-editor "model.poosl" | get-text-viewer] {
+	get-property "markers['1'][0].Type" | equals "org.eclipse.xtext.ui.editor.error" | verify-true
+	get-property "markers['2'][0].Type" | equals "org.eclipse.xtext.ui.editor.error" | verify-true
+
+	get-editor "model.poosl" | get-text-viewer | get-property "markers['1'][0].text" | contains " is defined in two d" +
+		"ifferent files:" | verify-true
+	get-editor "model.poosl" | get-text-viewer | get-property "markers['2'][0].text" | contains " is defined in two d" +
+		"ifferent files:" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,22 @@
+data class importInitClass extends Object
+variables
+
+methods
+	@Init
+	someMethod() : Object | |
+		return nil
+
+	@Init
+	secondMethod(i : Integer) : Object | |
+		return i
+
+	otherMethod() : Object | |
+		return nil
+
+data class importOldClass extends Object
+variables
+
+methods
+	someMethod() : Object | |
+		return nil			
+		

@@ -1,0 +1,39 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Process Port Not Declared
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _29fyUOQbEeSZttsAewanYQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/27/16 2:38 PM
+Tags: Process, Port, QuickFix
+Testcase-Type: ecl
+Verifications: __ZkgcFP2Eea5R70fIjiNMA
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer | type-text "process class someClass\n"
+    + "ports\n"
+    + "messages\n"
+    + "In?Message(Integer)\n"
+    + "variables\n"
+    + "init\n"
+    + "someMethod()()\n"
+    + "methods\n"
+    + "someMethod()()\n"
+    + "In?Message(var1)"
+
+get-editor "model.poosl" | get-text-viewer | get-property "markers['4'][0].text" | equals "Port 'In' is not declared." 
+    | verify-true
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 4 20
+    key-type "M1+1"
+}
+get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table | select "Create port 'In'" | click 
+    -default
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

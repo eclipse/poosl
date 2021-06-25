@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Change Value
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _AKqzoLSWEeapedkHH5Hcfw
+Manually-Ordered: true
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 3/23/18 8:55 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_AVUSgLSYEeapedkHH5Hcfw	// kind: 'test' name: 'Change Type To Boolean' path: 'Change Type To Boolean.test'
+_CP8zMLSYEeapedkHH5Hcfw	// kind: 'test' name: 'Change Type To Char' path: 'Change Type To Char.test'
+_-_zRELSXEeapedkHH5Hcfw	// kind: 'test' name: 'Change Type To Integer' path: 'Change Type To Integer.test'
+_6ggbQLSXEeapedkHH5Hcfw	// kind: 'test' name: 'Change Type To Real' path: 'Change Type To Real.test'
+_5PCMULSXEeapedkHH5Hcfw	// kind: 'test' name: 'Change Type To String' path: 'Change Type To String.test'
+_nq9jgLSVEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value Boolean' path: 'Change Value Boolean.test'
+_RLnooLSVEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value Char' path: 'Change Value Char.test'
+_hvgyYLSNEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value Integer' path: 'Change Value Integer.test'
+_WPhc0LSUEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value Integer Error' path: 'Change Value Integer Error.test'
+_oVXEALSYEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value Object' path: 'Change Value Object.test'
+_Ol2gQLSVEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value Real' path: 'Change Value Real.test'
+_U8ddALSVEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value String' path: 'Change Value String.test'
+_60IscLSYEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value Var of Object' path: 'Change Value Var of Object.test'
+_VcKh4LTDEeapedkHH5Hcfw	// kind: 'test' name: 'Change Value PETView' path: 'Change Value PETView.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

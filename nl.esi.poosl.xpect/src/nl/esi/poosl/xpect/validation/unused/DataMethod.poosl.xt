@@ -1,0 +1,28 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+// XPECT noIssues
+data class unusedDataClass extends Object
+variables
+// Warning when process class paramater is not used
+// XPECT warnings --> "Variable is not used" at "var"
+var : Integer  
+
+methods
+		// Warning when local variable is not used
+		// XPECT warnings --> "Variable is not used" at "i"  
+	unusedLocal(): Object | i : Integer |
+		return nil
+		// Warning when inputvariable is not used
+		// XPECT warnings --> "Variable is not used" at "i"  
+	unusedInput(i : Integer): Object | |
+		return nil
+		// No Warning when local variable is used
+		// XPECT noIssues
+	usedLocal(): Object | i : Integer |
+		i+1;
+		return nil
+		// No Warning when inputvariable is used
+		// XPECT noIssues
+	usedInput(i : Integer): Object | |
+	i+1;
+		return nil 

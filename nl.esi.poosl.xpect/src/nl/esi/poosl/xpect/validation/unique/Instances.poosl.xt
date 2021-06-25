@@ -1,0 +1,73 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+//cluster containing 2 process instances with the same name
+cluster class doubleProcessInstanceClass()
+ports
+	
+instances
+// Cluster instance, Error when 2 instances have the same name
+// XPECT errors --> "There is another instance with the same name someInstance" at "someInstance"
+	someInstance: someProcessClass()
+// Cluster instance, Error when 2 instances have the same name
+// XPECT errors --> "There is another instance with the same name someInstance" at "someInstance"
+	someInstance: someProcessClass()
+channels
+
+//cluster containing 2 cluster instances with the same name
+cluster class doubleClusterInstanceClass()
+ports
+	
+instances
+// Cluster instance, Error when 2 instances have the same name
+// XPECT errors --> "There is another instance with the same name someInstance" at "someInstance"
+	someInstance: someClusterClass()
+// Cluster instance, Error when 2 instances have the same name
+// XPECT errors --> "There is another instance with the same name someInstance" at "someInstance"
+	someInstance: someClusterClass()
+channels
+
+//cluster containing 2 cluster instances with the same name
+cluster class doubleInstanceClass()
+ports
+	
+instances
+// Cluster instance, Error when 2 instances have the same name
+// XPECT errors --> "There is another instance with the same name someInstance" at "someInstance"
+	someInstance: someClusterClass()
+// Cluster instance, Error when 2 instances have the same name
+// XPECT errors --> "There is another instance with the same name someInstance" at "someInstance"
+	someInstance: someProcessClass()
+channels
+
+
+//System containing 2 instances with the same name
+system
+instances
+// Cluster instance, Error when 2 instances have the same name
+// XPECT errors --> "There is another instance with the same name someInstance" at "someInstance"
+	someInstance: someProcessClass()
+// Cluster instance, Error when 2 instances have the same name
+// XPECT errors --> "There is another instance with the same name someInstance" at "someInstance"
+	someInstance: someProcessClass()
+channels
+
+
+
+process class someProcessClass() 
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		
+
+cluster class someClusterClass()
+ports
+	
+instances
+	
+channels
+			

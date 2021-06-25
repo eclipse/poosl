@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated poosl -->
+      <package
+            uri="http://poosl.esi.nl/poosl/3.0.0"
+            class="nl.esi.poosl.PooslPackage"
+            genModel="model/poosl.genmodel"/>
+   </extension>
+
+</plugin>

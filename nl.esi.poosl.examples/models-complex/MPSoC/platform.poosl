@@ -1,0 +1,866 @@
+importlib "structures.poosl"
+importlib "distributions.poosl"
+importlib "performance.poosl"
+importlib "json.poosl"
+
+/* Data Classes */
+data class ScheduledTask extends Object
+variables
+	Scenario : String,
+	Priority : Integer,
+	RemainingExecutionTime : Real,
+	Name : String
+methods
+	getRemainingExecutionTime : Real
+		return RemainingExecutionTime
+
+	@Init
+	init(N, S : String, P : Integer) : ScheduledTask
+		Name := N;
+		Scenario := S;
+		Priority := P;
+		return self
+
+	getName : String
+		return Name
+
+	printString : String
+		return "Task " + Name printString + " in Scenario " + Scenario printString + " with Priority " + Priority
+			printString
+
+	getScenario : String
+		return Scenario
+
+	setRemainingExecutionTime(T : Real) : ScheduledTask
+		RemainingExecutionTime := T;
+		return self
+
+	getPriority : Integer
+		return Priority
+
+data class SchedulerStatus extends Object
+variables
+	TaskList : Sequence,
+	Policy : String
+methods
+	@Init
+	init(T : String) : SchedulerStatus
+		Policy := T;
+		TaskList := new(Sequence);
+		return self
+
+	registerTask(Task, Scenario : String, Priority : Integer) : ScheduledTask | NewTask : ScheduledTask,
+			It : SequenceIterator, Found : Boolean |
+		NewTask := new(ScheduledTask) init(Task, Scenario, Priority);
+		if Policy = "FCFS" then
+			TaskList prepend(NewTask)
+		else if Policy = "PB" then
+			Found := false;
+			It := TaskList iterator;
+			while It isDone not & !Found do
+				if It element getPriority < Priority then
+					It advance
+				else
+					It addBefore(NewTask);
+					Found := true
+				fi
+			od;
+			if !Found then
+				TaskList append(NewTask)
+			fi
+		else
+			self error("Unknown Scheduling Policy")
+		fi fi;
+		return NewTask
+
+	nextTaskToSchedule : ScheduledTask
+		return TaskList last
+
+	printString : String | PrintOut : String, It : SequenceIterator |
+		PrintOut := "Operating System with Policy: " + Policy printString cr cr + "List of Waiting Tasks:" cr;
+		PrintOut := PrintOut + "( ";
+		It := TaskList iterator;
+		while It isDone not do
+			PrintOut := PrintOut + It element printString;
+			if It element != TaskList last then
+				PrintOut := PrintOut + ", "
+			fi;
+			It advance
+		od;
+		PrintOut := PrintOut + " )";
+		return PrintOut
+
+	removeTask(OldTask : ScheduledTask) : Integer | i : Integer |
+		i := TaskList find(1, OldTask);
+		TaskList removeAt(i);
+		return TaskList size
+
+	updateTask(Task : ScheduledTask) : SchedulerStatus | It : SequenceIterator, i : Integer |
+		It := TaskList iterator;
+		i := 1;
+		while It isDone not do
+			if It element getName = Task getName then
+				TaskList putAt(i, Task)
+			fi;
+			It advance;
+			i := i + 1
+		od;
+		return self
+
+data class ProcessorStatus extends Object
+variables
+	PowerConsumption : Real,
+	RunningTask : String,
+	MemoryUsages : Map,
+	ExecutionTimes : Map,
+	ContextSwitchingTime : Real,
+	Running : Boolean,
+	Utilisation : LongRunTimeAverage,
+	Frequency : Real
+methods
+	run(T : ScheduledTask, CurrentTime : Real) : ProcessorStatus
+		Running := true;
+		RunningTask := T getName;
+		Utilisation rewardBM(1.0, CurrentTime);
+		return self
+
+	@Init
+	init(Type : String) : ProcessorStatus | File : FileIn, i : Integer, Task : String, CalibrationData : Map |
+		if (Type != "MIPS") & (Type != "ARM") & (Type != "TriMedia") then
+			self error("Unknown Processor Type")
+		fi;
+		File := new(FileIn) source(Type + ".txt") open;
+		Task := "";
+		while File atEndOfFile not do
+			Task concat(File readLine)
+		od;
+		CalibrationData := new(JSON) parse(Task);
+		Frequency := CalibrationData at("Frequency") asReal;
+		ContextSwitchingTime := CalibrationData at("ContextSwitchingTime") asReal;
+		PowerConsumption := CalibrationData at("PowerConsumption");
+		ExecutionTimes := new(Map);
+		MemoryUsages := new(Map);
+		i := 1;
+		while i <= 7 do
+			Task := "Task" + i printString;
+			ExecutionTimes putAt(Task, new(Map));
+			MemoryUsages putAt(Task, new(Map));
+			ExecutionTimes at(Task) putAt("S1", CalibrationData at(Task) at("Cycles") at("S1") asReal);
+			ExecutionTimes at(Task) putAt("S2", CalibrationData at(Task) at("Cycles") at("S2") asReal);
+			MemoryUsages at(Task) putAt("S1", CalibrationData at(Task) at("Memory") at("S1"));
+			MemoryUsages at(Task) putAt("S2", CalibrationData at(Task) at("Memory") at("S2"));
+			i := i + 1
+		od;
+		File close;
+		Running := false;
+		Utilisation := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+		return self
+
+	idle(CurrentTime : Real) : ProcessorStatus
+		Running := false;
+		RunningTask := nil;
+		Utilisation rewardBM(0.0, CurrentTime);
+		return self
+
+	getContextSwitchingTime : Real
+		return ContextSwitchingTime / Frequency
+
+	getPowerConsumption : Real
+		return PowerConsumption
+
+	log(Name, MemoryResults : String) : ProcessorStatus | LogFile : FileOut |
+		LogFile := new(FileOut) destination("Processor" + Name + ".log") open;
+		LogFile write("Processor Utilisation Results:" cr cr + "Average Utilisation:" cr + Utilisation logStatistics cr
+			cr + "Data Memory Results: " cr cr + MemoryResults);
+		LogFile close;
+		return self
+
+	getMemoryUsage(Task : ScheduledTask) : Integer
+		return MemoryUsages at(Task getName) at(Task getScenario)
+
+	getExecutionTime(Task : ScheduledTask) : Real
+		if Task getRemainingExecutionTime = nil then
+			return ExecutionTimes at(Task getName) at(Task getScenario) / Frequency
+		else
+			return Task getRemainingExecutionTime
+		fi
+
+	printString : String
+		if Running then
+			return "Processor is Executing Task " + RunningTask printString cr cr + "Average Utilisation:" cr +
+				Utilisation printStatistics
+		else
+			return "Processor is Idle" cr cr + "Average Utilisation:" cr + Utilisation printStatistics
+		fi
+
+	notPreviouslyPreempted(Task : ScheduledTask) : Boolean
+		if Task getRemainingExecutionTime != nil then
+			return false
+		else
+			return true
+		fi
+
+	update(Task : ScheduledTask, RunTime : Real) : ProcessorStatus
+		if Task getRemainingExecutionTime = nil then
+			Task setRemainingExecutionTime((ExecutionTimes at(Task getName) at(Task getScenario) / Frequency) - RunTime)
+		else
+			Task setRemainingExecutionTime(Task getRemainingExecutionTime - RunTime)
+		fi;
+		return self
+
+	accurate : Boolean
+		return Utilisation accurate
+
+data class MemoryStatus extends Object
+variables
+	Occupation : Integer,
+	MaximumOccupation : Integer,
+	AverageOccupation : LongRunTimeAverage
+methods
+	@Init
+	init : MemoryStatus
+		Occupation := 0;
+		MaximumOccupation := 0;
+		AverageOccupation := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+		return self
+
+	logString : String
+		return "Maximum Occupation: " + MaximumOccupation printString cr cr + "Statistics for Average Occupation:" cr +
+			AverageOccupation logStatistics
+
+	free(NumberOfBytes : Integer, CurrentTime : Real) : MemoryStatus
+		Occupation := Occupation - NumberOfBytes;
+		AverageOccupation rewardBM(Occupation asReal, CurrentTime);
+		return self
+
+	printString : String
+		return "Occupation: " + Occupation printString cr cr + "Maximum Occupation: " + MaximumOccupation printString cr
+			cr + "Statistics for Average Occupation:" cr + AverageOccupation printStatistics
+
+	allocate(NumberOfBytes : Integer, CurrentTime : Real) : MemoryStatus
+		Occupation := Occupation + NumberOfBytes;
+		if Occupation > MaximumOccupation then
+			MaximumOccupation := Occupation
+		fi;
+		AverageOccupation rewardBM(Occupation asReal, CurrentTime);
+		return self
+
+	accurate : Boolean
+		return AverageOccupation accurate
+
+data class CommunicationStatus extends Object
+variables
+	AverageNumberOfConcurrentConnections : LongRunTimeAverage,
+	NumberOfConcurrentConnections : Integer,
+	AchievedMaximumNumberOfConcurrentConnections : Integer,
+	ActiveConnections : Set
+methods
+	@Init
+	init : CommunicationStatus
+		ActiveConnections := new(Set);
+		NumberOfConcurrentConnections := 0;
+		AchievedMaximumNumberOfConcurrentConnections := 0;
+		AverageNumberOfConcurrentConnections := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+		return self
+
+	inactive(Connection : String) : Boolean
+		return ActiveConnections excludes(Connection)
+
+	deactivate(Connection : String, CurrentTime : Real) : CommunicationStatus
+		ActiveConnections remove(Connection);
+		NumberOfConcurrentConnections := NumberOfConcurrentConnections - 1;
+		AverageNumberOfConcurrentConnections rewardBM(NumberOfConcurrentConnections asReal, CurrentTime);
+		return self
+
+	activate(Connection : String, CurrentTime : Real) : String
+		ActiveConnections add(Connection);
+		NumberOfConcurrentConnections := NumberOfConcurrentConnections + 1;
+		if NumberOfConcurrentConnections > AchievedMaximumNumberOfConcurrentConnections then
+			AchievedMaximumNumberOfConcurrentConnections := NumberOfConcurrentConnections
+		fi;
+		AverageNumberOfConcurrentConnections rewardBM(NumberOfConcurrentConnections asReal, CurrentTime);
+		return Connection
+
+	log(Name, MemoryResults : String) : CommunicationStatus | LogFile : FileOut |
+		LogFile := new(FileOut) destination("Communication" + Name + ".log") open;
+		LogFile write("Interconnect Utilisation Results:" cr cr + "Achieved Maximum Number of Concurrent Connections: "
+			+ AchievedMaximumNumberOfConcurrentConnections printString cr cr +
+			"Statistics for Average Number of Concurrent Connections:" cr + AverageNumberOfConcurrentConnections
+				logStatistics cr cr + "Buffer Memory Results: " cr cr + MemoryResults);
+		LogFile close;
+		return self
+
+	printString : String
+		return "Number of Concurrent Connections: " + NumberOfConcurrentConnections printString cr cr +
+			"Active Connections:" cr + ActiveConnections printString cr cr +
+			"Achieved Maximum Number of Concurrent Connections: " + AchievedMaximumNumberOfConcurrentConnections
+				printString cr cr + "Statistics for Average Number of Concurrent Connections:" cr +
+			AverageNumberOfConcurrentConnections printStatistics
+
+	accurate : Boolean
+		return AverageNumberOfConcurrentConnections accurate
+
+data class BatteryStatus extends Object
+variables
+	NumberOfSamples : Integer,
+	Power : Real,
+	AveragePower : LongRunTimeAverage,
+	PreviousUpdateTime : Real,
+	PeakPower : Real,
+	ObservedAverageTime : Real,
+	ObservedAveragePower : Real
+methods
+	stopConsumption(P, CurrentTime : Real) : BatteryStatus | Factor : Real |
+		NumberOfSamples := NumberOfSamples + 1;
+		Factor := (NumberOfSamples - 1) asReal / NumberOfSamples asReal;
+		ObservedAveragePower := (Factor * ObservedAveragePower) + (Power * (CurrentTime - PreviousUpdateTime)) /
+			NumberOfSamples asReal;
+		ObservedAverageTime := (Factor * ObservedAverageTime) + (CurrentTime - PreviousUpdateTime) / NumberOfSamples
+			asReal;
+		PreviousUpdateTime := CurrentTime;
+		Power := Power - P;
+		AveragePower rewardBM(Power, CurrentTime);
+		return self
+
+	startConsumption(P, CurrentTime : Real) : BatteryStatus | Factor : Real |
+		NumberOfSamples := NumberOfSamples + 1;
+		Factor := (NumberOfSamples - 1) asReal / NumberOfSamples asReal;
+		ObservedAveragePower := (Factor * ObservedAveragePower) + (Power * (CurrentTime - PreviousUpdateTime)) /
+			NumberOfSamples asReal;
+		ObservedAverageTime := (Factor * ObservedAverageTime) + (CurrentTime - PreviousUpdateTime) / NumberOfSamples
+			asReal;
+		PreviousUpdateTime := CurrentTime;
+		Power := Power + P;
+		if Power > PeakPower then
+			PeakPower := Power
+		fi;
+		AveragePower rewardBM(Power, CurrentTime);
+		return self
+
+	@Init
+	init : BatteryStatus
+		Power := 0.0;
+		PeakPower := 0.0;
+		AveragePower := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+		NumberOfSamples := 0;
+		ObservedAveragePower := 0.0;
+		ObservedAverageTime := 0.0;
+		PreviousUpdateTime := 0.0;
+		return self
+
+	log : BatteryStatus | LogFile : FileOut |
+		LogFile := new(FileOut) destination("Battery.log") open;
+		LogFile write("Peak Power Consumption: " + PeakPower printString + " Watts" cr cr);
+		if (NumberOfSamples < 20000) then
+			LogFile write("Observed Average Power: " + (ObservedAveragePower / ObservedAverageTime) printString +
+				" Watts")
+		else
+			LogFile write("Statistics for Average Power Consumption:" cr + AveragePower logStatistics)
+		fi;
+		LogFile close;
+		return self
+
+	printString : String | PrintString : String |
+		PrintString := "Current Power Consumption: " + Power printString + " Watts" cr cr + "Peak Power Consumption: " +
+			PeakPower printString + " Watts" cr cr;
+		if (NumberOfSamples < 20000) then
+			PrintString := PrintString + "Observed Average Power: " + (ObservedAveragePower / ObservedAverageTime)
+				printString + " Watts"
+		else
+			PrintString := PrintString + "Statistics for Average Power Consumption:" cr + AveragePower printStatistics
+		fi;
+		return PrintString
+
+	accurate : Boolean
+		return AveragePower accurate
+
+data class PlatformStatus extends Object
+variables
+	Monitors : Array,
+	Accuracies : Array
+methods
+	getNumberOfMonitors : Integer
+		return Accuracies size
+
+	register(ID : Integer, Accurate : Boolean) : PlatformStatus
+		Accuracies putAt(ID, Accurate);
+		return self
+
+	@Init
+	init : PlatformStatus
+		Accuracies := new(Array);
+		Monitors := new(Array);
+		return self
+
+	printString : String | i : Integer, PrintOut : String |
+		PrintOut := "Accuracy Status for Monitors at the following Components" cr cr;
+		i := 1;
+		while i <= Monitors size do
+			PrintOut := PrintOut + Monitors at(i) printString + ": " + Accuracies at(i) printString cr;
+			i := i + 1
+		od;
+		return PrintOut
+
+	getMonitor(ID : Integer) : String
+		return Monitors at(ID)
+
+	accurate : Boolean | i : Integer, Accurate : Boolean |
+		Accurate := true;
+		i := 1;
+		while Accurate & (i <= Accuracies size) do
+			Accurate := Accurate & Accuracies at(i);
+			i := i + 1
+		od;
+		return Accurate
+
+	addMonitor(Name : String) : PlatformStatus | i : Integer |
+		i := Accuracies size + 1;
+		Monitors resize(i);
+		Accuracies resize(i);
+		Monitors putAt(i, Name);
+		Accuracies putAt(i, false);
+		return self
+
+/* Process Classes */
+process class OperatingSystem(NodeName : String, Policy : String)
+ports
+	Processor,
+	Task
+messages
+	Processor!Execute(ScheduledTask),
+	Processor!Preempt(),
+	Processor!Use(Boolean),
+	Processor?Stopped(ScheduledTask),
+	Task!ExecutionCompleted(String),
+	Task?Execute(String, String, Integer, String),
+	Task?Use(String)
+variables
+	Status : SchedulerStatus
+init
+	Initialise()()
+methods
+	Schedule()() | Task, Scenario, MapToNode : String, Priority, NumberOfWaitingTasks : Integer, NewTask,
+			OldTask : ScheduledTask |
+		sel
+			Task?Execute(Task, Scenario, Priority, MapToNode | MapToNode = NodeName) {NewTask := Status
+				registerTask(Task, Scenario, Priority)};
+			if Status nextTaskToSchedule == NewTask then
+				sel
+					Processor!Execute(NewTask)
+				/* No other Task is being executed */
+				or
+					Processor!Preempt;
+					/* Preempt running Task */
+					Processor?Stopped(OldTask) {Status updateTask(OldTask)};
+					Processor!Execute(NewTask)
+				les
+			fi
+		or
+			Processor?Stopped(OldTask) {NumberOfWaitingTasks := Status removeTask(OldTask)};
+			Task!ExecutionCompleted(OldTask getName);
+			if NumberOfWaitingTasks > 0 then
+				/* Run the next available Task */
+				Processor!Execute(Status nextTaskToSchedule)
+			fi
+		les;
+		Schedule()()
+
+	Initialise()() | MapTo : String, InUse : Boolean |
+		InUse := false;
+		abort
+			while true do
+				Task?Use(MapTo | MapTo = NodeName) {InUse := true}
+			od
+		with delay (1.0e-12);
+		Processor!Use(InUse);
+		if InUse then
+			Status := new(SchedulerStatus) init(Policy);
+			Schedule()()
+		fi
+
+process class ProcessingUnit(NodeName : String, Type : String, VoltageScaleFactor : Real)
+ports
+	Monitor,
+	OS,
+	Power,
+	Memory
+messages
+	Memory!Allocate(Integer),
+	Memory!Free(Integer),
+	Memory!Status(),
+	Memory!Use(Boolean),
+	Memory?AccuracyStatus(Boolean),
+	Memory?SimulationResults(String),
+	Monitor!AccuracyStatus(Boolean),
+	Monitor!InitialiseMonitor(String),
+	Monitor?Status(String),
+	Monitor?StopSimulation(),
+	OS!Stopped(ScheduledTask),
+	OS?Execute(ScheduledTask),
+	OS?Preempt(),
+	OS?Use(Boolean),
+	Power!StartConsumption(Real),
+	Power!StopConsumption(Real)
+variables
+	Status : ProcessorStatus
+init
+	Initialise()()
+methods
+	ExecuteTask()() | Task : ScheduledTask, StartTime : Real, Preempt : Boolean |
+		OS?Execute(Task) {Status run(Task, currentTime)};
+		Power!StartConsumption(Status getPowerConsumption * (VoltageScaleFactor sqr));
+		delay Status getContextSwitchingTime / VoltageScaleFactor;
+		if Status notPreviouslyPreempted(Task) then
+			Memory!Allocate(Status getMemoryUsage(Task))
+		fi;
+		StartTime := currentTime;
+		Preempt := false;
+		abort
+			delay Status getExecutionTime(Task) / VoltageScaleFactor
+		with OS?Preempt {
+			Preempt := true;
+			Status update(Task, (currentTime - StartTime) * VoltageScaleFactor)
+		};
+		OS!Stopped(Task) {Status idle(currentTime)};
+		Power!StopConsumption(Status getPowerConsumption * (VoltageScaleFactor sqr));
+		if Preempt not then
+			Memory!Free(Status getMemoryUsage(Task))
+		fi;
+		ExecuteTask()()
+
+	Initialise()() | InUse : Boolean, Results : String |
+		OS?Use(InUse);
+		if InUse then
+			Memory!Use(InUse);
+			Monitor!InitialiseMonitor("Processor" + NodeName);
+			Status := new(ProcessorStatus) init(Type);
+			if  (VoltageScaleFactor != 1.0 / 4.0) & (VoltageScaleFactor != 1.0 / 2.0) & (VoltageScaleFactor != 1.0 /
+					3.0) & (VoltageScaleFactor != 2.0 / 3.0) & (VoltageScaleFactor != 3.0 / 4.0) & (VoltageScaleFactor
+					!= 1.0 / 1.0) then
+				Status error("Invalid voltage scale factor")
+			fi;
+			abort
+				par
+					ExecuteTask()()
+				and
+					CheckAccuracyStatus()()
+				rap
+			with Monitor?StopSimulation;
+			Memory?SimulationResults(Results) {Status log(NodeName, Results)}
+		fi
+
+	CheckAccuracyStatus()() | ID : String, Accurate : Boolean |
+		Monitor?Status(ID | ID = ("Processor" + NodeName));
+		Memory!Status;
+		Memory?AccuracyStatus(Accurate);
+		Monitor!AccuracyStatus(Accurate & Status accurate);
+		CheckAccuracyStatus()()
+
+process class StorageUnit(PowerPerByte : Real)
+ports
+	Monitor,
+	Power,
+	Access
+messages
+	Access!AccuracyStatus(Boolean),
+	Access!SimulationResults(String),
+	Access?Allocate(Integer),
+	Access?Free(Integer),
+	Access?Status(),
+	Access?Use(Boolean),
+	Monitor?StopSimulation(),
+	Power!StartConsumption(Real),
+	Power!StopConsumption(Real)
+variables
+	Status : MemoryStatus
+init
+	Initialise()()
+methods
+	Initialise()() | InUse : Boolean |
+		Access?Use(InUse);
+		if InUse then
+			Status := new(MemoryStatus) init;
+			abort
+				par
+					HandleAccesses()()
+				and
+					CheckAccuracyStatus()()
+				rap
+			with Monitor?StopSimulation;
+			Access!SimulationResults(Status logString)
+		fi
+
+	HandleAccesses()() | NumberOfBytes : Integer |
+		sel
+			Access?Allocate(NumberOfBytes) {Status allocate(NumberOfBytes, currentTime)};
+			Power!StartConsumption(PowerPerByte * NumberOfBytes asReal)
+		or
+			Access?Free(NumberOfBytes) {Status free(NumberOfBytes, currentTime)};
+			Power!StopConsumption(PowerPerByte * NumberOfBytes asReal)
+		les;
+		HandleAccesses()()
+
+	CheckAccuracyStatus()()
+		Access?Status;
+		Access!AccuracyStatus(Status accurate);
+		CheckAccuracyStatus()()
+
+process class CommunicationUnit(BandwidthPerConnection : Real, ConnectionSetUpLatency : Real, NodeName : String,
+		PowerPerByte : Real)
+ports
+	Monitor,
+	Power,
+	Communications,
+	Memory
+messages
+	Communications!TransferCompleted(String, Integer),
+	Communications!TransferInitiated(String),
+	Communications?InitialiseTokens(String, Integer, Integer),
+	Communications?ReleaseRoom(String, Integer, Integer),
+	Communications?ReserveRoom(String, String, Integer, Integer),
+	Communications?Transfer(String, String, Integer),
+	Communications?Use(String),
+	Memory!Allocate(Integer),
+	Memory!Free(Integer),
+	Memory!Status(),
+	Memory!Use(Boolean),
+	Memory?AccuracyStatus(Boolean),
+	Memory?SimulationResults(String),
+	Monitor!AccuracyStatus(Boolean),
+	Monitor!InitialiseMonitor(String),
+	Monitor?Status(String),
+	Monitor?StopSimulation(),
+	Power!StartConsumption(Real),
+	Power!StopConsumption(Real)
+variables
+	Status : CommunicationStatus
+init
+	Initialise()()
+methods
+	Initialise()() | MapTo, Results : String, InUse : Boolean, NumberOfTokens, TokenSize : Integer |
+		InUse := false;
+		abort
+			while true do
+				Communications?Use(MapTo | MapTo = NodeName) {InUse := true}
+			od
+		with delay (1.0e-12);
+		if InUse then
+			Memory!Use(InUse);
+			Monitor!InitialiseMonitor("Communication" + NodeName);
+			Status := new(CommunicationStatus) init;
+			abort
+				while true do
+					Communications?InitialiseTokens(MapTo, NumberOfTokens, TokenSize | MapTo = NodeName);
+					Memory!Allocate(NumberOfTokens * TokenSize)
+				od
+			with delay 1.0e-12;
+			abort
+				par
+					Transfer()()
+				and
+					ReleaseBufferSpace()()
+				and
+					CheckAccuracyStatus()()
+				rap
+			with Monitor?StopSimulation;
+			Memory?SimulationResults(Results) {Status log(NodeName, Results)}
+		fi
+
+	Transfer()() | Channel, Connection, MapTo : String, NumberOfTokens, TokenSize, TransferID : Integer |
+		Communications?ReserveRoom(Channel, MapTo, NumberOfTokens, TokenSize |(Status inactive(Channel)) & (MapTo =
+			NodeName)) {Status activate(Channel, currentTime)};
+		par
+			Memory!Allocate(NumberOfTokens * TokenSize);
+			Communications!TransferInitiated(Channel);
+			delay ConnectionSetUpLatency;
+			Communications?Transfer(Connection, MapTo, TransferID |(Connection = Channel) & (MapTo = NodeName));
+			Power!StartConsumption(PowerPerByte * NumberOfTokens asReal * TokenSize asReal);
+			delay (NumberOfTokens * TokenSize) asReal / BandwidthPerConnection;
+			Communications!TransferCompleted(Channel, TransferID) {Status deactivate(Channel, currentTime)};
+			Power!StopConsumption(PowerPerByte * NumberOfTokens asReal * TokenSize asReal)
+		and
+			Transfer()()
+		rap
+
+	ReleaseBufferSpace()() | MapTo : String, NumberOfTokens, TokenSize : Integer |
+		Communications?ReleaseRoom(MapTo, NumberOfTokens, TokenSize | MapTo = NodeName);
+		Memory!Free(NumberOfTokens * TokenSize);
+		ReleaseBufferSpace()()
+
+	CheckAccuracyStatus()() | ID : String, Accurate : Boolean |
+		Monitor?Status(ID | ID = ("Communication" + NodeName));
+		Memory!Status;
+		Memory?AccuracyStatus(Accurate);
+		Monitor!AccuracyStatus(Accurate & Status accurate);
+		CheckAccuracyStatus()()
+
+process class EnergySource()
+ports
+	Power,
+	Monitor
+messages
+	Monitor!AccuracyStatus(Boolean),
+	Monitor!InitialiseMonitor(String),
+	Monitor?Status(String),
+	Monitor?StopSimulation(),
+	Power?StartConsumption(Real),
+	Power?StopConsumption(Real)
+variables
+	Status : BatteryStatus
+init
+	Initialise()()
+methods
+	Initialise()()
+		Status := new(BatteryStatus) init;
+		Monitor!InitialiseMonitor("Battery");
+		abort
+			par
+				HandleConsumptions()()
+			and
+				CheckAccuracyStatus()()
+			rap
+		with Monitor?StopSimulation {Status log}
+
+	HandleConsumptions()() | Power : Real |
+		sel
+			Power?StartConsumption(Power) {Status startConsumption(Power, currentTime)}
+		or
+			Power?StopConsumption(Power) {Status stopConsumption(Power, currentTime)}
+		les;
+		HandleConsumptions()()
+
+	CheckAccuracyStatus()() | ID : String |
+		Monitor?Status(ID | ID = "Battery");
+		Monitor!AccuracyStatus(Status accurate);
+		CheckAccuracyStatus()()
+
+process class PlatformMonitor()
+ports
+	SimulationController,
+	Monitor
+messages
+	Monitor!Status(String),
+	Monitor!StopSimulation(),
+	Monitor?AccuracyStatus(Boolean),
+	Monitor?InitialiseMonitor(String),
+	SimulationController!PlatformAccuracyStatus(Boolean),
+	SimulationController?PlatformStatus(),
+	SimulationController?StopSimulation()
+variables
+	Status : PlatformStatus
+init
+	Initialise()()
+methods
+	Initialise()() | Monitor : String |
+		Status := new(PlatformStatus) init;
+		abort
+			while true do
+				Monitor?InitialiseMonitor(Monitor) {Status addMonitor(Monitor)}
+			od
+		with delay (2.0e-12);
+		abort
+			CheckAccuracyStatus()()
+		with SimulationController?StopSimulation;
+		while true do
+			Monitor!StopSimulation
+		od
+
+	CheckAccuracyStatus()() | MonitorID : Integer, Accurate : Boolean |
+		SimulationController?PlatformStatus;
+		MonitorID := 1;
+		while MonitorID <= Status getNumberOfMonitors() do
+			Monitor!Status(Status getMonitor(MonitorID));
+			Monitor?AccuracyStatus(Accurate) {Status register(MonitorID, Accurate)};
+			MonitorID := MonitorID + 1
+		od;
+		SimulationController!PlatformAccuracyStatus(Status accurate);
+		CheckAccuracyStatus()()
+
+/* Cluster Classes */
+cluster class NetworkOnChip(BandwidthPerConnection : Real, ConnectionSetUpLatency : Real, NetworkName : String,
+	PowerPerCommunicatedByte : Real, PowerPerStoredByte : Real)
+ports
+	Power,
+	Communications,
+	Monitor
+instances
+	BufferMemory : StorageUnit(PowerPerByte := PowerPerStoredByte)
+	RouterNetwork : CommunicationUnit(BandwidthPerConnection := BandwidthPerConnection, ConnectionSetUpLatency :=
+		ConnectionSetUpLatency, NodeName := NetworkName, PowerPerByte := PowerPerCommunicatedByte)
+channels
+	{ BufferMemory.Access, RouterNetwork.Memory }
+	{ Power, BufferMemory.Power, RouterNetwork.Power }
+	{ Monitor, BufferMemory.Monitor, RouterNetwork.Monitor }
+	{ Communications, RouterNetwork.Communications }
+
+cluster class ProcessorNode(
+		CommunicationBandwidth : Real,
+		ConnectionSetUpLatency : Real,
+		NodeName : String,
+		OSPolicy : String,
+		PowerPerCommunicatedByte : Real,
+		PowerPerStoredByte : Real,
+		ProcessorType : String,
+		VoltageScaleFactor : Real)
+ports
+	Power,
+	Communications,
+	Computations,
+	Monitor
+instances
+	InterConnect : CommunicationUnit(BandwidthPerConnection := CommunicationBandwidth, ConnectionSetUpLatency :=
+		ConnectionSetUpLatency, NodeName := NodeName, PowerPerByte := PowerPerCommunicatedByte)
+	DataMemory : StorageUnit(PowerPerByte := PowerPerStoredByte)
+	BufferMemory : StorageUnit(PowerPerByte := PowerPerStoredByte)
+	OperatingSystem : OperatingSystem(NodeName := NodeName, Policy := OSPolicy)
+	Processor : ProcessingUnit(NodeName := NodeName, Type := ProcessorType, VoltageScaleFactor := VoltageScaleFactor)
+channels
+	{ OperatingSystem.Processor, Processor.OS }
+	{ InterConnect.Memory, BufferMemory.Access }
+	{ Processor.Memory, DataMemory.Access }
+	{ Computations, OperatingSystem.Task }
+	{ Communications, InterConnect.Communications }
+	{ Power, InterConnect.Power, DataMemory.Power, BufferMemory.Power, Processor.Power }
+	{ Monitor, InterConnect.Monitor, DataMemory.Monitor, BufferMemory.Monitor, Processor.Monitor }
+
+cluster class Platform(
+		NoC_BandwidthPerConnection : Real,
+		NoC_ConnectionSetUpLatency : Real,
+		Node_InternalBandwidth : Real,
+		Node_InternalConnectionSetUpLatency : Real,
+		PowerPerCommunicatedByte : Real,
+		PowerPerStoredByte : Real)
+ports
+	SimulationController,
+	CommunicationResources,
+	ComputationResources
+instances
+	Node1 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node1", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node2 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node2", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "ARM", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node3 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node3", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "TriMedia",
+		VoltageScaleFactor := 1.0 / 1.0)
+	Node4 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node4", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	NoC : NetworkOnChip(BandwidthPerConnection := NoC_BandwidthPerConnection, ConnectionSetUpLatency :=
+		NoC_ConnectionSetUpLatency, NetworkName := "NoC", PowerPerCommunicatedByte := PowerPerCommunicatedByte,
+		PowerPerStoredByte := PowerPerStoredByte)
+	Battery : EnergySource()
+	PlatformMonitor : PlatformMonitor()
+channels
+	{ Node1.Power, Node2.Power, Node3.Power, Node4.Power, NoC.Power, Battery.Power }
+	{ Node1.Monitor, Node2.Monitor, Node3.Monitor, Node4.Monitor, NoC.Monitor, Battery.Monitor,
+		PlatformMonitor.Monitor }
+	{ ComputationResources, Node1.Computations, Node2.Computations, Node3.Computations, Node4.Computations }
+	{ CommunicationResources, Node1.Communications, Node2.Communications, Node3.Communications, Node4.Communications,
+		NoC.Communications }
+	{ SimulationController, PlatformMonitor.SimulationController }

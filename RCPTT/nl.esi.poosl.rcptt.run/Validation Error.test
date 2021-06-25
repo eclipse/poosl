@@ -1,0 +1,50 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _IqURkO5dEeSFZ64tz1ToyA,_LhpEAO5dEeSFZ64tz1ToyA
+Element-Name: Validation Error
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _JqgJEOgDEeSUFO5-NwwB0Q
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 11/26/17 8:22 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl"] {
+	with [get-text-viewer] {
+		type-text -text "process class processClass()\nports\nmessages\nvariables\ninit\nsomeMethod()()\nmethods\nsom" +
+			"eMethod()() | |\nskip\n\nsystem\ninstances\nsomeInstance: someClass()\nchannels"
+	}
+	key-type "M1+s"
+}
+
+get-editor "model.poosl" | get-text-viewer | get-property "markers['13'][0].Type" | equals "org.eclipse.xtext.ui.edit" +
+	"or.error" | verify-true
+
+exec-with-options {
+	get-editor "model.poosl" | get-editbox | get-menu "Run As/.* POOSL Simulation" | click
+} -allowStatusDialog
+
+// with [get-window "Problem Occurred"] {
+// get-label "'Launching model.poosl' has encountered a problem." | get-property caption
+// | equals "'Launching model.poosl' has encountered a problem." | verify-true
+// get-label "The selected model has validation errors.See details." | get-property caption
+// | equals "The selected model has validation errors.\n"
+// + "See details." | verify-true
+// get-button "Details >>" | click
+// get-editbox -after [get-label "The selected model has validation errors.See details."]
+// | get-property text | contains "The selected model has validation errors." | verify-true
+// get-button "<< Details" | click
+// get-button OK | click
+// }
+
+echo [ get-view Console | get-text-viewer | get-property text]
+
+get-view Console | get-text-viewer | get-property text | contains "Encountered error while checking the model's consi" +
+	"stency" | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

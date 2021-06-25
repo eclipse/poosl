@@ -1,0 +1,40 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Cluster Unconnected External Port Channel
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _Yn0ZIONyEeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 3/21/18 3:35 PM
+Tags: Cluster, QuickFix, External Port
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+type-text "cluster class \n someClass() \n ports \n	In \n instances \n channels"
+
+}
+get-editor "model.poosl" | get-text-viewer | get-property "markers['4'][0].text" 
+    | equals "Port is not connected to a channel" | verify-true
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 4 6
+    key-type "M1+1"
+}
+with [get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table] {
+	get-items
+   	select "Add channel that connects this port" | click -default
+}
+get-editor "model.poosl" | get-text-viewer | get-property text | equals "cluster class \n"
+    + " someClass() \n"
+    + "  ports \n"
+    + "  \tIn \n"
+    + "  \t instances \n"
+    + "  \t  channels\n"
+    + "\t{ In }" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

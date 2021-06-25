@@ -1,0 +1,38 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_CDfpAJQpEeWsHLzSvkw_VA,_74QxIOqHEeSdDvHJCJiyYA
+Element-Name: Saved From Cluster to Cluster Textual
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: __jDs0NpWEeWr3a7wWrF4WQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 2/23/16 7:07 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+
+get-tab-folder -index 2 | get-tab-item "*Cluster ProducerConsumer (producer_consumer.poosl)" | click
+with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
+    -name "Cluster ProducerConsumer (producer_consumer.poosl)"] {
+    mouse-move 243 7 -height 770 -width 1386
+    with [get-edit-part -name ProducerConsumer | get-edit-part 
+        -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+        mouse-move 326 59 -height 349 -width 481
+        with [get-edit-part -name "extraCluster : ExtraCluster" | get-edit-part -className SquareEditPart] {
+            mouse-move 70 79 button1 -height 100 -width 150
+            mouse-press 70 79 button1 -height 100 -width 150
+            mouse-release 70 79 button1 524288 -height 100 -width 150
+            mouse-press 70 79 button1 -height 100 -width 150
+            mouse-double-click 70 79 button1 -height 100 -width 150
+            mouse-release 70 79 button1 524288 -height 100 -width 150
+        }
+    }
+}
+get-tab-folder -index 2 | get-property activePage | equals "producer_consumer.poosl" | verify-true
+verify-error {get-window "Choose Editor"}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

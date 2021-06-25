@@ -1,0 +1,15 @@
+process class importPortMessageClass()
+ports
+	Out,
+	In
+messages
+	In?integer()
+	Out!integer(Object)
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		In?integer() ;
+		Out!integer(nil) 
+ 		

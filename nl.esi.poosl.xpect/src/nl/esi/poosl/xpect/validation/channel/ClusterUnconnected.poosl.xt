@@ -1,0 +1,175 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.channel.PooslValidationChannelTest END_SETUP */
+
+cluster class NoProcessPortCluster2()  
+ports	
+instances 
+// warnSendReceiveMismatch from instance, port point of view 
+// XPECT warnings --> "Unconnected port 'Out' hierarchically connects no process ports" at "someInstance: emptyCluster2()"
+	someInstance: emptyCluster2() 
+	// warnSendReceiveMismatch from instance, port point of view in a second instance of the cluster
+	// XPECT warnings --> "Unconnected port 'Out' hierarchically connects no process ports" at "someInstance2: emptyCluster2()" 
+	someInstance2: emptyCluster2() 
+channels 
+ 
+
+	
+
+cluster class ClusterOutClass()
+ports
+Out
+	
+instances
+	someInstance: ChannelOutProcess()
+channels
+	{Out, someInstance.Out} 
+	
+			
+process class UniqueParameter(i : Integer)
+ports	 		
+messages	 		
+variables
+j : Integer
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		i := j
+		
+
+
+process class ChannelOutProcess() 
+ports
+	Out
+messages
+	Out!integer(Integer)
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		Out!integer(nil)
+		
+process class ChannelInProcess()
+ports
+	In
+	
+messages
+	In?integer(Integer)
+	
+variables
+	i :Integer
+init
+	someMethod()()
+methods
+	someMethod()() | |		
+		In?integer(i)
+
+process class thirdChannelProcess()
+ports
+	In,
+	Out
+	
+messages
+	In?integer(Integer)
+	Out!string(String)
+variables
+	i :Integer
+init
+	someMethod()()
+methods
+	someMethod()() | |		
+		In?integer(i);
+		Out!string("")
+		
+
+cluster class channelsClusterClass()
+ports
+	
+instances
+	someInstance: ChannelOutProcess()
+	someInstance2: ChannelInProcess()	
+	//XPECT warnings --> "Unconnected port 'Out' hierarchically connects only process port someInstance3[thirdChannelProcess].Out" at "someInstance3: thirdChannelProcess()"
+	someInstance3: thirdChannelProcess()
+channels
+// Error when port is used more then once
+// XPECT errors --> "This instance port is connected more than once" at "someInstance.Out"
+{someInstance.Out, someInstance2.In}
+// Error when port is used more then once
+// XPECT errors --> "This instance port is connected more than once" at "someInstance.Out"
+{someInstance.Out, someInstance3.In}
+
+cluster class externalClusterClass()
+ports
+	Out
+instances
+	someInstance: ChannelOutProcess()
+	someInstance2: ChannelInProcess()	
+channels
+// Error when extern port is used more then once
+// XPECT errors --> "This external port is connected more than once" at "Out"
+{Out, someInstance.Out}
+// Error when extern port is used more then once
+// XPECT errors --> "This external port is connected more than once" at "Out"
+{Out, someInstance2.In}
+
+cluster class NoProcessPortClass()
+ports
+
+instances
+	secondInstance: ChannelInProcess()
+	//XPECT warnings --> "Unconnected port 'Out' hierarchically connects only process port thirdInstance[thirdChannelProcess].Out" at "thirdInstance: thirdChannelProcess()"
+	thirdInstance: thirdChannelProcess() 
+channels
+// warnSendReceiveMismatch No Process can send message
+// XPECT warningsNoExpectations --> "On this internal channel, no processes can send message 'integer' with 1 parameter(s), but the following processes can receive it:  thirdInstance[thirdChannelProcess].In secondInstance[ChannelInProcess].In" at "{secondInstance.In, thirdInstance.In}"
+{secondInstance.In, thirdInstance.In} 
+
+process class emptyProcessClass()
+ports	
+messages	
+variables	
+init
+	someMethod()() 
+methods
+
+	someMethod()() | |
+		skip
+
+cluster class emptyCluster2()  
+ports	
+	Out
+instances
+	someInstance: emptyProcessClass()
+channels
+	// warnSendReceiveMismatch, warning for unused channel, also needed for next test no process ports 
+	// XPECT warnings --> "Unused channel (only one element)" at "{Out}"
+	{Out} 
+
+cluster class NoProcessPortCluster() 
+ports	
+instances
+	someInstance: emptyCluster2()
+	someInstance2: emptyCluster2()
+channels
+// warnSendReceiveMismatch channel connects no process ports 
+// XPECT warnings --> "Internal channel hierarchically connects no process ports" at "{someInstance.Out, someInstance2.Out}"
+	{someInstance.Out, someInstance2.Out}
+
+
+
+
+
+
+
+cluster class OneProcessPortCluster()  
+ports	
+instances
+	someInstance: emptyCluster2()
+	someInstance2: ClusterOutClass()
+channels
+// warnSendReceiveMismatch channel connects no process ports 
+// XPECT warnings --> "Internal channel hierarchically connects only process port someInstance2/someInstance[ChannelOutProcess].Out" at "{someInstance.Out, someInstance2.Out}"
+	{someInstance.Out, someInstance2.Out}  
+
+	

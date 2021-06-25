@@ -1,0 +1,103 @@
+// This example demonstrates how processes can communicate via external socket connections.
+// It models a Client and a Server that communicate messages via an external socket connection.
+
+// -----------------------------------------------------------------------------
+
+importlib "SocketProcess.poosl"
+
+// -----------------------------------------------------------------------------
+
+/* Example client process */
+process class Client()
+ports
+	/* This is the only port; it is used for sending and receiving messages over the socket. */
+	Port
+messages
+	/* Received message over the socket. */
+	Port?Received(String),
+	/* Message to be send over the socket. */
+	Port!Send(String)
+variables
+	/* Random generator for generating random identifiers. */
+	rand : RandomGenerator
+init
+	Init()()
+methods
+	/* Initializes the process class. */
+	Init()()
+		rand := new(RandomGenerator);
+		Iterate()()
+	/* Perform one iteration of the communication protocol. */
+	Iterate()() | Id : Integer, Str : String |
+		// Generate a random identifier
+		Id := (rand random * 1000000.0) asInteger();
+		// Execute the protocol
+		Port!Send("Hello! I am Mister " + Id printString);
+		Port!Send("Hello! I am Mister " + Id printString);
+		Port?Received(Str);
+		Port?Received(Str);
+		// Check the response
+		if Str != "Hello Mister " + Id printString + "!" then
+			nil error("Wrong response!")
+		else
+			Iterate()()
+		fi
+
+// -----------------------------------------------------------------------------
+
+/* Example server process */
+process class Server()
+ports
+	/* This is the only port; it is used for sending and receiving messages over the socket. */
+	Port
+messages
+	/* Received message over the socket. */
+	Port?Received(String),
+	/* Message to be send over the socket. */
+	Port!Send(String)
+variables
+	/* Length of the prefix that the server sends before the identifier. */
+	PrefixLength: Integer
+init
+	Init()()
+methods
+	/* Initializes the process class. */
+	Init()()
+		PrefixLength := "Hello! I am Mister " size;
+		Iterate()()
+	/* Perform one iteration of the communication protocol. */
+	Iterate()() |
+			/* Received input from the socket. */
+			Input : String,
+			/* Length of the received input from the socket. */
+			InputLength: Integer,
+			/* Identifier received from the socket. */
+			Id : Integer 
+		|
+		// Receive the request
+		Port?Received(Input);
+		Port?Received(Input);
+		// Extract the used identifier (this demonstrates several String methods) 
+		InputLength := Input size;
+		Id := Input subString(PrefixLength+1, InputLength-PrefixLength) toInteger();
+		// Send the correct response
+		Port!Send("Hello Mister " + Id printString +"!");
+		Port!Send("Hello Mister " + Id printString +"!");
+		Iterate()()
+
+// -----------------------------------------------------------------------------
+
+/* Top-level system specification */
+system
+instances
+	/* Client side of the protocol. */
+	Client : Client()
+	/* Socket connection for the Client process. */
+	ClientSocket : SocketProcess(HostName := "localhost", PortNumber := 9090)
+	/* Socket connection for the Server process. */
+	ServerSocket : SocketProcess(HostName := nil, PortNumber := 9090)
+	/* Server side of the protocol. */
+	Server : Server()
+channels
+	{ Client.Port, ClientSocket.Port }
+	{ Server.Port, ServerSocket.Port }

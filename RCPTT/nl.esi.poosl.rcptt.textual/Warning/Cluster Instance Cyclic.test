@@ -1,0 +1,27 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Cluster Instance Cyclic
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _jzy6kOQ8EeSZttsAewanYQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/27/16 2:15 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer | type-text "cluster class someClass() \n"
+    + "ports\n"
+    + "instances\n"
+    + "someInstance: someClass()\n"
+    + "channels\n"
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    get-property "markers['4'][0].Type" | equals "org.eclipse.xtext.ui.editor.error" | verify-true
+    get-property "markers['4'][0].text" | equals "Cyclic cluster class dependency: someClass -> someClass" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,97 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+import "../imports/importUniquePortMessage.poosl"
+import "../imports/import.poosl" 
+
+cluster class clusterClass()
+ports
+// XPECT noIssues
+Out,
+// Cluster Port, Error when two ports with the same id exist in the same class
+// XPECT errors --> "There is another port in scope with the same name In" at "In" 
+In,
+// Cluster Port, Error when two ports with the same id exist in the same class
+// XPECT errors --> "There is another port in scope with the same name In" at "In"
+In	
+instances
+	someInstance: portProcessClass()
+channels
+{Out, someInstance.In}
+
+
+process class processClass() 
+ports	
+// Process port, error when port with the same name
+// XPECT errors --> "There is another port in scope with the same name In" at "In"
+In,
+// XPECT errors --> "There is another port in scope with the same name In" at "In"
+In
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+	skip	
+	
+	
+process class childSomeClass() extends processClass
+ports
+// XPECT errors --> "There is another port in scope with the same name In" at "In"
+In	
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		
+process class childImportClass() extends importPortMessageClass
+ports
+// XPECT errors --> "There is another port in scope with the same name In" at "In"
+In	
+messages
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+	process class portProcessClass() 
+ports	
+In	
+messages
+In?integer(Integer)
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | i : Integer |
+		In?integer(i)	
+		
+	
+process class doubleProcessClass() extends importPortProcessClass
+ports   
+ 
+// Error when using id for port that already is in use by parent
+// XPECT errors --> "There is another port in scope with the same name In" at "In"
+	In, 
+// Error when using id for port that already is in use
+// XPECT errors --> "There is another port in scope with the same name Out" at "Out"
+	Out, 
+// Error when using id for port that already is in use
+// XPECT errors --> "There is another port in scope with the same name Out" at "Out"
+	Out  
+	
+messages 
+
+variables
+	
+init
+	newMethod()() 
+methods
+	newMethod()() || 
+	skip 
+		

@@ -1,0 +1,19 @@
+import "./AircraftInterface.poosl"
+import "./ApplicationsServer.poosl"
+
+@Source("In-Flight Entertainment System::In-Flight Entertainment System::Logical Architecture::IFE System::Aircraft Front Servers")
+cluster class AircraftFrontServer
+ports
+	InAudio
+	OutAudio
+	OutInterruptionCommand
+	Trace
+instances
+	aircraftInterface : AircraftInterface()
+	applicationsServer : ApplicationsServer()
+channels
+	{ InAudio, aircraftInterface.InAudio }
+	{ OutAudio, applicationsServer.OutAudio }
+	{ OutInterruptionCommand, applicationsServer.OutInterruptionCommand }
+	{ aircraftInterface.OutAudio, applicationsServer.InAudio }
+	{ Trace, aircraftInterface.Trace, applicationsServer.Trace }

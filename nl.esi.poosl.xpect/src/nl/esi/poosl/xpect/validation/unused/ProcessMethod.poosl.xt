@@ -1,0 +1,77 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+process class unusedProcessClass()
+ports
+messages
+variables
+	var : Integer
+init
+	someMethod()()
+methods
+// No Warning when processmethod is used
+// XPECT noIssues
+	someMethod()() | |
+		unusedLocal()() ;
+		unusedInput(var)() ;
+		unusedOutput()(var) ;
+		usedLocal()() ;
+		usedInput(var)() ;
+		usedOutput()(var) ;
+		skip
+		// Warning when local variable is not used
+		// XPECT warnings --> "Variable is not used" at "i"  
+	unusedLocal()() | i : Integer |
+		skip
+		// Warning when inputvariable is not used
+		// XPECT warnings --> "Variable is not used" at "i" 
+	unusedInput(i : Integer)() | |
+		skip
+		// Warning when outputvariable is not used
+		// XPECT warnings --> "Variable is not used" at "i" 
+	unusedOutput()(i : Integer) | |
+		skip
+		// No Warning when localvariable is used
+		// XPECT noIssues
+	usedLocal()() | i : Integer |
+		i := 1 ;
+		skip
+		// No Warning when inputvariable is used
+		// XPECT noIssues
+	usedInput(i : Integer)() | |
+		i := 1 ;
+		skip
+		// No Warning when outputvariable is used
+		// XPECT noIssues
+	usedOutput()(i : Integer) | |
+		i := 1 ;
+		skip
+
+		// Process Method unused are not shown when the process init method is not declared	
+process class parentClass()
+ports
+messages
+variables
+init
+	//XPECT errors --> "ProcessMethod 'someMethod' is not declared." at "someMethod" 
+	someMethod()()
+methods
+	///XPECT warnings --> "Method is not used" at "someMethod"
+	someMethod(i : Integer)() | |
+		i
+	//XPECT warnings --> "Method is not used" at "otherMethod"
+	otherMethod()() | |
+		skip
+
+process class someClass() extends parentClass
+ports
+messages
+variables
+init
+	//XPECT errors --> "ProcessMethod 'someMethod' is not declared." at "someMethod" 
+	someMethod()()
+methods
+	//XPECT warnings --> "Method is not used" at "someMethod"
+	someMethod(i : Integer)() | |
+		i
+	//XPECT warnings --> "Method is not used" at "otherMethod"
+	otherMethod()() | |
+		skip

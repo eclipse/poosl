@@ -1,0 +1,54 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.suppress.PooslValidationSuppressTest END_SETUP */
+
+@SuppressWarnings("unused")
+process class unusedClass()
+ports
+	// XPECT noIssues
+	x
+	a
+messages
+	a?m(Object)
+variables
+	// XPECT noIssues
+	s : Integer
+init
+	someMethod()()
+methods
+	someMethod()() | someVar : Object |
+		a?m(someVar);
+		skip
+
+	// XPECT noIssues
+	@SuppressWarnings("unused")
+	unusedMethod()() | |
+		skip
+
+cluster class secondClass()
+ports
+	p
+instances
+	//XPECT warnings --> "Unconnected port 'a' hierarchically connects only process port someInstance[unused2Class].a" at "someInstance : unused2Class()"
+	someInstance : unused2Class()
+channels
+	// XPECT noIssues
+	@SuppressWarnings("unused")
+	{ p }
+
+process class unused2Class()
+ports
+	a
+messages
+	a?m(Object)
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()() | someVar : Object |
+		a?m(someVar);
+		skip
+
+	// XPECT noIssues
+	@SuppressWarnings("unused")
+	unusedMethod()() | |
+		skip

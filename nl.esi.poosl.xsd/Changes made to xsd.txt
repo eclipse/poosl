@@ -1,0 +1,54 @@
+This document contains all the changes to the xsd's of rotalumis for use with java's xjc class generation tool.
+There is also 1 important change made in rotalumis. Because xjc generates namespace aware classes all xml documents must refer to that used namespace.
+Rotalumis did not reply to messages with a namespace so the namespace uri:poosl has been added to all response xmls.
+In the future it would be better to split the namespace of poosl and rotalumis!
+
+Rotalumis API request changes to XSD:
+	
+	* t_load_request
+		* changed "filename" element to attribute
+		
+	* t_save_request
+		* changed elements to minoccurs="1"/maxoccurs="1" instead of use="required"
+		  the last one can only be used on attributes and not on elements
+		  
+	* t_command_request
+		* changed "type" element to attribute
+	
+	* changed all occurences of type t_handle to xs:integer
+		* t_handle contains an element with an ID and an element with a type.
+		  what rotalumis actually returns is just 1 element with the handleID
+	
+Rotalumis API response changes to XSD:
+	
+	* t_file_io_result
+		* changed enum "ok" to "OK"
+		  possibly other enums in this list are also wrong
+		  
+	* t_class_with_handle
+		* changed "name" element to "class_name" to fix class generation error
+		
+	* t_command_response
+		* changed "result" attribute to element
+		
+	* t_inspect_response
+		* commented out 2 elements because they are not present in actual response from rotalumis
+		
+	* t_execution_state_change_response
+		* commented out 1 element because it is not present in actual response from rotalumis
+		
+	* changed the type "t_stack_frame" to "t_stack_trace_frame"
+		* xjc ignores underscores so t_stack_frame == t_stackframe and both are used in the xsd
+	
+	* changed all occurences of type t_handle to xs:integer
+		* t_handle contains an element with an ID and an element with a type.
+		  what rotalumis actually returns is just 1 element with the handleID
+		  
+PooslModel changes to XSD:
+	
+	* removed the hex_integer, binary_integer and octal_integer from the constant_type enumeration because there are not used.
+	* changed list_of_statements into t_statements
+	* removed the t_sequence_of_statements	
+	* added sequence_of_statements to t_statements to allow for recursive sequence_of_statements
+
+	

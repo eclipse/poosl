@@ -1,0 +1,98 @@
+/* This example demonstrates a use of the interrupt statement.
+ * It models a scheduler that temporarily suspends low-priority jobs for high-priority jobs.
+ *
+ */
+// -----------------------------------------------------------------------------
+//
+/* Data class that specifies a task with a certain execution time. */
+data class TaskSpecification
+variables
+	executionTime : Integer
+methods
+	setExecutionTime(time : Integer) : TaskSpecification
+		executionTime := time;
+		return self
+
+	getExecutionTime : Integer
+		return executionTime
+
+	printString: String
+		return self^ printString + "(execution time: " + executionTime printString + ")"
+
+// -----------------------------------------------------------------------------
+
+/* Process class that models a client that requests for the execution of tasks */
+process class Client
+ports
+	Scheduler
+messages
+	Scheduler!ExecuteTask(TaskSpecification)
+	Scheduler?TaskCompleted
+variables
+	randomGenerator : RandomGenerator
+init
+	Initialise()()
+methods
+	/* Initializes the process class. */
+	Initialise()()
+		randomGenerator := new(RandomGenerator) randomiseSeed;
+		Wait()()
+
+	/* Wait some time in between tasks. */
+	Wait()()
+		delay (randomGenerator randomInt(100));
+		RequestTaks()()
+
+	/* Request a task execution. */
+	RequestTaks()() | task : TaskSpecification |
+		task := new(TaskSpecification) setExecutionTime(randomGenerator randomInt(100));
+		Scheduler!ExecuteTask(task);
+		Scheduler?TaskCompleted;
+		Wait()()
+
+// -----------------------------------------------------------------------------
+
+/* Process class that models a preemptive scheduler that executes requested tasks. */
+process class Scheduler
+ports
+	LP
+	HP
+messages
+	LP?ExecuteTask(TaskSpecification)
+	LP!TaskCompleted
+	HP?ExecuteTask(TaskSpecification)
+	HP!TaskCompleted
+variables
+
+init
+	Schedule()()
+methods
+	/* Schedule low-priority ad high-priority tasks. */
+	Schedule()()
+		interrupt
+			HandleLowPriorityTasks()()
+		with HandleHighPriorityTask()()
+
+	/* Handle low-priority tasks. */
+	HandleLowPriorityTasks()() | task : TaskSpecification |
+		LP?ExecuteTask(task);
+		delay (task getExecutionTime);
+		LP!TaskCompleted;
+		HandleLowPriorityTasks()()
+
+	/* Handle a single high-priority task. */
+	HandleHighPriorityTask()() | task : TaskSpecification |
+		HP?ExecuteTask(task);
+		delay (task getExecutionTime);
+		HP!TaskCompleted
+
+// -----------------------------------------------------------------------------
+
+system
+instances
+	scheduler : Scheduler()
+	clientLow : Client()
+	clientHigh : Client()
+channels
+	{ scheduler.LP, clientLow.Scheduler }
+	{ scheduler.HP, clientHigh.Scheduler }

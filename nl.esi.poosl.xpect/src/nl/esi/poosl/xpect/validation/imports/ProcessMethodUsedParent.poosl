@@ -1,0 +1,12 @@
+process class parentImportProcessClass()
+ports	
+messages	
+variables	
+init
+	parentMethod()()
+methods
+	parentMethod()() | |
+	secondMethod(nil)()
+		
+	secondMethod(someVar : Object)() ||
+	someVar 	 

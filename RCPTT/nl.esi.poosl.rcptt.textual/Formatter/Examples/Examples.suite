@@ -1,0 +1,23 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Examples
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _UBlPkLZKEeapedkHH5Hcfw
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 11/30/16 11:44 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_VBopALbnEea5NIYftQAZ6Q	// kind: 'test' name: 'DistributionsLib.poosl' path: 'DistributionsLib.poosl.test'
+_F4_7kLZbEeapedkHH5Hcfw	// kind: 'test' name: 'JsonLib' path: 'JsonLib.test'
+_7KsDsLbnEea5NIYftQAZ6Q	// kind: 'test' name: 'Lottery' path: 'Lottery.test'
+_g2wc4LbnEea5NIYftQAZ6Q	// kind: 'test' name: 'PerformanceLib' path: 'PerformanceLib.test'
+_lKUj0LbnEea5NIYftQAZ6Q	// kind: 'test' name: 'ProducerConsumer' path: 'ProducerConsumer.test'
+_GlZMcLboEea5NIYftQAZ6Q	// kind: 'test' name: 'Trace' path: 'Trace.test'
+_ZDhUoLboEea5NIYftQAZ6Q	// kind: 'test' name: 'Switch' path: 'Switch (1).test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

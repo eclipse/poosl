@@ -1,0 +1,57 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+process class parameterProcess(x : Integer)
+ports	 		
+messages	 		
+variables
+i : Integer	 
+j : Integer	
+
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		x := 4;
+		j := 4;
+		// WarnEqualityInsteadOfAssignmentIn,  Warning perhaps you mean assignment in process method
+		//XPECT warnings --> "Perhaps you mean assignment ':=' instead of equality '='" at "="
+		i = j;
+		
+		while true do
+			// WarnEqualityInsteadOfAssignmentIn,   Warning perhaps you mean assignment in while if
+			//XPECT warnings --> "Perhaps you mean assignment ':=' instead of equality '='" at "="
+			i = j
+		od;
+			// WarnEqualityInsteadOfAssignmentIn, No warning when in if statement condition
+			//XPECT noIssues
+		if  (i = j) then
+			// WarnEqualityInsteadOfAssignmentIn, Warning perhaps you mean assignment in if then
+			//XPECT warnings --> "Perhaps you mean assignment ':=' instead of equality '='" at "="
+			i = j
+			else
+			// WarnEqualityInsteadOfAssignmentIn, Warning perhaps you mean assignment in if else
+			//XPECT warnings --> "Perhaps you mean assignment ':=' instead of equality '='" at "="
+			i = j 
+		fi;
+			// WarnEqualityInsteadOfAssignmentIn, No warning when in while statement condition
+			//XPECT noIssues
+		while i=j do 
+			// WarnEqualityInsteadOfAssignmentIn, Warning perhaps you mean assignment in while 
+			// XPECT warnings --> "Perhaps you mean assignment ':=' instead of equality '='" at "="
+			i = j
+		od; 
+		// WarnEqualityInsteadOfAssignmentIn, Warning perhaps you mean assignment in return 
+		// XPECT warnings --> "Perhaps you mean assignment ':=' instead of equality '='" at "="
+			i = j		 
+	
+		 data class someClass extends Object
+		 variables
+		 	
+		 methods
+		 	
+		 returnMethod() :Integer |i,j : Integer| 
+		 	// WarnEqualityInsteadOfAssignmentIn, Warning perhaps you mean assignment in data class
+			// XPECT warnings --> "Perhaps you mean assignment ':=' instead of equality '='" at "="
+		 i=j;
+		 return i
+		 

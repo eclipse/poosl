@@ -1,0 +1,56 @@
+<jxb:bindings 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	version="2.1"> 
+	<jxb:bindings schemaLocation="pooslstatements.xsd"> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='+']"> 
+			<jxb:typesafeEnumMember name="ADD"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='-']"> 
+			<jxb:typesafeEnumMember name="SUBTRACT"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='*']"> 
+			<jxb:typesafeEnumMember name="MULTIPLY"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='/']"> 
+			<jxb:typesafeEnumMember name="DIVIDE"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='=']"> 
+			<jxb:typesafeEnumMember name="EQUAL"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='!=']"> 
+			<jxb:typesafeEnumMember name="UNEQUAL"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='==']"> 
+			<jxb:typesafeEnumMember name="IDENTICAL"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='!==']"> 
+			<jxb:typesafeEnumMember name="NOT_IDENTICAL"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='&amp;']"> 
+			<jxb:typesafeEnumMember name="AND"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='|']"> 
+			<jxb:typesafeEnumMember name="OR"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='&lt;']"> 
+			<jxb:typesafeEnumMember name="LESS_THAN"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='&gt;']"> 
+			<jxb:typesafeEnumMember name="GREATER_THAN"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='&gt;=']"> 
+			<jxb:typesafeEnumMember name="AT_LEAST"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_binary_operator']/xs:restriction/xs:enumeration[@value='&lt;=']"> 
+			<jxb:typesafeEnumMember name="AT_MOST"/> 
+		</jxb:bindings> 
+		
+		<jxb:bindings node="//xs:simpleType[@name='t_unary_operator']/xs:restriction/xs:enumeration[@value='-']"> 
+			<jxb:typesafeEnumMember name="MINUS"/> 
+		</jxb:bindings> 
+		<jxb:bindings node="//xs:simpleType[@name='t_unary_operator']/xs:restriction/xs:enumeration[@value='!']"> 
+			<jxb:typesafeEnumMember name="NEGATION"/> 
+		</jxb:bindings> 
+	</jxb:bindings> 
+</jxb:bindings>

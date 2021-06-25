@@ -1,0 +1,12 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+
+data class someClass extends Object
+variables
+	
+methods
+	asReal() : Object | |
+		// Up to date Basic classes doesn't give the warning "No method 'asReal' defined for left expression"
+		// XPECT noIssues
+		return 0.3 asReal()
+	

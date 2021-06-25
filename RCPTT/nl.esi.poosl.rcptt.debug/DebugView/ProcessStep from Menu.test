@@ -1,0 +1,25 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g,_-6xq0Nf8Eea3P5Zs0ralfQ
+Element-Name: ProcessStep from Menu
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _hDoZYBP6EeWt28U8Nd-cFA
+Runtime-Version: 2.3.0.201806262310
+Save-Time: 7/29/19 8:10 AM
+Tags: Debug, ProcessStep
+Testcase-Type: ecl
+Verifications: _K7EWEBQWEeWRGfHyjhXfJw
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+launch-debug -name ProducerConsumer10002 -port 10002 -file "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl"
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/Bus" 
+    | select "producer_consumer.poosl [Simulated time: 0]/system/Bus" | get-menu "Perform Process Step" | click
+    get-view Console | get-text-viewer | get-property "getText()" | equals "" | verify-true
+    
+     // verification of PETview is add in the verifications
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

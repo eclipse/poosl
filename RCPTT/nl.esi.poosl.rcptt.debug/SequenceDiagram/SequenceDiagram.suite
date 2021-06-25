@@ -1,0 +1,23 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: SequenceDiagram
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _-qVMAOdZEeS02qlAIvBOkg
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 3/22/18 5:54 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_bEPuQOdiEeS02qlAIvBOkg	// kind: 'test' name: 'Clear Messages' path: 'Clear Messages.test'
+_W83FUOdmEeS02qlAIvBOkg	// kind: 'test' name: 'Dont Record Messages' path: 'Dont Record Messages.test'
+_rBXckOgCEeSUFO5-NwwB0Q	// kind: 'test' name: 'Closed Sequence Diagram' path: 'Closed Sequence Diagram.test'
+_ZtNW0Oj3EeSkTJCY7hn1FA	// kind: 'test' name: 'Settings Tree Select All' path: 'Settings Tree Select All.test'
+_xPFCgOjzEeSkTJCY7hn1FA	// kind: 'test' name: 'Settings Tree Default' path: 'Settings Tree Default.test'
+_90tQ0Oj0EeSkTJCY7hn1FA	// kind: 'test' name: 'Settings Tree Select Cluster' path: 'Settings Tree Select Cluster.test'
+_-6C2UOj2EeSkTJCY7hn1FA	// kind: 'test' name: 'Settings Tree Deselect All' path: 'Settings Tree Deselect All.test'
+_kpSuEejwEeSkTJCY7hn1FA	// kind: 'test' name: 'Messages Maximum Default 1000' path: 'Messages Maximum Default 1000.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

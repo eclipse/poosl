@@ -1,0 +1,45 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_miregORDEeSZttsAewanYQ
+Element-Name: DebugView with hello
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _yBPMgORDEeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 12:00 PM
+Tags: Debug, View, Perspective, PC
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+
+get-editor "hello_world.poosl" | editor-poosl-debug
+with [get-view Debug | get-tree] {
+    get-property itemCount | equals 1 | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]" | get-property caption 
+        | equals "hello_world.poosl [Simulated time: 0]" | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]/system/Sender" | get-property caption | equals Sender | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]/system/Sender" | get-property childCount | equals 0 | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]/system/Receiver" | get-property caption | equals Receiver | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]/system/Receiver" | get-property childCount | equals 0 | verify-true
+}
+click-terminate
+get-view Debug | get-tree | get-property itemCount | equals 1 | verify-true
+with [get-view Debug | get-tree] {
+    get-item "<terminated> hello_world.poosl/<terminated> system/<terminated> Sender" | get-property caption | equals "<terminated> Sender" 
+        | verify-true
+    get-item "<terminated> hello_world.poosl/<terminated> system/<terminated> Sender" | get-property childCount | equals 0 | verify-true
+    get-item "<terminated> hello_world.poosl/<terminated> system/<terminated> Receiver" | get-property caption 
+        | equals "<terminated> Receiver" | verify-true
+    get-item "<terminated> hello_world.poosl/<terminated> system/<terminated> Receiver" | get-property childCount | equals 0 | verify-true
+}
+with [get-view Debug | get-tree] {
+    get-item "<terminated> hello_world.poosl/<terminated> system" | get-property childCount | equals 2 | verify-true
+}
+click-remove-terminated-launches
+get-view Debug | get-tree | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

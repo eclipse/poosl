@@ -1,0 +1,36 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: DebugView
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _qA0OsOUGEeSZacs1KESTcQ
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 6/16/15 1:24 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_HzUAYOUCEeSZacs1KESTcQ	// kind: 'test' name: 'DebugView with PC, Switch and Shopping' path: 'DebugView with PC, Switch and Shopping.test'
+_T7QlgORFEeSZttsAewanYQ	// kind: 'test' name: 'DebugView with Scheduling' path: 'DebugView with Scheduling.test'
+_m3js4OREEeSZttsAewanYQ	// kind: 'test' name: 'DebugView with Job' path: 'DebugView with Job.test'
+_yBPMgORDEeSZttsAewanYQ	// kind: 'test' name: 'DebugView with hello' path: 'DebugView with hello.test'
+_fuYNAOTvEeS0itSwbx-n-w	// kind: 'test' name: 'DebugView with Vending' path: 'DebugView with Vending.test'
+_uRD4oONVEeSZttsAewanYQ	// kind: 'test' name: 'DebugView with Switch' path: 'DebugView with Switch.test'
+_uQlXgONVEeSZttsAewanYQ	// kind: 'test' name: 'DebugView with PC' path: 'DebugView with PC.test'
+_ItHcoORGEeSZttsAewanYQ	// kind: 'test' name: 'Terminate Relaunch Same Model' path: 'Terminate Relaunch Same Model.test'
+_LsKmcOTwEeS0itSwbx-n-w	// kind: 'test' name: 'DebugView with PC and Switch' path: 'DebugView with PC and Switch.test'
+_3-mGAOgYEeSUFO5-NwwB0Q	// kind: 'test' name: 'Simulation Time' path: 'Simulation Time.test'
+_1vcxEOgcEeSUFO5-NwwB0Q	// kind: 'test' name: 'Folding On Start with PC' path: 'Folding On Start with PC.test'
+_46jFAOglEeSUFO5-NwwB0Q	// kind: 'test' name: 'Color Blue Cluster Time Transition' path: 'Color Blue Cluster Time Transition.test'
+_mQZsUOggEeSUFO5-NwwB0Q	// kind: 'test' name: 'Non-Time Transition Red, Black and Grey' path: 'Non-Time Transition Red, Black and Grey.test'
+_hCH0IOghEeSUFO5-NwwB0Q	// kind: 'test' name: 'Color red Cluster Non-Time Transition' path: 'Color red Cluster Non-Time Transition.test'
+_WJ5bcOgjEeSUFO5-NwwB0Q	// kind: 'test' name: 'Color Blue Process Time Transition' path: 'Color Blue Process Time Transition.test'
+_5-XRsfPGEeSSR_rCt07tDg	// kind: 'test' name: 'Socket connected inspect' path: 'Socket connected inspect.test'
+_VUS18P1oEeSY2Ma_ry9BIw	// kind: 'test' name: 'Terminate Relaunch Cancel' path: 'Terminate Relaunch Cancel.test'
+_WuF6cP1oEeSY2Ma_ry9BIw	// kind: 'test' name: 'Terminate Relaunch Continue' path: 'Terminate Relaunch Continue.test'
+_5cMCcP1uEeSY2Ma_ry9BIw	// kind: 'test' name: 'Keep Folding state' path: 'Keep Folding state.test'
+_Xbg-4BQWEeWRGfHyjhXfJw	// kind: 'test' name: 'ProcessStep Double Click' path: 'ProcessStep Double Click.test'
+_hDoZYBP6EeWt28U8Nd-cFA	// kind: 'test' name: 'ProcessStep from Menu' path: 'ProcessStep from Menu.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

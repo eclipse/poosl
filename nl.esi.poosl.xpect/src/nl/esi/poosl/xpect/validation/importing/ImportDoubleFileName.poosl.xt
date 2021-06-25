@@ -1,0 +1,8 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.importing.PooslValidationImportingTest END_SETUP */
+
+
+// Error when data class is imported more then once
+//XPECT  contains --> "Process or Cluster class twiceProcessClass is defined in two different files: %/validation/importing/importProcessTwice.poosl (accessible via import "importProcessTwice.poosl") and %/validation/imports/importProcessTwice.poosl (accessible via import "importProcessTwice3FileName.poosl")" at "import "importProcessTwice.poosl""
+import "importProcessTwice.poosl"
+//XPECT  contains --> "Process or Cluster class twiceProcessClass is defined in two different files:%/validation/imports/importProcessTwice.poosl (accessible via import "importProcessTwice3FileName.poosl") and %/validation/importing/importProcessTwice.poosl (accessible via import "importProcessTwice.poosl")" at "import  "importProcessTwice3FileName.poosl""
+import  "importProcessTwice3FileName.poosl" 

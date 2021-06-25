@@ -1,0 +1,25 @@
+process class AircraftInterface
+ports
+	InAudio
+	OutAudio
+messages
+	InAudio?BeginAnnouncement(Integer)
+	InAudio?EndAnnouncement(Integer)
+	OutAudio!BeginAnnouncement(Integer)
+	OutAudio!EndAnnouncement(Integer)
+variables
+
+init
+	Idle()()
+methods
+	Idle()() | id : Integer |
+		InAudio?BeginAnnouncement(id);
+		delay 1; // internal processing time
+		OutAudio!BeginAnnouncement(id);
+		AcquireAudio()()
+
+	AcquireAudio()() | id : Integer |
+		InAudio?EndAnnouncement(id);
+		delay 1; // internal processing time
+		OutAudio!EndAnnouncement(id);
+		Idle()()

@@ -1,0 +1,56 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4iC4F1qEeaic9IZ0_T0eQ,_sw_zwOmaEeS5bKpaEaRSAA,_mzBKsOmgEeS5bKpaEaRSAA
+Element-Name: Diagram Rename Process
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _D3WbsACOEeW6OtP6PNhTFg
+Runtime-Version: 2.5.0.202001211718
+Save-Time: 10/19/20 4:45 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "Classes (producer_consumer.poosl)"] {
+    with [get-diagram -index 1 | get-edit-part -name "Classes (producer_consumer.poosl)" | get-edit-part -name Producer] {                
+            mouse-press 20 17 button1 -height 20 -width 30
+            mouse-release 20 17 button1 524288 -height 20 -width 30        
+    }
+}
+
+// HINT: get-preperty-tab seems ot work any more
+//with [get-view Properties] {
+//    get-property-tab Semantic | click
+//}
+// Window must be greate enough to select the "Properties" part
+//get-eclipse-window | maximize
+get-eclipse-window | get-object| invoke setSize 1024 968
+get-view Properties | get-canvas -after [get-label "Process Class Producer"] -index 4 | double-click
+
+with [get-view Properties | get-tree] {
+    select "Process Class Producer/Name" | activate-cell-edit -column 1
+    with [get-editbox] {
+        set-text Producers
+        key-type Enter
+    }
+    apply-cell-edit -deactivate
+    key-type "M1+s"
+    
+}
+with [get-editor "Classes (producer_consumer.poosl)" | get-diagram -index 1] {
+    with [get-edit-part -name "Classes (producer_consumer.poosl)"] {        
+        mouse-press 213 386 button1 -height 654 -width 1106
+    }  
+    key-type F2
+}
+
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    select-range 26 15 26 24
+}
+get-editor "producer_consumer.poosl" | get-text-viewer | get-property "getSelectionText()" | equals Producers 
+    | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

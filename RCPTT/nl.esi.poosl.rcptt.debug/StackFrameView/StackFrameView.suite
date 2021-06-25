@@ -1,0 +1,23 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: StackFrameView
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _cxOfYD9EEeWqI5T62C2nUQ
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 2/6/17 10:21 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_cVMDsMmpEeWBFNGtI_hPDw	// kind: 'test' name: 'Stepping StackTrace ' path: 'Stepping StackTrace .test'
+_2HAZ4D9aEeWqI5T62C2nUQ	// kind: 'test' name: 'TraceTerminate' path: 'TraceTerminate.test'
+_MOlKcD9aEeWqI5T62C2nUQ	// kind: 'test' name: 'TraceVariableDetailView' path: 'TraceVariableDetailView.test'
+_GZMg4D9ZEeWqI5T62C2nUQ	// kind: 'test' name: 'TraceVariableView' path: 'TraceVariableView.test'
+_fHqyUD9EEeWqI5T62C2nUQ	// kind: 'test' name: 'TraceView' path: 'TraceView.test'
+_5im44D9sEeWqI5T62C2nUQ	// kind: 'test' name: 'TraceView Multiple Models' path: 'TraceView Multiple Models.test'
+_qySEIOonEeae3IXU5RCKiQ	// kind: 'test' name: 'TraceView Second' path: 'TraceView Second.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

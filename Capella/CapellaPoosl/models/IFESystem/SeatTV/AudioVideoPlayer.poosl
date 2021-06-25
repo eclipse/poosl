@@ -1,0 +1,64 @@
+importlib "distributions.poosl"
+
+process class AudioVideoPlayer
+ports
+	InAudio
+	OutAudio
+	InControl
+	InInterruptionCommand
+	Trace
+messages
+	InAudio?BeginAnnouncement(Integer)
+	InAudio?EndAnnouncement(Integer)
+	OutAudio!BeginAnnouncement(Integer)
+	OutAudio!EndAnnouncement(Integer)
+	OutAudio!BeginVideo(Integer)
+	OutAudio!EndVideo(Integer)
+	InControl?StartVideo(Integer, Integer)
+	InInterruptionCommand?Interrupt()
+	InInterruptionCommand?Resume()
+	Trace!AnnouncementAtAudioVideoPlayer(Integer, Real, Real)
+	Trace!VideoAtAudioVideoPlayer(Integer, Real, Real)
+variables
+	lastTraceStartTime : Real
+	lastVideoID : Integer
+init
+	Initialise()()
+methods
+	Initialise()()
+		lastVideoID := nil;
+		interrupt
+			PlayVideos()()
+		with (
+			InInterruptionCommand?Interrupt();
+			if lastVideoID != nil then
+				Trace!VideoAtAudioVideoPlayer(lastVideoID, lastTraceStartTime, currentTime)
+			fi;
+			HandleInterruption()();
+			lastTraceStartTime := currentTime
+		)
+
+	PlayVideos()() | length : Integer |
+		InControl?StartVideo(lastVideoID, length);
+		delay 1; // internal processing time
+		lastTraceStartTime := currentTime;
+		OutAudio!BeginVideo(lastVideoID);
+		delay length; // playtime of video
+		Trace!VideoAtAudioVideoPlayer(lastVideoID, lastTraceStartTime, currentTime);
+		OutAudio!EndVideo(lastVideoID) {lastVideoID := nil};
+		PlayVideos()()
+
+	HandleInterruption()() | id : Integer |
+		sel
+			InAudio?BeginAnnouncement(id);
+			delay 1; // internal processing time
+			Trace!AnnouncementAtAudioVideoPlayer(id, currentTime - 1.0, currentTime);
+			OutAudio!BeginAnnouncement(id);
+			InAudio?EndAnnouncement(id);
+			delay 1; // internal processing time
+			Trace!AnnouncementAtAudioVideoPlayer(id, currentTime - 1.0, currentTime);
+			OutAudio!EndAnnouncement(id);
+			HandleInterruption()()
+		or
+			InInterruptionCommand?Resume()
+		les

@@ -1,0 +1,29 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+import "../imports/import.poosl"
+import "../imports/import3.poosl"
+
+//XPECT noIssues
+ data class uniqueDataClass extends Object
+variables
+methods
+
+//XPECT errors --> "There is another data class with the same name dataClass in DataClass.poosl.xt" at "dataClass" 
+data class dataClass extends Object
+variables
+methods
+
+//XPECT errors --> "There is another data class with the same name dataClass in DataClass.poosl.xt" at "dataClass"
+data class dataClass extends Object
+variables
+methods
+		
+//XPECT errors --> "There is another data class with the same name importDataClass in import.poosl" at "importDataClass"
+data class importDataClass extends Object
+variables
+methods       
+
+		
+//XPECT errors --> "There is another data class with the same name importDataClass3 in import31.poosl" at "importDataClass3"
+data class importDataClass3 extends Object
+variables
+methods    

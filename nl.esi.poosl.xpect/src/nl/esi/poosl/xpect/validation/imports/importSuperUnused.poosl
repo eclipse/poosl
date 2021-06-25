@@ -1,0 +1,23 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationImportTest END_SETUP */
+
+import "../unused/ProcessParentExtern.poosl.xt" 
+
+process class subClass() extends someSuperClass
+ports
+messages
+	p!m
+variables
+source , target : Integer
+entrance, exit : String 
+init
+	someMethod()()
+methods
+	someMethod()()
+		r;
+		v;
+		p!m;
+		q?n;
+		someOtherMethod()();
+		someOtherMethod(source, target, entrance, exit)();
+		someOtherMethod()(source, target, entrance, exit)   
+		

@@ -1,0 +1,35 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_aW5WwORGEeSZttsAewanYQ,_g-HYwP1oEeSY2Ma_ry9BIw
+Element-Name: Terminate Relaunch Cancel
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _VUS18P1oEeSY2Ma_ry9BIw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/25/18 4:27 PM
+Tags: Debug Terminate Relaunch
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+When running a model start a different model on the same port. A popup should show giving the option to terminate and relaunch. When selecting cancel the current model should show in the debugview.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+get-window "Could not start simulation" | get-button Cancel | click
+
+with [get-view Debug | get-tree] {
+    get-property "getItems().TreeItem[0].getText()" | equals "producer_consumer.poosl [Simulated time: 0]" | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 2 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals ProducerConsumer | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getText()" | equals Bus | verify-true 
+    get-property "getItemCount()" | equals 1 | verify-true
+}
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

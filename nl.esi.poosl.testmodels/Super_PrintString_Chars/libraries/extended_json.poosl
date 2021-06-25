@@ -1,0 +1,449 @@
+importlib "structures.poosl"
+
+/* Main data class for JSON data structures */
+data class ExtendedJSON
+variables Item: Object, Pointer: Integer
+methods
+// Methods for end-users
+
+/* Returns the JSON object as POOSL data structure */
+asObject : Object
+	return Item
+
+/* Converts a JSON-compatible POOSL data structure to a JSON object */
+convert(O: Object) : ExtendedJSON
+	if O != nil then
+		if O isOfType("String") then O := new(JSONString) convert(O) fi;
+		if O isOfType("Array") then O := new(JSONArray) convert(O) fi;
+		if O isOfType("Map") then O := new(JSONMap) convert(O) fi
+	fi;
+	if (O != nil) & (O isOfType("Boolean") not) & (O isOfType("Integer") not) & (O isOfType("Real") not)
+		& (O isOfType("JSONString") not) & (O isOfType("JSONArray") not) & (O isOfType("JSONMap") not) then
+		self error("Parameter for method \"convert\" of JSON is not a valid JSON object")
+	fi;	
+	Item := O;
+	return self
+
+/* Parses a JSON-compatible String as JSON object */
+parse(S: String) : ExtendedJSON
+	return self parse(S, 1)
+
+/* Returns the JSON object as JSON-compatible String */
+printString : String
+	return if Item != nil then Item printString else "null" fi
+
+// Methods for Implementation
+parse(S: String, Origin: Integer) : ExtendedJSON |Token: Char|
+	if (S = nil) | (S isOfType("String") not) then self error("Parameter of method \"parse\" for JSON must be a String") fi;
+	if S = "" then self error("Parameter of method \"parse\" for JSON must be a non-empty String") fi;
+	Pointer := Origin;
+	self skipWhiteSpace(S);
+	if Pointer <= S size then
+		Token := S at(Pointer);
+		if Token = 't' then
+			Item := true;
+			if S size < Pointer + 3 then self error("Invalid boolean true detected at end of String \"" + S + "\" while parsing as JSON object") fi;
+			if (S at(Pointer + 1) != 'r') | (S at(Pointer + 2) != 'u') | (S at(Pointer + 3) != 'e') then self error("Invalid boolean true detected at end of String \"" + S + "\" while parsing as JSON object") fi;
+			Pointer := Pointer + 4
+		else if Token = 'f' then
+			Item := false;
+			if S size < Pointer + 4 then self error("Invalid boolean false detected at end of String \"" + S + "\" while parsing as JSON object") fi;
+			if (S at(Pointer + 1) != 'a') | (S at(Pointer + 2) != 'l') | (S at(Pointer + 3) != 's') | (S at(Pointer + 4) != 'e') then self error("Invalid boolean false detected at end of String \"" + S + "\" while parsing as JSON object") fi;
+			Pointer := Pointer + 5
+		else if Token = 'n' then
+			Item := nil;
+			if S size < Pointer + 3 then self error("Invalid value null detected at end of String \"" + S + "\" while parsing as JSON object") fi;
+			if (S at(Pointer + 1) != 'u') | (S at(Pointer + 2) != 'l') | (S at(Pointer + 3) != 'l') then self error("Invalid value null detected at end of String \"" + S + "\" while parsing as JSON object") fi;
+			Pointer := Pointer + 4
+		else if (Token = '+') | (Token = '-') | ((Token asciiIndex > 47) & (Token asciiIndex < 58)) then
+			self parseNumber(S)
+		else if Token = '"' then
+			Item := new(JSONString) parse(S, Pointer);
+			Pointer := Item pointer
+		else if Token = '[' then
+			Item := new(JSONArray) parse(S, Pointer);
+			Pointer := Item pointer
+		else if Token = '{' then
+			Item := new(JSONMap) parse(S, Pointer);
+			Pointer := Item pointer
+		fi fi fi fi fi fi fi 
+	else
+		self error("Invalid object detected at end of String \"" + S + "\" while parsing as JSON object")
+	fi;
+	self skipWhiteSpace(S);
+	return self
+pointer : Integer
+	return Pointer
+skipWhiteSpace(S: String) : ExtendedJSON |Token: Char, NF: Boolean|
+	NF := true; while NF & (Pointer <= S size) do
+		Token := S at(Pointer);
+		if (Token = ' ') | (Token = '\t') | (Token = '\r') | (Token = '\f') | (Token = '\n') then Pointer := Pointer + 1 else NF := false fi	
+	od;
+	return self
+parseNumber(S: String) : ExtendedJSON |Number: String, Token: Object, Origin: Integer, Decimal, NF: Boolean|
+	if (S = nil) | (S isOfType("String") not) then self error("Parameter of method \"parseNumber\" for JSON must be a String") fi;
+	if S = "" then self error("Parameter of method \"parseNumber\" for JSON must be a non-empty String") fi;
+	if Pointer = nil then Pointer := 1 fi;
+	Origin := Pointer; Decimal := false;
+	Number := ""; Token := S at(Pointer);
+	if (Token = '-') | (Token = '+') then
+		if Token = '-' then Number concat(Token asString) fi;
+		Pointer := Pointer + 1
+	fi;
+	NF := true; while NF & (Pointer <= S size) do
+		Token := S at(Pointer);
+		if (Token asciiIndex > 47) & (Token asciiIndex < 58) then Number concat(Token asString); Pointer := Pointer + 1 else NF := false fi
+	od;
+	if Pointer <= S size then
+		Token := S at(Pointer);
+		if Token = '.' then
+			Decimal := true;
+			Number concat(Token asString);
+			Pointer := Pointer + 1;
+			NF := true; while NF & (Pointer <= S size) do
+				Token := S at(Pointer);
+				if (Token asciiIndex > 47) & (Token asciiIndex < 58) then Number concat(Token asString); Pointer := Pointer + 1 else NF := false fi
+			od
+		fi;
+		if (Token = 'e') | (Token = 'E') then
+			Pointer := Pointer + 1;
+			if Pointer <= S size then
+				Token := S at(Pointer);
+				if Token = '-' then
+					if !Decimal then Number concat(".0e-") else Number concat("e-") fi;
+					Pointer := Pointer + 1
+				else if Token = '+' then
+					Number concat("e");
+					Pointer := Pointer + 1
+				else
+					Number concat("e")
+				fi fi;
+				NF := true; while NF & (Pointer <= S size) do
+					Token := S at(Pointer);
+					if (Token asciiIndex > 47) & (Token asciiIndex < 58) then Number concat(Token asString); Pointer := Pointer + 1 else NF := false fi
+				od
+			fi
+		fi
+	fi;
+	if Number isInteger then
+		Item := Number toInteger
+	else if Number isReal then
+		Item := Number toReal
+	else
+		self error("Invalid number detected from position " + Origin printString + " in String \"" + S + "\" while parsing as JSON object")
+	fi fi;
+	return self
+
+
+/* Data class for JSON dictionaries */
+data class JSONMap extends Map
+variables Pointer: Integer
+methods
+// Methods for end-users
+
+/* Converts a JSON-compatible POOSL Map to a JSON Map (Dictionary) */
+convert(M: Map) : JSONMap |i: MapIterator, Key, Value: Object|
+	if Root = nil then self clear fi;
+	if (M = nil) | (M isOfType("Map") not) then self error("Parameter for method \"convert\" of JSONMap must be a Map") fi;
+	i := M iterator;
+	while !(i isDone) do
+		Key := i key;
+		if Key isOfType("JSONString") not then
+			if (i key = nil) | (i key isOfType("String") not) then
+				self error("Key \"" + Key printString + "\" in Map paremeter for method \"convert\" of JSONMap must be a String")
+			else
+				Key := new(JSONString) convert(Key)
+			fi
+		fi;
+		Value := i value;
+		if Value = nil then
+			self ^putAt(Key, new(ExtendedJSON) convert(nil))
+		else if (Value isOfType("JSON")) | (Value isOfType("JSONMap")) | (Value isOfType("JSONArray")) | (Value isOfType("JSONString")) then
+			self ^putAt(Key, Value)
+		else
+			self ^putAt(Key, new(ExtendedJSON) convert(Value))
+		fi fi;
+		i advance
+	od;
+	return self
+
+/* Parses a JSON-compatible string as JSON Map (Dictionary) */
+parse(S: String, Origin: Integer) : JSONMap	|Key, Value: ExtendedJSON, Token: Char, NF: Boolean|
+	Pointer := Origin + 1;
+	NF := true; while NF & (Pointer <= S size) do
+		Token := S at(Pointer);
+		if (Token = ' ') | (Token = '\t') | (Token = '\r') | (Token = '\f') | (Token = '\n') then Pointer := Pointer + 1 else NF := false fi	
+	od;
+	if Pointer <= S size then
+		if S at(Pointer) != '}' then
+			NF := true; while NF & (Pointer <= S size) do
+				Key := new(ExtendedJSON) parse(S, Pointer);							// Must be a JSONString
+				Pointer := Key pointer;
+				if Pointer <= S size then
+					if S at(Pointer) = ':' then Pointer := Pointer + 1 fi
+				fi;
+				Value := new(ExtendedJSON) parse(S, Pointer);
+				Pointer := Value pointer;
+				self ^putAt(Key, Value);
+				if Pointer <= S size then
+					Token := S at(Pointer);
+					if Token = ',' then
+						Pointer := Pointer + 1
+					else if Token = '}' then
+						NF := false
+					fi fi
+				fi
+			od
+		fi
+	fi;
+	Pointer := Pointer + 1;
+	return self
+
+/* Returns the JSON Map (Dictionary) as JSON-compatible String */
+printString : String |R: MapElement, PrintOut: String|
+	if Root = nil then self clear fi;
+	PrintOut := "{";
+ 	R := Root next;
+	while R != Root do
+		PrintOut concat(R key printString) concat(":") concat(R value printString);
+		if R next != Root then PrintOut concat(",") fi;
+		R := R next
+ 	od;
+ 	return PrintOut concat("}")
+
+/* Overrides Map::putAt to ensure JSON-compatibility */
+putAt(Key: Object, Value: Object) : JSONMap
+	if Root = nil then self clear fi;
+	if (Key = nil) | (Key isOfType("String") not) then self error("First parameter for method \"putAt\" of JSONMap must be a String") fi;
+	if Key isOfType("JSONString") not then Key := new(JSONString) convert(Key) fi;
+	if Value = nil then
+		self ^putAt(Key, new(ExtendedJSON) convert(nil))
+	else if (Value isOfType("JSON")) | (Value isOfType("JSONMap")) | (Value isOfType("JSONArray")) | (Value isOfType("JSONString")) then
+		self ^putAt(Key, Value)
+	else
+		self ^putAt(Key, new(ExtendedJSON) convert(Value))
+	fi fi;
+	return self
+	
+// Methods for Implementation
+pointer : Integer
+	return Pointer
+
+
+/* Data class for JSON arrays */
+data class JSONArray extends Array
+variables Pointer: Integer
+methods
+// Methods for End-Users
+
+/* Converts a JSON-compatible POOSL Array to a JSON Array */
+convert(A: Array) : JSONArray |i: Integer, Token: Object|
+	if (A = nil) | (A isOfType("Array") not) then self error("Parameter for method \"convert\" of JSONArray must be an Array") fi;
+	i := 1; self resize(A size);
+	while i <= A size do
+		Token := A at(i);
+		if Token = nil then
+			self ^putAt(i, new(ExtendedJSON) convert(nil))
+		else if (Token isOfType("JSON")) | (Token isOfType("JSONMap")) | (Token isOfType("JSONArray")) | (Token isOfType("JSONString")) then
+			self ^putAt(i, Token)
+		else
+			self ^putAt(i, new(ExtendedJSON) convert(Token))
+		fi fi;
+		i := i + 1
+	od;
+	return self
+
+/* Parses a JSON-compatible string as JSON Array */
+parse(S: String, Origin: Integer) : JSONArray |Item: ExtendedJSON, Token: Char, NF: Boolean|
+	Pointer := Origin + 1;
+	NF := true; while NF & (Pointer <= S size) do
+		Token := S at(Pointer);
+		if (Token = ' ') | (Token = '\t') | (Token = '\r') | (Token = '\f') | (Token = '\n') then Pointer := Pointer + 1 else NF := false fi	
+	od;
+	if Pointer <= S size then
+		if S at(Pointer) != ']' then
+			NF := true; while NF & (Pointer <= S size) do
+				Item := new(ExtendedJSON) parse(S, Pointer);
+				self ^resize(self size + 1);
+				self ^putAt(self size, Item);
+				Pointer := Item pointer;
+				if Pointer <= S size then
+					Token := S at(Pointer);
+					if Token = ',' then
+						Pointer := Pointer + 1
+					else if Token = ']' then
+						NF := false
+					fi fi
+				fi
+			od
+		fi
+	fi;
+	Pointer := Pointer + 1;
+	return self
+
+/* Returns the JSON Array as JSON-compatible String */
+printString : String |i: Integer, PrintOut: String|
+	PrintOut := "[";
+	if self size >= 1 then
+		i := 1;
+		while i <= self size do
+			PrintOut concat(self at(i) printString);
+			if i < self size then PrintOut concat(",") fi;
+			i := i + 1
+		od
+	fi;
+	return PrintOut concat("]")
+
+/* Overrides Array::+ to ensure JSON-compatibility */	
++(A: Array) : JSONArray |Out: JSONArray, i: Integer|
+	if (A = nil) | (A isOfType("Array") not) then self error("Parameter of operator \"+\" for JSONArray must be an Array") fi;
+	Out := self deepCopy resize(self size + A size);
+	i := 1; while i <= A size do
+		Out putAt(self size + i, A at(i));
+		i := i + 1
+	od;
+	return Out
+
+/* Overrides Array::concat to ensure JSON-compatibility */	
+concat(A: Array) : JSONArray |i, j: Integer|
+	if (A = nil) | (A isOfType("Array") not) then self error("Parameter of method \"concat\" for JSONArray must be an Array") fi;
+	j := self size; self resize(j + A size);
+	i := 1; while i <= A size do
+		self putAt(j + i, A at(i));
+		i := i + 1
+	od;
+	return self
+
+/* Overrides Array::putAll to ensure JSON-compatibility */	
+putAll(Token: Object) : JSONArray
+	if Token = nil then
+		self ^putAll(new(ExtendedJSON) convert(nil))
+	else if (Token isOfType("JSON")) | (Token isOfType("JSONMap")) | (Token isOfType("JSONArray")) | (Token isOfType("JSONString")) then
+		self ^putAll(Token)
+	else
+		self ^putAll(new(ExtendedJSON) convert(Token))
+	fi fi;
+	return self
+
+/* Overrides Array::putAt to ensure JSON-compatibility */	
+putAt(i: Integer, Token: Object) : JSONArray
+	if self size = 0 then self error("JSONArray must have a positive size to execute method \"putAt\"") fi;
+	if (i = nil) | (i isOfType("Integer") not) then self error("First parameter for method \"putAt\" of JSONArray must be an Integer") fi;
+	if (i < 1) | (i > self size) then self error("First parameter for method \"putAt\" of JSONArray must range in [1," + self size printString + "]") fi;
+	if Token = nil then
+		self ^putAt(i, new(ExtendedJSON) convert(nil))
+	else if (Token isOfType("JSON")) | (Token isOfType("JSONMap")) | (Token isOfType("JSONArray")) | (Token isOfType("JSONString")) then
+		self ^putAt(i, Token)
+	else
+		self ^putAt(i, new(ExtendedJSON) convert(Token))
+	fi fi;
+	return self
+
+/* Overrides Array::resize to ensure JSON-compatibility */	
+resize(i: Integer) : JSONArray |j: Integer|
+	if (i = nil) | (i isOfType("Integer") not) then self error("Parameter for method \"resize\" of JSONArray must be an Integer") fi;
+	if i < 0 then self error("Parameter for method \"resize\" of JSONArray must not be negative") fi;
+	j := self size; self ^resize(i);
+	if i > j then
+		while j < i do
+			j := j + 1;
+			self ^putAt(j, new(ExtendedJSON) convert(nil))
+		od
+	fi;
+	return self
+
+/* Overrides Array::subArray to ensure JSON-compatibility */	
+subArray(i, l: Integer) : JSONArray |Out: JSONArray, j: Integer|
+	if (i = nil) | (i isOfType("Integer") not) then self error("First parameter for method \"subArray\" of JSONArray must be an Integer") fi;
+	if (l = nil) | (l isOfType("Integer") not) then self error("Second parameter for method \"subArray\" of JSONArray must be an Integer") fi;
+	if (i < 0) | (i > self size) then self error("First parameter for method \"subArray\" of JSONArray must range in [1," + self size printString + "]") fi;
+	if l < 0 then self error("Second parameter for method \"subArray\" of JSONArray must be non negative") fi;
+	if i + l - 1 > self size then self error("Sum of parameters for method \"subArray\" minus 1 of JSONArray must range in [1," + self size printString + "]") fi;
+	Out := new(JSONArray) resize(l);
+	j := 1;
+	while j <= l do
+		Out putAt(j, self at(i));
+		i := i + 1; j := j + 1
+	od;
+	return Out
+	
+// Methods for Implementation
+pointer : Integer
+	return Pointer
+
+
+/* Data class for JSON strings */
+data class JSONString extends String
+variables Pointer: Integer
+methods
+// Methods for End-Users
+
+/* Converts a JSON-compatible POOSL String to a JSON String */
+convert(S: Object) : JSONString
+	if (S = nil) | (S isOfType("String") not) then self error("Parameter for method \"convert\" of JSONString must be a String") fi;
+	return self concat(S)
+
+/* Parses a JSON-compatible string as JSON String */
+parse(S: String, Origin: Integer) : JSONString |Token: Char, NF: Boolean|
+	Pointer := Origin + 1;
+	NF := true; while NF & (Pointer <= S size) do
+		Token := S at(Pointer);
+		if (Token asciiIndex > 0) | (Token asciiIndex < 256) then
+			if Token = '\\' then
+				if Pointer + 1 <= S size then
+					Pointer := Pointer + 1;
+					Token := S at(Pointer)
+				fi;
+				if Token = '"' then
+					self concat("\"")
+				else if Token = '\\' then
+					self concat("\\")
+				else if Token = '\'' then
+					self concat("'")
+				else if Token = "/" then
+					self concat("/")
+				else if Token = 'b' then
+					self concat("\b")			// Does not seem to work ...
+				else if Token = 'f' then
+					self concat("\f")			// Does not seem to work ...
+				else if Token = 'n' then
+					self concat("\n")
+				else if Token = 'r' then
+					self concat("\r")
+				else if Token = 't' then
+					self concat("\t")
+				else if Token = 'u' then
+					self error("Unicode escapse sequence not supported while parsing String \"" + S + "\" as JSON object")	// Needs a bit of work to support this
+				else
+					self concat(Token asString)
+				fi fi fi fi fi fi fi fi fi fi
+			else
+				if Token = '"' then
+					NF := false
+				else
+					self concat(Token asString)
+				fi
+			fi
+		fi;
+		Pointer := Pointer + 1
+	od;
+	return self
+
+/* Returns the JSON String as JSON-compatible string */
+printString : String |Out: String, i: Integer|
+	Out := "\""; i := 1;
+	while i <= self size do
+		if self at(i) = '\\' then
+			Out concat("\\\\")
+		else if self at(i) = '"' then
+			Out concat("\\\"")
+		else
+			Out concat(self at(i) asString)
+		fi fi;
+		i := i + 1
+	od;
+	return Out concat("\"")
+	
+// Methods for Implementation
+pointer : Integer
+	return Pointer

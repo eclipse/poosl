@@ -1,0 +1,86 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.suppress.PooslValidationSuppressTest END_SETUP */
+
+@SuppressWarnings("unused")
+process class unusedClass()
+ports
+	p
+	a
+	unused
+messages
+	p!someMessage(Object, Object)
+	a!unused(Object, Object)
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p!someMessage(1, 1);
+		skip
+
+	@SuppressWarnings("unused")
+	unusedMethod()() | |
+		p!someMessage(1, 1);
+		skip
+
+
+process class unusedMethodClass()
+ports
+
+messages
+
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+	// XPECT noIssues
+	@SuppressWarnings("unused")
+	unusedMethod()() | |
+		skip
+
+
+
+@SuppressWarnings("unconnected")
+process class unusedWrongClass()
+ports
+	p
+	a
+	// XPECT warnings --> "Port is not used" at "unused"
+	unused
+messages
+	p!someMessage(Object, Object)
+	// XPECT warnings --> "No send statement for this message" at "a!unused(Object, Object)"
+	a!unused(Object, Object)
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p!someMessage(1, 1);
+		skip
+
+	// XPECT warnings --> "Method is not used" at "unusedMethod"
+	unusedMethod()() | |
+		p!someMessage(1, 1);
+		skip
+
+
+
+process class someClass()
+ports
+	p
+messages
+	p!someMessage(Object, Object)
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p!someMessage(1, 1);
+		skip

@@ -1,0 +1,52 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.channel.PooslValidationChannelTest END_SETUP */
+
+process class Node_Bus()
+ports
+	Monitor
+messages
+	Monitor?StopSimulation,
+	Monitor!Accurate(Integer)
+variables
+init
+	Initialise()()
+methods
+	Initialise()() | i : Integer |
+	Monitor?StopSimulation;
+	Monitor!Accurate(i)
+		
+
+process class SimulationController_Bus()
+ports
+	Monitor
+messages
+	Monitor?Accurate(Integer),
+	Monitor!StopSimulation
+variables
+init
+	CheckAccuracy()()
+methods
+	CheckAccuracy()() | |
+		Monitor!StopSimulation;
+		ReceiveStatusInformation()()
+	ReceiveStatusInformation()() | NI_ID : Integer |
+		Monitor?Accurate(NI_ID)
+
+		cluster class SoC_Bus()
+		ports
+			Monitor
+		instances
+			N1 : Node_Bus()
+			N2 : Node_Bus()
+			N3 : Node_Bus()
+			N4 : Node_Bus()
+		channels
+			{ Monitor, N1.Monitor, N2.Monitor, N3.Monitor, N4.Monitor }
+
+		system
+		instances
+			SoC_Bus : SoC_Bus()
+			SimulationController : SimulationController_Bus()
+		channels
+		// No error is shown, testing the retrieval the instanceports in a cluster instacnce
+		// XPECT noIssues
+			{ SoC_Bus.Monitor, SimulationController.Monitor }       

@@ -1,0 +1,17 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+data class dataClass extends Object
+variables
+// Dont show type warnings when variable type is not declared
+//XPECT errors --> "DataClass 'Intege' is not declared." at "Intege"
+a : Intege
+methods
+someMethod() : Integer
+//XPECT noIssues
+a := 1;
+//XPECT noIssues
+return a + 1
+otherMethod() :Integer
+return self someMethod() 
+
+	

@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _lVE1EONVEeSZttsAewanYQ,_ldH90ONVEeSZttsAewanYQ
+Element-Name: Generate Documentation PC
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _tMXXYO5LEeSm7umqZJi-ag
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 4/29/15 10:47 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-view "Project Explorer" | get-tree] {    
+    select "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+        | get-menu "Generate Documentation" | click
+}
+with [get-view "Project Explorer" | get-tree] {
+    get-item "nl.esi.poosl.examples/models-basic/ProducerConsumer" | get-property childCount | equals 2 | verify-true
+    get-item "nl.esi.poosl.examples/models-basic/ProducerConsumer/documentation" | get-property caption 
+        | equals documentation | verify-true
+}
+get-view "Project Explorer" | get-tree | get-item "nl.esi.poosl.examples/models-basic/ProducerConsumer/documentation" 
+    | get-property childCount | equals 1 | verify-true
+get-view "Project Explorer" | get-tree 
+    | select "nl.esi.poosl.examples/models-basic/ProducerConsumer/documentation/producer_consumer.html" | double-click
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

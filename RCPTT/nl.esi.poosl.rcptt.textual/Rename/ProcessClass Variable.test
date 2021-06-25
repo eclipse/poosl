@@ -1,0 +1,52 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _pPT2MHjAEeaJ2L29rpch3A,_8DR5QHjFEeaJ2L29rpch3A
+Element-Name: ProcessClass Variable
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _f8a0EHj4EeaJ2L29rpch3A
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/13/16 12:10 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "main.poosl" | get-text-viewer] {
+      
+        set-caret-pos 34 34
+        get-menu "Rename Element" | click
+        type-text New
+        key-type Enter
+        set-caret-pos 28 6
+        select-range 28 5 28 14
+        set-caret-pos 28 6
+        select-range 28 5 28 15       
+        get-property "getSelectionText()" | equals mainNewVar | verify-true
+        set-caret-pos 34 40
+        get-menu "Rename Element" | click
+        key-type BackSpace -times 7
+        type-text parent
+        key-type Enter
+}
+
+get-window "Rename element" | get-button Cancel | click
+with [get-editor "main.poosl" | get-text-viewer] {
+
+    set-caret-pos 34 40
+    key-type BackSpace -times 7
+    type-text parent   
+    get-menu "Rename Element" | click
+    type-text New
+    key-type Enter
+    key-type "M1+s"
+}
+get-view "Project Explorer" | get-tree | select "CleanProject/models/parent.poosl" | double-click
+with [get-editor "parent.poosl" | get-text-viewer] {
+    set-caret-pos 15 6
+    select-range 15 5 15 17
+}
+get-editor "parent.poosl" | get-text-viewer | get-property "getSelectionText()" | equals parentNewVar | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

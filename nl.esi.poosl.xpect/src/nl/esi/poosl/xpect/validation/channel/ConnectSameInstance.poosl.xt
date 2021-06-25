@@ -1,0 +1,116 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.channel.PooslValidationChannelTest END_SETUP */
+
+
+process class PCP()
+ports
+	p
+messages
+	p!m
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p!m
+
+		
+process class PCQ()
+ports
+	q
+messages
+	q?m
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		q?m
+		
+
+
+
+cluster class systemClusterClass()
+ports
+	p,q
+instances
+	pcp:PCP()
+	pcq:PCQ()
+channels
+	{p, pcp.p}
+	{q, pcq.q}
+	
+
+system
+instances
+	x:systemClusterClass()
+	c:clusterOneProcessClass()
+	// No warning even when extern port is not connected
+	// XPECT noIssues
+	y:internConnectClass() 
+channels
+	// TODO 3 warnings? when the first would be sufficient?
+	/* XPECT  warnings --- 
+	"On this internal channel, process port x/pcp[PCP].p can send message 'm' with 0 parameter(s), but no process port can receive it" at "{x.p,x.q}"
+	"On this internal channel, process port x/pcq[PCQ].q can receive message 'm' with 0 parameter(s), but no process port can send it" at "{x.p,x.q}"
+	"Unused channel (all connected ports belong to the same instance, so communication is impossible)" at "{x.p,x.q}"
+	---
+	*/
+	{x.p,x.q}
+	/* XPECT  warnings --- 
+	"On this internal channel, process port c/pcz[PCZ].p can send message 'm' with 0 parameter(s), but no process port can receive it" at "{c.p,c.q}"
+	"On this internal channel, process port c/pcz[PCZ].q can receive message 'm' with 0 parameter(s), but no process port can send it" at "{c.p,c.q}"
+	"Unused channel (all connected ports belong to the same instance, so communication is impossible)" at "{c.p,c.q}"
+	---
+	*/
+	{c.p,c.q}  
+	
+	
+process class PCZ() 
+ports
+	q , p 
+messages
+	q?m
+	p!m
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		q?m;
+		p!m
+
+cluster class internClusterClass()
+ports
+
+instances
+	pcz:PCZ()	
+channels
+	/* XPECT warnings ---
+	"On this internal channel, process port pcz[PCZ].p can send message 'm' with 0 parameter(s), but no process port can receive it" at "{pcz.p, pcz.q}"
+	"On this internal channel, process port pcz[PCZ].q can receive message 'm' with 0 parameter(s), but no process port can send it" at "{pcz.p, pcz.q}"
+	"Unused channel (all connected ports belong to the same instance, so communication is impossible)" at "{pcz.p, pcz.q}"
+	---
+	*/
+	{pcz.p, pcz.q}
+	
+	
+cluster class clusterOneProcessClass()
+ports
+p,q
+instances
+	pcz:PCZ()	
+channels
+	{pcz.p, p}
+	{pcz.q, q}
+	
+cluster class internConnectClass()
+ports
+	p
+instances
+	pcp:PCP()
+	pcq:PCQ()
+channels
+	{p, pcp.p, pcq.q}

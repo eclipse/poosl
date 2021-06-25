@@ -1,0 +1,26 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Editing
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _xNdwoONbEeSZttsAewanYQ
+Manually-Ordered: true
+Runtime-Version: 2.3.0.201806262310
+Save-Time: 4/24/20 4:21 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_59nvoP-fEeSf_PFiy2GHdA	// kind: 'suite' name: 'Import' path: 'Import/Import.suite'
+_oi1kAON1EeSZttsAewanYQ	// kind: 'suite' name: 'QuickFix' path: 'QuickFix/QuickFix.suite'
+_x6MwsDY7EeamRbAWgfjSSQ	// kind: 'suite' name: 'Validation' path: 'Validation/Validation.suite'
+_oVZKUOToEeS0itSwbx-n-w	// kind: 'suite' name: 'Warning' path: 'Warning/Warning.suite'
+_XlKXkHjfEeaJ2L29rpch3A	// kind: 'suite' name: 'Proposals' path: 'Proposals/Proposals.suite'
+_OuRRkHjuEeaJ2L29rpch3A	// kind: 'suite' name: 'Navigation' path: 'Navigation/Navigation.suite'
+_7d3KkLV3EeapedkHH5Hcfw	// kind: 'suite' name: 'Formatter' path: 'Formatter/Formatter.suite'
+_cxJFYBuPEeeKSO4xt8npOw	// kind: 'suite' name: 'Poosl Include' path: 'Poosl Include Paths/Poosl Include.suite'
+_CuAVUFAhEeelWq6Y3GDIQQ	// kind: 'suite' name: 'TestAnnotation' path: 'TestAnnotation/TestAnnotation.suite'
+_y1_0EHj2EeaJ2L29rpch3A	// kind: 'suite' name: 'Rename' path: 'Rename/Rename.suite'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

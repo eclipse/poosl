@@ -1,0 +1,68 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _pPT2MHjAEeaJ2L29rpch3A,_8DR5QHjFEeaJ2L29rpch3A
+Element-Name: InstanceVariable
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _YsZjEHj4EeaJ2L29rpch3A
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/13/16 11:38 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "CleanProject/models/parent.poosl" | double-click
+with [get-editor "parent.poosl" | get-text-viewer] {
+    set-caret-pos 8 33
+    type-text "x : String"
+    key-type "M1+s"
+}
+
+get-editor "parent.poosl" | close
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 16 26
+    type-text "x := nil"
+    set-caret-pos 17 27
+    type-text "x := nil"  
+}
+
+with [get-editor "main.poosl" | get-text-viewer] {  
+    set-caret-pos 16 26
+    get-menu "Rename Element" | click
+    key-type Del
+    type-text b
+    key-type Enter
+    set-caret-pos 17 28
+    select-range 17 27 17 28
+}
+get-editor "main.poosl" | get-text-viewer | get-property "getSelectionText()" | equals b | verify-true
+get-eclipse-window | key-type "M1+s"
+get-view "Project Explorer" | get-tree | select "CleanProject/models/parent.poosl" | double-click
+with [get-editor "parent.poosl" | get-text-viewer] {   
+    select-range 8 33 8 34
+}
+get-editor "parent.poosl" | get-text-viewer | get-property "getSelectionText()" | equals b | verify-true
+with [get-editor "parent.poosl" | get-text-viewer] {
+    set-caret-pos 19 25
+    key-type Enter
+    type-text "b;"
+    key-type Left
+    get-menu "Rename Element" | click
+    key-type BackSpace
+    type-text x
+    key-type Enter  
+    select-range 8 33 8 34  
+}
+get-editor "parent.poosl" | get-text-viewer | get-property "getSelectionText()" | equals x | verify-true
+get-eclipse-window | key-type "M1+s"
+with [get-editor "main.poosl"] {
+    click
+    with [get-text-viewer] {   
+        select-range 16 26 16 27       
+    }
+}
+get-editor "main.poosl" | get-text-viewer | get-property "getSelectionText()" | equals x | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

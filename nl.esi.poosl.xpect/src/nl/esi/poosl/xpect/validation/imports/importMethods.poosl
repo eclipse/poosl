@@ -1,0 +1,15 @@
+data class importDataClass extends Object
+variables
+	
+methods
+
+ 	dataDouble : Integer ||
+ 	return 1
+
+ 	dataParam(o : Object) : Integer  ||
+ 	o;
+ 	return 1
+
+ 	typeReturn(o : Object) : Object ||
+ 	return o
+ 	

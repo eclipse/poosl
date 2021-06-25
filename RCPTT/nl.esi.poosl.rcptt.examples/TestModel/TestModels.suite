@@ -1,0 +1,20 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: TestModels
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _LKTUoHM8EeWNsvS2ZqaobA
+Runtime-Version: 2.0.0.201506242315
+Save-Time: 10/15/15 3:15 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_jcHMUHM0EeWNsvS2ZqaobA	// kind: 'test' name: 'Debug Super_PrintString_Chars' path: 'Debug Super_PrintString_Chars.test'
+_L__G0HM5EeWNsvS2ZqaobA	// kind: 'test' name: 'Debug test_api' path: 'Debug test_api.test'
+_0RixAHM3EeWNsvS2ZqaobA	// kind: 'test' name: 'Run Super_PrintString_Chars' path: 'Run Super_PrintString_Chars.test'
+_KLtFwHM5EeWNsvS2ZqaobA	// kind: 'test' name: 'Run test_api' path: 'Run test_api.test'
+_IkJKsHM8EeWNsvS2ZqaobA	// kind: 'suite' name: 'BenchMark' path: 'Benchmark/BenchMark.suite'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

@@ -1,0 +1,25 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: Start PC and Switch
+Element-Type: context
+Element-Version: 2.0
+Id: _g-HYwP1oEeSY2Ma_ry9BIw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/25/18 4:23 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-editor "producer_consumer.poosl" | get-editbox | get-menu "Debug As/.* POOSL Simulation" | click
+with [get-view Debug | get-tree] {
+	expand-all
+    get-property "getItems().length" | equals 1 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().length" | equals 2 | verify-true
+}
+    
+get-editor "switch.poosl" | get-editbox | get-menu "Debug As/.* POOSL Simulation" | click
+get-window "Could not start simulation" 
+    | get-label ".*producer_consumer.poosl.*" | assert-non-empty
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

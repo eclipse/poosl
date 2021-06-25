@@ -1,0 +1,103 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+import "../imports/importInit.poosl"
+
+process class someClass()
+ports
+
+messages
+
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		// data classes without Init dont expect issues
+		// XPECT noIssues
+		new(oldClass);
+		// Expect error when method is called without init annotation
+		// XPECT errors --> "Data class initClass has an @Init method that needs to be called immediately after new(initClass)" at "new(initClass)"
+		new(initClass) otherMethod();
+		// Expect error when no method is called
+		// XPECT errors --> "Data class initClass has an @Init method that needs to be called immediately after new(initClass)" at "new(initClass)"
+		new(initClass);
+		// Expect noissues when init method is called
+		// XPECT noIssues
+		new(initClass) someMethod();
+		// Expect noissues when a different / not first init method is called
+		// XPECT noIssues
+		new(initClass) secondMethod(1)
+
+data class initClass extends Object
+variables
+
+methods
+	@Init
+	someMethod() : Object | |
+		return nil
+
+	@Init
+	secondMethod(i : Integer) : Object | |
+		return i
+
+	otherMethod() : Object | |
+		return nil
+
+data class oldClass extends Object
+variables
+
+methods
+	someMethod() : Object | |
+		return nil
+
+// init validation tests for an imported data class
+process class importSomeClass()
+ports
+
+messages
+
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		// data classes without Init dont expect issues
+		// XPECT noIssues
+		new(importOldClass);
+		// Expect error when method is called without init annotation
+		// XPECT errors --> "Data class importInitClass has an @Init method that needs to be called immediately after new(importInitClass)" at "new(importInitClass)"
+		new(importInitClass) otherMethod();
+		// Expect error when no method is called
+		// XPECT errors --> "Data class importInitClass has an @Init method that needs to be called immediately after new(importInitClass)" at "new(importInitClass)"
+		new(importInitClass);
+		// Expect noissues when init method is called
+		// XPECT noIssues
+		new(importInitClass) someMethod();
+		// Expect noissues when a different / not first init method is called
+		// XPECT noIssues
+		new(importInitClass) secondMethod(1)		
+
+data class someClass extends Object
+variables
+
+methods
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"\""
+	@Init("")
+	someMethod() : Object | |
+		return nil
+
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"Returnn\""
+	@Init("Returnn")
+	someMethod1() : Object | |
+		return nil
+
+	//XPECT warnings --> "This annotation doesn't support any arguments." at "\"Return\""
+	@Init("Return")
+	someMethod2() : Object | |
+		return nil
+
+	//XPECT noIssues
+	@Init()
+	someMethod3() : Object | |
+		return nil		

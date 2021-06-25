@@ -1,0 +1,22 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_XNccwOF6EeaHF4Utzt6ADQ,_DS-RMOgBEeSUFO5-NwwB0Q
+Element-Name: EndListCommas
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _zEwMwOF4EeaHF4Utzt6ADQ
+Runtime-Version: 2.5.0.202001211718
+Save-Time: 10/30/20 9:30 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | editor-poosl-debug
+// HINT: label output is slightly since eclipse 2020-06
+//get-view Console | get-label "model.poosl [POOSL Simulation] [Seed: 1]" | assert-non-empty
+get-view Console | get-label "model.poosl [POOSL Simulation]" | assert-non-empty
+get-button "Terminate (M1+F2)" | click
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

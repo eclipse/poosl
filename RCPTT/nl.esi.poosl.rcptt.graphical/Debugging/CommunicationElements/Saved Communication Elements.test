@@ -1,0 +1,142 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_74QxIOqHEeSdDvHJCJiyYA
+Element-Name: Saved Communication Elements
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _KvccwMUOEeWbAfcxAheu3Q
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 4:51 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part
+	-name "Cluster ProducerConsumer (producer_consumer.poosl)"] {
+	mouse-move 523 17 -height 770 -width 1386
+	mouse-move 430 0 -height 770 -width 1386
+}
+with [get-tab-folder -index 2] {
+	double-click
+	get-tab-item "*Cluster ProducerConsumer (producer_consumer.poosl)" | click
+}
+with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)"] {
+	with [get-diagram -index 1] {
+		with [get-edit-part -name "Cluster ProducerConsumer (producer_consumer.poosl)"] {
+			mouse-move 694 182 button3 -height 924 -width 1721
+			mouse-press 694 182 button3 -height 924 -width 1721
+			mouse-release 694 182 button3 2097152 -height 924 -width 1721
+		}
+		get-menu "Show\\/Hide Communication Elements" | click
+	}
+	with [get-diagram -index 1 | get-edit-part -name "Cluster ProducerConsumer (producer_consumer.poosl)"] {
+		with [get-edit-part -text "* Message: \n* Time: \n* Sender:  \n* Receiver:  \n* Parameters:"] {
+			mouse-move 93 79 button1 -height 87 -width 100
+			mouse-press 93 79 button1 -height 87 -width 100
+			mouse-release 93 79 button1 524288 -height 87 -width 100
+			mouse-hover 93 79 -height 87 -width 100
+			mouse-press 93 79 button1 -height 87 -width 100
+			mouse-move 94 79 -mask 524288 -height 87 -width 100
+		}
+		mouse-drag 648 171 button1 524288 -height 924 -width 1724
+		mouse-release 648 171 button1 524288 -height 924 -width 1724
+		with [get-edit-part -text "* Message: \n* Time: \n* Sender:  \n* Receiver:  \n* Parameters:"] {
+			mouse-hover 97 75 -height 87 -width 100
+			mouse-move 96 77 -height 87 -width 100
+			mouse-hover 96 77 -height 87 -width 100
+		}
+		mouse-move 1041 467 -height 924 -width 1724
+	}
+}
+with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part
+	-name "Cluster ProducerConsumer (producer_consumer.poosl)" | get-edit-part -text "* Message: \n* Time: \n* Sender:  \n* Rec" +
+	"eiver:  \n* Parameters:"] {
+	get-property x -raw true | between 203 211 | verify-true
+
+	let [val y [get-property y -raw true]] {
+		$y | between [int -input "-150"] [int -input "-140"] | assert-true -message [format "%s is not between -159 a" +
+			"nd -140" $y]
+	}
+	get-property width | equals 100 | verify-true
+	get-property height | equals 102 | verify-true
+}
+with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1] {
+	with [get-edit-part -name "Cluster ProducerConsumer (producer_consumer.poosl)"] {
+		mouse-move 748 125 -height 924 -width 1724
+		mouse-move 536 143 -height 924 -width 1724
+		with [get-edit-part -name ProducerConsumer] {
+			get-edit-part -className DNodeContainerViewNodeContainerCompartmentEditPart | mouse-move 67 195 -height 349
+				-width 481
+			with [get-edit-part -name In | get-target-connection 0 | get-edit-part -className DEdgeBeginNameEditPart] {
+				mouse-move 17 7 button1 -height 13 -width 39
+				mouse-press 17 7 button1 -height 13 -width 39
+				mouse-release 17 7 button1 524288 -height 13 -width 39
+				mouse-hover 17 8 -height 13 -width 39
+				mouse-move 17 5 button1 -height 13 -width 39
+				mouse-press 17 5 button1 -height 13 -width 39
+				mouse-release 17 5 button1 524288 -height 13 -width 39
+				mouse-hover 17 5 -height 13 -width 39
+				activate-direct-edit
+				mouse-move 11 7 button1 -height 13 -width 39
+				mouse-press 11 7 button1 -height 13 -width 39
+				mouse-move 11 8 -mask 524288 -height 13 -width 39
+			}
+			with [get-edit-part -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+				mouse-drag 32 258 button1 524288 -height 349 -width 481
+				mouse-release 32 258 button1 524288 -height 349 -width 481
+			}
+			get-edit-part -name In | get-target-connection 0 | get-edit-part -className DEdgeBeginNameEditPart
+				| mouse-hover 8 6 -height 13 -width 39
+		}
+	}
+	key-type "M1+s"
+	get-edit-part -name "Cluster ProducerConsumer (producer_consumer.poosl)" | mouse-move 1039 665 -height 924
+		-width 1725
+}
+with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part
+	-name "Cluster ProducerConsumer (producer_consumer.poosl)" | get-edit-part -name ProducerConsumer | get-edit-part
+	-name In | get-target-connection 0 | get-edit-part -className DEdgeBeginNameEditPart] {
+		get-property y -raw true | between 21 26 | verify-true
+		get-property width -raw true | between 35 40 | verify-true
+		get-property height -raw true | between 10 15 | verify-true
+}
+get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part -name "Cluster" +
+	" ProducerConsumer (producer_consumer.poosl)" | mouse-move 705 241 -height 832 -width 1096
+with [get-tab-folder] {
+	double-click
+	get-tab-item "Cluster ProducerConsumer (producer_consumer.poosl)" | click
+}
+get-view "Project Explorer" | get-tree | select "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consume" +
+	"r.poosl" | get-menu "Debug As/.* POOSL Simulation" | click
+get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part -name "Cluster" +
+	" ProducerConsumer (producer_consumer.poosl)" | mouse-move 645 255 -height 444 -width 678
+get-view Debug | get-tree | select "producer_consumer.poosl [Simulated time: 0]/system/ProducerConsumer" | get-menu "Open Co" +
+	"mmunication Diagram" | click
+
+with [get-tab-folder -index 3] {
+	double-click
+	get-tab-item -index 1 | click
+}
+
+with [get-editor "<COMM>Cluster ProducerConsumer (producer_consumer.poosl) [/system/ProducerConsumer]" | get-diagram -index 1
+	| get-edit-part -name "<COMM>Cluster ProducerConsumer (producer_consumer.poosl) [/system/ProducerConsumer]"] {
+	with [get-edit-part -text "* Message: \n* Time: \n* Sender:  \n* Receiver:  \n* Parameters:"] {
+		get-property x -raw true | between 203 211 | verify-true
+		let [val y [get-property y -raw true]] {
+			$y | between [int -input "-150"] [int -input "-140"] | assert-true -message [format "%s is not between -1" +
+				"59 and -140" $y]
+		}
+		get-property width | equals 100 | verify-true
+		get-property height | equals 102 | verify-true
+	}
+	with [get-edit-part -name ProducerConsumer | get-edit-part -name In | get-target-connection 0 | get-edit-part
+		-className DEdgeBeginNameEditPart] {
+		get-property y -raw true | between 21 26 | verify-true
+		get-property width -raw true | between 35 40 | verify-true
+		get-property height -raw true | between 10 15 | verify-true
+	}
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

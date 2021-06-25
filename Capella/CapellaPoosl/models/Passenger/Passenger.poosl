@@ -1,0 +1,57 @@
+importlib "distributions.poosl"
+
+/* Stub for simulation and monitoring purposes only.
+ */
+process class Passenger
+ports
+	InAudio
+	OutControl
+	Monitor
+messages
+	OutControl!StartVideo(Integer, Integer)
+	InAudio?BeginVideo(Integer)
+	InAudio?EndVideo(Integer)
+	InAudio?EndAnnouncement(Integer)
+	InAudio?BeginAnnouncement(Integer)
+	Monitor!AnnouncementReceived(Integer)
+variables
+	idleTimeGen : Uniform
+	videoTimeGen : Uniform
+	videoCounter : Integer
+	console : Console
+init
+	Initialise()()
+methods
+	Initialise()()
+		idleTimeGen := new(Uniform) withParameters(5.0, 200.0);
+		videoTimeGen := new(Uniform) withParameters(90.0, 200.0);
+		videoCounter := 0;
+		console := new(Console);
+		Main()()
+
+	Main()()
+		interrupt
+			WatchVideos()()
+		with listenToAnnouncement()()
+
+	WatchVideos()() | videoID : Integer, length : Integer |
+		delay idleTimeGen sample asInteger;
+		videoCounter := videoCounter + 1;
+		length := videoTimeGen sample asInteger;
+		log("Select video " + videoCounter printString + " of length " + length printString)();
+		OutControl!StartVideo(videoCounter, length);
+		InAudio?BeginVideo(videoID);
+		log("Begin video " + videoID printString)();
+		InAudio?EndVideo(videoID);
+		log("End video " + videoID printString)();
+		WatchVideos()()
+
+	listenToAnnouncement()() | id : Integer |
+		InAudio?BeginAnnouncement(id);
+		Monitor!AnnouncementReceived(id);
+		log("Begin announcement " + id printString)();
+		InAudio?EndAnnouncement(id);
+		log("End announcement " + id printString)()
+
+	log(msg : String)()
+		console writeLine("Passenger: [time " + currentTime asInteger printString + "] " + msg)

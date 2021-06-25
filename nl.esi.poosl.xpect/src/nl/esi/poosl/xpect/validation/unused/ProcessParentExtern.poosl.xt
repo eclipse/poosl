@@ -1,0 +1,43 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+// The child process class of someSuperClass uses elements from the parent someSuperClass. 
+// With no child import, that parent is not informed and should have an unused warning
+
+// See ProcessParentExtern.poosl.xt for child import
+
+//XPECT warnings --> "Variable is not used" at "r"
+process class someSuperClass(r : Object) 
+ports
+//XPECT warnings --> "Port is not used" at "p"
+	p,
+	q
+messages
+//XPECT warnings --> "No receive statement for this message" at "q?n"
+	q?n
+variables
+//XPECT warnings --> "Variable is not used" at "v"
+	v:Integer
+init 
+	someMethod()() 
+methods  
+	someMethod()()
+		skip
+		
+//method should give warning because child class is not imported	
+//XPECT warnings --> "Method is not used" at "someOtherMethod" 
+	someOtherMethod()()
+		skip
+//method should give warning because child class is not imported	
+//XPECT warnings --> "Method is not used" at "someOtherMethod" 
+	someOtherMethod(source, target : Integer, entrance , exit : String)()        
+		source;
+		target;
+		entrance;
+		exit
+//method should give warning because child class is not imported	
+//XPECT warnings --> "Method is not used" at "someOtherMethod" 
+		someOtherMethod()(source, target : Integer, entrance , exit : String)      
+		source;
+		target;
+		entrance;
+		exit	

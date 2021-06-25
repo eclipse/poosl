@@ -1,0 +1,27 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_MoNOUOqKEeSdDvHJCJiyYA,_XLnUMMWrEeWbAfcxAheu3Q
+Element-Name: Cluster Diagram Lift Lock On Stop
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _MFA_0Mm0EeWBFNGtI_hPDw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 5:30 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+get-tab-folder -index 3 | get-property activePage | equals "System (producer_consumer.poosl)" | verify-true
+get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
+    -name "System (producer_consumer.poosl)" | get-property "isEditModeEnabled()" | equals false | verify-true
+
+click-terminate
+get-editor "producer_consumer.poosl" | click
+get-editor "System (producer_consumer.poosl)" | click
+get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
+    -name "System (producer_consumer.poosl)" | get-property "isEditModeEnabled()" | equals true | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

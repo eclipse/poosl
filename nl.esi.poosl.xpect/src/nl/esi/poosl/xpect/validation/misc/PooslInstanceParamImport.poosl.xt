@@ -1,0 +1,12 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+import "../imports/ImportInstanceParameter.poosl" 
+	
+
+cluster class someClass()
+ports
+	
+instances 
+
+	instance: ChildClass(p := nil)     
+channels

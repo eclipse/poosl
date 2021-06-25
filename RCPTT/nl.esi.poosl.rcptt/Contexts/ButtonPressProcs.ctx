@@ -1,0 +1,82 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: ButtonPressProcs
+Element-Type: context
+Element-Version: 2.0
+Id: _isDrkFPUEea5R70fIjiNMA
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 1/12/17 2:22 PM
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Buttons seems to be renamed every now and then and it breaks all tests using them.
+Tests should use these procedures for the buttons to avoid fixing all tests.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+proc "get-button-resume" {
+	get-button "Resume .*"
+}
+
+proc "get-button-suspend" {
+	get-button "Suspend .*"
+}
+
+proc "get-button-terminate" {
+	get-button "Terminate.*"
+}
+
+proc "click-record-communications" {
+	get-button "Record Communications.*" | click
+}
+
+proc "click-communication-step" {
+	get-button "Communication Step (F7)" | click
+}
+
+proc "click-terminate" {
+	get-button-terminate | click
+}
+
+proc "click-remove-terminated-launches" {
+	get-view Debug | get-button "Remove All Terminated Launches" | click
+}
+
+proc "click-resume" {
+	get-button-resume | click
+}
+
+proc "click-suspend" {
+	get-button-suspend | click
+}
+
+proc "click-step" {
+	get-button "Step (F5)" | click
+}
+
+proc "select-root-click-record" {
+	get-view Debug | get-tree | select ".*"
+	click-record-communications
+}
+
+proc "click-open-communication-diagram-debugview" [val debugViewItem -input] {
+	$debugViewItem | get-menu "Open Communication Diagram" | click
+}
+
+proc "click-record" {
+	get-view Debug | get-tree | select ".*"
+	get-button "Record Communications.*" | click
+}
+
+
+
+
+
+
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

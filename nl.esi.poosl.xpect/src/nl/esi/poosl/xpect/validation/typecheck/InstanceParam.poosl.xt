@@ -1,0 +1,66 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+
+process class ProcessInstanceClass(s: String) 
+ports	
+messages	
+variables	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		s printString()		
+
+cluster class someClass()
+ports	
+instances
+	// Warning at wrong type of instance parameter
+	// XPECT warnings --> "Expression of type Integer is not compatible with variable of type String" at "s := 1" 
+	someInstance: ProcessInstanceClass(s := 1)
+	
+	// No warning at correct instanceparameter
+	// XPECT noIssues
+	someInstance2: ProcessInstanceClass(s := "text")
+channels   		 
+
+
+process class paramProcessClass(Param : Integer)
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+	Param +1;
+		skip
+
+process class childParamClass() extends paramProcessClass
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+		
+		
+cluster class paramClusterClass()
+ports
+	
+instances
+	// Error when missing instantiation of a parameter
+	// XPECT errors --> "Missing instantiation for parameter Param" at "paramProcessClass"
+	someInstance: paramProcessClass()
+	//// Error when missing instantiation of a parameter
+	// XPECT errors --> "Missing instantiation for parameter Param" at "childParamClass"
+	childInstance: childParamClass()
+channels

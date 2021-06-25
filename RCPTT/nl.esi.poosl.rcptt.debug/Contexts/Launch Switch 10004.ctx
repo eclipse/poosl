@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: Launch Switch 10004
+Element-Type: context
+Element-Version: 2.0
+Id: _eo2A4EALEeW7HIRWCkxkzg
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 1/11/17 2:09 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-menu "Run/Debug Configurations..." | click
+with [get-window "Debug Configurations"] {
+    get-tree | select "POOSL Simulation" | get-menu New | click
+    with [get-editbox -after [get-label "Name:"]] {
+        set-text Switch10004
+    }
+    get-group "Model:" | get-button Browse | click
+    
+    set-dialog-result File "platform:/resource/nl.esi.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
+	get-window "Debug Configurations" | get-group "Model:" | get-button Browse | click
+
+    get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text 10004
+    get-button Apply | click
+    get-button Debug | click
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

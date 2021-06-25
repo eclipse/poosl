@@ -1,0 +1,14 @@
+
+process class twiceProcessClass()
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+ 

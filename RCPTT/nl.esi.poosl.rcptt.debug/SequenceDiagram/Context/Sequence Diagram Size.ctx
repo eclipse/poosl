@@ -1,0 +1,20 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: Sequence Diagram Size
+Element-Type: context
+Element-Version: 2.0
+Id: _VBDK0OdkEeS02qlAIvBOkg
+Runtime-Version: 2.5.0.202001211718
+Save-Time: 1/29/21 8:56 AM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+
+proc "sequence-diagram-resize" {
+	get-tab-folder -index 5 | get-object | invoke setSize 1024 800
+	get-tab-folder -index 5 | get-canvas
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

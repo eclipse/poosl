@@ -1,0 +1,32 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+data class selfClass extends Object
+variables	
+methods	
+
+	
+	// Data method return type self warning when not returning integer
+	// XPECT warnings --> "Method body of type selfClass is not compatible with method return type Integer" at "Integer"
+	returnSelfInt() : Integer
+	return self
+	
+	// Data method return type self no warning when returning self
+	//XPECT noIssues
+	returnSelf() : selfClass
+	return self
+	
+	
+data class parentDataClass extends Object
+variables		
+methods			
+	
+data class parentAssignment extends parentDataClass
+variables
+i : parentDataClass	
+methods
+	// Data method return type compatible when returning child of parent class
+	// XPECT noIssues
+	compatible(): parentDataClass
+	i := new(parentAssignment);
+	return i
+	

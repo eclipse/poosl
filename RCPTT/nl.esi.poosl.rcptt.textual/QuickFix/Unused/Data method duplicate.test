@@ -1,0 +1,43 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Data method duplicate
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _JCVucOQ1EeSZttsAewanYQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/27/16 3:29 PM
+Tags: Data, Method, QuickFix
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+type-text "data class someClass \n"
+type-text "variables\n"
+type-text "methods\n"
+type-text "getValue(i : Integer) : Integer\n"
+type-text "return i\n"
+type-text "getValue(i : Integer) : Integer\n"
+type-text "return i\n"
+}
+
+get-editor "model.poosl" | get-text-viewer | get-property "markers['4'][0].text" 
+    | equals "There is another method with the same name getValue and number of parameters" | verify-true
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 5 9
+    key-type "M1+1"
+     set-caret-pos 6 2
+    hover-text 6 5
+}
+get-window -from "Information Window" | get-link "<a>Remove the currently selected method</a>" | click-link
+get-editor "model.poosl" | get-text-viewer | get-property text | equals "data class someClass \n"
+    + "variables\n"
+    + "methods\n"
+    + "getValue(i : Integer) : Integer\n"
+    + "return i" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

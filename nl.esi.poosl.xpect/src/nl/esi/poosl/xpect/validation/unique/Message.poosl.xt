@@ -1,0 +1,98 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+import "../imports/importUniquePortMessage.poosl"
+
+process class receiveStatementClass()
+ports
+	In
+messages
+// Process Message Signature local, Error when receivestatement already exists
+// XPECT errors --> "There is another receive message in scope with the same name, port and number of parameters" at "In?integer(Integer)"
+	In?integer(Integer)
+	// Process Message Signature local, Error when receivestatement already exists
+	// XPECT errors --> "There is another receive message in scope with the same name, port and number of parameters" at "In?integer(Integer)"
+	In?integer(Integer),
+	// Process Message Signature local, Error when receivestatement already exists
+	// XPECT errors --> "There is another receive message in scope with the same name, port and number of parameters" at "In?integer(Object)"
+	In?integer(Object),
+	// XPECT noIssues
+	In?Object(Object),
+	// XPECT noIssues
+	In?integer()
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | someVar : Object| 
+		In?Object(someVar);
+		In?integer()
+
+process class sendStatementClass()
+ports
+	Out
+messages
+// Process Message Signature parent, Error when receivestatement already exists in parent
+// XPECT errors --> "There is another send message in scope with the same name, port and number of parameters" at "Out!integer(Integer)"
+	Out!integer(Integer)
+	// Process Message Signature parent, Error when receivestatement already exists in parent
+	// XPECT errors --> "There is another send message in scope with the same name, port and number of parameters" at "Out!integer(Integer)"
+	Out!integer(Integer)
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+process class childStatementClass() extends parentStatementClass
+ports
+messages
+// Process Message Signature parent, Error when sendstatement already exists in parent
+// XPECT errors --> "There is another send message in scope with the same name, port and number of parameters" at "Out!integer(Object)"
+	Out!integer(Object)
+	// Process Message Signature local, Error when receivestatement already exists
+	// XPECT errors --> "There is another receive message in scope with the same name, port and number of parameters" at "In?integer()"
+	In?integer()
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		
+process class childImportClass() extends importPortMessageClass
+ports
+messages
+// Process Message Signature parent, Error when sendstatement already exists in parent
+// XPECT errors --> "There is another send message in scope with the same name, port and number of parameters" at "Out!integer(Object)"
+	Out!integer(Object) 
+// Process Message Signature parent, Error when sendstatement already exists in parent
+// XPECT errors --> "There is another send message in scope with the same name, port and number of parameters" at "Out!integer(String)"
+	Out!integer(String) 
+	// Process Message Signature local, Error when receivestatement already exists
+	// XPECT errors --> "There is another receive message in scope with the same name, port and number of parameters" at "In?integer()"
+	In?integer()
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+process class parentStatementClass()
+ports
+	Out,
+	In
+messages
+	In?integer()
+	Out!integer(Object)
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		In?integer() ;
+		Out!integer(nil)
+ 		
+ 		
+ 		

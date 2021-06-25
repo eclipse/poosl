@@ -1,0 +1,38 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Edit
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _79CT8Bt_EeeKSO4xt8npOw
+Manually-Ordered: true
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/26/18 3:35 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_zJgiYDa9EeamRbAWgfjSSQ	// kind: 'test' name: 'Cluster Class Instance Edit' path: 'Cluster Class Instance Edit.test'
+_GrfwwDa9EeamRbAWgfjSSQ	// kind: 'test' name: 'Cluster Class Instantiable Edit' path: 'Cluster Class Instantiable Edit.test'
+_X0VhADa9EeamRbAWgfjSSQ	// kind: 'test' name: 'Cluster Class Name Edit' path: 'Cluster Class Name Edit.test'
+_lIIHwDa8EeamRbAWgfjSSQ	// kind: 'test' name: 'Cluster Class Simple' path: 'Cluster Class Simple.test'
+_dxNr8Da5EeamRbAWgfjSSQ	// kind: 'test' name: 'Data Class Name Edit' path: 'Data Class Name Edit.test'
+_rYP3cDa7EeamRbAWgfjSSQ	// kind: 'test' name: 'Data Class Type Edit' path: 'Data Class Type Edit.test'
+_jAXG0Da4EeamRbAWgfjSSQ	// kind: 'test' name: 'Data Class Variable Edit' path: 'Data Class Variable Edit.test'
+_-WeRcDa6EeamRbAWgfjSSQ	// kind: 'test' name: 'Data Method Name Edit' path: 'Data Method Name Edit.test'
+_IPGRELicEeafVuSsqI98NA	// kind: 'test' name: 'Data Method Return Edit' path: 'Data Method Return Edit.test'
+_BDxkwLiaEeafVuSsqI98NA	// kind: 'test' name: 'Expression Incompatible Edit' path: 'Expression Incompatible Edit.test'
+_KtJOMNMyEeangbMjQQ1kGg	// kind: 'test' name: 'Process Class Channel Edit' path: 'Process Class Channel Edit.test'
+_s3N_8NM0EeaQeIm_cT_j2g	// kind: 'test' name: 'Process Class Channel2 Edit' path: 'Process Class Channel2 Edit.test'
+_TGJZINM1EeaQeIm_cT_j2g	// kind: 'test' name: 'Process Class Instance Edit' path: 'Process Class Instance Edit.test'
+_rSpNcDa1EeamRbAWgfjSSQ	// kind: 'test' name: 'Process Class Name Edit' path: 'Process Class Name Edit.test'
+_HDfeoDY8EeamRbAWgfjSSQ	// kind: 'test' name: 'Process Class Simple' path: 'Process Class Simple.test'
+_-ao8kDa2EeamRbAWgfjSSQ	// kind: 'test' name: 'Process Class Type Edit' path: 'Process Class Type Edit.test'
+_WEOqULibEeafVuSsqI98NA	// kind: 'test' name: 'Process Message Edit' path: 'Process Message Edit.test'
+_cdsycDa1EeamRbAWgfjSSQ	// kind: 'test' name: 'Process Method Name Edit' path: 'Process Method Name Edit.test'
+_ATi3ILiZEeafVuSsqI98NA	// kind: 'test' name: 'Statement Incompatible Edit' path: 'Statement Incompatible Edit.test'
+_jliW0DbAEeamRbAWgfjSSQ	// kind: 'test' name: 'System Instance Edit' path: 'System Instance Edit.test'
+_OuUs0Da_EeamRbAWgfjSSQ	// kind: 'test' name: 'System Instantiable Edit' path: 'System Instantiable Edit.test'
+_w79QQDa-EeamRbAWgfjSSQ	// kind: 'test' name: 'System Unconnected Port Edit' path: 'System Unconnected Port Edit.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

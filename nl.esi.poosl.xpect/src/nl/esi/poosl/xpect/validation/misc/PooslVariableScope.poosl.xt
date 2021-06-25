@@ -1,0 +1,31 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+data class someClass
+variables
+       v: Object 
+methods    
+ someDataMethod() : Object | |
+   	return v  
+
+process class someClass()
+ports
+messages
+variables
+init
+       someMethod()()
+methods
+       someMethod()() | |
+             skip
+ 
+process class someOtherClass extends someClass
+ports
+messages
+variables 
+init
+       someMethod()()
+methods
+       someMethod()() | | 
+        
+       //Error when v is not  declared in this or the extended processclass someClass, but is available in another class
+      //XPECT errors --> "Variable 'v' is not declared." at "v"
+             v      // this should not be allowed (nice test case!)

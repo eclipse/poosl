@@ -1,0 +1,79 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g
+Element-Name: DebugView with PC
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _uQlXgONVEeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/27/18 3:13 PM
+Tags: Debug, View, Perspective, PC
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "producer_consumer.poosl" | editor-poosl-debug
+with [get-view Debug | get-tree] {
+	expand-all
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]" | get-property caption 
+        | equals "producer_consumer.poosl [Simulated time: 0]" | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system" | get-property childCount | equals 2 | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/Bus" | get-property caption | equals Bus | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/Bus" | get-property childCount | equals 0 | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/Bus" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer" | get-property caption 
+        | equals ProducerConsumer | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+}
+with [get-view Debug | get-tree] {
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Producer" | get-property caption 
+        | equals Producer | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Producer" | get-property childCount 
+        | equals 0 | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Producer" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+}
+with [get-view Debug | get-tree] {
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Consumer" | get-property caption 
+        | equals Consumer | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Consumer" | get-property childCount 
+        | equals 0 | verify-true
+    get-item "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Consumer" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+}
+click-terminate
+with [get-view Debug | get-tree] {
+    get-item "<terminated> producer_consumer.poosl" | get-property caption 
+        | equals "<terminated> producer_consumer.poosl" | verify-true
+    get-item "<terminated> producer_consumer.poosl" | get-property childCount | equals 1 | verify-true
+    get-item "<terminated> producer_consumer.poosl" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/debugtt_obj.png" | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> Bus" | get-property caption | equals "<terminated> Bus" 
+        | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> Bus" | get-property childCount | equals 0 | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> Bus" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> ProducerConsumer/<terminated> Producer" 
+        | get-property caption | equals "<terminated> Producer" | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> ProducerConsumer/<terminated> Producer" 
+        | get-property childCount | equals 0 | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> ProducerConsumer/<terminated> Producer" 
+        | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> ProducerConsumer/<terminated> Consumer" 
+        | get-property caption | equals "<terminated> Consumer" | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> ProducerConsumer/<terminated> Consumer" 
+        | get-property childCount | equals 0 | verify-true
+    get-item "<terminated> producer_consumer.poosl/<terminated> system/<terminated> ProducerConsumer/<terminated> Consumer" 
+        | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+}
+
+click-remove-terminated-launches
+get-view Debug | get-tree | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

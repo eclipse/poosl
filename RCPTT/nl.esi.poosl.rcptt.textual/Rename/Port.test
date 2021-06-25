@@ -1,0 +1,64 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _pPT2MHjAEeaJ2L29rpch3A,_8DR5QHjFEeaJ2L29rpch3A
+Element-Name: Port
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _KB-9EHj4EeaJ2L29rpch3A
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/13/16 11:50 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 26 6
+    get-menu "Rename Element" | click
+    key-type BackSpace
+    type-text a
+    key-type Enter
+    hover-text 26 5
+}
+get-eclipse-window | key-type "TRAVERSE_ESCAPE"
+get-eclipse-window | key-type ESC
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 24 6
+    select-range 24 5 24 6
+    hover-text 24 5
+}
+get-editor "main.poosl" | get-text-viewer | get-property "getSelectionText()" | equals a | verify-true
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 33 9
+    select-range 33 9 33 10
+    hover-text 33 10 -with "M2+M3"
+}
+get-editor "main.poosl" | get-text-viewer | get-property "getSelectionText()" | equals a | verify-true
+with [get-editor "main.poosl" | get-text-viewer] {
+    hover-text 33 9
+    get-menu "Rename Element" | click
+    type-text q
+    key-type "NUMPAD_ENTER" "\\u000D"
+}
+get-window "Rename element" | get-button Cancel | click
+get-editor "main.poosl" | get-text-viewer | get-property "getSelectionText()" | equals a | verify-true
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 33 13
+    key-type Enter
+    type-text "q!q;"
+    set-caret-pos 34 9
+    get-menu "Rename Element" | click
+    key-type Del
+    type-text c
+    key-type Enter
+    key-type "M1+s"
+}
+get-view "Project Explorer" | get-tree | select "CleanProject/models/parent.poosl" | double-click
+with [get-editor "parent.poosl" | get-text-viewer] {
+    set-caret-pos 21 10
+    select-range 21 9 21 10
+}
+get-editor "parent.poosl" | get-text-viewer | get-property "getSelectionText()" | equals c | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

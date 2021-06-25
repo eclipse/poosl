@@ -1,0 +1,62 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: Switch_Workspace
+Element-Type: context
+Element-Version: 2.0
+Id: _ZZ70YA0REeaiAIW4k7PpxQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 4/28/16 9:35 AM
+
+------=_contents/nl.esi.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2
+Content-Type: q7/binary
+Entry-Name: contents/nl.esi.poosl.examples/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACFkD0OwjAMhWeQuEPV
+nQQ2hlAkQIwswAFCapWg/ClOUY9PEgKoLGz+np/tl7DNoFX1AI/SmnW9JIu6AiNsK023ri/nw3xVb5rZ
+lDlv7yDCHlB46UJ0R3XCDNfQGEUAJXHWYqwGrp0CZDT3kklYrcGEhtF3ldSyETPQEV17qdqTA5Go4C6O
+ctNmpdy1viMglHQIZAgwBNJLgjfuoX3xNg2C/0aJk9x3fcqAhelYYPT3WlHeceLp0Hso7hf8T3LMvhQk
++/Pa76LP88ff+wRQSwcIXZroscwAAACdAQAAUEsBAhQAFAAICAgAAAAhAF2a6LHMAAAAnQEAAAgACQAA
+AAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAAsBAAAAAA==
+------=_contents/nl.esi.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2--
+------=_contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl-884a6ce7-2036-313f-96b3-95fdb3a44683
+Content-Type: q7/binary
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9V0tv4zYQPsuA/8PU
+JznJxk3ak4NF0cbAQkAXXmwC9FD0QEtjm61ECiIVr9vkv3f4kkTbCdJFswGMmOTwm+HMNw/PZnC/5Qrw
+C6vqEqHASgqlG6ZRQSWVBiyxQqFZs4dPy+Xdr5BLkWOt1eV4NJtBpkmswFIBg0+NLNocG2CioOUtIbUV
+LfWWabpWVa3gOSFDhUqxDWl44IwEf2kNmIV793/+WcwzWDDNIC+ZUrCWjbGT5X+hdmYpLRsyhAngBT2T
+6/0lnM3Go6K/5MXxi0ZRKFiu/sRcj0cPrOFsVaIajxLSkvnrDrEALhQhdtocapItYA6Z0LjBZjyqUG9l
+4QHuUCuyCYFkHljZIsi1XddDAIU6aEqzHmtKX50ikrFa3kMGN2bRoG4bAQrLtVP04VWKNr2iockdXrZw
+aLcNWrIYgDvdcLHxoNa9RC21lTsBq72VKHDVbjZGSEtZuoCQpzQjTilrx77G2GU1YWqPPPcqejvSye8T
+ODdPGcqdw+SPyfStOJWYdxPZyWTlOWIfWzv+q47f7gV1JBmSJLXcvOeVcUrJ9uQGWKHeIYoAVPSJYnCy
+okQr30edwGWjlYMyecxdIKQo92COboDbILSK0IyzZas30rgotjFZttrw0e1ZvOWBZCf33Ue3kbowTaNU
+sESmVQmirVaU/IFbh086kRDJeMQFNwzO6B9hcIXpNJ0OEsUkmj/725Mucm9APbgfUuLKpcQdJbIzPhxb
+s23Vil4bC8Ij1F2ewaO5R1nymaqdrLKFlbDwtVElcBccBFHSLrzU0JP1FP4Bn7ULYu8VPFkZE3JnYjBy
+x3W+hY/WHyFPIwseobHL3q0XsCFOzcGJfUCBVN6JCo+Je4EI5h4ITG/CuUMkb94hFqnbD1reQy9BCtMf
+pjdJYpHNRzl7r6CQZpnkTCF8b+ImwG64R7vrvcSVkxgewhlcW8XJb4x3cXPi1068N8l/O6eTmyM1hPQj
+xFDe4qTANWtLDYKXgE0jm3Ti71AOCamBlaXcEYu3fLO1nY3UXk+sKbLwjx7aZ1M7vfYh994w6M4f5o6P
+rLlF9NttObXhFVKuIvFGFLZWEs0F9Z+YnD05gp5QIaanaf6GPfZENaQhQqg1Ni+XQ+r9XRGzZZW+dq2j
+q1pc0Phwompl4uKla68sdrZ9H2gI+D8dFDuv7+uKY1IP2rQvdffeTQeFzigJR3EbOLiRDI2sT9cWuxdf
++5ZMyN0g+DIRwrQYseF1Pe15dnxtlOOoxUObj9tnzJE/4DC/ouD584PYHd060VPieIa+UMNwIntyMT1h
+xJsF9rZslSYyDgIbJn8BrK5LM9tzKWy4udLGzdT8n/1Z4IKUR6hBNMikngb/YUpKXhqTvm2F6QZbjxD8
+QF6JTe5O5v142D+DZoJQ1/3IHX5YHQF1J/NOyHAi3zIhKFIkQXQSF30MMgFPdpcMvuiUX9LK7L8Zl+5l
+/a7EByxB7Sn8Fagac74ODDqb0XDgTo68+POAafHUbeh1VGpiBw/8c0S1ocOvvaepOz3XzBywEZgbsSM3
+mx+1xtWHeoJvvUjk94Ow/AtQSwcI2yCma5IEAACdDwAAUEsBAhQAFAAICAgAAAAhANsgpmuSBAAAnQ8A
+AAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAANEEAAAAAA==
+
+------=_contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl-884a6ce7-2036-313f-96b3-95fdb3a44683--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVkk9LAzEQxe+C32HJ
+vUkVobLsWop46EGoeqj2UrbZaRubfyRZNx/faZvtlgqKt8zwe29mHinGUcnsC5wXRpfkhg5JBpqbWuhN
+SZqwHtyT8cP1VWHchgKXwnqgjtsQKA+RtsbtvK045PPu9Wh0gBiyqER+8r3d++Ik7XPsl2Qbgs0Za9uW
+GrWhaM7en6cd8sesk7xj9vIDx5BjJ45kulJIv7Ui8O1y3vdFXZLlYjEafkyGr09Qicl0frcbzWx8IXhs
+lhV8f4UOhwJL68wn8OCTo5YUvKDWGI+vWCkrwZMEI74WWCeWJi3mGoE3oVpJ7AbXAGFnCiNrDCtplKlB
++sGq8oL3tj+wmTN1w8Fh5L5R4M7Riy1sQpc8scflf10KLVga2C960SlYF80xN9YHV7D//hkUfQNQSwcI
+ZdVd5DUBAACQAgAAUEsBAhQAFAAICAgAAAAhAGXVXeQ1AQAAkAIAAAgACQAAAAAAAAAAAAAAAAAAAC5j
+b250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAHQBAAAAAA==
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--

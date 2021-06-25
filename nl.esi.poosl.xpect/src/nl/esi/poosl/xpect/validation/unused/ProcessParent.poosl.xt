@@ -1,0 +1,79 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+process class overriddenClass()
+ports
+	
+messages
+	
+variables
+	
+init    
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+		// This method is overridden but still should give warning
+		// XPECT warnings --> "Method is not used" at "overRiddenMethod"
+		overRiddenMethod(  
+		// Warning on input variable not used, method is overridden 
+		// XPECT warnings --> "Variable is not used" at "input" 
+		input : String)(
+		// Warning on output variable not used, method is overridden
+		// XPECT warnings --> "Variable is not used" at "output" 
+		output : String) | 
+		//// Warning on local variable not used, method is overridden
+		// XPECT warnings --> "Variable is not used" at "local" 
+		local : String |
+		skip 
+		
+		
+
+process class someClass() extends overriddenClass
+ports
+	
+messages
+	
+variables
+	
+init
+	startMethod()() 
+methods
+	startMethod()() |get : String |
+		overRiddenMethod ("")(get) 
+	overRiddenMethod(input : String)(output : String) | local : String | 
+	output := input + local  
+	
+		process class ParentMethodCall() 
+ports	
+messages
+variables
+init
+	Initialise()() 
+methods
+	Initialise()()
+		PerformWrites("")()  
+		// XPECT warnings --> "Variable is not used" at "Scenario"
+	PerformWrites(Scenario : String)()   
+		skip
+ 		// Warning when method is not used and is overriden in childclass	    
+	    // XPECT warnings --> "Method is not used" at "unusedMethod"
+	unusedMethod()()    
+		skip
+		
+
+			process class ChildMethodCall() extends ParentMethodCall 
+ports	
+messages
+variables
+init
+	Initialise()() 
+methods 
+// No issues when method is used in parent
+// XPECT  noIssues 
+ 	PerformWrites(Scenario : String)()   
+	Scenario := "" 
+	// Warning when method is not used    
+    // XPECT warnings --> "Method is not used" at "unusedMethod"
+	unusedMethod()()   
+		skip
+				

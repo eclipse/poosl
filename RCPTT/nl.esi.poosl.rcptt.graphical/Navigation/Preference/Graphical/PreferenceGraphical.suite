@@ -1,0 +1,23 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: PreferenceGraphical
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _Ty8GgNpXEeWr3a7wWrF4WQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 2/24/16 11:59 AM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_VlRRsNpVEeWr3a7wWrF4WQ	// kind: 'test' name: 'From Cluster to Cluster Structure Diagram' path: 'From Cluster to Cluster Structure Diagram.test'
+_TjJB4NpVEeWr3a7wWrF4WQ	// kind: 'test' name: 'From Cluster to Cluster Textual' path: 'From Cluster to Cluster Textual.test'
+_Ne8r8JRmEeWdZoPrrryMIA	// kind: 'test' name: 'From System to Cluster Structure Diagram' path: 'From System to Cluster Structure Diagram.test'
+_PWI3EJRmEeWdZoPrrryMIA	// kind: 'test' name: 'From System to Cluster Textual' path: 'From System to Cluster Textual.test'
+_-Ttk0NpWEeWr3a7wWrF4WQ	// kind: 'test' name: 'Saved From Cluster to Cluster Structure Diagram' path: 'Saved From Cluster to Cluster Structure Diagram.test'
+__jDs0NpWEeWr3a7wWrF4WQ	// kind: 'test' name: 'Saved From Cluster to Cluster Textual' path: 'Saved From Cluster to Cluster Textual.test'
+_A6ZTMNpXEeWr3a7wWrF4WQ	// kind: 'test' name: 'Saved From System to Cluster Structure Diagram' path: 'Saved From System to Cluster Structure Diagram.test'
+_CFl7ANpXEeWr3a7wWrF4WQ	// kind: 'test' name: 'Saved From System to Cluster Textual' path: 'Saved From System to Cluster Textual.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

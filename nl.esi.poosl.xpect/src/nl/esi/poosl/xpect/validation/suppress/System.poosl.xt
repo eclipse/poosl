@@ -1,0 +1,29 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.suppress.PooslValidationSuppressTest END_SETUP */
+
+
+system
+instances
+	//XPECT noIssues
+	@SuppressWarnings("unconnected")
+	someInstance : someClass() 
+channels
+	//XPECT noIssues
+	@SuppressWarnings("unconnected","unused")
+ 	{someInstance.p }
+
+process class someClass()
+ports
+	p
+messages
+	p!someMessage(Object, Object)
+variables
+
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		p!someMessage(1,1);
+		skip
+
+
+	

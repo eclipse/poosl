@@ -1,0 +1,294 @@
+importlib "structures.poosl"
+
+// Matrix
+
+data class Matrix extends Array2D
+variables
+methods
+	zero : Matrix
+		if RowArray = nil then self resize(0, 0) fi;
+		return self putAll(0.0)
+	isZero : Boolean |I, J: Integer, NF: Boolean|
+		if RowArray = nil then self resize(0, 0) fi;
+		I := 0; NF := true;
+		while NF & (I < Rows) do
+			I := I + 1; J := 0;
+			while NF & (J < Columns) do
+				J := J + 1;
+				NF := RowArray at(I) at(J) = 0.0
+			od
+		od;
+		return NF
+	identity : Matrix |I: Integer|
+		if RowArray = nil then self resize(0, 0) fi;
+		if Rows != Columns then self error("Method \"identity\" of Matrix requires an equal number of rows and columns") fi;
+		self zero; I := 0;
+		while I < Rows do
+			I := I + 1;
+			self putAt(I, I, 1.0)
+		od;
+		return self
+	isIdentity : Boolean |I, J: Integer, NF: Boolean|
+		if RowArray = nil then self resize(0, 0) fi;
+		if Rows != Columns then
+			return false
+		else
+			I := 0; NF := true;
+			while NF & (I < Rows) do
+				I := I + 1; J := 1;
+				while NF & (J <= Columns) do
+					J := J + 1;
+					NF := if I = J then RowArray at(I) at(J) = 1.0 else RowArray at(I) at(J) = 0.0 fi
+				od
+			od;
+			return NF
+		fi
+	sum : Real |I, J: Integer, Sum: Real|
+		if RowArray = nil then self resize(0, 0) fi;
+		I := 0; Sum := 0.0;
+		while I <= Rows do
+			I := I + 1; J := 0;
+			while J < Columns do
+				J := J + 1;
+				if RowArray at(I) at(J) = nil then self error("Method \"sum\" of Matrix requires all entries to not be nil") fi;
+				Sum := Sum + RowArray at(I) at(J)
+			od
+		od;
+		return Sum
+	sqr : Matrix |I, J: Integer|
+		if RowArray = nil then self resize(0, 0) fi;
+		I := 0;
+		while I < Rows do
+			I := I + 1; J := 0;
+			while J < Columns do
+				J := J + 1;
+				if RowArray at(I) at(J) = nil then self error("Method \"sqr\" of Matrix requires all entries to not be nil") fi;
+				RowArray at(I) putAt(J, RowArray at(I) at(J) sqr)
+			od
+		od;
+		return self
+	abs : Matrix |I, J: Integer|
+		if RowArray = nil then self resize(0, 0) fi;
+		I := 0;
+		while I < Rows do
+			I := I + 1; J := 0;
+			while J < Columns do
+				J := J + 1;
+				if RowArray at(I) at(J) = nil then self error("Method \"abs\" of Matrix requires all entries to not be nil") fi;
+				RowArray at(I) putAt(J, RowArray at(I) at(J) abs)
+			od
+		od;
+		return self
+	transpose : Matrix |I, J: Integer, Copy: Matrix|
+		if RowArray = nil then self resize(0, 0) fi;
+		Copy := self deepCopy;
+		self resize(Columns, Rows);
+		I := 0;
+		while I < Copy rows do
+			I := I + 1; J := 0;
+			while J < Copy columns do
+				J := J + 1;
+				RowArray at(J) putAt(I, Copy at(I,J))
+			od
+		od;
+		return self
+//	- : Matrix |I, J: Integer|
+//		if RowArray = nil then self resize(0, 0) fi;
+//		I := 0;
+//		while I <= Rows do
+//			I := I + 1; J := 0;
+//			while J < Columns do
+//				J := J + 1;
+//				if RowArray at(I) at(J) = nil then self error("Unary operator \"-\" of Matrix requires all entries to not be nil") fi;
+//				RowArray at(I) putAt(J, -(RowArray at(I) at(J)))
+//			od
+//		od;
+//		return self
+	+(M: Object) : Matrix |I, J: Integer, Sum: Matrix|
+		if RowArray = nil then self resize(0, 0) fi;
+		if (M = nil) | (M isOfType("Matrix") not) then self error("Parameter for operator \"+\" of Matrix must be a Matrix") fi;
+		if (M rows != Rows) | (M columns != Columns) then self error("Parameter for operator \"+\" of Matrix must be a Matrix of size [" + Rows printString + "," + Columns printString + "]") fi;
+		Sum := new(Matrix) resize(Rows, Columns); I := 0;
+		while I < Rows do
+			I := I + 1; J := 0;
+			while J < Columns do
+				J := J + 1;
+				if RowArray at(I) at(J) = nil then self error("Operator \"+\" of Matrix requires all entries to not be nil") fi;
+				if M at(I,J) = nil then self error("Operator \"+\" of Matrix requires all entries of Matrix parameter to not be nil") fi;
+				Sum putAt(I, J, RowArray at(I) at(J) + M at(I,J))
+			od
+		od;
+		return Sum
+	add(N: Object) : Matrix |I, J: Integer|
+		if RowArray = nil then self resize(0, 0) fi;
+		if (N = nil) | ((N isOfType("Real") not) & (N isOfType("Integer") not)) then self error("Parameter for metjod \"add\" of Matrix must be a Real or an Integer") fi;
+		I := 0;
+		while I < Rows do
+			I := I + 1; J := 0;
+			while J < Columns do
+				J := J + 1;
+				RowArray at(I) putAt(J, RowArray at(I) at(J) + N)
+			od
+		od;
+		return self		
+	-(M: Object) : Matrix |I, J: Integer, Subtraction: Matrix|
+		if RowArray = nil then self resize(0, 0) fi;
+		if (M = nil) | (M isOfType("Matrix") not) then self error("Parameter for operator \"-\" of Matrix must be a Matrix") fi;
+		if (M rows != Rows) | (M columns != Columns) then self error("Parameter for operator \"-\" of Matrix must be a Matrix of size [" + Rows printString + "," + Columns printString + "]") fi;
+		Subtraction := new(Matrix) resize(Rows, Columns); I := 0;
+		while I < Rows do
+			I := I + 1; J := 0;
+			while J < Columns do
+				J := J + 1;
+				if RowArray at(I) at(J) = nil then self error("Operator \"-\" of Matrix requires all entries to not be nil") fi;
+				if M at(I,J) = nil then self error("Operator \"-\" of Matrix requires all entries of Matrix parameter to not be nil") fi;
+				Subtraction putAt(I, J, RowArray at(I) at(J) - M at(I,J))
+			od
+		od;
+		return Subtraction
+	subtract(N: Object) : Matrix |I, J: Integer|
+		if RowArray = nil then self resize(0, 0) fi;
+		if (N = nil) | ((N isOfType("Real") not) & (N isOfType("Integer") not)) then self error("Parameter for metjod \"subtract\" of Matrix must be a Real or an Integer") fi;
+		I := 0;
+		while I < Rows do
+			I := I + 1; J := 0;
+			while J < Columns do
+				J := J + 1;
+				RowArray at(I) putAt(J, RowArray at(I) at(J) - N)
+			od
+		od;
+		return self		
+	*(M: Object) : Matrix |I, J, K: Integer, Multiplication: Matrix|
+		if RowArray = nil then self resize(0, 0) fi;
+		if (M = nil) | (M isOfType("Matrix") not) then self error("Parameter for operator \"*\" of Matrix must be a Matrix") fi;
+		if Columns != M rows then self error("Parameter for operator \"*\" of Matrix must be a Matrix with " + Columns printString + " rows") fi;
+		Multiplication := new(Matrix) resize(Rows, M columns) zero;
+		I := 0;
+		while I < Rows do
+			I := I + 1; J := 0;
+			while J < M columns do
+				J := J + 1; K := 0;
+				while K < Rows do
+					K := K + 1;
+					Multiplication putAt(I,J, Multiplication at(I,J) + RowArray at(I) at(K) * M at(K,J))
+				od
+			od
+		od;
+		return Multiplication
+	multiply(N: Object) : Matrix |I, J: Integer|
+		if RowArray = nil then self resize(0, 0) fi;
+		if (N = nil) | ((N isOfType("Real") not) & (N isOfType("Integer") not)) then self error("Parameter for metjod \"multiply\" of Matrix must be a Real or an Integer") fi;
+		I := 0;
+		while I < Rows do
+			I := I + 1; J := 0;
+			while J < Columns do
+				J := J + 1;
+				RowArray at(I) putAt(J, RowArray at(I) at(J) * N)
+			od
+		od;
+		return self
+/*	rowSwitch(I, J: Integer) : Matrix |R: Array|
+		if (I = nil) | (I isOfType("Integer") not) | (J = nil) | (J isOfType("Integer") not) then self error("Parameters for method \"rowSwitch\" of Matrix must be Integers") fi;
+		if I != J then
+			if (I < 0) | (I > NrOfRows) | (J < 0) | (J > NrOfRows) then self error("Index out of bounds for method \"rowSwitch\" of Matrix") fi;
+			R := Rows at(I);
+			Rows putAt(I, Rows at(J));
+			Rows putAt(J, R)
+		fi;
+		return self
+	rowMultiply(I: Integer, N: Object) : Matrix |Index: Integer|
+		if (I = nil) | (I isOfType("Integer") not) then self error("First parameter for method \"rowMultiply\" of Matrix must be an Integer") fi;
+		if (N = nil) | ((N isOfType("Integer") not) & (N isOfType("Real") not)) then self error("Second parameter for method \"rowMultiply\" of Matrix must be a Real or an Integer") fi;
+		if N isOfType("Integer") then N := N asReal fi;
+		Index := 0;
+		while Index < NrOfColumns do
+			Index := Index + 1;
+			Rows at(I) putAt(Index, Rows at(I) at(Index) * N)
+		od;			
+		return self
+	rowAdd(I,J: Integer, N: Object) : Matrix |Index: Integer|
+		if (I = nil) | (I isOfType("Integer") not) | (J = nil) | (J isOfType("Integer") not) then self error("First and second parameters for method \"rowAdd\" of Matrix must be Integers") fi;
+		if (N = nil) | ((N isOfType("Integer") not) & (N isOfType("Real") not)) then self error("Third parameter for method \"rowAdd\" of Matrix must be a Real or an Integer") fi;
+		if N isOfType("Integer") then N := N asReal fi;
+		if I != J then
+			if (I < 0) | (I > NrOfRows) | (J < 0) | (J > NrOfRows) then self error("Index out of bounds for method \"rowSwitch\" of Matrix") fi;
+			Index := 0;
+			while Index < NrOfColumns do
+				Index := Index + 1;
+				Rows putAt(I, Rows at(I) at(Index) + (N * Rows at(J) at(Index)))
+			od
+		fi;
+		return self*/
+	maxNorm : Real |I, J: Integer, Norm: Real|
+		Norm := 0.0; I := 0;
+		while I != Rows do
+			I := I + 1; J := 0;
+			while J != Columns do
+				J := J + 1;
+				Norm := Norm max(RowArray at(I) at(J) abs)
+			od
+		od;
+		return Norm
+	oneNorm : Real |I, J: Integer, Norm, Sum: Real|
+		Norm := 0.0; J := 0;
+		while J != Columns do
+			J := J + 1; I := 0; Sum := 0.0;
+			while I != Rows do
+				I := I + 1;
+				Sum := Sum + (RowArray at(I) at(J) abs)
+			od;
+			Norm := Norm max(Sum)
+		od;
+		return Norm
+	infNorm : Real |I, J: Integer, Norm, Sum: Real|
+		Norm := 0.0; I := 0;
+		while I != Rows do
+			I := I + 1; J := 0; Sum := 0.0;
+			while J != Columns do
+				J := J + 1;
+				Sum := Sum + (RowArray at(I) at(J) abs)
+			od;
+			Norm := Norm max(Sum)
+		od;
+		return Norm
+	resize(R, C: Integer) : Matrix
+		if (R = nil) | (R isOfType("Integer") not) | (C = nil) | (C isOfType("Integer") not) then self error("Parameters for method \"resize\" of Matrix must be Integers") fi;
+		if (R < 0) | (C < 0) then self error("Parameters for method \"resize\" of Matrix must not be negative") fi;
+		return self ^resize(R, C)
+	at(R, C: Integer): Object
+ 		if RowArray = nil then self resize(0, 0) fi;
+		if (R = nil) | (R isOfType("Integer") not) | (C = nil) | (C isOfType("Integer") not) then self error("Parameters for method \"at\" of Matrix must be Integers") fi;
+   		if (R < 1) | (C < 1) | (R > Rows) | (C > Columns) then self error("Index out of bounds for method \"at\" of Matrix") 	fi;
+   		return RowArray at(R) at(C)
+	putAt(R, C: Integer, O: Object) : Matrix
+ 		if RowArray = nil then self resize(0, 0) fi;
+		if (R = nil) | (R isOfType("Integer") not) | (C = nil) | (C isOfType("Integer") not) then self error("Parameters for method \"putAt\" of Matrix must be Integers") fi;
+   		if (R < 1) | (C < 1) | (R > Rows) | (C > Columns) then self error("Index out of bounds for method \"putAt\" of Matrix") fi;
+		if (O = nil) | ((O isOfType("Real") not) & (O isOfType("Integer") not)) then self error("Third parameter for method \"putAt\" of Matrix must be a Real or an Integer") fi;
+		if O isOfType("Integer") then O := O asReal fi;
+   		return self ^putAt(R, C, O)
+	putAll(O: Object) : Matrix
+		if RowArray = nil then self resize(0, 0) fi;
+		if (O = nil) | ((O isOfType("Real") not) & (O isOfType("Integer") not)) then self error("Parameter for method \"putAll\" of Matrix must be a Real or an Integer") fi;
+ 		if O isOfType("Integer") then O := O asReal fi;
+   		return self ^putAll(O)
+	printString : String |Out: String, I, J: Integer|
+		if RowArray = nil then self resize(0, 0) fi;
+		if (Rows != 0) & (Columns != 0) then
+   			Out := "Matrix[" concat(Rows printString) concat(",") concat(Columns printString) concat("]:\n");
+   			I := 0;
+   			while I < Rows do
+      			I := I + 1;
+      			J := 0;
+      			Out concat("[");
+      			while J < Columns do
+         			J := J + 1;
+         			Out concat(RowArray at(I) at(J) printString);
+         			if J < Columns then Out concat(", ") fi
+      			od;
+      			Out concat("]\n")
+   			od
+   		else
+   			Out := "Matrix[0,0]"
+   		fi;
+   		return Out

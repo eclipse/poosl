@@ -1,0 +1,206 @@
+/* This example demonstrates non-deterministic and probabilistic choice.
+ * It also demonstrates the use of output parameters of process methods.
+ * It models a gambler who participates in a lottery.
+ * 
+ * Observe the effect of changing the lottery variant in the system definition.
+ * 
+ * Note: there are multiple seeds that are relevant when executing a POOSL model: 
+ * - seed of each RandomGenerator (set in the POOSL model)
+ * - seed of the simulator (set in the launch configuration)
+ * The seed of the simulator is used for resolving non-determinism choices.
+ * More information about setting the seed of the simulator can be found at:
+ *   Help (F1) -> Contents -> Poosl -> Simulate -> Launch Configuration -> Setting a seed for resolving non-determinism
+ * 
+ */
+// -----------------------------------------------------------------------------
+//
+/* Process class that models various variants of a lottery. */
+process class Lottery(
+		/* Fixed seed for the random generator. If nil, a random seed is used. */
+		seed : Object,
+		/* <p>Implementation variant of the coin flip game:
+		 * <ol><li> Angelic/External non-determinism (the gambler can influence the result; not fair)
+		 *     <li> Demonic/Internal non-determinism (the lottery determines the result; not fair)
+		 *     <li> Probabilities (Chance determines the result; fairness can be guaranteed)
+		 * </ol></p>
+		 */
+		variant : Integer)
+ports
+	/* This is the only port for interaction with the gambler. */
+	Port
+messages
+	/* Gambler decides to bet on head as result of the coin flip. */
+	Port?BetOnHead
+	/* Gambler decides to bet on tail as result of the coin flip. */
+	Port?BetOnTail
+	/* Result of the coin flip is head. */
+	Port!ResultIsHead
+	/* Result of the coin flip is tail. */
+	Port!ResultIsTail
+	/* Report that the gambler has won. */
+	Port!YouHaveWon
+	/* Report that the gambler has lost. */
+	Port!YouHaveLost
+variables
+	randomGenerator : RandomGenerator
+init
+	Initialise()()
+methods
+	/* Initializes the process class. */
+	Initialise()()
+		if seed = nil then
+			randomGenerator := new(RandomGenerator) randomiseSeed
+		else
+			randomGenerator := new(RandomGenerator) seed(seed)
+		fi;
+		Play()()
+
+	/* Play one round of the lottery game. */
+	Play()() | betOnHead : Boolean, flippedHead : Boolean |
+		ReceiveBet()(betOnHead);
+		sel
+			[variant = 1] CoinFlipNondeterministicExternal()(flippedHead)
+		or
+			[variant = 2] CoinFlipNondeterministicInternal()(flippedHead)
+		or
+			[variant = 3] CoinFlipProbabilistic()(flippedHead)
+		les;
+		ReportResult(betOnHead, flippedHead)();
+		Play()()
+
+	/* Receive a bet from a gambler. */
+	ReceiveBet()(betOnHead : Boolean)
+		sel
+			Port?BetOnHead;
+			betOnHead := true
+		or
+			Port?BetOnTail;
+			betOnHead := false
+		les
+
+	/* Report the results to the gambler. */
+	ReportResult(betOnHead : Boolean, flippedHead : Boolean)()
+		if betOnHead == flippedHead then
+			Port!YouHaveWon
+		else
+			Port!YouHaveLost
+		fi
+
+	/* Flip the coin using angelic non-determinism.
+	 * The effect is that the gambler can influence the result.
+	 */
+	CoinFlipNondeterministicExternal()(flippedHead : Boolean)
+		sel
+			Port!ResultIsHead;
+			flippedHead := true
+		or
+			Port!ResultIsTail;
+			flippedHead := false
+		les
+
+	/* Flip the coin using demonic non-determinism.
+	 * The effect is that the gambler cannot influence the result, but no fairness is guaranteed.
+	 */
+	CoinFlipNondeterministicInternal()(flippedHead : Boolean)
+		sel
+			skip;
+			Port!ResultIsHead;
+			flippedHead := true
+		or
+			skip;
+			Port!ResultIsTail;
+			flippedHead := false
+		les
+
+	/* Flip the coin using probabilities.
+	 * The effect is that the gambler cannot influence the result, and fairness is guaranteed.
+	 */
+	CoinFlipProbabilistic()(flippedHead : Boolean) | random : Integer |
+		random := randomGenerator randomInt(2);
+		if random = 0 then
+			Port!ResultIsHead;
+			flippedHead := true
+		else
+			Port!ResultIsTail;
+			flippedHead := false
+		fi
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that models a gambler who tries to avoid loosing by postponing the reception of bad news. */
+process class Gambler(canBetOnHead : Boolean, canBetOnTail : Object, numberOfRounds : Integer)
+ports
+	/* This is the only port for interaction with the lottery. */
+	Port
+messages
+	/* Gambler decides to bet on head as result of the coin flip. */
+	Port!BetOnHead
+	/* Gambler decides to bet on tail as result of the coin flip. */
+	Port!BetOnTail
+	/* Result of the coin flip is head. */
+	Port?ResultIsHead
+	/* Result of the coin flip is tail. */
+	Port?ResultIsTail
+	/* Report that the gambler has won. */
+	Port?YouHaveWon
+	/* Report that the gambler has lost. */
+	Port?YouHaveLost
+variables
+
+init
+	PlayN(numberOfRounds)()
+methods
+	/* Play N rounds of the lottery game. */
+	PlayN(N : Integer)()
+		if (N > 0) then
+			Play()();
+			PlayN(N - 1)()
+		fi
+
+	/* Play one round of the lottery game. */
+	Play()()
+		sel
+			[canBetOnHead] BetOnHead()()
+		or
+			[canBetOnTail] BetOnTail()()
+		les
+
+	/* Participate in the lottery with a bet on head.
+	 * If possible use a delay tactic to avoid loosing. 
+	 */
+	BetOnHead()()
+		Port!BetOnHead;
+		sel
+			Port?ResultIsHead;
+			Port?YouHaveWon
+		or
+			delay 1;
+			Port?ResultIsTail;
+			Port?YouHaveLost
+		les
+
+	/* Participate in the lottery with a bet on tail.
+	 * If possible use a delay tactic to avoid loosing. 
+	 */
+	BetOnTail()()
+		Port!BetOnTail;
+		sel
+			Port?ResultIsTail;
+			Port?YouHaveWon
+		or
+			delay 1;
+			Port?ResultIsHead;
+			Port?YouHaveLost
+		les
+
+// -----------------------------------------------------------------------------
+//
+system
+instances
+	lottery : Lottery(seed := nil, variant := 1) // Result: gambler always wins
+	// lottery: Lottery(seed := nil, variant := 2)		// Result: always the same sequence of winning and loosing (given a fixed seed of the simulator)
+	// lottery: Lottery(seed := 1, variant := 3)			// Result: always the same sequence of winning and loosing (given a fixed seed of the simulator)
+	// lottery: Lottery(seed := nil, variant := 3)		// Result: in each round a fair chance between winning and loosing (independent of the seed of the simulator)
+	gambler : Gambler(canBetOnHead := true, canBetOnTail := false, numberOfRounds := 2)
+channels
+	{ lottery.Port, gambler.Port }

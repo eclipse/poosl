@@ -1,0 +1,58 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: QuickfixImport
+Element-Type: context
+Element-Version: 2.0
+Id: _elzZwEnBEea18PiEOcOxrA
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 7/14/16 3:09 PM
+
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACFkEEOwiAURNeaeIeG
+vaA7F7Qm1rg0JuoBEH4qpoUGqOnxBUpt6sYdb5j/Z4Du+6bO3mCs1CpHW7xBGSiuhVRVju6303qH9sVq
+SVujX8DdESw3snXe7dUFVayBoqyBqctgoCRK4Y7rpgHlCkrGU1DTIhuBzOjRyVpcW+CBEpZ+lCkRlRSn
+TYWB17K1gHsHvcOdxPbJDIiBD2EQzFTFTzJTdaGDTUzmAiW/aUkZ6/ho1xlI7gH+NzlHXygS/XHttOj7
+/PmvfgBQSwcIydVtJsYAAACUAQAAUEsBAhQAFAAICAgAAAAhAMnVbSbGAAAAlAEAAAgACQAAAAAAAAAA
+AAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAAUBAAAAAA==
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65--
+------=_contents/CleanProject/models/parent.poosl-80978c06-67ff-3e77-99e5-cab690dcb93f
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/models/parent.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADLzC3ILypRUCouLUgt
+KkgsSs0r0SvIzy/OUQIAUEsHCBG1I9ocAAAAGgAAAFBLAQIUABQACAgIAAAAIQARtSPaHAAAABoAAAAI
+AAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAABbAAAAAAA=
+------=_contents/CleanProject/models/parent.poosl-80978c06-67ff-3e77-99e5-cab690dcb93f--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVkrFOwzAQhnck3sHy
+jk2ZqiihgipDB9QygVhQcK7F1LEt+0Isnp5Lm7SoA9AtPn/fb92v5LPUGPYJIWpnCz4R15yBVa7WdlPw
+FtdXUz67vbzIXdgIUEb7CCIojygUJtG5sI2+UpA9jV9zZxESstTo7JB70+fSSzZmNC/4O6LPpOy6Trhm
+IyhcPj8sRuSPtw76yPT6jpPEyQPHma0aoh9brbZrnRaNdwE503XBX8F8vXSlvS+hmkxXulyqZQp3nFZl
+LFf9DhZ3Bzr64D5AYRzy5gYqu9rP+MAQtdYGRkQMCpWZQLVYvRmaYmiByx+GMzU1NDiNq8HEY+BJ5O5a
+eOei+TX1RPNVoE3O92LrIfxbzuWwy1iZHDvbFyqPjeby3F+JpG9QSwcIA1IHMCMBAACnAgAAUEsBAhQA
+FAAICAgAAAAhAANSBzAjAQAApwIAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsF
+BgAAAAABAAEAPwAAAGIBAAAAAA==
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
+------=_contents/CleanProject/models/superparent.poosl-45816e43-c83f-32e9-bae9-c51811dbf448
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/models/superparent.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAADAFBLBwgAAAAAAgAA
+AAAAAABQSwECFAAUAAgICAAAACEAAAAAAAIAAAAAAAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRV
+VAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAQQAAAAAA
+------=_contents/CleanProject/models/superparent.poosl-45816e43-c83f-32e9-bae9-c51811dbf448--
+------=_contents/CleanProject/models/model.poosl-88c4f0db-cff5-3086-a386-70ec493375af
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/models/model.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADLzC3ILypRUCpILErN
+K9EryM8vzlHi5QIAUEsHCO3qVhYZAAAAFwAAAFBLAQIUABQACAgIAAAAIQDt6lYWGQAAABcAAAAIAAkA
+AAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAABYAAAAAAA=
+------=_contents/CleanProject/models/model.poosl-88c4f0db-cff5-3086-a386-70ec493375af--

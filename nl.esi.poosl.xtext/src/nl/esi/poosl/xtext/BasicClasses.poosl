@@ -1,0 +1,806 @@
+// API version 3.0
+
+// IMPORTANT NOTE:
+// After making any changes, please regenerate the documentation
+// and copy this to   nl.esi.poosl.help\html\language\BasicClasses.html
+
+/* This permanent, native class extends Object. It represents an indexed list of (arbitrary typed) objects. Creating a new Array yields an indexed list of size 0 (empty Array). Valid indices for non-empty Arrays range from 1 to the size of the Array. */
+native data class Array extends Object
+variables
+
+methods
+	/* Returns true in case o is an Array of the same size as the receiver and for each index, the objects both Arrays refer to are equal (in terms of =). Otherwise, it returns false. */
+	native =(o : Object) : Boolean
+
+	/* Returns a new Array object with the same size as the receiver and at each index, a recursive deepCopy of the object referred to by the receiver at that index. */
+	native deepCopy : Object
+
+	/* Returns a new Array object with the same size as the receiver and at each index, it refers to the same object referred to by the receiver at that index. */
+	native shallowCopy : Object
+
+	/* Returns a String equal to "Empty Array" in case the receiver has size 0. Otherwise, it consists of String "Array(" followed by a comma separated list of Strings, the result s of calling printString on the objects from index 1 to the size of the receiver, followed by ")". */
+	native printString : String
+
+	/* Returns the object located at index i in case i ranges between 1 and the size the receiver. Otherwise, an index out-of-bounds error is generated. */
+	native at(i : Integer) : Object
+
+	/* Returns the size of the receiver. */
+	native size : Integer
+
+	/* Replaces the object at index i with o in case i ranges between 1 and the size of the receiver. Otherwise, an index out-of-bounds error is generated. It returns the receiver. */
+	native putAt(i : Integer, o : Object) : Array
+
+	/* Makes all indices in the receiver refer to object o (without making copies). It returns the receiver. */
+	native putAll(o : Object) : Array
+
+	/* Modifies the size of the receiver to i (in case i >= 0). In case i < 0, an error is generated. When i is larger than the original size of the receiver, all new locations are filled with nil. When i is smaller than the original size of the receiver, the objects at indices between i+1 and the original size will no longer be contained. It returns the receiver. */
+	native resize(i : Integer) : Array
+
+	/* Returns a new Array consisting of a copy of the receiver that has the size of the receiver plus the size of a, where the indices between 1 and the size of the receiver are filled with the objects in the receiver (in the same order) and the indices between the size of the receiver + 1 and the size of the returned Array contain the objects in a (in the same order). It has a special syntax of the form a1 + a2, where a1 acts as the receiver and a2 as the argument. */
+	native +(a : Array) : Array
+
+	/* Modifies the receiver by increasing its size with the size of a, where the indices between the size of the receiver + 1 and the size of the returned Array contain the objects in a (in the same order). */
+	native concat(a : Array) : Array
+
+	/* This method searches the receiver for object o, starting from index i. If an object equal to o is found, the index (between 1 and the size of the receiver) at which o is located is returned. In case i is smaller than 1 or larger than the size of the receiver, an index out-of-bounds error is generated. In all other cases, it returns 0. */
+	native find(i : Integer, o : Object) : Integer
+
+	/* Returns a new Array of size l containing a copy of the objects in the receiver starting at index i in case i is between 1 and the size of the receiver, l is non-negative and i + l-1 is at most equal to the size of the receiver. Otherwise, an index out-of-bounds error is generated. */
+	native subArray(i, l : Integer) : Array
+
+
+/* This primitive, permanent, native class extends Object. It represents the class of Booleans. This class has two instances represented with the constants true and false. */
+native data class Boolean extends Object
+variables
+
+methods
+	/* Returns the logical and of the receiver and b. It has a special syntax of the form b1 & b2, where b1 acts as the receiver and b2 as the argument. */
+	native &(b : Boolean) : Boolean
+
+	/* Returns the logical or of the receiver and b. It has a special syntax of the form b1 | b2, where b1 acts as the receiver and b2 as the argument. */
+	native |(b : Boolean) : Boolean
+
+	/* Returns the logical inverse of the receiver. In addition to the normal syntax, it also has a special syntax of the form ! b, where b acts as the receiver. */
+	native not : Boolean
+
+	/* Returns the logical xor of the receiver and b. It is equivalent to (receiver!= B). */
+	native xor(b : Boolean) : Boolean
+
+	/* Using prefix notation, operator ! returns the logical inverse of the receiver. It is equivalent to b not, where b acts as the receiver. */
+	native !() : Boolean
+
+
+/* This primitive, permanent, native class extends Object. It represents the class of individual Extended ASCII characters and therefore has 256 instances representing each of the extended ASCII characters. */
+native data class Char extends Object
+variables
+
+methods
+	/* Returns the ASCII index number of the receiver. */
+	native asciiIndex : Integer
+
+	/* Returns a new String consisting of the single receiver character. */
+	native asString : String
+
+
+/* This native class extends Object. It provides a means to write information to the console. */
+native data class Console extends Object
+variables
+
+methods
+	/* Writes the String s as standard output to the console (not its syntactic representation). It returns the receiver. */
+	native write(s : String) : Console
+
+	/* Writes the String s as standard output to the console (its characters, not its syntactic representation) followed by new line character LF(10). It returns the receiver. */
+	native writeLine(s : String) : Console
+
+	/* Writes the String s as standard error to the console (not its syntactic representation). It returns the receiver. */
+	native writeError(s : String) : Console
+
+	/* Writes the String s as standard error to the console (its characters, not its syntactic representation) followed by new line character LF(10). It returns the receiver. */
+	native writeLineError(s : String) : Console
+
+
+/* This native class extends Object. It provides a means to read information from files. Creating a new FileIn yields an object without referring to any concrete file. */
+native data class FileIn extends Object
+variables
+
+methods
+	/* Specifies the file to read information from. s is a file name (possibly with an absolute or relative path reference – where the syntactic symbols / and \ for path references can be used interchangeably independent of OS). It returns the receiver. */
+	native source(s : String) : FileIn
+
+	/* Locks the referred file for read access. It assumes that method source has previously been called to identify the concrete file to refer to. Otherwise, an error is generated. It returns the receiver. */
+	native open : FileIn
+
+	/* Returns true in case the read pointer in the file points at the end of the file and false otherwise. */
+	native atEndOfFile : Boolean
+
+	/* This method and releases the referred file for further access. It returns the receiver. */
+	native close : FileIn
+
+	/* This method reads the next first i characters from the referred file and returns that as a String if i is non-negative. If fewer than i characters are available, a String is returned consisting of the number of available characters (until the end of the file). The read pointer in the file has been advanced till after the last read character. In case i is negative an error is produced. */
+	native read(i : Integer) : String
+
+	/* This method returns nil if the read pointer is at the end of the file. Otherwise, it returns the sequence of characters (as a String) until the next occurrence of character c in the file, or until the end of the file, whichever comes first. The read pointer has been advanced till after the character c if c was found or is at the end of the file if the end of the file has been encountered. The character c is not part of the returned String. */
+	native readUntil(c : Char) : String
+
+	/* This method returns nil if no non-white space characters exist until the end of the file. Otherwise, it returns the next consecutive sequence of non-white space characters (as a String) until the first white space character after this sequence, or until the end of the file, whichever comes first. The read pointer has been advanced till the first white space character after the sequence in the former case or is at the end of the file in the latter. None of the white space characters are part of the returned String. */
+	native readWord : String
+
+	/* This method returns nil if the read pointer is at the end of the file. Otherwise, it returns the next (possibly empty) sequence of non-newline characters (as a String) until the first new line character sequence , or until the end of the file, whichever comes first. The read pointer has been advanced till after the longest newline character sequence after the sequence of non-newline characters (if the line ends in CR(13) followed by LF(10) it advances till after the LF(10)). None of the newline characters are part of the returned String. */
+	native readLine : String
+
+	/* This method advances until the next occurrence of a double quote character ". In case the character sequence starting from the double quote character is a valid syntactical representation of a String, then this String is returned and the read pointer in the file has advanced till after the end of the String representation. If it is not a valid syntactical representation of a String, an error is generated. If no double quote character is encountered, nil is returned. */
+	native readString : String
+
+
+/* This native class extends Object. It provides a means to write information to files. Creating a new FileOut yields an object without referring to any concrete file. */
+native data class FileOut extends Object
+variables
+
+methods
+	/* Specifies the file to be referred to for writing information to. s is a file name (possibly with an absolute or relative path reference – where the syntactic symbols / and \ for path references can be used interchangeably independent of OS). In case a file with destination indicated by s already exists, that particular file is emptied. It returns the receiver. */
+	native destination(s : String) : FileOut
+
+	/* (Re-)opens the referred file for write access. Performing such write accesses will result in first clearing all existing information in the file (if any). It assumes that method destination has previously been called to identify the concrete file to refer to. Otherwise, an error is generated. It returns the receiver. */
+	native open : FileOut
+
+	/* (Re-)opens the referred file for write access. Performing such write accesses will result in appending the written information without overwriting the existing information in the file (if any). It assumes that method destination has previously been called to identify the concrete file to refer to. Otherwise, an error is generated. It returns the receiver. */
+	native append : FileOut
+
+	/* This method flushes all write buffers to file. It returns the receiver. */
+	native flush : FileOut
+
+	/* This method flushes all write buffers and releases the referred file for further access. It returns the receiver. */
+	native close : FileOut
+
+	/* Writes the String s to the referred file (not its syntactic representation). It returns the receiver. */
+	native write(s : String) : FileOut
+
+	/* Writes the String s to the file (its characters, not its syntactic representation) followed by new line character LF(10). It returns the receiver. */
+	native writeLine(s : String) : FileOut
+
+	/* Writes a syntactic representation of String s to the file. It returns the receiver. */
+	native writeString(s : String) : FileOut
+
+
+/* This primitive, permanent, native class extends Object. Its instances represents floating-point numbers using IEEE 754-2008 double-precision floating point representations. Note that the arithmetic operators operate as specified by this standard. Instances of the Float class can be distinguished from the Real class by the 'f' (or 'F') postfix, or the literals nan and inf. */
+native data class Float extends Object
+variables
+
+methods
+	/* Returns the sum of the receiver with r. It has a special syntax of the form r1 + r2, where r1 acts as the receiver and r2 as the argument. */
+	native +(r : Float) : Float
+
+	/* Returns the quotient of the receiver with r. It has a special syntax of the form r1 / r2, where r1 acts as the receiver and r2 as the argument. */
+	native /(r : Float) : Float
+
+	/* Returns the product of the receiver and r. It has a special syntax of the form r1 * r2, where r1 acts as the receiver and r2 as the argument. */
+	native *(r : Float) : Float
+
+	/* Returns true in case the receiver is greater than or equal to r and false otherwise. It has a special syntax of the form r1 >= r2, where r1 acts as the receiver and r2 as the argument. */
+	native >=(r : Float) : Boolean
+
+	/* Returns true in case the receiver is greater than r and false otherwise. It has a special syntax of the form r1 > r2, where r1 acts as the receiver and r2 as the argument. */
+	native >(r : Float) : Boolean
+
+	/* Returns true in case the receiver is smaller than or equal to r and false otherwise. It has a special syntax of the form r1 <= r2, where r1 acts as the receiver and r2 as the argument. */
+	native <=(r : Float) : Boolean
+
+	/* Returns true in case the receiver is smaller than r and false otherwise. It has a special syntax of the form r1 < r2, where r1 acts as the receiver and r2 as the argument. */
+	native <(r : Float) : Boolean
+
+	/* Subtracts r from the receiver and returns the result. It has a special syntax of the form r1 - r2, where r1 acts as the receiver and r2 as the argument. */
+	native -(r : Float) : Float
+
+	/* Returns the negation of the receiver. It has a special syntax of the form -r, where r acts as the receiver. */
+	native -() : Float
+
+	/* Returns the absolute value of the receiver. */
+	native abs() : Float
+
+	/* Returns the inverse hyperbolic sine of the receiver if the receiver is a positive value. Otherwise, an error is generated. */
+	native acosh() : Float
+
+	/* Returns the inverse hyperbolic cosine of the receiver. */
+	native asinh() : Float
+
+	/* Returns the inverse hyperbolic tangent of the receiver for values smaller or equal to (-)1. Otherwise, an error is generated. */
+	native atanh() : Float
+
+	/* Returns the hyperbolic cosine of the receiver. */
+	native cosh() : Float
+
+	/* Returns the hyperbolic sine of the receiver. */
+	native sinh() : Float
+
+	/* Returns the hyperbolic tangent of the receiver. */
+	native tanh() : Float
+
+	/* Returns the arc cosine of the receiver. */
+	native acos() : Float
+
+	/* Returns the arc sine of the receiver. */
+	native asin() : Float
+
+	/* Returns the arc tangent of the receiver. */
+	native atan() : Float
+
+	/* Returns the principal value of the arc tangent of the receiver / argument(p), using the signs of the receiver and argument (p) to determine the quadrant of the result. */
+	native atan2(p : Float) : Float
+
+	/* Returns the smallest integral value that is not less then the receiver. */
+	native ceil() : Float
+
+	/* Returns the cosine value of the receiver. */
+	native cos() : Float
+
+	/* Returns the value of e to the power of the receiver. */
+	native exp() : Float
+
+	/* Returns the largest integral value that is not greater than the receiver. */
+	native floor() : Float
+
+	/* Returns the natural logarithm of the receiver. */
+	native log() : Float
+
+	/* Returns the base 10 logarithm of the receiver. */
+	native log10() : Float
+
+	/* Returns the receiver raised to the power of p. */
+	native pow(p : Float) : Float
+
+	/* Returns the nearest integer value of the receiver, but round halfway cases away from 0. */
+	native round() : Float
+
+	/* Returns the sine value of the receiver. */
+	native sin() : Float
+
+	/* Returns the square of the receiver. */
+	native sqr() : Float
+
+	/* Returns the square root of the receiver if the receiver is non-negative. Otherwise an error is generated. */
+	native sqrt() : Float
+
+	/* Returns the tangent of the receiver. */
+	native tan() : Float
+
+	/* Returns the smallest value of the receiver and p. */
+	native min(p : Float) : Float
+
+	/* Returns the biggest value of the receiver and p. */
+	native max(p : Float) : Float
+
+	/* Returns the difference of the receiver with p if the receiver > p or 0 otherwise. */
+	native monus(p : Float) : Float
+
+	/* Returns the textual representation of the value of the receiver. */
+	native printString() : String
+
+	/* Returns an Integer representation of the receiver denoting the integer number closest to the receiver. Rounding is as follows: for positive numbers: x rounds to ceil(x+1/2) for negative numbers x rounds to floor(x-1/2). It will throw an exception when the value of the receiver cannot be represented as an Integer. */
+	native asInteger() : Integer
+
+	/* Returns the receiver. */
+	native asFloat() : Float
+
+	/* Returns the receiver as a Real if it is a valid Real number. Otherwise an error is generated. */
+	native asReal() : Real
+
+	/* Returns the nearest integer value. This function returns a Float. */
+	native nearbyint() : Float
+
+	/* Returns the next representable floating-point value following the receiver in the direction of p. */
+	native nextafter(p : Float) : Float
+
+	/* Returns the remainder of dividing x by y. The return value is x-n*y, where n is the value x / y, rounded to the nearest integer.  If the absolute value of x-n*y is 0.5, n is chosen to be even. */
+	native remainder(p : Float) : Float
+
+	/* Returns the cube root of the receiver. */
+	native cbrt() : Float
+
+	/* Returns the error function of the receiver (x), defined as: erf(x) = 2/sqrt(pi)* integral from 0 to x of exp(-t*t) dt. */
+	native erf() : Float
+
+	/* Returns 1.0f - r erf(). */
+	native erfc() : Float
+
+	/* Returns base-2 exponential function */
+	native exp2() : Float
+
+	/* Returns exp(x) - 1. */
+	native expm1() : Float
+
+	/* Same as round, but will raise exception when inexact. */
+	native rint() : Float
+
+	/* Returns the rounded integer value not larger in absolute value. */
+	native trunc() : Float
+
+	/* Returns a value whose magnitude is taken from x and whose sign is taken from y. */
+	native copysign(p : Float) : Float
+
+	/* Returns the result of r* y + z. The result is rounded as one ternary operation. */
+	native fma(y, z : Float) : Float
+
+	/* Returns the positive difference between the receiver and x. */
+	native fdim(x : Float) : Float
+
+	/* Returns the value r - n*y, for some integer n, such that the returned value has the same sign as the receiver and a magnitude less than the magnitude of y. */
+	native fmod(x : Float) : Float
+
+	/* Returns sqrt(r*r+y*y). */
+	native hypot(y : Float) : Float
+
+	/* Returns the Gamma function of the receiver. The gamma function is defined as: Gamma(x) = integral from 0 to infinity of t^(x-1) e^-t dt. */
+	native tgamma() : Float
+
+	/* Returns the natural logarithm of the absolute value of the Gamma function on the receiver. */
+	native lgamma() : Float
+
+	/* Returns the logarithm of 1 plus the receiver. */
+	native log1p() : Float
+
+	/* Returns the base-2 logarithmic of the receiver. */
+	native log2() : Float
+
+	/* Returns the exponent of the internal float representation of the receiver. */
+	native logb() : Float
+
+	/* Returns the integer exponent of the internal floating-point representation of the receiver. */
+	native ilogb() : Integer
+
+	/* Returns true if the receiver is ``Not a Number''. */
+	native isnan() : Boolean
+
+	/* Returns true if the receiver is a positive or negative infinity. */
+	native isinf() : Boolean
+
+
+/* This primitive, permanent, native class extends Object. It represents the class of (unbounded) integer numbers. */
+native data class Integer extends Object
+variables
+
+methods
+	/* Returns the negation of the receiver. It has a special syntax of the form -i, where i acts as the receiver. */
+	native - : Integer
+
+	/* Subtracts i from the receiver and returns the result. It has a special syntax of the form i1 - i2, where i1 acts as the receiver and i2 as the argument. */
+	native -(i : Integer) : Integer
+
+	/* Returns the product of the receiver and i. It has a special syntax of the form i1 * i2, where i1 acts as the receiver and i2 as the argument. */
+	native *(i : Integer) : Integer
+
+	/* This method is identical to the method div. Returns the Integer A such that A*i + B equals the receiver for some B and 0 <= B < i if i > 0 and i < B <= 0 if i < 0. */
+	native /(i : Integer) : Integer
+
+	/* Returns an Integer representing the bit-wise and of the two's-complement of the receiver with i. It has a special syntax of the form i1 & i2, where i1 acts as the receiver and i2 as the argument. */
+	native &(i : Integer) : Integer
+
+	/* Returns the sum of the receiver with i. It has a special syntax of the form i1 + i2, where i1 acts as the receiver and i2 as the argument. */
+	native +(i : Integer) : Integer
+
+	/* Returns true in case the receiver is smaller than i and false otherwise. It has a special syntax of the form i1 < i2, where i1 acts as the receiver and i2 as the argument. */
+	native <(i : Integer) : Boolean
+
+	/* Returns true in case the receiver is smaller than or equal to i and false otherwise. It has a special syntax of the form i1 <= i2, where i1 acts as the receiver and i2 as the argument. */
+	native <=(i : Integer) : Boolean
+
+	/* Returns true in case the receiver is greater than i and false otherwise. It has a special syntax of the form i1 > i2, where i1 acts as the receiver and i2 as the argument. */
+	native >(i : Integer) : Boolean
+
+	/* Returns true in case the receiver is greater than or equal to i and false otherwise. It has a special syntax of the form i1 >= i2, where i1 acts as the receiver and i2 as the argument. */
+	native >=(i : Integer) : Boolean
+
+	/* Returns an Integer representing the bit-wise or of the two's-complement of the receiver with i. It has a special syntax of the form i1 | i2, where i1 acts as the receiver and i2 as the argument. */
+	native |(i : Integer) : Integer
+
+	/* Returns the absolute value of the receiver. */
+	native abs : Integer
+
+	/* Returns the character by using the receiver as its ASCII index number in case the receiver ranges between 0 and 255. Otherwise, an index out-of-bound error is generated. */
+	native asAsciiChar : Char
+
+	/* Returns a Float object with the same value as the receiver. */
+	native asFloat : Float
+
+	/* Returns the receiver. (Only for compatibility with Real::asInteger.)*/
+	native asInteger : Integer
+
+	/* Returns a Real object with the same value as the receiver. */
+	native asReal : Real
+
+	/* Returns the Integer A such that A*i + B equals the receiver for some B and 0 <= B < i if i > 0 and i < B <= 0 if i < 0. */
+	native div(i : Integer) : Integer
+
+	/* Returns the factorial of the receiver in case the receiver is non-negative. Otherwise, an error is generated. (Notice that 0! = 1). */
+	native fac : Integer
+
+	/* Returns the Integer B such that A * i + B equals the receiver for some Integer A and 0 <= B < i if i > 0 and i < B <= 0 if i < 0. */
+	native modulo(i : Integer) : Integer
+
+	/* Returns the difference of the receiver with i if the receiver > i or 0 otherwise. */
+	native monus(i : Integer) : Integer
+
+	/* Returns the receiver raised to the power of i in case i is non-negative. Otherwise, an error is generated. */
+	native power(i : Integer) : Integer
+
+	/* Returns the square of the receiver. */
+	native sqr : Integer
+
+	/* Returns the maximum of the receiver and i. */
+	native max(i : Integer) : Integer
+
+	/* Returns the bit-wise negation of the receiver. It is equivalent to: -receiver - 1. */
+	native not : Integer
+
+	/* Returns the minimum of the receiver and i. */
+	native min(i : Integer) : Integer
+
+	/* Returns the bit-wise xor of the receiver and i. */
+	native xor(i : Integer) : Integer
+
+
+/* This primitive, permanent, native class extends Object. It represents the class of instance nil. */
+native data class Nil extends Object
+variables
+
+methods
+
+
+/* This permanent, native class represents the root superclass of any other data class. It therefore provides generic methods that are applicable to all data objects. */
+native data class Object
+variables
+
+methods
+	/* Returns true in case o is not equal to the receiver and false otherwise. The result is equivalent to (receiver = o) not. It has a special syntax of the form o1 != o2, where o1 acts as the receiver and o2 as the argument */
+	native !=(o : Object) : Boolean
+
+	/* Returns true in case o is not identical to the receiver and false otherwise. The result is equivalent to: (receiver == o) not. It has a special syntax of the form o1 !== o2, where o1 acts as the receiver and o2 as the argument. */
+	native !==(o : Object) : Boolean
+
+	/* Implements the equality relation. For primitive objects (except for Float value nan), = is equivalent to ==. For user-defined classes, it returns true if o is an object of the same class as the receiver and all instance variables of o and the receiver are (recursively) equal as well. Otherwise, it returns false. For non-primitive native classes, the behavior is as defined for the user-defined classes, unless specified differently at the description of the class. It has a special syntax of the form o1 = o2, where o1 acts as the receiver and o2 as the argument.	*/
+	native =(o : Object) : Boolean
+
+	/* Implements the identity relation. Returns true in case o refers to the same object as the receiver. Otherwise, it returns false. It has a special syntax of the form o1 == o2, where o1 acts as the receiver and o2 as the argument. */
+	native ==(o : Object) : Boolean
+
+	/* For user-defined classes not extending non-permanent native classes, it returns a clone of the receiver as a new object. This means that a new instance of the receiver's class is returned, where each instance variable is assigned to clones in a recursive manner, such that all (indirect) references to the same original object result in references to a single cloned object. The original and cloned data object structures are isomorphic. For primitive classes, the receiver itself is returned. The non-permanent native classes (and any user-defined subclasses) do not support copying and therefore, an error is generated. For non-primitive permanent classes, the behavior is as defined for the user-defined classes, unless specified differently at the description of the class. */
+	native deepCopy : Object
+
+	/* This method allows to signal erroneous behavior. Semantically it does nothing, but tools tend to halt execution of a model after this method and show message s to the user. */
+	native error(s : String) : Object
+
+	/* This method allows to signal erroneous behavior for a condition b. Semantically it does nothing, but tools tend to halt execution of a model after this method when expression b evaluates to false and show message s to the user. */
+	native assert(b : Boolean, s : String) : Object
+
+	/* Returns a standardized String representation of the receiver. The inverse functionality is implemented as method unmarshal in class String. It can for example be used to communicate arbitrary objects between different POOSL models via files or sockets in a standardized way. */
+	native marshal : String
+
+	/* Returns a String representation of the receiver. It is the typical means used by tools to retrieve a representation of an object to users of those tools. The standard behavior in class Object returns just the class name. This is overridden in subclasses to display more specific information on the object. If the receiver is an instance of a primitive class or class String, the syntactic constant representation of the receiver is returned. */
+	native printString : String
+
+	/* For user-defined classes not extending non-permanent native classes, it returns a shallow copy of the receiver. This means that a new object of the receiver's class is created, for which the instance variables refer to the same objects as the corresponding instance variables of the receiver. For primitive classes, the receiver itself is returned. For non-permanent native classes (and any user-defined subclasses), an error is generated. For non-primitive permanent classes, the behavior is as defined for the user-defined classes, unless specified differently at the description of the class. */
+	native shallowCopy : Object
+
+	/* If s does not refer to the name of an existing data class, an error is generated. In case s does refer to the name of an existing data class, true is returned in case the receiver is of the type associated with the data class with name s and false otherwise. */
+	native isOfType(s : String) : Boolean
+
+
+/* This native class extends Object. It can be used to monitor the simulated system and it provides a means for POOSL tools to terminate an execution or interact with other tools based on observation results. Creating a new Observer yields an unregistered observer object. While unregistered it has no effect on execution of a model. Registering an Observer makes it relevant in the condition to terminate the execution. In case method complete has been called for all Observer instances in a POOSL model since their registration (and there is at least one registered Observer), the execution terminates. Execution also terminates when method halt is called for any registered Observer. */
+native data class Observer extends Object
+variables
+
+methods
+	/* Sets the Observer’s human-readable identity to s. */
+	native identifyWith(s : String) : Observer
+
+	/* Returns the Observer’s identity. */
+	native identity : String
+
+	/* This method returns a String representation of the results for the monitored property. Tools typically use it to communicate observer state to external tools. By default, the result of method printString is returned. Method result can be overridden in subclasses to return specific information on the monitored properties. */
+	native result : String
+
+	/* Marks the Observer to be relevant for terminating the simulation. If the Observer executed the complete method before, it is only considered activated until it executes the complete method again. */
+	native register : Observer
+
+	/* Marks the Observer to be irrelevant for terminating the simulation. */
+	native deregister : Observer
+
+	/* Marks the Observer as activated to terminate the simulation. The simulation actually terminates at the moment that all observers were activated by calling method complete since their registration. */
+	native complete : Observer
+
+	/* The simulation terminates immediately when any registered Observer executes this method. */
+	native halt : Observer
+
+	/* Returns true when the receiver is the last Observer not yet activated. */
+	native isLast : Boolean
+
+
+/* This native class extends Object. It represents a generator of pseudo-random values with a uniform distribution U[0,1). */
+native data class RandomGenerator extends Object
+variables
+
+methods
+	/* Returns a Real sample from distribution U[0, 1). */
+	native random : Real
+
+	/* Returns an Integer sample from discrete uniform distribution [0, i-1] for i > 0. In case i <= 0, an error is generated. */
+	native randomInt(i : Integer) : Integer
+
+	/* This method arbitrarily modifies the seed for the sequence of pseudo-random numbers successively produced by calling methods random and randomInt. The exact behavior is implementation dependent, typically setting the seed to a time-dependent value. Note that when the randomiseSeed or seed methods are not used, every instance of this class will produce the same sequence of pseudo random numbers. Using randomiseSeed disables exact reproductions of executions. It returns the receiver. */
+	native randomiseSeed : RandomGenerator
+
+	/* Sets the seed of the receiver to i. It returns the receiver. */
+	native seed(i : Integer) : RandomGenerator
+
+
+/* This primitive, permanent, native class extends Object. Custom floating point implementation; see data class Float for the IEEE 754-2008 standard. */
+native data class Real extends Object
+variables
+
+methods
+	/* Returns the negation of the receiver. It has a special syntax of the form -r, where r acts as the receiver. */
+	native - : Real
+
+	/* Subtracts r from the receiver and returns the result. It has a special syntax of the form r1 - r2, where r1 acts as the receiver and r2 as the argument. */
+	native -(r : Real) : Real
+
+	/* Returns the product of the receiver and r. It has a special syntax of the form r1 * r2, where r1 acts as the receiver and r2 as the argument. */
+	native *(r : Real) : Real
+
+	/* Returns the quotient of the receiver with r. It has a special syntax of the form r1 / r2, where r1 acts as the receiver and r2 as the argument. */
+	native /(r : Real) : Real
+
+	/* Returns the sum of the receiver with r. It has a special syntax of the form r1 + r2, where r1 acts as the receiver and r2 as the argument. */
+	native +(r : Real) : Real
+
+	/* Returns true in case the receiver is smaller than r and false otherwise. It has a special syntax of the form r1 < r2, where r1 acts as the receiver and r2 as the argument. */
+	native <(r : Real) : Boolean
+
+	/* Returns true in case the receiver is smaller than or equal to r and false otherwise. It has a special syntax of the form r1 <= r2, where r1 acts as the receiver and r2 as the argument. */
+	native <=(r : Real) : Boolean
+
+	/* Returns true in case the receiver is greater than r and false otherwise. It has a special syntax of the form r1 > r2, where r1 acts as the receiver and r2 as the argument. */
+	native >(r : Real) : Boolean
+
+	/* Returns true in case the receiver is greater than or equal to r and false otherwise. It has a special syntax of the form r1 >= r2, where r1 acts as the receiver and r2 as the argument. */
+	native >=(r : Real) : Boolean
+
+	/* Returns the absolute value of the receiver. */
+	native abs : Real
+
+	/* Returns the arccosine of the receiver if the receiver is in [-1.0, 1.0]. Otherwise, an error is generated. */
+	native acos : Real
+
+	/* Returns the arcsine of the receiver if the receiver is in [-1.0, 1.0]. Otherwise, an error is generated. */
+	native asin : Real
+
+	/* Returns a Float object with the same value as the receiver. */
+	native asFloat : Float
+
+	/* Returns an Integer representation of the receiver denoting the integer number closest to the receiver. Rounding is as follows: for positive numbers: x rounds to floor(x + 1/2) for negative numbers x rounds to ceiling(x - 1/2). */
+	native asInteger : Integer
+
+	/* Returns the receiver. (Only for compatibility with Integer::asReal.)*/
+	native asReal : Real
+
+	/* Returns the arctangent of the receiver. */
+	native atan : Real
+
+	/* Returns the angle in radians between the vector (receiver, r) and the vector (1, 0). */
+	native atan2(r : Real) : Real
+
+	/* Returns the smallest rounded Real that is not smaller than the receiver. */
+	native ceiling : Real
+
+	/* Returns the cosine of the receiver (as an angle in radians). */
+	native cos : Real
+
+	/* Returns e (the base of the natural logarithm) to the power of the receiver. */
+	native exp : Real
+
+	/* Returns the largest rounded Real that is not larger than the receiver. */
+	native floor : Real
+
+	/* Returns the natural logarithm of the receiver if the receiver is positive. Otherwise, an error is generated. */
+	native ln : Real
+
+	/* Returns the 10-based logarithm of the receiver if the receiver is positive. Otherwise, an error is generated. */
+	native log : Real
+
+	/* Returns the difference of the receiver with r if the receiver > r or 0 otherwise. */
+	native monus(r : Real) : Real
+
+	/* Returns the receiver raised to the power of r. */
+	native power(r : Real) : Real
+
+	/* Returns the rounded Real closest to the receiver (as an Integer). Rounding is as follows: for positive numbers: x rounds to floor(x + 1/2) for negative numbers x rounds to ceiling(x - 1/2). */
+	native round : Real
+
+	/* Returns the sine of the receiver (as an angle in radians). */
+	native sin : Real
+
+	/* Returns the square of the receiver. */
+	native sqr : Real
+
+	/* Returns the square root of the receiver in case the receiver is non-negative. Otherwise, an error is generated. */
+	native sqrt : Real
+
+	/* Returns the tangent of the receiver (as an angle in radians). */
+	native tan : Real
+
+	/* Returns the maximum of the receiver and r. */
+	native max(r : Real) : Real
+
+	/* Returns the minimum of the receiver and r. */
+	native min(r : Real) : Real
+
+
+/* This native class extends Object. It provides a means to communicate via TCP/IP through sockets. Creating a new Socket yields an unconnected TCP/IP socket. For simplicity reasons, a Socket supports at most one connection between a server and client. */
+native data class Socket extends Object
+variables
+
+methods
+	/* Passively accepts a TCP/IP connection from local port i. It returns the receiver. */
+	native acceptFrom(i : Integer) : Socket
+
+	/* Actively establishes a TCP/IP connection to a remote socket with remote server named s or with IP address s and remote port number i. It returns the receiver. */
+	native connectTo(s : String, i : Integer) : Socket
+
+	/* Returns true in case is the receiver is connected and false otherwise. */
+	native isConnected : Boolean
+
+	/* Returns true in case is the receiver is disconnected and false otherwise. */
+	native isDisconnected : Boolean
+
+	/* Releases the concrete socket (if it was created) for further communication. It returns the receiver. */
+	native close : Socket
+
+	/* Returns true in case there are at least i characters available for reading and false otherwise. */
+	native hasCharacters(i : Integer) : Boolean
+
+	/* This method returns nil in case less than i characters are available for reading (without advancing the read pointer). Otherwise, it returns the sequence of first i characters (as an Array containing Char elements). The read pointer has been advanced till after the last read character. */
+	native readCharacters(i : Integer) : Array
+
+	/* This method reads the next sequence of i available characters and returns them as a String if i is non-negative. If fewer than i characters are available, a String is returned consisting of the number of available characters. The read pointer has been advanced till after the last read character. In case i is negative, an error is produced. */
+	native read(i : Integer) : String
+
+	/* Returns true in case there is at least one occurrence of character c available for reading and false otherwise. */
+	native hasCharacter(c : Char) : Boolean
+
+	/* This method returns nil in case no character 'c' is available (without advancing the read pointer). Otherwise, it returns the sequence of characters (as a String) until the first occurrence of character 'c'. The read pointer has been advanced till after the last read character. The character 'c' is not returned as part of the String. */
+	native readUntil(c : Char) : String
+
+	/* Returns true in case a non-empty sequence of non-white space characters is available for reading, preceded by a possibly empty sequence of white-space characters and succeeded by at least one white space character. Otherwise, it returns false. */
+	native hasWord : Boolean
+
+	/* This method returns nil in case no sequence of non-white space characters is available that is succeeded by a white space character (without advancing the read pointer). Otherwise, it returns the sequence of non-white space characters (as a String) after a possibly empty sequence of white-space characters, until the first white space character after this sequence. The read pointer has been advanced till immediately after the first white space character after the sequence of non-white space characters. None of the white space characters before or after the word are part of the returned String. */
+	native readWord : String
+
+	/* Returns true in case a newline character sequence is available (possibly after other characters) and false otherwise. */
+	native hasLine : Boolean
+
+	/* This method returns nil in case no new line character sequence is available (without advancing the read pointer). Otherwise it returns the sequence of non-new line characters (as a String) until the first new-line character sequence after this sequence. The read pointer has been advanced till after the longest new-line character sequence immediately following the non-newline characters (if the line ends in CR(13) followed by LF(10) it advances till after the LF(10)). The new line characters are not part of the returned String. */
+	native readLine : String
+
+	/* Returns true in case in the sequence available for reading the first occurrence of a double quote forms with a sequence of following characters either a (complete) syntactic representation of a String, or is an invalid beginning of a syntactic representation of a String, i.e., cannot be completed to a valid String constant. It returns false otherwise. */
+	native hasString : Boolean
+
+	/* This method advances until the next occurrence of a double quote character ". In case the character sequence starting from the double quote character is a valid syntactical representation of a String, then this String is returned. The read pointer has advanced till after the end of the String representation. In case the character sequence is not a valid syntactical representation of a String and cannot be completed to a valid String, an error is generated. In all other cases, nil is returned (without advancing the read pointer). */
+	native readString : String
+
+	/* Writes the String s to the referred socket (not its syntactic representation). It returns the receiver. */
+	native write(s : String) : Socket
+
+	/* Writes the characters in the array to the socket. The array parameter is only allowed to contain characters. It returns the receiver.*/
+	native writeCharacters(a : Array) : Socket
+
+	/* Writes the String s to the referred file (not its syntactic representation) followed by new line character LF(10). It returns the receiver. */
+	native writeLine(s : String) : Socket
+
+	/* Writes the syntactic representation of s to the socket. It returns the receiver.*/
+	native writeString(s : String) : Socket
+
+
+/* This permanent, native class extends Object. It represents the class of strings (of arbitrary size). */
+native data class String extends Object
+variables
+
+methods
+	/* Returns true in case o refers to a String identical to the receiver. Otherwise, it returns false. It has a special syntax of the form o1 = o2, where o1 acts as the receiver and o2 as the argument. */
+	native =(o : Object) : Boolean
+
+	/* Returns a new String, identical to the receiver. */
+	native deepCopy : Object
+
+	/* Returns a new String, identical to the receiver. */
+	native shallowCopy : Object
+
+	/* Returns the concatenation of the receiver and s (as a new String). It has a special syntax of the form s1 + s2, where s1 acts as the receiver and s2 as the argument. */
+	native +(s : String) : String
+
+	/* Modifies the receiver by concatenation with s. It returns the receiver. */
+	native concat(s : String) : String
+
+	/* Modifies the receiver by concatenation with a carriage return character CR(13). It returns the receiver. */
+	native cr : String
+
+	/* Modifies the receiver by concatenation with a line feed character LF(10). It returns the receiver. */
+	native lf : String
+
+	/* Modifies the receiver by concatenation with a tab character HT(9). It returns the receiver. */
+	native tab : String
+
+	/* This method searches the receiver for a substring s, starting from index i. If pattern s is found, the index (between 1 and the size of the receiver) at which s starts is returned. In case i is smaller than 1 or larger than the size of the receiver, an index out-of-bounds error is generated. In all other cases, it returns 0. */
+	native find(i : Integer, s : String) : Integer
+
+	/* Returns the character at index i in case i ranges between 1 and the size of the receiver. Otherwise, an index out-of-bounds error is generated. */
+	native at(i : Integer) : Char
+
+	/* Returns the number of characters constituting the receiver. */
+	native size : Integer
+
+	/* Modifies the receiver by replacing the character at index i with c in case i ranges between 1 and the size of the receiver. Otherwise, an index out-of-bounds error is generated. It returns the receiver. */
+	native putAt(i : Integer, c : Char) : String
+
+	/* Returns a new String containing a copy of the substring with size l, starting at index i in case i is between 1 and the size of the receiver, l is non-negative  and i + l-1 is at most equal to the size of the receiver. Otherwise, an index out-of-bounds error is generated. */
+	native subString(i, l : Integer) : String
+
+	/* This method reconstructs an Object from a standardized String representation as created by the method marshal of class Object. If the receiver does not conform to the marshal syntax, an error occurs. */
+	native unmarshal : Object
+
+	/* Returns an Array of String objects, constructed by splitting the receiver into substrings at characters c. The new String objects in the returned Array do not contain character c. Notice that in case the receiver contains a sequence of characters c, the returned Array will contain empty Strings. In case c is not included in the receiver, the returned Array solely contains a copy of the receiver. */
+	native splitOn(c : Char) : Array
+
+	/* Returns an Array of String objects, constructed by splitting the receiver into substrings delimited by one or more white space characters. The new String objects in the returned Array do not contain any white space characters. White space characters at the beginning and end of the receiver are ignored and if the receiver consists of white space characters only, an empty Array is returned. In case the receiver does not contain any white-space characters, the returned Array solely contains a copy of the receiver. */
+	native splitOnWhiteSpace : Array
+
+	/* Returns an Array of String objects, constructed by splitting the receiver into substrings at string s. The new String objects in the returned Array do not contain string s. Notice that in case the receiver contains a sequence of string s, the returned Array will contain empty Strings. In case s is not included in the receiver, the returned Array solely contains a copy of the receiver. Splitting the string is done from left to right. Splitting the string "aapppoa" on "pp" therefor results in: "aa", "poa". */
+	native splitOnString(s : String) : Array
+
+	/* Returns an Array of String objects, constructed by splitting the receiver into substrings at any of characters in s. The new String objects in the returned Array do not contain any of the characters in s. Notice that in case the receiver contains a sequence of characters in s, the returned Array will contain empty Strings. In case any of the characters of s is not included in the receiver, the returned Array solely contains a copy of the receiver. */
+	native splitOnAny(c : String) : Array
+
+	/* Returns a new string where the leading and trailing whitespaces are removed. */
+	native trim() : String
+
+	/* Returns true in case the receiver is the String representation of a Boolean object and false otherwise. No extra white space or other characters are allowed. */
+	native isBoolean : Boolean
+
+	/* Returns true in case the receiver is the String representation of a Char object and false otherwise. The character must include surrounding single quotes and may use escape characters. No extra white space or other characters are allowed. */
+	native isChar : Boolean
+
+	/* Returns "receiver isFloat | receiver isInteger | receiver isReal". */
+	native isNumber : Boolean
+
+	/* Returns true in case the receiver is the String representation of a Float object and false otherwise. No extra white space or other characters are allowed. */
+	native isFloat : Boolean
+
+	/* Returns true in case the receiver is the String representation of an Integer object and false otherwise. No extra white space or other characters are allowed. */
+	native isInteger : Boolean
+
+	/* Returns true in case the receiver is the String representation of a Real object and false otherwise. No extra white space or other characters are allowed. */
+	native isReal : Boolean
+
+	/* If "receiver isFloat", it returns "receiver toFloat". If "receiver isReal", it returns "receiver toReal asFloat". If "receiver isInteger", it returns "receiver toInteger asFloat". Otherwise, it returns nil. */
+	native parseAsFloat : Float
+
+	/* If "receiver isInteger", it returns "receiver toInteger". If "receiver isReal", it returns "receiver toReal asInteger". Otherwise, it returns nil. */
+	native parseAsInteger : Integer
+
+	/* If "receiver isReal", it returns "receiver toReal". If "receiver isInteger", it returns "receiver toInteger asReal". Otherwise, it returns nil. */
+	native parseAsReal : Real
+
+	/* If the receiver is the String representation of a Boolean object (in line with the isBoolean method), this object is returned. Otherwise, nil is returned. */
+	native toBoolean : Boolean
+
+	/* If the receiver is the String representation of a Char object (in line with the isChar method), this object is returned. Otherwise, nil is returned. */
+	native toChar : Char
+
+	/* If the receiver is the String representation of a Float object (in line with the isFloat method), this object is returned. Otherwise, nil is returned. */
+	native toFloat : Integer
+
+	/* If the receiver is the String representation of an Integer object (in line with the isInteger method), this object is returned. Otherwise, nil is returned. */
+	native toInteger : Integer
+
+	/* If the receiver is the String representation of a Real object (in line with the isReal method), this object is returned. Otherwise, nil is returned. */
+	native toReal : Real

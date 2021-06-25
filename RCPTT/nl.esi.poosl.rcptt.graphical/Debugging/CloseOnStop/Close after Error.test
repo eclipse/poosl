@@ -1,0 +1,32 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihIHEMT_EeWbAfcxAheu3Q,_1XTYUMT-EeWbAfcxAheu3Q
+Element-Name: Close after Error
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _81ImUMXDEeWbAfcxAheu3Q
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 3:40 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "producer_consumer.poosl"] {
+    with [get-text-viewer] {
+        set-caret-pos 47 43
+        key-type Enter
+        type-text "nil error(\"error\");"
+    }
+}
+get-eclipse-window | key-type "M1+s"
+get-editor "producer_consumer.poosl" | get-editbox | get-menu "Debug As/.* POOSL Simulation" | click
+
+get-view Debug | get-tree | select "producer_consumer.poosl [Simulated time: 0]/system" | click-open-communication-diagram-debugview
+get-tab-folder -index 3 | get-property tabCount | equals 2 | verify-true
+click-communication-step
+click-terminate
+get-tab-folder -index 3 | get-property tabCount | equals 1 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

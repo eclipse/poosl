@@ -1,0 +1,19 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: PC debug and Bus in seperate window  
+Element-Type: context
+Element-Version: 2.0
+Id: _ivTMsDBkEeW29Z9sVV_ISA
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/21/18 2:36 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+wait 50
+get-editor "producer_consumer.poosl" | get-editbox | get-menu "Debug As/.* POOSL Simulation" | click
+get-view Debug | get-tree | select "producer_consumer.poosl [Simulated time: 0]/system/Bus" | get-menu "Open in New Window" 
+    | click
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

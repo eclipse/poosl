@@ -1,0 +1,35 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _M2SmsJdqEeW9e7WhQQEB6g,_ldH90ONVEeSZttsAewanYQ
+Element-Name: Generate Rotalumis Cyclic XML Empty
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _THCzEJdqEeW9e7WhQQEB6g
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 8/10/17 1:36 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "CyclicProject/models/FileA.poosl" | get-menu "Generate Legacy Rotalumis XML" 
+    | click
+
+
+with [get-view "Project Explorer" | get-tree] {
+    select "CyclicProject/models/FileA.poosl" | get-menu "Generate Legacy Rotalumis XML" | click
+    select "CyclicProject/models/simulator/FileA.xml" | double-click
+}
+get-editor "FileA.xml" | get-tree | get-item "poosl_specification" | assert-non-empty
+get-editor "FileA.xml" | get-tree | get-item "poosl_specification" | get-property childCount | equals 5 | verify-true
+
+get-editor "FileA.xml" | get-tree | select "poosl_specification/process_classes/process_class/name"
+with [get-editor "FileA.xml" | get-tree] {
+    get-item "poosl_specification/process_classes/process_class/name" | get-property "values['Node']" | equals name 
+        | verify-true
+    get-item "poosl_specification/process_classes/process_class/name" | get-property "values['Content']" 
+        | equals processClass | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

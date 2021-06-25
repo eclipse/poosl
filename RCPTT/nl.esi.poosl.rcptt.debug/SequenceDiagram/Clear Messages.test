@@ -1,0 +1,31 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g,_VBDK0OdkEeS02qlAIvBOkg,_-6xq0Nf8Eea3P5Zs0ralfQ
+Element-Name: Clear Messages
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _bEPuQOdiEeS02qlAIvBOkg
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 1/12/17 4:13 PM
+Tags: Debug, SequenceDiagram
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+launch-debug -name ProducerConsumer10002 -file "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
+get-view Debug | get-tree | select "producer_consumer.poosl .*"
+get-button "Communication Step (F7)" | click
+
+with [get-view "Sequence Diagram"] {
+    get-button "Clear Messages" | click
+    with [get-canvas] {
+        mouse-press 435 79 button1
+        mouse-release 435 79 button1 524288
+        mouse-move 6 118
+    }
+}
+get-tab-folder -index 4 | get-property activePage | equals Console | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

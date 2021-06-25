@@ -1,0 +1,33 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+
+data class notDeclaredDataClass extends Object
+variables	
+methods	
+ someMethod() : Object |  |
+// XPECT errors --> "Variable 'i' is not declared." at "i"
+ return i
+ 
+ 
+ process class someClass()
+ ports 	
+ messages 	
+ variables 	
+ init
+ 	someMethod()()
+ methods
+ 	someMethod()() | | 
+ 	 // Error when variable is not declared in dataclass
+ 	// XPECT errors --> "Variable 'i' is not declared." at "i"
+ 	i+1;
+ 		skip
+ 
+ 
+  // Error when dataclass is not declared in dataclass
+ //XPECT errors --> "DataClass 'NotExisting' is not declared." at "NotExisting"
+ data class extendDataClass extends NotExisting
+variables
+methods	
+ someMethod() : Object |  |
+	return nil
+ 

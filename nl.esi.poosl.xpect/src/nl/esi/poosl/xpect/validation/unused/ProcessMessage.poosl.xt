@@ -1,0 +1,59 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+process class sendUsedStatementClass()
+ports
+	Out,
+	Out2
+messages
+// Warning when send statement is not used
+//XPECT warnings --> "No send statement for this message" at "Out!integer(Integer)"
+	Out!integer(Integer)
+	//No  Warning when send statement is used
+	//XPECT noIssues
+	Out2!integer(Integer) 
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		Out2!integer(1) ;
+		skip
+    
+process class receiveUsedStatementClass()
+ports
+	In,
+	In2 
+messages
+// Warning when receive statement is not used
+//XPECT warnings --> "No receive statement for this message" at "In?integer(Integer)"
+	In?integer(Integer)
+	//No  Warning when receive statement is used
+	//XPECT noIssues
+	In2?integer(Integer)
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | i : Integer | 
+		In2?integer(i) ;
+		skip
+		
+		
+
+process class SimulationController() 
+ports
+	Monitor  
+messages
+	// Message is used inside abort inside while statement
+	// XPECT noIssues
+	Monitor!StopSimulation()
+variables
+init 
+	CheckAccuracyStatus()()
+methods
+	CheckAccuracyStatus()() | |
+		abort
+			while true do
+				Monitor!StopSimulation
+			od
+		with delay(1.0e-12)

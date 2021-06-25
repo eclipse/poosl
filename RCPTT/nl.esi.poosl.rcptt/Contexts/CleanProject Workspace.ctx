@@ -1,0 +1,41 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: CleanProject Workspace
+Element-Type: context
+Element-Version: 2.0
+Id: _3u4PMONbEeSZttsAewanYQ
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 5/21/15 9:55 AM
+
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSFkEEOwiAURNeaeIeGvaA7F7Qm1rg0
+JuoBEH4qpoUGqOnxBUpt6sYdb5j/Z4Du+6bO3mCs1CpHW7xBGSiuhVRVju6303qH9sVqSVujX8DdESw3
+snXe7dUFVayBoqyBqctgoCRK4Y7rpgHlCkrGU1DTIhuBzOjRyVpcW+CBEpZ+lCkRlRSnTYWB17K1gHsH
+vcOdxPbJDIiBD2EQzFTFTzJTdaGDTUzmAiW/aUkZ6/ho1xlI7gH+NzlHXygS/XHttOj7/PmvfgBQSwcI
+ydVtJsYAAACUAQAAUEsBAhQAFAAICAgAAAAhAMnVbSbGAAAAlAEAAAgAAAAAAAAAAAAAAAAAAAAAAC5j
+b250ZW50UEsFBgAAAAABAAEANgAAAPwAAAAAAA==
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSVkU1PxCAQhu8m/gfCXfDrYJrWjdl4
+8LC6xsOqF9OlsxWlQGBq+/OddvthjNF4A+Z5H5ghXbSVYR8QonY24yfimDOwyhXalhmvcXd0wReXhwep
+C6UAZbSPIILyiEJhKxoX3qPPFSSbcbV0FqFF1lY6mbynnZdusjGh84y/IvpEyqZphKtKQXL5uLoZkT/u
+muIj08V7ThInJ44zm1dELw3kdh3cGyhkm7mqi4y/nNXn69Xd7fYaHp4R4xU0uX2659QyY6nqerHYb2jr
+9474g5cPDFE7bWBExBChobagasy3hk4x1MDll4QzBU1qyFSuABNn4TdlXxbeuWh+t8pBO75ejs/f9ybn
+5lL539+l0CdQSwcIc2I6mQ4BAAA6AgAAUEsBAhQAFAAICAgAAAAhAHNiOpkOAQAAOgIAAAgAAAAAAAAA
+AAAAAAAAAAAAAC5jb250ZW50UEsFBgAAAAABAAEANgAAAEQBAAAAAA==
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
+------=_contents/CleanProject/models/model.poosl-88c4f0db-cff5-3086-a386-70ec493375af
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/models/model.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnQDAFBLBwgAAAAAAgAAAAAAAABQSwEC
+FAAUAAgICAAAACEAAAAAAAIAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRQSwUGAAAAAAEA
+AQA2AAAAOAAAAAAA
+------=_contents/CleanProject/models/model.poosl-88c4f0db-cff5-3086-a386-70ec493375af--

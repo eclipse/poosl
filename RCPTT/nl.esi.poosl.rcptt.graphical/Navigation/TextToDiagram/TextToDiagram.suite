@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: TextToDiagram
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _v__DAOnAEeSy84egTU6BNw
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 2/23/16 1:55 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_ExhNgOmbEeS5bKpaEaRSAA	// kind: 'test' name: 'F2 Open Graphical Editor System' path: 'F2 Open Graphical Editor System.test'
+_BoCUEOmbEeS5bKpaEaRSAA	// kind: 'test' name: 'F2 Open Graphical Editor Data' path: 'F2 Open Graphical Editor Data.test'
+_IRbp8OmbEeS5bKpaEaRSAA	// kind: 'test' name: 'F2 Open Graphical Editor Process' path: 'F2 Open Graphical Editor Process.test'
+_1Ru3UONbEeSZttsAewanYQ	// kind: 'test' name: 'Open Composite Structure Cluster' path: 'Open Composite Structure Cluster.test'
+_qsDoMP4tEeSf_PFiy2GHdA	// kind: 'test' name: 'Open Composite Structure Cluster Existing' path: 'Open Composite Structure Cluster Existing.test'
+_DWQREP4uEeSf_PFiy2GHdA	// kind: 'test' name: 'F2 Open Graphical Editor Data Existing' path: 'F2 Open Graphical Editor Data Existing.test'
+_GmX-AP4uEeSf_PFiy2GHdA	// kind: 'test' name: 'F2 Open Graphical Editor Process Existing' path: 'F2 Open Graphical Editor Process Existing.test'
+_IT-vUP4uEeSf_PFiy2GHdA	// kind: 'test' name: 'F2 Open Graphical Editor System Existing' path: 'F2 Open Graphical Editor System Existing.test'
+_xfDOENorEeWr3a7wWrF4WQ	// kind: 'test' name: 'Open Class Diagram' path: 'Open Class Diagram.test'
+_axq3MNorEeWr3a7wWrF4WQ	// kind: 'test' name: 'Open Composite Structure Not Selected Main' path: 'Open Composite Structure Not Selected Main.test'
+_fjWS8NoqEeWr3a7wWrF4WQ	// kind: 'test' name: 'Open Composite Structure Not Selected NonExisting' path: 'Open Composite Structure Not Selected NonExisting.test'
+_TVPXUNoqEeWr3a7wWrF4WQ	// kind: 'test' name: 'Open Composite Structure Not Selected System' path: 'Open Composite Structure Not Selected System.test'
+_s10rENopEeWr3a7wWrF4WQ	// kind: 'test' name: 'Open Composite Structure System' path: 'Open Composite Structure System.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

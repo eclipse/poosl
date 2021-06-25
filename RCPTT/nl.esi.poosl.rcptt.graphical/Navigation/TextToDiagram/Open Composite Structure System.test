@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _lVE1EONVEeSZttsAewanYQ,_hmR-AOgJEeSUFO5-NwwB0Q
+Element-Name: Open Composite Structure System
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _s10rENopEeWr3a7wWrF4WQ
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 2/23/16 1:35 PM
+Tags: Graphical, Class Diagram
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    set-caret-pos 145 24
+    get-menu "Open Composite Structure Diagram" | click
+}
+with [get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
+    -name "System (producer_consumer.poosl)"] {
+    get-property className | equals "org.eclipse.sirius.diagram.ui.internal.edit.parts.DDiagramEditPart" | verify-true
+    get-property childrenCount | equals 1 | verify-true
+    get-property "diagram.element.name" | equals "System (producer_consumer.poosl)" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

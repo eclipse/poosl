@@ -1,0 +1,33 @@
+@Source("In-Flight Entertainment System::In-Flight Entertainment System::Physical Architecture::Physical Context::Aircraft")
+/* Stub for simulation and monitoring purposes only.
+ */
+process class AircraftProcess
+ports
+	OutAudio
+	Monitor
+messages
+	OutAudio!BeginAnnouncement(Integer)
+	OutAudio!EndAnnouncement(Integer)
+	Monitor!AnnouncementSent(Integer)
+variables
+	random : RandomGenerator
+	counter : Integer
+init
+	Initialise()()
+methods
+	Initialise()()
+		random := new(RandomGenerator);
+		counter := 0;
+		Idle()()
+
+	Idle()()
+		delay random randomInt(100); // time between announcements
+		DoAnnouncement()()
+
+	DoAnnouncement()()
+		counter := counter + 1;
+		Monitor!AnnouncementSent(counter);
+		OutAudio!BeginAnnouncement(counter);
+		delay 5; // duration of announcement
+		OutAudio!EndAnnouncement(counter);
+		Idle()()

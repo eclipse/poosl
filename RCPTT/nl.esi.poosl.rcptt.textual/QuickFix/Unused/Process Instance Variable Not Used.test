@@ -1,0 +1,41 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Process Instance Variable Not Used
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _n2gpQOQUEeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 1/10/18 5:17 PM
+Tags: Process, Instance, QuickFix
+Testcase-Type: ecl
+Verifications: _gJsDYFP-Eea5R70fIjiNMA
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+	type-text "process class someClass(number  : Integer) \n"
+	type-text "ports \n"	
+	type-text "messages \n"
+	type-text "variables \n"
+	type-text "init \n"
+	type-text "someMethod()() \n"
+	type-text "methods \n"
+	type-text "\tsomeMethod()() | | \n"
+	type-text "\tskip \n"
+}
+
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 1 31
+    key-type "M1+1"
+    key-type Down
+    key-type Enter    
+}
+//get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table | select "Remove this unused variable" 
+//    | click -default
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

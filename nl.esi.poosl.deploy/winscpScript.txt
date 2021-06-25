@@ -1,0 +1,11 @@
+open ftpes://upload%40poosl.esi.nl:%POOSL_PASSWORD%@web-da81.tno.nl:21/
+
+
+#upload updatesite
+put "%dir%..\nl.esi.poosl.updatesite\target\repository\*" public_html/downloads/ide/updates/%type%/local/
+
+#upload combined repo jars
+put "%dir%..\currentSite-TNO\%type%\*.jar" public_html/downloads/ide/updates/%type%/local/
+put "%dir%..\currentSite-TNO\%type%\*.xz" public_html/downloads/ide/updates/%type%/local/
+
+exit

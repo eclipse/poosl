@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="pooslmodel" targetNamespace="uri:poosl" xmlns="uri:poosl"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:include id="poosltypes" schemaLocation="poosltypes.xsd" />
+	<xs:include id="pooslstatements" schemaLocation="pooslstatements.xsd" />
+	<xs:include id="rotalumisapitypes" schemaLocation="rotalumisapitypes.xsd" />
+
+	<xs:element name="poosl_specification" type="t_poosl_specification" />
+
+	<xs:complexType name="t_poosl_specification">
+		<xs:sequence>
+			<xs:element name="name" type="t_identifier" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="data_classes" type="t_data_classes"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="process_classes" type="t_process_classes"
+				maxOccurs="1" minOccurs="0" />
+			<xs:element name="cluster_classes" type="t_cluster_classes"
+				maxOccurs="1" minOccurs="0" />
+			<xs:element name="top_level_specification" type="t_top_level_specification"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="description" type="xs:string" minOccurs="0"
+				maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--<xs:complexType name="t_list_files_request">
+		<xs:sequence>
+			<xs:element name="poosl_specification" type="xs:integer" />
+		</xs:sequence>
+	</xs:complexType>-->
+
+	<xs:complexType name="t_cluster_classes">
+		<xs:sequence>
+			<xs:element name="cluster_class" minOccurs="0" maxOccurs="unbounded"
+				type="t_cluster_class" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="t_process_classes">
+		<xs:sequence>
+			<xs:element name="process_class" minOccurs="0" maxOccurs="unbounded"
+				type="t_process_class" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_data_classes">
+		<xs:sequence>
+			<xs:element name="data_class" minOccurs="0" maxOccurs="unbounded"
+				type="t_data_class" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_data_class">
+		<xs:sequence>
+			<xs:element name="super_class" type="t_poosl_type"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="instance_variable" minOccurs="0"
+				maxOccurs="unbounded" type="t_typed_variable" />
+			<xs:element name="data_method" minOccurs="0" maxOccurs="unbounded"
+				type="t_data_method" />
+			<xs:element name="annotation" minOccurs="0" maxOccurs="1"
+				type="t_data_class_annotation" />
+		</xs:sequence>
+		<xs:attribute name="name" type="t_poosl_type" use="required" />
+		<xs:attribute name="native" type="t_boolean" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="t_data_method">
+		<xs:sequence>
+			<xs:element name="return_type" type="t_poosl_type"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="argument" minOccurs="0" maxOccurs="unbounded"
+				type="t_typed_variable" />
+			<xs:element name="local_variable" minOccurs="0" maxOccurs="unbounded"
+				type="t_typed_variable" />
+			<xs:element name="body_text" type="xs:string" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="body_expression" type="t_expression"
+				minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="name" type="t_data_method_name" use="required" />
+		<xs:attribute name="native" type="t_boolean" use="optional" />
+		<!-- note that if native="true", the method should not have body_text and 
+			body_expression and if native="false", they must have body_expression. I 
+			don't know if that can be expressed in xsd. -->
+	</xs:complexType>
+
+	<xs:complexType name="t_process_class">
+		<xs:sequence>
+			<xs:element name="interface" minOccurs="1" maxOccurs="1"
+				type="t_interface" />
+			<xs:element name="super_class" type="t_poosl_type"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="instantiation_parameter" maxOccurs="unbounded"
+				minOccurs="0" type="t_typed_variable" />
+			<xs:element name="instance_variable" maxOccurs="unbounded"
+				minOccurs="0" type="t_typed_variable" />
+			<xs:element name="initial_method_call" type="t_initial_method_call"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="process_method" minOccurs="0" maxOccurs="unbounded"
+				type="t_process_method" />
+			<xs:element name="annotation" minOccurs="0" maxOccurs="1"
+				type="t_process_class_annotation" />
+		</xs:sequence>
+		<xs:attribute name="name" type="t_poosl_type" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="t_process_method">
+		<xs:sequence>
+			<xs:element name="argument" maxOccurs="unbounded"
+				minOccurs="0" type="t_typed_variable" />
+			<xs:element name="output_parameter" maxOccurs="unbounded"
+				minOccurs="0" type="t_typed_variable" />
+			<xs:element name="local_variable" minOccurs="0" maxOccurs="unbounded"
+				type="t_typed_variable" />
+			<xs:element name="body_text" type="xs:string" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="body_statement" type="t_statement"
+				minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="name" type="t_identifier" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="t_cluster_class">
+		<xs:sequence>
+			<xs:element name="interface" minOccurs="1" maxOccurs="1"
+				type="t_cluster_interface" />
+			<xs:element name="instantiation_parameter" maxOccurs="unbounded"
+				minOccurs="0" type="t_typed_variable" />
+			<xs:element name="channel" maxOccurs="unbounded"
+				minOccurs="0" type="t_channel" />
+			<xs:element name="instance" maxOccurs="unbounded"
+				minOccurs="1" type="t_instance" />
+			<xs:element name="annotation" minOccurs="0" maxOccurs="1"
+				type="t_cluster_class_annotation" />
+		</xs:sequence>
+		<xs:attribute name="name" type="t_poosl_type" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="t_top_level_specification">
+		<xs:sequence>
+			<xs:element name="instance" minOccurs="1" maxOccurs="unbounded"
+				type="t_instance" />
+			<xs:element name="channel" maxOccurs="unbounded"
+				minOccurs="0" type="t_channel_internal" />
+			<xs:element name="annotation" minOccurs="0" maxOccurs="1"
+				type="t_top_level_annotation" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_channel_internal">
+		<xs:sequence>
+			<xs:element name="annotation" type="t_channel_annotation"
+				minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="name" type="t_identifier" />
+	</xs:complexType>
+
+	<xs:complexType name="t_channel">
+		<xs:complexContent>
+			<xs:extension base="t_channel_internal">
+				<xs:attribute name="output_port" type="t_identifier"
+					use="optional" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_instance">
+		<xs:sequence>
+			<xs:element name="instantiation_expression" type="t_instantiation_expression"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="connection" minOccurs="0" maxOccurs="unbounded"
+				type="t_connection" />
+			<xs:element name="annotation" type="t_instance_annotation"
+				minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="type" type="t_instance_type" />
+		<xs:attribute name="class" type="t_identifier" />
+		<xs:attribute name="name" type="t_identifier" />
+	</xs:complexType>
+
+	<xs:complexType name="t_connection">
+		<xs:sequence>
+			<xs:element name="annotation" type="t_connection_annotation"
+				minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="port" type="t_identifier" use="required" />
+		<xs:attribute name="channel" type="t_identifier" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="t_initial_method_call">
+		<xs:sequence>
+			<xs:element name="method_call_text" type="xs:string"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="process_method_call" type="t_initial_process_method_call"
+				minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_instantiation_expression">
+		<xs:sequence>
+			<xs:element name="body_text" type="xs:string" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="body_expression" type="t_expression"
+				minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="parameter_name" type="t_variable_name"
+			use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="t_interface">
+		<xs:sequence>
+			<xs:element name="port" type="t_port" maxOccurs="unbounded"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_port">
+		<xs:sequence>
+			<xs:element name="message" type="t_message" maxOccurs="unbounded"
+				minOccurs="0" />
+			<xs:element name="annotation" maxOccurs="1" minOccurs="0"
+				type="t_port_annotation" />
+		</xs:sequence>
+		<xs:attribute name="name" type="t_identifier" />
+	</xs:complexType>
+
+	<xs:complexType name="t_message">
+		<xs:sequence>
+			<xs:element name="argument" type="t_poosl_type_attribute"
+				maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="type" type="t_message_type" />
+		<xs:attribute name="name" type="t_identifier" />
+	</xs:complexType>
+
+	<xs:complexType name="t_cluster_interface">
+		<xs:sequence>
+			<xs:element name="port" type="t_port" maxOccurs="unbounded"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_annotation">
+		<xs:sequence>
+			<xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="t_top_level_annotation">
+		<xs:complexContent>
+			<xs:extension base="t_annotation" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_data_class_annotation">
+		<xs:complexContent>
+			<xs:extension base="t_annotation" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_process_class_annotation">
+		<xs:complexContent>
+			<xs:extension base="t_annotation" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_cluster_class_annotation">
+		<xs:complexContent>
+			<xs:extension base="t_annotation" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_channel_annotation">
+		<xs:complexContent>
+			<xs:extension base="t_annotation" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_instance_annotation">
+		<xs:complexContent>
+			<xs:extension base="t_annotation" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_port_annotation">
+		<xs:complexContent>
+			<xs:extension base="t_annotation" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="t_connection_annotation">
+		<xs:complexContent>
+			<xs:extension base="t_annotation" />
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

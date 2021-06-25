@@ -1,0 +1,54 @@
+/* This example demonstrates a very simple POOSL model.
+ * It models a Sender and a Receiver that communicate one message.
+ * The next example to look at is ProducerConsumer. 
+ * 
+ */
+// -----------------------------------------------------------------------------
+//
+/* Process class that sends one message. */
+process class Sender
+ports
+	/* This is the only port; it is used for outgoing messages. */
+	Out
+messages
+	/* Outgoing message */
+	Out!Message(String)
+variables
+
+init
+	Send()()
+methods
+	/* Send one message */
+	Send()()
+		Out!Message("Hello World")
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that receives one message. */
+process class Receiver
+ports
+	/* This is the only port; it is used for incoming messages. */
+	In
+messages
+	/* Incoming message */
+	In?Message(String)
+variables
+
+init
+	Receive()()
+methods
+	/* Receive one message */
+	Receive()() | X : String |
+		In?Message(X)
+
+// -----------------------------------------------------------------------------
+//
+/* Top-level system specification */
+system
+instances
+	/* Message sender */
+	Sender : Sender()
+	/* Message receiver */
+	Receiver : Receiver()
+channels
+	{ Sender.Out, Receiver.In }

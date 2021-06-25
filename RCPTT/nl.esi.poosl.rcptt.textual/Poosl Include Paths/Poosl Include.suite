@@ -1,0 +1,21 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Poosl Include
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _cxJFYBuPEeeKSO4xt8npOw
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 4/7/17 3:11 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_qvzGsBuREeeKSO4xt8npOw	// kind: 'test' name: 'Include Properties View' path: 'Include Properties View.test'
+_VM0bgBuTEeeKSO4xt8npOw	// kind: 'test' name: 'Include Add' path: 'Include Add.test'
+_XFnwMBuTEeeKSO4xt8npOw	// kind: 'test' name: 'Include Add External' path: 'Include Add External.test'
+_bcm-kBuTEeeKSO4xt8npOw	// kind: 'test' name: 'Include Build on Change' path: 'Include Build on Change.test'
+_ZCa0EBuTEeeKSO4xt8npOw	// kind: 'test' name: 'Include Up and Down' path: 'Include Up and Down.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

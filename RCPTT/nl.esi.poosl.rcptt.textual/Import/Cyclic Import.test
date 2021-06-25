@@ -1,0 +1,47 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _XCZgsP-QEeSf_PFiy2GHdA,_DS-RMOgBEeSUFO5-NwwB0Q,_sGziUN-iEeW3F4aEWhFXfg
+Element-Name: Cyclic Import
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _36YkMP-tEeSf_PFiy2GHdA
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 8/10/17 1:21 PM
+Tags: Error, Import, Process
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Error is shown because processClass is not declared in the file. The process class is declared in a different file.
+By importing the file that imports the correct file the error is no longer shown.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+	set-caret-pos 1 1	
+	type-text "import \"classes.poosl\"\n\nsystem \ninstances\nsomeInstance : secondImportProcess()\nchannels"
+	key-type "M1+s"
+}
+
+with [get-view "Project Explorer" | get-tree] {
+    select "CleanProject/models/secondImport.poosl" | double-click
+}
+with [get-editor "secondImport.poosl" | get-text-viewer] {
+	set-caret-pos 1 1
+	type-text "import \"classes.poosl\""
+    set-caret-pos 8 5
+    type-text "someVar : dataClass"    
+    set-caret-pos 13 13
+    key-type BackSpace -times 4
+    type-text "someVar := new(dataClass)"
+    key-type "M1+s"
+    
+    get-property "markers['1'][0].Type" | equals null
+	get-property "markers['1'][0].text" | equals null
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

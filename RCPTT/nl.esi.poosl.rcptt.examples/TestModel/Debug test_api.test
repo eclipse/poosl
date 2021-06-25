@@ -1,0 +1,25 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_fdA5gHM0EeWNsvS2ZqaobA,_ldH90ONVEeSZttsAewanYQ
+Element-Name: Debug test_api
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _L__G0HM5EeWNsvS2ZqaobA
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 10:01 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+file-poosl-debug "nl.esi.poosl.testmodels/test_api.poosl"
+select-root-click-record
+get-menu "Run/Resume" | click
+try -times 10 -delay 500 -command {
+	get-view Console | get-text-viewer | get-property text | contains "Test procedures done!" | verify-true
+	//get-view Console | get-text-viewer | get-property text | contains failed | verify-false
+	get-menu "Run/Terminate" | click
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

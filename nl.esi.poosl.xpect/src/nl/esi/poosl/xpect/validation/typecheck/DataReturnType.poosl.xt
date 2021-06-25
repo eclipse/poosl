@@ -1,0 +1,39 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+
+
+data class Distribution extends Object
+variables 
+methods  
+// return self
+//XPECT noIssues
+	initialise : Distribution		
+	return self
+
+
+data class Bernoulli extends Distribution
+variables 
+methods 
+	//
+	//XPECT noIssues
+	sample : Boolean
+		return true  
+	
+data class Collection extends Object 
+	variables
+	methods
+	//XPECT noIssues
+	!=(S: Object) : Boolean
+	S;
+		return true
+
+ 
+		
+// Collection Classes
+
+data class Bag extends Collection
+	variables
+	methods
+	//XPECT noIssues
+	add(O: Object) : Bag || 
+	O;
+		return self

@@ -1,0 +1,41 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_miregORDEeSZttsAewanYQ
+Element-Name: Editing while Debugging Relaunch
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _KnN54OgMEeSUFO5-NwwB0Q
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 10/3/18 12:11 PM
+Tags: Edit Debug Relaunch
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Edit a resource of a model that is already running, add a second cluster to the system. When trying to save this resource select continue in the popup window. The debug window should change and hold 1 model with 3 child nodes.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "hello_world.poosl" | editor-poosl-debug 
+
+with [get-editor "hello_world.poosl" | get-text-viewer] {
+    set-caret-pos 14 24
+    key-type Enter
+    type-text "Out!Message1(String)"
+    key-type "M1+s"
+}
+get-window "Save during debug session" | get-button "Terminate and relaunch" | click
+click-remove-terminated-launches
+with [get-view Debug | get-tree] {
+    get-property itemCount | equals 1 | verify-true
+    get-item "hello_world.poosl \\[Simulated time: 0\\]" | get-property childCount | equals 1 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals "hello_world.poosl [Simulated time: 0]" | verify-true
+}
+
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

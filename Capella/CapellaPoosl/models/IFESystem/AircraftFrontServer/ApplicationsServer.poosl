@@ -1,0 +1,40 @@
+process class ApplicationsServer
+ports
+	InAudio
+	OutAudio
+	OutInterruptionCommand
+	Trace
+messages
+	InAudio?BeginAnnouncement(Integer)
+	InAudio?EndAnnouncement(Integer)
+	OutAudio!BeginAnnouncement(Integer)
+	OutAudio!EndAnnouncement(Integer)
+	OutInterruptionCommand!Resume()
+	OutInterruptionCommand!Interrupt()
+	Trace!AnnouncementAtApplicationsServer(Integer, Real, Real)
+variables
+
+init
+	Idle()()
+methods
+	Idle()() | id : Integer |
+		InAudio?BeginAnnouncement(id);
+		delay 1; // internal processing time
+		Trace!AnnouncementAtApplicationsServer(id, currentTime - 1.0, currentTime);
+		par
+			OutInterruptionCommand!Interrupt()
+		and
+			OutAudio!BeginAnnouncement(id)
+		rap;
+		ProcessAudio()()
+
+	ProcessAudio()() | id : Integer |
+		InAudio?EndAnnouncement(id);
+		delay 1; // internal processing time
+		Trace!AnnouncementAtApplicationsServer(id, currentTime - 1.0, currentTime);
+		par
+			OutAudio!EndAnnouncement(id)
+		and
+			OutInterruptionCommand!Resume()
+		rap;
+		Idle()()

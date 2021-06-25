@@ -1,0 +1,43 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_0xOUsD9EEeWqI5T62C2nUQ,_r5J-sN-HEeSGR4qac-ot4g,_BwlHUB7pEeWW8tYfmHmITA,__IJ8MD9YEeWqI5T62C2nUQ
+Element-Name: TraceClear
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _TvmzwGK4EeW-SLvDGrSJuQ
+Runtime-Version: 2.3.0.201806262310
+Save-Time: 7/10/19 4:34 PM
+Tags: StrackTrace Error
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Clear all fields when model is terminated
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Execution Tree" | get-tree | select "\\/system\\/ProducerConsumer\\/Producer"
+with [get-view StackTrace] {
+    get-list | get-property "getItemCount()" | equals 4 | verify-true
+    get-editbox -after [get-label "Error Message:"] | get-property text 
+        | equals "The index (4) is out of bounds. Index should be within range: 1 <= index <=  2." | verify-true
+}
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]"
+get-button "Terminate (M1+F2)" | click
+// Debug session may still be terminating, waiting half a second
+wait 500
+get-view Debug | get-button "Remove All Terminated Launches" | click
+with [get-view StackTrace] {
+    get-editbox -after [get-label "Error Message:"] | get-property text | equals "" | verify-true
+    get-list | get-property "getItems().length" | equals 0 | verify-true
+}
+with [get-view "StackTrace Variables"] {
+    get-tree | get-property itemCount | equals 0 | verify-true
+    get-text-viewer | get-property text | equals "" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

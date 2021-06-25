@@ -1,0 +1,18 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: MessageSignature
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _E5m5kHjuEeaJ2L29rpch3A
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/12/16 4:12 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_lYmNEHjxEeaJ2L29rpch3A	// kind: 'test' name: 'Message Receive Statement' path: 'Message Receive Statement.test'
+_HgAzwHjxEeaJ2L29rpch3A	// kind: 'test' name: 'Message Send Statement' path: 'Message Send Statement.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

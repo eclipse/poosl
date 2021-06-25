@@ -1,0 +1,46 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _pPT2MHjAEeaJ2L29rpch3A,_8DR5QHjFEeaJ2L29rpch3A
+Element-Name: Variable OutputVariable
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _tUNt4HjzEeaJ2L29rpch3A
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/12/16 4:30 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 34 32
+    open-declaration
+    key-type "M2+M3+t"
+    set-caret-pos 29 5
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 34 34
+    open-declaration
+    hover-text 34 37 -with M3
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 28 | verify-true
+    get-property "caretPosition.column" | equals 12 | verify-true
+    get-property "getSelectionText()" | equals mainVar | verify-true
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 34 33
+    select-range 34 34 34 30
+    type-text parent
+    set-caret-pos 34 36
+    open-declaration
+}
+with [get-editor "parent.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 15 | verify-true
+    get-property "caretPosition.column" | equals 14 | verify-true
+    get-property "getSelectionText()" | equals parentVar | verify-true
+}
+get-eclipse-window | key-type "M1+s"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

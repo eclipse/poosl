@@ -1,0 +1,43 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+
+import "../imports/importMethods.poosl"
+
+data class dataClass extends Object
+variables
+	
+methods
+// XPECT noIssues
+dataNormal : Integer ||
+return 1
+ // DataClass local, error when there are 2 methods with same name
+ // XPECT errors --> "There is another method with the same name dataDouble and number of parameters" at "dataDouble" 
+ dataDouble : Integer ||
+ 	return 1
+ // DataClass local, error when there are 2 methods with same name
+ // XPECT errors --> "There is another method with the same name dataDouble and number of parameters" at "dataDouble" 
+ dataDouble : Integer ||
+ 	return 1
+   
+   //XPECT errors --> "There is another method with the same name dataParam and number of parameters" at " dataParam"
+ 	dataParam(o : Object) : Integer  ||
+ 	o;
+ 	return 1
+ 	//XPECT errors --> "There is another method with the same name dataParam and number of parameters" at "dataParam"
+ 	dataParam(o : String) : Integer  || 
+ 	o;
+ 	return 1
+ 	
+ 	//XPECT noIssues
+ 	dataParam(o : Object, s : String) : Integer  ||
+ 	s;
+ 	o;
+ 	return 1
+ 	//XPECT errors --> "There is another method with the same name typeReturn and number of parameters" at "typeReturn"
+ 	typeReturn(o : Object) : Object ||
+ 	return o
+ 	//XPECT errors --> "There is another method with the same name typeReturn and number of parameters" at "typeReturn"
+ 	typeReturn(o : Object) : Integer  ||
+ 	o;
+ 	return 1
+ 	
+ 

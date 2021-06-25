@@ -1,0 +1,23 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sR81YOmcEeS5bKpaEaRSAA,_sw_zwOmaEeS5bKpaEaRSAA,_EA_F4JQoEeWsHLzSvkw_VA
+Element-Name: Saved With System Open Structure Diagram
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _webHkJRbEeWdZoPrrryMIA
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 10/3/18 12:04 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree 
+    | select "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" | double-click
+
+
+
+get-editor  "System (producer_consumer.poosl)"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

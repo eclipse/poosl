@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g,_ivTMsDBkEeW29Z9sVV_ISA
+Element-Name: Thread window Close All
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _f8q-8GE2EeW7EsiMmOBZZQ
+Runtime-Version: 2.0.0.201506051546
+Save-Time: 9/22/15 4:37 PM
+Tags: Debug, ThreadWindow, DebugView
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+wait 50
+
+get-view Debug | get-tree | select "producer_consumer.poosl [Simulated time: 0]/ProducerConsumer/Producer" 
+    | get-menu "Open in New Window" | click
+get-tab-folder -index 5 | get-tab-item "Sequence Diagram" | click
+get-window "producer_consumer.poosl /ProducerConsumer/Producer" | assert-non-empty
+get-window "producer_consumer.poosl /Bus" | assert-non-empty
+get-view Debug | get-button "Close All Process Windows" | click
+verify-error {get-window "producer_consumer.poosl /Bus"}
+verify-error {get-window "producer_consumer.poosl /ProducerConsumer/Producer"}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

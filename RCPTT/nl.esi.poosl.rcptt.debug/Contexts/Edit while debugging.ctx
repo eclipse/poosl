@@ -1,0 +1,33 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: Edit while debugging
+Element-Type: context
+Element-Version: 2.0
+Id: _uJFO8P1MEeSY2Ma_ry9BIw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/21/18 4:23 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-editor "producer_consumer.poosl" | get-editbox | get-menu "Debug As/.* POOSL Simulation" | click
+with [get-view Debug | get-tree] {
+	expand-all
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getItemCount()" | equals 0 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getText()" | equals Bus | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 2 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals ProducerConsumer | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 2 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals "producer_consumer.poosl [Simulated time: 0]" | verify-true
+    get-property "getItemCount()" | equals 1 | verify-true
+}
+    
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    set-caret-pos 126 55
+    key-type Enter
+    type-text "newConsumer : ProducerConsumer(IdleTime := 1)"
+    key-type "M1+s"
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

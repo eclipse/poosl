@@ -1,0 +1,62 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: EmptyDiagram Workspace
+Element-Type: context
+Element-Version: 2.0
+Id: _uIVNsACREeW6OtP6PNhTFg
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 5/22/15 5:17 PM
+
+------=_contents/EmptyDiagram/.project-c4f446c6-1697-3278-8dd8-af8fc45d24d6
+Content-Type: q7/binary
+Entry-Name: contents/EmptyDiagram/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnR1UctOwzAQPFOJf6hyx4ZbD24qQeHI
+hfIBxl6FreKH1jYKf1/bcYAguO3M7nhm1+IwmXH7ARTQ2X13x267LVjlNNph372enm523aG/3ghP7gwq
+HiEoQh/zdGavhJUG+kfj4+cR5UDSCF6p0lPOGLCxF3ypCtseChXwFXpLOOoXD6qgBh+yVFpdmWbnaGCg
+RvQB2BRhiiwhC++SQM/4vgiBvqNkpaQhlQyhYb4mBP/t1pglTraOiaBNz2CVJCBhCmzuMOM0jPmGbb8S
+pSr+U/+5x3Od+6ld6hLj63jrP7kAUEsHCM4l+NDfAAAA0gEAAFBLAQIUABQACAgIAAAAIQDOJfjQ3wAA
+ANIBAAAIAAAAAAAAAAAAAAAAAAAAAAAuY29udGVudFBLBQYAAAAAAQABADYAAAAVAQAAAAA=
+------=_contents/EmptyDiagram/.project-c4f446c6-1697-3278-8dd8-af8fc45d24d6--
+------=_contents/EmptyDiagram/models/model.poosl-36fb2612-84c0-3535-9b77-60ba33314726
+Content-Type: q7/binary
+Entry-Name: contents/EmptyDiagram/models/model.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnQDAFBLBwgAAAAAAgAAAAAAAABQSwEC
+FAAUAAgICAAAACEAAAAAAAIAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRQSwUGAAAAAAEA
+AQA2AAAAOAAAAAAA
+------=_contents/EmptyDiagram/models/model.poosl-36fb2612-84c0-3535-9b77-60ba33314726--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSVkk9LAzEQxe+C32HJ3UQ9FFl2LVIr
+9GAtItabxOx0G80/kll3/fZO624LUizeMpnfe5N5pBh31mSfEJP2rmQX/Jxl4JSvtKtL1uDq7IqNr09P
+Ch9rDsrokIBHFRC5wo63Pn6kIBXky+E08Q6hw6yzOt/5Xm58aZJLOd2XbI0YciHatuXe1pzMxcv9bECO
+zNrJB2Yj33KCOLHjWOakJXpqA37dallHabPlvqurkr02s+d5upk8TmE5esDFaDFfP93VjFbOskJtdnG4
+LagM0b+DwnTAl/UMUSttYEB4L6FQO1ANyjdDtxgbYOKwIkKIkGioREoucaljdUTtTUU593rrKzBp/5xf
+9ts2D94n87er6G2H3cWw/E8yYh9NIf77N0j0DVBLBwir3Pj2IgEAAHgCAABQSwECFAAUAAgICAAAACEA
+q9z49iIBAAB4AgAACAAAAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRQSwUGAAAAAAEAAQA2AAAAWAEAAAAA
+
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
+------=_contents/EmptyDiagram/representations.aird-e0d92ec8-cf78-33a8-a43c-3cdfc58ac895
+Content-Type: q7/binary
+Entry-Name: contents/EmptyDiagram/representations.aird
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnTNVl1P2zAUfZ+0/xAZTWwPxG0RGkTt
+oKItsBWVksHGJlR5yW2w5jiR7TQNv35u0qRuSQHtZXvpR3zuPeden3uV9vE8ZNYMhKQR76Cm3UAWcC/y
+KQ866ObrYO8QHX96+6Y9o5DGEeXK6XU5YZmk0pqH1KlCW4tQnYxLRz/voAelYgfjNE3tKAzsSAT4++VF
+BZHrkHQ/R7QajaaGDV3vAUKyR7lUhHtQRvkgPUFjlRMa0eAxGkvIU0gqaCKxAcVNu7kSZxxMmi9moSQQ
+JHwmWwF4bZ61WB4p8mwpQTjFIuGKhqAjG3YLlyFlijiKJKvi8382SGpzVvzB+zqsIqzu8CW5pUxJHZnf
+xDDynpe6revWK4h2sBn3QsTWG3llXA0jyo1M/Q6aJD+YSAcHR31wv/ijo+x29tjqj5ElgYGnwL/VHZQa
+l/bGd+MaXDUNh5qmifTgWFY7jHxgxbSoLIYOyq/GuVp8IutBwLSDCgzOv+z8fAcjXMRHKV8yGzmMebyG
+WIAEXljjNNI/KAdhlLVNLuVUUcLoI2iUEgkUikvO9cQm+7KbTs/V5tAG9XrFA4Pz90c2v+meXvfhW+Pg
+s9fPzn+N7rrI4iTUCU4ZkRKk9d6o+EPJXvJ3een3PleCwpqC1f0567hsTYRSFzUiZJQIT2c5uxxMehfd
+s+vupbti1/w+UcRgK/M7dXVqivFTiiLQzd2ndyqDEBaDt7UvIRCZiBx1o6+lg67oHJgpSsuSKmNrbdgU
+5i4Am+qCJ2zYrBUvil21Htf3fgUwh7X2QibNUk7PnLLC6TEjahqJ0MExSwLKMS9WVrG8avZIcaBtImnA
+9eSeVPOQ+1/+zB21ezUaucN3rUY1GLv3S+iGjZf43IEav7Ty7r3RlPaUMgXilghKfjE4p1JFIqvx/6AO
+tzkET81hMBFP0RnRq2VIMr08tjY0P/7ve4hPfJiShKlCrlGnIiIA9ddLsPLlhpDysFK8ZUVUpf6DFpZ7
+HK8W+eKNCte8UunnfwBQSwcItskPPPQCAACSCQAAUEsBAhQAFAAICAgAAAAhALbJDzz0AgAAkgkAAAgA
+AAAAAAAAAAAAAAAAAAAAAC5jb250ZW50UEsFBgAAAAABAAEANgAAACoDAAAAAA==
+------=_contents/EmptyDiagram/representations.aird-e0d92ec8-cf78-33a8-a43c-3cdfc58ac895--

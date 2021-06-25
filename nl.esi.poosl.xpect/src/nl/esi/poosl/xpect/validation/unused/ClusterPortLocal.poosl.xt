@@ -1,0 +1,28 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+// Show warning when cluster parameter is not used
+// XPECT warnings --> "Variable is not used" at "x" 
+cluster class someClusterClass(x: Object)	// give an "unused" warning
+ports
+	// Show warning when cluster port is not connected
+	// XPECT warnings --> "Port is not connected to a channel" at "p"
+	p	// give an "unused" warning
+instances
+	someInstance: someProcessClass()
+	someInstance2: someProcessClass()  
+channels 
+	{someInstance.p, someInstance2.p} 
+
+process class someProcessClass()	
+ports	
+	p	
+messages
+	p!message()
+	p?message() 
+variables 
+init
+	someMethod()() 
+methods
+	someMethod()() | | 
+	p!message();
+	p?message() 

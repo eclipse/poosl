@@ -1,0 +1,20 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_TwmjcLV9EeapedkHH5Hcfw,_TTc_ULV7EeapedkHH5Hcfw
+Element-Name: ContentAssist Classes
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _gF794LV8EeapedkHH5Hcfw
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 11/28/16 4:25 PM
+Testcase-Type: ecl
+Verifications: _T4uvQLV-EeapedkHH5Hcfw
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "main.poosl" | get-text-viewer | get-menu "Source/Format" | click
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

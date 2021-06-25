@@ -1,0 +1,18 @@
+import "./AudioVideoPlayer.poosl"
+import "./ServicesManager.poosl"
+
+cluster class SeatTV
+ports
+	InAudio
+	InInterruptionCommand
+	InControl
+	OutAudio
+instances
+	audioVideoPlayer : AudioVideoPlayer
+	servicesManager : ServicesManager
+channels
+	{ InAudio, audioVideoPlayer.InAudio }
+	{ InInterruptionCommand, servicesManager.InInterruptionCommand }
+	{ InControl, audioVideoPlayer.InControl }
+	{ OutAudio, audioVideoPlayer.OutAudio }
+	{ servicesManager.OutInterruptionCommand, audioVideoPlayer.InInterruptionCommand }

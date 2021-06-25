@@ -1,0 +1,72 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _pPT2MHjAEeaJ2L29rpch3A,_8DR5QHjFEeaJ2L29rpch3A
+Element-Name: Variable Variable Expression
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _tUc-cHjzEeaJ2L29rpch3A
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/12/16 4:33 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 36 31
+    type-text " +mainVar+parentVar"
+    set-caret-pos 36 34
+    open-declaration
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 28 | verify-true
+    get-property "caretPosition.column" | equals 12 | verify-true
+    get-property "getSelectionText()" | equals mainVar | verify-true
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 36 27
+    open-declaration
+    hover-text 36 27
+    set-caret-pos 36 26
+    open-declaration
+    hover-text 36 27 -with M1
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 35 | verify-true
+    get-property "caretPosition.column" | equals 57 | verify-true
+    get-property "getSelectionText()" | equals localVar | verify-true
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 36 19
+    open-declaration
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 35 | verify-true
+    get-property "caretPosition.column" | equals 36 | verify-true
+    get-property "getSelectionText()" | equals oVar | verify-true
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    set-caret-pos 36 10
+    open-declaration
+    select-range 36 10 37 1
+    set-caret-pos 36 10
+    open-declaration
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 35 | verify-true
+    get-property "caretPosition.column" | equals 21 | verify-true
+    get-property "getSelectionText()" | equals iVar | verify-true
+}
+with [get-editor "main.poosl" | get-text-viewer] {
+    hover-text 36 45 -with M1
+    set-caret-pos 36 47
+    open-declaration
+}
+with [get-editor "parent.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 15 | verify-true
+    get-property "caretPosition.column" | equals 14 | verify-true
+    get-property "getSelectionText()" | equals parentVar | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

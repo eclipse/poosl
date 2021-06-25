@@ -1,0 +1,29 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Statement
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _X8K10LZKEeapedkHH5Hcfw
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 11/29/16 5:38 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_3lX_kLZHEeapedkHH5Hcfw	// kind: 'test' name: 'Statement else if' path: 'Statement else if.test'
+_4irVULZHEeapedkHH5Hcfw	// kind: 'test' name: 'Statement switch' path: 'Statement switch.test'
+_70bZ8LZHEeapedkHH5Hcfw	// kind: 'test' name: 'Statement while' path: 'Statement while.test'
+_cugRgLZMEeapedkHH5Hcfw	// kind: 'test' name: 'Statement Abort' path: 'Statement Abort.test'
+_3lX_kLZHEeapedkHH5Hcfw	// kind: 'test' name: 'Statement else if' path: 'Statement else if.test'
+_nd8PsLZMEeapedkHH5Hcfw	// kind: 'test' name: 'Statement Guard' path: 'Statement Guard.test'
+_eS41YLZMEeapedkHH5Hcfw	// kind: 'test' name: 'Statement Interrupt' path: 'Statement Interrupt.test'
+_h-rxsLZMEeapedkHH5Hcfw	// kind: 'test' name: 'Statement Parallel' path: 'Statement Parallel.test'
+_kLN6sLZMEeapedkHH5Hcfw	// kind: 'test' name: 'Statement Select' path: 'Statement Select.test'
+_4irVULZHEeapedkHH5Hcfw	// kind: 'test' name: 'Statement switch' path: 'Statement switch.test'
+_70bZ8LZHEeapedkHH5Hcfw	// kind: 'test' name: 'Statement while' path: 'Statement while.test'
+_fJq6ILZREeapedkHH5Hcfw	// kind: 'test' name: 'Statement Receive' path: 'Statement Receive.test'
+_dxPHkLZREeapedkHH5Hcfw	// kind: 'test' name: 'Statement Send' path: 'Statement Send.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

@@ -1,0 +1,26 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _hmr-4FAPEeelWq6Y3GDIQQ,_lqaTAFAPEeelWq6Y3GDIQQ
+Element-Name: Passed
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _UoB6oFAQEeelWq6Y3GDIQQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 11/26/17 7:39 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "CleanProject/models/pass.poosl" | get-menu "Run As/.* POOSL Tests" 
+    | click    
+
+with [get-view Console | get-text-viewer | get-property text] {
+	contains "TOTAL: 4"| verify-true
+	contains "PASS:  4" | verify-true
+	contains "FAIL:  0" | verify-true
+	contains "SKIP:  0" | verify-true	
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

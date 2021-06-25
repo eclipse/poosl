@@ -1,0 +1,18 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: Start Debug model
+Element-Type: context
+Element-Version: 2.0
+Id: _Uvd58P2_Eea0C9TgAMMSpg
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 2/28/17 3:08 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    get-menu "Debug As/.* POOSL Simulation" | click
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

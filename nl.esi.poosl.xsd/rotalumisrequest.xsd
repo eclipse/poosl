@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="uri:poosl" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="rotalumisrequest" targetNamespace="uri:poosl" elementFormDefault="qualified">
+  <xs:include id="rotalumisapitypes" schemaLocation="rotalumisapitypes.xsd"/>
+  <xs:element name="request">
+    <xs:complexType>
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <!-- Storage API -->
+        <xs:element name="load" type="t_load_request"/>
+        <!-- Compiler API -->
+        <xs:element name="compile" type="t_compile_request"/>
+        <!-- DEBUG API -->
+        <xs:element name="list_files" type="t_list_files_request"/>
+        <!-- Model API -->
+        <xs:element name="list_classes" type="t_list_classes_request"/>
+        <xs:element name="get_top_level_specification" type="t_get_top_level_specification_request"/>
+        <!-- Execution engine API -->
+        <xs:element name="instantiate" type="t_instantiate_request"/>
+        <xs:element name="command" type="t_command_request"/>
+        <xs:element name="execution_state" type="t_execution_state_request"/>
+        <xs:element name="get_transitions" type="t_get_transitions_request"/>
+        <xs:element name="perform_transition" type="t_perform_transition_request"/>
+        <xs:element name="perform_process_step" type="t_perform_process_step_request"/>
+        <xs:element name="inspect" type="t_inspect_request"/>
+        <xs:element name="create_breakpoint" type="t_create_breakpoint_request"/>
+        <xs:element name="enable_breakpoint" type="t_enable_breakpoint_request"/>
+        <xs:element name="disable_breakpoint" type="t_disable_breakpoint_request"/>
+        <xs:element name="delete_breakpoint" type="t_delete_breakpoint_request"/>
+        <xs:element name="set_variable" type="t_set_variable_request"/>
+        <xs:element name="get_position" type="t_get_position_request"/>
+        <!-- Execution engine events API -->
+        <xs:element name="eengine_event_setup" type="t_eengine_event_setup_request"/>
+      </xs:choice>
+      <xs:attribute name="id" type="t_reqid" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Load Request (read string from file) -->
+  <xs:complexType name="t_load_request">
+    <xs:attribute name="filename" type="t_filename" use="required"/>
+  </xs:complexType>
+  <!-- Compile request (compile a POOSL syntax string into its memory representation) -->
+  <xs:complexType name="t_compile_request">
+    <xs:sequence>
+      <xs:element name="basic_classes" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:element name="poosl_specification" type="xs:string"/>
+        <xs:element name="cluster_class" type="xs:string"/>
+        <xs:element name="process_class" type="xs:string"/>
+        <xs:element name="data_class" type="xs:string"/>
+        <xs:element name="initial_method_call" type="xs:string"/>
+        <xs:element name="process_method" type="xs:string"/>
+        <xs:element name="data_method" type="xs:string"/>
+        <xs:element name="expression" type="xs:string"/>
+      </xs:choice>
+      <xs:element name="includes" type="t_include">
+			</xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_include">
+    <xs:sequence>
+      <xs:element name="include" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- Model API -->
+  <!-- list all classes in the model -->
+  <xs:complexType name="t_list_classes_request"/>
+  <!-- response will return handle to the top-level specification(s?) -->
+  <xs:complexType name="t_get_top_level_specification_request"/>
+  <!-- Instantiate Request (create an instance of the top-level specification) -->
+  <xs:complexType name="t_instantiate_request">
+    <xs:sequence>
+      <xs:element name="poosl_specification" type="xs:integer"/>
+      <xs:element name="external_port_description_filename" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_list_files_request">
+    <xs:sequence>
+      <xs:element name="poosl_specification" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- response can be an error message explaining issue encountered during instantiation  -->
+  <!-- Command Request (control the simulation)-->
+  <xs:complexType name="t_command_request">
+    <xs:attribute name="type" type="t_command"/>
+  </xs:complexType>
+  <!-- Get execution state request (obtain current simulation state) -->
+  <xs:complexType name="t_execution_state_request">
+  </xs:complexType>
+  <!-- Get transitions from current state to the next states -->
+  <xs:complexType name="t_get_transitions_request">
+  </xs:complexType>
+  <!-- Perform state transition request -->
+  <xs:complexType name="t_perform_transition_request">
+    <xs:sequence>
+      <xs:element name="handle" type="xs:integer"/>
+      <!-- option for future data debugging: run until expression evaluation -->
+    </xs:sequence>
+    <xs:attribute name="data_debug" type="xs:boolean"/>
+  </xs:complexType>
+  <!-- Perform process_step request -->
+  <xs:complexType name="t_perform_process_step_request">
+    <xs:sequence>
+      <xs:element name="process_path" type="xs:string"/>
+      <!-- option for future data debugging: run until expression evaluation -->
+    </xs:sequence>
+  </xs:complexType>
+  <!--Inspect Request-->
+  <xs:complexType name="t_inspect_request">
+    <xs:choice minOccurs="1" maxOccurs="1">
+      <!-- object inquiry by (name, type) -->
+      <xs:sequence>
+        <xs:element name="name" type="t_instance_name"/>
+        <xs:element name="type" type="t_inspect_type"/>
+      </xs:sequence>
+      <!-- object inquiry by handle (already includes the type) -->
+      <xs:element name="handle" type="xs:integer"/>
+    </xs:choice>
+  </xs:complexType>
+  <!-- Execution engine event setup -->
+  <xs:complexType name="t_eengine_event_setup_request">
+    <xs:sequence>
+      <xs:element name="communication_messages_enable" type="xs:boolean"/>
+      <xs:element name="communication_messages_credits" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="communication_messages_credits_enable" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--Breakpoint Requests-->
+  <xs:complexType name="t_create_breakpoint_request">
+    <xs:sequence>
+      <!-- optional name for this breakpoint, if absent a unique id is given -->
+      <xs:element name="name" type="t_identifier" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="stmt_handle" type="xs:int" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="position" type="t_source_position" minOccurs="0" maxOccurs="1">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- should respond with a handle to the newly created breakpoint object or error if breakpoint already exists -->
+  <xs:complexType name="t_enable_breakpoint_request">
+    <xs:sequence>
+      <xs:element name="breakpoint_id" type="xs:integer"/>
+      <xs:element name="stmt_handle" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_disable_breakpoint_request">
+    <xs:sequence>
+      <xs:element name="breakpoint_id" type="xs:integer"/>
+      <xs:element name="stmt_handle" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_delete_breakpoint_request">
+    <xs:sequence>
+      <xs:element name="breakpoint_id" type="xs:integer"/>
+      <xs:element name="stmt_handle" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_set_variable_request">
+    <xs:sequence>
+      <xs:element name="var_handle" type="t_handle_id"/>
+      <xs:element name="list_handle" type="t_handle_id"/>
+      <xs:element name="type" type="t_constant_type"/>
+      <xs:element name="literal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_get_position_request">
+    <xs:sequence>
+      <xs:element name="stmt_handle" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="t_inspect_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="process"/>
+      <xs:enumeration value="cluster"/>
+      <xs:enumeration value="channel"/>
+      <xs:enumeration value="model"/>
+      <xs:enumeration value="system"/>
+      <xs:enumeration value="channel"/>
+      <xs:enumeration value="port"/>
+      <xs:enumeration value="variable"/>
+      <xs:enumeration value="data"/>
+      <xs:enumeration value="stackframe"/>
+      <xs:enumeration value="variable_context"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

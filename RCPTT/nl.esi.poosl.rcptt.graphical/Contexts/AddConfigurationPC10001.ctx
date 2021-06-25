@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: AddConfigurationPC10001
+Element-Type: context
+Element-Version: 2.0
+Id: _VXD6cMW4EeWbAfcxAheu3Q
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 1/28/16 1:12 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-menu "Run/Debug Configurations..." | click
+with [get-window "Debug Configurations"] {
+    get-tree | select "POOSL Simulation" | get-menu New | click
+    with [get-editbox -after [get-label "Name:"]] {
+        set-text PCConf
+    }
+    get-group "Model:" | get-button Browse | click
+    with [get-window "Select poosl model"] {
+       get-tree | select "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl"
+        get-button OK | click
+    }
+    get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text 10001
+    get-button Apply | click
+    get-button Close | click
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

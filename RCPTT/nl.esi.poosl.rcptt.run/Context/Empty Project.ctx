@@ -1,0 +1,61 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: Empty Project
+Element-Type: context
+Element-Version: 2.0
+Id: _IqURkO5dEeSFZ64tz1ToyA
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 4/29/15 12:47 PM
+
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSFkEEOwiAURNeaeIeGvaA7F7Qm1rg0
+JuoBEH4qpoUGqOnxBUpt6sYdb5j/Z4Du+6bO3mCs1CpHW7xBGSiuhVRVju6303qH9sVqSVujX8DdESw3
+snXe7dUFVayBoqyBqctgoCRK4Y7rpgHlCkrGU1DTIhuBzOjRyVpcW+CBEpZ+lCkRlRSnTYWB17K1gHsH
+vcOdxPbJDIiBD2EQzFTFTzJTdaGDTUzmAiW/aUkZ6/ho1xlI7gH+NzlHXygS/XHttOj7/PmvfgBQSwcI
+ydVtJsYAAACUAQAAUEsBAhQAFAAICAgAAAAhAMnVbSbGAAAAlAEAAAgAAAAAAAAAAAAAAAAAAAAAAC5j
+b250ZW50UEsFBgAAAAABAAEANgAAAPwAAAAAAA==
+------=_contents/CleanProject/.project-36257c63-cdda-361f-afa8-878b02690d65--
+------=_contents/CleanProject/representations.aird-427bb5e7-203c-3b4d-a263-df653c5fb0b2
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/representations.aird
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnTNVmFP2zAQ/T5p/yEKmvhE3BZtgqgd
+TCto0zoB61axTQh5yTXc5NiR7TaEXz9jJ8GFtCA0afvSNPa99+6e76wMD65zFixBKhR8FPajXhgAT0SK
+PBuF374e7+yFB29fvhguEcpCINfx+B2nrFKogusc4xY6uIUaMq5isz4Kr7QuYkLKsoxEnkVCZuT888c2
+RK2GlLs2YtDr9U3YZJpcQU53kCtNeQINKgWVSCy0FfTQkDAsFFgKhRIXinihpB/175LzNi77j7IgzSTN
+N7C5gKfyrGC50HRjKVk+J3LBNeZgkL1oQBpIQ1EIoViLt28RKIw4cy9k18BaQaUrBs8p2QJXk2/74TG+
+BqUwVvZUJyLZXPa6EwyeILRFfNwjiLWn+0Tc31H0zH2+rmMJ7UhiOgovFz+YLI9f7x/B9FN6sl/NljeD
+o7MwUMAg0ZDOzPkpE1eOz76fdcS1c71nxPqhuQKCYJiLFJibe10VppVsk8Wnt79hcCVhPgpdDLGPyO5v
+kZA4vCh5rexxeDfLFygkKOCuyd8L8wc5SK+sdekiR42U4Q2YKC0X4DJuNFeJffXa03g8Na1pRi0ZuwVP
+c/f3+ZsuKznNDQGHMphWSkMe1FyNdBA0z6HfIZ62fxXFtfD4brGxtGBUz4XMY1KwRYaccDflbt47xsVt
+mBNQmHHTKIet8dZo9dOmvn16cjKdvBr02hPYvqhD7/lVx7syDaAudPuiPlhb4xyZBjmjEukvBh9QaSGr
+DqePu+Lu2X3z0G5PiSYal9Q08YRWpk3XOmq3/38TyWEKc7pg2uXrFaqpzEA/mDdHsWngyKGyMdMCEpyj
+u3Bb5iHpyq/ZbAvp9jVuHfgHzjYXCbm7SW4/TkjH14lZ/wNQSwcIacLOspECAADdCAAAUEsBAhQAFAAI
+CAgAAAAhAGnCzrKRAgAA3QgAAAgAAAAAAAAAAAAAAAAAAAAAAC5jb250ZW50UEsFBgAAAAABAAEANgAA
+AMcCAAAAAA==
+------=_contents/CleanProject/representations.aird-427bb5e7-203c-3b4d-a263-df653c5fb0b2--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSVkk9LAzEQxe+C3yHkbmJFRZZdi5QK
+PYjiHxQvsmanNTabxGTqbv30zrabFkQs3jKT33svMyQftrVhnxCidrbgA3HIGVjlKm1nBV/g9OCMD8/3
+93IXZgKU0T6CCMojCoWtaFyYR18qyB7TaeQsQousrXW28T3qfCnJxoz6BX9D9JmUTdMIV88Emcunq0lC
+dmRt5Inp5CtOEic3HGe2rIke1x6X7Ca4d1DIma4K/jL5eLidX59UY7i7fD49xq/BvVtecJqUsVx1I1hc
+FVT6tTL2diMDpU1uPUPUVBtIiPApDFpQCyxfDXUxLIDL3xUBfIBIoSXSwqIodah2qJ2paL29vnYVmLh9
+zg/71bXwzkXzt6vsbdPsMg2/3ozcriaX//0SJPoGUEsHCK6ugwokAQAAbwIAAFBLAQIUABQACAgIAAAA
+IQCuroMKJAEAAG8CAAAIAAAAAAAAAAAAAAAAAAAAAAAuY29udGVudFBLBQYAAAAAAQABADYAAABaAQAA
+AAA=
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
+------=_contents/CleanProject/models/model.poosl-88c4f0db-cff5-3086-a386-70ec493375af
+Content-Type: q7/binary
+Entry-Name: contents/CleanProject/models/model.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnQDAFBLBwgAAAAAAgAAAAAAAABQSwEC
+FAAUAAgICAAAACEAAAAAAAIAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRQSwUGAAAAAAEA
+AQA2AAAAOAAAAAAA
+------=_contents/CleanProject/models/model.poosl-88c4f0db-cff5-3086-a386-70ec493375af--

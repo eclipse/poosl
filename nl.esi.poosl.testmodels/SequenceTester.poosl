@@ -1,0 +1,123 @@
+importlib "structures.poosl"
+
+data class SequenceTester extends Object
+variables
+methods
+
+	@Test
+	@Error("Unable to add before a removed element")
+	addRemove : SequenceTester | seq : Sequence, iterator : SequenceIterator |
+		new(Console) writeLine("Starting test addRemove");
+		// Start with empty sequence {}
+		seq := new(Sequence);
+
+		// Add 1 at beginning of list
+		seq prepend(1); // {1}
+		self assert(seq size() = 1, "size error");
+		iterator := seq iterator();
+		self assert(iterator element = 1, "Iterator should point to 1");
+		new(Console) writeLine("Iterator points to: " + iterator element printString());
+
+		// Add 1 and 2
+		iterator addBefore(2); // {2, 1}
+		self assert(seq size() = 2, "size error");
+		self assert(iterator element = 1, "Iterator should point to 1");
+		new(Console) writeLine("Iterator points to: " + iterator element printString() + "\n");
+
+		// Remove 1
+		iterator remove(); // // {2}, still points to 1
+		self assert(seq size() = 1, "size error");
+		self assert(iterator element = 1, "Iterator should point to 1"); // Should still point to 1
+
+		iterator addBefore(3); // Should trigger error
+
+		return self
+
+	@Test
+	@Error("Cannot addBefore when isDone holds.")
+	addInEmptyList() : SequenceTester | seq : Sequence, iterator : Iterator |
+		seq := new(Sequence);
+		iterator := seq iterator();
+		iterator addBefore(2);
+		return self
+
+	@Test
+	reversedSequence() : SequenceTester | original, expectedResult : Sequence, iterator : Iterator |
+		new(Console) writeLine("Starting test reversedSequence");
+		original := self makeOriginalSequence();
+
+		new(Console) writeLine("Original sequence: " + original printString());
+
+		iterator := original iterator reverse last; // {1, 2, 3}, should point to 3
+		self assert(iterator element = 3, "Iterator should point to 3");
+		new(Console) writeLine("Iterator points to: " + iterator element printString() + "\n");
+
+		iterator addAfter("a") addBefore("b");
+
+		expectedResult := new(Sequence) append(1) append(2) append("b")  append(3) append("a");
+		new(Console) writeLine("Reversed sequence: " + original printString());
+		self assert(original = expectedResult, "Result does not match expectation for reversed sequence");
+		return self
+
+	makeOriginalSequence() : Sequence
+		return new(Sequence) append(1) append(2) append(3)
+
+	makeAddBeforeSequence(input : Sequence) : Sequence | addBeforeSequence : Sequence, iter : Iterator |
+		addBeforeSequence := input deepCopy();
+		iter := addBeforeSequence iterator() advance(); // Point to second index
+		iter addBefore("a");
+		iter addBefore("b");
+		iter addBefore("c");
+		self assert(iter element = 2, "Iterator should point to 2");
+		new(Console) writeLine("Iterator addBefore(): " + addBeforeSequence printString());
+		new(Console) writeLine("Iterator points to: " + iter element printString() + "\n");
+		return addBeforeSequence
+
+	makeAddAfterSequence(input : Sequence) : Sequence | addAfterSequence : Sequence, iter : Iterator |
+		addAfterSequence := input deepCopy();
+		iter := addAfterSequence iterator() advance(); // Point to second index
+		iter addAfter("a");
+		iter addAfter("b");
+		iter addAfter("c");
+		self assert(iter element = 2, "Iterator should point to 2");
+		new(Console) writeLine("Iterator addAfter(): " + addAfterSequence printString());
+		new(Console) writeLine("Iterator points to: " + iter element printString() + "\n");
+		return addAfterSequence
+
+	makeInsertAtSequence(input : Sequence) : Sequence | insertAtSequence : Sequence |
+		insertAtSequence := input deepCopy();
+		insertAtSequence insertAt(2, "a");
+		insertAtSequence insertAt(2, "b");
+		insertAtSequence insertAt(2, "c");
+		new(Console) writeLine("Sequence insertAt(): " + insertAtSequence printString());
+		new(Console) writeLine("Index still fixed at 2\n");
+		return insertAtSequence
+
+	@Test
+	addBeforeTest : SequenceTester | original, addBefore, expectedResult : Sequence |
+		new(Console) writeLine("Starting test addBeforeTest");
+		original := self makeOriginalSequence();
+
+		new(Console) writeLine("Original sequence: " + original printString());
+		new(Console) writeLine("Advancing once (to index 2) and adding a then b then c\n");
+
+		addBefore := self makeAddBeforeSequence(original);
+		expectedResult := new(Sequence) append(1) append("a") append("b") append("c") append(2) append(3);
+		self assert(addBefore = expectedResult, "Result of addBefore does not match expectation");
+		return self
+
+	@Test
+	addAfterTest : SequenceTester | original, addAfter, expectedResult : Sequence |
+		new(Console) writeLine("Starting test addAfterTest");
+		original := self makeOriginalSequence();
+
+		new(Console) writeLine("Original sequence: " + original printString());
+
+		addAfter := self makeAddAfterSequence(original);
+		expectedResult := new(Sequence) append(1) append(2) append("c") append("b") append("a") append(3);
+		self assert(addAfter = expectedResult, "Result of addAfter does not match expectation");
+		return self
+
+	system
+		instances
+		channels

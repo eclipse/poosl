@@ -1,0 +1,36 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_aW5WwORGEeSZttsAewanYQ,_-6xq0Nf8Eea3P5Zs0ralfQ
+Element-Name: Keep Folding state
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _5cMCcP1uEeSY2Ma_ry9BIw
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 3/29/17 2:57 PM
+Tags: Debug, View, folding
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+When adding a second model the expanded state of the first should stay the same.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+//launch-debug ShoppingCarts10003 -port 10003 -file "nl.esi.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
+launch-debug Switch10004 -port 10004 -file "nl.esi.poosl.examples/models-complex/ATMSwitch/switch.poosl"
+with [get-view Debug | get-tree] {
+	expand-all
+}
+get-editor "producer_consumer.poosl" | editor-poosl-debug
+
+//check if second level treeitem is still expanded
+with [get-view Debug | get-tree] {
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getExpanded()" | equals true | verify-true
+    get-property "getItems().TreeItem[0].getExpanded()" | equals true | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

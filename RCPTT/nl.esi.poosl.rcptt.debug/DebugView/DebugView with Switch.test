@@ -1,0 +1,118 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_W7yaoN-MEeSGR4qac-ot4g
+Element-Name: DebugView with Switch
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _uRD4oONVEeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 11:57 AM
+Tags: Debug, View, Perspective, Switch
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "switch.poosl" | editor-poosl-debug
+with [get-view Debug | get-tree] {
+    get-item "switch.poosl \\[Simulated time: 0\\]" | get-property caption | equals "switch.poosl [Simulated time: 0]" 
+        | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/debugts_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source1" | get-property caption | equals source1 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source1" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source1" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source2" | get-property caption | equals source2 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source2" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source2" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source3" | get-property caption | equals source3 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source3" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source3" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source4" | get-property caption | equals source4 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source4" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/source4" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination1" | get-property caption | equals destination1 
+        | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination1" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination1" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination2" | get-property caption | equals destination2 
+        | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination2" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination2" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination3" | get-property caption | equals destination3 
+        | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination3" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination3" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination3" | get-property caption | equals destination3 
+        | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination3" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination3" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination4" | get-property caption | equals destination4 
+        | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination4" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/destination4" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x" | get-property caption | equals x | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+}
+with [get-view Debug | get-tree] {
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x1" | get-property caption | equals x1 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x1" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x1" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+}
+with [get-view Debug | get-tree] {
+    key-type "TRAVERSE_ESCAPE"
+    key-type ESC
+}
+with [get-view Debug | get-tree] {
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x2" | get-property caption | equals x2 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x2" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x2" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x3" | get-property caption | equals x3 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x3" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x3" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x4" | get-property caption | equals x4 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x4" | get-property childCount | equals 0 | verify-true
+    get-item "switch.poosl \\[Simulated time: 0\\]/system/x/x4" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+}
+click-terminate
+with [get-view Debug | get-tree] {
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> x" | get-property caption | equals "<terminated> x" | verify-true
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> x" | get-property childCount | equals 4 | verify-true
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> x" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+}
+with [get-view Debug | get-tree] {
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> x/<terminated> x1" | get-property caption 
+        | equals "<terminated> x1" | verify-true
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> x/<terminated> x1" | get-property childCount | equals 0 
+        | verify-true
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> x/<terminated> x1" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> source1" | get-property caption | equals "<terminated> source1" 
+        | verify-true
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> source1" | get-property childCount | equals 0 | verify-true
+    get-item "<terminated> switch.poosl/<terminated> system/<terminated> source1" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/threads_obj.png" | verify-true    
+    get-item "<terminated> switch.poosl/<terminated> system" | get-property childCount | equals 9 | verify-true
+    get-item "<terminated> switch.poosl" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/debugtt_obj.png" | verify-true
+}
+click-remove-terminated-launches
+get-view Debug | get-tree | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

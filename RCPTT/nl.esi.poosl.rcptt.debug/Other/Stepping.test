@@ -1,0 +1,63 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g
+Element-Name: Stepping
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _uS5EoONVEeSZttsAewanYQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 9:50 AM
+Tags: Debug, RC, Step
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "producer_consumer.poosl" | editor-poosl-debug
+
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/Bus"
+with [get-view Variables | get-tree] {
+	get-items
+    get-item p | assert-non-empty
+    get-item p | get-property "values['Name']" | equals p | verify-true
+}
+get-view "Execution Tree" | get-tree | select "\\/system\\/Bus/Transfer\\(\\)\\(\\)"
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 72 | verify-true
+    get-property "caretPosition.column" | equals 17 | verify-true
+    get-property "styleAtCaret.start" | equals 1949 | verify-true
+    get-property "styleAtCaret.length" | equals 2 | verify-true
+    get-property "styleAtCaret.text" | equals "\r\n" | verify-true
+    get-property "styleAtCaret.fontStyle" | equals normal | verify-true
+    get-property "styleAtCaret.startPos.line" | equals 72 | verify-true
+    get-property "styleAtCaret.startPos.column" | equals 17 | verify-true
+    get-property "styleAtCaret.endPos.line" | equals 73 | verify-true
+    get-property "styleAtCaret.endPos.column" | equals 1 | verify-true
+}
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Producer"
+with [get-view Variables | get-tree] {
+    get-property itemCount | equals 2 | verify-true
+    get-items
+    get-item IdleTime | assert-non-empty
+    get-item ID | assert-non-empty
+}
+get-view "Execution Tree" | get-tree | select "\\/system\\/ProducerConsumer\\/Producer/Initialise\\(\\)\\(\\)"
+with [get-editor "producer_consumer.poosl" | get-text-viewer] {
+    get-property "caretPosition.line" | equals 39 | verify-true
+    get-property "caretPosition.column" | equals 19 | verify-true
+    get-property "styleAtCaret.start" | equals 1191 | verify-true
+    get-property "styleAtCaret.length" | equals 2 | verify-true
+    get-property "styleAtCaret.text" | equals "\r\n" | verify-true
+    get-property "styleAtCaret.fontStyle" | equals normal | verify-true
+    get-property "styleAtCaret.startPos.line" | equals 39 | verify-true
+    get-property "styleAtCaret.startPos.column" | equals 19 | verify-true
+    get-property "styleAtCaret.endPos.line" | equals 40 | verify-true
+    get-property "styleAtCaret.endPos.column" | equals 1 | verify-true
+    get-property "markers['39'][0].line" | equals 39 | verify-true
+    get-property "markers['39'][0].text" | equals "POOSL Instruction pointer" | verify-true
+}
+click-terminate
+click-remove-terminated-launches
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,37 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Cluster Class Double
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _sUpMgEm6Eea18PiEOcOxrA
+Runtime-Version: 2.5.0.202001211718
+Save-Time: 9/8/20 4:14 PM
+Tags: Data, Double, QuickFix
+Testcase-Type: ecl
+Verifications: __-JisEm6Eea18PiEOcOxrA
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "model.poosl" | get-text-viewer] {
+type-text "cluster class cClass() \n"
++ "ports\n"
++ "instances\n"
++ "channels\n"
++ "cluster class cClass() \n"
++ "ports\n"
++ "instances\n"
++ "channels\n"
+}
+
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 11 19
+    key-type "M1+1"
+}
+get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
+    | select "Remove the currently selected class" | click -default
+get-editor "model.poosl" | get-text-viewer | set-caret-pos 11 5
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

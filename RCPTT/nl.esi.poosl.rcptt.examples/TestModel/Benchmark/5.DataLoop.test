@@ -1,0 +1,26 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_fdA5gHM0EeWNsvS2ZqaobA,_ldH90ONVEeSZttsAewanYQ
+Element-Name: 5.DataLoop
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _2prwQHM7EeWNsvS2ZqaobA
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 1/13/17 4:11 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-view "Project Explorer" | get-tree] {
+	select "nl.esi.poosl.testmodels/benchmark/05. dataLoop10000000/dataLoop10000000.poosl" | get-menu "Run As/ *. POO" +
+		"SL Simulation" | click
+}
+try -times 10 -delay 500 -command {
+	with [get-view Console] {
+		get-text-viewer | get-property text | contains failed | verify-false
+	}
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

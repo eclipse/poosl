@@ -1,0 +1,159 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+// No error when cluster class is empty
+// XPECT noIssues 
+cluster class clusterClass() 
+ports	
+instances	
+channels
+
+// No error when cluster class is empty
+// XPECT noIssues
+system
+instances	
+channels
+
+
+
+data class someClass extends Object
+variables
+temp : String
+// Check At Least One Variable In Declaration
+// XPECT errors --> "Missing variable or parameter" at ": Integer"
+	: Integer
+methods
+	test() : Integer
+	// ^ can only be preceded by "self", errorUseOfOnSuperClass
+	// XPECT errors --> "^ can only be preceded by "self"" at "temp"
+		temp ^printString(); 
+	// No error on self ^", errorUseOfOnSuperClass
+	// XPECT noIssues
+		self ^printString(); 
+		return 1
+	
+
+
+
+data class timeDataClass extends Object
+variables
+value : Integer 
+methods
+	getTimeDiff : Integer
+		// Current Time is not allowed in data class, errorContextOfCurrentTimeExpression 
+		// XPECT errors --> "Expression "currentTime" is only allowed in process classes"  at "currentTime"
+		currentTime;
+		return value 
+	
+		// Current Time is not allowed in guardedstatement
+		
+
+process class timeProcessClass()
+ports		
+messages		
+variables		
+init
+	someMethod()()
+methods
+	someMethod()() | |
+	// Current Time is allowed in process class, errorContextOfCurrentTimeExpression
+	// XPECT noIssues
+		currentTime
+
+cluster class someClass()
+ports
+	
+instances
+	// return not allowed in cluster class, errorContextOfReturnExpression
+	// XPECT errors --> "Expression "return" is only allowed in data classes" at "return 4"
+	someInstance: returnClass(x := return 4)
+	// return not allowed in cluster class, errorContextOfReturnExpression
+	// XPECT errors --> "Expression "self" is only allowed in data classes" at "self"
+	
+	somesInstance: returnClass(x := self)
+channels
+		
+	 
+process class returnClass(x : Integer)
+ports		
+messages		
+variables		
+init
+	someMethod()()
+methods	
+	someMethod()() | |	
+	// return not allowed in process class, errorContextOfReturnExpression
+	// XPECT errors --> "Expression "return" is only allowed in data classes" at "return x"
+	return x
+	
+process class selfClass()
+ports		
+messages		
+variables		
+init
+	someMethod()()
+methods	
+	someMethod()() | |
+	//self only allowed in Data Classes
+	// XPECT errors --> "Expression "self" is only allowed in data classes" at "self"
+	self
+
+data class nonNative extends Object
+variables
+
+methods
+// Native method not allowed in non-native data class
+// XPECT errors --> "No native method allowed in non-native data class" at "native" 
+native nativeMethod : Integer
+	
+
+native data class emptyDataClass extends Object
+variables
+
+methods
+	// Data Method should not be empty
+	// XPECT errors --> "The body of a non-native data method should not be empty" at "isEmpty : Integer"
+	isEmpty : Integer
+	// Native Data Method should be empty
+	// XPECT errors --> "The body of a native data method should be empty" at "native isNotEmpty : Integer	  		return 4"
+	native isNotEmpty : Integer	
+		return 4
+	// Empty Native Data Method in native dataclass should be allowed
+	// XPECT noIssues
+	native nativeEmpty : Integer
+		
+/*------------------------- */
+
+
+
+process class dummyClass()
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+
+cluster class unConnectedChannelsClass()
+ports
+	
+instances
+	someInstance: dummyClass()
+channels
+// Error when channel is empty, errorUnconnectedChannel
+// XPECT errors --> "Unused channel (no elements)" at "{}"
+{}
+	
+
+
+
+	
+
+
+
+

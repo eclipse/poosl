@@ -1,0 +1,13 @@
+import "../unused/ProcessMethodUsedChild.poosl.xt"
+
+process class childImportProcessClass() extends parentImportProcessClass  
+ports	
+messages	
+variables	
+init
+	startMethod()()  
+methods
+	startMethod()() |get : String |
+		overRiddenMethod ("")(get) 
+	overRiddenMethod(input : String)(output : String) | local : String | 
+	output := input + local 

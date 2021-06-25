@@ -1,0 +1,61 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_G8rhIORDEeSZttsAewanYQ,_-6xq0Nf8Eea3P5Zs0ralfQ
+Element-Name: Socket connected inspect
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _5-XRsfPGEeSSR_rCt07tDg
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/24/18 12:10 PM
+Tags: Debug, View, Perspective, PC
+Testcase-Type: ecl
+Verifications: _1o0woPPNEeSSR_rCt07tDg
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+launch-debug -name Socket10001 -port 10001 -file "nl.esi.poosl.examples/models-basic/SocketExample/socket_example.poosl"
+
+get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]"
+get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]/system/ServerSocket"
+with [get-view "Execution Tree" | get-tree] {
+    select "\\/system\\/ServerSocket/Init\\(\\)\\(\\)" | key-type Enter
+    click -default
+    select "\\/system\\/ServerSocket/sequential/Socket := new\\(Socket\\)" | key-type Enter
+    click -default
+    select "\\/system\\/ServerSocket/parallel/Connect\\(\\)\\(\\)" | key-type Enter
+    click -default
+    select "\\/system\\/ServerSocket/parallel/sequential/\\[Socket isDisconnected\\]/if HostName = nil then Socket acceptFrom\\(PortNumber\\) else Socket connectTo\\(HostName, PortNumber\\) fi" 
+        | key-type Enter
+    click -default
+ }
+
+
+get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]/system/ClientSocket"
+with [get-view "Execution Tree" | get-tree] {
+    select "\\/system\\/ClientSocket/Init\\(\\)\\(\\)" | key-type Enter
+    click -default
+    select "\\/system\\/ClientSocket/sequential/Socket := new\\(Socket\\)" | key-type Enter
+    click -default
+    select "\\/system\\/ClientSocket/parallel/Connect\\(\\)\\(\\)" | key-type Enter
+    click -default
+    select "\\/system\\/ClientSocket/parallel/sequential/\\[Socket isDisconnected\\]/if HostName = nil then Socket acceptFrom\\(PortNumber\\) else Socket connectTo\\(HostName, PortNumber\\) fi" 
+        | key-type Enter
+    click -default
+    select "\\/system\\/ClientSocket/parallel/sequential/Socket connectTo\\(HostName, PortNumber\\)" | key-type Enter
+    click -default
+    select "\\/system\\/ClientSocket/parallel/select/Communicate\\(\\)\\(\\)" | key-type Enter
+    click -default
+}
+get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]/system/ServerSocket"
+with [get-view "Execution Tree" | get-tree] {
+    select "\\/system\\/ServerSocket/parallel/sequential/Socket acceptFrom\\(PortNumber\\)" | key-type Enter
+    click -default
+    select "\\/system\\/ServerSocket/parallel/select/Communicate\\(\\)\\(\\)" | key-type Enter
+    click -default
+    get-item "\\/system\\/ServerSocket/parallel/select/sequential/abort par Read\\(\\)\\(\\) and Write\\(\\)\\(\\) rap with Connect\\(\\)\\(\\)/parallel/Write\\(\\)\\(\\)" | assert-non-empty
+}
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

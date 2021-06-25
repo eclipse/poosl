@@ -1,0 +1,22 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihIHEMT_EeWbAfcxAheu3Q,_1XTYUMT-EeWbAfcxAheu3Q,_LivfwMT_EeWbAfcxAheu3Q
+Element-Name: From Context Text Class diagram
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _aGC3QMWmEeWbAfcxAheu3Q
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 3/1/16 1:21 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "producer_consumer.poosl" | get-editbox | get-menu "Open Class Diagram" | click
+get-tab-folder -index 3 | get-property activePage | equals "Classes (producer_consumer.poosl)" | verify-true
+get-editor "Classes (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
+    -name "Classes (producer_consumer.poosl)" | get-property "isEditModeEnabled()" | equals false | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

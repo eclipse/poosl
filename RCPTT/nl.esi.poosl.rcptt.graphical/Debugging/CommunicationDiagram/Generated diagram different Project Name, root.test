@@ -1,0 +1,37 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _5ElwIMUDEeWbAfcxAheu3Q,_uyyIYMV6EeimqvUaoIT6uA,_AGpZ8FPYEea5R70fIjiNMA
+Element-Name: Generated diagram different Project Name, root
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _7cZLQMm0EeWBFNGtI_hPDw
+Runtime-Version: 2.5.0.202001211718
+Save-Time: 9/8/20 2:47 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-menu -path "Project/Build Automatically" | click
+with [get-view "Project Explorer" | get-tree] {
+    select "nl.esi.poosl.examples" | get-menu -path "Rename..." | click
+    with [get-editbox] {
+        key-type "M1+a"
+        set-text examples
+    }
+}
+
+get-editor "producer_consumer.poosl" | editor-poosl-debug
+
+get-view Debug | get-tree | select "producer_consumer.poosl [Simulated time: 0]/system" 
+    | get-menu "Open Communication Diagram" | click
+get-tab-folder -index 3 | get-property activePage | equals "*<COMM>System (producer_consumer.poosl) [/system]" | verify-true
+get-editor "<COMM>System (producer_consumer.poosl) [/system]" | get-diagram -index 1 | get-edit-part 
+    -name "<COMM>System (producer_consumer.poosl) [/system]" | get-property "isEditModeEnabled()" | equals false | verify-true
+get-editor "<COMM>System (producer_consumer.poosl) [/system]" | get-diagram -index 1 | get-edit-part 
+    -name "<COMM>System (producer_consumer.poosl) [/system]" | mouse-move 590 88 -height 305 -width 684
+get-button "Terminate (M1+F2)" | click
+get-tab-folder -index 3 | get-property tabCount | equals 1 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

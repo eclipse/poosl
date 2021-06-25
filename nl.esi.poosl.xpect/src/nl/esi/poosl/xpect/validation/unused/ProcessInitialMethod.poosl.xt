@@ -1,0 +1,33 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+// x and y are used in the process initial method call
+//XPECT noIssues
+process class initialInputClass(x, y : Integer)
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod(x, y)() 
+methods
+	someMethod(i, p : Integer)() | | 
+		i;
+		p
+
+process class initialInputVariableClass()
+ports
+	
+messages
+	
+variables 
+	x : Integer
+init
+// Local variables are now allowed in the initial method call
+//XPECT noIssues 
+	someMethod(x)()  
+methods
+	someMethod(i : Integer)() | |  
+		i 
+		

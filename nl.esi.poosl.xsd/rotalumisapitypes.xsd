@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="uri:poosl" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="rotalumisrequest" targetNamespace="uri:poosl" elementFormDefault="qualified">
+  <!--
+      Commands enumeration
+    -->
+  <xs:simpleType name="t_command">
+    <xs:restriction base="xs:string">
+      <!-- start execution of model -->
+      <xs:enumeration value="run"/>
+      <!-- pause execution of model -->
+      <xs:enumeration value="pause"/>
+      <!-- stop execution of model -->
+      <xs:enumeration value="stop"/>
+      <!-- make single step in execution of model -->
+      <xs:enumeration value="step"/>
+      <!-- step through execution model until specified process has made a single step -->
+      <xs:enumeration value="process-step"/>
+      <!-- step through execution model until model has made a single time step -->
+      <xs:enumeration value="time-step"/>
+      <!-- step through execution model until model has made a single communication step -->
+      <xs:enumeration value="comm-step"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--
+      Request ID
+    -->
+  <xs:simpleType name="t_reqid">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--
+      Handle to object
+    -->
+  <xs:complexType name="t_handle">
+    <xs:sequence>
+      <!-- Identifier of object -->
+      <xs:element name="id" type="t_handle_id"/>
+      <!-- Type of handle -->
+      <xs:element name="type" type="t_handle_type"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--
+      Object handle identifier
+    -->
+  <xs:simpleType name="t_handle_id">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--
+      Type of object handle
+    -->
+  <xs:simpleType name="t_handle_type">
+    <xs:restriction base="xs:string">
+      <!-- Poosl specification. -->
+      <xs:enumeration value="poosl_specification"/>
+      <!-- Cluster class -->
+      <xs:enumeration value="cluster_class"/>
+      <!-- Process class -->
+      <xs:enumeration value="process_class"/>
+      <!-- Data class -->
+      <xs:enumeration value="data_class"/>
+      <!-- Initial method call class -->
+      <xs:enumeration value="initial_method_call"/>
+      <!-- Process method -->
+      <xs:enumeration value="process_method"/>
+      <!-- Data method -->
+      <xs:enumeration value="data_method"/>
+      <!-- Expression -->
+      <xs:enumeration value="expression"/>
+      <!-- more to add -->
+    </xs:restriction>
+  </xs:simpleType>
+  <!--
+      Instance name
+    -->
+  <xs:simpleType name="t_instance_name">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([A-Za-z]([A-Za-z0-9_])*)(\.([A-Za-z]([A-Za-z0-9_])*))*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--
+      Sender and Receiver information
+    -->
+  <xs:complexType name="t_sender_info">
+    <xs:sequence>
+      <xs:element name="process_path" type="xs:string"/>
+      <xs:element name="handle" type="xs:integer"/>
+      <xs:element name="port" type="t_port_name"/>
+      <xs:element name="message" type="t_message_name"/>
+      <xs:element name="parameter_count" type="xs:nonNegativeInteger"/>
+      <xs:element name="node" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_receiver_info">
+    <xs:sequence>
+      <xs:element name="process_path" type="xs:string"/>
+      <xs:element name="handle" type="xs:integer"/>
+      <xs:element name="port" type="t_port_name"/>
+      <xs:element name="message" type="t_message_name"/>
+      <xs:element name="parameter_count" type="xs:nonNegativeInteger"/>
+      <xs:element name="node" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--
+      Transition Data type.
+    -->
+  <xs:complexType name="t_transition">
+    <xs:choice minOccurs="1" maxOccurs="1">
+      <xs:element name="communication" type="t_communication_transition"/>
+      <xs:element name="process_step" type="t_process_step_transition"/>
+      <xs:element name="data_step" type="t_data_step_transition"/>
+      <xs:element name="delay" type="t_delay_transition"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="t_communication_transition">
+    <xs:sequence>
+      <xs:element name="sender" type="t_sender_info"/>
+      <xs:element name="receiver" type="t_receiver_info"/>
+    </xs:sequence>
+    <xs:attribute name="handle" type="t_handle_id" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="t_process_step_transition">
+    <xs:sequence>
+      <xs:element name="process_path" type="xs:string"/>
+      <xs:element name="node" type="xs:integer"/>
+    </xs:sequence>
+    <xs:attribute name="handle" type="t_handle_id" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="t_data_step_transition">
+    <xs:sequence>
+      <xs:element name="process" type="t_instance_name"/>
+      <xs:element name="node" type="xs:integer"/>
+    </xs:sequence>
+    <xs:attribute name="handle" type="t_handle_id" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="t_delay_transition">
+    <xs:sequence>
+      <xs:element name="period" type="xs:double"/>
+      <xs:element name="node" type="xs:integer"/>
+      <xs:element name="process_path" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="handle" type="t_handle_id" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="t_transition_list">
+    <xs:sequence>
+      <xs:element name="transition" type="t_transition" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--
+      Filename definition.
+    -->
+  <xs:simpleType name="t_filename">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!--
+      Identifier definition
+    -->
+  <xs:simpleType name="t_identifier">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z][a-zA-Z0-9_]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--
+      Data definitions mapped on t_identifier
+    -->
+  <xs:simpleType name="t_port_name">
+    <xs:restriction base="t_identifier"/>
+  </xs:simpleType>
+  <xs:simpleType name="t_message_name">
+    <xs:restriction base="t_identifier"/>
+  </xs:simpleType>
+  <xs:simpleType name="t_class_name">
+    <xs:restriction base="t_identifier"/>
+  </xs:simpleType>
+  <xs:simpleType name="t_method_name">
+    <xs:restriction base="t_identifier"/>
+  </xs:simpleType>
+  <!--
+      Enumeration of instance type
+    -->
+  <xs:simpleType name="t_instance_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="process"/>
+      <xs:enumeration value="cluster"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_set_variable_result">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="unknown"/>
+      <xs:enumeration value="ok"/>
+      <xs:enumeration value="error"/>
+      <xs:enumeration value="invalid_var_handle"/>
+      <xs:enumeration value="invalid_list_handle"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--
+    Enumerate The constant type
+
+    These are the build in primitive classes in rotalumis.
+    -->
+  <xs:simpleType name="t_constant_type">
+    <xs:restriction base="xs:string">
+      <!-- String -->
+      <xs:enumeration value="string"/>
+      <!-- Character-->
+      <xs:enumeration value="character"/>
+      <!-- Integer -->
+      <xs:enumeration value="integer"/>
+      <!-- Real -->
+      <xs:enumeration value="real"/>
+      <!-- Boolean -->
+      <xs:enumeration value="boolean"/>
+      <!-- unknown constant type -->
+      <xs:enumeration value="unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--
+    Points to a position in the input file.
+  -->
+  <xs:complexType name="t_source_position">
+    <xs:sequence>
+      <!-- The source file. This is the index in the output of the list_files request. -->
+      <xs:element name="file" type="xs:integer"/>
+      <!-- The line in the source file. -->
+      <xs:element name="line" type="xs:integer"/>
+      <!-- The column in the source file. -->
+      <xs:element name="column" type="xs:integer"/>
+      <!-- The offset from the start of the source file. (unused?) -->
+      <xs:element name="offset" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

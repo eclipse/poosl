@@ -1,0 +1,33 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_fdA5gHM0EeWNsvS2ZqaobA,_ldH90ONVEeSZttsAewanYQ
+Element-Name: Run Super_PrintString_Chars
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _0RixAHM3EeWNsvS2ZqaobA
+Runtime-Version: 2.5.0.202001211718
+Save-Time: 10/30/20 10:24 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-view "Project Explorer" | get-tree] {
+	select "nl.esi.poosl.testmodels/Super_PrintString_Chars/test.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
+}
+with [get-view Console | get-text-viewer] {
+	set-caret-pos 20 15
+	select-range 20 16 20 1
+	key-type "M1+c"
+}
+try -times 10 -delay 500 -command {
+	with [get-view Console] {
+		get-text-viewer | get-property text | contains failed | verify-false
+		// HINT: label output is slightly since eclipse 2020-06
+		//get-label "<terminated> test.poosl [POOSL Simulation] [Seed: 1]" | assert-non-empty
+		get-label | get-text | contains "<terminated> test.poosl [POOSL Simulation] [Seed: 1]" | verify-true
+	}
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

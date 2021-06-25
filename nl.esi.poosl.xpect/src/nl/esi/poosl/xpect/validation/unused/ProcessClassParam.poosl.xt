@@ -1,0 +1,100 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+//Waning class parameter not used in used class
+//XPECT warnings --> "Variable is not used" at "param2"
+process class somePClass(param: Object, param2: Object)
+ports
+	p	
+	p2
+messages
+	p!m
+	p?m
+	p2!m
+	p2?m
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | | 
+		param;
+		p!m; 
+		p?m;
+		p2!m;
+		p2?m;
+		p?m
+
+//Waning class parameter not used in unused class
+//XPECT warnings --> "Variable is not used" at "param2"
+process class somePClass2(param: Object, param2: Object)
+ports
+	p	
+	p2
+messages
+	p!m
+	p?m
+	p2!m
+	p2?m
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | | 
+		param;
+		p!m; 
+		p?m;
+		p2!m;
+		p2?m
+
+cluster class someCClass()
+ports
+instances
+	someInstance: somePClass(param := nil, param2 := nil)
+	someInstance2: somePClass(param := nil, param2 := nil)
+channels
+	{someInstance.p, someInstance2.p}
+	{someInstance.p2, someInstance2.p2} 
+	
+
+	system
+	instances
+		cl : someClusterClass(x := nil)
+	channels
+	
+		
+//Waning class parameter not used in used class
+//XPECT warnings --> "Variable is not used" at "x"	
+process class someProcessClass(x: Object)	// give an "unused" warning
+ports
+//XPECT warnings --> "Port is not used" at "p"	
+	p	// give an "unused" warning
+messages
+	
+variables
+init
+	someMethod()()
+methods
+	someMethod()() | |
+	skip
+		
+
+//Waning class parameter not used in used class
+//XPECT warnings --> "Variable is not used" at "x"
+cluster class someClusterClass(x: Object)	// give an "unused" warning
+ports
+	p	// give an "unused" warning
+instances
+	someInstance: someProcessClass(x := nil)
+	someInstance2: someProcessClass(x := nil)
+channels
+	{someInstance.p, someInstance2.p, p}
+
+
+cluster class topCluster()
+ports
+	p
+instances
+	someInstance3: someClusterClass(x := nil)
+channels
+	{p, someInstance3.p}
+
+	

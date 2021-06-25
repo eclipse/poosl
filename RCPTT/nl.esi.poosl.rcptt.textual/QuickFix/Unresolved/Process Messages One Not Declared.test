@@ -1,0 +1,41 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _3u4PMONbEeSZttsAewanYQ,_hfz8QONsEeSZttsAewanYQ
+Element-Name: Process Messages One Not Declared
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _fa_6IGLgEeaOApqarGCklQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 1/10/18 4:29 PM
+Testcase-Type: ecl
+Verifications: _9XOdUGLgEeaOApqarGCklQ
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-editor "model.poosl" | get-text-viewer | type-text "process class someClass\n"
+    + "ports\n"
+    + "In\n"
+    + "messages\n"
+    + "In?Second(Integer)\n"
+    + "variables\n"
+    + "init\n"
+    + "someMethod()()\n"
+    + "methods\n"
+    + "someMethod()()  | i : Integer |\n"
+    + "In?Message(i);\n"
+    + "In?Second(i)"
+
+get-editor "model.poosl" | get-text-viewer | get-property "markers['11'][0].text" 
+    | equals "No receive message Message of port In with 1 variables" | verify-true
+with [get-editor "model.poosl" | get-text-viewer] {
+    set-caret-pos 11 14   
+    key-type "M1+1"    
+    key-type Enter //Extend the message declarations based on this statement
+}
+//get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
+//    | select "Extend the message declarations based on this statement" | click -default
+get-editor "model.poosl" | get-text-viewer | key-type "M1+M2+f"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

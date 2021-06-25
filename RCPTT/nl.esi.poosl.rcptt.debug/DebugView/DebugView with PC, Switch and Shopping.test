@@ -1,0 +1,116 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_B8zgAOUCEeSZacs1KESTcQ,_-6xq0Nf8Eea3P5Zs0ralfQ
+Element-Name: DebugView with PC, Switch and Shopping
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _HzUAYOUCEeSZacs1KESTcQ
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/21/18 1:57 PM
+Tags: Debug, View, Perspective, PC
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+add-launch-debug -name ShoppingCartsConf -port 10004 -file "nl.esi.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
+add-launch-debug -name SwitchConf -port 10003 -file "nl.esi.poosl.examples/models-complex/ATMSwitch/switch.poosl"
+add-launch-debug -name PCConf -port 10001 -file "nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl"
+wait 50
+get-editor "switch.poosl" | editor-poosl-debug
+
+with [get-view Debug | get-tree] {
+	expand-all
+	
+	 get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 9 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals x 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getText()" 
+        | equals x1 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getText()" 
+        | equals x2 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[2].getText()" 
+        | equals x3 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[3].getText()" 
+        | equals x4 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[1].getText()" | equals source1 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[2].getText()" | equals source2 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[3].getText()" | equals source3 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[4].getText()" | equals source4 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[5].getText()" | equals destination1 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[6].getText()" | equals destination2 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[7].getText()" | equals destination3 
+        | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[8].getText()" | equals destination4 
+        | verify-true
+	
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 9 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals "switch.poosl.*" | verify-true
+    get-property "getItemCount()" | equals 1 | verify-true
+}
+get-editor "producer_consumer.poosl" | editor-poosl-debug
+
+with [get-view Debug | get-tree] {
+    expand-all
+    
+    get-property "getItemCount()" | equals 2 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals "switch.poosl [Simulated time: 0]" | verify-true
+    get-property "getItems().TreeItem[1].getText()" | equals "producer_consumer.poosl [Simulated time: 0]" | verify-true    
+    
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 9 | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals x | verify-true
+    
+    get-property "getItems().TreeItem[1].getItems().TreeItem[0].getItems().TreeItem[1].getText()" | equals Bus | verify-true
+    get-property "getItems().TreeItem[1].getItems().TreeItem[0].getItems().TreeItem[1].getItemCount()" | equals 0 | verify-true
+    get-property "getItems().TreeItem[1].getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals ProducerConsumer | verify-true
+    get-property "getItems().TreeItem[1].getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 2 | verify-true
+    
+   
+}
+
+get-editor "ShoppingCarts.poosl" | editor-poosl-debug
+with [get-view Debug | get-tree] {
+ 	expand-all
+ 	
+    get-property "getItemCount()" | equals 3 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals "switch.poosl [Simulated time: 0]" | verify-true
+    get-property "getItems().TreeItem[1].getText()" | equals "producer_consumer.poosl [Simulated time: 0]" | verify-true    
+    get-property "getItems().TreeItem[2].getText()" | equals "ShoppingCarts.poosl [Simulated time: 0]" | verify-true 
+ 
+    get-property "getItems().TreeItem[2].getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals customers | verify-true
+    get-property "getItems().TreeItem[2].getItems().TreeItem[0].getItems().TreeItem[0].getItemCount()" | equals 0 | verify-true
+    get-property "getItems().TreeItem[2].getItems().TreeItem[0].getItems().TreeItem[1].getText()" | equals shed1 | verify-true
+    get-property "getItems().TreeItem[2].getItems().TreeItem[0].getItems().TreeItem[1].getItemCount()" | equals 0 | verify-true
+    get-property "getItems().TreeItem[2].getItems().TreeItem[0].getItems().TreeItem[2].getText()" | equals shed2 | verify-true
+    get-property "getItems().TreeItem[2].getItems().TreeItem[0].getItems().TreeItem[2].getItemCount()" | equals 0 | verify-true
+
+    get-property "getItems().TreeItem[2].getItems().TreeItem[0].getItemCount()" | equals 3 | verify-true
+    get-property "getItemCount()" | equals 3 | verify-true
+}
+get-view Debug | get-tree | select "ShoppingCarts.poosl \\[Simulated time: 0\\]"
+click-terminate
+with [get-view Debug | get-tree] {
+    get-item "<terminated> ShoppingCarts.poosl.*" | assert-non-empty
+    get-item "<terminated> ShoppingCarts.poosl.*" | get-property "image.path" 
+        | equals "org.eclipse.debug.ui/icons/full/obj16/debugtt_obj.png" | verify-true
+}
+click-remove-terminated-launches
+get-view Debug | get-tree | get-property itemCount | equals 2 | verify-true
+get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]"
+click-terminate
+click-remove-terminated-launches
+get-view Debug | get-tree | get-property itemCount | equals 1 | verify-true
+get-view Debug | get-tree | select "switch.poosl \\[Simulated time: 0\\]"
+click-terminate
+click-remove-terminated-launches
+get-view Debug | get-tree | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_0f97UCMJEemTAfKT-AIu5w,_rGPg8CMLEemTAfKT-AIu5w
+Element-Name: FileCopy
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _PS1g4CMKEemTAfKT-AIu5w
+Runtime-Version: 2.4.0.201808022310
+Save-Time: 1/29/19 12:57 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+file-poosl-debug "nl.esi.poosl.examples/models-cosim/FileCopy/FileCopy.poosl"    
+
+get-view Debug | get-tree | select "FileCopy.poosl \\[Simulated time: 0\\]/adapters"
+with [get-view Debug | get-tree] {
+    get-item -path "FileCopy.poosl \\[Simulated time: 0\\]/adapters/fileReader" | get-property caption 
+        | equals fileReader | verify-true
+    get-item -path "FileCopy.poosl \\[Simulated time: 0\\]/adapters/fileWriter" | get-property caption 
+        | equals fileWriter | verify-true
+}
+
+click-terminate
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

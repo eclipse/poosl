@@ -1,0 +1,20 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+
+data class greaterClass extends Object
+variables	
+methods
+ // Error when more then 1 parameter is given to a data method for a binary operator
+// XPECT errors --> "Data methods for binary operators should have exactly 1 parameter" at "d :Integer"
++ (i : Integer, d :Integer) : Integer
+	return i+d
+	
+// When no paremters are given more errors are shown
+data class someClass extends Object
+variables	
+methods
+// Error when no parameters are given to a data method for a binary operator
+// XPECT errors --> "unexpected input '"Missing variable or parameter"'" at ""Missing variable or parameter""
+"Missing variable or parameter" at ") : Integer"
+"extraneous input ')' expecting ':'" at ")"
+"mismatched input '<EOF>' expecting ')'" at "       	  "
++ () : Integer

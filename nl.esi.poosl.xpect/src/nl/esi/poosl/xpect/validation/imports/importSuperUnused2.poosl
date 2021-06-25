@@ -1,0 +1,20 @@
+import "../unused/ProcessParentExternImport.poosl.xt"
+
+process class subClass() extends someSuperClass2 
+ports
+messages
+	p!m
+variables
+source , target : Integer
+entrance, exit : String
+init
+	someMethod()()
+methods
+	someMethod()()
+		r;
+		v;
+		p!m;
+		q?n;
+		someOtherMethod()();
+		someOtherMethod(source, target, entrance, exit)();
+		someOtherMethod()(source, target, entrance, exit) 

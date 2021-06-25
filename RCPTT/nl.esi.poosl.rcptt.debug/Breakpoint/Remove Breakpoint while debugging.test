@@ -1,0 +1,25 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_lVE1EONVEeSZttsAewanYQ,_r5J-sN-HEeSGR4qac-ot4g,_ZB3rEOkIEeSkTJCY7hn1FA
+Element-Name: Remove Breakpoint while debugging
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _Wn8XgP1aEeSY2Ma_ry9BIw
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 1/23/17 3:41 PM
+Tags: Breakpoint Debug
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+remove breakpoint while simulation has already started. simulation should not stop at the breakpoint
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

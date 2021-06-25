@@ -1,0 +1,87 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest END_SETUP */
+process class someClass()
+ports
+messages
+variables
+init
+	someMethod(nil)()
+methods
+	someMethod(P : Integer)() | I : Integer |	
+		//Switch with normal setup, cases and default, gives no warnings/errors
+		//XPECT noIssues	 
+		P := switch I do
+			case 1 then 1
+			case 2 then 2
+			default 0
+		od ;
+
+		//Switch with no Default gives no warnings
+		//XPECT noIssues	 
+		I := switch I do
+			case 1 then 1
+		od ;
+	
+		I := switch I do		
+		// Warning when case condition is not compatible with switch expression
+		//XPECT warnings --> "Case condition of type Boolean is not compatible with switch expression of type Integer" at "true"
+			case true then 1
+		od ;
+
+		// Show warning when switch returns uncompatible type
+		//XPECT warnings --> "Expression of type Boolean is not compatible with variable of type Integer" at "I := switch I do		  			case 1 then	    	  	     		true  	     	default  	     	    true  	     od"
+		I := switch I do
+			case 1 then true
+			default true
+		od 	
+
+data class Packet extends Object
+variables
+	ID : Integer
+methods
+	switchTests(I : Integer) : Integer
+
+	//Switch with normal setup cases and default gives no errors
+	//XPECT noIssues	 
+		I := switch I do
+			case 1 then 1
+			case 2 then 2
+			default 0
+		od ;
+
+		//Switch with no Default gives no warnings
+		//XPECT noIssues	 
+		I := switch I do
+			case 1 then 1
+		od ;
+		
+		I := switch I do		
+		// Warning when case condition is not compatible with switch condition
+		//XPECT warnings --> "Case condition of type Boolean is not compatible with switch expression of type Integer" at "true"
+			case true then 1
+		od ;
+
+		// Show warning when switch returns uncompatible type
+		//XPECT warnings --> "Expression of type Boolean is not compatible with variable of type Integer" at "I := switch I do		  			case 1 then	    	  	     		true  	     	default  	     	    true  	     od"
+		I := switch I do
+			case 1 then true
+			default true
+		od ;
+
+		// Show warning when switch returns uncompatible type
+		//XPECT warnings --> ""return" is not at the end of the method body" at "return switch I do		  			case 1 then  	     		true  	     	default  	     	    true  	     od"
+		return switch I do
+			case 1 then true
+			default true
+		od ;
+		return I
+	returnSwitch() : Packet
+	//switch in return gives no warnings or errors
+	//XPECT noIssues	
+		return switch ID do
+			case 1 then
+			//return self
+			//XPECT noIssues	
+			self
+			default nil
+		od	
+

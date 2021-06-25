@@ -1,0 +1,29 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Unresolved
+Element-Type: testsuite
+Element-Version: 2.0
+Id: __JfJYEmrEea18PiEOcOxrA
+Manually-Ordered: true
+Runtime-Version: 2.1.0.201605312320
+Save-Time: 8/15/16 2:09 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_7Zic0OQ8EeSZttsAewanYQ	// kind: 'test' name: 'Cluster Instance Not Exist' path: 'Cluster Instance Not Exist.test'
+_nDtWsOQ9EeSZttsAewanYQ	// kind: 'test' name: 'Cluster Instance Not Exist2' path: 'Cluster Instance Not Exist2.test'
+_B3LZQON6EeSZttsAewanYQ	// kind: 'test' name: 'Data Variable Not Declared Class' path: 'Data Variable Not Declared Class.test'
+_1T6-8ON3EeSZttsAewanYQ	// kind: 'test' name: 'Data Variable Not Declared Local' path: 'Data Variable Not Declared Local.test'
+_wlOWwOQdEeSZttsAewanYQ	// kind: 'test' name: 'Process Message Not Declared Integer ' path: 'Process Message Not Declared Integer .test'
+_0JIiYOQdEeSZttsAewanYQ	// kind: 'test' name: 'Process Message Not Declared Integer2' path: 'Process Message Not Declared Integer2.test'
+_CA7OEOQdEeSZttsAewanYQ	// kind: 'test' name: 'Process Message Not Declared' path: 'Process Message Not Declared.test'
+_fa_6IGLgEeaOApqarGCklQ	// kind: 'test' name: 'Process Messages One Not Declared' path: 'Process Messages One Not Declared.test'
+_U2qpYOQ7EeSZttsAewanYQ	// kind: 'test' name: 'Process Method Not Defined' path: 'Process Method Not Defined.test'
+_29fyUOQbEeSZttsAewanYQ	// kind: 'test' name: 'Process Port Not Declared' path: 'Process Port Not Declared.test'
+_IaOZoOjXEeSZ96htjnTzFw	// kind: 'test' name: 'Process Variable Undeclared class' path: 'Process Variable Undeclared class.test'
+_JJYlsOjXEeSZ96htjnTzFw	// kind: 'test' name: 'Process Variable Undeclared local' path: 'Process Variable Undeclared local.test'
+_KpHL4OQdEeSZttsAewanYQ	// kind: 'test' name: 'Process Variable Undeclared parameter' path: 'Process Variable Undeclared parameter.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

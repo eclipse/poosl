@@ -1,0 +1,48 @@
+/* XPECT_SETUP nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+
+
+//The child process class of someSuperClass2 uses elements from the parent someSuperClass2. 
+//Importing the child class informs which elements are used which otherwise would have an unused warning
+
+// See ProcessParentExtern.poosl.xt for no child import
+
+import "../imports/importSuperUnused2.poosl"
+
+process class someSuperClass2(r : Object)
+ports
+//Due to the import pshould not give an unused warning
+//XPECT noIssues 
+	p,
+	q
+messages
+//Due to the import q?n should not give an unused warning
+//XPECT noIssues 
+	q?n
+variables
+//Due to the import v should not give an unused warning
+//XPECT noIssues
+	v : Integer 
+init
+	someMethod()()  
+methods 
+	someMethod()() 
+		skip
+		//Due to the import someOtherMethod should not give an unused warning
+		//XPECT noIssues
+	someOtherMethod()() 
+		skip
+		//Due to the import someOtherMethod should not give an unused warning
+		//XPECT noIssues
+	someOtherMethod(source, target : Integer, entrance , exit : String)()    
+		source;
+		target;
+		entrance;
+		exit
+		//Due to the import someOtherMethod should not give an unused warning
+		//XPECT noIssues		 
+		someOtherMethod()(source, target : Integer, entrance , exit : String)      
+		source;
+		target;
+		entrance;
+		exit	 
+	   
