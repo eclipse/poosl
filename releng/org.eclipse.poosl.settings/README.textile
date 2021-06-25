@@ -1,0 +1,7 @@
+h1. Eclipse Configuration Files for POOSL
+
+This directory contains configuration files for Eclipse which should be installed by every POOSL team member to ensure a common coding style:
+* @CheckstyleConfiguration.xml@: the configuration file for CheckStyle v5. Import it from __Preferences > CheckStyle__. *Required for everyone*.
+* @CleanupProfile.xml@: the configuration file for Clean Up. Import it from __Preferences > Java > Code Style > Clean Up__.
+* @JavaFormatter.xml@: the configuration file to format the Java file. Import it from __Preferences > Java > Code Style > Formatter__. *Required for everyone*.
+* @poosl.importorder@: the configuration file to sort the imports. Import it from __Preferences > Java > Code Style > Organize Imports__. *Required for everyone*.
