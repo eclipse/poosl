@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: POOSL Xtext IDE
+Bundle-Vendor: TNO ESI
+Bundle-Version: 4.2.2.qualifier
+Bundle-SymbolicName: org.eclipse.poosl.xtext.ide;singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.poosl.xtext,
+ org.eclipse.poosl.model,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.eclipse.poosl.xtext.ide.contentassist.antlr,
+ org.eclipse.poosl.xtext.ide.contentassist.antlr.internal
+Automatic-Module-Name: org.eclipse.poosl.xtext.ide

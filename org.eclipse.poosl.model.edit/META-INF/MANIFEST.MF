@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.poosl.model.edit;singleton:=true
+Automatic-Module-Name: org.eclipse.poosl.model.edit
+Bundle-Version: 4.2.2.qualifier
+Bundle-ClassPath: .
+Bundle-Activator: org.eclipse.poosl.provider.PooslEditPlugin$Implementation
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.eclipse.poosl.provider
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.poosl.model;visibility:=reexport,
+ org.eclipse.emf.edit;visibility:=reexport,
+ org.eclipse.poosl.xtext
+Bundle-ActivationPolicy: lazy

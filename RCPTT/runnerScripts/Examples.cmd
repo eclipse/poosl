@@ -9,7 +9,7 @@ SET AUT_VM_ARGS=-Xms1024m;-Xmx1024m;-XX:MaxMetaspaceSize=256m
 SET RUNNER=C:\opt\rcptt\rcptt.runner-2.5.0
 SET RUNNER_VM_ARGS=-Xms512m -Xmx512m -XX:MaxMetaspaceSize=128m
 SET TESTS=%WORKSPACE%\poosl\RCPTT
-SET POOSL_PLUGINS=%WORKSPACE%\poosl\nl.esi.poosl.updatesite\target\repository
+SET POOSL_PLUGINS=%WORKSPACE%\poosl\org.eclipse.poosl.updatesite\target\repository
 SET RESULTS=%WORKSPACE%\results\examples-tests
 
 REM Remove results dir if present
@@ -24,7 +24,7 @@ java %RUNNER_VM_ARGS% -jar "%RUNNER%\plugins\org.eclipse.equinox.launcher_1.5.60
 -autConsolePrefix "%RESULTS%/aut-output" ^
 -htmlReport "%RESULTS%/report.html" ^
 -junitReport "%RESULTS%/report.html" ^
--import "%TESTS%\nl.esi.poosl.rcptt;%TESTS%\nl.esi.poosl.rcptt.examples" ^
+-import "%TESTS%\org.eclipse.poosl.rcptt;%TESTS%\org.eclipse.poosl.rcptt.examples" ^
 -injection:dir "%POOSL_PLUGINS%" ^
 -suites "Examples" ^
 -connectTimeout 240 ^

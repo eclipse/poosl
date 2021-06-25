@@ -82,8 +82,8 @@
 			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="src" path="/nl.esi.poosl.xtext"/>
-	<classpathentry kind="src" path="/nl.esi.poosl.transformations"/>
+	<classpathentry kind="src" path="/org.eclipse.poosl.xtext"/>
+	<classpathentry kind="src" path="/org.eclipse.poosl.transformations"/>
 	<classpathentry kind="lib" path="D:/eclipse/plugins/org.eclipse.emf.ecore_2.9.0.v20130528-0742.jar" sourcepath="D:/eclipse/plugins/org.eclipse.emf.ecore.source_2.9.0.v20130528-0742.jar">
 		<accessrules>
 			<accessrule kind="accessible" pattern="org/eclipse/emf/ecore/*"/>
@@ -104,6 +104,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/eclipse/plugins/org.eclipse.emf.common_2.9.0.v20130528-0742.jar"/>
 	<classpathentry kind="lib" path="D:/eclipse/plugins/org.eclipse.xtext.util_2.4.2.v201306120542.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/nl.esi.poosl.model"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.poosl.model"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.poosl</groupId>
+	<artifactId>org.eclipse.poosl.target</artifactId>
+	<packaging>pom</packaging>
+	<parent>
+		<groupId>org.eclipse.poosl</groupId>
+		<artifactId>org.eclipse.poosl.maven</artifactId>
+		<version>4.2.2-SNAPSHOT</version>
+		<relativePath>../org.eclipse.poosl.maven/pom.xml</relativePath>
+	</parent>
+
+
+	<modules>
+		<module>latest</module>
+		<module>release</module>
+	</modules>
+</project>

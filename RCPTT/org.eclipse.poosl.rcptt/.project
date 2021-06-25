@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>org.eclipse.poosl.rcptt</name>
+	<comment></comment>
+	<projects>
+		<project>org.eclipse.poosl.rcptt.debug</project>
+		<project>org.eclipse.poosl.rcptt.graphical</project>
+		<project>org.eclipse.poosl.rcptt.run</project>
+		<project>org.eclipse.poosl.rcptt.setup</project>
+		<project>org.eclipse.poosl.rcptt.textual</project>
+		<project>org.eclipse.poosl.rcptt.examples</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.rcptt.core.builder.q7Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.sonarlint.eclipse.core.sonarlintBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rcptt.core.rcpttnature</nature>
+	</natures>
+</projectDescription>

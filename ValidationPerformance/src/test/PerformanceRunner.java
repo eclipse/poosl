@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.esi.poosl.xtext.PooslStandaloneSetup;
+import org.eclipse.poosl.xtext.PooslStandaloneSetup;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -84,8 +84,8 @@ public class PerformanceRunner {
 		}
 		System.out.print(".");
 		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getPackageRegistry().put(nl.esi.poosl.PooslPackage.eINSTANCE.getNsURI(),
-				nl.esi.poosl.PooslPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(),
+				org.eclipse.poosl.PooslPackage.eINSTANCE);
 		long currentTime, currentTime2;
 		List<Issue> issues;
 		System.out.print(".");

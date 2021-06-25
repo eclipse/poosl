@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="org.eclipse.poosl.sdk">
+      <category name="org.eclipse.poosl"/>
+   </feature>
+   <feature id="org.eclipse.poosl.sdk.legacysupport">
+      <category name="org.eclipse.poosl"/>
+   </feature>
+   <category-def name="org.eclipse.poosl" label="Poosl"/>
+</site>

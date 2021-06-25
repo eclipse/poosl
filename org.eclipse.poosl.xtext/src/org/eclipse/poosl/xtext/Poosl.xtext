@@ -1,0 +1,622 @@
+grammar org.eclipse.poosl.xtext.Poosl hidden (WS, ML_COMMENT, SL_COMMENT)
+
+// reference package needs to have the Xtext nature; see https://bugs.eclipse.org/bugs/show_bug.cgi?id=367013
+import "http://poosl.eclipse.org/poosl/3.0.0"	
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+// === Main entry point =======
+
+Poosl: {Poosl}
+	( imports+=Import | importLibs+=ImportLib ) *
+		( dataClasses+=DataClass
+		| processClasses+=ProcessClass
+		| clusterClasses+=ClusterClass
+		)*
+	( clusterClasses+=System
+		( dataClasses+=DataClass
+		| processClasses+=ProcessClass
+		| clusterClasses+=ClusterClass
+		)*
+	)?
+;
+
+Import:
+	'import' importURI=POOSL_STRING
+;
+
+ImportLib returns Import:
+ 'importlib' importURI=POOSL_STRING
+;
+
+// === Data Class =======
+
+DataClass:
+	( annotations+=Annotation )*
+	( native?='native' )?
+	  'data' 'class'	  name=IDENTIFIER
+	( 'extends'			  superClass=IDENTIFIER )?
+	  'variables'		( instanceVariables+=Declaration ((',')? instanceVariables+=Declaration)* (',')?)?
+	  'methods'			( dataMethodsNamed+=DataMethodNamed  |
+	  					  dataMethodsUnaryOperator+=DataMethodUnaryOperator  |
+	  					  dataMethodsBinaryOperator+=DataMethodBinaryOperator
+	  					)*
+;
+
+DataMethodNamed:
+	( annotations+=Annotation )*
+	(  native?='native' )?
+	   name=IDENTIFIER
+	( '(' (parameters+=Declaration (',' parameters+=Declaration)*)? ')' )?
+	  ':' returnType=IDENTIFIER
+	( '|' (localVariables+=Declaration (',' localVariables+=Declaration)*)? '|' )?
+	( body=Expression )?
+;
+	
+DataMethodBinaryOperator:
+	( annotations+=Annotation )*
+	( native?='native' )?
+	  name=OperatorBinary
+	  '(' parameters+=Declaration (',' parameters+=Declaration)* ')'
+	  ':' returnType=IDENTIFIER
+	( '|' (localVariables+=Declaration (',' localVariables+=Declaration)*)? '|' )?
+	( body=Expression )?
+;
+
+DataMethodUnaryOperator:
+	( annotations+=Annotation )*
+	( native?='native' )?
+	  name=OperatorUnary
+	( '(' ')' )?
+	  ':' returnType=IDENTIFIER
+	( '|' (localVariables+=Declaration (',' localVariables+=Declaration)*)? '|' )?
+	( body=Expression )?
+;
+
+Declaration:
+	( variables+=Variable (',' variables+=Variable)* )? ':' type=IDENTIFIER
+;
+
+Variable:
+	name=IDENTIFIER
+;
+
+Annotation:
+	'@' name=IDENTIFIER 
+	( '('
+		(arguments+=ExpressionConstant (',' arguments+=ExpressionConstant)* )? 	
+	')' )? 
+;
+
+
+// === Process Class =======
+
+ProcessClass:
+	( annotations+=Annotation )*
+	  'process' 'class'				  name=IDENTIFIER
+									( '(' (parameters+=Declaration
+									       (',' parameters+=Declaration)* )?
+									  ')' )?
+	( 'extends'						  superClass=IDENTIFIER )?
+	  'ports'						( ports+=Port
+	  								  ((',')? ports+=Port)* (',')?)? 
+	  'messages'					( (receiveMessages+=MessageReceiveSignature | sendMessages+=MessageSendSignature) 
+									  ((',')? (receiveMessages+=MessageReceiveSignature | sendMessages+=MessageSendSignature))* (',')?)?
+	  'variables'					( instanceVariables+=Declaration
+									  ((',')? instanceVariables+=Declaration)* (',')?)?
+	  'init'						  (initialMethodCall=ProcessMethodCall)?
+	  'methods'						( methods+=ProcessMethod )*
+;
+
+ProcessMethod:
+	( annotations+=Annotation )*
+	  name=IDENTIFIER
+	  '(' (inputParameters+=Declaration (',' inputParameters+=Declaration)*)? ')'
+	  '(' (outputParameters+=Declaration (',' outputParameters+=Declaration)*)? ')'
+	( '|' (localVariables+=Declaration (',' localVariables+=Declaration)*)? '|' )?
+	  body=Statement
+;
+
+Port:
+	name=IDENTIFIER
+;
+
+MessageReceiveSignature returns MessageSignature: 
+	port=PortReference '?' name=IDENTIFIER
+	( '(' (parameters+=MessageParameter (',' parameters+=MessageParameter)*)? ')' )?
+;
+
+MessageSendSignature returns MessageSignature: 
+	port=PortReference '!' name=IDENTIFIER 
+	( '(' (parameters+=MessageParameter (',' parameters+=MessageParameter)*)? ')' )?
+;
+
+MessageParameter:
+	type=IDENTIFIER
+;
+
+
+// === System and Cluster Class =======
+
+System returns ClusterClass: {ClusterClass}
+	   ( annotations+=Annotation )*
+	  'system'
+       						( '(' (parameters+=Declaration
+       							   (',' parameters+=Declaration)* )?
+       						  ')' )?
+      ('ports'				( ports+=Port
+	  						     ((',')? ports+=Port)* (',')?)? )?
+	  'instances'			( instances+=Instance )*
+	  'channels'			( channels+=Channel )*  
+;
+
+ClusterClass:
+	   ( annotations+=Annotation )*
+	  'cluster' 'class'		  name=IDENTIFIER
+       						( '(' (parameters+=Declaration
+       							   (',' parameters+=Declaration)* )?
+       						  ')' )?
+	  'ports'				( ports+=Port 
+	  						     ((',')? ports+=Port)* (',')?)?
+	  'instances'			( instances+=Instance )*
+	  'channels'			( channels+=Channel )*
+;
+
+Instance:
+	( annotations+=Annotation )*
+	name=IDENTIFIER 
+	':' classDefinition=IDENTIFIER
+	( '(' (instanceParameters+=InstanceParameter (',' instanceParameters+=InstanceParameter)*)? ')' )?
+;
+
+InstanceParameter:
+	parameter=IDENTIFIER ':=' expression=Expression
+;
+
+Channel: {Channel}
+	( annotations+=Annotation )*
+	'{'	(
+		( 	instancePorts+=InstancePort		(',' instancePorts+=InstancePort)*
+			( ','	externalPort=[Port|IDENTIFIER]
+					(',' instancePorts+=InstancePort)*
+			)?
+		)
+	|
+		(
+			externalPort=[Port|IDENTIFIER]
+			(',' instancePorts+=InstancePort)*
+		)
+    )? '}'
+;
+
+InstancePort: 
+	instance=[Instance|IDENTIFIER] '.' port=PortReference
+;	
+
+
+// === Expressions =======
+
+Expression:
+	ExpressionSingle
+	( {ExpressionSequence.expressions+=current} (';' expressions+=ExpressionSingle)+ )?
+;
+
+ExpressionSingle returns Expression:
+	ExpressionLevel1
+;
+
+ExpressionLevel1 returns Expression:
+	ExpressionLevel2
+	| ({AssignmentExpression}	variable=IDENTIFIER ':=' expression=ExpressionLevel1)
+	| ({ReturnExpression}		'return' expression=ExpressionLevel1)
+;
+
+ExpressionLevel2 returns Expression:		// Left associativity
+	ExpressionLevel3
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel2 rightOperand=ExpressionLevel3 )*
+;
+
+ExpressionLevel3 returns Expression:		// Left associativity
+	ExpressionLevel4
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel3 rightOperand=ExpressionLevel4 )*
+;
+
+ExpressionLevel4 returns Expression:		// Left associativity
+	ExpressionLevel5
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel4 rightOperand=ExpressionLevel5 )*
+;
+
+ExpressionLevel5 returns Expression:
+	ExpressionLevel6
+	( ({DataMethodCallExpression.target=current} (onSuperClass?='^')? name=IDENTIFIER ( '(' (arguments+=Expression (',' arguments+=Expression)*)? ')' )? )
+	)*
+;
+
+ExpressionLevel6 returns Expression:
+	(=> ExpressionLevel7) | UnaryOperatorExpression | IfExpression | WhileExpression | SwitchExpression	
+	// ExpressionLevel7 should occur before UnaryOperatorExpression, to avoid unary minus when possible
+;
+
+UnaryOperatorExpression:
+	name=OperatorUnary operand=ExpressionLevel7
+;
+
+IfExpression: 
+	'if' condition=Expression 'then' thenClause=Expression ('else' elseClause=Expression)? 'fi'
+;
+
+WhileExpression: 
+	'while' condition=Expression 'do' body=Expression 'od'
+;
+
+SwitchExpression:
+	'switch' expression=Expression 
+	'do'
+	((
+		(cases+=SwitchExpressionCase)+
+		('default' defaultBody=Expression)?
+	)|(
+		'default' defaultBody=Expression
+	))
+	'od'
+;
+
+SwitchExpressionCase:
+	'case' value=Expression 'then' body=Expression
+;
+
+ExpressionLevel7 returns Expression:
+	CurrentTimeExpression | SelfExpression | ExpressionConstant |
+	NewExpression | VariableExpression | ExpressionSequenceRoundBracket
+;
+
+CurrentTimeExpression:	{CurrentTimeExpression} 'currentTime';
+SelfExpression:			{SelfExpression} 'self';
+
+ExpressionConstant returns Expression:
+	BooleanConstant | CharacterConstant | FloatConstant | IntegerConstant | NilConstant | RealConstant |  StringConstant | EnvironmentConstant
+;
+
+BooleanConstant: 		value='true' | value='false';
+CharacterConstant:		value=CHARACTER;
+FloatConstant:			value=FLOAT;
+IntegerConstant:		value=INTEGER;
+NilConstant:			{NilConstant} 'nil';
+RealConstant:			value=REAL;
+StringConstant:			value=POOSL_STRING;
+EnvironmentConstant:	value=ENVIRONMENT_VARIABLE_NAME;
+
+OutputVariable:			variable=IDENTIFIER;
+VariableExpression:		variable=IDENTIFIER;
+NewExpression:			'new' '(' dataClass=IDENTIFIER ')';
+
+ExpressionSequenceRoundBracket:
+	'('	expressions+=ExpressionSingle (';' expressions+=ExpressionSingle)* ')'
+ ;
+
+
+// --- Restricted expressions for use in statement, split by first token -------
+
+IDStartWithinStatementExpressionSingle returns Expression:
+	IDStartWithinStatementExpressionLevel1
+;
+
+IDStartWithinStatementExpressionLevel1 returns Expression:
+	IDStartWithinStatementExpressionLevel2
+	| ({AssignmentExpression}	variable=IDENTIFIER ':=' expression=ExpressionLevel1)
+;
+
+IDStartWithinStatementExpressionLevel2 returns Expression:		// Left associativity
+	IDStartWithinStatementExpressionLevel3
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel2 rightOperand=ExpressionLevel3 )*
+;
+
+IDStartWithinStatementExpressionLevel3 returns Expression:		// Left associativity
+	IDStartWithinStatementExpressionLevel4
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel3 rightOperand=ExpressionLevel4 )*
+;
+
+IDStartWithinStatementExpressionLevel4 returns Expression:		// Left associativity
+	IDStartWithinStatementExpressionLevel5
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel4 rightOperand=ExpressionLevel5 )*
+;
+
+IDStartWithinStatementExpressionLevel5 returns Expression:
+	VariableExpression	( ({DataMethodCallExpression.target=current} (onSuperClass?='^')? name=IDENTIFIER ( '(' (arguments+=Expression (',' arguments+=Expression)*)? ')' )? )
+	)*
+;
+
+
+NonIDStartWithinStatementExpressionSingle returns Expression:
+	NonIDStartWithinStatementExpressionLevel1
+;
+
+NonIDStartWithinStatementExpressionLevel1 returns Expression:
+	NonIDStartWithinStatementExpressionLevel2
+	| ({ReturnExpression}		'return' expression=ExpressionLevel1)
+;
+
+NonIDStartWithinStatementExpressionLevel2 returns Expression:		// Left associativity
+	NonIDStartWithinStatementExpressionLevel3
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel2 rightOperand=ExpressionLevel3 )*
+;
+
+NonIDStartWithinStatementExpressionLevel3 returns Expression:		// Left associativity
+	NonIDStartWithinStatementExpressionLevel4
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel3 rightOperand=ExpressionLevel4 )*
+;
+
+NonIDStartWithinStatementExpressionLevel4 returns Expression:		// Left associativity
+	NonIDStartWithinStatementExpressionLevel5
+	( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel4 rightOperand=ExpressionLevel5 )*
+;
+
+NonIDStartWithinStatementExpressionLevel5 returns Expression:
+	NonIDStartWithinStatementExpressionLevel6
+	( ({DataMethodCallExpression.target=current} (onSuperClass?='^')? name=IDENTIFIER ( '(' (arguments+=Expression (',' arguments+=Expression)*)? ')' )? )
+	)*
+;
+
+NonIDStartWithinStatementExpressionLevel6 returns Expression:
+	(=> NonIDStartWithinStatementExpressionLevel7) | UnaryOperatorExpression
+;
+
+NonIDStartWithinStatementExpressionLevel7 returns Expression:
+	CurrentTimeExpression | SelfExpression | ExpressionConstant |
+	NewExpression
+;
+
+
+// === Statements =======
+
+Statement:
+	StatementSingle
+	( {StatementSequence.statements+=current} (';' statements+=StatementSingle)+ )?
+;
+
+StatementSingle returns Statement:
+	AbortStatement | DelayStatement | GuardedStatement | InterruptStatement | ParStatement | ProcessMethodCall |  SelStatement | SkipStatement | 
+	SendStatement | ReceiveStatement |
+	IfStatement | BracketStartStatement | WhileStatement | SwitchStatement |
+	ExpressionStatement
+;
+
+ExpressionStatement:
+	expression=IDStartWithinStatementExpressionSingle | expression=NonIDStartWithinStatementExpressionSingle |
+	'{' expression=Expression '}'
+;
+
+DelayStatement:			'delay' expression=ExpressionSingle;
+
+ReceiveStatement:
+	portDescriptor=PortDescriptor '?' name=IDENTIFIER
+	( '(' (variables+=OutputVariable (',' variables+=OutputVariable)*)? ('|' receptionCondition=Expression)? ')' )?
+	( '{' postCommunicationExpression=Expression '}' )?
+;
+
+SendStatement:
+	portDescriptor=PortDescriptor '!' name=IDENTIFIER
+	( '(' (arguments+=Expression (',' arguments+=Expression)*)? ')' )?	
+	( '{' postCommunicationExpression=Expression '}' )?
+;
+
+PortDescriptor:
+	  ( {PortReference} port=IDENTIFIER )
+//	| ( {PortExpression} expression=Expression )	// ambiguous
+;
+
+PortReference: port=IDENTIFIER
+;
+
+SkipStatement: 
+	{SkipStatement} 'skip'
+;
+
+GuardedStatement:
+	'[' guard=Expression ']' statement=StatementSingle
+;
+
+IfStatement: 
+	'if' condition=Expression 'then' thenClause=Statement ('else' elseClause=Statement)? 'fi'
+;
+
+WhileStatement: 
+	'while' condition=Expression 'do' body=Statement 'od'
+;
+
+SwitchStatement:
+	'switch' expression=Expression 
+	'do'
+	((
+		(cases+=SwitchStatementCase)+
+		('default' defaultBody=Statement)?
+	)|(
+		'default' defaultBody=Statement
+	))
+	'od'
+;
+
+SwitchStatementCase:
+	'case' value=Expression 'then' body=Statement
+;
+
+ParStatement: 
+	'par' clauses+=Statement ('and' clauses+=Statement)* 'rap'
+;
+
+SelStatement: 
+	'sel' clauses+=Statement ('or' clauses+=Statement)* 'les'
+;
+ 
+AbortStatement: 
+	'abort' normalClause=Statement 'with' abortingClause=StatementSingle
+;
+
+InterruptStatement: 
+	'interrupt' normalClause=Statement 'with' interruptingClause=StatementSingle
+;
+
+ProcessMethodCall:
+	     method=IDENTIFIER //method=[ProcessMethod|IDENTIFIER] 
+	'(' (inputArguments+=Expression (',' inputArguments+=Expression)*)? ')' 
+	'(' (outputVariables+=OutputVariable (',' outputVariables+=OutputVariable)*)? ')'
+;
+
+BracketStartStatement returns Statement:
+	(=> BracketedArgumentStartExpressionStatement) | StatementSequenceRoundBracket
+	// BracketedDataMethodCallExpressionStatement should occur before SubStatement  
+;
+
+StatementSequenceRoundBracket: 
+	'(' statements+=StatementSingle (';' statements+=StatementSingle)* ')'
+;
+
+BracketedArgumentStartExpressionStatement returns ExpressionStatement:
+	expression=BracketedArgumentStartExpressionSingle
+;
+
+BracketedArgumentStartExpressionSingle returns Expression:
+	BracketedArgumentStartExpressionLevel1
+;
+
+BracketedArgumentStartExpressionLevel1 returns Expression:
+	BracketedArgumentStartExpressionLevel2
+;
+
+BracketedArgumentStartExpressionLevel2 returns Expression:		// Left associativity
+	(=>
+		BracketedArgumentStartExpressionLevel3
+		( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel2 rightOperand=ExpressionLevel3
+		)*
+	) | (
+		ExpressionSequenceRoundBracket
+		( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel2 rightOperand=ExpressionLevel3
+		)+
+	)
+;
+
+BracketedArgumentStartExpressionLevel3 returns Expression:		// Left associativity
+	(=>
+		BracketedArgumentStartExpressionLevel4
+		( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel3 rightOperand=ExpressionLevel4
+		)*
+	) | (
+		ExpressionSequenceRoundBracket
+		( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel3 rightOperand=ExpressionLevel4
+		)+
+	)
+;
+
+BracketedArgumentStartExpressionLevel4 returns Expression:		// Left associativity
+	(=>
+		BracketedArgumentStartExpressionLevel5
+		( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel4 rightOperand=ExpressionLevel5
+		)*
+	) | (
+		ExpressionSequenceRoundBracket
+		( {BinaryOperatorExpression.leftOperand=current} name=BinaryOperatorLevel4 rightOperand=ExpressionLevel5
+		)+
+	)
+;
+
+BracketedArgumentStartExpressionLevel5 returns Expression:
+	ExpressionSequenceRoundBracket
+	( ({DataMethodCallExpression.target=current} (onSuperClass?='^')? name=IDENTIFIER ( '(' (arguments+=Expression (',' arguments+=Expression)*)? ')' )? )
+	)+
+;
+
+
+// === Enum types =======
+
+enum OperatorUnary:
+	minus='-'| not='!'
+;
+
+enum OperatorBinary:
+	equal='=' | unequal='!=' | identical='==' | notIdentical='!==' |
+	lessThan='<' | atMost='<=' | greaterThan='>' | atLeast='>=' |
+	add='+' | subtract='-' | and='&' | or='|' |
+	multiply='*' | divide='/' 
+;
+
+enum BinaryOperatorLevel2 returns OperatorBinary:
+	equal='=' | unequal='!=' | identical='==' | notIdentical='!==' |
+	lessThan='<' | atMost='<=' | greaterThan='>' | atLeast='>='
+;
+
+enum BinaryOperatorLevel3 returns OperatorBinary:
+	add='+' | subtract='-' | and='&' | or='|'
+;
+
+enum BinaryOperatorLevel4 returns OperatorBinary:
+	multiply='*' | divide='/'
+;
+
+
+// === Tokens =======
+
+terminal WS:					(' '|'\t'|'\r'|'\n')+ ;
+
+terminal SL_COMMENT:			'//' !('\n'|'\r')* ('\r'? '\n')?;
+
+terminal fragment MLC_ANY:		!( '*' | '/' );
+terminal fragment MLC_SLASH:	'/'+ ( '*' MLC_BODY | MLC_ANY );
+terminal fragment MLC_STAR:		'*'+ ( MLC_ANY );
+terminal fragment MLC_BODY:		( MLC_ANY | MLC_SLASH | MLC_STAR )* '*'+ '/';
+terminal ML_COMMENT:			'/*' MLC_BODY;		// http://www.eclipse.org/forums/index.php/t/208085/
+
+terminal BINARY_CORE:			'0' ('b' | 'B') ('0'..'1')+;
+terminal HEXADECIMAL_CORE:		'0' ('x' | 'X') ('0'..'9' | 'a'..'f' | 'A'..'F')+;
+
+terminal fragment DIGITS:		('0'..'9') | ('1'..'9') ('0'..'9')+;
+
+terminal DECIMAL_CORE:			DIGITS
+								(('e' | 'E') '+'? ('0'..'9')+)?
+;
+
+terminal REAL_CORE:				(	DIGITS '.' ('0'..'9')*
+								|	'.' ('0'..'9')+
+								)
+								(('e' | 'E') ('+' | '-')? ('0'..'9')+)?
+;
+
+terminal FLOAT_CORE:			REAL_CORE ( 'f' | 'F' );
+
+// only the parser can distinguish between unary and binary '-'
+INTEGER:						('-' | '+')? (DECIMAL_CORE | BINARY_CORE | HEXADECIMAL_CORE);
+REAL:							('-' | '+')? REAL_CORE;
+FLOAT:							('-' | '+')? (FLOAT_CORE | 'nan' | 'inf');
+
+IDENTIFIER:						IDENTIFIER_CORE
+								| 'class' | 'extends'
+								| 'variables' | 'methods' | 'ports' | 'messages' | 'init' | 'channels' | 'instances'
+;
+
+terminal IDENTIFIER_CORE:		('a'..'z'|'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '_')*;
+terminal CHARACTER:				"'" CHARACTER_ELEMENT "'";
+// We use terminal name POOSL_STRING to easily avoid the standard value conversion.
+terminal POOSL_STRING:			'"' POOSL_STRING_ELEMENT* '"';
+terminal ENVIRONMENT_VARIABLE_NAME:	'${' ('0'..'9'|'a'..'z'|'A'..'Z'|'_')+ '}';
+
+terminal fragment CHARACTER_ELEMENT:
+								'\u0009'															// include TAB (= 0009)
+								| '\u0020'..'\u0026' | '\u0028'..'\u005B' | '\u005D'..'\u00FF'		// exclude ' (= 0027) and \ (= 005C) 
+								| ESCAPE_SEQUENCE
+								| ESCAPE_ZERO
+;
+
+terminal fragment POOSL_STRING_ELEMENT:
+								'\u0009'															// include TAB (= 0009)
+								| '\u0020'..'\u0021' | '\u0023'..'\u005B' | '\u005D'..'\u00FF'		// exclude " (= 0022) and \ (= 005C)
+								| ESCAPE_SEQUENCE
+;
+
+terminal fragment ESCAPE_SEQUENCE:
+	  ('\\x' '0' ('1'..'9' | 'a'..'f' | 'A'..'F'))
+	| ('\\x' ('1'..'9' | 'a'..'f' | 'A'..'F') ('0'..'9' | 'a'..'f' | 'A'..'F')?)
+	| '\\n' | '\\t' | '\\v' | '\\b' | '\\r' | '\\f' | '\\a' | '\\\\' | '\\?' | '\\\'' | '\\\"'
+;
+
+terminal fragment ESCAPE_ZERO:
+	('\\x' '0' ('0')?)
+;
