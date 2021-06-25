@@ -14,75 +14,79 @@ import nl.esi.poosl.OutputVariable;
 import nl.esi.poosl.VariableExpression;
 
 class PooslSuperClassDescription {
-	private static final String STR_SUPER_CLASS = "SuperClass";
-	private static final String STR_USED_VARIABLES = "UsedVariables";
-	private static final String SEPARATOR = ",";
+    private static final String STR_SUPER_CLASS = "SuperClass";
 
-	private PooslSuperClassDescription() {
-		throw new IllegalStateException("Utility class");
-	}
+    private static final String STR_USED_VARIABLES = "UsedVariables";
 
-	// --- Set -------
+    private static final String SEPARATOR = ",";
 
-	public static void setSuperClass(Map<String, String> userData, String superClass) {
-		if (superClass != null) {
-			userData.put(STR_SUPER_CLASS, superClass);
-		}
-	}
+    private PooslSuperClassDescription() {
+        throw new IllegalStateException("Utility class");
+    }
 
-	public static void setUsedVariables(Map<String, String> userData, Set<String> usedElements) {
-		userData.put(STR_USED_VARIABLES, formatUsedElements(usedElements));
-	}
+    // --- Set -------
 
-	/**
-	 * Adds the name of object to usedElements if interested
-	 * 
-	 * @param usedElements container created with {@link #initUsedElements()}
-	 * @param object       element to add to the usedelements
-	 */
-	public static void addUsedVariables(Set<String> used, Set<String> local, EObject object) {
-		if (object instanceof VariableExpression) {
-			addVariable(used, local, ((VariableExpression) object).getVariable());
-		} else if (object instanceof AssignmentExpression) {
-			addVariable(used, local, ((AssignmentExpression) object).getVariable());
-		} else if (object instanceof OutputVariable) {
-			addVariable(used, local, ((OutputVariable) object).getVariable());
-		}
-	}
+    public static void setSuperClass(Map<String, String> userData, String superClass) {
+        if (superClass != null) {
+            userData.put(STR_SUPER_CLASS, superClass);
+        }
+    }
 
-	private static void addVariable(Set<String> used, Set<String> local, String name) {
-		if (name != null && !local.contains(name)) {
-			used.add(name);
-		}
-	}
+    public static void setUsedVariables(Map<String, String> userData, Set<String> usedElements) {
+        userData.put(STR_USED_VARIABLES, formatUsedElements(usedElements));
+    }
 
-	public static String formatUsedElements(Set<String> usedElements) {
-		StringBuilder builder = new StringBuilder();
-		for (String string : usedElements) {
-			builder.append(string).append(SEPARATOR);
-		}
-		return builder.toString();
-	}
+    /**
+     * Adds the name of object to usedElements if interested
+     * 
+     * @param usedElements
+     *            container created with {@link #initUsedElements()}
+     * @param object
+     *            element to add to the usedelements
+     */
+    public static void addUsedVariables(Set<String> used, Set<String> local, EObject object) {
+        if (object instanceof VariableExpression) {
+            addVariable(used, local, ((VariableExpression) object).getVariable());
+        } else if (object instanceof AssignmentExpression) {
+            addVariable(used, local, ((AssignmentExpression) object).getVariable());
+        } else if (object instanceof OutputVariable) {
+            addVariable(used, local, ((OutputVariable) object).getVariable());
+        }
+    }
 
-	// --- Get -------
+    private static void addVariable(Set<String> used, Set<String> local, String name) {
+        if (name != null && !local.contains(name)) {
+            used.add(name);
+        }
+    }
 
-	public static String getSuperClass(IEObjectDescription descr) {
-		return descr.getUserData(STR_SUPER_CLASS);
-	}
+    public static String formatUsedElements(Set<String> usedElements) {
+        StringBuilder builder = new StringBuilder();
+        for (String string : usedElements) {
+            builder.append(string).append(SEPARATOR);
+        }
+        return builder.toString();
+    }
 
-	public static List<String> getUsedVariables(IEObjectDescription descr) {
-		return parseUsedElements(descr.getUserData(STR_USED_VARIABLES));
-	}
+    // --- Get -------
 
-	public static List<String> parseUsedElements(String usedString) {
-		return parseUsedElements(usedString, SEPARATOR);
-	}
+    public static String getSuperClass(IEObjectDescription descr) {
+        return descr.getUserData(STR_SUPER_CLASS);
+    }
 
-	public static List<String> parseUsedElements(String usedString, String separator) {
-		if (usedString != null) {
-			String[] elements = usedString.split(separator);
-			return Arrays.asList(elements);
-		}
-		return Collections.emptyList();
-	}
+    public static List<String> getUsedVariables(IEObjectDescription descr) {
+        return parseUsedElements(descr.getUserData(STR_USED_VARIABLES));
+    }
+
+    public static List<String> parseUsedElements(String usedString) {
+        return parseUsedElements(usedString, SEPARATOR);
+    }
+
+    public static List<String> parseUsedElements(String usedString, String separator) {
+        if (usedString != null) {
+            String[] elements = usedString.split(separator);
+            return Arrays.asList(elements);
+        }
+        return Collections.emptyList();
+    }
 }

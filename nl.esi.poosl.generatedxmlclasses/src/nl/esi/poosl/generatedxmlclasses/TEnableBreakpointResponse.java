@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_enable_breakpoint_response complex type.
+ * <p>
+ * Java class for t_enable_breakpoint_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_enable_breakpoint_response">
@@ -34,9 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_enable_breakpoint_response", propOrder = {
-    "result"
-})
+@XmlType(name = "t_enable_breakpoint_response", propOrder = { "result" })
 public class TEnableBreakpointResponse {
 
     @XmlElement(required = true)
@@ -45,10 +43,8 @@ public class TEnableBreakpointResponse {
     /**
      * Gets the value of the result property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getResult() {
         return result;
@@ -58,9 +54,8 @@ public class TEnableBreakpointResponse {
      * Sets the value of the result property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setResult(String value) {
         this.result = value;

@@ -27,72 +27,75 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
 public class ImportWizardPage extends WizardNewFileCreationPage {
-	private FileFieldEditor editor;
+    private FileFieldEditor editor;
 
-	public ImportWizardPage(String pageName, IStructuredSelection selection) {
-		super(pageName, selection);
-		setTitle(pageName); //NON-NLS-1
-		setDescription("Import a file from the local file system into the workspace"); //NON-NLS-1
-		setAllowExistingResources(true);
-	}
+    public ImportWizardPage(String pageName, IStructuredSelection selection) {
+        super(pageName, selection);
+        setTitle(pageName); // NON-NLS-1
+        setDescription("Import a file from the local file system into the workspace"); // NON-NLS-1
+        setAllowExistingResources(true);
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#createAdvancedControls(org.eclipse.swt.widgets.Composite)
-	 */
-	@Override
-	protected void createAdvancedControls(Composite parent) {
-		Composite fileSelectionArea = new Composite(parent, SWT.NONE);
-		GridData fileSelectionData = new GridData(GridData.GRAB_HORIZONTAL
-				| GridData.FILL_HORIZONTAL);
-		fileSelectionArea.setLayoutData(fileSelectionData);
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#createAdvancedControls(org.eclipse.swt.widgets.Composite)
+     */
+    @Override
+    protected void createAdvancedControls(Composite parent) {
+        Composite fileSelectionArea = new Composite(parent, SWT.NONE);
+        GridData fileSelectionData = new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL);
+        fileSelectionArea.setLayoutData(fileSelectionData);
 
-		GridLayout fileSelectionLayout = new GridLayout();
-		fileSelectionLayout.numColumns = 3;
-		fileSelectionLayout.makeColumnsEqualWidth = false;
-		fileSelectionLayout.marginWidth = 0;
-		fileSelectionLayout.marginHeight = 0;
-		fileSelectionArea.setLayout(fileSelectionLayout);
-		
-		editor = new FileFieldEditor("fileSelect","Select File: ",fileSelectionArea);
-		editor.getTextControl(fileSelectionArea).addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent e) {
-				IPath path = new Path(ImportWizardPage.this.editor.getStringValue());
-				path = path.removeFileExtension();
-				path = path.addFileExtension("poosl");
-				setFileName(path.lastSegment());
-			}
-		});
-		String[] extensions = new String[] { "*.xml;" };
-		editor.setFileExtensions(extensions);
-		fileSelectionArea.moveAbove(null);
-	}
+        GridLayout fileSelectionLayout = new GridLayout();
+        fileSelectionLayout.numColumns = 3;
+        fileSelectionLayout.makeColumnsEqualWidth = false;
+        fileSelectionLayout.marginWidth = 0;
+        fileSelectionLayout.marginHeight = 0;
+        fileSelectionArea.setLayout(fileSelectionLayout);
 
-	@Override
-	protected void createLinkTarget() {
-		// This avoids a null pointer exception
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#getInitialContents()
-	 */
-	@Override
-	protected InputStream getInitialContents() {
-		return Xml2xtext.parse(editor.getStringValue());
-	}
+        editor = new FileFieldEditor("fileSelect", "Select File: ", fileSelectionArea);
+        editor.getTextControl(fileSelectionArea).addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                IPath path = new Path(ImportWizardPage.this.editor.getStringValue());
+                path = path.removeFileExtension();
+                path = path.addFileExtension("poosl");
+                setFileName(path.lastSegment());
+            }
+        });
+        String[] extensions = new String[] { "*.xml;" };
+        editor.setFileExtensions(extensions);
+        fileSelectionArea.moveAbove(null);
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#getNewFileLabel()
-	 */
-	@Override
-	protected String getNewFileLabel() {
-		return "New File Name:";
-	}
+    @Override
+    protected void createLinkTarget() {
+        // This avoids a null pointer exception
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#validateLinkedResource()
-	 */
-	@Override
-	protected IStatus validateLinkedResource() {
-		return new Status(IStatus.OK, "nl.esi.poosl.xml", IStatus.OK, "", null);
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#getInitialContents()
+     */
+    @Override
+    protected InputStream getInitialContents() {
+        return Xml2xtext.parse(editor.getStringValue());
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#getNewFileLabel()
+     */
+    @Override
+    protected String getNewFileLabel() {
+        return "New File Name:";
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#validateLinkedResource()
+     */
+    @Override
+    protected IStatus validateLinkedResource() {
+        return new Status(IStatus.OK, "nl.esi.poosl.xml", IStatus.OK, "", null);
+    }
 }

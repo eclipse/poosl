@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_message_receive complex type.
+ * <p>
+ * Java class for t_message_receive complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_message_receive">
@@ -42,22 +43,22 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_message_receive", propOrder = {
-    "variable",
-    "condition",
-    "atomicExpression",
-    "port"
-})
+@XmlType(name = "t_message_receive", propOrder = { "variable", "condition", "atomicExpression", "port" })
 public class TMessageReceive {
 
     protected List<String> variable;
+
     protected TExpression condition;
+
     @XmlElement(name = "atomic_expression")
     protected TExpression atomicExpression;
+
     @XmlElement(required = true)
     protected String port;
+
     @XmlAttribute(name = "message_name")
     protected String messageName;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
@@ -65,21 +66,20 @@ public class TMessageReceive {
      * Gets the value of the variable property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the variable property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the variable property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getVariable().add(newItem);
+     * getVariable().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
@@ -93,10 +93,8 @@ public class TMessageReceive {
     /**
      * Gets the value of the condition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getCondition() {
         return condition;
@@ -106,9 +104,8 @@ public class TMessageReceive {
      * Sets the value of the condition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setCondition(TExpression value) {
         this.condition = value;
@@ -117,10 +114,8 @@ public class TMessageReceive {
     /**
      * Gets the value of the atomicExpression property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getAtomicExpression() {
         return atomicExpression;
@@ -130,9 +125,8 @@ public class TMessageReceive {
      * Sets the value of the atomicExpression property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setAtomicExpression(TExpression value) {
         this.atomicExpression = value;
@@ -141,10 +135,8 @@ public class TMessageReceive {
     /**
      * Gets the value of the port property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getPort() {
         return port;
@@ -154,9 +146,8 @@ public class TMessageReceive {
      * Sets the value of the port property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setPort(String value) {
         this.port = value;
@@ -165,10 +156,8 @@ public class TMessageReceive {
     /**
      * Gets the value of the messageName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMessageName() {
         return messageName;
@@ -178,9 +167,8 @@ public class TMessageReceive {
      * Sets the value of the messageName property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMessageName(String value) {
         this.messageName = value;
@@ -189,10 +177,8 @@ public class TMessageReceive {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -202,9 +188,8 @@ public class TMessageReceive {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

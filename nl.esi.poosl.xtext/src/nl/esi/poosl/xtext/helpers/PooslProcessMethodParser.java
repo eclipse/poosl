@@ -11,71 +11,69 @@ import nl.esi.poosl.ProcessMethodCall;
 import nl.esi.poosl.xtext.custom.PooslCache;
 
 public class PooslProcessMethodParser {
-	private static final String PARSER_METHOD_PARAM_SEPARATOR = "|";
+    private static final String PARSER_METHOD_PARAM_SEPARATOR = "|";
 
-	private String calledMethod;
-	private int numberOfInputs;
-	private int numberOfOutputs;
+    private String calledMethod;
 
-	public PooslProcessMethodParser(String stringDescription) {
-		String[] properties = stringDescription.split("\\" + PARSER_METHOD_PARAM_SEPARATOR);
-		if (properties.length == 3) {
-			this.calledMethod = properties[0];
-			this.numberOfInputs = Integer.parseInt(properties[1]);
-			this.numberOfOutputs = Integer.parseInt(properties[2]);
-		} else {
-			Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " " + stringDescription);
-		}
-	}
+    private int numberOfInputs;
 
-	public PooslProcessMethodParser(ProcessMethodCall statement) {
-		this.calledMethod = statement.getMethod();
-		this.numberOfInputs = statement.getInputArguments().size();
-		this.numberOfOutputs = statement.getOutputVariables().size();
-	}
+    private int numberOfOutputs;
 
-	private static String getID(String name, int input, int output) {
-		return name + PARSER_METHOD_PARAM_SEPARATOR + String.valueOf(input) + PARSER_METHOD_PARAM_SEPARATOR
-				+ String.valueOf(output);
-	}
+    public PooslProcessMethodParser(String stringDescription) {
+        String[] properties = stringDescription.split("\\" + PARSER_METHOD_PARAM_SEPARATOR);
+        if (properties.length == 3) {
+            this.calledMethod = properties[0];
+            this.numberOfInputs = Integer.parseInt(properties[1]);
+            this.numberOfOutputs = Integer.parseInt(properties[2]);
+        } else {
+            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " " + stringDescription);
+        }
+    }
 
-	public static String getProcessMethodID(ProcessMethodCall methodCall) {
-		if (methodCall != null) {
-			return getID(methodCall.getMethod(), methodCall.getInputArguments().size(),
-					methodCall.getOutputVariables().size());
-		}
-		return null;
-	}
+    public PooslProcessMethodParser(ProcessMethodCall statement) {
+        this.calledMethod = statement.getMethod();
+        this.numberOfInputs = statement.getInputArguments().size();
+        this.numberOfOutputs = statement.getOutputVariables().size();
+    }
 
-	public static String getProcessMethodID(ProcessMethod pMethod) {
-		return getID(pMethod.getName(), HelperFunctions.computeNumberOfVariables(pMethod.getInputParameters()),
-				HelperFunctions.computeNumberOfVariables(pMethod.getOutputParameters()));
-	}
+    private static String getID(String name, int input, int output) {
+        return name + PARSER_METHOD_PARAM_SEPARATOR + String.valueOf(input) + PARSER_METHOD_PARAM_SEPARATOR + String.valueOf(output);
+    }
 
-	public static String getProcessMethodIDWithClassName(ProcessMethod pMethod) {
-		ProcessClass pClass = (ProcessClass) pMethod.eContainer();
-		return pClass.getName() + ":" + getProcessMethodID(pMethod);
-	}
+    public static String getProcessMethodID(ProcessMethodCall methodCall) {
+        if (methodCall != null) {
+            return getID(methodCall.getMethod(), methodCall.getInputArguments().size(), methodCall.getOutputVariables().size());
+        }
+        return null;
+    }
 
-	public IEObjectDescription getCalledMethod(ProcessClass pClass) {
-		return PooslCache.get(pClass.eResource()).getProcessMethods(pClass.getName(), numberOfInputs, numberOfOutputs)
-				.get(calledMethod);
-	}
+    public static String getProcessMethodID(ProcessMethod pMethod) {
+        return getID(pMethod.getName(), HelperFunctions.computeNumberOfVariables(pMethod.getInputParameters()), HelperFunctions.computeNumberOfVariables(pMethod.getOutputParameters()));
+    }
 
-	@Override
-	public String toString() {
-		return getID(calledMethod, numberOfInputs, numberOfOutputs);
-	}
+    public static String getProcessMethodIDWithClassName(ProcessMethod pMethod) {
+        ProcessClass pClass = (ProcessClass) pMethod.eContainer();
+        return pClass.getName() + ":" + getProcessMethodID(pMethod);
+    }
 
-	public String getCalledMethod() {
-		return calledMethod;
-	}
+    public IEObjectDescription getCalledMethod(ProcessClass pClass) {
+        return PooslCache.get(pClass.eResource()).getProcessMethods(pClass.getName(), numberOfInputs, numberOfOutputs).get(calledMethod);
+    }
 
-	public int getNumberOfInputs() {
-		return numberOfInputs;
-	}
+    @Override
+    public String toString() {
+        return getID(calledMethod, numberOfInputs, numberOfOutputs);
+    }
 
-	public int getNumberOfOutputs() {
-		return numberOfOutputs;
-	}
+    public String getCalledMethod() {
+        return calledMethod;
+    }
+
+    public int getNumberOfInputs() {
+        return numberOfInputs;
+    }
+
+    public int getNumberOfOutputs() {
+        return numberOfOutputs;
+    }
 }

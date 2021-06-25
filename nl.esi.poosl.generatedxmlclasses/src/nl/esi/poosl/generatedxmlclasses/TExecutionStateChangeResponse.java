@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigDecimal;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_execution_state_change_response complex type.
+ * <p>
+ * Java class for t_execution_state_change_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_execution_state_change_response">
@@ -41,35 +42,31 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_execution_state_change_response", propOrder = {
-    "breakpoints",
-    "error",
-    "transition",
-    "message",
-    "state",
-    "time",
-    "minimalTimeStep"
-})
+@XmlType(name = "t_execution_state_change_response", propOrder = { "breakpoints", "error", "transition", "message", "state", "time", "minimalTimeStep" })
 public class TExecutionStateChangeResponse {
 
     protected TBreakpoint breakpoints;
+
     protected TErrorInfo error;
+
     protected TTransition transition;
+
     protected String message;
+
     @XmlElement(required = true)
     protected String state;
+
     @XmlElement(required = true)
     protected BigDecimal time;
+
     @XmlElement(name = "minimal_time_step")
     protected double minimalTimeStep;
 
     /**
      * Gets the value of the breakpoints property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TBreakpoint }
-     *     
+     * @return possible object is {@link TBreakpoint }
+     * 
      */
     public TBreakpoint getBreakpoints() {
         return breakpoints;
@@ -79,9 +76,8 @@ public class TExecutionStateChangeResponse {
      * Sets the value of the breakpoints property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TBreakpoint }
-     *     
+     *            allowed object is {@link TBreakpoint }
+     * 
      */
     public void setBreakpoints(TBreakpoint value) {
         this.breakpoints = value;
@@ -90,10 +86,8 @@ public class TExecutionStateChangeResponse {
     /**
      * Gets the value of the error property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TErrorInfo }
-     *     
+     * @return possible object is {@link TErrorInfo }
+     * 
      */
     public TErrorInfo getError() {
         return error;
@@ -103,9 +97,8 @@ public class TExecutionStateChangeResponse {
      * Sets the value of the error property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TErrorInfo }
-     *     
+     *            allowed object is {@link TErrorInfo }
+     * 
      */
     public void setError(TErrorInfo value) {
         this.error = value;
@@ -114,10 +107,8 @@ public class TExecutionStateChangeResponse {
     /**
      * Gets the value of the transition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TTransition }
-     *     
+     * @return possible object is {@link TTransition }
+     * 
      */
     public TTransition getTransition() {
         return transition;
@@ -127,9 +118,8 @@ public class TExecutionStateChangeResponse {
      * Sets the value of the transition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TTransition }
-     *     
+     *            allowed object is {@link TTransition }
+     * 
      */
     public void setTransition(TTransition value) {
         this.transition = value;
@@ -138,10 +128,8 @@ public class TExecutionStateChangeResponse {
     /**
      * Gets the value of the message property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMessage() {
         return message;
@@ -151,9 +139,8 @@ public class TExecutionStateChangeResponse {
      * Sets the value of the message property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMessage(String value) {
         this.message = value;
@@ -162,10 +149,8 @@ public class TExecutionStateChangeResponse {
     /**
      * Gets the value of the state property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getState() {
         return state;
@@ -175,9 +160,8 @@ public class TExecutionStateChangeResponse {
      * Sets the value of the state property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setState(String value) {
         this.state = value;
@@ -186,10 +170,8 @@ public class TExecutionStateChangeResponse {
     /**
      * Gets the value of the time property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
     public BigDecimal getTime() {
         return time;
@@ -199,9 +181,8 @@ public class TExecutionStateChangeResponse {
      * Sets the value of the time property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     *            allowed object is {@link BigDecimal }
+     * 
      */
     public void setTime(BigDecimal value) {
         this.time = value;

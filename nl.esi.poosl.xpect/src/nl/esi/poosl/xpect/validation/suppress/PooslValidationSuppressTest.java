@@ -5,7 +5,6 @@ import org.xpect.runner.XpectRunner;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
 @RunWith(XpectRunner.class)
-public class PooslValidationSuppressTest extends ValidationTest {		
-	
+public class PooslValidationSuppressTest extends ValidationTest {
 
-} 
+}

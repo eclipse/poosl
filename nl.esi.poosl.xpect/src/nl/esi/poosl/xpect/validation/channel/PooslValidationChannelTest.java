@@ -19,19 +19,18 @@ import org.xpect.xtext.lib.util.NextLine;
 import com.google.common.collect.Multimap;
 
 @RunWith(XpectRunner.class)
-public class PooslValidationChannelTest extends ValidationTest {		
-	/*
-	 * Is used when a warning is expected but the message has no set format
-	 */
-	@Xpect
-	@ConsumedIssues(Severity.WARNING)
-	public void warningsNoExpectations(ILinesExpectation expectation, @IssuesByLine Multimap<IRegion, Issue> line2issue, @NextLine IRegion line, ValidationTestConfig cfg) {
-		
-		List<String> issues = getActualIssues(line2issue, line, cfg, Severity.WARNING);
-		if(issues.size() == 0)
-		{
-			throw new ComparisonFailure("A warning was expected but none was found.", issues.toString(),"!");
-		}  
-	}
+public class PooslValidationChannelTest extends ValidationTest {
+    /*
+     * Is used when a warning is expected but the message has no set format
+     */
+    @Xpect
+    @ConsumedIssues(Severity.WARNING)
+    public void warningsNoExpectations(ILinesExpectation expectation, @IssuesByLine Multimap<IRegion, Issue> line2issue, @NextLine IRegion line, ValidationTestConfig cfg) {
 
-} 
+        List<String> issues = getActualIssues(line2issue, line, cfg, Severity.WARNING);
+        if (issues.size() == 0) {
+            throw new ComparisonFailure("A warning was expected but none was found.", issues.toString(), "!");
+        }
+    }
+
+}

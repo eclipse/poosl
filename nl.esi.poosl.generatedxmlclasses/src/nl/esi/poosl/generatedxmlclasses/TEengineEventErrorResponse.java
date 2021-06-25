@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_eengine_event_error_response complex type.
+ * <p>
+ * Java class for t_eengine_event_error_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_eengine_event_error_response">
@@ -37,30 +37,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_eengine_event_error_response", propOrder = {
-    "error",
-    "stmtHandle",
-    "processPath",
-    "stacktrace"
-})
+@XmlType(name = "t_eengine_event_error_response", propOrder = { "error", "stmtHandle", "processPath", "stacktrace" })
 public class TEengineEventErrorResponse {
 
     @XmlElement(required = true)
     protected String error;
+
     @XmlElement(name = "stmt_handle")
     protected int stmtHandle;
+
     @XmlElement(name = "process_path", required = true)
     protected String processPath;
+
     @XmlElement(required = true)
     protected TErrorStacktrace stacktrace;
 
     /**
      * Gets the value of the error property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getError() {
         return error;
@@ -70,9 +66,8 @@ public class TEengineEventErrorResponse {
      * Sets the value of the error property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setError(String value) {
         this.error = value;
@@ -97,10 +92,8 @@ public class TEengineEventErrorResponse {
     /**
      * Gets the value of the processPath property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getProcessPath() {
         return processPath;
@@ -110,9 +103,8 @@ public class TEengineEventErrorResponse {
      * Sets the value of the processPath property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setProcessPath(String value) {
         this.processPath = value;
@@ -121,10 +113,8 @@ public class TEengineEventErrorResponse {
     /**
      * Gets the value of the stacktrace property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TErrorStacktrace }
-     *     
+     * @return possible object is {@link TErrorStacktrace }
+     * 
      */
     public TErrorStacktrace getStacktrace() {
         return stacktrace;
@@ -134,9 +124,8 @@ public class TEengineEventErrorResponse {
      * Sets the value of the stacktrace property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TErrorStacktrace }
-     *     
+     *            allowed object is {@link TErrorStacktrace }
+     * 
      */
     public void setStacktrace(TErrorStacktrace value) {
         this.stacktrace = value;

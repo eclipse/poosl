@@ -20,13 +20,13 @@ import com.google.common.collect.Multimap;
 import nl.esi.poosl.xpect.IPooslLinesExpectation;
 
 @RunWith(XpectRunner.class)
-public class PooslValidationImportingTest extends ValidationTest {		
-	
-	@Xpect(liveExecution = LiveExecutionType.FAST)
-	@ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
-	public void contains(IPooslLinesExpectation expectation, @IssuesByLine Multimap<IRegion, Issue> line2issue, @NextLine IRegion line, ValidationTestConfig cfg) {
-		List<String> issues = getActualIssues(line2issue, line, cfg, Severity.ERROR, Severity.WARNING, Severity.INFO, Severity.IGNORE);
-		expectation.assertContains("", issues);
-	}
+public class PooslValidationImportingTest extends ValidationTest {
 
-} 
+    @Xpect(liveExecution = LiveExecutionType.FAST)
+    @ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
+    public void contains(IPooslLinesExpectation expectation, @IssuesByLine Multimap<IRegion, Issue> line2issue, @NextLine IRegion line, ValidationTestConfig cfg) {
+        List<String> issues = getActualIssues(line2issue, line, cfg, Severity.ERROR, Severity.WARNING, Severity.INFO, Severity.IGNORE);
+        expectation.assertContains("", issues);
+    }
+
+}

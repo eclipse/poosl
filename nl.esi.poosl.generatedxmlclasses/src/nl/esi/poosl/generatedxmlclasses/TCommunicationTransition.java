@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_communication_transition complex type.
+ * <p>
+ * Java class for t_communication_transition complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_communication_transition">
@@ -38,26 +39,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_communication_transition", propOrder = {
-    "sender",
-    "receiver"
-})
+@XmlType(name = "t_communication_transition", propOrder = { "sender", "receiver" })
 public class TCommunicationTransition {
 
     @XmlElement(required = true)
     protected TSenderInfo sender;
+
     @XmlElement(required = true)
     protected TReceiverInfo receiver;
+
     @XmlAttribute(name = "handle", required = true)
     protected BigInteger handle;
 
     /**
      * Gets the value of the sender property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TSenderInfo }
-     *     
+     * @return possible object is {@link TSenderInfo }
+     * 
      */
     public TSenderInfo getSender() {
         return sender;
@@ -67,9 +65,8 @@ public class TCommunicationTransition {
      * Sets the value of the sender property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TSenderInfo }
-     *     
+     *            allowed object is {@link TSenderInfo }
+     * 
      */
     public void setSender(TSenderInfo value) {
         this.sender = value;
@@ -78,10 +75,8 @@ public class TCommunicationTransition {
     /**
      * Gets the value of the receiver property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TReceiverInfo }
-     *     
+     * @return possible object is {@link TReceiverInfo }
+     * 
      */
     public TReceiverInfo getReceiver() {
         return receiver;
@@ -91,9 +86,8 @@ public class TCommunicationTransition {
      * Sets the value of the receiver property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TReceiverInfo }
-     *     
+     *            allowed object is {@link TReceiverInfo }
+     * 
      */
     public void setReceiver(TReceiverInfo value) {
         this.receiver = value;
@@ -102,10 +96,8 @@ public class TCommunicationTransition {
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -115,9 +107,8 @@ public class TCommunicationTransition {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;

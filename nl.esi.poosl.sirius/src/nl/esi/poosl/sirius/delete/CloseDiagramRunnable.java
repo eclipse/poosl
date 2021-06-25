@@ -14,34 +14,34 @@ import org.eclipse.sirius.ui.business.api.session.SessionUIManager;
 import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 
 public class CloseDiagramRunnable implements IRunnableWithProgress {
-	private static final String CLOSING_EDITORS = "Closing diagrams.";
+    private static final String CLOSING_EDITORS = "Closing diagrams.";
 
-	private final Map<Session, Set<DRepresentationDescriptor>> session2Descriptors;
+    private final Map<Session, Set<DRepresentationDescriptor>> session2Descriptors;
 
-	public CloseDiagramRunnable(Map<Session, Set<DRepresentationDescriptor>> session2Descriptors) {
-		this.session2Descriptors = session2Descriptors;
-	}
+    public CloseDiagramRunnable(Map<Session, Set<DRepresentationDescriptor>> session2Descriptors) {
+        this.session2Descriptors = session2Descriptors;
+    }
 
-	@Override
-	public void run(final IProgressMonitor monitor) {
-		try {
-			monitor.beginTask(CLOSING_EDITORS, 1);
-			for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors.entrySet()) {
-				Session session = entry.getKey();
-				Set<DRepresentationDescriptor> descriptors = entry.getValue();
-				IEditingSession editingSession = SessionUIManager.INSTANCE.getUISession(session);
-				if (editingSession != null) {
-					for (DRepresentationDescriptor descriptor : descriptors) {
-						DialectEditor editor = editingSession.getEditor(descriptor.getRepresentation());
-						if (editor != null) {
-							DialectUIManager.INSTANCE.closeEditor(editor, false);
-							editingSession.detachEditor(editor);
-						}
-					}
-				}
-			}
-		} finally {
-			monitor.done();
-		}
-	}
+    @Override
+    public void run(final IProgressMonitor monitor) {
+        try {
+            monitor.beginTask(CLOSING_EDITORS, 1);
+            for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors.entrySet()) {
+                Session session = entry.getKey();
+                Set<DRepresentationDescriptor> descriptors = entry.getValue();
+                IEditingSession editingSession = SessionUIManager.INSTANCE.getUISession(session);
+                if (editingSession != null) {
+                    for (DRepresentationDescriptor descriptor : descriptors) {
+                        DialectEditor editor = editingSession.getEditor(descriptor.getRepresentation());
+                        if (editor != null) {
+                            DialectUIManager.INSTANCE.closeEditor(editor, false);
+                            editingSession.detachEditor(editor);
+                        }
+                    }
+                }
+            }
+        } finally {
+            monitor.done();
+        }
+    }
 }

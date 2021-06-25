@@ -3,19 +3,21 @@
  */
 package nl.esi.poosl.xtext.ide;
 
+import org.eclipse.xtext.util.Modules2;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+
 import nl.esi.poosl.xtext.PooslRuntimeModule;
 import nl.esi.poosl.xtext.PooslStandaloneSetup;
-import org.eclipse.xtext.util.Modules2;
 
 /**
  * Initialization support for running Xtext languages as language servers.
  */
 public class PooslIdeSetup extends PooslStandaloneSetup {
 
-	@Override
-	public Injector createInjector() {
-		return Guice.createInjector(Modules2.mixin(new PooslRuntimeModule(), new PooslIdeModule()));
-	}
+    @Override
+    public Injector createInjector() {
+        return Guice.createInjector(Modules2.mixin(new PooslRuntimeModule(), new PooslIdeModule()));
+    }
 }

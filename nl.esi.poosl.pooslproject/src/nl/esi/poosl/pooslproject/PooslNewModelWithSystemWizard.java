@@ -12,35 +12,37 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
 public class PooslNewModelWithSystemWizard extends AbstractPooslModelWizard implements INewWizard {
-	private static final Logger LOGGER = Logger.getLogger(PooslNewModelWithSystemWizard.class.getName());
-	private static final String WIZARD_NAME = "New Poosl model with System";
-	private WizardNewFileCreationPage pageOne;
+    private static final Logger LOGGER = Logger.getLogger(PooslNewModelWithSystemWizard.class.getName());
 
-	@Override
-	public boolean performFinish() {
-		IFile file = pageOne.createNewFile();
-		addTemplate(file);
-		return openFile(file);
-	}
+    private static final String WIZARD_NAME = "New Poosl model with System";
 
-	@Override
-	public void addPages() {
-		super.addPages();
-		pageOne = new WizardPooslNewFileWithSystemCreationPage(WIZARD_NAME, selection);
-		addPage(pageOne);
-	}
+    private WizardNewFileCreationPage pageOne;
 
-	private static void addTemplate(IFile file) {
-		URL url;
-		InputStream inputStream = null;
+    @Override
+    public boolean performFinish() {
+        IFile file = pageOne.createNewFile();
+        addTemplate(file);
+        return openFile(file);
+    }
 
-		try {
-			url = new URL("platform:/plugin/nl.esi.poosl.pooslproject/templates/system.poosl");
-			inputStream = url.openConnection().getInputStream();
-			file.setContents(inputStream, 0, null);
-		} catch (IOException | CoreException e) {
-			LOGGER.log(Level.FINE, "Could not add template to poosl file.");
-		}
-	}
+    @Override
+    public void addPages() {
+        super.addPages();
+        pageOne = new WizardPooslNewFileWithSystemCreationPage(WIZARD_NAME, selection);
+        addPage(pageOne);
+    }
+
+    private static void addTemplate(IFile file) {
+        URL url;
+        InputStream inputStream = null;
+
+        try {
+            url = new URL("platform:/plugin/nl.esi.poosl.pooslproject/templates/system.poosl");
+            inputStream = url.openConnection().getInputStream();
+            file.setContents(inputStream, 0, null);
+        } catch (IOException | CoreException e) {
+            LOGGER.log(Level.FINE, "Could not add template to poosl file.");
+        }
+    }
 
 }

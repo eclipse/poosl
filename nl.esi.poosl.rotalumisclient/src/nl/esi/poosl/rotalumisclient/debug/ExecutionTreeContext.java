@@ -3,19 +3,20 @@ package nl.esi.poosl.rotalumisclient.debug;
 import nl.esi.poosl.generatedxmlclasses.TExecutiontreeBase;
 
 public class ExecutionTreeContext {
-	private final PooslThread context;
-	private final TExecutiontreeBase executiontreeBase;
+    private final PooslThread context;
 
-	public ExecutionTreeContext(PooslThread context, TExecutiontreeBase executiontreeBase) {
-		this.context = context;
-		this.executiontreeBase = executiontreeBase;
-	}
+    private final TExecutiontreeBase executiontreeBase;
 
-	public PooslThread getContext() {
-		return context;
-	}
+    public ExecutionTreeContext(PooslThread context, TExecutiontreeBase executiontreeBase) {
+        this.context = context;
+        this.executiontreeBase = executiontreeBase;
+    }
 
-	public TExecutiontreeBase getExecutiontreeBase() {
-		return executiontreeBase;
-	}
+    public PooslThread getContext() {
+        return context;
+    }
+
+    public TExecutiontreeBase getExecutiontreeBase() {
+        return executiontreeBase;
+    }
 }

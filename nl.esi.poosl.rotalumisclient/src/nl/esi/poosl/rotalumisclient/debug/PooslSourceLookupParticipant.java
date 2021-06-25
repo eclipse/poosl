@@ -11,30 +11,30 @@ import nl.esi.poosl.rotalumisclient.sourcemapping.PooslSourceMapping;
 
 public class PooslSourceLookupParticipant extends AbstractSourceLookupParticipant {
 
-	@Override
-	public String getSourceName(Object object) throws CoreException {
-		if (object instanceof PooslStackFrame) {
-			// Return the fileName of the model
-			PooslStackFrame stackFrame = (PooslStackFrame) object;
-			PooslSourceMapping sourceMapping = stackFrame.getSourceMapping();
+    @Override
+    public String getSourceName(Object object) throws CoreException {
+        if (object instanceof PooslStackFrame) {
+            // Return the fileName of the model
+            PooslStackFrame stackFrame = (PooslStackFrame) object;
+            PooslSourceMapping sourceMapping = stackFrame.getSourceMapping();
 
-			if (sourceMapping != null) {
-				return getRelativeFileString(sourceMapping);
-			}
-		}
-		return null;
-	}
+            if (sourceMapping != null) {
+                return getRelativeFileString(sourceMapping);
+            }
+        }
+        return null;
+    }
 
-	private String getRelativeFileString(PooslSourceMapping sourceMapping) {
-		IPath path = new Path(sourceMapping.getFilePath());
-		for (ISourceContainer iSourceContainer : getSourceContainers()) {
-			if (iSourceContainer instanceof ProjectSourceContainer) {
-				IPath ploc = ((ProjectSourceContainer) iSourceContainer).getProject().getLocation();
-				if (path.toOSString().startsWith(ploc.toOSString())) {
-					return path.makeRelativeTo(ploc).toOSString();
-				}
-			}
-		}
-		return null;
-	}
+    private String getRelativeFileString(PooslSourceMapping sourceMapping) {
+        IPath path = new Path(sourceMapping.getFilePath());
+        for (ISourceContainer iSourceContainer : getSourceContainers()) {
+            if (iSourceContainer instanceof ProjectSourceContainer) {
+                IPath ploc = ((ProjectSourceContainer) iSourceContainer).getProject().getLocation();
+                if (path.toOSString().startsWith(ploc.toOSString())) {
+                    return path.makeRelativeTo(ploc).toOSString();
+                }
+            }
+        }
+        return null;
+    }
 }

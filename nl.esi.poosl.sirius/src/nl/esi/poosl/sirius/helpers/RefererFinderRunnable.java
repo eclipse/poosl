@@ -40,125 +40,121 @@ import nl.esi.poosl.xtext.ui.references.PooslReferenceFinder;
 
 @SuppressWarnings("restriction")
 public class RefererFinderRunnable implements IRunnableWithProgress {
-	private static PooslReferenceFinder pooslRefererFinder;
-	private static IResourceDescriptions resourceDescriptions;
-	private static TargetURIConverter targetUriConverter; // Deprecated, eventually use:
-															// nl.esi.poosl.xtext.ui.references.PooslReferenceFinder
-	private static Provider<ResourceAccess> resourceAccesProvider;
+    private static PooslReferenceFinder pooslRefererFinder;
 
-	private static PooslReferenceFinder getPooslReferenceFinder(Resource resource) {
-		if (pooslRefererFinder == null) {
-			pooslRefererFinder = (PooslReferenceFinder) IResourceServiceProvider.Registry.INSTANCE
-					.getResourceServiceProvider(resource.getURI()).get(IReferenceFinder.class);
-		}
-		return pooslRefererFinder;
-	}
+    private static IResourceDescriptions resourceDescriptions;
 
-	private static IResourceDescriptions getIResourceDescriptions(Resource resource) {
-		if (resourceDescriptions == null) {
-			resourceDescriptions = IResourceServiceProvider.Registry.INSTANCE
-					.getResourceServiceProvider(resource.getURI()).get(IResourceDescriptions.class);
-		}
-		return resourceDescriptions;
-	}
+    private static TargetURIConverter targetUriConverter; // Deprecated, eventually use:
+                                                          // nl.esi.poosl.xtext.ui.references.PooslReferenceFinder
 
-	private static TargetURIConverter getTargetURIConverter(Resource resource) {
-		if (targetUriConverter == null) {
-			targetUriConverter = IResourceServiceProvider.Registry.INSTANCE
-					.getResourceServiceProvider(resource.getURI()).get(TargetURIConverter.class);
-		}
-		return targetUriConverter;
-	}
+    private static Provider<ResourceAccess> resourceAccesProvider;
 
-	private static Provider<ResourceAccess> getResourceAccessProvider(Resource resource) {
-		if (resourceAccesProvider == null) {
-			resourceAccesProvider = PooslActivator.getInstance().getInjector("nl.esi.poosl.xtext.Poosl")
-					.getProvider(ResourceAccess.class);
-		}
-		return resourceAccesProvider;
-	}
+    private static PooslReferenceFinder getPooslReferenceFinder(Resource resource) {
+        if (pooslRefererFinder == null) {
+            pooslRefererFinder = (PooslReferenceFinder) IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(resource.getURI()).get(IReferenceFinder.class);
+        }
+        return pooslRefererFinder;
+    }
 
-	private EObject result = null;
-	private final EObject element;
-	private final Resource resource;
+    private static IResourceDescriptions getIResourceDescriptions(Resource resource) {
+        if (resourceDescriptions == null) {
+            resourceDescriptions = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(resource.getURI()).get(IResourceDescriptions.class);
+        }
+        return resourceDescriptions;
+    }
 
-	public RefererFinderRunnable(EObject element, Resource resource) {
-		this.element = element;
-		this.resource = resource;
-	}
+    private static TargetURIConverter getTargetURIConverter(Resource resource) {
+        if (targetUriConverter == null) {
+            targetUriConverter = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(resource.getURI()).get(TargetURIConverter.class);
+        }
+        return targetUriConverter;
+    }
 
-	@Override
-	public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-		final URI uri = EcoreUtil.getURI(element);
-		Predicate<URI> targetURIs = createURIPredicate(uri);
+    private static Provider<ResourceAccess> getResourceAccessProvider(Resource resource) {
+        if (resourceAccesProvider == null) {
+            resourceAccesProvider = PooslActivator.getInstance().getInjector("nl.esi.poosl.xtext.Poosl").getProvider(ResourceAccess.class);
+        }
+        return resourceAccesProvider;
+    }
 
-		SubMonitor progress = SubMonitor.convert(monitor, "Finding references", 100);
+    private EObject result = null;
 
-		final Set<EObject> localReferers = new HashSet<>();
-		final Set<URI> externReferers = new HashSet<>();
-		Acceptor acceptor = createReferenceAcceptor(localReferers, externReferers);
-		PooslReferenceFinder finder = getPooslReferenceFinder(element.eResource());
+    private final EObject element;
 
-		finder.findReferences(targetURIs, resource, acceptor, progress.newChild(20));
-		Iterator<EObject> localIt = localReferers.iterator();
-		if (localIt.hasNext()) {
-			result = findContainer(localIt.next());
-			return;
-		}
+    private final Resource resource;
 
-		Provider<ResourceAccess> resourceAccess = getResourceAccessProvider(resource);
-		IResourceDescriptions indexData = getIResourceDescriptions(resource);
-		TargetURIConverter targetURIConverter = getTargetURIConverter(resource);
-		ResourceSet resourceSet = resource.getResourceSet();
-		Set<URI> uriSet = Collections.singleton(uri);
+    public RefererFinderRunnable(EObject element, Resource resource) {
+        this.element = element;
+        this.resource = resource;
+    }
 
-		finder.findAllReferences(targetURIConverter.fromIterable(uriSet), resourceAccess.get(), indexData, acceptor,
-				progress.newChild(80));
+    @Override
+    public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+        final URI uri = EcoreUtil.getURI(element);
+        Predicate<URI> targetURIs = createURIPredicate(uri);
 
-		Iterator<URI> externIt = externReferers.iterator();
-		if (externIt.hasNext()) {
-			result = findContainer(resourceSet.getEObject(externIt.next(), true));
-		}
-	}
+        SubMonitor progress = SubMonitor.convert(monitor, "Finding references", 100);
 
-	public EObject getResult() {
-		return result;
-	}
+        final Set<EObject> localReferers = new HashSet<>();
+        final Set<URI> externReferers = new HashSet<>();
+        Acceptor acceptor = createReferenceAcceptor(localReferers, externReferers);
+        PooslReferenceFinder finder = getPooslReferenceFinder(element.eResource());
 
-	private static EObject findContainer(EObject originalObject) {
-		EObject object = originalObject;
-		while (object != null && !(object instanceof Instance) && !(object instanceof DataMethod)
-				&& !(object instanceof ProcessMethod)
-				&& !(object instanceof ProcessMethodCall
-						&& object.eContainingFeature() == Literals.PROCESS_CLASS__INITIAL_METHOD_CALL)
-				&& !(object instanceof Channel) && !(object instanceof DataClass) && !(object instanceof ProcessClass)
-				&& !(object instanceof ClusterClass)) {
-			object = object.eContainer();
-		}
-		return object;
-	}
+        finder.findReferences(targetURIs, resource, acceptor, progress.newChild(20));
+        Iterator<EObject> localIt = localReferers.iterator();
+        if (localIt.hasNext()) {
+            result = findContainer(localIt.next());
+            return;
+        }
 
-	private static Acceptor createReferenceAcceptor(final Set<EObject> referers, final Set<URI> externReferers) {
-		return new Acceptor() {
-			@Override
-			public void accept(EObject source, URI sourceURI, EReference eReference, int index, EObject targetOrProxy,
-					URI targetURI) {
-				referers.add(source);
-			}
+        Provider<ResourceAccess> resourceAccess = getResourceAccessProvider(resource);
+        IResourceDescriptions indexData = getIResourceDescriptions(resource);
+        TargetURIConverter targetURIConverter = getTargetURIConverter(resource);
+        ResourceSet resourceSet = resource.getResourceSet();
+        Set<URI> uriSet = Collections.singleton(uri);
 
-			@Override
-			public void accept(IReferenceDescription description) {
-				externReferers.add(description.getContainerEObjectURI());
-			}
-		};
-	}
+        finder.findAllReferences(targetURIConverter.fromIterable(uriSet), resourceAccess.get(), indexData, acceptor, progress.newChild(80));
 
-	private static Predicate<URI> createURIPredicate(final URI uri) {
-		return new Predicate<URI>() {
-			@Override
-			public boolean apply(URI input) {
-				return uri.equals(input);
-			}
-		};
-	}
+        Iterator<URI> externIt = externReferers.iterator();
+        if (externIt.hasNext()) {
+            result = findContainer(resourceSet.getEObject(externIt.next(), true));
+        }
+    }
+
+    public EObject getResult() {
+        return result;
+    }
+
+    private static EObject findContainer(EObject originalObject) {
+        EObject object = originalObject;
+        while (object != null && !(object instanceof Instance) && !(object instanceof DataMethod) && !(object instanceof ProcessMethod)
+                && !(object instanceof ProcessMethodCall && object.eContainingFeature() == Literals.PROCESS_CLASS__INITIAL_METHOD_CALL) && !(object instanceof Channel)
+                && !(object instanceof DataClass) && !(object instanceof ProcessClass) && !(object instanceof ClusterClass)) {
+            object = object.eContainer();
+        }
+        return object;
+    }
+
+    private static Acceptor createReferenceAcceptor(final Set<EObject> referers, final Set<URI> externReferers) {
+        return new Acceptor() {
+            @Override
+            public void accept(EObject source, URI sourceURI, EReference eReference, int index, EObject targetOrProxy, URI targetURI) {
+                referers.add(source);
+            }
+
+            @Override
+            public void accept(IReferenceDescription description) {
+                externReferers.add(description.getContainerEObjectURI());
+            }
+        };
+    }
+
+    private static Predicate<URI> createURIPredicate(final URI uri) {
+        return new Predicate<URI>() {
+            @Override
+            public boolean apply(URI input) {
+                return uri.equals(input);
+            }
+        };
+    }
 }

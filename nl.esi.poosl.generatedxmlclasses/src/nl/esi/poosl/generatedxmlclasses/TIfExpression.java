@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_if_expression complex type.
+ * <p>
+ * Java class for t_if_expression complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_if_expression">
@@ -36,27 +36,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_if_expression", propOrder = {
-    "condition",
-    "then",
-    "_else"
-})
+@XmlType(name = "t_if_expression", propOrder = { "condition", "then", "_else" })
 public class TIfExpression {
 
     @XmlElement(required = true)
     protected TExpression condition;
+
     @XmlElement(required = true)
     protected TExpression then;
+
     @XmlElement(name = "else")
     protected TExpression _else;
 
     /**
      * Gets the value of the condition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getCondition() {
         return condition;
@@ -66,9 +62,8 @@ public class TIfExpression {
      * Sets the value of the condition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setCondition(TExpression value) {
         this.condition = value;
@@ -77,10 +72,8 @@ public class TIfExpression {
     /**
      * Gets the value of the then property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getThen() {
         return then;
@@ -90,9 +83,8 @@ public class TIfExpression {
      * Sets the value of the then property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setThen(TExpression value) {
         this.then = value;
@@ -101,10 +93,8 @@ public class TIfExpression {
     /**
      * Gets the value of the else property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getElse() {
         return _else;
@@ -114,9 +104,8 @@ public class TIfExpression {
      * Sets the value of the else property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setElse(TExpression value) {
         this._else = value;

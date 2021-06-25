@@ -6,8 +6,8 @@ import org.eclipse.debug.core.sourcelookup.ISourceLookupParticipant;
 
 public class PooslSourceLocator extends AbstractSourceLookupDirector implements IPersistableSourceLocator {
 
-	@Override
-	public void initializeParticipants() {
-		addParticipants(new ISourceLookupParticipant[] { new PooslSourceLookupParticipant() });
-	}
+    @Override
+    public void initializeParticipants() {
+        addParticipants(new ISourceLookupParticipant[] { new PooslSourceLookupParticipant() });
+    }
 }

@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_command_request complex type.
+ * <p>
+ * Java class for t_command_request complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_command_request">
@@ -41,10 +41,8 @@ public class TCommandRequest {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommand }
-     *     
+     * @return possible object is {@link TCommand }
+     * 
      */
     public TCommand getType() {
         return type;
@@ -54,9 +52,8 @@ public class TCommandRequest {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommand }
-     *     
+     *            allowed object is {@link TCommand }
+     * 
      */
     public void setType(TCommand value) {
         this.type = value;

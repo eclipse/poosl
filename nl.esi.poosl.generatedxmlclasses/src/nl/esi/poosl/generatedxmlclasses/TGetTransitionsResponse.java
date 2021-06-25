@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_get_transitions_response complex type.
+ * <p>
+ * Java class for t_get_transitions_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_get_transitions_response">
@@ -34,9 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_get_transitions_response", propOrder = {
-    "transitions"
-})
+@XmlType(name = "t_get_transitions_response", propOrder = { "transitions" })
 public class TGetTransitionsResponse {
 
     @XmlElement(required = true)
@@ -45,10 +43,8 @@ public class TGetTransitionsResponse {
     /**
      * Gets the value of the transitions property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TTransitionList }
-     *     
+     * @return possible object is {@link TTransitionList }
+     * 
      */
     public TTransitionList getTransitions() {
         return transitions;
@@ -58,9 +54,8 @@ public class TGetTransitionsResponse {
      * Sets the value of the transitions property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TTransitionList }
-     *     
+     *            allowed object is {@link TTransitionList }
+     * 
      */
     public void setTransitions(TTransitionList value) {
         this.transitions = value;

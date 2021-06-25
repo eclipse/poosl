@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * <p>Java class for t_sublist complex type.
+ * <p>
+ * Java class for t_sublist complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_sublist">
@@ -35,25 +36,23 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_sublist", propOrder = {
-    "value"
-})
+@XmlType(name = "t_sublist", propOrder = { "value" })
 public class TSublist {
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(name = "local")
     protected BigInteger local;
+
     @XmlAttribute(name = "global")
     protected BigInteger global;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getValue() {
         return value;
@@ -63,9 +62,8 @@ public class TSublist {
      * Sets the value of the value property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setValue(String value) {
         this.value = value;
@@ -74,10 +72,8 @@ public class TSublist {
     /**
      * Gets the value of the local property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getLocal() {
         return local;
@@ -87,9 +83,8 @@ public class TSublist {
      * Sets the value of the local property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setLocal(BigInteger value) {
         this.local = value;
@@ -98,10 +93,8 @@ public class TSublist {
     /**
      * Gets the value of the global property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getGlobal() {
         return global;
@@ -111,9 +104,8 @@ public class TSublist {
      * Sets the value of the global property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setGlobal(BigInteger value) {
         this.global = value;

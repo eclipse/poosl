@@ -28,81 +28,64 @@ import nl.esi.poosl.xtext.helpers.PooslReferenceHelper;
 
 public class PooslResourceDescriptionStrategy extends DefaultResourceDescriptionStrategy {
 
-	@Override
-	public boolean createReferenceDescriptions(EObject from, URI exportedContainerURI,
-			IAcceptor<IReferenceDescription> acceptor) {
+    @Override
+    public boolean createReferenceDescriptions(EObject from, URI exportedContainerURI, IAcceptor<IReferenceDescription> acceptor) {
 
-		// --- Message References -------
+        // --- Message References -------
 
-		if (from instanceof SendStatement) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getSendSignatureDescription((SendStatement) from));
-		} else if (from instanceof ReceiveStatement) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getReceiveSignatureDescription((ReceiveStatement) from));
-		} else if (from instanceof ProcessMethodCall) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getProcessMethodDescription((ProcessMethodCall) from));
-		}
+        if (from instanceof SendStatement) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getSendSignatureDescription((SendStatement) from));
+        } else if (from instanceof ReceiveStatement) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getReceiveSignatureDescription((ReceiveStatement) from));
+        } else if (from instanceof ProcessMethodCall) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getProcessMethodDescription((ProcessMethodCall) from));
+        }
 
-		// --- Port References -------
+        // --- Port References -------
 
-		else if (from instanceof PortReference) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getPortDescription((PortReference) from));
-		}
+        else if (from instanceof PortReference) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getPortDescription((PortReference) from));
+        }
 
-		// --- Class References -------
+        // --- Class References -------
 
-		else if (from instanceof ProcessClass) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getProcessClassDescription((ProcessClass) from));
-		} else if (from instanceof DataClass) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getDataClassDescription((DataClass) from));
-		} else if (from instanceof Instance) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getInstantiableClassDescription((Instance) from));
-		} else if (from instanceof NewExpression) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getDataClassDescription((NewExpression) from));
-		} else if (from instanceof Declaration) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getDataClassDescription((Declaration) from));
-		} else if (from instanceof MessageParameter) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getDataClassDescription((MessageParameter) from));
-		} else if (from instanceof DataMethod) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getDataClassDescription((DataMethod) from));
-		}
+        else if (from instanceof ProcessClass) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getProcessClassDescription((ProcessClass) from));
+        } else if (from instanceof DataClass) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getDataClassDescription((DataClass) from));
+        } else if (from instanceof Instance) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getInstantiableClassDescription((Instance) from));
+        } else if (from instanceof NewExpression) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getDataClassDescription((NewExpression) from));
+        } else if (from instanceof Declaration) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getDataClassDescription((Declaration) from));
+        } else if (from instanceof MessageParameter) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getDataClassDescription((MessageParameter) from));
+        } else if (from instanceof DataMethod) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getDataClassDescription((DataMethod) from));
+        }
 
-		// --- Variable References -------
+        // --- Variable References -------
 
-		else if (from instanceof AssignmentExpression) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getVariableDescription((AssignmentExpression) from));
-		} else if (from instanceof VariableExpression) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getVariableDescription((VariableExpression) from));
-		} else if (from instanceof OutputVariable) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getVariableDescription((OutputVariable) from));
-		} else if (from instanceof InstanceParameter) {
-			validateAndAccept(from, exportedContainerURI, acceptor,
-					PooslReferenceHelper.getVariableDescription((InstanceParameter) from));
-		}
-		return super.createReferenceDescriptions(from, exportedContainerURI, acceptor);
-	}
+        else if (from instanceof AssignmentExpression) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getVariableDescription((AssignmentExpression) from));
+        } else if (from instanceof VariableExpression) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getVariableDescription((VariableExpression) from));
+        } else if (from instanceof OutputVariable) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getVariableDescription((OutputVariable) from));
+        } else if (from instanceof InstanceParameter) {
+            validateAndAccept(from, exportedContainerURI, acceptor, PooslReferenceHelper.getVariableDescription((InstanceParameter) from));
+        }
+        return super.createReferenceDescriptions(from, exportedContainerURI, acceptor);
+    }
 
-	private void validateAndAccept(EObject fromObject, URI exportedContainerURI,
-			IAcceptor<IReferenceDescription> acceptor, IEObjectDescription call) {
-		if (call != null) {
-			URI from = EcoreUtil.getURI(fromObject);
-			URI to = call.getEObjectURI();
-			if (to != null && !from.trimFragment().equals(to.trimFragment())) {
-				acceptor.accept(new DefaultReferenceDescription(from, to, null, -1, exportedContainerURI));
-			}
-		}
-	}
+    private void validateAndAccept(EObject fromObject, URI exportedContainerURI, IAcceptor<IReferenceDescription> acceptor, IEObjectDescription call) {
+        if (call != null) {
+            URI from = EcoreUtil.getURI(fromObject);
+            URI to = call.getEObjectURI();
+            if (to != null && !from.trimFragment().equals(to.trimFragment())) {
+                acceptor.accept(new DefaultReferenceDescription(from, to, null, -1, exportedContainerURI));
+            }
+        }
+    }
 }

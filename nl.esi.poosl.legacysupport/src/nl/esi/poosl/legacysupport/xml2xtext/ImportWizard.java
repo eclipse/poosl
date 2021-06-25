@@ -17,37 +17,34 @@ import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 
 public class ImportWizard extends Wizard implements IImportWizard {
-	private ImportWizardPage mainPage;
+    private ImportWizardPage mainPage;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
-	 */
-	public boolean performFinish() {
-		IFile file = mainPage.createNewFile();
-		return file != null;
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.jface.wizard.Wizard#performFinish()
+     */
+    public boolean performFinish() {
+        IFile file = mainPage.createNewFile();
+        return file != null;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
-	 * org.eclipse.jface.viewers.IStructuredSelection)
-	 */
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		setWindowTitle("File Import Wizard"); // NON-NLS-1
-		setNeedsProgressMonitor(true);
-		mainPage = new ImportWizardPage("Import XML", selection); // NON-NLS-1
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
+     * org.eclipse.jface.viewers.IStructuredSelection)
+     */
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
+        setWindowTitle("File Import Wizard"); // NON-NLS-1
+        setNeedsProgressMonitor(true);
+        mainPage = new ImportWizardPage("Import XML", selection); // NON-NLS-1
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.wizard.IWizard#addPages()
-	 */
-	public void addPages() {
-		super.addPages();
-		addPage(mainPage);
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.jface.wizard.IWizard#addPages()
+     */
+    public void addPages() {
+        super.addPages();
+        addPage(mainPage);
+    }
 }

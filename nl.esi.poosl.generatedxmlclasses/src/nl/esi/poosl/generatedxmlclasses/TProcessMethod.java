@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_process_method complex type.
+ * <p>
+ * Java class for t_process_method complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_process_method">
@@ -42,24 +43,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_process_method", propOrder = {
-    "argument",
-    "outputParameter",
-    "localVariable",
-    "bodyText",
-    "bodyStatement"
-})
+@XmlType(name = "t_process_method", propOrder = { "argument", "outputParameter", "localVariable", "bodyText", "bodyStatement" })
 public class TProcessMethod {
 
     protected List<TTypedVariable> argument;
+
     @XmlElement(name = "output_parameter")
     protected List<TTypedVariable> outputParameter;
+
     @XmlElement(name = "local_variable")
     protected List<TTypedVariable> localVariable;
+
     @XmlElement(name = "body_text")
     protected String bodyText;
+
     @XmlElement(name = "body_statement", required = true)
     protected TStatement bodyStatement;
+
     @XmlAttribute(name = "name", required = true)
     protected String name;
 
@@ -67,21 +67,20 @@ public class TProcessMethod {
      * Gets the value of the argument property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the argument property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the argument property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getArgument().add(newItem);
+     * getArgument().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TTypedVariable }
+     * Objects of the following type(s) are allowed in the list {@link TTypedVariable }
      * 
      * 
      */
@@ -96,21 +95,20 @@ public class TProcessMethod {
      * Gets the value of the outputParameter property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the outputParameter property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the outputParameter property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getOutputParameter().add(newItem);
+     * getOutputParameter().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TTypedVariable }
+     * Objects of the following type(s) are allowed in the list {@link TTypedVariable }
      * 
      * 
      */
@@ -125,21 +123,20 @@ public class TProcessMethod {
      * Gets the value of the localVariable property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the localVariable property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the localVariable property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLocalVariable().add(newItem);
+     * getLocalVariable().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TTypedVariable }
+     * Objects of the following type(s) are allowed in the list {@link TTypedVariable }
      * 
      * 
      */
@@ -153,10 +150,8 @@ public class TProcessMethod {
     /**
      * Gets the value of the bodyText property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getBodyText() {
         return bodyText;
@@ -166,9 +161,8 @@ public class TProcessMethod {
      * Sets the value of the bodyText property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setBodyText(String value) {
         this.bodyText = value;
@@ -177,10 +171,8 @@ public class TProcessMethod {
     /**
      * Gets the value of the bodyStatement property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStatement }
-     *     
+     * @return possible object is {@link TStatement }
+     * 
      */
     public TStatement getBodyStatement() {
         return bodyStatement;
@@ -190,9 +182,8 @@ public class TProcessMethod {
      * Sets the value of the bodyStatement property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStatement }
-     *     
+     *            allowed object is {@link TStatement }
+     * 
      */
     public void setBodyStatement(TStatement value) {
         this.bodyStatement = value;
@@ -201,10 +192,8 @@ public class TProcessMethod {
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -214,9 +203,8 @@ public class TProcessMethod {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;

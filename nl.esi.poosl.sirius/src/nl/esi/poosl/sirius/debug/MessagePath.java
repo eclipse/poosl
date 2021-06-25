@@ -3,50 +3,54 @@ package nl.esi.poosl.sirius.debug;
 import nl.esi.poosl.rotalumisclient.PooslConstants;
 
 public class MessagePath {
-	private final String owner;
-	private final String sender;
-	private final String receiver;
-	private final String senderPort;
-	private final String receiverPort;
+    private final String owner;
 
-	public MessagePath(String sender, String receiver, String senderPort, String receiverPort) {
-		super();
+    private final String sender;
 
-		this.sender = sender;
-		this.receiver = receiver;
-		this.senderPort = senderPort;
-		this.receiverPort = receiverPort;
+    private final String receiver;
 
-		String[] sendLocation = getProcessAsArray(this.sender);
-		String[] receiveLocation = getProcessAsArray(this.receiver);
-		if (sendLocation.length == receiveLocation.length) {
-			this.owner = this.sender.substring(0, this.sender.lastIndexOf(PooslConstants.PATH_SEPARATOR));
-		} else {
-			this.owner = (sendLocation.length > receiveLocation.length) ? this.receiver : this.sender;
-		}
-	}
+    private final String senderPort;
 
-	private String[] getProcessAsArray(String process) {
-		return process.substring(1).split(PooslConstants.PATH_SEPARATOR);
-	}
+    private final String receiverPort;
 
-	public String getSenderPort() {
-		return senderPort;
-	}
+    public MessagePath(String sender, String receiver, String senderPort, String receiverPort) {
+        super();
 
-	public String getReceiverPort() {
-		return receiverPort;
-	}
+        this.sender = sender;
+        this.receiver = receiver;
+        this.senderPort = senderPort;
+        this.receiverPort = receiverPort;
 
-	public String getOwner() {
-		return owner;
-	}
+        String[] sendLocation = getProcessAsArray(this.sender);
+        String[] receiveLocation = getProcessAsArray(this.receiver);
+        if (sendLocation.length == receiveLocation.length) {
+            this.owner = this.sender.substring(0, this.sender.lastIndexOf(PooslConstants.PATH_SEPARATOR));
+        } else {
+            this.owner = (sendLocation.length > receiveLocation.length) ? this.receiver : this.sender;
+        }
+    }
 
-	public String getSender() {
-		return sender;
-	}
+    private String[] getProcessAsArray(String process) {
+        return process.substring(1).split(PooslConstants.PATH_SEPARATOR);
+    }
 
-	public String getReceiver() {
-		return receiver;
-	}
+    public String getSenderPort() {
+        return senderPort;
+    }
+
+    public String getReceiverPort() {
+        return receiverPort;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
 }

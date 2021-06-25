@@ -73,658 +73,636 @@ import nl.esi.poosl.xtext.helpers.PooslReferenceHelper;
 
 @SuppressWarnings("restriction")
 public class GraphicalEditorHelper {
-	private static final String WARNING_MODELING_PROJECT_EXPLORER = "Modeling extension in the project explorer could not be removed.";
-	private static final String SIRIUS_EXPLORER_CONTENT_ID = "org.eclipse.sirius.ui.resource.content.session";
-	private static final String WARNING_TARGET_UNKNOWN = "Could not determine diagram owner.";
-	private static final String VIEWPOINT = "POOSL viewpoint";
-	private static final String AIRD_FILE_EXTENSION = ".aird";
-	private static final String DEFAULT_AIRD_FILE = "/representations.aird";
+    private static final String WARNING_MODELING_PROJECT_EXPLORER = "Modeling extension in the project explorer could not be removed.";
 
-	private static final Logger LOGGER = Logger.getLogger(GraphicalEditorHelper.class.getName());
+    private static final String SIRIUS_EXPLORER_CONTENT_ID = "org.eclipse.sirius.ui.resource.content.session";
 
-	private GraphicalEditorHelper() {
-		throw new IllegalStateException("Utility class");
-	}
+    private static final String WARNING_TARGET_UNKNOWN = "Could not determine diagram owner.";
 
-	/**
-	 * Add modeling nature to the project. If it fails, then an error message dialog
-	 * is opened.
-	 * 
-	 * @param project The project to which the nature must be added
-	 * @return True if adding the nature succeeded
-	 */
-	private static boolean addModelingNature(final IProject project, IProgressMonitor monitor) {
-		try {
-			ModelingProjectManager.INSTANCE.convertToModelingProject(project, monitor);
-		} catch (final CoreException e) {
-			LOGGER.log(Level.WARNING, "Adding modeling nature failed.", e);
-			Display.getDefault().syncExec(new Runnable() {
-				@Override
-				public void run() {
-					MessageDialog.openError(Display.getDefault().getActiveShell(), Messages.ERROR_MODELLING_TITLE,
-							MessageFormat.format(Messages.ERROR_MODELLING_MESSAGE, e.getMessage()));
-				}
-			});
-			return false;
-		}
-		return true;
-	}
+    private static final String VIEWPOINT = "POOSL viewpoint";
 
-	/**
-	 * Gets the sirius eobject thats corresponds to the given eobject
-	 * 
-	 * @param target
-	 * @param session
-	 * @return
-	 */
-	public static EObject getSiriusObject(EObject target, Session session) {
-		URI uri = EcoreUtil.getURI(target);
-		EObject object = session.getTransactionalEditingDomain().getResourceSet().getEObject(uri, false);
-		if (object == null) {
-			return target;
-		} else {
-			return object;
-		}
-	}
+    private static final String AIRD_FILE_EXTENSION = ".aird";
 
-	/**
-	 * @param airdfile
-	 * @return new session
-	 */
-	private static Session createSession(IProject project, IEditorPart editor, IProgressMonitor monitor) {
-		String pathName = project.getFullPath().append(ModelingProject.DEFAULT_REPRESENTATIONS_FILE_NAME).toString();
-		URI sessionResourceURI = URI.createPlatformResourceURI(pathName, true);
+    private static final String DEFAULT_AIRD_FILE = "/representations.aird";
 
-		addModelingNature(project, monitor);
+    private static final Logger LOGGER = Logger.getLogger(GraphicalEditorHelper.class.getName());
 
-		Session session = SessionManager.INSTANCE.getSession(sessionResourceURI, monitor);
+    private GraphicalEditorHelper() {
+        throw new IllegalStateException("Utility class");
+    }
 
-		try {
-			removeModelingFromProjectExpl(editor);
-		} catch (PartInitException e) {
-			LOGGER.log(Level.WARNING, WARNING_MODELING_PROJECT_EXPLORER, e);
-		}
+    /**
+     * Add modeling nature to the project. If it fails, then an error message dialog is opened.
+     * 
+     * @param project
+     *            The project to which the nature must be added
+     * @return True if adding the nature succeeded
+     */
+    private static boolean addModelingNature(final IProject project, IProgressMonitor monitor) {
+        try {
+            ModelingProjectManager.INSTANCE.convertToModelingProject(project, monitor);
+        } catch (final CoreException e) {
+            LOGGER.log(Level.WARNING, "Adding modeling nature failed.", e);
+            Display.getDefault().syncExec(new Runnable() {
+                @Override
+                public void run() {
+                    MessageDialog.openError(Display.getDefault().getActiveShell(), Messages.ERROR_MODELLING_TITLE, MessageFormat.format(Messages.ERROR_MODELLING_MESSAGE, e.getMessage()));
+                }
+            });
+            return false;
+        }
+        return true;
+    }
 
-		session.open(monitor);
-		session.save(monitor);
-		return session;
-	}
+    /**
+     * Gets the sirius eobject thats corresponds to the given eobject
+     * 
+     * @param target
+     * @param session
+     * @return
+     */
+    public static EObject getSiriusObject(EObject target, Session session) {
+        URI uri = EcoreUtil.getURI(target);
+        EObject object = session.getTransactionalEditingDomain().getResourceSet().getEObject(uri, false);
+        if (object == null) {
+            return target;
+        } else {
+            return object;
+        }
+    }
 
-	/**
-	 * Find the aird file the project or create one if none exists
-	 * 
-	 * @param activeProject in which the aird file must exist
-	 * @return location of the aird file
-	 * @throws CoreException
-	 */
-	private static URI findRepresentationFile(IProject activeProject) throws CoreException {
-		final String[] airdlocation = { "" };
-		activeProject.accept(new IResourceVisitor() {
-			@Override
-			public boolean visit(IResource resource) throws CoreException {
-				if (resource.getFileExtension() != null && resource.getFileExtension().equals(AIRD_FILE_EXTENSION)) {
-					airdlocation[0] = resource.getFullPath().toString();
-				}
-				return false;
-			}
-		});
+    /**
+     * @param airdfile
+     * @return new session
+     */
+    private static Session createSession(IProject project, IEditorPart editor, IProgressMonitor monitor) {
+        String pathName = project.getFullPath().append(ModelingProject.DEFAULT_REPRESENTATIONS_FILE_NAME).toString();
+        URI sessionResourceURI = URI.createPlatformResourceURI(pathName, true);
 
-		if (!airdlocation[0].isEmpty()) {
-			return URI.createPlatformResourceURI(airdlocation[0], true);
-		} else {
-			return null;
-		}
-	}
+        addModelingNature(project, monitor);
 
-	/**
-	 * Get description for the object that is used to make a new representation
-	 * 
-	 * @param session
-	 * @param object
-	 * @param vps
-	 * @return
-	 */
-	private static RepresentationDescription getDescription(EObject object, Collection<Viewpoint> vps) {
-		Collection<RepresentationDescription> possiblediagrams = DialectManager.INSTANCE
-				.getAvailableRepresentationDescriptions(vps, object);
-		if (!possiblediagrams.isEmpty()) {
-			return possiblediagrams.iterator().next();
-		} else {
-			return null;
-		}
-	}
+        Session session = SessionManager.INSTANCE.getSession(sessionResourceURI, monitor);
 
-	/**
-	 * find an existing representation for the target
-	 * 
-	 * @param session
-	 * @param target
-	 * @return
-	 */
-	private static DRepresentationDescriptor getExistingDescriptor(Session session, EObject target) {
-		Collection<DRepresentationDescriptor> descriptors = getAllObjectDescriptors(session, target);
-		for (DRepresentationDescriptor descriptor : descriptors) {
-			if (descriptor.getRepresentation().getDocumentation().isEmpty()) {
-				return descriptor;
-			}
-		}
-		return null;
-	}
+        try {
+            removeModelingFromProjectExpl(editor);
+        } catch (PartInitException e) {
+            LOGGER.log(Level.WARNING, WARNING_MODELING_PROJECT_EXPLORER, e);
+        }
 
-	public static Collection<DRepresentationDescriptor> getAllObjectDescriptors(Session session, EObject target) {
-		EObject siriusObject = getSiriusObject(target, session);
-		if (siriusObject != null) {
-			return DialectManager.INSTANCE.getRepresentationDescriptors(siriusObject, session);
-		} else {
-			return Collections.emptyList();
-		}
-	}
+        session.open(monitor);
+        session.save(monitor);
+        return session;
+    }
 
-	public static Boolean isLaunchRepresentation(DRepresentationDescriptor descriptor, Collection<String> launchIDs) {
-		DRepresentation representation = descriptor.getRepresentation();
-		if (representation.getName().startsWith(DiagramNameHelper.COMMUNICATION_DIAGRAM_PREFIX)) {
-			return launchIDs.contains(getLaunchIdFromDocumentation(representation.getDocumentation()));
-		} else {
-			return false;
-		}
-	}
+    /**
+     * Find the aird file the project or create one if none exists
+     * 
+     * @param activeProject
+     *            in which the aird file must exist
+     * @return location of the aird file
+     * @throws CoreException
+     */
+    private static URI findRepresentationFile(IProject activeProject) throws CoreException {
+        final String[] airdlocation = { "" };
+        activeProject.accept(new IResourceVisitor() {
+            @Override
+            public boolean visit(IResource resource) throws CoreException {
+                if (resource.getFileExtension() != null && resource.getFileExtension().equals(AIRD_FILE_EXTENSION)) {
+                    airdlocation[0] = resource.getFullPath().toString();
+                }
+                return false;
+            }
+        });
 
-	private static Boolean isInstanceRepresentation(DRepresentationDescriptor descriptor, String launchID,
-			String instance) {
-		DRepresentation representation = descriptor.getRepresentation();
-		if (representation.getName().startsWith(DiagramNameHelper.COMMUNICATION_DIAGRAM_PREFIX)) {
-			String doc = representation.getDocumentation();
-			return launchID.equals(getLaunchIdFromDocumentation(doc))
-					&& instance.equals(getInstanceFromDocumentation(doc));
-		} else {
-			return false;
-		}
-	}
+        if (!airdlocation[0].isEmpty()) {
+            return URI.createPlatformResourceURI(airdlocation[0], true);
+        } else {
+            return null;
+        }
+    }
 
-	public static String getLaunchIdFromDocumentation(String documentation) {
-		String[] info = documentation.split(",");
-		if (info.length == 2) {
-			return info[0];
-		} else {
-			return documentation;
-		}
-	}
+    /**
+     * Get description for the object that is used to make a new representation
+     * 
+     * @param session
+     * @param object
+     * @param vps
+     * @return
+     */
+    private static RepresentationDescription getDescription(EObject object, Collection<Viewpoint> vps) {
+        Collection<RepresentationDescription> possiblediagrams = DialectManager.INSTANCE.getAvailableRepresentationDescriptions(vps, object);
+        if (!possiblediagrams.isEmpty()) {
+            return possiblediagrams.iterator().next();
+        } else {
+            return null;
+        }
+    }
 
-	public static String getInstanceFromDocumentation(String documentation) {
-		String[] info = documentation.split(",");
-		if (info.length == 2) {
-			return info[1];
-		} else {
-			return documentation;
-		}
-	}
+    /**
+     * find an existing representation for the target
+     * 
+     * @param session
+     * @param target
+     * @return
+     */
+    private static DRepresentationDescriptor getExistingDescriptor(Session session, EObject target) {
+        Collection<DRepresentationDescriptor> descriptors = getAllObjectDescriptors(session, target);
+        for (DRepresentationDescriptor descriptor : descriptors) {
+            if (descriptor.getRepresentation().getDocumentation().isEmpty()) {
+                return descriptor;
+            }
+        }
+        return null;
+    }
 
-	private static DRepresentationDescriptor getExistingDebugDescriptor(Session session, EObject target,
-			String serverPort, String instance) {
-		EObject siriusObject = getSiriusObject(target, session);
-		if (siriusObject != null) {
-			for (DRepresentationDescriptor descriptor : DialectManager.INSTANCE
-					.getRepresentationDescriptors(siriusObject, session)) {
-				if (isInstanceRepresentation(descriptor, serverPort, instance)) {
-					return descriptor;
-				}
-			}
-		}
-		return null;
-	}
+    public static Collection<DRepresentationDescriptor> getAllObjectDescriptors(Session session, EObject target) {
+        EObject siriusObject = getSiriusObject(target, session);
+        if (siriusObject != null) {
+            return DialectManager.INSTANCE.getRepresentationDescriptors(siriusObject, session);
+        } else {
+            return Collections.emptyList();
+        }
+    }
 
-	/**
-	 * Removes modeling extension from project explorer. When there was a package
-	 * explorer opened but no project explorer, the package explorer will be brought
-	 * (back) to front. If there is a project explorer already opened nothing will
-	 * change. Focus will always go to the editor provided if it is in the active
-	 * workbench.
-	 * 
-	 * @param editor The editor to give focus
-	 * @throws PartInitException if explorer can not be shown
-	 */
-	private static void removeModelingFromProjectExpl(IEditorPart editor) throws PartInitException {
-		IWorkbenchWindow activeWorkbench = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		if (activeWorkbench != null) {
-			IWorkbenchPage page = activeWorkbench.getActivePage();
-			if (page != null) {
-				CommonNavigator explorer = (CommonNavigator) page.findView(IPageLayout.ID_PROJECT_EXPLORER);
-				if (explorer == null) {
-					page.showView(IPageLayout.ID_PROJECT_EXPLORER);
-					explorer = (CommonNavigator) page.findView(IPageLayout.ID_PROJECT_EXPLORER);
-					IViewPart pack = page.findView("org.eclipse.jdt.ui.PackageExplorer");
-					if (pack != null) {
-						page.activate(pack);
-					}
-					if (editor != null) {
-						IEditorPart diagram = page.findEditor(editor.getEditorInput());
-						if (diagram != null) {
-							page.activate(diagram);
-						}
-					}
-				}
+    public static Boolean isLaunchRepresentation(DRepresentationDescriptor descriptor, Collection<String> launchIDs) {
+        DRepresentation representation = descriptor.getRepresentation();
+        if (representation.getName().startsWith(DiagramNameHelper.COMMUNICATION_DIAGRAM_PREFIX)) {
+            return launchIDs.contains(getLaunchIdFromDocumentation(representation.getDocumentation()));
+        } else {
+            return false;
+        }
+    }
 
-				if (explorer != null) {
-					INavigatorContentService content = explorer.getNavigatorContentService();
-					if (content != null && content.isActive(SIRIUS_EXPLORER_CONTENT_ID)) {
-						content.getActivationService().deactivateExtensions(new String[] { SIRIUS_EXPLORER_CONTENT_ID },
-								false);
-						content.getActivationService().persistExtensionActivations();
+    private static Boolean isInstanceRepresentation(DRepresentationDescriptor descriptor, String launchID, String instance) {
+        DRepresentation representation = descriptor.getRepresentation();
+        if (representation.getName().startsWith(DiagramNameHelper.COMMUNICATION_DIAGRAM_PREFIX)) {
+            String doc = representation.getDocumentation();
+            return launchID.equals(getLaunchIdFromDocumentation(doc)) && instance.equals(getInstanceFromDocumentation(doc));
+        } else {
+            return false;
+        }
+    }
 
-					}
-				}
-			}
-		}
-	}
+    public static String getLaunchIdFromDocumentation(String documentation) {
+        String[] info = documentation.split(",");
+        if (info.length == 2) {
+            return info[0];
+        } else {
+            return documentation;
+        }
+    }
 
-	/**
-	 * This method is used to go from Graphical editor to another graphical editor.
-	 * 
-	 * @param target
-	 */
-	public static void openGraphicalEditor(final EObject target, final String documentation) {
-		try {
-			String instanceName = "";
-			EObject currentTarget = target;
-			if (currentTarget instanceof Instance) {
-				Instance instance = (Instance) currentTarget;
-				currentTarget = PooslReferenceHelper.getInstantiableClassEObject(instance);
-				instanceName = instance.getName();
-			}
-			if (currentTarget instanceof ClusterClass || currentTarget instanceof nl.esi.poosl.Poosl) {
-				EObjectQuery query = new EObjectQuery(currentTarget);
-				Session session = query.getSession();
-				if (session != null) {
-					if (documentation != null && !documentation.isEmpty()) {
-						instanceName = getInstanceFromDocumentation(documentation) + "/" + instanceName;
-						openDebugDiagram(getLaunchIdFromDocumentation(documentation), instanceName, currentTarget,
-								session, new NullProgressMonitor());
-					} else {
-						openGraphicalEditor(currentTarget, session, new NullProgressMonitor());
-					}
-				} else {
-					Display.getDefault().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Poosl Editor",
-									"Can not open a Poosl editor for a file outside of the workspace.");
-						}
-					});
-				}
-			}
-		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Could not open graphical Editor", e);
-		}
-	}
+    public static String getInstanceFromDocumentation(String documentation) {
+        String[] info = documentation.split(",");
+        if (info.length == 2) {
+            return info[1];
+        } else {
+            return documentation;
+        }
+    }
 
-	public static void openGraphicalEditorFromSelection(ISelection selection, boolean classDiagram) {
-		IFile file = ConvertHelper.convertISelectionToIFile(selection);
-		if (file == null) {
-			LOGGER.log(Level.WARNING, "Could not get file from the selection");
-			return;
-		}
+    private static DRepresentationDescriptor getExistingDebugDescriptor(Session session, EObject target, String serverPort, String instance) {
+        EObject siriusObject = getSiriusObject(target, session);
+        if (siriusObject != null) {
+            for (DRepresentationDescriptor descriptor : DialectManager.INSTANCE.getRepresentationDescriptors(siriusObject, session)) {
+                if (isInstanceRepresentation(descriptor, serverPort, instance)) {
+                    return descriptor;
+                }
+            }
+        }
+        return null;
+    }
 
-		Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
-		if (poosl == null) {
-			LOGGER.log(Level.WARNING, "Could not get poosl model from the selection");
-			return;
-		}
+    /**
+     * Removes modeling extension from project explorer. When there was a package explorer opened but no project
+     * explorer, the package explorer will be brought (back) to front. If there is a project explorer already opened
+     * nothing will change. Focus will always go to the editor provided if it is in the active workbench.
+     * 
+     * @param editor
+     *            The editor to give focus
+     * @throws PartInitException
+     *             if explorer can not be shown
+     */
+    private static void removeModelingFromProjectExpl(IEditorPart editor) throws PartInitException {
+        IWorkbenchWindow activeWorkbench = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        if (activeWorkbench != null) {
+            IWorkbenchPage page = activeWorkbench.getActivePage();
+            if (page != null) {
+                CommonNavigator explorer = (CommonNavigator) page.findView(IPageLayout.ID_PROJECT_EXPLORER);
+                if (explorer == null) {
+                    page.showView(IPageLayout.ID_PROJECT_EXPLORER);
+                    explorer = (CommonNavigator) page.findView(IPageLayout.ID_PROJECT_EXPLORER);
+                    IViewPart pack = page.findView("org.eclipse.jdt.ui.PackageExplorer");
+                    if (pack != null) {
+                        page.activate(pack);
+                    }
+                    if (editor != null) {
+                        IEditorPart diagram = page.findEditor(editor.getEditorInput());
+                        if (diagram != null) {
+                            page.activate(diagram);
+                        }
+                    }
+                }
 
-		openGraphicalEditorFromFile(file, null, poosl, classDiagram);
-	}
+                if (explorer != null) {
+                    INavigatorContentService content = explorer.getNavigatorContentService();
+                    if (content != null && content.isActive(SIRIUS_EXPLORER_CONTENT_ID)) {
+                        content.getActivationService().deactivateExtensions(new String[] { SIRIUS_EXPLORER_CONTENT_ID }, false);
+                        content.getActivationService().persistExtensionActivations();
 
-	/**
-	 * If openClassDiagram is true opens a classdiagram. Otherwise will open the
-	 * system specification. When no system exists and the poosl model contains only
-	 * 1 clusterclass open the composite structure diagram of that cluster.
-	 * 
-	 * @param file             {@link IFile} used to get graphical context
-	 * @param poosl            Contains the objects that are used for opening the
-	 *                         diagram
-	 * @param openClassDiagram if true opens the class diagram
-	 */
-	public static void openGraphicalEditorFromFile(IFile file, IEditorPart editor, Poosl poosl,
-			boolean openClassDiagram) {
-		if (openClassDiagram) {
-			openGraphicalEditor(poosl, editor, file.getProject());
-		} else {
-			EObject mainTarget = CompositeStructureDiagram.findTarget(poosl);
-			if (mainTarget != null) {
-				openGraphicalEditor(mainTarget, editor, file.getProject());
-			} else {
-				Display.getDefault().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						MessageDialog.openError(Display.getDefault().getActiveShell(),
-								Messages.ERROR_MISSING_SYSTEM_AND_CLUSTER_TITLE,
-								Messages.ERROR_MISSING_SYSTEM_AND_CLUSTER_MESSAGE);
-					}
-				});
-			}
-		}
-	}
+                    }
+                }
+            }
+        }
+    }
 
-	/**
-	 * This method is used to go from textual editor to the graphical editor.
-	 * 
-	 * @param target EObject from which the diagram must be shown
-	 * @param editor The editor is used to determine the active project
-	 * @return
-	 * @return
-	 */
-	public static void openGraphicalEditor(final EObject target, final IEditorPart editor,
-			final IProject activeProject) {
-		try {
-			PlatformUI.getWorkbench().getProgressService().run(false, false, new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					if (target != null) {
-						Session session = getSession(target, activeProject, editor, true, true, monitor);
-						if (session != null) {
-							openGraphicalEditor(target, session, monitor);
-						}
-					} else {
-						LOGGER.log(Level.FINE, WARNING_TARGET_UNKNOWN);
-					}
-				}
-			});
-		} catch (InvocationTargetException | InterruptedException e) {
-			LOGGER.log(Level.WARNING, "Could not open Graphical editor", e);
-		}
-	}
+    /**
+     * This method is used to go from Graphical editor to another graphical editor.
+     * 
+     * @param target
+     */
+    public static void openGraphicalEditor(final EObject target, final String documentation) {
+        try {
+            String instanceName = "";
+            EObject currentTarget = target;
+            if (currentTarget instanceof Instance) {
+                Instance instance = (Instance) currentTarget;
+                currentTarget = PooslReferenceHelper.getInstantiableClassEObject(instance);
+                instanceName = instance.getName();
+            }
+            if (currentTarget instanceof ClusterClass || currentTarget instanceof nl.esi.poosl.Poosl) {
+                EObjectQuery query = new EObjectQuery(currentTarget);
+                Session session = query.getSession();
+                if (session != null) {
+                    if (documentation != null && !documentation.isEmpty()) {
+                        instanceName = getInstanceFromDocumentation(documentation) + "/" + instanceName;
+                        openDebugDiagram(getLaunchIdFromDocumentation(documentation), instanceName, currentTarget, session, new NullProgressMonitor());
+                    } else {
+                        openGraphicalEditor(currentTarget, session, new NullProgressMonitor());
+                    }
+                } else {
+                    Display.getDefault().asyncExec(new Runnable() {
+                        @Override
+                        public void run() {
+                            MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Poosl Editor", "Can not open a Poosl editor for a file outside of the workspace.");
+                        }
+                    });
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Could not open graphical Editor", e);
+        }
+    }
 
-	private static IEditorPart openGraphicalEditor(EObject object, Session session, IProgressMonitor monitor) {
-		if (object == null) {
-			LOGGER.log(Level.SEVERE, WARNING_TARGET_UNKNOWN);
-			return null;
-		}
+    public static void openGraphicalEditorFromSelection(ISelection selection, boolean classDiagram) {
+        IFile file = ConvertHelper.convertISelectionToIFile(selection);
+        if (file == null) {
+            LOGGER.log(Level.WARNING, "Could not get file from the selection");
+            return;
+        }
 
-		DRepresentationDescriptor descriptor = getExistingDescriptor(session, object);
-		if (descriptor == null) {
-			URI uri = object.eResource().getURI();
-			PooslPermissionAuthority authority = getPermissionAuthority(session);
-			if (authority != null) {
-				authority.creatingRepresentation(uri);
-			}
+        Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
+        if (poosl == null) {
+            LOGGER.log(Level.WARNING, "Could not get poosl model from the selection");
+            return;
+        }
 
-			descriptor = createNewRepresentation(object, session, null, null, monitor);
+        openGraphicalEditorFromFile(file, null, poosl, classDiagram);
+    }
 
-			if (authority != null) {
-				authority.createdRepresentation(uri);
-			}
-		}
+    /**
+     * If openClassDiagram is true opens a classdiagram. Otherwise will open the system specification. When no system
+     * exists and the poosl model contains only 1 clusterclass open the composite structure diagram of that cluster.
+     * 
+     * @param file
+     *            {@link IFile} used to get graphical context
+     * @param poosl
+     *            Contains the objects that are used for opening the diagram
+     * @param openClassDiagram
+     *            if true opens the class diagram
+     */
+    public static void openGraphicalEditorFromFile(IFile file, IEditorPart editor, Poosl poosl, boolean openClassDiagram) {
+        if (openClassDiagram) {
+            openGraphicalEditor(poosl, editor, file.getProject());
+        } else {
+            EObject mainTarget = CompositeStructureDiagram.findTarget(poosl);
+            if (mainTarget != null) {
+                openGraphicalEditor(mainTarget, editor, file.getProject());
+            } else {
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        MessageDialog.openError(Display.getDefault().getActiveShell(), Messages.ERROR_MISSING_SYSTEM_AND_CLUSTER_TITLE, Messages.ERROR_MISSING_SYSTEM_AND_CLUSTER_MESSAGE);
+                    }
+                });
+            }
+        }
+    }
 
-		IEditorPart editor = null;
-		if (descriptor != null) {
-			GraphicalDebugUpdater.verifyLockedFiles();
-			editor = DialectUIManager.INSTANCE.openEditor(session, descriptor.getRepresentation(), monitor);
-			if (editor instanceof DialectEditor) {
-				((DialectEditor) editor).validateRepresentation();
-			}
-		}
+    /**
+     * This method is used to go from textual editor to the graphical editor.
+     * 
+     * @param target
+     *            EObject from which the diagram must be shown
+     * @param editor
+     *            The editor is used to determine the active project
+     * @return
+     * @return
+     */
+    public static void openGraphicalEditor(final EObject target, final IEditorPart editor, final IProject activeProject) {
+        try {
+            PlatformUI.getWorkbench().getProgressService().run(false, false, new IRunnableWithProgress() {
+                @Override
+                public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+                    if (target != null) {
+                        Session session = getSession(target, activeProject, editor, true, true, monitor);
+                        if (session != null) {
+                            openGraphicalEditor(target, session, monitor);
+                        }
+                    } else {
+                        LOGGER.log(Level.FINE, WARNING_TARGET_UNKNOWN);
+                    }
+                }
+            });
+        } catch (InvocationTargetException | InterruptedException e) {
+            LOGGER.log(Level.WARNING, "Could not open Graphical editor", e);
+        }
+    }
 
-		session.save(monitor);
-		return editor;
-	}
+    private static IEditorPart openGraphicalEditor(EObject object, Session session, IProgressMonitor monitor) {
+        if (object == null) {
+            LOGGER.log(Level.SEVERE, WARNING_TARGET_UNKNOWN);
+            return null;
+        }
 
-	private static Session getSession(EObject target, IProject activeProject, IEditorPart editor, boolean create,
-			boolean open, IProgressMonitor monitor) {
-		EObjectQuery query = new EObjectQuery(target);
-		Session session = query.getSession();
-		if (session == null) {
-			session = getSession(activeProject, editor, create, open, monitor);
-		}
-		return session;
-	}
+        DRepresentationDescriptor descriptor = getExistingDescriptor(session, object);
+        if (descriptor == null) {
+            URI uri = object.eResource().getURI();
+            PooslPermissionAuthority authority = getPermissionAuthority(session);
+            if (authority != null) {
+                authority.creatingRepresentation(uri);
+            }
 
-	/**
-	 * Get a graphical {@link Session} for the project
-	 * 
-	 * @param activeProject the project to look at for a session
-	 * @param editor        if editor is provided it will get focus if a modeling
-	 *                      nature was added
-	 * @param open          true to open the session if a closed one is found
-	 * @param create        true to create session if none can be found
-	 * @return
-	 */
-	public static Session getSession(IProject activeProject, IEditorPart editor, boolean create, boolean open,
-			IProgressMonitor monitor) {
-		String pathName = activeProject.getFullPath().append(ModelingProject.DEFAULT_REPRESENTATIONS_FILE_NAME)
-				.toString();
-		URI sessionResourceURI = URI.createPlatformResourceURI(pathName, true);
+            descriptor = createNewRepresentation(object, session, null, null, monitor);
 
-		boolean defaultExists = isAlreadyLoaded(sessionResourceURI) || defaultResourceExists(activeProject);
-		boolean customExists = false;
-		if (!defaultExists) {
-			try {
-				URI location = findRepresentationFile(activeProject);
-				customExists = location != null;
-				if (customExists) {
-					sessionResourceURI = location;
-				}
-			} catch (CoreException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
-			}
-		}
+            if (authority != null) {
+                authority.createdRepresentation(uri);
+            }
+        }
 
-		Session session = null;
-		if (defaultExists || customExists) {
-			session = SessionManager.INSTANCE.getSession(sessionResourceURI, monitor);
-		} else {
-			if (create) {
-				session = createSession(activeProject, editor, monitor);
-			}
-		}
+        IEditorPart editor = null;
+        if (descriptor != null) {
+            GraphicalDebugUpdater.verifyLockedFiles();
+            editor = DialectUIManager.INSTANCE.openEditor(session, descriptor.getRepresentation(), monitor);
+            if (editor instanceof DialectEditor) {
+                ((DialectEditor) editor).validateRepresentation();
+            }
+        }
 
-		if (open && session != null && !session.isOpen()) {
-			session.open(monitor);
-		}
-		return session;
-	}
+        session.save(monitor);
+        return editor;
+    }
 
-	private static boolean defaultResourceExists(IProject activeProject) {
-		IFile defaultFile = activeProject.getFile(new Path(DEFAULT_AIRD_FILE));
-		return defaultFile.exists();
-	}
+    private static Session getSession(EObject target, IProject activeProject, IEditorPart editor, boolean create, boolean open, IProgressMonitor monitor) {
+        EObjectQuery query = new EObjectQuery(target);
+        Session session = query.getSession();
+        if (session == null) {
+            session = getSession(activeProject, editor, create, open, monitor);
+        }
+        return session;
+    }
 
-	private static boolean isAlreadyLoaded(URI representationsFileURI) {
-		for (Session session : Collections.unmodifiableCollection(SessionManager.INSTANCE.getSessions())) {
-			if (representationsFileURI.equals(session.getSessionResource().getURI())) {
-				return true;
-			}
-		}
-		return false;
-	}
+    /**
+     * Get a graphical {@link Session} for the project
+     * 
+     * @param activeProject
+     *            the project to look at for a session
+     * @param editor
+     *            if editor is provided it will get focus if a modeling nature was added
+     * @param open
+     *            true to open the session if a closed one is found
+     * @param create
+     *            true to create session if none can be found
+     * @return
+     */
+    public static Session getSession(IProject activeProject, IEditorPart editor, boolean create, boolean open, IProgressMonitor monitor) {
+        String pathName = activeProject.getFullPath().append(ModelingProject.DEFAULT_REPRESENTATIONS_FILE_NAME).toString();
+        URI sessionResourceURI = URI.createPlatformResourceURI(pathName, true);
 
-	private static DRepresentationDescriptor createNewRepresentation(EObject object, Session session, String launchID,
-			String instance, IProgressMonitor monitor) {
-		checkViewPoint(object.eResource(), session, monitor);
-		TransactionalEditingDomain ted = session.getTransactionalEditingDomain();
-		final RepresentationDescription description = getDescription(object, session.getSelectedViewpoints(false));
-		CreateRepresentationCommand createCommand = new CreateRepresentationCommand(session, description, object,
-				launchID, instance, monitor);
-		ted.getCommandStack().execute(createCommand);
-		DRepresentationDescriptor createdDescriptor = createCommand.getCreatedDescriptor();
-		if (createdDescriptor == null) {
-			LOGGER.severe("Representation could not be created for " + instance + ", " + launchID + ".");
-		}
-		return createdDescriptor;
-	}
+        boolean defaultExists = isAlreadyLoaded(sessionResourceURI) || defaultResourceExists(activeProject);
+        boolean customExists = false;
+        if (!defaultExists) {
+            try {
+                URI location = findRepresentationFile(activeProject);
+                customExists = location != null;
+                if (customExists) {
+                    sessionResourceURI = location;
+                }
+            } catch (CoreException e) {
+                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            }
+        }
 
-	public static void checkViewPoint(Resource resource, Session session, IProgressMonitor monitor) {
-		Collection<Viewpoint> vps = session.getSelectedViewpoints(true);
-		if (vps.isEmpty()) {
-			AddSemanticResourceCommand command = new AddSemanticResourceCommand(session, resource.getURI(), monitor);
-			session.getTransactionalEditingDomain().getCommandStack().execute(command);
-			UserSession userSession = UserSession.from(session);
-			userSession.selectViewpoint(VIEWPOINT);
-			userSession.save(monitor);
-		}
-	}
+        Session session = null;
+        if (defaultExists || customExists) {
+            session = SessionManager.INSTANCE.getSession(sessionResourceURI, monitor);
+        } else {
+            if (create) {
+                session = createSession(activeProject, editor, monitor);
+            }
+        }
 
-	public static PooslPermissionAuthority getPermissionAuthority(Session session) {
-		if (session != null) {
-			IPermissionAuthority authority = PermissionAuthorityRegistry.getDefault()
-					.getPermissionAuthority(session.getTransactionalEditingDomain().getResourceSet());
-			if (authority instanceof ReadOnlyWrapperPermissionAuthority) {
-				return (PooslPermissionAuthority) ((ReadOnlyWrapperPermissionAuthority) authority)
-						.getWrappedAuthority();
-			}
-		}
-		return null;
-	}
+        if (open && session != null && !session.isOpen()) {
+            session.open(monitor);
+        }
+        return session;
+    }
 
-	public static void openCommunicationDiagram(final ExternDebugItem selectedItem, final IProject project,
-			final EObject diagramTarget) {
-		try {
-			PlatformUI.getWorkbench().getProgressService().run(false, false, new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					monitor.beginTask("Setup environment and open Communication Diagram " + selectedItem.getDiagram(),
-							3);
-					String launchID = selectedItem.getLaunchID();
-					Session session = getSession(diagramTarget, project, null, true, true, monitor);
-					if (session != null) {
-						if (!session.isOpen()) {
-							session.open(monitor);
-						}
-						monitor.worked(1);
-						setupDebugSession(launchID, session);
-						monitor.worked(1);
-						openDebugDiagram(launchID, selectedItem.getDiagram(), diagramTarget, session, monitor);
-						monitor.worked(1);
-					} else {
-						monitor.worked(3);
-						LOGGER.log(Level.WARNING, "Could not get session to open Communication Diagram");
-					}
-				}
-			});
-		} catch (InvocationTargetException | InterruptedException e) {
-			LOGGER.log(Level.WARNING, "Could not open Communication Diagram", e);
-		}
-	}
+    private static boolean defaultResourceExists(IProject activeProject) {
+        IFile defaultFile = activeProject.getFile(new Path(DEFAULT_AIRD_FILE));
+        return defaultFile.exists();
+    }
 
-	private static void openDebugDiagram(String launchID, String instance, EObject diagramTarget, Session session,
-			IProgressMonitor monitor) {
-		if (diagramTarget == null) {
-			return;
-		}
-		String instanceLabel = instance;
-		DRepresentationDescriptor debugDescriptor = getDebugRepresentation(diagramTarget, session, launchID,
-				instanceLabel);
+    private static boolean isAlreadyLoaded(URI representationsFileURI) {
+        for (Session session : Collections.unmodifiableCollection(SessionManager.INSTANCE.getSessions())) {
+            if (representationsFileURI.equals(session.getSessionResource().getURI())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-		if (debugDescriptor != null) {
-			openDebugEditor(session, debugDescriptor.getRepresentation(), monitor);
-		} else {
-			// Creating a whole new diagram, for this we need get temporary
-			// write access
-			URI resourceUri = diagramTarget.eResource().getURI();
-			PooslPermissionAuthority authority = getPermissionAuthority(session);
-			if (authority != null) {
-				authority.creatingRepresentation(resourceUri);
-			} else {
-				LOGGER.log(Level.SEVERE,
-						"Could not get permission authority for communication diagram " + instanceLabel);
-				Display.getDefault().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						MessageDialog.openError(Display.getDefault().getActiveShell(), "Communication Diagram",
-								"Can not get permission to lock communication diagram.");
-					}
-				});
-			}
-			try {
-				debugDescriptor = createNewRepresentation(diagramTarget, session, launchID, instanceLabel, monitor);
-				if (debugDescriptor != null) {
-					openDebugEditor(session, debugDescriptor.getRepresentation(), monitor);
-				} else {
-					LOGGER.log(Level.SEVERE, "Communication diagram was not created");
-				}
-			} catch (Exception e) {
-				LOGGER.log(Level.SEVERE, "Communication diagram could not be created", e);
-			} finally {
-				// resource should always be unlocked
-				if (authority != null) {
-					authority.createdRepresentation(resourceUri);
-				}
-			}
-		}
+    private static DRepresentationDescriptor createNewRepresentation(EObject object, Session session, String launchID, String instance, IProgressMonitor monitor) {
+        checkViewPoint(object.eResource(), session, monitor);
+        TransactionalEditingDomain ted = session.getTransactionalEditingDomain();
+        final RepresentationDescription description = getDescription(object, session.getSelectedViewpoints(false));
+        CreateRepresentationCommand createCommand = new CreateRepresentationCommand(session, description, object, launchID, instance, monitor);
+        ted.getCommandStack().execute(createCommand);
+        DRepresentationDescriptor createdDescriptor = createCommand.getCreatedDescriptor();
+        if (createdDescriptor == null) {
+            LOGGER.severe("Representation could not be created for " + instance + ", " + launchID + ".");
+        }
+        return createdDescriptor;
+    }
 
-		Activator.MESSAGEUPDATER.draw(session, debugDescriptor);
-		session.save(monitor);
-	}
+    public static void checkViewPoint(Resource resource, Session session, IProgressMonitor monitor) {
+        Collection<Viewpoint> vps = session.getSelectedViewpoints(true);
+        if (vps.isEmpty()) {
+            AddSemanticResourceCommand command = new AddSemanticResourceCommand(session, resource.getURI(), monitor);
+            session.getTransactionalEditingDomain().getCommandStack().execute(command);
+            UserSession userSession = UserSession.from(session);
+            userSession.selectViewpoint(VIEWPOINT);
+            userSession.save(monitor);
+        }
+    }
 
-	private static void openDebugEditor(Session session, DRepresentation debugRepresentation,
-			IProgressMonitor monitor) {
-		if (debugRepresentation != null) {
-			GraphicalDebugUpdater.verifyLockedFiles();
-			IEditorPart editor = DialectUIManager.INSTANCE.openEditor(session, debugRepresentation, monitor);
-			if (editor != null) {
-				editor.setFocus();
-			}
-		}
-	}
+    public static PooslPermissionAuthority getPermissionAuthority(Session session) {
+        if (session != null) {
+            IPermissionAuthority authority = PermissionAuthorityRegistry.getDefault().getPermissionAuthority(session.getTransactionalEditingDomain().getResourceSet());
+            if (authority instanceof ReadOnlyWrapperPermissionAuthority) {
+                return (PooslPermissionAuthority) ((ReadOnlyWrapperPermissionAuthority) authority).getWrappedAuthority();
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * Getting a debug diagram by either getting an existing one or by copying a
-	 * normal diagram
-	 * 
-	 * @param diagramTarget
-	 * @param session
-	 * @param launchID
-	 * @return the debug diagram
-	 */
-	private static DRepresentationDescriptor getDebugRepresentation(EObject diagramTarget, Session session,
-			String launchID, String instance) {
-		DRepresentationDescriptor debugDescriptor = getExistingDebugDescriptor(session, diagramTarget, launchID,
-				instance);
-		if (debugDescriptor == null) {
-			// If already an editing representation exists we can make a copy
-			// from it
-			DRepresentationDescriptor originalDescriptor = getExistingDescriptor(session, diagramTarget);
-			if (originalDescriptor != null) {
-				List<DRepresentationDescriptor> descriptors = new ArrayList<>();
-				descriptors.add(originalDescriptor);
-				try {
-					final TransactionalEditingDomain transDomain = session.getTransactionalEditingDomain();
-					CopyRepresentationCommand command = new CopyRepresentationCommand(transDomain, descriptors, session,
-							launchID, instance);
-					transDomain.getCommandStack().execute(command);
-					debugDescriptor = command.getCreatedDescriptors().get(0);
-				} catch (Exception e) {
-					LOGGER.log(Level.WARNING, "Could not create a debug diagram by copying the original.", e);
-				}
-			}
-		}
-		return debugDescriptor;
-	}
+    public static void openCommunicationDiagram(final ExternDebugItem selectedItem, final IProject project, final EObject diagramTarget) {
+        try {
+            PlatformUI.getWorkbench().getProgressService().run(false, false, new IRunnableWithProgress() {
+                @Override
+                public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+                    monitor.beginTask("Setup environment and open Communication Diagram " + selectedItem.getDiagram(), 3);
+                    String launchID = selectedItem.getLaunchID();
+                    Session session = getSession(diagramTarget, project, null, true, true, monitor);
+                    if (session != null) {
+                        if (!session.isOpen()) {
+                            session.open(monitor);
+                        }
+                        monitor.worked(1);
+                        setupDebugSession(launchID, session);
+                        monitor.worked(1);
+                        openDebugDiagram(launchID, selectedItem.getDiagram(), diagramTarget, session, monitor);
+                        monitor.worked(1);
+                    } else {
+                        monitor.worked(3);
+                        LOGGER.log(Level.WARNING, "Could not get session to open Communication Diagram");
+                    }
+                }
+            });
+        } catch (InvocationTargetException | InterruptedException e) {
+            LOGGER.log(Level.WARNING, "Could not open Communication Diagram", e);
+        }
+    }
 
-	/**
-	 * find and remove any communication diagrams that were left over after a sudden
-	 * shutdown of eclipse
-	 * 
-	 * @param launchID
-	 * @param session
-	 */
-	private static void setupDebugSession(String launchID, Session session) {
-		if (!Activator.MESSAGEUPDATER.isSetup(launchID) && session != null) {
-			final Set<DRepresentationDescriptor> descriptors = UpdateHelper
-					.getLaunchRepresentationsFromSession(launchID, session);
-			if (!descriptors.isEmpty()) {
-				PooslDiagramDeleteHelper.closeAndDeleteDiagrams(UpdateHelper.getPooslShell(), session, descriptors);
-			}
-		}
-	}
+    private static void openDebugDiagram(String launchID, String instance, EObject diagramTarget, Session session, IProgressMonitor monitor) {
+        if (diagramTarget == null) {
+            return;
+        }
+        String instanceLabel = instance;
+        DRepresentationDescriptor debugDescriptor = getDebugRepresentation(diagramTarget, session, launchID, instanceLabel);
 
-	public static List<String> getCurrentLaunchIDs() throws CoreException {
-		List<String> currentLaunches = new ArrayList<>();
-		for (ILaunch launch : DebugPlugin.getDefault().getLaunchManager().getLaunches()) {
-			String launchID = launch.getLaunchConfiguration()
-					.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "");
-			if (!launchID.isEmpty()) {
-				currentLaunches.add(launchID);
-			}
-		}
-		return currentLaunches;
-	}
+        if (debugDescriptor != null) {
+            openDebugEditor(session, debugDescriptor.getRepresentation(), monitor);
+        } else {
+            // Creating a whole new diagram, for this we need get temporary
+            // write access
+            URI resourceUri = diagramTarget.eResource().getURI();
+            PooslPermissionAuthority authority = getPermissionAuthority(session);
+            if (authority != null) {
+                authority.creatingRepresentation(resourceUri);
+            } else {
+                LOGGER.log(Level.SEVERE, "Could not get permission authority for communication diagram " + instanceLabel);
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        MessageDialog.openError(Display.getDefault().getActiveShell(), "Communication Diagram", "Can not get permission to lock communication diagram.");
+                    }
+                });
+            }
+            try {
+                debugDescriptor = createNewRepresentation(diagramTarget, session, launchID, instanceLabel, monitor);
+                if (debugDescriptor != null) {
+                    openDebugEditor(session, debugDescriptor.getRepresentation(), monitor);
+                } else {
+                    LOGGER.log(Level.SEVERE, "Communication diagram was not created");
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Communication diagram could not be created", e);
+            } finally {
+                // resource should always be unlocked
+                if (authority != null) {
+                    authority.createdRepresentation(resourceUri);
+                }
+            }
+        }
+
+        Activator.MESSAGEUPDATER.draw(session, debugDescriptor);
+        session.save(monitor);
+    }
+
+    private static void openDebugEditor(Session session, DRepresentation debugRepresentation, IProgressMonitor monitor) {
+        if (debugRepresentation != null) {
+            GraphicalDebugUpdater.verifyLockedFiles();
+            IEditorPart editor = DialectUIManager.INSTANCE.openEditor(session, debugRepresentation, monitor);
+            if (editor != null) {
+                editor.setFocus();
+            }
+        }
+    }
+
+    /**
+     * Getting a debug diagram by either getting an existing one or by copying a normal diagram
+     * 
+     * @param diagramTarget
+     * @param session
+     * @param launchID
+     * @return the debug diagram
+     */
+    private static DRepresentationDescriptor getDebugRepresentation(EObject diagramTarget, Session session, String launchID, String instance) {
+        DRepresentationDescriptor debugDescriptor = getExistingDebugDescriptor(session, diagramTarget, launchID, instance);
+        if (debugDescriptor == null) {
+            // If already an editing representation exists we can make a copy
+            // from it
+            DRepresentationDescriptor originalDescriptor = getExistingDescriptor(session, diagramTarget);
+            if (originalDescriptor != null) {
+                List<DRepresentationDescriptor> descriptors = new ArrayList<>();
+                descriptors.add(originalDescriptor);
+                try {
+                    final TransactionalEditingDomain transDomain = session.getTransactionalEditingDomain();
+                    CopyRepresentationCommand command = new CopyRepresentationCommand(transDomain, descriptors, session, launchID, instance);
+                    transDomain.getCommandStack().execute(command);
+                    debugDescriptor = command.getCreatedDescriptors().get(0);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Could not create a debug diagram by copying the original.", e);
+                }
+            }
+        }
+        return debugDescriptor;
+    }
+
+    /**
+     * find and remove any communication diagrams that were left over after a sudden shutdown of eclipse
+     * 
+     * @param launchID
+     * @param session
+     */
+    private static void setupDebugSession(String launchID, Session session) {
+        if (!Activator.MESSAGEUPDATER.isSetup(launchID) && session != null) {
+            final Set<DRepresentationDescriptor> descriptors = UpdateHelper.getLaunchRepresentationsFromSession(launchID, session);
+            if (!descriptors.isEmpty()) {
+                PooslDiagramDeleteHelper.closeAndDeleteDiagrams(UpdateHelper.getPooslShell(), session, descriptors);
+            }
+        }
+    }
+
+    public static List<String> getCurrentLaunchIDs() throws CoreException {
+        List<String> currentLaunches = new ArrayList<>();
+        for (ILaunch launch : DebugPlugin.getDefault().getLaunchManager().getLaunches()) {
+            String launchID = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "");
+            if (!launchID.isEmpty()) {
+                currentLaunches.add(launchID);
+            }
+        }
+        return currentLaunches;
+    }
 }

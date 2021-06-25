@@ -5,11 +5,11 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,11 +19,12 @@ import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_statements complex type.
+ * <p>
+ * Java class for t_statements complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_statements">
@@ -55,32 +56,27 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_statements", propOrder = {
-    "sequenceOfStatementsOrParallelStatementsOrSelectStatements"
-})
-@XmlSeeAlso({
-    TStatement.class
-})
+@XmlType(name = "t_statements", propOrder = { "sequenceOfStatementsOrParallelStatementsOrSelectStatements" })
+@XmlSeeAlso({ TStatement.class })
 public class TStatements {
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "skip", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "message_receive", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "parallel_statements", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "expression", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "interrupt", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "select_statements", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "process_method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "guard", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "abort", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "delay", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "message_send", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "if", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "while", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "switch", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "sequence_of_statements", namespace = "uri:poosl", type = JAXBElement.class, required = false)
-    })
+    @XmlElementRefs({ @XmlElementRef(name = "skip", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "message_receive", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "parallel_statements", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "expression", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "interrupt", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "select_statements", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "process_method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "guard", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "abort", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "delay", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "message_send", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "if", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "while", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "switch", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "sequence_of_statements", namespace = "uri:poosl", type = JAXBElement.class, required = false) })
     protected List<JAXBElement<?>> sequenceOfStatementsOrParallelStatementsOrSelectStatements;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
@@ -88,35 +84,29 @@ public class TStatements {
      * Gets the value of the sequenceOfStatementsOrParallelStatementsOrSelectStatements property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sequenceOfStatementsOrParallelStatementsOrSelectStatements property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the sequenceOfStatementsOrParallelStatementsOrSelectStatements property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(newItem);
+     * getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link TEmpty }{@code >}
-     * {@link JAXBElement }{@code <}{@link TMessageReceive }{@code >}
-     * {@link JAXBElement }{@code <}{@link TStatements }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExpression }{@code >}
-     * {@link JAXBElement }{@code <}{@link TInterrupt }{@code >}
-     * {@link JAXBElement }{@code <}{@link TStatements }{@code >}
-     * {@link JAXBElement }{@code <}{@link TProcessMethodCall }{@code >}
-     * {@link JAXBElement }{@code <}{@link TGuard }{@code >}
-     * {@link JAXBElement }{@code <}{@link TAbort }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExpression }{@code >}
-     * {@link JAXBElement }{@code <}{@link TMessageSend }{@code >}
-     * {@link JAXBElement }{@code <}{@link TIfStatement }{@code >}
-     * {@link JAXBElement }{@code <}{@link TWhileStatement }{@code >}
-     * {@link JAXBElement }{@code <}{@link TSwitchStatement }{@code >}
-     * {@link JAXBElement }{@code <}{@link TStatements }{@code >}
+     * Objects of the following type(s) are allowed in the list {@link JAXBElement }{@code <}{@link TEmpty }{@code >}
+     * {@link JAXBElement }{@code <}{@link TMessageReceive }{@code >} {@link JAXBElement }{@code <}{@link TStatements
+     * }{@code >} {@link JAXBElement }{@code <}{@link TExpression }{@code >} {@link JAXBElement
+     * }{@code <}{@link TInterrupt }{@code >} {@link JAXBElement }{@code <}{@link TStatements }{@code >}
+     * {@link JAXBElement }{@code <}{@link TProcessMethodCall }{@code >} {@link JAXBElement }{@code <}{@link TGuard
+     * }{@code >} {@link JAXBElement }{@code <}{@link TAbort }{@code >} {@link JAXBElement }{@code <}{@link TExpression
+     * }{@code >} {@link JAXBElement }{@code <}{@link TMessageSend }{@code >} {@link JAXBElement
+     * }{@code <}{@link TIfStatement }{@code >} {@link JAXBElement }{@code <}{@link TWhileStatement }{@code >}
+     * {@link JAXBElement }{@code <}{@link TSwitchStatement }{@code >} {@link JAXBElement }{@code <}{@link TStatements
+     * }{@code >}
      * 
      * 
      */
@@ -130,10 +120,8 @@ public class TStatements {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -143,9 +131,8 @@ public class TStatements {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

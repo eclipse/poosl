@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.JAXBElement;
@@ -13,60 +12,88 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
-
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the nl.esi.poosl.generatedxmlclasses package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
- * provided in this class.
+ * This object contains factory methods for each Java content interface and Java element interface generated in the
+ * nl.esi.poosl.generatedxmlclasses package.
+ * <p>
+ * An ObjectFactory allows you to programatically construct new instances of the Java representation for XML content.
+ * The Java representation of XML content can consist of schema derived interfaces and classes representing the binding
+ * of schema type definitions, element declarations and model groups. Factory methods for each of these are provided in
+ * this class.
  * 
  */
 @XmlRegistry
 public class ObjectFactory {
 
     private final static QName _PooslSpecification_QNAME = new QName("uri:poosl", "poosl_specification");
+
     private final static QName _TExpressionsSequenceOfExpressions_QNAME = new QName("uri:poosl", "sequence_of_expressions");
+
     private final static QName _TExpressionsWhile_QNAME = new QName("uri:poosl", "while");
+
     private final static QName _TExpressionsSwitch_QNAME = new QName("uri:poosl", "switch");
+
     private final static QName _TExpressionsDataMethodCall_QNAME = new QName("uri:poosl", "data_method_call");
+
     private final static QName _TExpressionsNew_QNAME = new QName("uri:poosl", "new");
+
     private final static QName _TExpressionsConstant_QNAME = new QName("uri:poosl", "constant");
+
     private final static QName _TExpressionsAssignment_QNAME = new QName("uri:poosl", "assignment");
+
     private final static QName _TExpressionsSelf_QNAME = new QName("uri:poosl", "self");
+
     private final static QName _TExpressionsVariable_QNAME = new QName("uri:poosl", "variable");
+
     private final static QName _TExpressionsIf_QNAME = new QName("uri:poosl", "if");
+
     private final static QName _TExpressionsBinaryOperation_QNAME = new QName("uri:poosl", "binary_operation");
+
     private final static QName _TExpressionsUnaryOperation_QNAME = new QName("uri:poosl", "unary_operation");
+
     private final static QName _TExpressionsCurrentTime_QNAME = new QName("uri:poosl", "current_time");
+
     private final static QName _TExpressionsReturn_QNAME = new QName("uri:poosl", "return");
+
     private final static QName _TExpressionsNil_QNAME = new QName("uri:poosl", "nil");
+
     private final static QName _TStatementsProcessMethodCall_QNAME = new QName("uri:poosl", "process_method_call");
+
     private final static QName _TStatementsSkip_QNAME = new QName("uri:poosl", "skip");
+
     private final static QName _TStatementsExpression_QNAME = new QName("uri:poosl", "expression");
+
     private final static QName _TStatementsSelectStatements_QNAME = new QName("uri:poosl", "select_statements");
+
     private final static QName _TStatementsGuard_QNAME = new QName("uri:poosl", "guard");
+
     private final static QName _TStatementsInterrupt_QNAME = new QName("uri:poosl", "interrupt");
+
     private final static QName _TStatementsSequenceOfStatements_QNAME = new QName("uri:poosl", "sequence_of_statements");
+
     private final static QName _TStatementsParallelStatements_QNAME = new QName("uri:poosl", "parallel_statements");
+
     private final static QName _TStatementsDelay_QNAME = new QName("uri:poosl", "delay");
+
     private final static QName _TStatementsAbort_QNAME = new QName("uri:poosl", "abort");
+
     private final static QName _TStatementsMessageSend_QNAME = new QName("uri:poosl", "message_send");
+
     private final static QName _TStatementsMessageReceive_QNAME = new QName("uri:poosl", "message_receive");
+
     private final static QName _TExecutiontreeMethodCall_QNAME = new QName("uri:poosl", "method_call");
+
     private final static QName _TExecutiontreeSelect_QNAME = new QName("uri:poosl", "select");
+
     private final static QName _TExecutiontreeSequential_QNAME = new QName("uri:poosl", "sequential");
+
     private final static QName _TExecutiontreeStatement_QNAME = new QName("uri:poosl", "statement");
+
     private final static QName _TExecutiontreeParallel_QNAME = new QName("uri:poosl", "parallel");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: nl.esi.poosl.generatedxmlclasses
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package:
+     * nl.esi.poosl.generatedxmlclasses
      * 
      */
     public ObjectFactory() {

@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_guard complex type.
+ * <p>
+ * Java class for t_guard complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_guard">
@@ -37,26 +37,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_guard", propOrder = {
-    "expression",
-    "statement"
-})
+@XmlType(name = "t_guard", propOrder = { "expression", "statement" })
 public class TGuard {
 
     @XmlElement(required = true)
     protected TExpression expression;
+
     @XmlElement(required = true)
     protected TStatement statement;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the expression property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getExpression() {
         return expression;
@@ -66,9 +63,8 @@ public class TGuard {
      * Sets the value of the expression property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setExpression(TExpression value) {
         this.expression = value;
@@ -77,10 +73,8 @@ public class TGuard {
     /**
      * Gets the value of the statement property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStatement }
-     *     
+     * @return possible object is {@link TStatement }
+     * 
      */
     public TStatement getStatement() {
         return statement;
@@ -90,9 +84,8 @@ public class TGuard {
      * Sets the value of the statement property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStatement }
-     *     
+     *            allowed object is {@link TStatement }
+     * 
      */
     public void setStatement(TStatement value) {
         this.statement = value;
@@ -101,10 +94,8 @@ public class TGuard {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -114,9 +105,8 @@ public class TGuard {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

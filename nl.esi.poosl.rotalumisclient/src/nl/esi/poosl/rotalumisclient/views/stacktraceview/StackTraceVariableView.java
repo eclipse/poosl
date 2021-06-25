@@ -17,65 +17,63 @@ import nl.esi.poosl.rotalumisclient.PooslConstants;
 @SuppressWarnings("restriction")
 public class StackTraceVariableView extends VariablesView {
 
-	@Override
-	public void createPartControl(Composite parent) {
-		super.createPartControl(parent);
+    @Override
+    public void createPartControl(Composite parent) {
+        super.createPartControl(parent);
 
-		DebugPlugin plugin = DebugPlugin.getDefault();
-		if (plugin != null) {
-			plugin.addDebugEventListener(debugEventSetListener);
-		}
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        if (plugin != null) {
+            plugin.addDebugEventListener(debugEventSetListener);
+        }
 
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		if (workbench != null) {
-			workbench.getHelpSystem().setHelp(parent, "nl.esi.poosl.help.help_stacktrace_variables");
-		}
-	}
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        if (workbench != null) {
+            workbench.getHelpSystem().setHelp(parent, "nl.esi.poosl.help.help_stacktrace_variables");
+        }
+    }
 
-	IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
-		@Override
-		public void handleDebugEvents(DebugEvent[] events) {
-			final Viewer viewer = getViewer();
-			if (viewer != null) {
-				for (DebugEvent debugEvent : events) {
-					if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC
-							&& debugEvent.getDetail() == PooslConstants.STACKFRAME_INSPECT) {
-						final Object data = debugEvent.getData();
-						Display.getDefault().asyncExec(new Runnable() {
-							public void run() {
-								viewer.setInput(data);
-							}
-						});
-					}
-				}
-			}
-		}
-	};
+    IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
+        @Override
+        public void handleDebugEvents(DebugEvent[] events) {
+            final Viewer viewer = getViewer();
+            if (viewer != null) {
+                for (DebugEvent debugEvent : events) {
+                    if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.STACKFRAME_INSPECT) {
+                        final Object data = debugEvent.getData();
+                        Display.getDefault().asyncExec(new Runnable() {
+                            public void run() {
+                                viewer.setInput(data);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    };
 
-	@Override
-	public Viewer createViewer(Composite parent) {
-		Viewer viewer = super.createViewer(parent);
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				// On selection change send out an model specific debug event
-				// for a inspect request for the selected element.
-				DebugPlugin plugin = DebugPlugin.getDefault();
-				if (plugin != null) {
-					plugin.fireDebugEventSet(new DebugEvent[] { new DebugEvent(event.getSelection(),
-							DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_REQUEST) });
-				}
-			}
-		});
-		return viewer;
-	}
+    @Override
+    public Viewer createViewer(Composite parent) {
+        Viewer viewer = super.createViewer(parent);
+        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                // On selection change send out an model specific debug event
+                // for a inspect request for the selected element.
+                DebugPlugin plugin = DebugPlugin.getDefault();
+                if (plugin != null) {
+                    plugin.fireDebugEventSet(new DebugEvent[] { new DebugEvent(event.getSelection(), DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_REQUEST) });
+                }
+            }
+        });
+        return viewer;
+    }
 
-	@Override
-	public void dispose() {
-		DebugPlugin plugin = DebugPlugin.getDefault();
-		if (plugin != null) {
-			plugin.removeDebugEventListener(debugEventSetListener);
-		}
-		super.dispose();
-	}
+    @Override
+    public void dispose() {
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        if (plugin != null) {
+            plugin.removeDebugEventListener(debugEventSetListener);
+        }
+        super.dispose();
+    }
 }

@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_compile_request complex type.
+ * <p>
+ * Java class for t_compile_request complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_compile_request">
@@ -45,47 +45,44 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_compile_request", propOrder = {
-    "basicClasses",
-    "pooslSpecification",
-    "clusterClass",
-    "processClass",
-    "dataClass",
-    "initialMethodCall",
-    "processMethod",
-    "dataMethod",
-    "expression",
-    "includes"
-})
+@XmlType(name = "t_compile_request",
+        propOrder = { "basicClasses", "pooslSpecification", "clusterClass", "processClass", "dataClass", "initialMethodCall", "processMethod", "dataMethod", "expression", "includes" })
 public class TCompileRequest {
 
     @XmlElement(name = "basic_classes")
     protected String basicClasses;
+
     @XmlElement(name = "poosl_specification")
     protected String pooslSpecification;
+
     @XmlElement(name = "cluster_class")
     protected String clusterClass;
+
     @XmlElement(name = "process_class")
     protected String processClass;
+
     @XmlElement(name = "data_class")
     protected String dataClass;
+
     @XmlElement(name = "initial_method_call")
     protected String initialMethodCall;
+
     @XmlElement(name = "process_method")
     protected String processMethod;
+
     @XmlElement(name = "data_method")
     protected String dataMethod;
+
     protected String expression;
+
     @XmlElement(required = true)
     protected TInclude includes;
 
     /**
      * Gets the value of the basicClasses property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getBasicClasses() {
         return basicClasses;
@@ -95,9 +92,8 @@ public class TCompileRequest {
      * Sets the value of the basicClasses property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setBasicClasses(String value) {
         this.basicClasses = value;
@@ -106,10 +102,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the pooslSpecification property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getPooslSpecification() {
         return pooslSpecification;
@@ -119,9 +113,8 @@ public class TCompileRequest {
      * Sets the value of the pooslSpecification property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setPooslSpecification(String value) {
         this.pooslSpecification = value;
@@ -130,10 +123,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the clusterClass property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getClusterClass() {
         return clusterClass;
@@ -143,9 +134,8 @@ public class TCompileRequest {
      * Sets the value of the clusterClass property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setClusterClass(String value) {
         this.clusterClass = value;
@@ -154,10 +144,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the processClass property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getProcessClass() {
         return processClass;
@@ -167,9 +155,8 @@ public class TCompileRequest {
      * Sets the value of the processClass property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setProcessClass(String value) {
         this.processClass = value;
@@ -178,10 +165,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the dataClass property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getDataClass() {
         return dataClass;
@@ -191,9 +176,8 @@ public class TCompileRequest {
      * Sets the value of the dataClass property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setDataClass(String value) {
         this.dataClass = value;
@@ -202,10 +186,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the initialMethodCall property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getInitialMethodCall() {
         return initialMethodCall;
@@ -215,9 +197,8 @@ public class TCompileRequest {
      * Sets the value of the initialMethodCall property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setInitialMethodCall(String value) {
         this.initialMethodCall = value;
@@ -226,10 +207,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the processMethod property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getProcessMethod() {
         return processMethod;
@@ -239,9 +218,8 @@ public class TCompileRequest {
      * Sets the value of the processMethod property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setProcessMethod(String value) {
         this.processMethod = value;
@@ -250,10 +228,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the dataMethod property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getDataMethod() {
         return dataMethod;
@@ -263,9 +239,8 @@ public class TCompileRequest {
      * Sets the value of the dataMethod property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setDataMethod(String value) {
         this.dataMethod = value;
@@ -274,10 +249,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the expression property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getExpression() {
         return expression;
@@ -287,9 +260,8 @@ public class TCompileRequest {
      * Sets the value of the expression property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -298,10 +270,8 @@ public class TCompileRequest {
     /**
      * Gets the value of the includes property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInclude }
-     *     
+     * @return possible object is {@link TInclude }
+     * 
      */
     public TInclude getIncludes() {
         return includes;
@@ -311,9 +281,8 @@ public class TCompileRequest {
      * Sets the value of the includes property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInclude }
-     *     
+     *            allowed object is {@link TInclude }
+     * 
      */
     public void setIncludes(TInclude value) {
         this.includes = value;

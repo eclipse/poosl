@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_executiontree_method_call complex type.
+ * <p>
+ * Java class for t_executiontree_method_call complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_executiontree_method_call">
@@ -34,22 +34,19 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "t_executiontree_method_call")
-public class TExecutiontreeMethodCall
-    extends TExecutiontreeBase
-{
+public class TExecutiontreeMethodCall extends TExecutiontreeBase {
 
     @XmlAttribute(name = "name", required = true)
     protected String name;
+
     @XmlAttribute(name = "state")
     protected String state;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -59,9 +56,8 @@ public class TExecutiontreeMethodCall
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -70,10 +66,8 @@ public class TExecutiontreeMethodCall
     /**
      * Gets the value of the state property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getState() {
         return state;
@@ -83,9 +77,8 @@ public class TExecutiontreeMethodCall
      * Sets the value of the state property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setState(String value) {
         this.state = value;

@@ -5,12 +5,12 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -21,11 +21,12 @@ import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_executiontree complex type.
+ * <p>
+ * Java class for t_executiontree complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_executiontree">
@@ -75,49 +76,47 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_executiontree", propOrder = {
-    "sequentialOrMethodCallOrParallel",
-    "executionTree"
-})
+@XmlType(name = "t_executiontree", propOrder = { "sequentialOrMethodCallOrParallel", "executionTree" })
 public class TExecutiontree {
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "delay", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "abort", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "parallel", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "expression", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "process_method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "select", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "nil", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "binary_operation", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "if", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "constant", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "message_send", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "guard", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "current_time", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "sequence_of_expressions", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "assignment", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "switch", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "variable", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "statement", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "sequential", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "unary_operation", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "new", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "self", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "return", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "interrupt", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "message_receive", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "while", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "data_method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "skip", namespace = "uri:poosl", type = JAXBElement.class, required = false)
-    })
+    @XmlElementRefs({ @XmlElementRef(name = "delay", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "abort", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "parallel", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "expression", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "process_method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "select", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "nil", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "binary_operation", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "if", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "constant", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "message_send", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "guard", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "current_time", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "sequence_of_expressions", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "assignment", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "switch", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "variable", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "statement", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "sequential", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "unary_operation", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "new", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "self", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "return", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "interrupt", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "message_receive", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "while", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "data_method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "skip", namespace = "uri:poosl", type = JAXBElement.class, required = false) })
     protected List<JAXBElement<? extends TExecutiontreeBase>> sequentialOrMethodCallOrParallel;
+
     @XmlElement(name = "execution_tree")
     protected List<TExecutiontree> executionTree;
+
     @XmlAttribute(name = "sourcecode_index_start", required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger sourcecodeIndexStart;
+
     @XmlAttribute(name = "sourcecode_index_end", required = true)
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger sourcecodeIndexEnd;
@@ -126,48 +125,38 @@ public class TExecutiontree {
      * Gets the value of the sequentialOrMethodCallOrParallel property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sequentialOrMethodCallOrParallel property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the sequentialOrMethodCallOrParallel property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSequentialOrMethodCallOrParallel().add(newItem);
+     * getSequentialOrMethodCallOrParallel().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeStatements }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeMethodCall }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeExpression }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeStatements }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeMessageSend }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeStatements }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeMessageReceive }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
-     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
+     * Objects of the following type(s) are allowed in the list {@link JAXBElement }{@code <}{@link TExecutiontreeBase
+     * }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeStatements }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeMethodCall
+     * }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeExpression }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeStatements
+     * }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
+     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeMessageSend }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase
+     * }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
+     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
+     * {@link JAXBElement }{@code <}{@link TExecutiontreeStatements }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
+     * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
+     * {@link JAXBElement }{@code <}{@link TExecutiontreeMessageReceive }{@code >} {@link JAXBElement
+     * }{@code <}{@link TExecutiontreeBase }{@code >} {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
      * {@link JAXBElement }{@code <}{@link TExecutiontreeBase }{@code >}
      * 
      * 
@@ -183,21 +172,20 @@ public class TExecutiontree {
      * Gets the value of the executionTree property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the executionTree property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the executionTree property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getExecutionTree().add(newItem);
+     * getExecutionTree().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TExecutiontree }
+     * Objects of the following type(s) are allowed in the list {@link TExecutiontree }
      * 
      * 
      */
@@ -211,10 +199,8 @@ public class TExecutiontree {
     /**
      * Gets the value of the sourcecodeIndexStart property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getSourcecodeIndexStart() {
         return sourcecodeIndexStart;
@@ -224,9 +210,8 @@ public class TExecutiontree {
      * Sets the value of the sourcecodeIndexStart property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setSourcecodeIndexStart(BigInteger value) {
         this.sourcecodeIndexStart = value;
@@ -235,10 +220,8 @@ public class TExecutiontree {
     /**
      * Gets the value of the sourcecodeIndexEnd property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getSourcecodeIndexEnd() {
         return sourcecodeIndexEnd;
@@ -248,9 +231,8 @@ public class TExecutiontree {
      * Sets the value of the sourcecodeIndexEnd property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setSourcecodeIndexEnd(BigInteger value) {
         this.sourcecodeIndexEnd = value;

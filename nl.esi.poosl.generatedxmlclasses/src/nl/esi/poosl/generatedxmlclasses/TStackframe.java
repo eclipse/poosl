@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_stackframe complex type.
+ * <p>
+ * Java class for t_stackframe complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_stackframe">
@@ -40,36 +41,32 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_stackframe", propOrder = {
-    "dataclassHandle",
-    "dataclassName",
-    "methodName",
-    "localVariables",
-    "downframe",
-    "upframe"
-})
+@XmlType(name = "t_stackframe", propOrder = { "dataclassHandle", "dataclassName", "methodName", "localVariables", "downframe", "upframe" })
 public class TStackframe {
 
     @XmlElement(name = "dataclass_handle", required = true)
     protected BigInteger dataclassHandle;
+
     @XmlElement(name = "dataclass_name", required = true)
     protected String dataclassName;
+
     @XmlElement(name = "method_name", required = true)
     protected String methodName;
+
     @XmlElement(name = "local_variables", required = true)
     protected TVarList localVariables;
+
     @XmlElement(required = true)
     protected BigInteger downframe;
+
     @XmlElement(required = true)
     protected BigInteger upframe;
 
     /**
      * Gets the value of the dataclassHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getDataclassHandle() {
         return dataclassHandle;
@@ -79,9 +76,8 @@ public class TStackframe {
      * Sets the value of the dataclassHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setDataclassHandle(BigInteger value) {
         this.dataclassHandle = value;
@@ -90,10 +86,8 @@ public class TStackframe {
     /**
      * Gets the value of the dataclassName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getDataclassName() {
         return dataclassName;
@@ -103,9 +97,8 @@ public class TStackframe {
      * Sets the value of the dataclassName property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setDataclassName(String value) {
         this.dataclassName = value;
@@ -114,10 +107,8 @@ public class TStackframe {
     /**
      * Gets the value of the methodName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMethodName() {
         return methodName;
@@ -127,9 +118,8 @@ public class TStackframe {
      * Sets the value of the methodName property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMethodName(String value) {
         this.methodName = value;
@@ -138,10 +128,8 @@ public class TStackframe {
     /**
      * Gets the value of the localVariables property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TVarList }
-     *     
+     * @return possible object is {@link TVarList }
+     * 
      */
     public TVarList getLocalVariables() {
         return localVariables;
@@ -151,9 +139,8 @@ public class TStackframe {
      * Sets the value of the localVariables property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TVarList }
-     *     
+     *            allowed object is {@link TVarList }
+     * 
      */
     public void setLocalVariables(TVarList value) {
         this.localVariables = value;
@@ -162,10 +149,8 @@ public class TStackframe {
     /**
      * Gets the value of the downframe property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getDownframe() {
         return downframe;
@@ -175,9 +160,8 @@ public class TStackframe {
      * Sets the value of the downframe property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setDownframe(BigInteger value) {
         this.downframe = value;
@@ -186,10 +170,8 @@ public class TStackframe {
     /**
      * Gets the value of the upframe property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getUpframe() {
         return upframe;
@@ -199,9 +181,8 @@ public class TStackframe {
      * Sets the value of the upframe property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setUpframe(BigInteger value) {
         this.upframe = value;

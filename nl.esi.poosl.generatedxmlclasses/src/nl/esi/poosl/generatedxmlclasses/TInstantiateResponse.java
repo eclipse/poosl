@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_instantiate_response complex type.
+ * <p>
+ * Java class for t_instantiate_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_instantiate_response">
@@ -35,9 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_instantiate_response", propOrder = {
-    "result"
-})
+@XmlType(name = "t_instantiate_response", propOrder = { "result" })
 public class TInstantiateResponse {
 
     @XmlElement(required = true)
@@ -47,10 +45,8 @@ public class TInstantiateResponse {
     /**
      * Gets the value of the result property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInstantiateResult }
-     *     
+     * @return possible object is {@link TInstantiateResult }
+     * 
      */
     public TInstantiateResult getResult() {
         return result;
@@ -60,9 +56,8 @@ public class TInstantiateResponse {
      * Sets the value of the result property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInstantiateResult }
-     *     
+     *            allowed object is {@link TInstantiateResult }
+     * 
      */
     public void setResult(TInstantiateResult value) {
         this.result = value;

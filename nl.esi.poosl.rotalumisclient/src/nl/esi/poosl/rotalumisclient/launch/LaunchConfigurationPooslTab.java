@@ -38,405 +38,415 @@ import org.osgi.framework.Bundle;
 import nl.esi.poosl.rotalumisclient.PooslConstants;
 
 public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab {
-	// UI text
-	private static final String GROUP_MODEL = "Model:";
-	private static final String GROUP_EXTERN = "External port configuration:";
-	private static final String GROUP_SIM = "Simulator settings:";
-	private static final String BTN_RANDOM = "Random";
-	private static final String BTN_BROWSE = "Browse";
-	private static final String LABEL_SEED = "Seed for resolving non-determinism: ";
-	private static final String LABEL_PORT = "Server port: ";
-	private static final String LABEL_QUIET = "Quiet mode:";
-	private static final String LABEL_PORTINFO = "The server port is only used for connecting with the simulator in debug mode.\n"
-			+ "To run debug sessions concurrently, use a different port for each run configuration.\nFor more information check the user manual.";
+    // UI text
+    private static final String GROUP_MODEL = "Model:";
 
-	// File Dialog
-	private static final String FILE_DIALOG_TITLE = "Select poosl model";
-	private static final String EXTERN_CONFIG_DIALOG_TITLE = "Select the file with the extern port configuration:";
-	private static final String FILE_NAME_FILTER = "*.";
+    private static final String GROUP_EXTERN = "External port configuration:";
 
-	// Validation
-	private static final String VALIDATION_FILE_EMPTY = "Model path cannot be empty";
-	private static final String VALIDATION_FILE_POOSL = "The model is not a .poosl file";
-	private static final String VALIDATION_FILE_IS_DIR = "The path is a directory and not a .poosl file";
-	private static final String VALIDATION_FILE_NOT_EXIST = "The selected model does not exist";
-	private static final String VALIDATION_EXTERNAL_FILE_NOT_EXIST = "The selected external port configuration file does not exist";
-	private static final String VALIDATION_EXTERNAL_FILE_IS_DIR = "The selected external port configuration file is a directory and not a ."
-			+ PooslConstants.EXTERN_CONFIG_EXTENSION + " file";
-	private static final String VALIDATION_EXTERNAL_FILE_EXTENSION = "The selected external port configuration file is not a ."
-			+ PooslConstants.EXTERN_CONFIG_EXTENSION + " file";
-	private static final String VALIDATION_SEED_EMPTY = "Seed for resolving non-determinism cannot be empty";
-	private static final String VALIDATION_SEED_NOT_INT = "Seed for resolving non-determinism is not a valid integer";
-	private static final String VALIDATION_PORT_EMPTY = "Simulator port cannot be empty";
-	private static final String VALIDATION_PORT_NOT_INT = "Simulator port is not a valid integer";
-	private static final String VALIDATION_PORT_INVALID = "Simulator port cannot be < 1";
+    private static final String GROUP_SIM = "Simulator settings:";
 
-	private static final Logger LOGGER = Logger.getLogger(LaunchConfigurationPooslTab.class.getName());
+    private static final String BTN_RANDOM = "Random";
 
-	// UI components
-	private Composite control;
-	private Text modelPathTextControl;
-	private Text externPathTextControl;
-	private Text portTextControl;
-	private Text seedTextControl;
-	private Text stackSizeTextControl;
-	private Button randomSeedButton;
-	private Button quietButton;
+    private static final String BTN_BROWSE = "Browse";
 
-	// Relative model info
-	private String projectName = "";
-	private String relativePath = "";
+    private static final String LABEL_SEED = "Seed for resolving non-determinism: ";
 
-	private final ModifyListener fBasicModifyListener = new ModifyListener() {
-		@Override
-		public void modifyText(ModifyEvent evt) {
-			setRelativeElements();
-			scheduleUpdateJob();
-		}
-	};
+    private static final String LABEL_PORT = "Server port: ";
 
-	private final SelectionListener modelPathListener = new SelectionListener() {
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			FileDialog fDialog = new FileDialog(getShell());
-			fDialog.setFilterExtensions(new String[] { FILE_NAME_FILTER + PooslConstants.POOSL_EXTENSION });
-			fDialog.setFilterPath(getFileSelectPath(modelPathTextControl));
-			fDialog.setText(FILE_DIALOG_TITLE);
-			String filePath = fDialog.open();
-			if (filePath != null) {
-				modelPathTextControl.setText(filePath);
-			}
-		}
+    private static final String LABEL_QUIET = "Quiet mode:";
 
-		@Override
-		public void widgetDefaultSelected(SelectionEvent e) {
-			widgetSelected(e);
-		}
-	};
+    private static final String LABEL_PORTINFO = "The server port is only used for connecting with the simulator in debug mode.\n"
+            + "To run debug sessions concurrently, use a different port for each run configuration.\nFor more information check the user manual.";
 
-	private final SelectionListener externPathListener = new SelectionListener() {
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			FileDialog fDialog = new FileDialog(getShell());
-			fDialog.setFilterExtensions(new String[] { FILE_NAME_FILTER + PooslConstants.EXTERN_CONFIG_EXTENSION });
-			fDialog.setFilterPath(getFileSelectPath(externPathTextControl));
-			fDialog.setText(EXTERN_CONFIG_DIALOG_TITLE);
-			String filePath = fDialog.open();
-			if (filePath != null) {
-				externPathTextControl.setText(filePath);
-			}
-		}
+    // File Dialog
+    private static final String FILE_DIALOG_TITLE = "Select poosl model";
 
-		@Override
-		public void widgetDefaultSelected(SelectionEvent e) {
-			widgetSelected(e);
-		}
-	};
+    private static final String EXTERN_CONFIG_DIALOG_TITLE = "Select the file with the extern port configuration:";
 
-	private String getFileSelectPath(Text textControl) {
-		String modelPath = textControl.getText();
-		if (modelPath.isEmpty()) {
-			return ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
-		} else {
-			return modelPath;
-		}
-	}
+    private static final String FILE_NAME_FILTER = "*.";
 
-	@Override
-	public void createControl(Composite parent) {
-		control = new Composite(parent, SWT.NONE);
+    // Validation
+    private static final String VALIDATION_FILE_EMPTY = "Model path cannot be empty";
 
-		GridLayout controlGrid = new GridLayout();
-		controlGrid.numColumns = 1;
-		control.setLayout(controlGrid);
+    private static final String VALIDATION_FILE_POOSL = "The model is not a .poosl file";
 
-		GridLayout grid = new GridLayout();
-		grid.numColumns = 3;
-		grid.makeColumnsEqualWidth = false;
-		GridData defaultGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    private static final String VALIDATION_FILE_IS_DIR = "The path is a directory and not a .poosl file";
 
-		Group modelGroup = new Group(control, SWT.SHADOW_OUT);
-		modelGroup.setText(GROUP_MODEL);
-		modelGroup.setLayout(grid);
-		modelGroup.setLayoutData(defaultGridData);
+    private static final String VALIDATION_FILE_NOT_EXIST = "The selected model does not exist";
 
-		modelPathTextControl = new Text(modelGroup, SWT.BORDER);
-		modelPathTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		modelPathTextControl.setText("");
-		modelPathTextControl.addModifyListener(fBasicModifyListener);
+    private static final String VALIDATION_EXTERNAL_FILE_NOT_EXIST = "The selected external port configuration file does not exist";
 
-		Button modelBrowseButton = new Button(modelGroup, SWT.PUSH);
-		modelBrowseButton.setText(BTN_BROWSE);
-		modelBrowseButton.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
-		modelBrowseButton.addSelectionListener(modelPathListener);
+    private static final String VALIDATION_EXTERNAL_FILE_IS_DIR = "The selected external port configuration file is a directory and not a ." + PooslConstants.EXTERN_CONFIG_EXTENSION + " file";
 
-		Group externGroup = new Group(control, SWT.SHADOW_OUT);
-		externGroup.setText(GROUP_EXTERN);
-		externGroup.setLayout(grid);
-		externGroup.setLayoutData(defaultGridData);
+    private static final String VALIDATION_EXTERNAL_FILE_EXTENSION = "The selected external port configuration file is not a ." + PooslConstants.EXTERN_CONFIG_EXTENSION + " file";
 
-		externPathTextControl = new Text(externGroup, SWT.BORDER);
-		externPathTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		externPathTextControl.setText("");
-		externPathTextControl.addModifyListener(fBasicModifyListener);
+    private static final String VALIDATION_SEED_EMPTY = "Seed for resolving non-determinism cannot be empty";
 
-		Button externBrowseButton = new Button(externGroup, SWT.PUSH);
-		externBrowseButton.setText(BTN_BROWSE);
-		externBrowseButton.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
-		externBrowseButton.addSelectionListener(externPathListener);
+    private static final String VALIDATION_SEED_NOT_INT = "Seed for resolving non-determinism is not a valid integer";
 
-		Group serverGroup = new Group(control, SWT.SHADOW_OUT);
-		serverGroup.setText(GROUP_SIM);
-		serverGroup.setLayout(grid);
-		serverGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    private static final String VALIDATION_PORT_EMPTY = "Simulator port cannot be empty";
 
-		Label seedLabel = new Label(serverGroup, SWT.NONE);
-		seedLabel.setText(LABEL_SEED);
+    private static final String VALIDATION_PORT_NOT_INT = "Simulator port is not a valid integer";
 
-		seedTextControl = new Text(serverGroup, SWT.BORDER);
-		seedTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		seedTextControl.setText("");
-		seedTextControl.addModifyListener(fBasicModifyListener);
+    private static final String VALIDATION_PORT_INVALID = "Simulator port cannot be < 1";
 
-		randomSeedButton = new Button(serverGroup, SWT.CHECK);
-		randomSeedButton.setText(BTN_RANDOM);
-		randomSeedButton.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				scheduleUpdateJob();
-				boolean selection = ((Button) e.getSource()).getSelection();
-				seedTextControl.setEnabled(!selection);
-			}
+    private static final Logger LOGGER = Logger.getLogger(LaunchConfigurationPooslTab.class.getName());
 
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-		});
+    // UI components
+    private Composite control;
 
-		Label stackSizeLabel = new Label(serverGroup, SWT.NONE);
-		stackSizeLabel.setText("Maximum stack size for data methods in bytes:");
+    private Text modelPathTextControl;
 
-		stackSizeTextControl = new Text(serverGroup, SWT.BORDER);
-		stackSizeTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		stackSizeTextControl.setText("");
+    private Text externPathTextControl;
 
-		new Label(serverGroup, SWT.NONE);
+    private Text portTextControl;
 
-		Label portLabel = new Label(serverGroup, SWT.NONE);
-		portLabel.setText(LABEL_PORT);
+    private Text seedTextControl;
 
-		portTextControl = new Text(serverGroup, SWT.BORDER);
-		portTextControl.setLayoutData(new GridData(SWT.FILL, SWT.WRAP, true, false));
-		portTextControl.addModifyListener(fBasicModifyListener);
-		portTextControl.setText("");
+    private Text stackSizeTextControl;
 
-		new Label(serverGroup, SWT.NONE);
+    private Button randomSeedButton;
 
-		Label quietLabel = new Label(serverGroup, SWT.NONE);
-		quietLabel.setText(LABEL_QUIET);
+    private Button quietButton;
 
-		quietButton = new Button(serverGroup, SWT.CHECK);
-		quietButton.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				scheduleUpdateJob();
-			}
+    // Relative model info
+    private String projectName = "";
 
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-		});
+    private String relativePath = "";
 
-		Label portInfoLabel = new Label(control, SWT.NONE);
-		portInfoLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BOTTOM, false, true));
-		portInfoLabel.setText(LABEL_PORTINFO);
-	}
+    private final ModifyListener fBasicModifyListener = new ModifyListener() {
+        @Override
+        public void modifyText(ModifyEvent evt) {
+            setRelativeElements();
+            scheduleUpdateJob();
+        }
+    };
 
-	@Override
-	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT,
-				PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED,
-				PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED,
-				PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET,
-				PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE,
-				PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
-	}
+    private final SelectionListener modelPathListener = new SelectionListener() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            FileDialog fDialog = new FileDialog(getShell());
+            fDialog.setFilterExtensions(new String[] { FILE_NAME_FILTER + PooslConstants.POOSL_EXTENSION });
+            fDialog.setFilterPath(getFileSelectPath(modelPathTextControl));
+            fDialog.setText(FILE_DIALOG_TITLE);
+            String filePath = fDialog.open();
+            if (filePath != null) {
+                modelPathTextControl.setText(filePath);
+            }
+        }
 
-	@Override
-	public void initializeFrom(ILaunchConfiguration configuration) {
-		if (configuration != null) {
-			try {
-				String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
-				if (!modelPath.isEmpty()) {
-					modelPathTextControl.setText(modelPath);
-				}
+        @Override
+        public void widgetDefaultSelected(SelectionEvent e) {
+            widgetSelected(e);
+        }
+    };
 
-				String externalConfigPath = configuration
-						.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, "");
-				if (!externalConfigPath.isEmpty()) {
-					externPathTextControl.setText(externalConfigPath);
-				}
-				String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT,
-						PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
-				portTextControl.setText(serverPort);
-				String stackSize = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE,
-						PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
-				stackSizeTextControl.setText(stackSize);
-				String seed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED,
-						PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
-				seedTextControl.setText(seed);
-				boolean boolAttribute = configuration.getAttribute(
-						PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED,
-						PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
-				randomSeedButton.setSelection(boolAttribute);
-				boolean quietAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET,
-						PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
-				quietButton.setSelection(quietAttribute);
-				seedTextControl.setEnabled(!boolAttribute);
-			} catch (CoreException e) {
-				LOGGER.log(Level.WARNING, e.getMessage(), e);
-			}
-		}
-	}
+    private final SelectionListener externPathListener = new SelectionListener() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            FileDialog fDialog = new FileDialog(getShell());
+            fDialog.setFilterExtensions(new String[] { FILE_NAME_FILTER + PooslConstants.EXTERN_CONFIG_EXTENSION });
+            fDialog.setFilterPath(getFileSelectPath(externPathTextControl));
+            fDialog.setText(EXTERN_CONFIG_DIALOG_TITLE);
+            String filePath = fDialog.open();
+            if (filePath != null) {
+                externPathTextControl.setText(filePath);
+            }
+        }
 
-	@Override
-	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, modelPathTextControl.getText());
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH,
-				externPathTextControl.getText());
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, portTextControl.getText());
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE,
-				stackSizeTextControl.getText());
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, seedTextControl.getText());
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED,
-				randomSeedButton.getSelection());
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, quietButton.getSelection());
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, projectName);
-		configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, relativePath);
-	}
+        @Override
+        public void widgetDefaultSelected(SelectionEvent e) {
+            widgetSelected(e);
+        }
+    };
 
-	@Override
-	public boolean isValid(ILaunchConfiguration launchConfig) {
-		setErrorMessage(null);
-		String errorMessage = null;
-		if (!modelPathTextControl.getText().isEmpty()) {
-			File modelFile = new File(modelPathTextControl.getText());
-			if (!modelFile.exists()) {
-				errorMessage = VALIDATION_FILE_NOT_EXIST;
-			} else if (modelFile.isDirectory()) {
-				errorMessage = VALIDATION_FILE_IS_DIR;
-			} else if (!PooslConstants.POOSL_EXTENSION
-					.equals(modelFile.getName().substring(modelFile.getName().lastIndexOf('.') + 1))) {
-				errorMessage = VALIDATION_FILE_POOSL;
-			}
-		} else {
-			errorMessage = VALIDATION_FILE_EMPTY;
-		}
+    private String getFileSelectPath(Text textControl) {
+        String modelPath = textControl.getText();
+        if (modelPath.isEmpty()) {
+            return ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
+        } else {
+            return modelPath;
+        }
+    }
 
-		if (!externPathTextControl.getText().isEmpty()) {
-			File externFile = new File(externPathTextControl.getText());
-			if (!externFile.exists()) {
-				errorMessage = VALIDATION_EXTERNAL_FILE_NOT_EXIST;
-			} else if (externFile.isDirectory()) {
-				errorMessage = VALIDATION_EXTERNAL_FILE_IS_DIR;
-			} else if (!PooslConstants.EXTERN_CONFIG_EXTENSION
-					.equals(externFile.getName().substring(externFile.getName().lastIndexOf('.') + 1))) {
-				errorMessage = VALIDATION_EXTERNAL_FILE_EXTENSION;
-			}
-		}
+    @Override
+    public void createControl(Composite parent) {
+        control = new Composite(parent, SWT.NONE);
 
-		if (!portTextControl.getText().isEmpty()) {
-			if (!isInteger(portTextControl.getText())) {
-				errorMessage = VALIDATION_PORT_INVALID;
-			} else {
-				try {
-					if (Integer.parseInt(portTextControl.getText()) < 1) {
-						errorMessage = VALIDATION_PORT_INVALID;
-					}
-				} catch (NumberFormatException e) {
-					errorMessage = VALIDATION_PORT_NOT_INT;
-				}
-			}
-		} else {
-			errorMessage = VALIDATION_PORT_EMPTY;
-		}
+        GridLayout controlGrid = new GridLayout();
+        controlGrid.numColumns = 1;
+        control.setLayout(controlGrid);
 
-		if (!seedTextControl.getText().isEmpty() && !randomSeedButton.getSelection()) {
-			if (!isInteger(seedTextControl.getText())) {
-				errorMessage = VALIDATION_SEED_NOT_INT;
-			}
-		} else if (!randomSeedButton.getSelection()) {
-			errorMessage = VALIDATION_SEED_EMPTY;
-		}
+        GridLayout grid = new GridLayout();
+        grid.numColumns = 3;
+        grid.makeColumnsEqualWidth = false;
+        GridData defaultGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
 
-		if (errorMessage != null && !errorMessage.isEmpty()) {
-			setErrorMessage(errorMessage);
-			return false;
-		} else {
-			return true;
-		}
-	}
+        Group modelGroup = new Group(control, SWT.SHADOW_OUT);
+        modelGroup.setText(GROUP_MODEL);
+        modelGroup.setLayout(grid);
+        modelGroup.setLayoutData(defaultGridData);
 
-	public static boolean isInteger(String s) {
-		try (Scanner sc = new Scanner(s.trim())) {
-			if (!sc.hasNextInt(10)) {
-				return false;
-			}
-			sc.nextInt(10);
-			return !sc.hasNext();
-		}
-	}
+        modelPathTextControl = new Text(modelGroup, SWT.BORDER);
+        modelPathTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        modelPathTextControl.setText("");
+        modelPathTextControl.addModifyListener(fBasicModifyListener);
 
-	@Override
-	public boolean canSave() {
-		return true;
-	}
+        Button modelBrowseButton = new Button(modelGroup, SWT.PUSH);
+        modelBrowseButton.setText(BTN_BROWSE);
+        modelBrowseButton.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
+        modelBrowseButton.addSelectionListener(modelPathListener);
 
-	@Override
-	public String getName() {
-		return "Simulator";
-	}
+        Group externGroup = new Group(control, SWT.SHADOW_OUT);
+        externGroup.setText(GROUP_EXTERN);
+        externGroup.setLayout(grid);
+        externGroup.setLayoutData(defaultGridData);
 
-	@Override
-	public Control getControl() {
-		return control;
-	}
+        externPathTextControl = new Text(externGroup, SWT.BORDER);
+        externPathTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        externPathTextControl.setText("");
+        externPathTextControl.addModifyListener(fBasicModifyListener);
 
-	@Override
-	public Image getImage() {
-		Bundle bundle = Platform.getBundle(PooslConstants.PLUGIN_ID);
-		Path path = new Path("icons/poosl_simulation.gif");
-		URL fileURL = FileLocator.find(bundle, path, null);
-		InputStream inputStream = null;
-		try {
-			inputStream = fileURL.openStream();
-		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, e.getMessage(), e);
-			return null;
-		}
-		return new Image(Display.getDefault(), inputStream);
-	}
+        Button externBrowseButton = new Button(externGroup, SWT.PUSH);
+        externBrowseButton.setText(BTN_BROWSE);
+        externBrowseButton.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
+        externBrowseButton.addSelectionListener(externPathListener);
 
-	private void setRelativeElements() {
-		String modelLocation = modelPathTextControl.getText();
-		if (!modelLocation.isEmpty()) {
-			for (IProject iProject : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-				String projectLocation = iProject.getLocation().toOSString();
-				if (modelLocation.startsWith(projectLocation)) {
-					projectName = iProject.getName();
-					relativePath = "\\" + projectName + modelLocation.substring(projectLocation.length());
+        Group serverGroup = new Group(control, SWT.SHADOW_OUT);
+        serverGroup.setText(GROUP_SIM);
+        serverGroup.setLayout(grid);
+        serverGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-					return;
-				}
-			}
-		}
-		projectName = "";
-		relativePath = "";
-	}
+        Label seedLabel = new Label(serverGroup, SWT.NONE);
+        seedLabel.setText(LABEL_SEED);
+
+        seedTextControl = new Text(serverGroup, SWT.BORDER);
+        seedTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        seedTextControl.setText("");
+        seedTextControl.addModifyListener(fBasicModifyListener);
+
+        randomSeedButton = new Button(serverGroup, SWT.CHECK);
+        randomSeedButton.setText(BTN_RANDOM);
+        randomSeedButton.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                scheduleUpdateJob();
+                boolean selection = ((Button) e.getSource()).getSelection();
+                seedTextControl.setEnabled(!selection);
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        });
+
+        Label stackSizeLabel = new Label(serverGroup, SWT.NONE);
+        stackSizeLabel.setText("Maximum stack size for data methods in bytes:");
+
+        stackSizeTextControl = new Text(serverGroup, SWT.BORDER);
+        stackSizeTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        stackSizeTextControl.setText("");
+
+        new Label(serverGroup, SWT.NONE);
+
+        Label portLabel = new Label(serverGroup, SWT.NONE);
+        portLabel.setText(LABEL_PORT);
+
+        portTextControl = new Text(serverGroup, SWT.BORDER);
+        portTextControl.setLayoutData(new GridData(SWT.FILL, SWT.WRAP, true, false));
+        portTextControl.addModifyListener(fBasicModifyListener);
+        portTextControl.setText("");
+
+        new Label(serverGroup, SWT.NONE);
+
+        Label quietLabel = new Label(serverGroup, SWT.NONE);
+        quietLabel.setText(LABEL_QUIET);
+
+        quietButton = new Button(serverGroup, SWT.CHECK);
+        quietButton.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                scheduleUpdateJob();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        });
+
+        Label portInfoLabel = new Label(control, SWT.NONE);
+        portInfoLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BOTTOM, false, true));
+        portInfoLabel.setText(LABEL_PORTINFO);
+    }
+
+    @Override
+    public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
+    }
+
+    @Override
+    public void initializeFrom(ILaunchConfiguration configuration) {
+        if (configuration != null) {
+            try {
+                String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
+                if (!modelPath.isEmpty()) {
+                    modelPathTextControl.setText(modelPath);
+                }
+
+                String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, "");
+                if (!externalConfigPath.isEmpty()) {
+                    externPathTextControl.setText(externalConfigPath);
+                }
+                String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+                portTextControl.setText(serverPort);
+                String stackSize = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
+                stackSizeTextControl.setText(stackSize);
+                String seed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
+                seedTextControl.setText(seed);
+                boolean boolAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
+                randomSeedButton.setSelection(boolAttribute);
+                boolean quietAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
+                quietButton.setSelection(quietAttribute);
+                seedTextControl.setEnabled(!boolAttribute);
+            } catch (CoreException e) {
+                LOGGER.log(Level.WARNING, e.getMessage(), e);
+            }
+        }
+    }
+
+    @Override
+    public void performApply(ILaunchConfigurationWorkingCopy configuration) {
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, modelPathTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, externPathTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, portTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, stackSizeTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, seedTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, randomSeedButton.getSelection());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, quietButton.getSelection());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, projectName);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, relativePath);
+    }
+
+    @Override
+    public boolean isValid(ILaunchConfiguration launchConfig) {
+        setErrorMessage(null);
+        String errorMessage = null;
+        if (!modelPathTextControl.getText().isEmpty()) {
+            File modelFile = new File(modelPathTextControl.getText());
+            if (!modelFile.exists()) {
+                errorMessage = VALIDATION_FILE_NOT_EXIST;
+            } else if (modelFile.isDirectory()) {
+                errorMessage = VALIDATION_FILE_IS_DIR;
+            } else if (!PooslConstants.POOSL_EXTENSION.equals(modelFile.getName().substring(modelFile.getName().lastIndexOf('.') + 1))) {
+                errorMessage = VALIDATION_FILE_POOSL;
+            }
+        } else {
+            errorMessage = VALIDATION_FILE_EMPTY;
+        }
+
+        if (!externPathTextControl.getText().isEmpty()) {
+            File externFile = new File(externPathTextControl.getText());
+            if (!externFile.exists()) {
+                errorMessage = VALIDATION_EXTERNAL_FILE_NOT_EXIST;
+            } else if (externFile.isDirectory()) {
+                errorMessage = VALIDATION_EXTERNAL_FILE_IS_DIR;
+            } else if (!PooslConstants.EXTERN_CONFIG_EXTENSION.equals(externFile.getName().substring(externFile.getName().lastIndexOf('.') + 1))) {
+                errorMessage = VALIDATION_EXTERNAL_FILE_EXTENSION;
+            }
+        }
+
+        if (!portTextControl.getText().isEmpty()) {
+            if (!isInteger(portTextControl.getText())) {
+                errorMessage = VALIDATION_PORT_INVALID;
+            } else {
+                try {
+                    if (Integer.parseInt(portTextControl.getText()) < 1) {
+                        errorMessage = VALIDATION_PORT_INVALID;
+                    }
+                } catch (NumberFormatException e) {
+                    errorMessage = VALIDATION_PORT_NOT_INT;
+                }
+            }
+        } else {
+            errorMessage = VALIDATION_PORT_EMPTY;
+        }
+
+        if (!seedTextControl.getText().isEmpty() && !randomSeedButton.getSelection()) {
+            if (!isInteger(seedTextControl.getText())) {
+                errorMessage = VALIDATION_SEED_NOT_INT;
+            }
+        } else if (!randomSeedButton.getSelection()) {
+            errorMessage = VALIDATION_SEED_EMPTY;
+        }
+
+        if (errorMessage != null && !errorMessage.isEmpty()) {
+            setErrorMessage(errorMessage);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static boolean isInteger(String s) {
+        try (Scanner sc = new Scanner(s.trim())) {
+            if (!sc.hasNextInt(10)) {
+                return false;
+            }
+            sc.nextInt(10);
+            return !sc.hasNext();
+        }
+    }
+
+    @Override
+    public boolean canSave() {
+        return true;
+    }
+
+    @Override
+    public String getName() {
+        return "Simulator";
+    }
+
+    @Override
+    public Control getControl() {
+        return control;
+    }
+
+    @Override
+    public Image getImage() {
+        Bundle bundle = Platform.getBundle(PooslConstants.PLUGIN_ID);
+        Path path = new Path("icons/poosl_simulation.gif");
+        URL fileURL = FileLocator.find(bundle, path, null);
+        InputStream inputStream = null;
+        try {
+            inputStream = fileURL.openStream();
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            return null;
+        }
+        return new Image(Display.getDefault(), inputStream);
+    }
+
+    private void setRelativeElements() {
+        String modelLocation = modelPathTextControl.getText();
+        if (!modelLocation.isEmpty()) {
+            for (IProject iProject : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
+                String projectLocation = iProject.getLocation().toOSString();
+                if (modelLocation.startsWith(projectLocation)) {
+                    projectName = iProject.getName();
+                    relativePath = "\\" + projectName + modelLocation.substring(projectLocation.length());
+
+                    return;
+                }
+            }
+        }
+        projectName = "";
+        relativePath = "";
+    }
 }

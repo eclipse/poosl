@@ -21,53 +21,53 @@ import com.google.common.collect.Lists;
 
 public class DotClasspath {
 
-	private class Handler extends DefaultHandler {
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes)
-				throws SAXException {
-			if ("classpathentry".equals(qName)) {
-				String kind = attributes.getValue("kind");
-				String path = attributes.getValue("path");
-				if ("src".equals(kind))
-					sources.add(path);
-				else if ("output".equals(kind))
-					output = path;
-			}
-		}
-	}
+    private class Handler extends DefaultHandler {
+        @Override
+        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            if ("classpathentry".equals(qName)) {
+                String kind = attributes.getValue("kind");
+                String path = attributes.getValue("path");
+                if ("src".equals(kind))
+                    sources.add(path);
+                else if ("output".equals(kind))
+                    output = path;
+            }
+        }
+    }
 
-	private String output;
-	private List<String> sources = Lists.newArrayList();
+    private String output;
 
-	public DotClasspath(File file) {
-		parse(file);
-	}
+    private List<String> sources = Lists.newArrayList();
 
-	public String getOutput() {
-		return output;
-	}
+    public DotClasspath(File file) {
+        parse(file);
+    }
 
-	public List<String> getSources() {
-		return sources;
-	}
+    public String getOutput() {
+        return output;
+    }
 
-	private void parse(File file) {
-		try {
-			SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-			SAXParser parser = parserFactory.newSAXParser();
-			XMLReader reader = parser.getXMLReader();
-			reader.setContentHandler(new Handler());
-			parse(file, reader);
-		} catch (SAXException | ParserConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public List<String> getSources() {
+        return sources;
+    }
 
-	private static void parse(File file, XMLReader reader) throws SAXException {
-		try (InputStream in = new FileInputStream(file)) {
-			reader.parse(new InputSource(in));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private void parse(File file) {
+        try {
+            SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+            SAXParser parser = parserFactory.newSAXParser();
+            XMLReader reader = parser.getXMLReader();
+            reader.setContentHandler(new Handler());
+            parse(file, reader);
+        } catch (SAXException | ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void parse(File file, XMLReader reader) throws SAXException {
+        try (InputStream in = new FileInputStream(file)) {
+            reader.parse(new InputSource(in));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

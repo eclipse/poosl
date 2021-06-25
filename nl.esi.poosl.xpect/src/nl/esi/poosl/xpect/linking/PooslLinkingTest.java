@@ -8,7 +8,6 @@ import org.xpect.xtext.lib.tests.LinkingTest;
 @RunWith(XpectRunner.class)
 @XpectTestFiles(fileExtensions = "xt")
 
-
 public class PooslLinkingTest extends LinkingTest {
 
 }

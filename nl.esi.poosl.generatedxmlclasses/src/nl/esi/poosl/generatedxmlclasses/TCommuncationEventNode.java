@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_communcation_event_node complex type.
+ * <p>
+ * Java class for t_communcation_event_node complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_communcation_event_node">
@@ -37,27 +38,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_communcation_event_node", propOrder = {
-    "processPath",
-    "stmtHandle",
-    "portName"
-})
+@XmlType(name = "t_communcation_event_node", propOrder = { "processPath", "stmtHandle", "portName" })
 public class TCommuncationEventNode {
 
     @XmlElement(name = "process_path", required = true)
     protected String processPath;
+
     @XmlElement(name = "stmt_handle", required = true)
     protected BigInteger stmtHandle;
+
     @XmlElement(name = "port_name", required = true)
     protected String portName;
 
     /**
      * Gets the value of the processPath property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getProcessPath() {
         return processPath;
@@ -67,9 +64,8 @@ public class TCommuncationEventNode {
      * Sets the value of the processPath property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setProcessPath(String value) {
         this.processPath = value;
@@ -78,10 +74,8 @@ public class TCommuncationEventNode {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getStmtHandle() {
         return stmtHandle;
@@ -91,9 +85,8 @@ public class TCommuncationEventNode {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setStmtHandle(BigInteger value) {
         this.stmtHandle = value;
@@ -102,10 +95,8 @@ public class TCommuncationEventNode {
     /**
      * Gets the value of the portName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getPortName() {
         return portName;
@@ -115,9 +106,8 @@ public class TCommuncationEventNode {
      * Sets the value of the portName property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setPortName(String value) {
         this.portName = value;

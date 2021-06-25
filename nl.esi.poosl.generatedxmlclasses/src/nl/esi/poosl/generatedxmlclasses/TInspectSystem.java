@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_system complex type.
+ * <p>
+ * Java class for t_inspect_system complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_system">
@@ -49,18 +50,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_system", propOrder = {
-    "channel",
-    "instance",
-    "port",
-    "executionTree"
-})
+@XmlType(name = "t_inspect_system", propOrder = { "channel", "instance", "port", "executionTree" })
 public class TInspectSystem {
 
     protected List<TInspectSystem.Channel> channel;
+
     @XmlElement(required = true)
     protected List<TInspectInstance> instance;
+
     protected List<TInspectPort> port;
+
     @XmlElement(name = "execution_tree", required = true)
     protected TExecutiontree executionTree;
 
@@ -68,21 +67,20 @@ public class TInspectSystem {
      * Gets the value of the channel property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the channel property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the channel property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getChannel().add(newItem);
+     * getChannel().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TInspectSystem.Channel }
+     * Objects of the following type(s) are allowed in the list {@link TInspectSystem.Channel }
      * 
      * 
      */
@@ -97,21 +95,20 @@ public class TInspectSystem {
      * Gets the value of the instance property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the instance property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the instance property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInstance().add(newItem);
+     * getInstance().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TInspectInstance }
+     * Objects of the following type(s) are allowed in the list {@link TInspectInstance }
      * 
      * 
      */
@@ -126,21 +123,20 @@ public class TInspectSystem {
      * Gets the value of the port property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the port property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the port property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPort().add(newItem);
+     * getPort().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TInspectPort }
+     * Objects of the following type(s) are allowed in the list {@link TInspectPort }
      * 
      * 
      */
@@ -154,10 +150,8 @@ public class TInspectSystem {
     /**
      * Gets the value of the executionTree property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExecutiontree }
-     *     
+     * @return possible object is {@link TExecutiontree }
+     * 
      */
     public TExecutiontree getExecutionTree() {
         return executionTree;
@@ -167,19 +161,19 @@ public class TInspectSystem {
      * Sets the value of the executionTree property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExecutiontree }
-     *     
+     *            allowed object is {@link TExecutiontree }
+     * 
      */
     public void setExecutionTree(TExecutiontree value) {
         this.executionTree = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -200,16 +194,15 @@ public class TInspectSystem {
 
         @XmlAttribute(name = "name", required = true)
         protected String name;
+
         @XmlAttribute(name = "output_port")
         protected String outputPort;
 
         /**
          * Gets the value of the name property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getName() {
             return name;
@@ -219,9 +212,8 @@ public class TInspectSystem {
          * Sets the value of the name property.
          * 
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *            allowed object is {@link String }
+         * 
          */
         public void setName(String value) {
             this.name = value;
@@ -230,10 +222,8 @@ public class TInspectSystem {
         /**
          * Gets the value of the outputPort property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getOutputPort() {
             return outputPort;
@@ -243,9 +233,8 @@ public class TInspectSystem {
          * Sets the value of the outputPort property.
          * 
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *            allowed object is {@link String }
+         * 
          */
         public void setOutputPort(String value) {
             this.outputPort = value;

@@ -17,45 +17,44 @@ import nl.esi.poosl.xtext.importing.ImportingHelper;
 
 public class ConvertHelper {
 
-	private ConvertHelper() {
-		throw new IllegalStateException("Utility class");
-	}
+    private ConvertHelper() {
+        throw new IllegalStateException("Utility class");
+    }
 
-	public static Poosl convertIFileToPoosl(IFile file) {
-		if (file != null) {
-			Resource resource = convertIFileToResource(file);
-			if (resource != null) {
-				return ImportingHelper.toPoosl(resource);
-			}
-		}
-		return null;
-	}
+    public static Poosl convertIFileToPoosl(IFile file) {
+        if (file != null) {
+            Resource resource = convertIFileToResource(file);
+            if (resource != null) {
+                return ImportingHelper.toPoosl(resource);
+            }
+        }
+        return null;
+    }
 
-	public static Resource convertIFileToResource(IFile file) {
-		String fileExtension = file.getFileExtension();
-		if (fileExtension != null && fileExtension.equals(IPreferenceConstants.POOSL_FILE_EXT)) {
-			URI uri = URI.createPlatformResourceURI(file.getFullPath().toString().substring(1), true);
-			ResourceSet resourceSet = new ResourceSetImpl();
-			resourceSet.getPackageRegistry().put(nl.esi.poosl.PooslPackage.eINSTANCE.getNsURI(),
-					nl.esi.poosl.PooslPackage.eINSTANCE);
-			return resourceSet.getResource(uri, true);
-		}
-		return null;
-	}
+    public static Resource convertIFileToResource(IFile file) {
+        String fileExtension = file.getFileExtension();
+        if (fileExtension != null && fileExtension.equals(IPreferenceConstants.POOSL_FILE_EXT)) {
+            URI uri = URI.createPlatformResourceURI(file.getFullPath().toString().substring(1), true);
+            ResourceSet resourceSet = new ResourceSetImpl();
+            resourceSet.getPackageRegistry().put(nl.esi.poosl.PooslPackage.eINSTANCE.getNsURI(), nl.esi.poosl.PooslPackage.eINSTANCE);
+            return resourceSet.getResource(uri, true);
+        }
+        return null;
+    }
 
-	public static Resource convertIPathToResource(IPath path) {
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IFile ifile = workspace.getRoot().getFile(path);
-		return convertIFileToResource(ifile);
-	}
+    public static Resource convertIPathToResource(IPath path) {
+        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        IFile ifile = workspace.getRoot().getFile(path);
+        return convertIFileToResource(ifile);
+    }
 
-	public static IFile convertISelectionToIFile(ISelection selection) {
-		if (selection instanceof IStructuredSelection) {
-			Object firstElement = ((IStructuredSelection) selection).getFirstElement();
-			if (firstElement instanceof IFile) {
-				return (IFile) firstElement;
-			}
-		}
-		return null;
-	}
+    public static IFile convertISelectionToIFile(ISelection selection) {
+        if (selection instanceof IStructuredSelection) {
+            Object firstElement = ((IStructuredSelection) selection).getFirstElement();
+            if (firstElement instanceof IFile) {
+                return (IFile) firstElement;
+            }
+        }
+        return null;
+    }
 }

@@ -14,28 +14,29 @@ import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 import nl.esi.poosl.sirius.debug.DeleteRepresentationCommand;
 
 public class DeleteDiagramRunnable implements IRunnableWithProgress {
-	private static final String DELETE_DIAGRAMS = "Deleting Diagrams";
-	private static final String DELETE_DIAGRAM = "Deleting Diagram";
+    private static final String DELETE_DIAGRAMS = "Deleting Diagrams";
 
-	private final Map<Session, Set<DRepresentationDescriptor>> session2Descriptors;
+    private static final String DELETE_DIAGRAM = "Deleting Diagram";
 
-	public DeleteDiagramRunnable(Map<Session, Set<DRepresentationDescriptor>> session2Descriptors) {
-		this.session2Descriptors = session2Descriptors;
-	}
+    private final Map<Session, Set<DRepresentationDescriptor>> session2Descriptors;
 
-	@Override
-	public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-		try {
-			String taskName = session2Descriptors.size() > 1 ? DELETE_DIAGRAM : DELETE_DIAGRAMS;
-			monitor.beginTask(taskName, session2Descriptors.size());
-			for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors.entrySet()) {
-				Session session = entry.getKey();
-				Set<DRepresentationDescriptor> descriptors = entry.getValue();
-				Command deleteDRepresentationsCmd = new DeleteRepresentationCommand(session, descriptors);
-				session.getTransactionalEditingDomain().getCommandStack().execute(deleteDRepresentationsCmd);
-			}
-		} finally {
-			monitor.done();
-		}
-	}
+    public DeleteDiagramRunnable(Map<Session, Set<DRepresentationDescriptor>> session2Descriptors) {
+        this.session2Descriptors = session2Descriptors;
+    }
+
+    @Override
+    public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+        try {
+            String taskName = session2Descriptors.size() > 1 ? DELETE_DIAGRAM : DELETE_DIAGRAMS;
+            monitor.beginTask(taskName, session2Descriptors.size());
+            for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors.entrySet()) {
+                Session session = entry.getKey();
+                Set<DRepresentationDescriptor> descriptors = entry.getValue();
+                Command deleteDRepresentationsCmd = new DeleteRepresentationCommand(session, descriptors);
+                session.getTransactionalEditingDomain().getCommandStack().execute(deleteDRepresentationsCmd);
+            }
+        } finally {
+            monitor.done();
+        }
+    }
 }

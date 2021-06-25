@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_process complex type.
+ * <p>
+ * Java class for t_inspect_process complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_process">
@@ -35,24 +35,20 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_process", propOrder = {
-    "instanceVariables",
-    "executionTree"
-})
+@XmlType(name = "t_inspect_process", propOrder = { "instanceVariables", "executionTree" })
 public class TInspectProcess {
 
     @XmlElement(name = "instance_variables", required = true)
     protected TVarList instanceVariables;
+
     @XmlElement(name = "execution_tree", required = true)
     protected TExecutiontree executionTree;
 
     /**
      * Gets the value of the instanceVariables property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TVarList }
-     *     
+     * @return possible object is {@link TVarList }
+     * 
      */
     public TVarList getInstanceVariables() {
         return instanceVariables;
@@ -62,9 +58,8 @@ public class TInspectProcess {
      * Sets the value of the instanceVariables property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TVarList }
-     *     
+     *            allowed object is {@link TVarList }
+     * 
      */
     public void setInstanceVariables(TVarList value) {
         this.instanceVariables = value;
@@ -73,10 +68,8 @@ public class TInspectProcess {
     /**
      * Gets the value of the executionTree property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExecutiontree }
-     *     
+     * @return possible object is {@link TExecutiontree }
+     * 
      */
     public TExecutiontree getExecutionTree() {
         return executionTree;
@@ -86,9 +79,8 @@ public class TInspectProcess {
      * Sets the value of the executionTree property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExecutiontree }
-     *     
+     *            allowed object is {@link TExecutiontree }
+     * 
      */
     public void setExecutionTree(TExecutiontree value) {
         this.executionTree = value;

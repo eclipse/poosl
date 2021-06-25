@@ -12,35 +12,36 @@ import nl.esi.poosl.sirius.helpers.ConvertHelper;
 import nl.esi.poosl.sirius.helpers.GraphicalEditorHelper;
 
 public class PooslOpenAction extends Action {
-	private final IWorkbenchPage page;
-	private IStructuredSelection selection;
+    private final IWorkbenchPage page;
 
-	public PooslOpenAction(IWorkbenchPage page) {
-		this.page = page;
-	}
+    private IStructuredSelection selection;
 
-	public void selectionChanged(IStructuredSelection selection) {
-		this.selection = selection;
-	}
+    public PooslOpenAction(IWorkbenchPage page) {
+        this.page = page;
+    }
 
-	@Override
-	public void run() {
-		IFile file = ConvertHelper.convertISelectionToIFile(selection);
-		Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
+    public void selectionChanged(IStructuredSelection selection) {
+        this.selection = selection;
+    }
 
-		OpenFilePreferenceManager prefManager = new OpenFilePreferenceManager(poosl);
-		String pref = prefManager.getEditorPreference();
-		if (pref == null) {
-			// dialog window was canceled, don't do anything
-			return;
-		}
+    @Override
+    public void run() {
+        IFile file = ConvertHelper.convertISelectionToIFile(selection);
+        Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
 
-		if (pref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL)) {
-			OpenFileAction fileAction = new OpenFileAction(page);
-			fileAction.selectionChanged(selection);
-			fileAction.run();
-		} else {
-			GraphicalEditorHelper.openGraphicalEditor(prefManager.getDiagramTarget(), null, file.getProject());
-		}
-	}
+        OpenFilePreferenceManager prefManager = new OpenFilePreferenceManager(poosl);
+        String pref = prefManager.getEditorPreference();
+        if (pref == null) {
+            // dialog window was canceled, don't do anything
+            return;
+        }
+
+        if (pref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL)) {
+            OpenFileAction fileAction = new OpenFileAction(page);
+            fileAction.selectionChanged(selection);
+            fileAction.run();
+        } else {
+            GraphicalEditorHelper.openGraphicalEditor(prefManager.getDiagramTarget(), null, file.getProject());
+        }
+    }
 }

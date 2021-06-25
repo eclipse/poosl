@@ -12,20 +12,15 @@ import nl.esi.poosl.xpect.validation.typecheck.PooslValidationTypeCheckTest;
 import nl.esi.poosl.xpect.validation.unique.PooslValidationUniqueTest;
 import nl.esi.poosl.xpect.validation.unused.PooslValidationUnusedTest;
 
-@SuiteClasses({ 
-		//Disabled scoping and linking test, no longer uses default xtext reference
-/*    *///PooslLinkingTest.class, // 
-	    //PooslScopingTest.class,
-		PooslValidationMiscTest.class, //
-		PooslValidationUnusedTest.class, 
-		PooslValidationUniqueTest.class,
-		PooslValidationTypeCheckTest.class,
-		PooslValidationChannelTest.class,
-		PooslValidationImportingTest.class,
-		PooslValidationSuppressTest.class		
-})
+@SuiteClasses({
+        // Disabled scoping and linking test, no longer uses default xtext reference
+        /*    */// PooslLinkingTest.class, //
+                // PooslScopingTest.class,
+        PooslValidationMiscTest.class, //
+        PooslValidationUnusedTest.class, PooslValidationUniqueTest.class, PooslValidationTypeCheckTest.class, PooslValidationChannelTest.class, PooslValidationImportingTest.class,
+        PooslValidationSuppressTest.class })
 
-@RunWith(Suite.class) 
-public class AllPooslXpectTests { 
+@RunWith(Suite.class)
+public class AllPooslXpectTests {
 
-} 
+}

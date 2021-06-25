@@ -7,29 +7,30 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class JavaSocketClient extends Thread {
-	static final String HOST_NAME = "127.0.0.1";
-	static final int PORT_NUMBER = 9090;
+    static final String HOST_NAME = "127.0.0.1";
 
-	public static void main(String[] args) throws IOException {
-		Socket clientSocket = new Socket(HOST_NAME, PORT_NUMBER);
-		PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-		BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    static final int PORT_NUMBER = 9090;
 
-		try {
-			int valueAsInteger = 4;
-			while (0 < valueAsInteger) {
-				out.println(valueAsInteger);
-				System.out.println("Send: " + valueAsInteger);
+    public static void main(String[] args) throws IOException {
+        Socket clientSocket = new Socket(HOST_NAME, PORT_NUMBER);
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-				String valueAsString = in.readLine();
-				System.out.println("Read: " + valueAsInteger);
-				valueAsInteger = Integer.parseInt(valueAsString);
-			}
-		} catch (IOException e) {
-		}
+        try {
+            int valueAsInteger = 4;
+            while (0 < valueAsInteger) {
+                out.println(valueAsInteger);
+                System.out.println("Send: " + valueAsInteger);
 
-		in.close();
-		out.close();
-		clientSocket.close();
-	}
+                String valueAsString = in.readLine();
+                System.out.println("Read: " + valueAsInteger);
+                valueAsInteger = Integer.parseInt(valueAsString);
+            }
+        } catch (IOException e) {
+        }
+
+        in.close();
+        out.close();
+        clientSocket.close();
+    }
 }

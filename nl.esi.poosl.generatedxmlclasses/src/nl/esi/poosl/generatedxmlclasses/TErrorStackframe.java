@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_error_stackframe complex type.
+ * <p>
+ * Java class for t_error_stackframe complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_error_stackframe">
@@ -39,32 +39,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_error_stackframe", propOrder = {
-    "method",
-    "stmtHandle",
-    "variableContextGlobal",
-    "variableContextLocal"
-})
+@XmlType(name = "t_error_stackframe", propOrder = { "method", "stmtHandle", "variableContextGlobal", "variableContextLocal" })
 public class TErrorStackframe {
 
     @XmlElement(required = true)
     protected String method;
+
     @XmlElement(name = "stmt_handle", required = true)
     protected String stmtHandle;
+
     @XmlElement(name = "variable_context_global", required = true)
     protected TVarList variableContextGlobal;
+
     @XmlElement(name = "variable_context_local", required = true)
     protected TVarList variableContextLocal;
+
     @XmlAttribute(name = "id")
     protected Integer id;
 
     /**
      * Gets the value of the method property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMethod() {
         return method;
@@ -74,9 +71,8 @@ public class TErrorStackframe {
      * Sets the value of the method property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMethod(String value) {
         this.method = value;
@@ -85,10 +81,8 @@ public class TErrorStackframe {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getStmtHandle() {
         return stmtHandle;
@@ -98,9 +92,8 @@ public class TErrorStackframe {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setStmtHandle(String value) {
         this.stmtHandle = value;
@@ -109,10 +102,8 @@ public class TErrorStackframe {
     /**
      * Gets the value of the variableContextGlobal property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TVarList }
-     *     
+     * @return possible object is {@link TVarList }
+     * 
      */
     public TVarList getVariableContextGlobal() {
         return variableContextGlobal;
@@ -122,9 +113,8 @@ public class TErrorStackframe {
      * Sets the value of the variableContextGlobal property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TVarList }
-     *     
+     *            allowed object is {@link TVarList }
+     * 
      */
     public void setVariableContextGlobal(TVarList value) {
         this.variableContextGlobal = value;
@@ -133,10 +123,8 @@ public class TErrorStackframe {
     /**
      * Gets the value of the variableContextLocal property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TVarList }
-     *     
+     * @return possible object is {@link TVarList }
+     * 
      */
     public TVarList getVariableContextLocal() {
         return variableContextLocal;
@@ -146,9 +134,8 @@ public class TErrorStackframe {
      * Sets the value of the variableContextLocal property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TVarList }
-     *     
+     *            allowed object is {@link TVarList }
+     * 
      */
     public void setVariableContextLocal(TVarList value) {
         this.variableContextLocal = value;
@@ -157,10 +144,8 @@ public class TErrorStackframe {
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getId() {
         return id;
@@ -170,9 +155,8 @@ public class TErrorStackframe {
      * Sets the value of the id property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setId(Integer value) {
         this.id = value;

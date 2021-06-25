@@ -17,287 +17,289 @@ import nl.esi.poosl.generatedxmlclasses.TVariable;
 import nl.esi.poosl.rotalumisclient.sourcemapping.PooslSourceMapping;
 
 public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
-	private static final Logger LOGGER = Logger.getLogger(PooslStackFrame.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PooslStackFrame.class.getName());
 
-	private final String name;
-	private final PooslThread thread;
-	private final PooslVariable[] originalVariables;
-	private PooslVariable[] variables;
-	private PooslSourceMapping sourceMapping;
-	private int lineNumber;
-	private int charStart;
-	private int charEnd;
+    private final String name;
 
-	public PooslStackFrame(PooslDebugTarget target, PooslThread thread, String name, List<TVariable> vars,
-			BigInteger globalHandle) throws DebugException {
-		super(target);
-		this.thread = thread;
-		this.name = name;
-		variables = new PooslVariable[vars.size()];
-		try {
-			for (int i = 0; i < vars.size(); i++) {
-				variables[i] = new PooslVariable(target, vars.get(i).getName());
-				variables[i].setValue(new PooslValue(target, vars.get(i), globalHandle));
-			}
-		} catch (DebugException e) {
-			LOGGER.log(Level.WARNING, "Could not initialize stackframe.", e);
-		}
-		originalVariables = variables;
-		for (PooslVariable pooslVariable : variables) {
-			pooslVariable.getSubVariables();
-		}
-	}
+    private final PooslThread thread;
 
-	@Override
-	public boolean canStepInto() {
-		return getThread().canStepInto();
-	}
+    private final PooslVariable[] originalVariables;
 
-	@Override
-	public boolean canStepOver() {
-		return getThread().canStepOver();
-	}
+    private PooslVariable[] variables;
 
-	@Override
-	public boolean canStepReturn() {
-		return getThread().canStepReturn();
-	}
+    private PooslSourceMapping sourceMapping;
 
-	@Override
-	public boolean isStepping() {
-		return getThread().isStepping();
-	}
+    private int lineNumber;
 
-	@Override
-	public void stepInto() throws DebugException {
-		getThread().stepInto();
-	}
+    private int charStart;
 
-	@Override
-	public void stepOver() throws DebugException {
-		getThread().stepOver();
-	}
+    private int charEnd;
 
-	@Override
-	public void stepReturn() throws DebugException {
-		getThread().stepReturn();
-	}
+    public PooslStackFrame(PooslDebugTarget target, PooslThread thread, String name, List<TVariable> vars, BigInteger globalHandle) throws DebugException {
+        super(target);
+        this.thread = thread;
+        this.name = name;
+        variables = new PooslVariable[vars.size()];
+        try {
+            for (int i = 0; i < vars.size(); i++) {
+                variables[i] = new PooslVariable(target, vars.get(i).getName());
+                variables[i].setValue(new PooslValue(target, vars.get(i), globalHandle));
+            }
+        } catch (DebugException e) {
+            LOGGER.log(Level.WARNING, "Could not initialize stackframe.", e);
+        }
+        originalVariables = variables;
+        for (PooslVariable pooslVariable : variables) {
+            pooslVariable.getSubVariables();
+        }
+    }
 
-	@Override
-	public boolean canResume() {
-		return getThread().canResume();
-	}
+    @Override
+    public boolean canStepInto() {
+        return getThread().canStepInto();
+    }
 
-	@Override
-	public boolean canSuspend() {
-		return getThread().canSuspend();
-	}
+    @Override
+    public boolean canStepOver() {
+        return getThread().canStepOver();
+    }
 
-	@Override
-	public boolean isSuspended() {
-		return getThread().isSuspended();
-	}
+    @Override
+    public boolean canStepReturn() {
+        return getThread().canStepReturn();
+    }
 
-	@Override
-	public void resume() throws DebugException {
-		getThread().resume();
-	}
+    @Override
+    public boolean isStepping() {
+        return getThread().isStepping();
+    }
 
-	@Override
-	public void suspend() throws DebugException {
-		getThread().suspend();
-	}
+    @Override
+    public void stepInto() throws DebugException {
+        getThread().stepInto();
+    }
 
-	@Override
-	public boolean canTerminate() {
-		return getThread().canTerminate();
-	}
+    @Override
+    public void stepOver() throws DebugException {
+        getThread().stepOver();
+    }
 
-	@Override
-	public boolean isTerminated() {
-		return getThread().isTerminated();
-	}
+    @Override
+    public void stepReturn() throws DebugException {
+        getThread().stepReturn();
+    }
 
-	@Override
-	public void terminate() throws DebugException {
-		getThread().terminate();
-	}
+    @Override
+    public boolean canResume() {
+        return getThread().canResume();
+    }
 
-	@Override
-	public IThread getThread() {
-		return thread;
-	}
+    @Override
+    public boolean canSuspend() {
+        return getThread().canSuspend();
+    }
 
-	@Override
-	public IVariable[] getVariables() throws DebugException {
-		return variables;
-	}
+    @Override
+    public boolean isSuspended() {
+        return getThread().isSuspended();
+    }
 
-	@Override
-	public boolean hasVariables() throws DebugException {
-		return variables.length > 0;
-	}
+    @Override
+    public void resume() throws DebugException {
+        getThread().resume();
+    }
 
-	@Override
-	public int getLineNumber() throws DebugException {
-		return lineNumber;
-	}
+    @Override
+    public void suspend() throws DebugException {
+        getThread().suspend();
+    }
 
-	@Override
-	public int getCharStart() throws DebugException {
-		return charStart;
-	}
+    @Override
+    public boolean canTerminate() {
+        return getThread().canTerminate();
+    }
 
-	@Override
-	public int getCharEnd() throws DebugException {
-		return charEnd;
-	}
+    @Override
+    public boolean isTerminated() {
+        return getThread().isTerminated();
+    }
 
-	@Override
-	public String getName() throws DebugException {
-		return name;
-	}
+    @Override
+    public void terminate() throws DebugException {
+        getThread().terminate();
+    }
 
-	@Override
-	public IRegisterGroup[] getRegisterGroups() throws DebugException {
-		return new IRegisterGroup[0];
-	}
+    @Override
+    public IThread getThread() {
+        return thread;
+    }
 
-	@Override
-	public boolean hasRegisterGroups() throws DebugException {
-		return false;
-	}
+    @Override
+    public IVariable[] getVariables() throws DebugException {
+        return variables;
+    }
 
-	public PooslSourceMapping getSourceMapping() {
-		return sourceMapping;
-	}
+    @Override
+    public boolean hasVariables() throws DebugException {
+        return variables.length > 0;
+    }
 
-	public void setSourceMapping(PooslSourceMapping sourceMapping) {
-		this.sourceMapping = sourceMapping;
-		lineNumber = sourceMapping.getLineNumber();
-		charStart = sourceMapping.getTotalOffset();
-		charEnd = sourceMapping.getTotalEndOffset();
-	}
+    @Override
+    public int getLineNumber() throws DebugException {
+        return lineNumber;
+    }
 
-	public void revertToOriginalVariables() {
-		variables = originalVariables;
-	}
+    @Override
+    public int getCharStart() throws DebugException {
+        return charStart;
+    }
 
-	public void addLocalVariables(List<TVariable> vars, BigInteger listHandle) throws DebugException {
-		PooslVariable[] localVariables = new PooslVariable[vars.size()];
-		for (int i = 0; i < vars.size(); i++) {
-			localVariables[i] = new PooslVariable(target, vars.get(i), listHandle);
-		}
+    @Override
+    public int getCharEnd() throws DebugException {
+        return charEnd;
+    }
 
-		variables = (PooslVariable[]) ArrayUtils.addAll(originalVariables, localVariables);
+    @Override
+    public String getName() throws DebugException {
+        return name;
+    }
 
-		for (PooslVariable pooslVariable : localVariables) {
-			pooslVariable.getSubVariables();
-		}
-	}
+    @Override
+    public IRegisterGroup[] getRegisterGroups() throws DebugException {
+        return new IRegisterGroup[0];
+    }
 
-	public boolean updateSubVariables(PooslDebugTarget target, BigInteger listHandle, List<TVariable> variableList)
-			throws DebugException {
-		boolean updated = false;
-		for (PooslValue pooslValue : getSubValuesByListHandle(listHandle)) {
-			if (pooslValue.getVariables().length == 0) {
-				IVariable[] vars = new IVariable[variableList.size()];
-				for (int i = 0; i < variableList.size(); i++) {
-					vars[i] = new PooslVariable(target, variableList.get(i), listHandle);
-				}
-				pooslValue.setVariables(vars);
-				updated = true;
-			}
-		}
-		return updated;
-	}
+    @Override
+    public boolean hasRegisterGroups() throws DebugException {
+        return false;
+    }
 
-	public boolean updateVariable(PooslDebugTarget target, BigInteger objectHandle, List<TVariable> variableList)
-			throws DebugException {
-		boolean updated = false;
-		for (PooslValue pooslValue : getValuesByObjectHandle(objectHandle)) {
-			if (pooslValue.getVariables().length == 0) {
-				// Disable the change value of subvariables by giving it no listhandle
-				// TODO to be removed after Rotalumis fix
-				BigInteger listHandle = null;// pooslValue.getListHandle();
-				IVariable[] vars = new IVariable[variableList.size()];
-				for (int i = 0; i < variableList.size(); i++) {
-					vars[i] = new PooslVariable(target, variableList.get(i), listHandle);
-				}
-				pooslValue.setVariables(vars);
-				updated = true;
-			}
-		}
-		return updated;
-	}
+    public PooslSourceMapping getSourceMapping() {
+        return sourceMapping;
+    }
 
-	private List<PooslValue> getSubValuesByListHandle(BigInteger listHandle) throws DebugException {
-		List<PooslValue> values = new ArrayList<>();
-		for (IVariable variable : getVariables()) {
-			if (variable.getValue() instanceof PooslValue) {
-				PooslValue value = (PooslValue) variable.getValue();
-				BigInteger handle = value.getSubHandle();
-				if (handle != null && listHandle.compareTo(handle) == 0) {
-					values.add(value);
-				}
-				if (value.hasVariables()) {
-					values.addAll(getSubValuesByListHandle(listHandle, value));
-				}
-			}
-		}
-		return values;
-	}
+    public void setSourceMapping(PooslSourceMapping sourceMapping) {
+        this.sourceMapping = sourceMapping;
+        lineNumber = sourceMapping.getLineNumber();
+        charStart = sourceMapping.getTotalOffset();
+        charEnd = sourceMapping.getTotalEndOffset();
+    }
 
-	private static List<PooslValue> getSubValuesByListHandle(BigInteger listHandle, PooslValue value)
-			throws DebugException {
-		List<PooslValue> values = new ArrayList<>();
-		for (IVariable variable : value.getVariables()) {
-			if (variable.getValue() instanceof PooslValue) {
-				PooslValue subValue = (PooslValue) variable.getValue();
-				BigInteger subHandle = subValue.getSubHandle();
-				if (subHandle != null && listHandle.compareTo(subHandle) == 0) {
-					values.add(subValue);
-				}
-				if (subValue.hasVariables()) {
-					values.addAll(getSubValuesByListHandle(listHandle, subValue));
-				}
-			}
-		}
-		return values;
-	}
+    public void revertToOriginalVariables() {
+        variables = originalVariables;
+    }
 
-	private List<PooslValue> getValuesByObjectHandle(BigInteger objectHandle) throws DebugException {
-		List<PooslValue> values = new ArrayList<>();
-		for (IVariable variable : getVariables()) {
-			if (variable.getValue() instanceof PooslValue) {
-				PooslValue value = (PooslValue) variable.getValue();
-				BigInteger handle = value.getObject();
-				if (handle != null && objectHandle.compareTo(handle) == 0) {
-					values.add(value);
-				}
-				if (value.hasVariables()) {
-					values.addAll(getValuesByObjectHandle(objectHandle, value));
-				}
-			}
-		}
-		return values;
-	}
+    public void addLocalVariables(List<TVariable> vars, BigInteger listHandle) throws DebugException {
+        PooslVariable[] localVariables = new PooslVariable[vars.size()];
+        for (int i = 0; i < vars.size(); i++) {
+            localVariables[i] = new PooslVariable(target, vars.get(i), listHandle);
+        }
 
-	private static List<PooslValue> getValuesByObjectHandle(BigInteger objectHandle, PooslValue value)
-			throws DebugException {
-		List<PooslValue> values = new ArrayList<>();
-		for (IVariable variable : value.getVariables()) {
-			if (variable.getValue() instanceof PooslValue) {
-				PooslValue subValue = (PooslValue) variable.getValue();
-				BigInteger subHandle = subValue.getObject();
-				if (subHandle != null && objectHandle.compareTo(subHandle) == 0) {
-					values.add(subValue);
-				}
-				if (subValue.hasVariables()) {
-					values.addAll(getValuesByObjectHandle(objectHandle, subValue));
-				}
-			}
-		}
-		return values;
-	}
+        variables = (PooslVariable[]) ArrayUtils.addAll(originalVariables, localVariables);
+
+        for (PooslVariable pooslVariable : localVariables) {
+            pooslVariable.getSubVariables();
+        }
+    }
+
+    public boolean updateSubVariables(PooslDebugTarget target, BigInteger listHandle, List<TVariable> variableList) throws DebugException {
+        boolean updated = false;
+        for (PooslValue pooslValue : getSubValuesByListHandle(listHandle)) {
+            if (pooslValue.getVariables().length == 0) {
+                IVariable[] vars = new IVariable[variableList.size()];
+                for (int i = 0; i < variableList.size(); i++) {
+                    vars[i] = new PooslVariable(target, variableList.get(i), listHandle);
+                }
+                pooslValue.setVariables(vars);
+                updated = true;
+            }
+        }
+        return updated;
+    }
+
+    public boolean updateVariable(PooslDebugTarget target, BigInteger objectHandle, List<TVariable> variableList) throws DebugException {
+        boolean updated = false;
+        for (PooslValue pooslValue : getValuesByObjectHandle(objectHandle)) {
+            if (pooslValue.getVariables().length == 0) {
+                // Disable the change value of subvariables by giving it no listhandle
+                // TODO to be removed after Rotalumis fix
+                BigInteger listHandle = null;// pooslValue.getListHandle();
+                IVariable[] vars = new IVariable[variableList.size()];
+                for (int i = 0; i < variableList.size(); i++) {
+                    vars[i] = new PooslVariable(target, variableList.get(i), listHandle);
+                }
+                pooslValue.setVariables(vars);
+                updated = true;
+            }
+        }
+        return updated;
+    }
+
+    private List<PooslValue> getSubValuesByListHandle(BigInteger listHandle) throws DebugException {
+        List<PooslValue> values = new ArrayList<>();
+        for (IVariable variable : getVariables()) {
+            if (variable.getValue() instanceof PooslValue) {
+                PooslValue value = (PooslValue) variable.getValue();
+                BigInteger handle = value.getSubHandle();
+                if (handle != null && listHandle.compareTo(handle) == 0) {
+                    values.add(value);
+                }
+                if (value.hasVariables()) {
+                    values.addAll(getSubValuesByListHandle(listHandle, value));
+                }
+            }
+        }
+        return values;
+    }
+
+    private static List<PooslValue> getSubValuesByListHandle(BigInteger listHandle, PooslValue value) throws DebugException {
+        List<PooslValue> values = new ArrayList<>();
+        for (IVariable variable : value.getVariables()) {
+            if (variable.getValue() instanceof PooslValue) {
+                PooslValue subValue = (PooslValue) variable.getValue();
+                BigInteger subHandle = subValue.getSubHandle();
+                if (subHandle != null && listHandle.compareTo(subHandle) == 0) {
+                    values.add(subValue);
+                }
+                if (subValue.hasVariables()) {
+                    values.addAll(getSubValuesByListHandle(listHandle, subValue));
+                }
+            }
+        }
+        return values;
+    }
+
+    private List<PooslValue> getValuesByObjectHandle(BigInteger objectHandle) throws DebugException {
+        List<PooslValue> values = new ArrayList<>();
+        for (IVariable variable : getVariables()) {
+            if (variable.getValue() instanceof PooslValue) {
+                PooslValue value = (PooslValue) variable.getValue();
+                BigInteger handle = value.getObject();
+                if (handle != null && objectHandle.compareTo(handle) == 0) {
+                    values.add(value);
+                }
+                if (value.hasVariables()) {
+                    values.addAll(getValuesByObjectHandle(objectHandle, value));
+                }
+            }
+        }
+        return values;
+    }
+
+    private static List<PooslValue> getValuesByObjectHandle(BigInteger objectHandle, PooslValue value) throws DebugException {
+        List<PooslValue> values = new ArrayList<>();
+        for (IVariable variable : value.getVariables()) {
+            if (variable.getValue() instanceof PooslValue) {
+                PooslValue subValue = (PooslValue) variable.getValue();
+                BigInteger subHandle = subValue.getObject();
+                if (subHandle != null && objectHandle.compareTo(subHandle) == 0) {
+                    values.add(subValue);
+                }
+                if (subValue.hasVariables()) {
+                    values.addAll(getValuesByObjectHandle(objectHandle, subValue));
+                }
+            }
+        }
+        return values;
+    }
 }

@@ -5,23 +5,24 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * <p>Java class for t_list_files_response complex type.
+ * <p>
+ * Java class for t_list_files_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_list_files_response">
@@ -46,9 +47,7 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_list_files_response", propOrder = {
-    "file"
-})
+@XmlType(name = "t_list_files_response", propOrder = { "file" })
 public class TListFilesResponse {
 
     protected List<TListFilesResponse.File> file;
@@ -57,21 +56,20 @@ public class TListFilesResponse {
      * Gets the value of the file property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the file property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the file property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getFile().add(newItem);
+     * getFile().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TListFilesResponse.File }
+     * Objects of the following type(s) are allowed in the list {@link TListFilesResponse.File }
      * 
      * 
      */
@@ -82,11 +80,12 @@ public class TListFilesResponse {
         return this.file;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -101,23 +100,20 @@ public class TListFilesResponse {
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "value"
-    })
+    @XmlType(name = "", propOrder = { "value" })
     public static class File {
 
         @XmlValue
         protected String value;
+
         @XmlAttribute(name = "handle")
         protected BigInteger handle;
 
         /**
          * Gets the value of the value property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getValue() {
             return value;
@@ -127,9 +123,8 @@ public class TListFilesResponse {
          * Sets the value of the value property.
          * 
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *            allowed object is {@link String }
+         * 
          */
         public void setValue(String value) {
             this.value = value;
@@ -138,10 +133,8 @@ public class TListFilesResponse {
         /**
          * Gets the value of the handle property.
          * 
-         * @return
-         *     possible object is
-         *     {@link BigInteger }
-         *     
+         * @return possible object is {@link BigInteger }
+         * 
          */
         public BigInteger getHandle() {
             return handle;
@@ -151,9 +144,8 @@ public class TListFilesResponse {
          * Sets the value of the handle property.
          * 
          * @param value
-         *     allowed object is
-         *     {@link BigInteger }
-         *     
+         *            allowed object is {@link BigInteger }
+         * 
          */
         public void setHandle(BigInteger value) {
             this.handle = value;

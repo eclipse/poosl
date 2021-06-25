@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_cluster complex type.
+ * <p>
+ * Java class for t_inspect_cluster complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_cluster">
@@ -47,13 +48,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_cluster", propOrder = {
-    "channel",
-    "instance"
-})
+@XmlType(name = "t_inspect_cluster", propOrder = { "channel", "instance" })
 public class TInspectCluster {
 
     protected List<TInspectCluster.Channel> channel;
+
     @XmlElement(required = true)
     protected List<TInspectInstance> instance;
 
@@ -61,21 +60,20 @@ public class TInspectCluster {
      * Gets the value of the channel property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the channel property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the channel property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getChannel().add(newItem);
+     * getChannel().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TInspectCluster.Channel }
+     * Objects of the following type(s) are allowed in the list {@link TInspectCluster.Channel }
      * 
      * 
      */
@@ -90,21 +88,20 @@ public class TInspectCluster {
      * Gets the value of the instance property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the instance property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the instance property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInstance().add(newItem);
+     * getInstance().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TInspectInstance }
+     * Objects of the following type(s) are allowed in the list {@link TInspectInstance }
      * 
      * 
      */
@@ -115,11 +112,12 @@ public class TInspectCluster {
         return this.instance;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -140,16 +138,15 @@ public class TInspectCluster {
 
         @XmlAttribute(name = "name", required = true)
         protected String name;
+
         @XmlAttribute(name = "output_port")
         protected String outputPort;
 
         /**
          * Gets the value of the name property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getName() {
             return name;
@@ -159,9 +156,8 @@ public class TInspectCluster {
          * Sets the value of the name property.
          * 
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *            allowed object is {@link String }
+         * 
          */
         public void setName(String value) {
             this.name = value;
@@ -170,10 +166,8 @@ public class TInspectCluster {
         /**
          * Gets the value of the outputPort property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getOutputPort() {
             return outputPort;
@@ -183,9 +177,8 @@ public class TInspectCluster {
          * Sets the value of the outputPort property.
          * 
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *            allowed object is {@link String }
+         * 
          */
         public void setOutputPort(String value) {
             this.outputPort = value;

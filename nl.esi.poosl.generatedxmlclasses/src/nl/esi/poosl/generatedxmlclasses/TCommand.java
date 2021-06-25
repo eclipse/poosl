@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_command.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_command.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_command">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -38,19 +39,14 @@ import javax.xml.bind.annotation.XmlType;
 public enum TCommand {
 
     @XmlEnumValue("run")
-    RUN("run"),
-    @XmlEnumValue("pause")
-    PAUSE("pause"),
-    @XmlEnumValue("stop")
-    STOP("stop"),
-    @XmlEnumValue("step")
-    STEP("step"),
-    @XmlEnumValue("process-step")
-    PROCESS_STEP("process-step"),
-    @XmlEnumValue("time-step")
-    TIME_STEP("time-step"),
-    @XmlEnumValue("comm-step")
+    RUN("run"), @XmlEnumValue("pause")
+    PAUSE("pause"), @XmlEnumValue("stop")
+    STOP("stop"), @XmlEnumValue("step")
+    STEP("step"), @XmlEnumValue("process-step")
+    PROCESS_STEP("process-step"), @XmlEnumValue("time-step")
+    TIME_STEP("time-step"), @XmlEnumValue("comm-step")
     COMM_STEP("comm-step");
+
     private final String value;
 
     TCommand(String v) {
@@ -62,7 +58,7 @@ public enum TCommand {
     }
 
     public static TCommand fromValue(String v) {
-        for (TCommand c: TCommand.values()) {
+        for (TCommand c : TCommand.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

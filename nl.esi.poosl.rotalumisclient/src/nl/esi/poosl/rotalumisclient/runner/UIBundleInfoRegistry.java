@@ -18,110 +18,110 @@ import com.google.common.collect.Sets;
 
 public class UIBundleInfoRegistry implements IBundleInfo.Registry {
 
-	public static class UIBundleInfo implements IBundleInfo {
-		private final Bundle bundle;
-		private final URI locationURI;
+    public static class UIBundleInfo implements IBundleInfo {
+        private final Bundle bundle;
 
-		public UIBundleInfo(URI locationURI, Bundle bundle) {
-			super();
-			this.locationURI = locationURI;
-			this.bundle = bundle;
-		}
+        private final URI locationURI;
 
-		public List<URI> find(Context context) {
-			return getInfo().find(context);
-		}
+        public UIBundleInfo(URI locationURI, Bundle bundle) {
+            super();
+            this.locationURI = locationURI;
+            this.bundle = bundle;
+        }
 
-		public URI find(Context context, String fileName) {
-			return getInfo().find(context, fileName);
-		}
+        public List<URI> find(Context context) {
+            return getInfo().find(context);
+        }
 
-		public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
-			return getInfo().find(context, path, matcher, fileExtensions);
-		}
+        public URI find(Context context, String fileName) {
+            return getInfo().find(context, fileName);
+        }
 
-		public Bundle getBundle() {
-			return bundle;
-		}
+        public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
+            return getInfo().find(context, path, matcher, fileExtensions);
+        }
 
-		private ResourceAccess.ResourceInfo getInfo() {
-			return ResourceAccess.create(getRootURI());
-		}
+        public Bundle getBundle() {
+            return bundle;
+        }
 
-		public URI getRootURI() {
-			return locationURI;
-		}
+        private ResourceAccess.ResourceInfo getInfo() {
+            return ResourceAccess.create(getRootURI());
+        }
 
-		public String getSymbolicName() {
-			return bundle.getSymbolicName();
-		}
+        public URI getRootURI() {
+            return locationURI;
+        }
 
-		@Override
-		public String toString() {
-			String type = Platform.isFragment(bundle) ? "fragment" : "bundle";
-			return type + " '" + getSymbolicName() + "' locationURI:" + getRootURI();
-		}
-	}
+        public String getSymbolicName() {
+            return bundle.getSymbolicName();
+        }
 
-	public Collection<String> getAllBundleNames() {
-		Set<String> result = Sets.newLinkedHashSet();
-		for (Bundle bundle : nl.esi.poosl.rotalumisclient.Activator.getDefault().getBundle().getBundleContext()
-				.getBundles())
-			result.add(bundle.getSymbolicName());
-		return result;
-	}
+        @Override
+        public String toString() {
+            String type = Platform.isFragment(bundle) ? "fragment" : "bundle";
+            return type + " '" + getSymbolicName() + "' locationURI:" + getRootURI();
+        }
+    }
 
-	public IBundleInfo getBundle(Class<?> clazz) {
-		Bundle bundle = FrameworkUtil.getBundle(clazz);
-		if (bundle == null)
-			return null;
-		URI locationURI = getBundleLocationURI(bundle);
-		Bundle[] fragments = Platform.getFragments(bundle);
-		if (fragments == null || fragments.length == 0)
-			return new UIBundleInfo(locationURI, bundle);
-		String classURI = getClassURI(clazz).toString();
-		if (classURI.startsWith(locationURI.toString()))
-			return new UIBundleInfo(locationURI, bundle);
-		for (Bundle fragment : fragments) {
-			URI fragmentURI = getBundleLocationURI(fragment);
-			if (classURI.startsWith(fragmentURI.toString()))
-				return new UIBundleInfo(fragmentURI, fragment);
-		}
-		return null;
-	}
+    public Collection<String> getAllBundleNames() {
+        Set<String> result = Sets.newLinkedHashSet();
+        for (Bundle bundle : nl.esi.poosl.rotalumisclient.Activator.getDefault().getBundle().getBundleContext().getBundles())
+            result.add(bundle.getSymbolicName());
+        return result;
+    }
 
-	public IBundleInfo getBundle(String symbolicName) {
-		Bundle bundle = Platform.getBundle(symbolicName);
-		return bundle != null ? new UIBundleInfo(getBundleLocationURI(bundle), bundle) : null;
-	}
+    public IBundleInfo getBundle(Class<?> clazz) {
+        Bundle bundle = FrameworkUtil.getBundle(clazz);
+        if (bundle == null)
+            return null;
+        URI locationURI = getBundleLocationURI(bundle);
+        Bundle[] fragments = Platform.getFragments(bundle);
+        if (fragments == null || fragments.length == 0)
+            return new UIBundleInfo(locationURI, bundle);
+        String classURI = getClassURI(clazz).toString();
+        if (classURI.startsWith(locationURI.toString()))
+            return new UIBundleInfo(locationURI, bundle);
+        for (Bundle fragment : fragments) {
+            URI fragmentURI = getBundleLocationURI(fragment);
+            if (classURI.startsWith(fragmentURI.toString()))
+                return new UIBundleInfo(fragmentURI, fragment);
+        }
+        return null;
+    }
 
-	public IBundleInfo getBundle(URI uri) {
-		return new IBundleInfo.BundleInfo(null, uri);
-	}
+    public IBundleInfo getBundle(String symbolicName) {
+        Bundle bundle = Platform.getBundle(symbolicName);
+        return bundle != null ? new UIBundleInfo(getBundleLocationURI(bundle), bundle) : null;
+    }
 
-	private URI getBundleLocationURI(Bundle bundle) {
-		try {
-			URI uri = URI.createURI(FileLocator.resolve(bundle.getEntry("/")).toString());
-			if (uri.isArchive())
-				return uri;
-			File current = new File(uri.toFileString());
-			if (new File(current, "META-INF").isDirectory()) {
-				return URI.createFileURI(current.toString()).appendSegment("");
-			} else {
-				return uri;
-			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public IBundleInfo getBundle(URI uri) {
+        return new IBundleInfo.BundleInfo(null, uri);
+    }
 
-	private URI getClassURI(Class<?> clazz) {
-		try {
-			URL resource = clazz.getClassLoader().getResource("/" + clazz.getName().replace('.', '/') + ".class");
-			URL url = FileLocator.resolve(resource);
-			return URI.createURI(url.toString());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private URI getBundleLocationURI(Bundle bundle) {
+        try {
+            URI uri = URI.createURI(FileLocator.resolve(bundle.getEntry("/")).toString());
+            if (uri.isArchive())
+                return uri;
+            File current = new File(uri.toFileString());
+            if (new File(current, "META-INF").isDirectory()) {
+                return URI.createFileURI(current.toString()).appendSegment("");
+            } else {
+                return uri;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private URI getClassURI(Class<?> clazz) {
+        try {
+            URL resource = clazz.getClassLoader().getResource("/" + clazz.getName().replace('.', '/') + ".class");
+            URL url = FileLocator.resolve(resource);
+            return URI.createURI(url.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

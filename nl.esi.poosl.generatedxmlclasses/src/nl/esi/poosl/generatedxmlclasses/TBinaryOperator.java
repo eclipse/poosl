@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_binary_operator.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_binary_operator.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_binary_operator">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -45,33 +46,21 @@ import javax.xml.bind.annotation.XmlType;
 public enum TBinaryOperator {
 
     @XmlEnumValue("+")
-    ADD("+"),
-    @XmlEnumValue("-")
-    SUBTRACT("-"),
-    @XmlEnumValue("*")
-    MULTIPLY("*"),
-    @XmlEnumValue("/")
-    DIVIDE("/"),
-    @XmlEnumValue("=")
-    EQUAL("="),
-    @XmlEnumValue("!=")
-    UNEQUAL("!="),
-    @XmlEnumValue("==")
-    IDENTICAL("=="),
-    @XmlEnumValue("!==")
-    NOT_IDENTICAL("!=="),
-    @XmlEnumValue("&")
-    AND("&"),
-    @XmlEnumValue("|")
-    OR("|"),
-    @XmlEnumValue("<")
-    LESS_THAN("<"),
-    @XmlEnumValue(">")
-    GREATER_THAN(">"),
-    @XmlEnumValue(">=")
-    AT_LEAST(">="),
-    @XmlEnumValue("<=")
+    ADD("+"), @XmlEnumValue("-")
+    SUBTRACT("-"), @XmlEnumValue("*")
+    MULTIPLY("*"), @XmlEnumValue("/")
+    DIVIDE("/"), @XmlEnumValue("=")
+    EQUAL("="), @XmlEnumValue("!=")
+    UNEQUAL("!="), @XmlEnumValue("==")
+    IDENTICAL("=="), @XmlEnumValue("!==")
+    NOT_IDENTICAL("!=="), @XmlEnumValue("&")
+    AND("&"), @XmlEnumValue("|")
+    OR("|"), @XmlEnumValue("<")
+    LESS_THAN("<"), @XmlEnumValue(">")
+    GREATER_THAN(">"), @XmlEnumValue(">=")
+    AT_LEAST(">="), @XmlEnumValue("<=")
     AT_MOST("<=");
+
     private final String value;
 
     TBinaryOperator(String v) {
@@ -83,7 +72,7 @@ public enum TBinaryOperator {
     }
 
     public static TBinaryOperator fromValue(String v) {
-        for (TBinaryOperator c: TBinaryOperator.values()) {
+        for (TBinaryOperator c : TBinaryOperator.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

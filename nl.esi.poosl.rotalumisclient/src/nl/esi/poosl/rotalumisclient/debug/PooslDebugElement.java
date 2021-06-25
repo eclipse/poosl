@@ -11,44 +11,44 @@ import org.eclipse.debug.core.model.ITerminate;
 import nl.esi.poosl.rotalumisclient.PooslConstants;
 
 public abstract class PooslDebugElement extends PlatformObject implements IDebugElement, ITerminate {
-	protected PooslDebugTarget target;
+    protected PooslDebugTarget target;
 
-	public PooslDebugElement(PooslDebugTarget target) {
-		super();
-		this.target = target;
-	}
+    public PooslDebugElement(PooslDebugTarget target) {
+        super();
+        this.target = target;
+    }
 
-	@Override
-	public String getModelIdentifier() {
-		return PooslConstants.DEBUG_MODEL_ID;
-	}
+    @Override
+    public String getModelIdentifier() {
+        return PooslConstants.DEBUG_MODEL_ID;
+    }
 
-	@Override
-	public IDebugTarget getDebugTarget() {
-		return target;
-	}
+    @Override
+    public IDebugTarget getDebugTarget() {
+        return target;
+    }
 
-	@Override
-	public ILaunch getLaunch() {
-		return getDebugTarget().getLaunch();
-	}
+    @Override
+    public ILaunch getLaunch() {
+        return getDebugTarget().getLaunch();
+    }
 
-	@Override
-	public <T> T getAdapter(Class<T> adapter) {
-		if (adapter == IDebugElement.class) {
-			return adapter.cast(this);
-		}
-		return super.getAdapter(adapter);
-	}
+    @Override
+    public <T> T getAdapter(Class<T> adapter) {
+        if (adapter == IDebugElement.class) {
+            return adapter.cast(this);
+        }
+        return super.getAdapter(adapter);
+    }
 
-	public void fireEvent(DebugEvent event) {
-		DebugPlugin plugin = DebugPlugin.getDefault();
-		if (plugin != null) {
-			plugin.fireDebugEventSet(new DebugEvent[] { event });
-		}
-	}
+    public void fireEvent(DebugEvent event) {
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        if (plugin != null) {
+            plugin.fireDebugEventSet(new DebugEvent[] { event });
+        }
+    }
 
-	public void fireCreationEvent() {
-		fireEvent(new DebugEvent(this, DebugEvent.CREATE));
-	}
+    public void fireCreationEvent() {
+        fireEvent(new DebugEvent(this, DebugEvent.CREATE));
+    }
 }

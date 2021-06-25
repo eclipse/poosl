@@ -5,10 +5,10 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -16,11 +16,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -56,73 +57,71 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "load",
-    "compile",
-    "listFiles",
-    "listClasses",
-    "getTopLevelSpecification",
-    "instantiate",
-    "command",
-    "executionState",
-    "getTransitions",
-    "performTransition",
-    "performProcessStep",
-    "inspect",
-    "createBreakpoint",
-    "enableBreakpoint",
-    "disableBreakpoint",
-    "deleteBreakpoint",
-    "setVariable",
-    "getPosition",
-    "eengineEventSetup"
-})
+@XmlType(name = "", propOrder = { "load", "compile", "listFiles", "listClasses", "getTopLevelSpecification", "instantiate", "command", "executionState", "getTransitions", "performTransition",
+        "performProcessStep", "inspect", "createBreakpoint", "enableBreakpoint", "disableBreakpoint", "deleteBreakpoint", "setVariable", "getPosition", "eengineEventSetup" })
 @XmlRootElement(name = "request")
 public class Request {
 
     protected TLoadRequest load;
+
     protected TCompileRequest compile;
+
     @XmlElement(name = "list_files")
     protected TListFilesRequest listFiles;
+
     @XmlElement(name = "list_classes")
     protected TListClassesRequest listClasses;
+
     @XmlElement(name = "get_top_level_specification")
     protected TGetTopLevelSpecificationRequest getTopLevelSpecification;
+
     protected TInstantiateRequest instantiate;
+
     protected TCommandRequest command;
+
     @XmlElement(name = "execution_state")
     protected TExecutionStateRequest executionState;
+
     @XmlElement(name = "get_transitions")
     protected TGetTransitionsRequest getTransitions;
+
     @XmlElement(name = "perform_transition")
     protected TPerformTransitionRequest performTransition;
+
     @XmlElement(name = "perform_process_step")
     protected TPerformProcessStepRequest performProcessStep;
+
     protected TInspectRequest inspect;
+
     @XmlElement(name = "create_breakpoint")
     protected TCreateBreakpointRequest createBreakpoint;
+
     @XmlElement(name = "enable_breakpoint")
     protected TEnableBreakpointRequest enableBreakpoint;
+
     @XmlElement(name = "disable_breakpoint")
     protected TDisableBreakpointRequest disableBreakpoint;
+
     @XmlElement(name = "delete_breakpoint")
     protected TDeleteBreakpointRequest deleteBreakpoint;
+
     @XmlElement(name = "set_variable")
     protected TSetVariableRequest setVariable;
+
     @XmlElement(name = "get_position")
     protected TGetPositionRequest getPosition;
+
     @XmlElement(name = "eengine_event_setup")
     protected TEengineEventSetupRequest eengineEventSetup;
+
     @XmlAttribute(name = "id", required = true)
     protected BigInteger id;
 
     /**
      * Gets the value of the load property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TLoadRequest }
-     *     
+     * @return possible object is {@link TLoadRequest }
+     * 
      */
     public TLoadRequest getLoad() {
         return load;
@@ -132,9 +131,8 @@ public class Request {
      * Sets the value of the load property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TLoadRequest }
-     *     
+     *            allowed object is {@link TLoadRequest }
+     * 
      */
     public void setLoad(TLoadRequest value) {
         this.load = value;
@@ -143,10 +141,8 @@ public class Request {
     /**
      * Gets the value of the compile property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCompileRequest }
-     *     
+     * @return possible object is {@link TCompileRequest }
+     * 
      */
     public TCompileRequest getCompile() {
         return compile;
@@ -156,9 +152,8 @@ public class Request {
      * Sets the value of the compile property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCompileRequest }
-     *     
+     *            allowed object is {@link TCompileRequest }
+     * 
      */
     public void setCompile(TCompileRequest value) {
         this.compile = value;
@@ -167,10 +162,8 @@ public class Request {
     /**
      * Gets the value of the listFiles property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TListFilesRequest }
-     *     
+     * @return possible object is {@link TListFilesRequest }
+     * 
      */
     public TListFilesRequest getListFiles() {
         return listFiles;
@@ -180,9 +173,8 @@ public class Request {
      * Sets the value of the listFiles property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TListFilesRequest }
-     *     
+     *            allowed object is {@link TListFilesRequest }
+     * 
      */
     public void setListFiles(TListFilesRequest value) {
         this.listFiles = value;
@@ -191,10 +183,8 @@ public class Request {
     /**
      * Gets the value of the listClasses property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TListClassesRequest }
-     *     
+     * @return possible object is {@link TListClassesRequest }
+     * 
      */
     public TListClassesRequest getListClasses() {
         return listClasses;
@@ -204,9 +194,8 @@ public class Request {
      * Sets the value of the listClasses property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TListClassesRequest }
-     *     
+     *            allowed object is {@link TListClassesRequest }
+     * 
      */
     public void setListClasses(TListClassesRequest value) {
         this.listClasses = value;
@@ -215,10 +204,8 @@ public class Request {
     /**
      * Gets the value of the getTopLevelSpecification property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TGetTopLevelSpecificationRequest }
-     *     
+     * @return possible object is {@link TGetTopLevelSpecificationRequest }
+     * 
      */
     public TGetTopLevelSpecificationRequest getGetTopLevelSpecification() {
         return getTopLevelSpecification;
@@ -228,9 +215,8 @@ public class Request {
      * Sets the value of the getTopLevelSpecification property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TGetTopLevelSpecificationRequest }
-     *     
+     *            allowed object is {@link TGetTopLevelSpecificationRequest }
+     * 
      */
     public void setGetTopLevelSpecification(TGetTopLevelSpecificationRequest value) {
         this.getTopLevelSpecification = value;
@@ -239,10 +225,8 @@ public class Request {
     /**
      * Gets the value of the instantiate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInstantiateRequest }
-     *     
+     * @return possible object is {@link TInstantiateRequest }
+     * 
      */
     public TInstantiateRequest getInstantiate() {
         return instantiate;
@@ -252,9 +236,8 @@ public class Request {
      * Sets the value of the instantiate property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInstantiateRequest }
-     *     
+     *            allowed object is {@link TInstantiateRequest }
+     * 
      */
     public void setInstantiate(TInstantiateRequest value) {
         this.instantiate = value;
@@ -263,10 +246,8 @@ public class Request {
     /**
      * Gets the value of the command property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommandRequest }
-     *     
+     * @return possible object is {@link TCommandRequest }
+     * 
      */
     public TCommandRequest getCommand() {
         return command;
@@ -276,9 +257,8 @@ public class Request {
      * Sets the value of the command property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommandRequest }
-     *     
+     *            allowed object is {@link TCommandRequest }
+     * 
      */
     public void setCommand(TCommandRequest value) {
         this.command = value;
@@ -287,10 +267,8 @@ public class Request {
     /**
      * Gets the value of the executionState property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExecutionStateRequest }
-     *     
+     * @return possible object is {@link TExecutionStateRequest }
+     * 
      */
     public TExecutionStateRequest getExecutionState() {
         return executionState;
@@ -300,9 +278,8 @@ public class Request {
      * Sets the value of the executionState property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExecutionStateRequest }
-     *     
+     *            allowed object is {@link TExecutionStateRequest }
+     * 
      */
     public void setExecutionState(TExecutionStateRequest value) {
         this.executionState = value;
@@ -311,10 +288,8 @@ public class Request {
     /**
      * Gets the value of the getTransitions property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TGetTransitionsRequest }
-     *     
+     * @return possible object is {@link TGetTransitionsRequest }
+     * 
      */
     public TGetTransitionsRequest getGetTransitions() {
         return getTransitions;
@@ -324,9 +299,8 @@ public class Request {
      * Sets the value of the getTransitions property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TGetTransitionsRequest }
-     *     
+     *            allowed object is {@link TGetTransitionsRequest }
+     * 
      */
     public void setGetTransitions(TGetTransitionsRequest value) {
         this.getTransitions = value;
@@ -335,10 +309,8 @@ public class Request {
     /**
      * Gets the value of the performTransition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TPerformTransitionRequest }
-     *     
+     * @return possible object is {@link TPerformTransitionRequest }
+     * 
      */
     public TPerformTransitionRequest getPerformTransition() {
         return performTransition;
@@ -348,9 +320,8 @@ public class Request {
      * Sets the value of the performTransition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TPerformTransitionRequest }
-     *     
+     *            allowed object is {@link TPerformTransitionRequest }
+     * 
      */
     public void setPerformTransition(TPerformTransitionRequest value) {
         this.performTransition = value;
@@ -359,10 +330,8 @@ public class Request {
     /**
      * Gets the value of the performProcessStep property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TPerformProcessStepRequest }
-     *     
+     * @return possible object is {@link TPerformProcessStepRequest }
+     * 
      */
     public TPerformProcessStepRequest getPerformProcessStep() {
         return performProcessStep;
@@ -372,9 +341,8 @@ public class Request {
      * Sets the value of the performProcessStep property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TPerformProcessStepRequest }
-     *     
+     *            allowed object is {@link TPerformProcessStepRequest }
+     * 
      */
     public void setPerformProcessStep(TPerformProcessStepRequest value) {
         this.performProcessStep = value;
@@ -383,10 +351,8 @@ public class Request {
     /**
      * Gets the value of the inspect property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectRequest }
-     *     
+     * @return possible object is {@link TInspectRequest }
+     * 
      */
     public TInspectRequest getInspect() {
         return inspect;
@@ -396,9 +362,8 @@ public class Request {
      * Sets the value of the inspect property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectRequest }
-     *     
+     *            allowed object is {@link TInspectRequest }
+     * 
      */
     public void setInspect(TInspectRequest value) {
         this.inspect = value;
@@ -407,10 +372,8 @@ public class Request {
     /**
      * Gets the value of the createBreakpoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCreateBreakpointRequest }
-     *     
+     * @return possible object is {@link TCreateBreakpointRequest }
+     * 
      */
     public TCreateBreakpointRequest getCreateBreakpoint() {
         return createBreakpoint;
@@ -420,9 +383,8 @@ public class Request {
      * Sets the value of the createBreakpoint property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCreateBreakpointRequest }
-     *     
+     *            allowed object is {@link TCreateBreakpointRequest }
+     * 
      */
     public void setCreateBreakpoint(TCreateBreakpointRequest value) {
         this.createBreakpoint = value;
@@ -431,10 +393,8 @@ public class Request {
     /**
      * Gets the value of the enableBreakpoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TEnableBreakpointRequest }
-     *     
+     * @return possible object is {@link TEnableBreakpointRequest }
+     * 
      */
     public TEnableBreakpointRequest getEnableBreakpoint() {
         return enableBreakpoint;
@@ -444,9 +404,8 @@ public class Request {
      * Sets the value of the enableBreakpoint property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TEnableBreakpointRequest }
-     *     
+     *            allowed object is {@link TEnableBreakpointRequest }
+     * 
      */
     public void setEnableBreakpoint(TEnableBreakpointRequest value) {
         this.enableBreakpoint = value;
@@ -455,10 +414,8 @@ public class Request {
     /**
      * Gets the value of the disableBreakpoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TDisableBreakpointRequest }
-     *     
+     * @return possible object is {@link TDisableBreakpointRequest }
+     * 
      */
     public TDisableBreakpointRequest getDisableBreakpoint() {
         return disableBreakpoint;
@@ -468,9 +425,8 @@ public class Request {
      * Sets the value of the disableBreakpoint property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TDisableBreakpointRequest }
-     *     
+     *            allowed object is {@link TDisableBreakpointRequest }
+     * 
      */
     public void setDisableBreakpoint(TDisableBreakpointRequest value) {
         this.disableBreakpoint = value;
@@ -479,10 +435,8 @@ public class Request {
     /**
      * Gets the value of the deleteBreakpoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TDeleteBreakpointRequest }
-     *     
+     * @return possible object is {@link TDeleteBreakpointRequest }
+     * 
      */
     public TDeleteBreakpointRequest getDeleteBreakpoint() {
         return deleteBreakpoint;
@@ -492,9 +446,8 @@ public class Request {
      * Sets the value of the deleteBreakpoint property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TDeleteBreakpointRequest }
-     *     
+     *            allowed object is {@link TDeleteBreakpointRequest }
+     * 
      */
     public void setDeleteBreakpoint(TDeleteBreakpointRequest value) {
         this.deleteBreakpoint = value;
@@ -503,10 +456,8 @@ public class Request {
     /**
      * Gets the value of the setVariable property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TSetVariableRequest }
-     *     
+     * @return possible object is {@link TSetVariableRequest }
+     * 
      */
     public TSetVariableRequest getSetVariable() {
         return setVariable;
@@ -516,9 +467,8 @@ public class Request {
      * Sets the value of the setVariable property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TSetVariableRequest }
-     *     
+     *            allowed object is {@link TSetVariableRequest }
+     * 
      */
     public void setSetVariable(TSetVariableRequest value) {
         this.setVariable = value;
@@ -527,10 +477,8 @@ public class Request {
     /**
      * Gets the value of the getPosition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TGetPositionRequest }
-     *     
+     * @return possible object is {@link TGetPositionRequest }
+     * 
      */
     public TGetPositionRequest getGetPosition() {
         return getPosition;
@@ -540,9 +488,8 @@ public class Request {
      * Sets the value of the getPosition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TGetPositionRequest }
-     *     
+     *            allowed object is {@link TGetPositionRequest }
+     * 
      */
     public void setGetPosition(TGetPositionRequest value) {
         this.getPosition = value;
@@ -551,10 +498,8 @@ public class Request {
     /**
      * Gets the value of the eengineEventSetup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TEengineEventSetupRequest }
-     *     
+     * @return possible object is {@link TEengineEventSetupRequest }
+     * 
      */
     public TEengineEventSetupRequest getEengineEventSetup() {
         return eengineEventSetup;
@@ -564,9 +509,8 @@ public class Request {
      * Sets the value of the eengineEventSetup property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TEengineEventSetupRequest }
-     *     
+     *            allowed object is {@link TEengineEventSetupRequest }
+     * 
      */
     public void setEengineEventSetup(TEengineEventSetupRequest value) {
         this.eengineEventSetup = value;
@@ -575,10 +519,8 @@ public class Request {
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getId() {
         return id;
@@ -588,9 +530,8 @@ public class Request {
      * Sets the value of the id property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setId(BigInteger value) {
         this.id = value;

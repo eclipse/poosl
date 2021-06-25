@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -54,74 +54,72 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "load",
-    "compile",
-    "listFiles",
-    "getPosition",
-    "listClasses",
-    "getTopLevelSpecification",
-    "instantiate",
-    "command",
-    "executionState",
-    "getTransitions",
-    "performTransition",
-    "inspect",
-    "createBreakpoint",
-    "enableBreakpoint",
-    "disableBreakpoint",
-    "deleteBreakpoint",
-    "setVariable",
-    "eengineEventSetup",
-    "communicationEvent",
-    "eengineEventError"
-})
+@XmlType(name = "",
+        propOrder = { "load", "compile", "listFiles", "getPosition", "listClasses", "getTopLevelSpecification", "instantiate", "command", "executionState", "getTransitions", "performTransition",
+                "inspect", "createBreakpoint", "enableBreakpoint", "disableBreakpoint", "deleteBreakpoint", "setVariable", "eengineEventSetup", "communicationEvent", "eengineEventError" })
 @XmlRootElement(name = "response")
 public class Response {
 
     protected TLoadResponse load;
+
     protected TCompileResponse compile;
+
     @XmlElement(name = "list_files")
     protected TListFilesResponse listFiles;
+
     @XmlElement(name = "get_position")
     protected TGetPositionResponse getPosition;
+
     @XmlElement(name = "list_classes")
     protected TListClassesResponse listClasses;
+
     @XmlElement(name = "get_top_level_specification")
     protected TGetTopLevelSpecificationResponse getTopLevelSpecification;
+
     protected TInstantiateResponse instantiate;
+
     protected TCommandResponse command;
+
     @XmlElement(name = "execution_state")
     protected TExecutionStateChangeResponse executionState;
+
     @XmlElement(name = "get_transitions")
     protected TGetTransitionsResponse getTransitions;
+
     @XmlElement(name = "perform_transition")
     protected TPerformTransitionResponse performTransition;
+
     protected TInspectResponse inspect;
+
     @XmlElement(name = "create_breakpoint")
     protected TCreateBreakpointResponse createBreakpoint;
+
     @XmlElement(name = "enable_breakpoint")
     protected TEnableBreakpointResponse enableBreakpoint;
+
     @XmlElement(name = "disable_breakpoint")
     protected TDisableBreakpointResponse disableBreakpoint;
+
     @XmlElement(name = "delete_breakpoint")
     protected TDeleteBreakpointResponse deleteBreakpoint;
+
     @XmlElement(name = "set_variable")
     protected TSetVariableResponse setVariable;
+
     @XmlElement(name = "eengine_event_setup")
     protected TEengineEventSetupResponse eengineEventSetup;
+
     @XmlElement(name = "communication_event")
     protected TCommunicationEvent communicationEvent;
+
     @XmlElement(name = "eengine_event_error")
     protected TEengineEventErrorResponse eengineEventError;
 
     /**
      * Gets the value of the load property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TLoadResponse }
-     *     
+     * @return possible object is {@link TLoadResponse }
+     * 
      */
     public TLoadResponse getLoad() {
         return load;
@@ -131,9 +129,8 @@ public class Response {
      * Sets the value of the load property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TLoadResponse }
-     *     
+     *            allowed object is {@link TLoadResponse }
+     * 
      */
     public void setLoad(TLoadResponse value) {
         this.load = value;
@@ -142,10 +139,8 @@ public class Response {
     /**
      * Gets the value of the compile property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCompileResponse }
-     *     
+     * @return possible object is {@link TCompileResponse }
+     * 
      */
     public TCompileResponse getCompile() {
         return compile;
@@ -155,9 +150,8 @@ public class Response {
      * Sets the value of the compile property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCompileResponse }
-     *     
+     *            allowed object is {@link TCompileResponse }
+     * 
      */
     public void setCompile(TCompileResponse value) {
         this.compile = value;
@@ -166,10 +160,8 @@ public class Response {
     /**
      * Gets the value of the listFiles property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TListFilesResponse }
-     *     
+     * @return possible object is {@link TListFilesResponse }
+     * 
      */
     public TListFilesResponse getListFiles() {
         return listFiles;
@@ -179,9 +171,8 @@ public class Response {
      * Sets the value of the listFiles property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TListFilesResponse }
-     *     
+     *            allowed object is {@link TListFilesResponse }
+     * 
      */
     public void setListFiles(TListFilesResponse value) {
         this.listFiles = value;
@@ -190,10 +181,8 @@ public class Response {
     /**
      * Gets the value of the getPosition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TGetPositionResponse }
-     *     
+     * @return possible object is {@link TGetPositionResponse }
+     * 
      */
     public TGetPositionResponse getGetPosition() {
         return getPosition;
@@ -203,9 +192,8 @@ public class Response {
      * Sets the value of the getPosition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TGetPositionResponse }
-     *     
+     *            allowed object is {@link TGetPositionResponse }
+     * 
      */
     public void setGetPosition(TGetPositionResponse value) {
         this.getPosition = value;
@@ -214,10 +202,8 @@ public class Response {
     /**
      * Gets the value of the listClasses property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TListClassesResponse }
-     *     
+     * @return possible object is {@link TListClassesResponse }
+     * 
      */
     public TListClassesResponse getListClasses() {
         return listClasses;
@@ -227,9 +213,8 @@ public class Response {
      * Sets the value of the listClasses property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TListClassesResponse }
-     *     
+     *            allowed object is {@link TListClassesResponse }
+     * 
      */
     public void setListClasses(TListClassesResponse value) {
         this.listClasses = value;
@@ -238,10 +223,8 @@ public class Response {
     /**
      * Gets the value of the getTopLevelSpecification property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TGetTopLevelSpecificationResponse }
-     *     
+     * @return possible object is {@link TGetTopLevelSpecificationResponse }
+     * 
      */
     public TGetTopLevelSpecificationResponse getGetTopLevelSpecification() {
         return getTopLevelSpecification;
@@ -251,9 +234,8 @@ public class Response {
      * Sets the value of the getTopLevelSpecification property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TGetTopLevelSpecificationResponse }
-     *     
+     *            allowed object is {@link TGetTopLevelSpecificationResponse }
+     * 
      */
     public void setGetTopLevelSpecification(TGetTopLevelSpecificationResponse value) {
         this.getTopLevelSpecification = value;
@@ -262,10 +244,8 @@ public class Response {
     /**
      * Gets the value of the instantiate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInstantiateResponse }
-     *     
+     * @return possible object is {@link TInstantiateResponse }
+     * 
      */
     public TInstantiateResponse getInstantiate() {
         return instantiate;
@@ -275,9 +255,8 @@ public class Response {
      * Sets the value of the instantiate property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInstantiateResponse }
-     *     
+     *            allowed object is {@link TInstantiateResponse }
+     * 
      */
     public void setInstantiate(TInstantiateResponse value) {
         this.instantiate = value;
@@ -286,10 +265,8 @@ public class Response {
     /**
      * Gets the value of the command property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommandResponse }
-     *     
+     * @return possible object is {@link TCommandResponse }
+     * 
      */
     public TCommandResponse getCommand() {
         return command;
@@ -299,9 +276,8 @@ public class Response {
      * Sets the value of the command property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommandResponse }
-     *     
+     *            allowed object is {@link TCommandResponse }
+     * 
      */
     public void setCommand(TCommandResponse value) {
         this.command = value;
@@ -310,10 +286,8 @@ public class Response {
     /**
      * Gets the value of the executionState property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExecutionStateChangeResponse }
-     *     
+     * @return possible object is {@link TExecutionStateChangeResponse }
+     * 
      */
     public TExecutionStateChangeResponse getExecutionState() {
         return executionState;
@@ -323,9 +297,8 @@ public class Response {
      * Sets the value of the executionState property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExecutionStateChangeResponse }
-     *     
+     *            allowed object is {@link TExecutionStateChangeResponse }
+     * 
      */
     public void setExecutionState(TExecutionStateChangeResponse value) {
         this.executionState = value;
@@ -334,10 +307,8 @@ public class Response {
     /**
      * Gets the value of the getTransitions property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TGetTransitionsResponse }
-     *     
+     * @return possible object is {@link TGetTransitionsResponse }
+     * 
      */
     public TGetTransitionsResponse getGetTransitions() {
         return getTransitions;
@@ -347,9 +318,8 @@ public class Response {
      * Sets the value of the getTransitions property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TGetTransitionsResponse }
-     *     
+     *            allowed object is {@link TGetTransitionsResponse }
+     * 
      */
     public void setGetTransitions(TGetTransitionsResponse value) {
         this.getTransitions = value;
@@ -358,10 +328,8 @@ public class Response {
     /**
      * Gets the value of the performTransition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TPerformTransitionResponse }
-     *     
+     * @return possible object is {@link TPerformTransitionResponse }
+     * 
      */
     public TPerformTransitionResponse getPerformTransition() {
         return performTransition;
@@ -371,9 +339,8 @@ public class Response {
      * Sets the value of the performTransition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TPerformTransitionResponse }
-     *     
+     *            allowed object is {@link TPerformTransitionResponse }
+     * 
      */
     public void setPerformTransition(TPerformTransitionResponse value) {
         this.performTransition = value;
@@ -382,10 +349,8 @@ public class Response {
     /**
      * Gets the value of the inspect property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectResponse }
-     *     
+     * @return possible object is {@link TInspectResponse }
+     * 
      */
     public TInspectResponse getInspect() {
         return inspect;
@@ -395,9 +360,8 @@ public class Response {
      * Sets the value of the inspect property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectResponse }
-     *     
+     *            allowed object is {@link TInspectResponse }
+     * 
      */
     public void setInspect(TInspectResponse value) {
         this.inspect = value;
@@ -406,10 +370,8 @@ public class Response {
     /**
      * Gets the value of the createBreakpoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCreateBreakpointResponse }
-     *     
+     * @return possible object is {@link TCreateBreakpointResponse }
+     * 
      */
     public TCreateBreakpointResponse getCreateBreakpoint() {
         return createBreakpoint;
@@ -419,9 +381,8 @@ public class Response {
      * Sets the value of the createBreakpoint property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCreateBreakpointResponse }
-     *     
+     *            allowed object is {@link TCreateBreakpointResponse }
+     * 
      */
     public void setCreateBreakpoint(TCreateBreakpointResponse value) {
         this.createBreakpoint = value;
@@ -430,10 +391,8 @@ public class Response {
     /**
      * Gets the value of the enableBreakpoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TEnableBreakpointResponse }
-     *     
+     * @return possible object is {@link TEnableBreakpointResponse }
+     * 
      */
     public TEnableBreakpointResponse getEnableBreakpoint() {
         return enableBreakpoint;
@@ -443,9 +402,8 @@ public class Response {
      * Sets the value of the enableBreakpoint property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TEnableBreakpointResponse }
-     *     
+     *            allowed object is {@link TEnableBreakpointResponse }
+     * 
      */
     public void setEnableBreakpoint(TEnableBreakpointResponse value) {
         this.enableBreakpoint = value;
@@ -454,10 +412,8 @@ public class Response {
     /**
      * Gets the value of the disableBreakpoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TDisableBreakpointResponse }
-     *     
+     * @return possible object is {@link TDisableBreakpointResponse }
+     * 
      */
     public TDisableBreakpointResponse getDisableBreakpoint() {
         return disableBreakpoint;
@@ -467,9 +423,8 @@ public class Response {
      * Sets the value of the disableBreakpoint property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TDisableBreakpointResponse }
-     *     
+     *            allowed object is {@link TDisableBreakpointResponse }
+     * 
      */
     public void setDisableBreakpoint(TDisableBreakpointResponse value) {
         this.disableBreakpoint = value;
@@ -478,10 +433,8 @@ public class Response {
     /**
      * Gets the value of the deleteBreakpoint property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TDeleteBreakpointResponse }
-     *     
+     * @return possible object is {@link TDeleteBreakpointResponse }
+     * 
      */
     public TDeleteBreakpointResponse getDeleteBreakpoint() {
         return deleteBreakpoint;
@@ -491,9 +444,8 @@ public class Response {
      * Sets the value of the deleteBreakpoint property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TDeleteBreakpointResponse }
-     *     
+     *            allowed object is {@link TDeleteBreakpointResponse }
+     * 
      */
     public void setDeleteBreakpoint(TDeleteBreakpointResponse value) {
         this.deleteBreakpoint = value;
@@ -502,10 +454,8 @@ public class Response {
     /**
      * Gets the value of the setVariable property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TSetVariableResponse }
-     *     
+     * @return possible object is {@link TSetVariableResponse }
+     * 
      */
     public TSetVariableResponse getSetVariable() {
         return setVariable;
@@ -515,9 +465,8 @@ public class Response {
      * Sets the value of the setVariable property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TSetVariableResponse }
-     *     
+     *            allowed object is {@link TSetVariableResponse }
+     * 
      */
     public void setSetVariable(TSetVariableResponse value) {
         this.setVariable = value;
@@ -526,10 +475,8 @@ public class Response {
     /**
      * Gets the value of the eengineEventSetup property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TEengineEventSetupResponse }
-     *     
+     * @return possible object is {@link TEengineEventSetupResponse }
+     * 
      */
     public TEengineEventSetupResponse getEengineEventSetup() {
         return eengineEventSetup;
@@ -539,9 +486,8 @@ public class Response {
      * Sets the value of the eengineEventSetup property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TEengineEventSetupResponse }
-     *     
+     *            allowed object is {@link TEengineEventSetupResponse }
+     * 
      */
     public void setEengineEventSetup(TEengineEventSetupResponse value) {
         this.eengineEventSetup = value;
@@ -550,10 +496,8 @@ public class Response {
     /**
      * Gets the value of the communicationEvent property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommunicationEvent }
-     *     
+     * @return possible object is {@link TCommunicationEvent }
+     * 
      */
     public TCommunicationEvent getCommunicationEvent() {
         return communicationEvent;
@@ -563,9 +507,8 @@ public class Response {
      * Sets the value of the communicationEvent property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommunicationEvent }
-     *     
+     *            allowed object is {@link TCommunicationEvent }
+     * 
      */
     public void setCommunicationEvent(TCommunicationEvent value) {
         this.communicationEvent = value;
@@ -574,10 +517,8 @@ public class Response {
     /**
      * Gets the value of the eengineEventError property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TEengineEventErrorResponse }
-     *     
+     * @return possible object is {@link TEengineEventErrorResponse }
+     * 
      */
     public TEengineEventErrorResponse getEengineEventError() {
         return eengineEventError;
@@ -587,9 +528,8 @@ public class Response {
      * Sets the value of the eengineEventError property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TEengineEventErrorResponse }
-     *     
+     *            allowed object is {@link TEengineEventErrorResponse }
+     * 
      */
     public void setEengineEventError(TEengineEventErrorResponse value) {
         this.eengineEventError = value;

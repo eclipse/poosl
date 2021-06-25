@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_compile_response complex type.
+ * <p>
+ * Java class for t_compile_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_compile_response">
@@ -36,24 +37,20 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_compile_response", propOrder = {
-    "error",
-    "handle"
-})
+@XmlType(name = "t_compile_response", propOrder = { "error", "handle" })
 public class TCompileResponse {
 
     @XmlElement(required = true)
     protected String error;
+
     @XmlElement(required = true)
     protected BigInteger handle;
 
     /**
      * Gets the value of the error property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getError() {
         return error;
@@ -63,9 +60,8 @@ public class TCompileResponse {
      * Sets the value of the error property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setError(String value) {
         this.error = value;
@@ -74,10 +70,8 @@ public class TCompileResponse {
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -87,9 +81,8 @@ public class TCompileResponse {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;

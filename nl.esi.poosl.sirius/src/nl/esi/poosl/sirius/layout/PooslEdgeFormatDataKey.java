@@ -10,54 +10,54 @@ import org.eclipse.sirius.viewpoint.DSemanticDecorator;
 import nl.esi.poosl.InstancePort;
 
 /**
- * A key that can be used for storing EdgeFormatData. It avoids duplicate keys
- * by adding the name of the instance when the connected object is an
- * {@link InstancePort}
+ * A key that can be used for storing EdgeFormatData. It avoids duplicate keys by adding the name of the instance when
+ * the connected object is an {@link InstancePort}
  * 
  * @author kstaal
  */
 
 @SuppressWarnings("restriction")
 public class PooslEdgeFormatDataKey extends SemanticEdgeFormatDataKey {
-	private final String sourceNode;
-	private final String targetNode;
+    private final String sourceNode;
 
-	public PooslEdgeFormatDataKey(DEdge edge) {
-		super(edge.getTarget());
-		sourceNode = getEdgeTargetUri(edge.getSourceNode());
-		targetNode = getEdgeTargetUri(edge.getTargetNode());
-	}
+    private final String targetNode;
 
-	private String getEdgeTargetUri(EdgeTarget edgeTarget) {
-		if (edgeTarget instanceof DSemanticDecorator) {
-			DSemanticDecorator semanticDecorator = (DSemanticDecorator) edgeTarget;
-			EObject realObject = semanticDecorator.getTarget();
-			String edgeId = EcoreUtil.getURI(semanticDecorator.getTarget()).fragment();
-			// add instance name. when more instanceports connect to the channel
-			// same id's can be created; @channels.1/@instancePorts.1
-			if (realObject instanceof InstancePort) {
-				InstancePort iPort = (InstancePort) realObject;
-				edgeId += "//" + iPort.getInstance().getName();
-			}
-			return edgeId;
+    public PooslEdgeFormatDataKey(DEdge edge) {
+        super(edge.getTarget());
+        sourceNode = getEdgeTargetUri(edge.getSourceNode());
+        targetNode = getEdgeTargetUri(edge.getTargetNode());
+    }
 
-		} else {
-			return EcoreUtil.getURI(edgeTarget).fragment();
-		}
-	}
+    private String getEdgeTargetUri(EdgeTarget edgeTarget) {
+        if (edgeTarget instanceof DSemanticDecorator) {
+            DSemanticDecorator semanticDecorator = (DSemanticDecorator) edgeTarget;
+            EObject realObject = semanticDecorator.getTarget();
+            String edgeId = EcoreUtil.getURI(semanticDecorator.getTarget()).fragment();
+            // add instance name. when more instanceports connect to the channel
+            // same id's can be created; @channels.1/@instancePorts.1
+            if (realObject instanceof InstancePort) {
+                InstancePort iPort = (InstancePort) realObject;
+                edgeId += "//" + iPort.getInstance().getName();
+            }
+            return edgeId;
 
-	@Override
-	public String getId() {
-		return getSemanticElementURIFragment() + "-" + sourceNode + "-" + targetNode;
-	}
+        } else {
+            return EcoreUtil.getURI(edgeTarget).fragment();
+        }
+    }
 
-	@Override
-	public int hashCode() {
-		return getSemanticElementURIFragment().hashCode() + sourceNode.hashCode() + targetNode.hashCode();
-	}
+    @Override
+    public String getId() {
+        return getSemanticElementURIFragment() + "-" + sourceNode + "-" + targetNode;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return super.equals(obj);
-	}
+    @Override
+    public int hashCode() {
+        return getSemanticElementURIFragment().hashCode() + sourceNode.hashCode() + targetNode.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

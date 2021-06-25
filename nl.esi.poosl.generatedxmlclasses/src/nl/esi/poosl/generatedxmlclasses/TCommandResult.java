@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_command_result.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_command_result.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_command_result">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -36,15 +37,12 @@ import javax.xml.bind.annotation.XmlType;
 public enum TCommandResult {
 
     @XmlEnumValue("ok")
-    OK("ok"),
-    @XmlEnumValue("no design loaded")
-    NO_DESIGN_LOADED("no design loaded"),
-    @XmlEnumValue("breakpoint hit")
-    BREAKPOINT_HIT("breakpoint hit"),
-    @XmlEnumValue("error")
-    ERROR("error"),
-    @XmlEnumValue("unknown")
+    OK("ok"), @XmlEnumValue("no design loaded")
+    NO_DESIGN_LOADED("no design loaded"), @XmlEnumValue("breakpoint hit")
+    BREAKPOINT_HIT("breakpoint hit"), @XmlEnumValue("error")
+    ERROR("error"), @XmlEnumValue("unknown")
     UNKNOWN("unknown");
+
     private final String value;
 
     TCommandResult(String v) {
@@ -56,7 +54,7 @@ public enum TCommandResult {
     }
 
     public static TCommandResult fromValue(String v) {
-        for (TCommandResult c: TCommandResult.values()) {
+        for (TCommandResult c : TCommandResult.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

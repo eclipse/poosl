@@ -1,40 +1,44 @@
 package nl.esi.poosl.rotalumisclient.views.diagram;
 
 public class PooslDrawableDiagramMessage {
-	private int serialNumber;
-	private final String content;
-	private final int from;
-	private final int to;
-	private final PooslDiagramMessage sourceMessage;
+    private int serialNumber;
 
-	public PooslDrawableDiagramMessage(PooslDiagramMessage sourceMessage, int from, int to) {
-		this.sourceMessage = sourceMessage;
-		this.content = sourceMessage.getPayload();
-		this.from = from;
-		this.to = to;
-	}
+    private final String content;
 
-	public void setSerialNumber(int serialNumber) {
-		this.serialNumber = serialNumber;
-	}
+    private final int from;
 
-	public int getSerialNumber() {
-		return serialNumber;
-	}
+    private final int to;
 
-	public String getContent() {
-		return content;
-	}
+    private final PooslDiagramMessage sourceMessage;
 
-	public int getFrom() {
-		return from;
-	}
+    public PooslDrawableDiagramMessage(PooslDiagramMessage sourceMessage, int from, int to) {
+        this.sourceMessage = sourceMessage;
+        this.content = sourceMessage.getPayload();
+        this.from = from;
+        this.to = to;
+    }
 
-	public int getTo() {
-		return to;
-	}
+    public void setSerialNumber(int serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 
-	public PooslDiagramMessage getSourceMessage() {
-		return sourceMessage;
-	}
+    public int getSerialNumber() {
+        return serialNumber;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public int getFrom() {
+        return from;
+    }
+
+    public int getTo() {
+        return to;
+    }
+
+    public PooslDiagramMessage getSourceMessage() {
+        return sourceMessage;
+    }
 }

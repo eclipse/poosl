@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_if_statement complex type.
+ * <p>
+ * Java class for t_if_statement complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_if_statement">
@@ -38,29 +38,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_if_statement", propOrder = {
-    "condition",
-    "then",
-    "_else"
-})
+@XmlType(name = "t_if_statement", propOrder = { "condition", "then", "_else" })
 public class TIfStatement {
 
     @XmlElement(required = true)
     protected TExpression condition;
+
     @XmlElement(required = true)
     protected TStatement then;
+
     @XmlElement(name = "else")
     protected TStatement _else;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the condition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getCondition() {
         return condition;
@@ -70,9 +67,8 @@ public class TIfStatement {
      * Sets the value of the condition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setCondition(TExpression value) {
         this.condition = value;
@@ -81,10 +77,8 @@ public class TIfStatement {
     /**
      * Gets the value of the then property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStatement }
-     *     
+     * @return possible object is {@link TStatement }
+     * 
      */
     public TStatement getThen() {
         return then;
@@ -94,9 +88,8 @@ public class TIfStatement {
      * Sets the value of the then property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStatement }
-     *     
+     *            allowed object is {@link TStatement }
+     * 
      */
     public void setThen(TStatement value) {
         this.then = value;
@@ -105,10 +98,8 @@ public class TIfStatement {
     /**
      * Gets the value of the else property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStatement }
-     *     
+     * @return possible object is {@link TStatement }
+     * 
      */
     public TStatement getElse() {
         return _else;
@@ -118,9 +109,8 @@ public class TIfStatement {
      * Sets the value of the else property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStatement }
-     *     
+     *            allowed object is {@link TStatement }
+     * 
      */
     public void setElse(TStatement value) {
         this._else = value;
@@ -129,10 +119,8 @@ public class TIfStatement {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -142,9 +130,8 @@ public class TIfStatement {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

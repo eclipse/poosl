@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_handle_type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_handle_type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_handle_type">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -39,21 +40,15 @@ import javax.xml.bind.annotation.XmlType;
 public enum THandleType {
 
     @XmlEnumValue("poosl_specification")
-    POOSL_SPECIFICATION("poosl_specification"),
-    @XmlEnumValue("cluster_class")
-    CLUSTER_CLASS("cluster_class"),
-    @XmlEnumValue("process_class")
-    PROCESS_CLASS("process_class"),
-    @XmlEnumValue("data_class")
-    DATA_CLASS("data_class"),
-    @XmlEnumValue("initial_method_call")
-    INITIAL_METHOD_CALL("initial_method_call"),
-    @XmlEnumValue("process_method")
-    PROCESS_METHOD("process_method"),
-    @XmlEnumValue("data_method")
-    DATA_METHOD("data_method"),
-    @XmlEnumValue("expression")
+    POOSL_SPECIFICATION("poosl_specification"), @XmlEnumValue("cluster_class")
+    CLUSTER_CLASS("cluster_class"), @XmlEnumValue("process_class")
+    PROCESS_CLASS("process_class"), @XmlEnumValue("data_class")
+    DATA_CLASS("data_class"), @XmlEnumValue("initial_method_call")
+    INITIAL_METHOD_CALL("initial_method_call"), @XmlEnumValue("process_method")
+    PROCESS_METHOD("process_method"), @XmlEnumValue("data_method")
+    DATA_METHOD("data_method"), @XmlEnumValue("expression")
     EXPRESSION("expression");
+
     private final String value;
 
     THandleType(String v) {
@@ -65,7 +60,7 @@ public enum THandleType {
     }
 
     public static THandleType fromValue(String v) {
-        for (THandleType c: THandleType.values()) {
+        for (THandleType c : THandleType.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

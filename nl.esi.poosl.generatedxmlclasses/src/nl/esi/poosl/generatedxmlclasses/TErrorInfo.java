@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_error_info complex type.
+ * <p>
+ * Java class for t_error_info complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_error_info">
@@ -37,20 +37,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_error_info", propOrder = {
-    "stmtHandle",
-    "message",
-    "processPath",
-    "node"
-})
+@XmlType(name = "t_error_info", propOrder = { "stmtHandle", "message", "processPath", "node" })
 public class TErrorInfo {
 
     @XmlElement(name = "stmt_handle")
     protected int stmtHandle;
+
     @XmlElement(required = true)
     protected String message;
+
     @XmlElement(name = "process_path")
     protected String processPath;
+
     protected int node;
 
     /**
@@ -72,10 +70,8 @@ public class TErrorInfo {
     /**
      * Gets the value of the message property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMessage() {
         return message;
@@ -85,9 +81,8 @@ public class TErrorInfo {
      * Sets the value of the message property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMessage(String value) {
         this.message = value;
@@ -96,10 +91,8 @@ public class TErrorInfo {
     /**
      * Gets the value of the processPath property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getProcessPath() {
         return processPath;
@@ -109,9 +102,8 @@ public class TErrorInfo {
      * Sets the value of the processPath property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setProcessPath(String value) {
         this.processPath = value;

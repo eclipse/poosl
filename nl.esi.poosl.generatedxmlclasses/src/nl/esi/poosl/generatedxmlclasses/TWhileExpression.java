@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_while_expression complex type.
+ * <p>
+ * Java class for t_while_expression complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_while_expression">
@@ -35,24 +35,20 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_while_expression", propOrder = {
-    "condition",
-    "body"
-})
+@XmlType(name = "t_while_expression", propOrder = { "condition", "body" })
 public class TWhileExpression {
 
     @XmlElement(required = true)
     protected TExpression condition;
+
     @XmlElement(required = true)
     protected TExpression body;
 
     /**
      * Gets the value of the condition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getCondition() {
         return condition;
@@ -62,9 +58,8 @@ public class TWhileExpression {
      * Sets the value of the condition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setCondition(TExpression value) {
         this.condition = value;
@@ -73,10 +68,8 @@ public class TWhileExpression {
     /**
      * Gets the value of the body property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getBody() {
         return body;
@@ -86,9 +79,8 @@ public class TWhileExpression {
      * Sets the value of the body property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setBody(TExpression value) {
         this.body = value;

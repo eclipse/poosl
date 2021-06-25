@@ -33,238 +33,223 @@ import nl.esi.poosl.xtext.helpers.HelperFunctions;
 import nl.esi.poosl.xtext.helpers.PooslProcessMethodParser;
 
 public class PooslJavaValidatorAcyclicRelations extends PooslJavaValidatorMisc {
-	private static final String UNGUARDED_LOOP = "Unguarded recursive loop: ";
-	private static final String CYCLIC_CLUSTER = "Cyclic cluster class dependency: ";
-	private static final String CYCLIC_PROCESS = "Cyclic process class dependency: ";
-	private static final String CYCLIC_DATA = "Cyclic data class dependency: ";
+    private static final String UNGUARDED_LOOP = "Unguarded recursive loop: ";
 
-	private static final String ARROW = " -> ";
-	private static final String SEPARATOR = "_";
+    private static final String CYCLIC_CLUSTER = "Cyclic cluster class dependency: ";
 
-	public boolean checkCyclesDataClasses(DataClass dClass) {
-		Resource resource = dClass.eResource();
-		String dClassName = dClass.getName();
-		if (dClassName != null) {
-			List<IEObjectDescription> parents = PooslCache.get(resource).getDataAncestors(dClassName);
-			if (!parents.isEmpty()) {
-				String lastParentName = HelperFunctions.getCorrectedDataClassExtendsAsString(parents.get(parents.size() - 1));
-				if (dClassName.equals(lastParentName)) {
-					// cyclic
-					StringBuilder buf = new StringBuilder();
-					for (IEObjectDescription description : parents) {
-						buf.append(HelperFunctions.getName(description)).append(ARROW);
-					}
-					error(CYCLIC_DATA + dClassName + ARROW + buf.toString() + dClassName, dClass,
-							Literals.DATA_CLASS__SUPER_CLASS);
-					return false;
-				}
-			} else {
-				String superClass = dClass.getSuperClass();
-				if (dClassName.equals(superClass)) {
-					error(CYCLIC_DATA + dClassName + ARROW + dClassName, dClass, Literals.DATA_CLASS__SUPER_CLASS);
-				}
-				return false;
-			}
-		}
-		return true;
-	}
+    private static final String CYCLIC_PROCESS = "Cyclic process class dependency: ";
 
-	public boolean checkCyclesProcessClasses(ProcessClass pClass) {
-		Resource resource = pClass.eResource();
-		String pClassName = pClass.getName();
-		if (pClassName != null) {
-			List<IEObjectDescription> parents = PooslCache.get(resource).getProcessAncestors(pClassName);
-			if (!parents.isEmpty()) {
-				String lastParentName = PooslProcessClassDescription.getSuperClass(parents.get(parents.size() - 1));
-				if (pClassName.equals(lastParentName)) {
-					// cyclic
-					StringBuilder buf = new StringBuilder();
-					for (IEObjectDescription description : parents) {
-						buf.append(HelperFunctions.getName(description)).append(ARROW);
-					}
-					error(CYCLIC_PROCESS + pClassName + ARROW + buf.toString() + pClassName, pClass,
-							Literals.PROCESS_CLASS__SUPER_CLASS);
-					return false;
-				}
-			} else {
-				String superClass = pClass.getSuperClass();
-				if (pClassName.equals(superClass)) {
-					error(CYCLIC_PROCESS + pClassName + ARROW + pClassName, pClass,
-							Literals.PROCESS_CLASS__SUPER_CLASS);
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+    private static final String CYCLIC_DATA = "Cyclic data class dependency: ";
 
-	public boolean checkCyclesClusterClasses(ClusterClass cClass) {
-		Resource resource = cClass.eResource();
-		String cClassName = cClass.getName();
-		if (cClassName != null) {
-			for (Instance instance : cClass.getInstances()) {
-				String iClassName = instance.getClassDefinition();
-				if (cClassName.equals(iClassName)) {
-					error(CYCLIC_CLUSTER + cClassName + ARROW + cClassName, instance,
-							Literals.INSTANCE__CLASS_DEFINITION, null);
-					return false;
-				} else {
-					List<String> history = new ArrayList<>();
-					history.add(cClassName);
+    private static final String ARROW = " -> ";
 
-					String cycle = checkCyclesClusterClassesRecursion(resource, iClassName, cClassName, history);
-					if (cycle != null) {
-						error(CYCLIC_CLUSTER + cClassName + ARROW + cycle, instance,
-								Literals.INSTANCE__CLASS_DEFINITION, null);
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
+    private static final String SEPARATOR = "_";
 
-	private String checkCyclesClusterClassesRecursion(Resource resource, String iClassName, String goal,
-			List<String> history) {
-		history.add(iClassName);
-		IEObjectDescription descr = HelperFunctions.getInstantiableClass(resource, iClassName);
-		if (descr != null && descr.getEClass() == Literals.CLUSTER_CLASS) {
-			Map<String, String> instances = PooslClusterClassDescription.getInstancesMap(descr);
-			for (Entry<String, String> instance : instances.entrySet()) {
-				String instanceClass = instance.getValue();
-				if (history.contains(instanceClass)) {
-					if (goal.equals(instanceClass)) {
-						return iClassName + ARROW + goal;
-					}
-				} else {
-					String cycle = checkCyclesClusterClassesRecursion(resource, instanceClass, goal, history);
-					if (cycle != null) {
-						return iClassName + ARROW + cycle;
-					}
-				}
-			}
-		}
+    public boolean checkCyclesDataClasses(DataClass dClass) {
+        Resource resource = dClass.eResource();
+        String dClassName = dClass.getName();
+        if (dClassName != null) {
+            List<IEObjectDescription> parents = PooslCache.get(resource).getDataAncestors(dClassName);
+            if (!parents.isEmpty()) {
+                String lastParentName = HelperFunctions.getCorrectedDataClassExtendsAsString(parents.get(parents.size() - 1));
+                if (dClassName.equals(lastParentName)) {
+                    // cyclic
+                    StringBuilder buf = new StringBuilder();
+                    for (IEObjectDescription description : parents) {
+                        buf.append(HelperFunctions.getName(description)).append(ARROW);
+                    }
+                    error(CYCLIC_DATA + dClassName + ARROW + buf.toString() + dClassName, dClass, Literals.DATA_CLASS__SUPER_CLASS);
+                    return false;
+                }
+            } else {
+                String superClass = dClass.getSuperClass();
+                if (dClassName.equals(superClass)) {
+                    error(CYCLIC_DATA + dClassName + ARROW + dClassName, dClass, Literals.DATA_CLASS__SUPER_CLASS);
+                }
+                return false;
+            }
+        }
+        return true;
+    }
 
-		history.remove(iClassName);
-		return null;
-	}
+    public boolean checkCyclesProcessClasses(ProcessClass pClass) {
+        Resource resource = pClass.eResource();
+        String pClassName = pClass.getName();
+        if (pClassName != null) {
+            List<IEObjectDescription> parents = PooslCache.get(resource).getProcessAncestors(pClassName);
+            if (!parents.isEmpty()) {
+                String lastParentName = PooslProcessClassDescription.getSuperClass(parents.get(parents.size() - 1));
+                if (pClassName.equals(lastParentName)) {
+                    // cyclic
+                    StringBuilder buf = new StringBuilder();
+                    for (IEObjectDescription description : parents) {
+                        buf.append(HelperFunctions.getName(description)).append(ARROW);
+                    }
+                    error(CYCLIC_PROCESS + pClassName + ARROW + buf.toString() + pClassName, pClass, Literals.PROCESS_CLASS__SUPER_CLASS);
+                    return false;
+                }
+            } else {
+                String superClass = pClass.getSuperClass();
+                if (pClassName.equals(superClass)) {
+                    error(CYCLIC_PROCESS + pClassName + ARROW + pClassName, pClass, Literals.PROCESS_CLASS__SUPER_CLASS);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
-	@Check(CheckType.FAST)
-	public void checkUnguardedCallLoop(ProcessMethod pMethod) {
-		String strPMethod = processMethod2StringNameAndParameterCounts(pMethod);
-		checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, pMethod.getBody());
-	}
+    public boolean checkCyclesClusterClasses(ClusterClass cClass) {
+        Resource resource = cClass.eResource();
+        String cClassName = cClass.getName();
+        if (cClassName != null) {
+            for (Instance instance : cClass.getInstances()) {
+                String iClassName = instance.getClassDefinition();
+                if (cClassName.equals(iClassName)) {
+                    error(CYCLIC_CLUSTER + cClassName + ARROW + cClassName, instance, Literals.INSTANCE__CLASS_DEFINITION, null);
+                    return false;
+                } else {
+                    List<String> history = new ArrayList<>();
+                    history.add(cClassName);
 
-	private void checkUnguardedCallLoopRecursionStatement(ProcessMethod pMethod, String strPMethod,
-			Statement statement) {
-		if (statement instanceof ProcessMethodCall) {
-			ProcessMethodCall call = (ProcessMethodCall) statement;
-			String pClass = HelperFunctions.getContainingProcessClass(call).getName();
+                    String cycle = checkCyclesClusterClassesRecursion(resource, iClassName, cClassName, history);
+                    if (cycle != null) {
+                        error(CYCLIC_CLUSTER + cClassName + ARROW + cycle, instance, Literals.INSTANCE__CLASS_DEFINITION, null);
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
-			if (pClass != null) {
-				Resource resource = pMethod.eResource();
-				IEObjectDescription calledMethod = PooslCache.get(resource)
-						.getProcessMethods(pClass, call.getInputArguments().size(), call.getOutputVariables().size())
-						.get(call.getMethod());
+    private String checkCyclesClusterClassesRecursion(Resource resource, String iClassName, String goal, List<String> history) {
+        history.add(iClassName);
+        IEObjectDescription descr = HelperFunctions.getInstantiableClass(resource, iClassName);
+        if (descr != null && descr.getEClass() == Literals.CLUSTER_CLASS) {
+            Map<String, String> instances = PooslClusterClassDescription.getInstancesMap(descr);
+            for (Entry<String, String> instance : instances.entrySet()) {
+                String instanceClass = instance.getValue();
+                if (history.contains(instanceClass)) {
+                    if (goal.equals(instanceClass)) {
+                        return iClassName + ARROW + goal;
+                    }
+                } else {
+                    String cycle = checkCyclesClusterClassesRecursion(resource, instanceClass, goal, history);
+                    if (cycle != null) {
+                        return iClassName + ARROW + cycle;
+                    }
+                }
+            }
+        }
 
-				if (calledMethod != null) {
-					String strCalledPMethod = processMethod2StringNameAndParameterCounts(calledMethod);
-					if (strPMethod.equals(strCalledPMethod)) {
-						StringBuilder buf = new StringBuilder();
-						FormattingHelper.formatProcessMethod(buf, pMethod, false);
-						buf.append(ARROW);
-						FormattingHelper.formatProcessMethod(buf, pMethod, false);
-						warning(UNGUARDED_LOOP + buf.toString(), statement, null, null, WarningType.UNGUARDED_LOOP);
-					} else {
-						List<String> history = new ArrayList<>();
-						history.add(strPMethod);
-						String cycle = checkUnguardedCallLoopRecursionEObjectDescription(
-								(ProcessClass) pMethod.eContainer(), pMethod, strPMethod, history, calledMethod);
-						if (cycle != null) {
-							StringBuilder buf = new StringBuilder();
-							FormattingHelper.formatProcessMethod(buf, pMethod, false);
-							buf.append(ARROW);
-							buf.append(cycle);
-							FormattingHelper.formatProcessMethod(buf, pMethod, false);
-							warning(UNGUARDED_LOOP + buf.toString(), statement, null, null, WarningType.UNGUARDED_LOOP);
-						}
-					}
-				}
-			}
-			return;
-		}
+        history.remove(iClassName);
+        return null;
+    }
 
-		if (statement instanceof StatementSequence) {
-			List<Statement> sequence = ((StatementSequence) statement).getStatements();
-			if (!sequence.isEmpty()) {
-				checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, sequence.get(0));
-			}
-		} else if (statement instanceof AbortStatement) {
-			checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod,
-					((AbortStatement) statement).getNormalClause());
-			checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod,
-					((AbortStatement) statement).getAbortingClause());
-		} else if (statement instanceof GuardedStatement) {
-			checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod,
-					((GuardedStatement) statement).getStatement());
-		} else if (statement instanceof InterruptStatement) {
-			checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod,
-					((InterruptStatement) statement).getNormalClause());
-			checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod,
-					((InterruptStatement) statement).getInterruptingClause());
-		} else if (statement instanceof ParStatement) {
-			for (Statement clause : ((ParStatement) statement).getClauses()) {
-				checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, clause);
-			}
-		} else if (statement instanceof SelStatement) {
-			for (Statement clause : ((SelStatement) statement).getClauses()) {
-				checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, clause);
-			}
-		}
-	}
+    @Check(CheckType.FAST)
+    public void checkUnguardedCallLoop(ProcessMethod pMethod) {
+        String strPMethod = processMethod2StringNameAndParameterCounts(pMethod);
+        checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, pMethod.getBody());
+    }
 
-	private String checkUnguardedCallLoopRecursionEObjectDescription(ProcessClass pClass, ProcessMethod pMethod,
-			String strPMethod, List<String> history, IEObjectDescription calledMethod) {
-		if (calledMethod == null) {
-			return null;
-		}
+    private void checkUnguardedCallLoopRecursionStatement(ProcessMethod pMethod, String strPMethod, Statement statement) {
+        if (statement instanceof ProcessMethodCall) {
+            ProcessMethodCall call = (ProcessMethodCall) statement;
+            String pClass = HelperFunctions.getContainingProcessClass(call).getName();
 
-		String strCalledPMethod = processMethod2StringNameAndParameterCounts(calledMethod);
-		if (history.contains(strCalledPMethod)) {
-			if (strPMethod.equals(strCalledPMethod)) {
-				return "";
-			}
-		} else {
-			history.add(strCalledPMethod);
+            if (pClass != null) {
+                Resource resource = pMethod.eResource();
+                IEObjectDescription calledMethod = PooslCache.get(resource).getProcessMethods(pClass, call.getInputArguments().size(), call.getOutputVariables().size()).get(call.getMethod());
 
-			for (PooslProcessMethodParser ungCall : PooslProcessMethodDescription
-					.getUnguardedCallDescriptions(calledMethod)) {
-				IEObjectDescription recCalledMethodDescr = ungCall.getCalledMethod(pClass);
-				String cycle = checkUnguardedCallLoopRecursionEObjectDescription(pClass, pMethod, strPMethod, history,
-						recCalledMethodDescr);
-				if (cycle != null) {
-					StringBuilder buf = new StringBuilder();
-					FormattingHelper.formatProcessMethod(buf, calledMethod);
-					buf.append(ARROW);
-					buf.append(cycle);
-					return buf.toString();
-				}
-			}
+                if (calledMethod != null) {
+                    String strCalledPMethod = processMethod2StringNameAndParameterCounts(calledMethod);
+                    if (strPMethod.equals(strCalledPMethod)) {
+                        StringBuilder buf = new StringBuilder();
+                        FormattingHelper.formatProcessMethod(buf, pMethod, false);
+                        buf.append(ARROW);
+                        FormattingHelper.formatProcessMethod(buf, pMethod, false);
+                        warning(UNGUARDED_LOOP + buf.toString(), statement, null, null, WarningType.UNGUARDED_LOOP);
+                    } else {
+                        List<String> history = new ArrayList<>();
+                        history.add(strPMethod);
+                        String cycle = checkUnguardedCallLoopRecursionEObjectDescription((ProcessClass) pMethod.eContainer(), pMethod, strPMethod, history, calledMethod);
+                        if (cycle != null) {
+                            StringBuilder buf = new StringBuilder();
+                            FormattingHelper.formatProcessMethod(buf, pMethod, false);
+                            buf.append(ARROW);
+                            buf.append(cycle);
+                            FormattingHelper.formatProcessMethod(buf, pMethod, false);
+                            warning(UNGUARDED_LOOP + buf.toString(), statement, null, null, WarningType.UNGUARDED_LOOP);
+                        }
+                    }
+                }
+            }
+            return;
+        }
 
-			history.remove(strCalledPMethod);
-		}
+        if (statement instanceof StatementSequence) {
+            List<Statement> sequence = ((StatementSequence) statement).getStatements();
+            if (!sequence.isEmpty()) {
+                checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, sequence.get(0));
+            }
+        } else if (statement instanceof AbortStatement) {
+            checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, ((AbortStatement) statement).getNormalClause());
+            checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, ((AbortStatement) statement).getAbortingClause());
+        } else if (statement instanceof GuardedStatement) {
+            checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, ((GuardedStatement) statement).getStatement());
+        } else if (statement instanceof InterruptStatement) {
+            checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, ((InterruptStatement) statement).getNormalClause());
+            checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, ((InterruptStatement) statement).getInterruptingClause());
+        } else if (statement instanceof ParStatement) {
+            for (Statement clause : ((ParStatement) statement).getClauses()) {
+                checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, clause);
+            }
+        } else if (statement instanceof SelStatement) {
+            for (Statement clause : ((SelStatement) statement).getClauses()) {
+                checkUnguardedCallLoopRecursionStatement(pMethod, strPMethod, clause);
+            }
+        }
+    }
 
-		return null;
-	}
+    private String checkUnguardedCallLoopRecursionEObjectDescription(ProcessClass pClass, ProcessMethod pMethod, String strPMethod, List<String> history, IEObjectDescription calledMethod) {
+        if (calledMethod == null) {
+            return null;
+        }
 
-	protected static String processMethod2StringNameAndParameterCounts(ProcessMethod method) {
-		return method.getName() + SEPARATOR + HelperFunctions.computeNumberOfVariables(method.getInputParameters())
-				+ SEPARATOR + HelperFunctions.computeNumberOfVariables(method.getOutputParameters());
-	}
+        String strCalledPMethod = processMethod2StringNameAndParameterCounts(calledMethod);
+        if (history.contains(strCalledPMethod)) {
+            if (strPMethod.equals(strCalledPMethod)) {
+                return "";
+            }
+        } else {
+            history.add(strCalledPMethod);
 
-	private static String processMethod2StringNameAndParameterCounts(IEObjectDescription descr) {
-		return HelperFunctions.getName(descr) + SEPARATOR
-				+ PooslProcessMethodDescription.getNumberOfInputParameters(descr) + SEPARATOR
-				+ PooslProcessMethodDescription.getNumberOfOutputParameters(descr);
-	}
+            for (PooslProcessMethodParser ungCall : PooslProcessMethodDescription.getUnguardedCallDescriptions(calledMethod)) {
+                IEObjectDescription recCalledMethodDescr = ungCall.getCalledMethod(pClass);
+                String cycle = checkUnguardedCallLoopRecursionEObjectDescription(pClass, pMethod, strPMethod, history, recCalledMethodDescr);
+                if (cycle != null) {
+                    StringBuilder buf = new StringBuilder();
+                    FormattingHelper.formatProcessMethod(buf, calledMethod);
+                    buf.append(ARROW);
+                    buf.append(cycle);
+                    return buf.toString();
+                }
+            }
+
+            history.remove(strCalledPMethod);
+        }
+
+        return null;
+    }
+
+    protected static String processMethod2StringNameAndParameterCounts(ProcessMethod method) {
+        return method.getName() + SEPARATOR + HelperFunctions.computeNumberOfVariables(method.getInputParameters()) + SEPARATOR
+                + HelperFunctions.computeNumberOfVariables(method.getOutputParameters());
+    }
+
+    private static String processMethod2StringNameAndParameterCounts(IEObjectDescription descr) {
+        return HelperFunctions.getName(descr) + SEPARATOR + PooslProcessMethodDescription.getNumberOfInputParameters(descr) + SEPARATOR
+                + PooslProcessMethodDescription.getNumberOfOutputParameters(descr);
+    }
 }

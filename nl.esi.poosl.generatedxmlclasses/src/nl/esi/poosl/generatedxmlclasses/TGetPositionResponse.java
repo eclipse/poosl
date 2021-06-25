@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_get_position_response complex type.
+ * <p>
+ * Java class for t_get_position_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_get_position_response">
@@ -36,17 +36,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_get_position_response", propOrder = {
-    "stmtHandle",
-    "begin",
-    "end"
-})
+@XmlType(name = "t_get_position_response", propOrder = { "stmtHandle", "begin", "end" })
 public class TGetPositionResponse {
 
     @XmlElement(name = "stmt_handle")
     protected int stmtHandle;
+
     @XmlElement(required = true)
     protected TSourcePosition begin;
+
     @XmlElement(required = true)
     protected TSourcePosition end;
 
@@ -69,10 +67,8 @@ public class TGetPositionResponse {
     /**
      * Gets the value of the begin property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TSourcePosition }
-     *     
+     * @return possible object is {@link TSourcePosition }
+     * 
      */
     public TSourcePosition getBegin() {
         return begin;
@@ -82,9 +78,8 @@ public class TGetPositionResponse {
      * Sets the value of the begin property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TSourcePosition }
-     *     
+     *            allowed object is {@link TSourcePosition }
+     * 
      */
     public void setBegin(TSourcePosition value) {
         this.begin = value;
@@ -93,10 +88,8 @@ public class TGetPositionResponse {
     /**
      * Gets the value of the end property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TSourcePosition }
-     *     
+     * @return possible object is {@link TSourcePosition }
+     * 
      */
     public TSourcePosition getEnd() {
         return end;
@@ -106,9 +99,8 @@ public class TGetPositionResponse {
      * Sets the value of the end property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TSourcePosition }
-     *     
+     *            allowed object is {@link TSourcePosition }
+     * 
      */
     public void setEnd(TSourcePosition value) {
         this.end = value;

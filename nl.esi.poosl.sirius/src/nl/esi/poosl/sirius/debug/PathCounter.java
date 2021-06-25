@@ -1,34 +1,36 @@
 package nl.esi.poosl.sirius.debug;
 
 public class PathCounter {
-	private final String pathId;
-	private int in;
-	private int out;
+    private final String pathId;
 
-	public PathCounter(String pathId) {
-		super();
-		this.pathId = pathId;
-		this.in = 0;
-		this.out = 0;
-	}
+    private int in;
 
-	public void addIncoming() {
-		in++;
-	}
+    private int out;
 
-	public void addOutgoing() {
-		out++;
-	}
+    public PathCounter(String pathId) {
+        super();
+        this.pathId = pathId;
+        this.in = 0;
+        this.out = 0;
+    }
 
-	public int getIn() {
-		return in;
-	}
+    public void addIncoming() {
+        in++;
+    }
 
-	public int getOut() {
-		return out;
-	}
+    public void addOutgoing() {
+        out++;
+    }
 
-	public String getPathId() {
-		return pathId;
-	}
+    public int getIn() {
+        return in;
+    }
+
+    public int getOut() {
+        return out;
+    }
+
+    public String getPathId() {
+        return pathId;
+    }
 }

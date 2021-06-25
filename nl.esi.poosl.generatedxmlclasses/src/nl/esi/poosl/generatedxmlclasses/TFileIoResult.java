@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_file_io_result.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_file_io_result.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_file_io_result">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -35,15 +36,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TFileIoResult {
 
-    OK("OK"),
-    @XmlEnumValue("file does not exist")
-    FILE_DOES_NOT_EXIST("file does not exist"),
-    @XmlEnumValue("cannot create file")
-    CANNOT_CREATE_FILE("cannot create file"),
-    @XmlEnumValue("disk full")
-    DISK_FULL("disk full"),
-    @XmlEnumValue("timed out")
+    OK("OK"), @XmlEnumValue("file does not exist")
+    FILE_DOES_NOT_EXIST("file does not exist"), @XmlEnumValue("cannot create file")
+    CANNOT_CREATE_FILE("cannot create file"), @XmlEnumValue("disk full")
+    DISK_FULL("disk full"), @XmlEnumValue("timed out")
     TIMED_OUT("timed out");
+
     private final String value;
 
     TFileIoResult(String v) {
@@ -55,7 +53,7 @@ public enum TFileIoResult {
     }
 
     public static TFileIoResult fromValue(String v) {
-        for (TFileIoResult c: TFileIoResult.values()) {
+        for (TFileIoResult c : TFileIoResult.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

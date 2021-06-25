@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_instance complex type.
+ * <p>
+ * Java class for t_inspect_instance complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_instance">
@@ -41,32 +42,28 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_instance", propOrder = {
-    "name",
-    "type",
-    "processPath",
-    "cluster",
-    "port"
-})
+@XmlType(name = "t_inspect_instance", propOrder = { "name", "type", "processPath", "cluster", "port" })
 public class TInspectInstance {
 
     @XmlElement(required = true)
     protected String name;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected TInstanceType type;
+
     @XmlElement(name = "process_path", required = true)
     protected String processPath;
+
     protected TInspectCluster cluster;
+
     protected List<TInspectPort> port;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -76,9 +73,8 @@ public class TInspectInstance {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -87,10 +83,8 @@ public class TInspectInstance {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInstanceType }
-     *     
+     * @return possible object is {@link TInstanceType }
+     * 
      */
     public TInstanceType getType() {
         return type;
@@ -100,9 +94,8 @@ public class TInspectInstance {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInstanceType }
-     *     
+     *            allowed object is {@link TInstanceType }
+     * 
      */
     public void setType(TInstanceType value) {
         this.type = value;
@@ -111,10 +104,8 @@ public class TInspectInstance {
     /**
      * Gets the value of the processPath property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getProcessPath() {
         return processPath;
@@ -124,9 +115,8 @@ public class TInspectInstance {
      * Sets the value of the processPath property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setProcessPath(String value) {
         this.processPath = value;
@@ -135,10 +125,8 @@ public class TInspectInstance {
     /**
      * Gets the value of the cluster property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectCluster }
-     *     
+     * @return possible object is {@link TInspectCluster }
+     * 
      */
     public TInspectCluster getCluster() {
         return cluster;
@@ -148,9 +136,8 @@ public class TInspectInstance {
      * Sets the value of the cluster property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectCluster }
-     *     
+     *            allowed object is {@link TInspectCluster }
+     * 
      */
     public void setCluster(TInspectCluster value) {
         this.cluster = value;
@@ -160,21 +147,20 @@ public class TInspectInstance {
      * Gets the value of the port property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the port property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the port property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getPort().add(newItem);
+     * getPort().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TInspectPort }
+     * Objects of the following type(s) are allowed in the list {@link TInspectPort }
      * 
      * 
      */

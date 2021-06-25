@@ -12,159 +12,155 @@ import nl.esi.poosl.rotalumisclient.RotalumisConstants;
 import nl.esi.poosl.rotalumisclient.extension.ExternDebugMessage;
 
 public class PooslDrawMessage {
-	private static final Logger LOGGER = Logger.getLogger(PooslDrawMessage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PooslDrawMessage.class.getName());
 
-	private ExternDebugMessage message;
-	private Map<String, MessagePath> messagePaths;
+    private ExternDebugMessage message;
 
-	private String[] sendLocation;
-	private String[] receiveLocation;
+    private Map<String, MessagePath> messagePaths;
 
-	private int commonIndex;
+    private String[] sendLocation;
 
-	public PooslDrawMessage(ExternDebugMessage message, Map<String, String> instancePortMap) {
-		setMessage(message);
-		setCommonClusterIndex();
-		setMessagePaths(calculateMessagePath(instancePortMap));
-	}
+    private String[] receiveLocation;
 
-	private void setCommonClusterIndex() {
-		// find highest common cluster
-		commonIndex = 0;
-		while (sendLocation[commonIndex] != null && receiveLocation[commonIndex] != null
-				&& sendLocation[commonIndex].equals(receiveLocation[commonIndex])) {
-			commonIndex++;
-		}
-	}
+    private int commonIndex;
 
-	private void setMessage(ExternDebugMessage message) {
-		this.message = message;
-		sendLocation = message.getSendProcess().substring(1).split(PooslConstants.PATH_SEPARATOR);
-		receiveLocation = message.getReceiveProcess().substring(1).split(PooslConstants.PATH_SEPARATOR);
-	}
+    public PooslDrawMessage(ExternDebugMessage message, Map<String, String> instancePortMap) {
+        setMessage(message);
+        setCommonClusterIndex();
+        setMessagePaths(calculateMessagePath(instancePortMap));
+    }
 
-	public ExternDebugMessage getMessage() {
-		return message;
-	}
+    private void setCommonClusterIndex() {
+        // find highest common cluster
+        commonIndex = 0;
+        while (sendLocation[commonIndex] != null && receiveLocation[commonIndex] != null && sendLocation[commonIndex].equals(receiveLocation[commonIndex])) {
+            commonIndex++;
+        }
+    }
 
-	/**
-	 * @return {@link Map} diagram name as key and the messagepath as value, may
-	 *         return null
-	 */
-	public Map<String, MessagePath> getMessagePaths() {
-		return messagePaths;
-	}
+    private void setMessage(ExternDebugMessage message) {
+        this.message = message;
+        sendLocation = message.getSendProcess().substring(1).split(PooslConstants.PATH_SEPARATOR);
+        receiveLocation = message.getReceiveProcess().substring(1).split(PooslConstants.PATH_SEPARATOR);
+    }
 
-	public void setMessagePaths(List<MessagePath> messagePathList) {
-		if (messagePaths == null) {
-			messagePaths = new HashMap<>();
-		}
-		for (MessagePath mPath : messagePathList) {
-			messagePaths.put(mPath.getOwner(), mPath);
-		}
-	}
+    public ExternDebugMessage getMessage() {
+        return message;
+    }
 
-	public MessagePath getMessagePath(String owner) {
-		if (messagePaths != null) {
-			return messagePaths.get(owner);
-		} else {
-			return null;
-		}
-	}
+    /**
+     * @return {@link Map} diagram name as key and the messagepath as value, may return null
+     */
+    public Map<String, MessagePath> getMessagePaths() {
+        return messagePaths;
+    }
 
-	private List<MessagePath> calculateMessagePath(Map<String, String> instancePortMap) {
-		List<MessagePath> allPaths = new ArrayList<>();
-		List<MessagePath> sendingPaths = createMessagePaths(message.getSendProcess(), message.getSendPort(),
-				(sendLocation.length - commonIndex) - 1, instancePortMap, true);
-		List<MessagePath> receivingPaths = createMessagePaths(message.getReceiveProcess(), message.getReceivePort(),
-				(receiveLocation.length - commonIndex) - 1, instancePortMap, false);
+    public void setMessagePaths(List<MessagePath> messagePathList) {
+        if (messagePaths == null) {
+            messagePaths = new HashMap<>();
+        }
+        for (MessagePath mPath : messagePathList) {
+            messagePaths.put(mPath.getOwner(), mPath);
+        }
+    }
 
-		allPaths.addAll(sendingPaths);
-		allPaths.addAll(receivingPaths);
-		if (!messageToAdapter()) {
-			allPaths.add(createMainMessagePath(sendingPaths, receivingPaths));
-		}
-		return allPaths;
-	}
+    public MessagePath getMessagePath(String owner) {
+        if (messagePaths != null) {
+            return messagePaths.get(owner);
+        } else {
+            return null;
+        }
+    }
 
-	private MessagePath createMainMessagePath(List<MessagePath> sendingPaths, List<MessagePath> receivingPaths) {
-		String sender;
-		String senderPort;
-		if (sendingPaths.isEmpty()) {
-			sender = message.getSendProcess();
-			senderPort = message.getSendPort();
-		} else {
-			MessagePath lastSending = sendingPaths.get(sendingPaths.size() - 1);
-			sender = lastSending.getReceiver();
-			senderPort = lastSending.getReceiverPort();
-		}
+    private List<MessagePath> calculateMessagePath(Map<String, String> instancePortMap) {
+        List<MessagePath> allPaths = new ArrayList<>();
+        List<MessagePath> sendingPaths = createMessagePaths(message.getSendProcess(), message.getSendPort(), (sendLocation.length - commonIndex) - 1, instancePortMap, true);
+        List<MessagePath> receivingPaths = createMessagePaths(message.getReceiveProcess(), message.getReceivePort(), (receiveLocation.length - commonIndex) - 1, instancePortMap, false);
 
-		String receiver;
-		String receiverPort;
-		if (receivingPaths.isEmpty()) {
-			receiver = message.getReceiveProcess();
-			receiverPort = message.getReceivePort();
-		} else {
-			MessagePath firstReceiving = receivingPaths.get(receivingPaths.size() - 1);
-			receiver = firstReceiving.getSender();
-			receiverPort = firstReceiving.getSenderPort();
-		}
-		return new MessagePath(sender, receiver, senderPort, receiverPort);
-	}
+        allPaths.addAll(sendingPaths);
+        allPaths.addAll(receivingPaths);
+        if (!messageToAdapter()) {
+            allPaths.add(createMainMessagePath(sendingPaths, receivingPaths));
+        }
+        return allPaths;
+    }
 
-	private List<MessagePath> createMessagePaths(String process, String port, int main,
-			Map<String, String> instancePortMap, boolean sending) {
-		List<MessagePath> path = new ArrayList<>();
+    private MessagePath createMainMessagePath(List<MessagePath> sendingPaths, List<MessagePath> receivingPaths) {
+        String sender;
+        String senderPort;
+        if (sendingPaths.isEmpty()) {
+            sender = message.getSendProcess();
+            senderPort = message.getSendPort();
+        } else {
+            MessagePath lastSending = sendingPaths.get(sendingPaths.size() - 1);
+            sender = lastSending.getReceiver();
+            senderPort = lastSending.getReceiverPort();
+        }
 
-		if (!isAdapterPath(sending)) {
-			try {
-				String processAndPort = process + "." + port;
-				for (int i = 0; i < main; i++) {
-					String externProcessAndPort = instancePortMap.get(processAndPort);
-					if (externProcessAndPort == null) {
-						LOGGER.log(Level.WARNING, "Could not find the external port for " + processAndPort);
-						return path;
-					}
+        String receiver;
+        String receiverPort;
+        if (receivingPaths.isEmpty()) {
+            receiver = message.getReceiveProcess();
+            receiverPort = message.getReceivePort();
+        } else {
+            MessagePath firstReceiving = receivingPaths.get(receivingPaths.size() - 1);
+            receiver = firstReceiving.getSender();
+            receiverPort = firstReceiving.getSenderPort();
+        }
+        return new MessagePath(sender, receiver, senderPort, receiverPort);
+    }
 
-					String[] externInfo = externProcessAndPort.split("\\.");
-					String externProcess = externInfo[0];
-					String externPort = externInfo[1];
+    private List<MessagePath> createMessagePaths(String process, String port, int main, Map<String, String> instancePortMap, boolean sending) {
+        List<MessagePath> path = new ArrayList<>();
 
-					String[] receiverInfo = processAndPort.split("\\.");
-					String receiverInfoProcess = receiverInfo[0];
-					String receiverInfoPort = receiverInfo[1];
+        if (!isAdapterPath(sending)) {
+            try {
+                String processAndPort = process + "." + port;
+                for (int i = 0; i < main; i++) {
+                    String externProcessAndPort = instancePortMap.get(processAndPort);
+                    if (externProcessAndPort == null) {
+                        LOGGER.log(Level.WARNING, "Could not find the external port for " + processAndPort);
+                        return path;
+                    }
 
-					if (sending) {
-						path.add(new MessagePath(receiverInfoProcess, externProcess, receiverInfoPort, externPort));
-					} else {
-						path.add(new MessagePath(externProcess, receiverInfoProcess, externPort, receiverInfoPort));
-					}
+                    String[] externInfo = externProcessAndPort.split("\\.");
+                    String externProcess = externInfo[0];
+                    String externPort = externInfo[1];
 
-					processAndPort = externProcessAndPort;
-				}
-			} catch (Exception e) {
-				LOGGER.log(Level.SEVERE,
-						"Could not calculate message path for process:" + process + ", port: " + port + ", main: "
-								+ main + ", instanceportmap " + instancePortMap + ", and sending is " + sending,
-						e.getCause());
-			}
-		}
-		return path;
-	}
+                    String[] receiverInfo = processAndPort.split("\\.");
+                    String receiverInfoProcess = receiverInfo[0];
+                    String receiverInfoPort = receiverInfo[1];
 
-	private boolean isAdapterPath(boolean sending) {
-		if (!messageToAdapter()) {
-			return false;
-		}
+                    if (sending) {
+                        path.add(new MessagePath(receiverInfoProcess, externProcess, receiverInfoPort, externPort));
+                    } else {
+                        path.add(new MessagePath(externProcess, receiverInfoProcess, externPort, receiverInfoPort));
+                    }
 
-		if (sending) {
-			return !sendLocation[0].equals(RotalumisConstants.CLUSTER_SYSTEM);
-		} else {
-			return !receiveLocation[0].equals(RotalumisConstants.CLUSTER_SYSTEM);
-		}
-	}
+                    processAndPort = externProcessAndPort;
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE,
+                        "Could not calculate message path for process:" + process + ", port: " + port + ", main: " + main + ", instanceportmap " + instancePortMap + ", and sending is " + sending,
+                        e.getCause());
+            }
+        }
+        return path;
+    }
 
-	private boolean messageToAdapter() {
-		return commonIndex == 0;
-	}
+    private boolean isAdapterPath(boolean sending) {
+        if (!messageToAdapter()) {
+            return false;
+        }
+
+        if (sending) {
+            return !sendLocation[0].equals(RotalumisConstants.CLUSTER_SYSTEM);
+        } else {
+            return !receiveLocation[0].equals(RotalumisConstants.CLUSTER_SYSTEM);
+        }
+    }
+
+    private boolean messageToAdapter() {
+        return commonIndex == 0;
+    }
 }

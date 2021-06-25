@@ -11,33 +11,34 @@ import org.eclipse.ui.navigator.ICommonViewerSite;
 import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 
 public class PooslNaviActionProvider extends CommonActionProvider {
-	private PooslOpenAction action;
-	private boolean contribute = false;
+    private PooslOpenAction action;
 
-	public PooslNaviActionProvider() {
-	}
+    private boolean contribute = false;
 
-	@Override
-	public void init(ICommonActionExtensionSite aConfig) {
-		ICommonViewerSite site = aConfig.getViewSite();
+    public PooslNaviActionProvider() {
+    }
 
-		if (site instanceof ICommonViewerWorkbenchSite) {
-			IWorkbenchPage page = ((ICommonViewerWorkbenchSite) site).getPage();
-			action = new PooslOpenAction(page);
-			contribute = true;
-		}
-	}
+    @Override
+    public void init(ICommonActionExtensionSite aConfig) {
+        ICommonViewerSite site = aConfig.getViewSite();
 
-	@Override
-	public void fillActionBars(IActionBars actionBars) {
-		if (!contribute) {
-			return;
-		}
+        if (site instanceof ICommonViewerWorkbenchSite) {
+            IWorkbenchPage page = ((ICommonViewerWorkbenchSite) site).getPage();
+            action = new PooslOpenAction(page);
+            contribute = true;
+        }
+    }
 
-		IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
-		if (selection.size() == 1 && selection.getFirstElement() instanceof IFile) {
-			action.selectionChanged(selection);
-			actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, action);
-		}
-	}
+    @Override
+    public void fillActionBars(IActionBars actionBars) {
+        if (!contribute) {
+            return;
+        }
+
+        IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
+        if (selection.size() == 1 && selection.getFirstElement() instanceof IFile) {
+            action.selectionChanged(selection);
+            actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, action);
+        }
+    }
 }

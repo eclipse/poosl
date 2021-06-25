@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_communication_event_parameter complex type.
+ * <p>
+ * Java class for t_communication_event_parameter complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_communication_event_parameter">
@@ -45,9 +46,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_communication_event_parameter", propOrder = {
-    "parameter"
-})
+@XmlType(name = "t_communication_event_parameter", propOrder = { "parameter" })
 public class TCommunicationEventParameter {
 
     protected List<TCommunicationEventParameter.Parameter> parameter;
@@ -56,21 +55,20 @@ public class TCommunicationEventParameter {
      * Gets the value of the parameter property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the parameter property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the parameter property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getParameter().add(newItem);
+     * getParameter().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TCommunicationEventParameter.Parameter }
+     * Objects of the following type(s) are allowed in the list {@link TCommunicationEventParameter.Parameter }
      * 
      * 
      */
@@ -81,11 +79,12 @@ public class TCommunicationEventParameter {
         return this.parameter;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
      * &lt;complexType>
@@ -106,16 +105,15 @@ public class TCommunicationEventParameter {
 
         @XmlAttribute(name = "value")
         protected String value;
+
         @XmlAttribute(name = "type")
         protected String type;
 
         /**
          * Gets the value of the value property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getValue() {
             return value;
@@ -125,9 +123,8 @@ public class TCommunicationEventParameter {
          * Sets the value of the value property.
          * 
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *            allowed object is {@link String }
+         * 
          */
         public void setValue(String value) {
             this.value = value;
@@ -136,10 +133,8 @@ public class TCommunicationEventParameter {
         /**
          * Gets the value of the type property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getType() {
             return type;
@@ -149,9 +144,8 @@ public class TCommunicationEventParameter {
          * Sets the value of the type property.
          * 
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *            allowed object is {@link String }
+         * 
          */
         public void setType(String value) {
             this.type = value;

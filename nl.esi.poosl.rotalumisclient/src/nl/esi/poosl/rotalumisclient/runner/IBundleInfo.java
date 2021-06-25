@@ -20,191 +20,193 @@ import nl.esi.poosl.rotalumisclient.runner.ResourceAccess.ResourceInfo;
 
 public interface IBundleInfo {
 
-	public class BundleInfo implements IBundleInfo {
-		private ResourceInfo info;
-		private final URI location;
-		private final String symbolicName;
+    public class BundleInfo implements IBundleInfo {
+        private ResourceInfo info;
 
-		public BundleInfo(String symbolicName, URI locationURI) {
-			super();
-			this.symbolicName = symbolicName;
-			this.location = locationURI;
-		}
+        private final URI location;
 
-		private ResourceInfo getInfo() {
-			if (info == null)
-				info = ResourceAccess.create(location);
-			return info;
-		}
+        private final String symbolicName;
 
-		public List<URI> find(Context context) {
-			return getInfo().find(context);
-		}
+        public BundleInfo(String symbolicName, URI locationURI) {
+            super();
+            this.symbolicName = symbolicName;
+            this.location = locationURI;
+        }
 
-		public URI find(Context context, String fileName) {
-			return getInfo().find(context, fileName);
-		}
+        private ResourceInfo getInfo() {
+            if (info == null)
+                info = ResourceAccess.create(location);
+            return info;
+        }
 
-		public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
-			return getInfo().find(context, path, matcher, fileExtensions);
-		}
+        public List<URI> find(Context context) {
+            return getInfo().find(context);
+        }
 
-		public URI getRootURI() {
-			return getInfo().getLocation();
-		}
+        public URI find(Context context, String fileName) {
+            return getInfo().find(context, fileName);
+        }
 
-		public String getSymbolicName() {
-			return symbolicName;
-		}
+        public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
+            return getInfo().find(context, path, matcher, fileExtensions);
+        }
 
-		@Override
-		public String toString() {
-			return symbolicName + ": " + getInfo();
-		}
-	}
+        public URI getRootURI() {
+            return getInfo().getLocation();
+        }
 
-	public enum Context {
-		CLASSPATH, ROOT, SOURCE
-	}
+        public String getSymbolicName() {
+            return symbolicName;
+        }
 
-	public class Delegate implements Registry {
-		private IBundleInfo.Registry delegate;
+        @Override
+        public String toString() {
+            return symbolicName + ": " + getInfo();
+        }
+    }
 
-		public Delegate() {
-			super();
-		}
+    public enum Context {
+        CLASSPATH, ROOT, SOURCE
+    }
 
-		public Collection<String> getAllBundleNames() {
-			return delegate.getAllBundleNames();
-		}
+    public class Delegate implements Registry {
+        private IBundleInfo.Registry delegate;
 
-		public IBundleInfo getBundle(Class<?> clazz) {
-			return delegate.getBundle(clazz);
-		}
+        public Delegate() {
+            super();
+        }
 
-		public IBundleInfo getBundle(String symbolicName) {
-			return delegate.getBundle(symbolicName);
-		}
+        public Collection<String> getAllBundleNames() {
+            return delegate.getAllBundleNames();
+        }
 
-		public IBundleInfo.Registry getDelegate() {
-			return delegate;
-		}
+        public IBundleInfo getBundle(Class<?> clazz) {
+            return delegate.getBundle(clazz);
+        }
 
-		public void setDelegate(IBundleInfo.Registry delegate) {
-			this.delegate = delegate;
-		}
+        public IBundleInfo getBundle(String symbolicName) {
+            return delegate.getBundle(symbolicName);
+        }
 
-		public IBundleInfo getBundle(URI uri) {
-			return delegate.getBundle(uri);
-		}
-	}
+        public IBundleInfo.Registry getDelegate() {
+            return delegate;
+        }
 
-	public interface Registry {
-		public final Registry INSTANCE = EcorePlugin.IS_ECLIPSE_RUNNING ? new Delegate()
-				: new StandaloneBundleRegistry();
+        public void setDelegate(IBundleInfo.Registry delegate) {
+            this.delegate = delegate;
+        }
 
-		Collection<String> getAllBundleNames();
+        public IBundleInfo getBundle(URI uri) {
+            return delegate.getBundle(uri);
+        }
+    }
 
-		IBundleInfo getBundle(Class<?> clazz);
+    public interface Registry {
+        public final Registry INSTANCE = EcorePlugin.IS_ECLIPSE_RUNNING ? new Delegate() : new StandaloneBundleRegistry();
 
-		IBundleInfo getBundle(URI uri);
+        Collection<String> getAllBundleNames();
 
-		IBundleInfo getBundle(String symbolicName);
-	}
+        IBundleInfo getBundle(Class<?> clazz);
 
-	public class StandaloneBundleRegistry implements IBundleInfo.Registry {
-		public static final Logger LOG = Logger.getLogger(StandaloneBundleRegistry.class.getName());
+        IBundleInfo getBundle(URI uri);
 
-		private final Map<URI, IBundleInfo> locationToBundle;
-		private final Map<String, IBundleInfo> symbolicNameToBundle;
+        IBundleInfo getBundle(String symbolicName);
+    }
 
-		public StandaloneBundleRegistry() {
-			symbolicNameToBundle = Maps.newLinkedHashMap();
-			locationToBundle = Maps.newLinkedHashMap();
-			for (URL url : ClasspathUtil.findResources("META-INF/MANIFEST.MF")) {
-				String name;
-				try {
-					name = ClasspathUtil.getSymbolicName(url);
-					if (name != null) {
-						URI location = URI.createURI(url.toString()).trimSegments(2).appendSegment("");
-						BundleInfo info = createBundleInfo(name, location);
-						symbolicNameToBundle.put(name, info);
-						locationToBundle.put(location, info);
-					}
-				} catch (Exception e) {
-					LOG.log(Level.WARNING, "can't open " + url, e);
-				}
-			}
-		}
+    public class StandaloneBundleRegistry implements IBundleInfo.Registry {
+        public static final Logger LOG = Logger.getLogger(StandaloneBundleRegistry.class.getName());
 
-		private BundleInfo createBundleInfo(String name, URI location) {
-			return new BundleInfo(name, location);
-		}
+        private final Map<URI, IBundleInfo> locationToBundle;
 
-		public Collection<String> getAllBundleNames() {
-			return symbolicNameToBundle.keySet();
-		}
+        private final Map<String, IBundleInfo> symbolicNameToBundle;
 
-		public IBundleInfo getBundle(Class<?> clazz) {
-			URI bundleURI = getBundleURI(clazz);
-			IBundleInfo info = locationToBundle.get(bundleURI);
-			if (info != null)
-				return info;
-			info = createBundleInfo(null, bundleURI);
-			locationToBundle.put(bundleURI, info);
-			return info;
-		}
+        public StandaloneBundleRegistry() {
+            symbolicNameToBundle = Maps.newLinkedHashMap();
+            locationToBundle = Maps.newLinkedHashMap();
+            for (URL url : ClasspathUtil.findResources("META-INF/MANIFEST.MF")) {
+                String name;
+                try {
+                    name = ClasspathUtil.getSymbolicName(url);
+                    if (name != null) {
+                        URI location = URI.createURI(url.toString()).trimSegments(2).appendSegment("");
+                        BundleInfo info = createBundleInfo(name, location);
+                        symbolicNameToBundle.put(name, info);
+                        locationToBundle.put(location, info);
+                    }
+                } catch (Exception e) {
+                    LOG.log(Level.WARNING, "can't open " + url, e);
+                }
+            }
+        }
 
-		public IBundleInfo getBundle(String symbolicName) {
-			return symbolicNameToBundle.get(symbolicName);
-		}
+        private BundleInfo createBundleInfo(String name, URI location) {
+            return new BundleInfo(name, location);
+        }
 
-		private URI getBundleURI(Class<?> clazz) {
-			String[] segments = clazz.getName().split("\\.");
-			String fileName = Joiner.on('/').join(segments) + ".class";
-			URL resource = clazz.getClassLoader().getResource(fileName);
-			if ("jar".equals(resource.getProtocol())) {
-				return URI.createURI(resource.toString()).trimSegments(segments.length).appendSegment("");
-			} else {
-				File classFile;
-				try {
-					classFile = new File(resource.toURI());
-					File packageRootFolder = classFile;
-					for (int i = 0; i < segments.length; i++) {
-						packageRootFolder = packageRootFolder.getParentFile();
-						if (packageRootFolder == null)
-							throw new RuntimeException("Could not determine package root for " + clazz);
-					}
-					File current = packageRootFolder;
-					while (current != null) {
-						if (new File(current, ".project").isFile())
-							return URI.createFileURI(current.toString()).appendSegment("");
-						current = current.getParentFile();
-					}
-					throw new RuntimeException("Could not find .project file in super-folder of " + packageRootFolder);
-				} catch (URISyntaxException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		}
+        public Collection<String> getAllBundleNames() {
+            return symbolicNameToBundle.keySet();
+        }
 
-		@Override
-		public String toString() {
-			return Joiner.on("\n").join(symbolicNameToBundle.values());
-		}
+        public IBundleInfo getBundle(Class<?> clazz) {
+            URI bundleURI = getBundleURI(clazz);
+            IBundleInfo info = locationToBundle.get(bundleURI);
+            if (info != null)
+                return info;
+            info = createBundleInfo(null, bundleURI);
+            locationToBundle.put(bundleURI, info);
+            return info;
+        }
 
-		public IBundleInfo getBundle(URI uri) {
-			return createBundleInfo(null, uri);
-		}
-	}
+        public IBundleInfo getBundle(String symbolicName) {
+            return symbolicNameToBundle.get(symbolicName);
+        }
 
-	List<URI> find(Context context);
+        private URI getBundleURI(Class<?> clazz) {
+            String[] segments = clazz.getName().split("\\.");
+            String fileName = Joiner.on('/').join(segments) + ".class";
+            URL resource = clazz.getClassLoader().getResource(fileName);
+            if ("jar".equals(resource.getProtocol())) {
+                return URI.createURI(resource.toString()).trimSegments(segments.length).appendSegment("");
+            } else {
+                File classFile;
+                try {
+                    classFile = new File(resource.toURI());
+                    File packageRootFolder = classFile;
+                    for (int i = 0; i < segments.length; i++) {
+                        packageRootFolder = packageRootFolder.getParentFile();
+                        if (packageRootFolder == null)
+                            throw new RuntimeException("Could not determine package root for " + clazz);
+                    }
+                    File current = packageRootFolder;
+                    while (current != null) {
+                        if (new File(current, ".project").isFile())
+                            return URI.createFileURI(current.toString()).appendSegment("");
+                        current = current.getParentFile();
+                    }
+                    throw new RuntimeException("Could not find .project file in super-folder of " + packageRootFolder);
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
 
-	URI find(Context context, String fileName);
+        @Override
+        public String toString() {
+            return Joiner.on("\n").join(symbolicNameToBundle.values());
+        }
 
-	List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions);
+        public IBundleInfo getBundle(URI uri) {
+            return createBundleInfo(null, uri);
+        }
+    }
 
-	URI getRootURI();
+    List<URI> find(Context context);
 
-	String getSymbolicName();
+    URI find(Context context, String fileName);
+
+    List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions);
+
+    URI getRootURI();
+
+    String getSymbolicName();
 }

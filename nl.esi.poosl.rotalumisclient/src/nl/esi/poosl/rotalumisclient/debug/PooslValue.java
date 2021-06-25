@@ -10,107 +10,109 @@ import nl.esi.poosl.generatedxmlclasses.TVariable;
 import nl.esi.poosl.xtext.helpers.HelperFunctions;
 
 public class PooslValue extends PooslDebugElement implements IValue {
-	private final TVariable var;
-	private IVariable[] vars = new PooslVariable[0];
-	private final BigInteger listHandle;
+    private final TVariable var;
 
-	public PooslValue(PooslDebugTarget target, TVariable tVariable, BigInteger listHandle) {
-		super(target);
-		this.var = tVariable;
-		this.listHandle = listHandle;
-	}
+    private IVariable[] vars = new PooslVariable[0];
 
-	public void setVariables(IVariable[] vars) {
-		this.vars = vars;
-	}
+    private final BigInteger listHandle;
 
-	@Override
-	public String getReferenceTypeName() throws DebugException {
-		return var.getType();
-	}
+    public PooslValue(PooslDebugTarget target, TVariable tVariable, BigInteger listHandle) {
+        super(target);
+        this.var = tVariable;
+        this.listHandle = listHandle;
+    }
 
-	@Override
-	public String getValueString() throws DebugException {
-		String typeName = var.getType();
-		if (HelperFunctions.primitiveDataClasses.contains(typeName)) {
-			return var.getLiteral();
-		} else {
-			return var.getLiteral() + " (id=" + var.getObject() + ")";
-		}
-	}
+    public void setVariables(IVariable[] vars) {
+        this.vars = vars;
+    }
 
-	@Override
-	public boolean isAllocated() throws DebugException {
-		return true;
-	}
+    @Override
+    public String getReferenceTypeName() throws DebugException {
+        return var.getType();
+    }
 
-	@Override
-	public IVariable[] getVariables() throws DebugException {
-		return vars;
-	}
+    @Override
+    public String getValueString() throws DebugException {
+        String typeName = var.getType();
+        if (HelperFunctions.primitiveDataClasses.contains(typeName)) {
+            return var.getLiteral();
+        } else {
+            return var.getLiteral() + " (id=" + var.getObject() + ")";
+        }
+    }
 
-	@Override
-	public boolean hasVariables() throws DebugException {
-		return vars.length > 0;
-	}
+    @Override
+    public boolean isAllocated() throws DebugException {
+        return true;
+    }
 
-	public BigInteger getSubHandle() {
-		if (var.getVariables() == null) {
-			return null;
-		} else {
-			return (getLocalHandle().compareTo(BigInteger.ZERO) == 0) ? getGlobalHandle() : getLocalHandle();
-		}
-	}
+    @Override
+    public IVariable[] getVariables() throws DebugException {
+        return vars;
+    }
 
-	public BigInteger getObject() {
-		if (var != null) {
-			return var.getObject();
-		}
-		return null;
-	}
+    @Override
+    public boolean hasVariables() throws DebugException {
+        return vars.length > 0;
+    }
 
-	public void setLiteral(String value) {
-		var.setLiteral(value);
-	}
+    public BigInteger getSubHandle() {
+        if (var.getVariables() == null) {
+            return null;
+        } else {
+            return (getLocalHandle().compareTo(BigInteger.ZERO) == 0) ? getGlobalHandle() : getLocalHandle();
+        }
+    }
 
-	public String getLiteral() {
-		if (var != null) {
-			String literal = var.getLiteral();
-			if (literal != null) {
-				return literal;
-			}
-		}
-		return "null";
-	}
+    public BigInteger getObject() {
+        if (var != null) {
+            return var.getObject();
+        }
+        return null;
+    }
 
-	public BigInteger getHandle() {
-		return var.getHandle();
-	}
+    public void setLiteral(String value) {
+        var.setLiteral(value);
+    }
 
-	public BigInteger getListHandle() {
-		return listHandle;
-	}
+    public String getLiteral() {
+        if (var != null) {
+            String literal = var.getLiteral();
+            if (literal != null) {
+                return literal;
+            }
+        }
+        return "null";
+    }
 
-	private BigInteger getLocalHandle() {
-		return var.getVariables().getLocal();
-	}
+    public BigInteger getHandle() {
+        return var.getHandle();
+    }
 
-	private BigInteger getGlobalHandle() {
-		return var.getVariables().getGlobal();
-	}
+    public BigInteger getListHandle() {
+        return listHandle;
+    }
 
-	@Override
-	public boolean canTerminate() {
-		return false;
-	}
+    private BigInteger getLocalHandle() {
+        return var.getVariables().getLocal();
+    }
 
-	@Override
-	public boolean isTerminated() {
-		return false;
-	}
+    private BigInteger getGlobalHandle() {
+        return var.getVariables().getGlobal();
+    }
 
-	@Override
-	public void terminate() throws DebugException {
-		// do nothing
-	}
+    @Override
+    public boolean canTerminate() {
+        return false;
+    }
+
+    @Override
+    public boolean isTerminated() {
+        return false;
+    }
+
+    @Override
+    public void terminate() throws DebugException {
+        // do nothing
+    }
 }

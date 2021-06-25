@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_switch_case_statement complex type.
+ * <p>
+ * Java class for t_switch_case_statement complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_switch_case_statement">
@@ -37,26 +37,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_switch_case_statement", propOrder = {
-    "valueExpression",
-    "body"
-})
+@XmlType(name = "t_switch_case_statement", propOrder = { "valueExpression", "body" })
 public class TSwitchCaseStatement {
 
     @XmlElement(name = "value_expression", required = true)
     protected TExpression valueExpression;
+
     @XmlElement(required = true)
     protected TStatement body;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the valueExpression property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getValueExpression() {
         return valueExpression;
@@ -66,9 +63,8 @@ public class TSwitchCaseStatement {
      * Sets the value of the valueExpression property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setValueExpression(TExpression value) {
         this.valueExpression = value;
@@ -77,10 +73,8 @@ public class TSwitchCaseStatement {
     /**
      * Gets the value of the body property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStatement }
-     *     
+     * @return possible object is {@link TStatement }
+     * 
      */
     public TStatement getBody() {
         return body;
@@ -90,9 +84,8 @@ public class TSwitchCaseStatement {
      * Sets the value of the body property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStatement }
-     *     
+     *            allowed object is {@link TStatement }
+     * 
      */
     public void setBody(TStatement value) {
         this.body = value;
@@ -101,10 +94,8 @@ public class TSwitchCaseStatement {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -114,9 +105,8 @@ public class TSwitchCaseStatement {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

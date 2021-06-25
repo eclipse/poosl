@@ -26,101 +26,105 @@ import nl.esi.poosl.sirius.helpers.PooslDiagramRefactorHelper;
  *
  */
 public class PooslFileChange extends Change {
-	private static final String NAME = "PooslFileChange";
-	private static final Logger LOGGER = Logger.getLogger(PooslFileChange.class.getName());
+    private static final String NAME = "PooslFileChange";
 
-	private IFile fFile;
-	private IFolder fFolder;
-	private String newName;
+    private static final Logger LOGGER = Logger.getLogger(PooslFileChange.class.getName());
 
-	private Resource oldResource;
-	private Session session;
+    private IFile fFile;
 
-	public PooslFileChange(IFile fFile, String newName) {
-		this.fFile = fFile;
-		this.newName = newName;
-	}
+    private IFolder fFolder;
 
-	public PooslFileChange(IFile fFile, IFolder folder, String newName) {
-		this.fFile = fFile;
-		this.fFolder = folder;
-		this.newName = newName;
-	}
+    private String newName;
 
-	private void copyFileChangeToNewResource(IFile file, IProgressMonitor monitor) {
-		IPath fullPath = createNewPath(file.getFullPath());
-		renameResourceDiagrams(monitor, file.getProject(), fullPath);
-	}
+    private Resource oldResource;
 
-	private void copyFolderChangeToNewResource(IFile file, IFolder folder, IProgressMonitor monitor) {
-		IPath folderPath = createNewPath(folder.getFullPath());
-		IPath filePath = file.getFullPath();
-		filePath = filePath.removeFirstSegments(folderPath.segmentCount());
-		filePath = folderPath.append(filePath);
-		renameResourceDiagrams(monitor, folder.getProject(), filePath);
-	}
+    private Session session;
 
-	private IPath createNewPath(IPath path) {
-		IPath oldPath = path;
-		oldPath = oldPath.removeLastSegments(1);
-		return oldPath.append(newName);
-	}
+    public PooslFileChange(IFile fFile, String newName) {
+        this.fFile = fFile;
+        this.newName = newName;
+    }
 
-	private void renameResourceDiagrams(IProgressMonitor monitor, IProject project, IPath fullPath) {
-		Resource newResource = ConvertHelper.convertIPathToResource(fullPath);
-		session = GraphicalEditorHelper.getSession(project, null, false, true, monitor);
+    public PooslFileChange(IFile fFile, IFolder folder, String newName) {
+        this.fFile = fFile;
+        this.fFolder = folder;
+        this.newName = newName;
+    }
 
-		if (session != null) {
-			PooslDiagramRefactorHelper.renameResource(session, oldResource, newResource, monitor);
-		}
-	}
+    private void copyFileChangeToNewResource(IFile file, IProgressMonitor monitor) {
+        IPath fullPath = createNewPath(file.getFullPath());
+        renameResourceDiagrams(monitor, file.getProject(), fullPath);
+    }
 
-	@Override
-	public String getName() {
-		return NAME;
-	}
+    private void copyFolderChangeToNewResource(IFile file, IFolder folder, IProgressMonitor monitor) {
+        IPath folderPath = createNewPath(folder.getFullPath());
+        IPath filePath = file.getFullPath();
+        filePath = filePath.removeFirstSegments(folderPath.segmentCount());
+        filePath = folderPath.append(filePath);
+        renameResourceDiagrams(monitor, folder.getProject(), filePath);
+    }
 
-	@Override
-	public void initializeValidationData(IProgressMonitor pm) {
-		oldResource = ConvertHelper.convertIFileToResource(fFile);
-	}
+    private IPath createNewPath(IPath path) {
+        IPath oldPath = path;
+        oldPath = oldPath.removeLastSegments(1);
+        return oldPath.append(newName);
+    }
 
-	@Override
-	public RefactoringStatus isValid(IProgressMonitor pm) {
-		return new RefactoringStatus();
-	}
+    private void renameResourceDiagrams(IProgressMonitor monitor, IProject project, IPath fullPath) {
+        Resource newResource = ConvertHelper.convertIPathToResource(fullPath);
+        session = GraphicalEditorHelper.getSession(project, null, false, true, monitor);
 
-	@Override
-	public Change perform(IProgressMonitor pm) throws CoreException {
-		if (oldResource != null) { // poosl resource
-			if (fFolder == null) {
-				copyFileChangeToNewResource(fFile, pm);
-			} else {
-				copyFolderChangeToNewResource(fFile, fFolder, pm);
-			}
-		}
-		return null;
-	}
+        if (session != null) {
+            PooslDiagramRefactorHelper.renameResource(session, oldResource, newResource, monitor);
+        }
+    }
 
-	@Override
-	public Object getModifiedElement() {
-		return session;
-	}
+    @Override
+    public String getName() {
+        return NAME;
+    }
 
-	@Override
-	public void dispose() {
-		try {
-			if (oldResource != null) {
-				oldResource.delete(null);
-			}
-		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, "Error unloading old resource after rename.", e);
-		}
-		fFile = null;
-		fFolder = null;
-		newName = null;
-		oldResource = null;
-		session = null;
-		super.dispose();
-	}
+    @Override
+    public void initializeValidationData(IProgressMonitor pm) {
+        oldResource = ConvertHelper.convertIFileToResource(fFile);
+    }
+
+    @Override
+    public RefactoringStatus isValid(IProgressMonitor pm) {
+        return new RefactoringStatus();
+    }
+
+    @Override
+    public Change perform(IProgressMonitor pm) throws CoreException {
+        if (oldResource != null) { // poosl resource
+            if (fFolder == null) {
+                copyFileChangeToNewResource(fFile, pm);
+            } else {
+                copyFolderChangeToNewResource(fFile, fFolder, pm);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Object getModifiedElement() {
+        return session;
+    }
+
+    @Override
+    public void dispose() {
+        try {
+            if (oldResource != null) {
+                oldResource.delete(null);
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "Error unloading old resource after rename.", e);
+        }
+        fFile = null;
+        fFolder = null;
+        newName = null;
+        oldResource = null;
+        session = null;
+        super.dispose();
+    }
 }

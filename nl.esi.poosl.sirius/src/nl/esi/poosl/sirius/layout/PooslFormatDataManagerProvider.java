@@ -10,17 +10,17 @@ import org.eclipse.sirius.diagram.ui.tools.api.format.SiriusFormatDataManager;
  * @author kstaal
  */
 public class PooslFormatDataManagerProvider implements IFormatDataManagerProvider {
-	public PooslFormatDataManagerProvider() {
-		// Nothing.
-	}
+    public PooslFormatDataManagerProvider() {
+        // Nothing.
+    }
 
-	@Override
-	public boolean provides(DDiagram diagram) {
-		return true;
-	}
+    @Override
+    public boolean provides(DDiagram diagram) {
+        return true;
+    }
 
-	@Override
-	public SiriusFormatDataManager getFormatDataManager() {
-		return new PooslFormatDataManager();
-	}
+    @Override
+    public SiriusFormatDataManager getFormatDataManager() {
+        return new PooslFormatDataManager();
+    }
 }

@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_set_variable_request complex type.
+ * <p>
+ * Java class for t_set_variable_request complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_set_variable_request">
@@ -39,31 +40,27 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_set_variable_request", propOrder = {
-    "varHandle",
-    "listHandle",
-    "type",
-    "literal"
-})
+@XmlType(name = "t_set_variable_request", propOrder = { "varHandle", "listHandle", "type", "literal" })
 public class TSetVariableRequest {
 
     @XmlElement(name = "var_handle", required = true)
     protected BigInteger varHandle;
+
     @XmlElement(name = "list_handle", required = true)
     protected BigInteger listHandle;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected TConstantType type;
+
     @XmlElement(required = true)
     protected String literal;
 
     /**
      * Gets the value of the varHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getVarHandle() {
         return varHandle;
@@ -73,9 +70,8 @@ public class TSetVariableRequest {
      * Sets the value of the varHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setVarHandle(BigInteger value) {
         this.varHandle = value;
@@ -84,10 +80,8 @@ public class TSetVariableRequest {
     /**
      * Gets the value of the listHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getListHandle() {
         return listHandle;
@@ -97,9 +91,8 @@ public class TSetVariableRequest {
      * Sets the value of the listHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setListHandle(BigInteger value) {
         this.listHandle = value;
@@ -108,10 +101,8 @@ public class TSetVariableRequest {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TConstantType }
-     *     
+     * @return possible object is {@link TConstantType }
+     * 
      */
     public TConstantType getType() {
         return type;
@@ -121,9 +112,8 @@ public class TSetVariableRequest {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TConstantType }
-     *     
+     *            allowed object is {@link TConstantType }
+     * 
      */
     public void setType(TConstantType value) {
         this.type = value;
@@ -132,10 +122,8 @@ public class TSetVariableRequest {
     /**
      * Gets the value of the literal property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getLiteral() {
         return literal;
@@ -145,9 +133,8 @@ public class TSetVariableRequest {
      * Sets the value of the literal property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setLiteral(String value) {
         this.literal = value;

@@ -19,43 +19,41 @@ import nl.esi.poosl.sirius.helpers.GraphicalEditorHelper;
 import nl.esi.poosl.sirius.helpers.PooslDiagramRefactorHelper;
 
 public class CopyFileRepresentationsCommand extends RecordingCommand {
-	private Session destSession;
-	private Resource newResource;
-	private List<DRepresentationDescriptor> descriptors;
-	private IProgressMonitor monitor;
+    private Session destSession;
 
-	public CopyFileRepresentationsCommand(TransactionalEditingDomain domain, Session destSession, Resource newResource,
-			List<DRepresentationDescriptor> descriptors, IProgressMonitor monitor) {
-		super(domain);
-		this.destSession = destSession;
-		this.newResource = newResource;
-		this.descriptors = descriptors;
-		this.monitor = monitor;
-	}
+    private Resource newResource;
 
-	@Override
-	public void doExecute() {
-		for (DRepresentationDescriptor descriptor : descriptors) {
-			DRepresentation diagram = descriptor.getRepresentation();
-			EObject diagramObject = diagram instanceof DSemanticDiagram ? ((DSemanticDiagram) diagram).getTarget()
-					: diagram.getOwnedRepresentationElements().get(0).getTarget();
-			String objFragment = EcoreUtil.getURI(diagramObject).fragment();
-			EObject newDiagramTarget = GraphicalEditorHelper.getSiriusObject(newResource.getEObject(objFragment),
-					destSession);
-			String label = DiagramNameHelper.getDiagramName(newDiagramTarget);
-			DRepresentation newRepresentation = DialectManager.INSTANCE.copyRepresentation(descriptor, label, destSession,
-					monitor);
-			PooslDiagramRefactorHelper.copyDiagramElements(newRepresentation,
-					EcoreUtil.getURI(diagramObject).trimFragment(), newDiagramTarget);
-		}
-	}
+    private List<DRepresentationDescriptor> descriptors;
 
-	@Override
-	public void dispose() {
-		this.destSession = null;
-		this.newResource = null;
-		this.descriptors = null;
-		this.monitor = null;
-		super.dispose();
-	}
+    private IProgressMonitor monitor;
+
+    public CopyFileRepresentationsCommand(TransactionalEditingDomain domain, Session destSession, Resource newResource, List<DRepresentationDescriptor> descriptors, IProgressMonitor monitor) {
+        super(domain);
+        this.destSession = destSession;
+        this.newResource = newResource;
+        this.descriptors = descriptors;
+        this.monitor = monitor;
+    }
+
+    @Override
+    public void doExecute() {
+        for (DRepresentationDescriptor descriptor : descriptors) {
+            DRepresentation diagram = descriptor.getRepresentation();
+            EObject diagramObject = diagram instanceof DSemanticDiagram ? ((DSemanticDiagram) diagram).getTarget() : diagram.getOwnedRepresentationElements().get(0).getTarget();
+            String objFragment = EcoreUtil.getURI(diagramObject).fragment();
+            EObject newDiagramTarget = GraphicalEditorHelper.getSiriusObject(newResource.getEObject(objFragment), destSession);
+            String label = DiagramNameHelper.getDiagramName(newDiagramTarget);
+            DRepresentation newRepresentation = DialectManager.INSTANCE.copyRepresentation(descriptor, label, destSession, monitor);
+            PooslDiagramRefactorHelper.copyDiagramElements(newRepresentation, EcoreUtil.getURI(diagramObject).trimFragment(), newDiagramTarget);
+        }
+    }
+
+    @Override
+    public void dispose() {
+        this.destSession = null;
+        this.newResource = null;
+        this.descriptors = null;
+        this.monitor = null;
+        super.dispose();
+    }
 }

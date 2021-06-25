@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 /**
- * <p>Java class for t_constant complex type.
+ * <p>
+ * Java class for t_constant complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_constant">
@@ -33,23 +33,20 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_constant", propOrder = {
-    "value"
-})
+@XmlType(name = "t_constant", propOrder = { "value" })
 public class TConstant {
 
     @XmlValue
     protected String value;
+
     @XmlAttribute(name = "type")
     protected TConstantType type;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getValue() {
         return value;
@@ -59,9 +56,8 @@ public class TConstant {
      * Sets the value of the value property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setValue(String value) {
         this.value = value;
@@ -70,10 +66,8 @@ public class TConstant {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TConstantType }
-     *     
+     * @return possible object is {@link TConstantType }
+     * 
      */
     public TConstantType getType() {
         return type;
@@ -83,9 +77,8 @@ public class TConstant {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TConstantType }
-     *     
+     *            allowed object is {@link TConstantType }
+     * 
      */
     public void setType(TConstantType value) {
         this.type = value;

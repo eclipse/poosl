@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_set_variable_response complex type.
+ * <p>
+ * Java class for t_set_variable_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_set_variable_response">
@@ -39,31 +40,27 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_set_variable_response", propOrder = {
-    "result",
-    "varHandle",
-    "listHandle",
-    "error"
-})
+@XmlType(name = "t_set_variable_response", propOrder = { "result", "varHandle", "listHandle", "error" })
 public class TSetVariableResponse {
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected TSetVariableResult result;
+
     @XmlElement(name = "var_handle", required = true)
     protected BigInteger varHandle;
+
     @XmlElement(name = "list_handle", required = true)
     protected BigInteger listHandle;
+
     @XmlElement(required = true)
     protected String error;
 
     /**
      * Gets the value of the result property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TSetVariableResult }
-     *     
+     * @return possible object is {@link TSetVariableResult }
+     * 
      */
     public TSetVariableResult getResult() {
         return result;
@@ -73,9 +70,8 @@ public class TSetVariableResponse {
      * Sets the value of the result property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TSetVariableResult }
-     *     
+     *            allowed object is {@link TSetVariableResult }
+     * 
      */
     public void setResult(TSetVariableResult value) {
         this.result = value;
@@ -84,10 +80,8 @@ public class TSetVariableResponse {
     /**
      * Gets the value of the varHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getVarHandle() {
         return varHandle;
@@ -97,9 +91,8 @@ public class TSetVariableResponse {
      * Sets the value of the varHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setVarHandle(BigInteger value) {
         this.varHandle = value;
@@ -108,10 +101,8 @@ public class TSetVariableResponse {
     /**
      * Gets the value of the listHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getListHandle() {
         return listHandle;
@@ -121,9 +112,8 @@ public class TSetVariableResponse {
      * Sets the value of the listHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setListHandle(BigInteger value) {
         this.listHandle = value;
@@ -132,10 +122,8 @@ public class TSetVariableResponse {
     /**
      * Gets the value of the error property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getError() {
         return error;
@@ -145,9 +133,8 @@ public class TSetVariableResponse {
      * Sets the value of the error property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setError(String value) {
         this.error = value;

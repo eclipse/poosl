@@ -34,140 +34,135 @@ import nl.esi.poosl.sirius.helpers.GraphicalEditorHelper;
 import nl.esi.poosl.xtext.importing.ImportingHelper;
 
 public class GraphicalEditorHandler extends AbstractHandler {
-	private static final Logger LOGGER = Logger.getLogger(GraphicalEditorHandler.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(GraphicalEditorHandler.class.getName());
 
-	private static final String COMMAND_EDITOR_CLASS_DIAGRAM = "nl.esi.poosl.commands.sirius.editor.openclassdiagram";
-	private static final String COMMAND_EDITOR_GRAPHICAL = "nl.esi.poosl.commands.sirius.editor.opengraphicaleditor";
-	private static final String COMMAND_EDITOR_STRUCTURE_DIAGRAM = "nl.esi.poosl.commands.sirius.editor.opencompositestructurediagram";
+    private static final String COMMAND_EDITOR_CLASS_DIAGRAM = "nl.esi.poosl.commands.sirius.editor.openclassdiagram";
 
-	private static final String WARNING_CURSOR_POSITION_UNKNOWN = "Cursor position was not found.";
-	private static final String WARNING_SELECTION_CAST_FAILED = "Selection could not be transfered to a textselection.";
+    private static final String COMMAND_EDITOR_GRAPHICAL = "nl.esi.poosl.commands.sirius.editor.opengraphicaleditor";
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		String commandId = event.getCommand().getId();
+    private static final String COMMAND_EDITOR_STRUCTURE_DIAGRAM = "nl.esi.poosl.commands.sirius.editor.opencompositestructurediagram";
 
-		IEditorPart edit = HandlerUtil.getActiveEditor(event);
-		IEditorInput input = edit.getEditorInput();
-		IFile file = null;
-		if (input instanceof FileEditorInput) {
-			file = ((FileEditorInput) input).getFile();
+    private static final String WARNING_CURSOR_POSITION_UNKNOWN = "Cursor position was not found.";
 
-			if (commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM)) {
-				Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
-				GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, poosl,
-						commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
-			} else {
-				ISelection selection = HandlerUtil.getCurrentSelection(event);
-				TextSelection text = (TextSelection) selection;
-				IWorkbenchPart part = HandlerUtil.getActivePart(event);
-				EObject target = null;
-				EObject result = getEObject(part, text, edit);
+    private static final String WARNING_SELECTION_CAST_FAILED = "Selection could not be transfered to a textselection.";
 
-				if (result != null) {
-					target = getDiagramTarget(result);
-					if (commandId.equals(COMMAND_EDITOR_GRAPHICAL)) {
-						GraphicalEditorHelper.openGraphicalEditor(target, edit, file.getProject());
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        String commandId = event.getCommand().getId();
 
-					} else if (commandId.equals(COMMAND_EDITOR_STRUCTURE_DIAGRAM)) {
-						// Open structure diagram of selected system or cluster.
-						// If none is selected find the main cluster (project
-						// explorer behavior)
-						if (target instanceof ClusterClass) {
-							GraphicalEditorHelper.openGraphicalEditor(target, edit, file.getProject());
-						} else {
-							if (target instanceof Poosl) {
-								GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, (Poosl) target,
-										commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
-							} else {
-								LOGGER.log(Level.WARNING,
-										"Could find target for opening the graphical editor, from command "
-												+ commandId);
-							}
-						}
-					} else {
-						LOGGER.log(Level.WARNING, "Command id unknown: " + commandId);
-					}
-				}
-			}
-		} else {
-			LOGGER.log(Level.WARNING, "Could not get file to open the graphical editor, from command " + commandId);
-		}
-		return null;
-	}
+        IEditorPart edit = HandlerUtil.getActiveEditor(event);
+        IEditorInput input = edit.getEditorInput();
+        IFile file = null;
+        if (input instanceof FileEditorInput) {
+            file = ((FileEditorInput) input).getFile();
 
-	private EObject getEObject(IWorkbenchPart part, ISelection selection, IEditorPart edit) {
-		if (edit instanceof XtextEditor) {
-			XtextEditor xtextEditor = (XtextEditor) edit;
-			IXtextDocument document = (IXtextDocument) xtextEditor.getDocumentProvider()
-					.getDocument(xtextEditor.getEditorInput());
-			int cursorposition = getCursorPosition(part);
-			int lineOffset = -1;
+            if (commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM)) {
+                Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
+                GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, poosl, commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
+            } else {
+                ISelection selection = HandlerUtil.getCurrentSelection(event);
+                TextSelection text = (TextSelection) selection;
+                IWorkbenchPart part = HandlerUtil.getActivePart(event);
+                EObject target = null;
+                EObject result = getEObject(part, text, edit);
 
-			try {
-				int lineNumber;
-				if (cursorposition != -1) {
-					lineNumber = document.getLineOfOffset(cursorposition);
-				} else {
-					if (selection instanceof TextSelection) {
-						TextSelection text = (TextSelection) selection;
-						lineNumber = text.getStartLine();
-					} else {
-						LOGGER.log(Level.SEVERE, WARNING_SELECTION_CAST_FAILED);
-						return null;
-					}
-				}
-				lineOffset = document.getLineInformation(lineNumber).getOffset();
-			} catch (BadLocationException e) {
-				LOGGER.log(Level.WARNING, e.getMessage(), e);
-			}
+                if (result != null) {
+                    target = getDiagramTarget(result);
+                    if (commandId.equals(COMMAND_EDITOR_GRAPHICAL)) {
+                        GraphicalEditorHelper.openGraphicalEditor(target, edit, file.getProject());
 
-			IResource resource = xtextEditor.getEditorInput().getAdapter(IResource.class);
-			return getSemanticObject(resource, lineOffset);
-		}
-		return null;
-	}
+                    } else if (commandId.equals(COMMAND_EDITOR_STRUCTURE_DIAGRAM)) {
+                        // Open structure diagram of selected system or cluster.
+                        // If none is selected find the main cluster (project
+                        // explorer behavior)
+                        if (target instanceof ClusterClass) {
+                            GraphicalEditorHelper.openGraphicalEditor(target, edit, file.getProject());
+                        } else {
+                            if (target instanceof Poosl) {
+                                GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, (Poosl) target, commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
+                            } else {
+                                LOGGER.log(Level.WARNING, "Could find target for opening the graphical editor, from command " + commandId);
+                            }
+                        }
+                    } else {
+                        LOGGER.log(Level.WARNING, "Command id unknown: " + commandId);
+                    }
+                }
+            }
+        } else {
+            LOGGER.log(Level.WARNING, "Could not get file to open the graphical editor, from command " + commandId);
+        }
+        return null;
+    }
 
-	private int getCursorPosition(IWorkbenchPart part) {
-		try {
-			return ((StyledText) part.getAdapter(Control.class)).getCaretOffset();
-		} catch (Exception e) {
-			LOGGER.log(Level.WARNING, WARNING_CURSOR_POSITION_UNKNOWN, e.getMessage());
-			return -1;
-		}
-	}
+    private EObject getEObject(IWorkbenchPart part, ISelection selection, IEditorPart edit) {
+        if (edit instanceof XtextEditor) {
+            XtextEditor xtextEditor = (XtextEditor) edit;
+            IXtextDocument document = (IXtextDocument) xtextEditor.getDocumentProvider().getDocument(xtextEditor.getEditorInput());
+            int cursorposition = getCursorPosition(part);
+            int lineOffset = -1;
 
-	private EObject getSemanticObject(IResource resource, int lineOffset) {
-		XtextResourceSet resourceSet = new XtextResourceSet();
-		resourceSet.getPackageRegistry().put(nl.esi.poosl.PooslPackage.eINSTANCE.getNsURI(),
-				nl.esi.poosl.PooslPackage.eINSTANCE);
+            try {
+                int lineNumber;
+                if (cursorposition != -1) {
+                    lineNumber = document.getLineOfOffset(cursorposition);
+                } else {
+                    if (selection instanceof TextSelection) {
+                        TextSelection text = (TextSelection) selection;
+                        lineNumber = text.getStartLine();
+                    } else {
+                        LOGGER.log(Level.SEVERE, WARNING_SELECTION_CAST_FAILED);
+                        return null;
+                    }
+                }
+                lineOffset = document.getLineInformation(lineNumber).getOffset();
+            } catch (BadLocationException e) {
+                LOGGER.log(Level.WARNING, e.getMessage(), e);
+            }
 
-		URI uri = URI.createPlatformResourceURI(resource.toString().substring(2), true);
-		XtextResource xtextResource = (XtextResource) resourceSet.getResource(uri, true);
+            IResource resource = xtextEditor.getEditorInput().getAdapter(IResource.class);
+            return getSemanticObject(resource, lineOffset);
+        }
+        return null;
+    }
 
-		ILeafNode leafNode = NodeModelUtils.findLeafNodeAtOffset(xtextResource.getParseResult().getRootNode(),
-				lineOffset);
-		EObject actualSemanticObject = NodeModelUtils.findActualSemanticObjectFor(leafNode);
+    private int getCursorPosition(IWorkbenchPart part) {
+        try {
+            return ((StyledText) part.getAdapter(Control.class)).getCaretOffset();
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, WARNING_CURSOR_POSITION_UNKNOWN, e.getMessage());
+            return -1;
+        }
+    }
 
-		if (actualSemanticObject == null) {
-			actualSemanticObject = ImportingHelper.toPoosl(xtextResource);
-		}
+    private EObject getSemanticObject(IResource resource, int lineOffset) {
+        XtextResourceSet resourceSet = new XtextResourceSet();
+        resourceSet.getPackageRegistry().put(nl.esi.poosl.PooslPackage.eINSTANCE.getNsURI(), nl.esi.poosl.PooslPackage.eINSTANCE);
 
-		return actualSemanticObject;
-	}
+        URI uri = URI.createPlatformResourceURI(resource.toString().substring(2), true);
+        XtextResource xtextResource = (XtextResource) resourceSet.getResource(uri, true);
 
-	/**
-	 * Search from bottom to top to the first object that can be used to create a
-	 * diagram
-	 * 
-	 * @param target
-	 * @return
-	 */
-	private EObject getDiagramTarget(EObject target) {
-		EObject object = target;
-		while (object != null && !(object instanceof ClusterClass) && !(object instanceof Poosl)) {
-			object = object.eContainer();
-		}
-		return object;
-	}
+        ILeafNode leafNode = NodeModelUtils.findLeafNodeAtOffset(xtextResource.getParseResult().getRootNode(), lineOffset);
+        EObject actualSemanticObject = NodeModelUtils.findActualSemanticObjectFor(leafNode);
+
+        if (actualSemanticObject == null) {
+            actualSemanticObject = ImportingHelper.toPoosl(xtextResource);
+        }
+
+        return actualSemanticObject;
+    }
+
+    /**
+     * Search from bottom to top to the first object that can be used to create a diagram
+     * 
+     * @param target
+     * @return
+     */
+    private EObject getDiagramTarget(EObject target) {
+        EObject object = target;
+        while (object != null && !(object instanceof ClusterClass) && !(object instanceof Poosl)) {
+            object = object.eContainer();
+        }
+        return object;
+    }
 }

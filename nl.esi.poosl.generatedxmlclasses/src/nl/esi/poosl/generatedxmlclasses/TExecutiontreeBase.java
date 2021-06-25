@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_executiontree_base complex type.
+ * <p>
+ * Java class for t_executiontree_base complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_executiontree_base">
@@ -40,35 +41,32 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "t_executiontree_base")
-@XmlSeeAlso({
-    TExecutiontreeMessageSend.class,
-    TExecutiontreeMessageReceive.class,
-    TExecutiontreeExpression.class,
-    TExecutiontreeMethodCall.class,
-    TExecutiontreeStatements.class
-})
+@XmlSeeAlso({ TExecutiontreeMessageSend.class, TExecutiontreeMessageReceive.class, TExecutiontreeExpression.class, TExecutiontreeMethodCall.class, TExecutiontreeStatements.class })
 public class TExecutiontreeBase {
 
     @XmlAttribute(name = "process")
     protected BigInteger process;
+
     @XmlAttribute(name = "parent")
     protected BigInteger parent;
+
     @XmlAttribute(name = "handle")
     protected BigInteger handle;
+
     @XmlAttribute(name = "global")
     protected BigInteger global;
+
     @XmlAttribute(name = "local")
     protected BigInteger local;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the process property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getProcess() {
         return process;
@@ -78,9 +76,8 @@ public class TExecutiontreeBase {
      * Sets the value of the process property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setProcess(BigInteger value) {
         this.process = value;
@@ -89,10 +86,8 @@ public class TExecutiontreeBase {
     /**
      * Gets the value of the parent property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getParent() {
         return parent;
@@ -102,9 +97,8 @@ public class TExecutiontreeBase {
      * Sets the value of the parent property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setParent(BigInteger value) {
         this.parent = value;
@@ -113,10 +107,8 @@ public class TExecutiontreeBase {
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -126,9 +118,8 @@ public class TExecutiontreeBase {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;
@@ -137,10 +128,8 @@ public class TExecutiontreeBase {
     /**
      * Gets the value of the global property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getGlobal() {
         return global;
@@ -150,9 +139,8 @@ public class TExecutiontreeBase {
      * Sets the value of the global property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setGlobal(BigInteger value) {
         this.global = value;
@@ -161,10 +149,8 @@ public class TExecutiontreeBase {
     /**
      * Gets the value of the local property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getLocal() {
         return local;
@@ -174,9 +160,8 @@ public class TExecutiontreeBase {
      * Sets the value of the local property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setLocal(BigInteger value) {
         this.local = value;
@@ -185,10 +170,8 @@ public class TExecutiontreeBase {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -198,9 +181,8 @@ public class TExecutiontreeBase {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

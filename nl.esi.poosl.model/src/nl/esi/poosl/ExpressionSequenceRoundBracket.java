@@ -2,10 +2,8 @@
  */
 package nl.esi.poosl;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Expression Sequence Round Bracket</b></em>'.
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Expression Sequence Round Bracket</b></em>'.
  * <!-- end-user-doc -->
  *
  *
@@ -13,6 +11,5 @@ package nl.esi.poosl;
  * @model
  * @generated
  */
-public interface ExpressionSequenceRoundBracket extends ExpressionSequence
-{
+public interface ExpressionSequenceRoundBracket extends ExpressionSequence {
 } // ExpressionSequenceRoundBracket

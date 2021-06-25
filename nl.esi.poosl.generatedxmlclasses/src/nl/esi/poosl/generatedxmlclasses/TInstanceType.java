@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_instance_type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_instance_type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_instance_type">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -33,9 +34,9 @@ import javax.xml.bind.annotation.XmlType;
 public enum TInstanceType {
 
     @XmlEnumValue("process")
-    PROCESS("process"),
-    @XmlEnumValue("cluster")
+    PROCESS("process"), @XmlEnumValue("cluster")
     CLUSTER("cluster");
+
     private final String value;
 
     TInstanceType(String v) {
@@ -47,7 +48,7 @@ public enum TInstanceType {
     }
 
     public static TInstanceType fromValue(String v) {
-        for (TInstanceType c: TInstanceType.values()) {
+        for (TInstanceType c : TInstanceType.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

@@ -5,11 +5,11 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,11 +19,12 @@ import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_expressions complex type.
+ * <p>
+ * Java class for t_expressions complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_expressions">
@@ -55,32 +56,27 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_expressions", propOrder = {
-    "sequenceOfExpressionsOrAssignmentOrDataMethodCall"
-})
-@XmlSeeAlso({
-    TExpression.class
-})
+@XmlType(name = "t_expressions", propOrder = { "sequenceOfExpressionsOrAssignmentOrDataMethodCall" })
+@XmlSeeAlso({ TExpression.class })
 public class TExpressions {
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "sequence_of_expressions", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "assignment", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "nil", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "constant", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "binary_operation", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "if", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "unary_operation", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "variable", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "self", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "new", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "while", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "switch", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "data_method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "current_time", namespace = "uri:poosl", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "return", namespace = "uri:poosl", type = JAXBElement.class, required = false)
-    })
+    @XmlElementRefs({ @XmlElementRef(name = "sequence_of_expressions", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "assignment", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "nil", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "constant", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "binary_operation", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "if", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "unary_operation", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "variable", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "self", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "new", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "while", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "switch", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "data_method_call", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "current_time", namespace = "uri:poosl", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "return", namespace = "uri:poosl", type = JAXBElement.class, required = false) })
     protected List<JAXBElement<?>> sequenceOfExpressionsOrAssignmentOrDataMethodCall;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
@@ -88,34 +84,28 @@ public class TExpressions {
      * Gets the value of the sequenceOfExpressionsOrAssignmentOrDataMethodCall property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sequenceOfExpressionsOrAssignmentOrDataMethodCall property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the sequenceOfExpressionsOrAssignmentOrDataMethodCall property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(newItem);
+     * getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link TExpressions }{@code >}
-     * {@link JAXBElement }{@code <}{@link TAssignment }{@code >}
-     * {@link JAXBElement }{@code <}{@link TEmpty }{@code >}
-     * {@link JAXBElement }{@code <}{@link TConstant }{@code >}
-     * {@link JAXBElement }{@code <}{@link TBinaryOperation }{@code >}
-     * {@link JAXBElement }{@code <}{@link TIfExpression }{@code >}
-     * {@link JAXBElement }{@code <}{@link TUnaryOperation }{@code >}
-     * {@link JAXBElement }{@code <}{@link TVariableRef }{@code >}
-     * {@link JAXBElement }{@code <}{@link TEmpty }{@code >}
-     * {@link JAXBElement }{@code <}{@link TObjectCreation }{@code >}
-     * {@link JAXBElement }{@code <}{@link TWhileExpression }{@code >}
-     * {@link JAXBElement }{@code <}{@link TSwitchExpression }{@code >}
-     * {@link JAXBElement }{@code <}{@link TDataMethodCall }{@code >}
-     * {@link JAXBElement }{@code <}{@link TCurrentTime }{@code >}
+     * Objects of the following type(s) are allowed in the list {@link JAXBElement }{@code <}{@link TExpressions
+     * }{@code >} {@link JAXBElement }{@code <}{@link TAssignment }{@code >} {@link JAXBElement }{@code <}{@link TEmpty
+     * }{@code >} {@link JAXBElement }{@code <}{@link TConstant }{@code >} {@link JAXBElement
+     * }{@code <}{@link TBinaryOperation }{@code >} {@link JAXBElement }{@code <}{@link TIfExpression }{@code >}
+     * {@link JAXBElement }{@code <}{@link TUnaryOperation }{@code >} {@link JAXBElement }{@code <}{@link TVariableRef
+     * }{@code >} {@link JAXBElement }{@code <}{@link TEmpty }{@code >} {@link JAXBElement
+     * }{@code <}{@link TObjectCreation }{@code >} {@link JAXBElement }{@code <}{@link TWhileExpression }{@code >}
+     * {@link JAXBElement }{@code <}{@link TSwitchExpression }{@code >} {@link JAXBElement
+     * }{@code <}{@link TDataMethodCall }{@code >} {@link JAXBElement }{@code <}{@link TCurrentTime }{@code >}
      * {@link JAXBElement }{@code <}{@link TExpression }{@code >}
      * 
      * 
@@ -130,10 +120,8 @@ public class TExpressions {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -143,9 +131,8 @@ public class TExpressions {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

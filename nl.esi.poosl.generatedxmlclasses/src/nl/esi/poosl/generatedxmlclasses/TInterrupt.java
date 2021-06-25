@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_interrupt complex type.
+ * <p>
+ * Java class for t_interrupt complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_interrupt">
@@ -37,26 +37,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_interrupt", propOrder = {
-    "normalBehavior",
-    "interruptingBehavior"
-})
+@XmlType(name = "t_interrupt", propOrder = { "normalBehavior", "interruptingBehavior" })
 public class TInterrupt {
 
     @XmlElement(name = "normal_behavior", required = true)
     protected TStatement normalBehavior;
+
     @XmlElement(name = "interrupting_behavior", required = true)
     protected TStatement interruptingBehavior;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the normalBehavior property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStatement }
-     *     
+     * @return possible object is {@link TStatement }
+     * 
      */
     public TStatement getNormalBehavior() {
         return normalBehavior;
@@ -66,9 +63,8 @@ public class TInterrupt {
      * Sets the value of the normalBehavior property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStatement }
-     *     
+     *            allowed object is {@link TStatement }
+     * 
      */
     public void setNormalBehavior(TStatement value) {
         this.normalBehavior = value;
@@ -77,10 +73,8 @@ public class TInterrupt {
     /**
      * Gets the value of the interruptingBehavior property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStatement }
-     *     
+     * @return possible object is {@link TStatement }
+     * 
      */
     public TStatement getInterruptingBehavior() {
         return interruptingBehavior;
@@ -90,9 +84,8 @@ public class TInterrupt {
      * Sets the value of the interruptingBehavior property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStatement }
-     *     
+     *            allowed object is {@link TStatement }
+     * 
      */
     public void setInterruptingBehavior(TStatement value) {
         this.interruptingBehavior = value;
@@ -101,10 +94,8 @@ public class TInterrupt {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -114,9 +105,8 @@ public class TInterrupt {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

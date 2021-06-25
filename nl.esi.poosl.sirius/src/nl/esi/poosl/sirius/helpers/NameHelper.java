@@ -14,115 +14,119 @@ import nl.esi.poosl.xtext.custom.PooslCache;
 import nl.esi.poosl.xtext.helpers.HelperFunctions;
 
 public class NameHelper {
-	private static final Logger LOGGER = Logger.getLogger(NameHelper.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(NameHelper.class.getName());
 
-	private static final String TXT_INSTANCE = "newInstance";
-	private static final String TXT_CLUSTERCLASS = "ClusterClass";
-	private static final String TXT_PROCESSCLASS = "ProcessClass";
-	private static final String TXT_DATACLASS = "DataClass";
-	private static final String UNDEFINED = "Undefined";
+    private static final String TXT_INSTANCE = "newInstance";
 
-	private NameHelper() {
-		throw new IllegalStateException("Utility class");
-	}
-	// get instance names
+    private static final String TXT_CLUSTERCLASS = "ClusterClass";
 
-	public static String getUniqueInstanceName(ClusterClass container) {
-		return getUniqueInstanceName(TXT_INSTANCE, container);
-	}
+    private static final String TXT_PROCESSCLASS = "ProcessClass";
 
-	public static String getUniqueInstanceName(String addition, ClusterClass container) {
-		return getUniqueName(addition, getInstanceNames(container));
-	}
+    private static final String TXT_DATACLASS = "DataClass";
 
-	public static String getUniqueInstanceName(List<String> instances) {
-		return getUniqueName(TXT_INSTANCE, instances);
-	}
+    private static final String UNDEFINED = "Undefined";
 
-	// get unique name
+    private NameHelper() {
+        throw new IllegalStateException("Utility class");
+    }
+    // get instance names
 
-	public static String getUniqueName(String addition, Iterable<String> names) {
-		try {
-			String name = addition;
-			int index = 1;
-			while (!isNameAvailable(name, names)) {
-				name = addition + index;
-				index++;
-			}
-			return name;
-		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Can not create new name. " + e.getMessage(), e.getCause());
-			return UNDEFINED;
-		}
-	}
+    public static String getUniqueInstanceName(ClusterClass container) {
+        return getUniqueInstanceName(TXT_INSTANCE, container);
+    }
 
-	public static boolean isNameAvailable(String name, Iterable<String> usedNames) {
-		for (String instancename : usedNames) {
-			if (instancename != null && instancename.equalsIgnoreCase(name)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public static String getUniqueInstanceName(String addition, ClusterClass container) {
+        return getUniqueName(addition, getInstanceNames(container));
+    }
 
-	// get cluster name
+    public static String getUniqueInstanceName(List<String> instances) {
+        return getUniqueName(TXT_INSTANCE, instances);
+    }
 
-	public static String getUniqueClusterName(EObject container) {
-		return getUniqueClusterName(TXT_CLUSTERCLASS, container);
-	}
+    // get unique name
 
-	public static String getUniqueClusterName(String addition, EObject container) {
-		return getUniqueName(addition, getAllInstantiableNames(container));
-	}
+    public static String getUniqueName(String addition, Iterable<String> names) {
+        try {
+            String name = addition;
+            int index = 1;
+            while (!isNameAvailable(name, names)) {
+                name = addition + index;
+                index++;
+            }
+            return name;
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Can not create new name. " + e.getMessage(), e.getCause());
+            return UNDEFINED;
+        }
+    }
 
-	// get process name
+    public static boolean isNameAvailable(String name, Iterable<String> usedNames) {
+        for (String instancename : usedNames) {
+            if (instancename != null && instancename.equalsIgnoreCase(name)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	public static String getUniqueProcessName(EObject container) {
-		return getUniqueProcessName(TXT_PROCESSCLASS, container);
-	}
+    // get cluster name
 
-	public static String getUniqueProcessName(String addition, EObject container) {
-		return getUniqueName(addition, getAllInstantiableNames(container));
-	}
+    public static String getUniqueClusterName(EObject container) {
+        return getUniqueClusterName(TXT_CLUSTERCLASS, container);
+    }
 
-	// get data name
+    public static String getUniqueClusterName(String addition, EObject container) {
+        return getUniqueName(addition, getAllInstantiableNames(container));
+    }
 
-	public static String getUniqueDataName(EObject container) {
-		return getUniqueDataName(TXT_DATACLASS, container);
-	}
+    // get process name
 
-	public static String getUniqueDataName(String addition, EObject container) {
-		return getUniqueName(addition, getAllDataNames(container));
-	}
+    public static String getUniqueProcessName(EObject container) {
+        return getUniqueProcessName(TXT_PROCESSCLASS, container);
+    }
 
-	// find all existing names
+    public static String getUniqueProcessName(String addition, EObject container) {
+        return getUniqueName(addition, getAllInstantiableNames(container));
+    }
 
-	public static Iterable<String> getAllDataNames(EObject container) {
-		Resource resource = container.eResource();
-		return HelperFunctions.getNames(PooslCache.get(resource).getAllRelevantDataClasses());
-	}
+    // get data name
 
-	public static Iterable<String> getAllInstantiableNames(EObject container) {
-		Resource resource = container.eResource();
-		return HelperFunctions.getNames(HelperFunctions.getAllRelevantInstantiableClasses(resource));
-	}
+    public static String getUniqueDataName(EObject container) {
+        return getUniqueDataName(TXT_DATACLASS, container);
+    }
 
-	public static Iterable<String> getAllProcessNames(EObject object) {
-		Resource resource = object.eResource();
-		return HelperFunctions.getNames(PooslCache.get(resource).getAllRelevantProcessClasses());
-	}
+    public static String getUniqueDataName(String addition, EObject container) {
+        return getUniqueName(addition, getAllDataNames(container));
+    }
 
-	public static Iterable<String> getAllClusterNames(EObject object) {
-		Resource resource = object.eResource();
-		return HelperFunctions.getNames(PooslCache.get(resource).getAllRelevantClusterClasses());
-	}
+    // find all existing names
 
-	public static List<String> getInstanceNames(ClusterClass container) {
-		List<String> result = new ArrayList<>();
-		for (Instance instance : container.getInstances()) {
-			result.add(instance.getName());
-		}
-		return result;
-	}
+    public static Iterable<String> getAllDataNames(EObject container) {
+        Resource resource = container.eResource();
+        return HelperFunctions.getNames(PooslCache.get(resource).getAllRelevantDataClasses());
+    }
+
+    public static Iterable<String> getAllInstantiableNames(EObject container) {
+        Resource resource = container.eResource();
+        return HelperFunctions.getNames(HelperFunctions.getAllRelevantInstantiableClasses(resource));
+    }
+
+    public static Iterable<String> getAllProcessNames(EObject object) {
+        Resource resource = object.eResource();
+        return HelperFunctions.getNames(PooslCache.get(resource).getAllRelevantProcessClasses());
+    }
+
+    public static Iterable<String> getAllClusterNames(EObject object) {
+        Resource resource = object.eResource();
+        return HelperFunctions.getNames(PooslCache.get(resource).getAllRelevantClusterClasses());
+    }
+
+    public static List<String> getInstanceNames(ClusterClass container) {
+        List<String> result = new ArrayList<>();
+        for (Instance instance : container.getInstances()) {
+            result.add(instance.getName());
+        }
+        return result;
+    }
 
 }

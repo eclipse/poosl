@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_binary_operation complex type.
+ * <p>
+ * Java class for t_binary_operation complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_binary_operation">
@@ -38,28 +38,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_binary_operation", propOrder = {
-    "leftOperand",
-    "rightOperand"
-})
+@XmlType(name = "t_binary_operation", propOrder = { "leftOperand", "rightOperand" })
 public class TBinaryOperation {
 
     @XmlElement(name = "left_operand", required = true)
     protected TExpression leftOperand;
+
     @XmlElement(name = "right_operand", required = true)
     protected TExpression rightOperand;
+
     @XmlAttribute(name = "operator")
     protected TBinaryOperator operator;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the leftOperand property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getLeftOperand() {
         return leftOperand;
@@ -69,9 +67,8 @@ public class TBinaryOperation {
      * Sets the value of the leftOperand property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setLeftOperand(TExpression value) {
         this.leftOperand = value;
@@ -80,10 +77,8 @@ public class TBinaryOperation {
     /**
      * Gets the value of the rightOperand property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getRightOperand() {
         return rightOperand;
@@ -93,9 +88,8 @@ public class TBinaryOperation {
      * Sets the value of the rightOperand property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setRightOperand(TExpression value) {
         this.rightOperand = value;
@@ -104,10 +98,8 @@ public class TBinaryOperation {
     /**
      * Gets the value of the operator property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TBinaryOperator }
-     *     
+     * @return possible object is {@link TBinaryOperator }
+     * 
      */
     public TBinaryOperator getOperator() {
         return operator;
@@ -117,9 +109,8 @@ public class TBinaryOperation {
      * Sets the value of the operator property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TBinaryOperator }
-     *     
+     *            allowed object is {@link TBinaryOperator }
+     * 
      */
     public void setOperator(TBinaryOperator value) {
         this.operator = value;
@@ -128,10 +119,8 @@ public class TBinaryOperation {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -141,9 +130,8 @@ public class TBinaryOperation {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_variable complex type.
+ * <p>
+ * Java class for t_inspect_variable complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_variable">
@@ -38,29 +39,25 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_variable", propOrder = {
-    "handle",
-    "object",
-    "type",
-    "literal"
-})
+@XmlType(name = "t_inspect_variable", propOrder = { "handle", "object", "type", "literal" })
 public class TInspectVariable {
 
     @XmlElement(required = true)
     protected BigInteger handle;
+
     @XmlElement(required = true)
     protected BigInteger object;
+
     @XmlElement(required = true)
     protected String type;
+
     protected String literal;
 
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -70,9 +67,8 @@ public class TInspectVariable {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;
@@ -81,10 +77,8 @@ public class TInspectVariable {
     /**
      * Gets the value of the object property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getObject() {
         return object;
@@ -94,9 +88,8 @@ public class TInspectVariable {
      * Sets the value of the object property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setObject(BigInteger value) {
         this.object = value;
@@ -105,10 +98,8 @@ public class TInspectVariable {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getType() {
         return type;
@@ -118,9 +109,8 @@ public class TInspectVariable {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setType(String value) {
         this.type = value;
@@ -129,10 +119,8 @@ public class TInspectVariable {
     /**
      * Gets the value of the literal property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getLiteral() {
         return literal;
@@ -142,9 +130,8 @@ public class TInspectVariable {
      * Sets the value of the literal property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setLiteral(String value) {
         this.literal = value;

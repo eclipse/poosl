@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_unary_operation complex type.
+ * <p>
+ * Java class for t_unary_operation complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_unary_operation">
@@ -37,25 +37,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_unary_operation", propOrder = {
-    "operand"
-})
+@XmlType(name = "t_unary_operation", propOrder = { "operand" })
 public class TUnaryOperation {
 
     @XmlElement(required = true)
     protected TExpression operand;
+
     @XmlAttribute(name = "operator")
     protected TUnaryOperator operator;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the operand property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getOperand() {
         return operand;
@@ -65,9 +63,8 @@ public class TUnaryOperation {
      * Sets the value of the operand property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setOperand(TExpression value) {
         this.operand = value;
@@ -76,10 +73,8 @@ public class TUnaryOperation {
     /**
      * Gets the value of the operator property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TUnaryOperator }
-     *     
+     * @return possible object is {@link TUnaryOperator }
+     * 
      */
     public TUnaryOperator getOperator() {
         return operator;
@@ -89,9 +84,8 @@ public class TUnaryOperation {
      * Sets the value of the operator property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TUnaryOperator }
-     *     
+     *            allowed object is {@link TUnaryOperator }
+     * 
      */
     public void setOperator(TUnaryOperator value) {
         this.operator = value;
@@ -100,10 +94,8 @@ public class TUnaryOperation {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -113,9 +105,8 @@ public class TUnaryOperation {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

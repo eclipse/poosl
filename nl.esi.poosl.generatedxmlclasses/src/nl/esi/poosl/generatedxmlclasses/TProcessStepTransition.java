@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_process_step_transition complex type.
+ * <p>
+ * Java class for t_process_step_transition complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_process_step_transition">
@@ -38,26 +39,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_process_step_transition", propOrder = {
-    "processPath",
-    "node"
-})
+@XmlType(name = "t_process_step_transition", propOrder = { "processPath", "node" })
 public class TProcessStepTransition {
 
     @XmlElement(name = "process_path", required = true)
     protected String processPath;
+
     @XmlElement(required = true)
     protected BigInteger node;
+
     @XmlAttribute(name = "handle", required = true)
     protected BigInteger handle;
 
     /**
      * Gets the value of the processPath property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getProcessPath() {
         return processPath;
@@ -67,9 +65,8 @@ public class TProcessStepTransition {
      * Sets the value of the processPath property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setProcessPath(String value) {
         this.processPath = value;
@@ -78,10 +75,8 @@ public class TProcessStepTransition {
     /**
      * Gets the value of the node property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getNode() {
         return node;
@@ -91,9 +86,8 @@ public class TProcessStepTransition {
      * Sets the value of the node property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setNode(BigInteger value) {
         this.node = value;
@@ -102,10 +96,8 @@ public class TProcessStepTransition {
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -115,9 +107,8 @@ public class TProcessStepTransition {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;

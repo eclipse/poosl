@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_perform_transition_request complex type.
+ * <p>
+ * Java class for t_perform_transition_request complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_perform_transition_request">
@@ -37,23 +38,20 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_perform_transition_request", propOrder = {
-    "handle"
-})
+@XmlType(name = "t_perform_transition_request", propOrder = { "handle" })
 public class TPerformTransitionRequest {
 
     @XmlElement(required = true)
     protected BigInteger handle;
+
     @XmlAttribute(name = "data_debug")
     protected Boolean dataDebug;
 
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -63,9 +61,8 @@ public class TPerformTransitionRequest {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;
@@ -74,10 +71,8 @@ public class TPerformTransitionRequest {
     /**
      * Gets the value of the dataDebug property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     * @return possible object is {@link Boolean }
+     * 
      */
     public Boolean isDataDebug() {
         return dataDebug;
@@ -87,9 +82,8 @@ public class TPerformTransitionRequest {
      * Sets the value of the dataDebug property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     *            allowed object is {@link Boolean }
+     * 
      */
     public void setDataDebug(Boolean value) {
         this.dataDebug = value;

@@ -7,9 +7,9 @@ import org.xpect.XpectImport;
 
 @XpectImport(PooslLinesExpectationImpl.class)
 public interface IPooslLinesExpectation {
-	void assertEquals (Iterable<?> string);
+    void assertEquals(Iterable<?> string);
 
-	void assertEquals(String message, Iterable<?> string);
-	
-	void assertContains(String message, Iterable<?> string);
+    void assertEquals(String message, Iterable<?> string);
+
+    void assertContains(String message, Iterable<?> string);
 }

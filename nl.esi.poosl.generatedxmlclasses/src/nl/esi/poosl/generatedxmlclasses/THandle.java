@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_handle complex type.
+ * <p>
+ * Java class for t_handle complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_handle">
@@ -37,14 +38,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_handle", propOrder = {
-    "id",
-    "type"
-})
+@XmlType(name = "t_handle", propOrder = { "id", "type" })
 public class THandle {
 
     @XmlElement(required = true)
     protected BigInteger id;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected THandleType type;
@@ -52,10 +51,8 @@ public class THandle {
     /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getId() {
         return id;
@@ -65,9 +62,8 @@ public class THandle {
      * Sets the value of the id property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setId(BigInteger value) {
         this.id = value;
@@ -76,10 +72,8 @@ public class THandle {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link THandleType }
-     *     
+     * @return possible object is {@link THandleType }
+     * 
      */
     public THandleType getType() {
         return type;
@@ -89,9 +83,8 @@ public class THandle {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link THandleType }
-     *     
+     *            allowed object is {@link THandleType }
+     * 
      */
     public void setType(THandleType value) {
         this.type = value;

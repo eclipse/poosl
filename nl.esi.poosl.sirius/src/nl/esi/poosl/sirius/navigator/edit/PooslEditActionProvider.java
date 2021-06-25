@@ -8,43 +8,44 @@ import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonViewerSite;
 
 public class PooslEditActionProvider extends CommonActionProvider {
-	private boolean contribute = false;
-	private PooslEditGroup editGroup;
+    private boolean contribute = false;
 
-	@Override
-	public void init(ICommonActionExtensionSite aSite) {
-		super.init(aSite);
-		ICommonViewerSite site = aSite.getViewSite();
-		editGroup = new PooslEditGroup(site.getShell());
-		contribute = true;
+    private PooslEditGroup editGroup;
 
-	}
+    @Override
+    public void init(ICommonActionExtensionSite aSite) {
+        super.init(aSite);
+        ICommonViewerSite site = aSite.getViewSite();
+        editGroup = new PooslEditGroup(site.getShell());
+        contribute = true;
 
-	@Override
-	public void fillActionBars(IActionBars actionBars) {
-		if (!contribute) {
-			return;
-		}
-		editGroup.fillActionBars(actionBars);
-	}
+    }
 
-	@Override
-	public void dispose() {
-		editGroup.dispose();
-	}
+    @Override
+    public void fillActionBars(IActionBars actionBars) {
+        if (!contribute) {
+            return;
+        }
+        editGroup.fillActionBars(actionBars);
+    }
 
-	@Override
-	public void fillContextMenu(IMenuManager menu) {
-		editGroup.fillContextMenu(menu);
-	}
+    @Override
+    public void dispose() {
+        editGroup.dispose();
+    }
 
-	@Override
-	public void setContext(ActionContext context) {
-		editGroup.setContext(context);
-	}
+    @Override
+    public void fillContextMenu(IMenuManager menu) {
+        editGroup.fillContextMenu(menu);
+    }
 
-	@Override
-	public void updateActionBars() {
-		editGroup.updateActionBars();
-	}
+    @Override
+    public void setContext(ActionContext context) {
+        editGroup.setContext(context);
+    }
+
+    @Override
+    public void updateActionBars() {
+        editGroup.updateActionBars();
+    }
 }

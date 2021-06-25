@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_executiontree_message_receive complex type.
+ * <p>
+ * Java class for t_executiontree_message_receive complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_executiontree_message_receive">
@@ -36,24 +37,22 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "t_executiontree_message_receive")
-public class TExecutiontreeMessageReceive
-    extends TExecutiontreeBase
-{
+public class TExecutiontreeMessageReceive extends TExecutiontreeBase {
 
     @XmlAttribute(name = "port")
     protected String port;
+
     @XmlAttribute(name = "message")
     protected String message;
+
     @XmlAttribute(name = "parameter_count")
     protected BigInteger parameterCount;
 
     /**
      * Gets the value of the port property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getPort() {
         return port;
@@ -63,9 +62,8 @@ public class TExecutiontreeMessageReceive
      * Sets the value of the port property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setPort(String value) {
         this.port = value;
@@ -74,10 +72,8 @@ public class TExecutiontreeMessageReceive
     /**
      * Gets the value of the message property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMessage() {
         return message;
@@ -87,9 +83,8 @@ public class TExecutiontreeMessageReceive
      * Sets the value of the message property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMessage(String value) {
         this.message = value;
@@ -98,10 +93,8 @@ public class TExecutiontreeMessageReceive
     /**
      * Gets the value of the parameterCount property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getParameterCount() {
         return parameterCount;
@@ -111,9 +104,8 @@ public class TExecutiontreeMessageReceive
      * Sets the value of the parameterCount property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setParameterCount(BigInteger value) {
         this.parameterCount = value;

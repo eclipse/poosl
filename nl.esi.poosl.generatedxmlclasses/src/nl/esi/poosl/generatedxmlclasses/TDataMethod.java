@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_data_method complex type.
+ * <p>
+ * Java class for t_data_method complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_data_method">
@@ -43,36 +44,34 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_data_method", propOrder = {
-    "returnType",
-    "argument",
-    "localVariable",
-    "bodyText",
-    "bodyExpression"
-})
+@XmlType(name = "t_data_method", propOrder = { "returnType", "argument", "localVariable", "bodyText", "bodyExpression" })
 public class TDataMethod {
 
     @XmlElement(name = "return_type", required = true)
     protected String returnType;
+
     protected List<TTypedVariable> argument;
+
     @XmlElement(name = "local_variable")
     protected List<TTypedVariable> localVariable;
+
     @XmlElement(name = "body_text")
     protected String bodyText;
+
     @XmlElement(name = "body_expression")
     protected TExpression bodyExpression;
+
     @XmlAttribute(name = "name", required = true)
     protected String name;
+
     @XmlAttribute(name = "native")
     protected TBoolean _native;
 
     /**
      * Gets the value of the returnType property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getReturnType() {
         return returnType;
@@ -82,9 +81,8 @@ public class TDataMethod {
      * Sets the value of the returnType property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setReturnType(String value) {
         this.returnType = value;
@@ -94,21 +92,20 @@ public class TDataMethod {
      * Gets the value of the argument property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the argument property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the argument property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getArgument().add(newItem);
+     * getArgument().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TTypedVariable }
+     * Objects of the following type(s) are allowed in the list {@link TTypedVariable }
      * 
      * 
      */
@@ -123,21 +120,20 @@ public class TDataMethod {
      * Gets the value of the localVariable property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the localVariable property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the localVariable property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getLocalVariable().add(newItem);
+     * getLocalVariable().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TTypedVariable }
+     * Objects of the following type(s) are allowed in the list {@link TTypedVariable }
      * 
      * 
      */
@@ -151,10 +147,8 @@ public class TDataMethod {
     /**
      * Gets the value of the bodyText property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getBodyText() {
         return bodyText;
@@ -164,9 +158,8 @@ public class TDataMethod {
      * Sets the value of the bodyText property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setBodyText(String value) {
         this.bodyText = value;
@@ -175,10 +168,8 @@ public class TDataMethod {
     /**
      * Gets the value of the bodyExpression property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getBodyExpression() {
         return bodyExpression;
@@ -188,9 +179,8 @@ public class TDataMethod {
      * Sets the value of the bodyExpression property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setBodyExpression(TExpression value) {
         this.bodyExpression = value;
@@ -199,10 +189,8 @@ public class TDataMethod {
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -212,9 +200,8 @@ public class TDataMethod {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -223,10 +210,8 @@ public class TDataMethod {
     /**
      * Gets the value of the native property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TBoolean }
-     *     
+     * @return possible object is {@link TBoolean }
+     * 
      */
     public TBoolean getNative() {
         return _native;
@@ -236,9 +221,8 @@ public class TDataMethod {
      * Sets the value of the native property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TBoolean }
-     *     
+     *            allowed object is {@link TBoolean }
+     * 
      */
     public void setNative(TBoolean value) {
         this._native = value;

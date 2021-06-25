@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_var_list complex type.
+ * <p>
+ * Java class for t_var_list complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_var_list">
@@ -39,14 +40,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_var_list", propOrder = {
-    "variable"
-})
+@XmlType(name = "t_var_list", propOrder = { "variable" })
 public class TVarList {
 
     protected List<TVariable> variable;
+
     @XmlAttribute(name = "local")
     protected BigInteger local;
+
     @XmlAttribute(name = "global")
     protected BigInteger global;
 
@@ -54,21 +55,20 @@ public class TVarList {
      * Gets the value of the variable property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the variable property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the variable property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getVariable().add(newItem);
+     * getVariable().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TVariable }
+     * Objects of the following type(s) are allowed in the list {@link TVariable }
      * 
      * 
      */
@@ -82,10 +82,8 @@ public class TVarList {
     /**
      * Gets the value of the local property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getLocal() {
         return local;
@@ -95,9 +93,8 @@ public class TVarList {
      * Sets the value of the local property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setLocal(BigInteger value) {
         this.local = value;
@@ -106,10 +103,8 @@ public class TVarList {
     /**
      * Gets the value of the global property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getGlobal() {
         return global;
@@ -119,9 +114,8 @@ public class TVarList {
      * Sets the value of the global property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setGlobal(BigInteger value) {
         this.global = value;

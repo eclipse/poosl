@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_perform_transition_response_result.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_perform_transition_response_result.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_perform_transition_response_result">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -35,13 +36,11 @@ import javax.xml.bind.annotation.XmlType;
 public enum TPerformTransitionResponseResult {
 
     @XmlEnumValue("ok")
-    OK("ok"),
-    @XmlEnumValue("inexecutable")
-    INEXECUTABLE("inexecutable"),
-    @XmlEnumValue("invalid transition")
-    INVALID_TRANSITION("invalid transition"),
-    @XmlEnumValue("invalid handle")
+    OK("ok"), @XmlEnumValue("inexecutable")
+    INEXECUTABLE("inexecutable"), @XmlEnumValue("invalid transition")
+    INVALID_TRANSITION("invalid transition"), @XmlEnumValue("invalid handle")
     INVALID_HANDLE("invalid handle");
+
     private final String value;
 
     TPerformTransitionResponseResult(String v) {
@@ -53,7 +52,7 @@ public enum TPerformTransitionResponseResult {
     }
 
     public static TPerformTransitionResponseResult fromValue(String v) {
-        for (TPerformTransitionResponseResult c: TPerformTransitionResponseResult.values()) {
+        for (TPerformTransitionResponseResult c : TPerformTransitionResponseResult.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

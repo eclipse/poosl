@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_command_response complex type.
+ * <p>
+ * Java class for t_command_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_command_response">
@@ -38,16 +38,15 @@ public class TCommandResponse {
 
     @XmlAttribute(name = "type")
     protected TCommand type;
+
     @XmlAttribute(name = "result")
     protected TCommandResult result;
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommand }
-     *     
+     * @return possible object is {@link TCommand }
+     * 
      */
     public TCommand getType() {
         return type;
@@ -57,9 +56,8 @@ public class TCommandResponse {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommand }
-     *     
+     *            allowed object is {@link TCommand }
+     * 
      */
     public void setType(TCommand value) {
         this.type = value;
@@ -68,10 +66,8 @@ public class TCommandResponse {
     /**
      * Gets the value of the result property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommandResult }
-     *     
+     * @return possible object is {@link TCommandResult }
+     * 
      */
     public TCommandResult getResult() {
         return result;
@@ -81,9 +77,8 @@ public class TCommandResponse {
      * Sets the value of the result property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommandResult }
-     *     
+     *            allowed object is {@link TCommandResult }
+     * 
      */
     public void setResult(TCommandResult value) {
         this.result = value;

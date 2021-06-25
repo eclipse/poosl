@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_port complex type.
+ * <p>
+ * Java class for t_inspect_port complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_port">
@@ -37,30 +37,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_port", propOrder = {
-    "name",
-    "upChannel",
-    "downChannel",
-    "isRoot"
-})
+@XmlType(name = "t_inspect_port", propOrder = { "name", "upChannel", "downChannel", "isRoot" })
 public class TInspectPort {
 
     @XmlElement(required = true)
     protected String name;
+
     @XmlElement(name = "up_channel")
     protected TInspectChannel upChannel;
+
     @XmlElement(name = "down_channel")
     protected TInspectChannel downChannel;
+
     @XmlElement(name = "is_root")
     protected boolean isRoot;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -70,9 +66,8 @@ public class TInspectPort {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -81,10 +76,8 @@ public class TInspectPort {
     /**
      * Gets the value of the upChannel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectChannel }
-     *     
+     * @return possible object is {@link TInspectChannel }
+     * 
      */
     public TInspectChannel getUpChannel() {
         return upChannel;
@@ -94,9 +87,8 @@ public class TInspectPort {
      * Sets the value of the upChannel property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectChannel }
-     *     
+     *            allowed object is {@link TInspectChannel }
+     * 
      */
     public void setUpChannel(TInspectChannel value) {
         this.upChannel = value;
@@ -105,10 +97,8 @@ public class TInspectPort {
     /**
      * Gets the value of the downChannel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectChannel }
-     *     
+     * @return possible object is {@link TInspectChannel }
+     * 
      */
     public TInspectChannel getDownChannel() {
         return downChannel;
@@ -118,9 +108,8 @@ public class TInspectPort {
      * Sets the value of the downChannel property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectChannel }
-     *     
+     *            allowed object is {@link TInspectChannel }
+     * 
      */
     public void setDownChannel(TInspectChannel value) {
         this.downChannel = value;

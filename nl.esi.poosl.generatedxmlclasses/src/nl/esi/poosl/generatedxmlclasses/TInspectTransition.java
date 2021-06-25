@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_transition complex type.
+ * <p>
+ * Java class for t_inspect_transition complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_transition">
@@ -34,9 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_transition", propOrder = {
-    "transition"
-})
+@XmlType(name = "t_inspect_transition", propOrder = { "transition" })
 public class TInspectTransition {
 
     @XmlElement(required = true)
@@ -45,10 +43,8 @@ public class TInspectTransition {
     /**
      * Gets the value of the transition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TTransition }
-     *     
+     * @return possible object is {@link TTransition }
+     * 
      */
     public TTransition getTransition() {
         return transition;
@@ -58,9 +54,8 @@ public class TInspectTransition {
      * Sets the value of the transition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TTransition }
-     *     
+     *            allowed object is {@link TTransition }
+     * 
      */
     public void setTransition(TTransition value) {
         this.transition = value;

@@ -4,20 +4,21 @@ import nl.esi.poosl.generatedxmlclasses.TErrorStackframe;
 import nl.esi.poosl.rotalumisclient.sourcemapping.PooslSourceMapping;
 
 public class StackFrameMapping {
-	private final PooslSourceMapping mapping;
-	private final TErrorStackframe frame;
+    private final PooslSourceMapping mapping;
 
-	public StackFrameMapping(TErrorStackframe frame, PooslSourceMapping mapping) {
-		this.frame = frame;
-		this.mapping = mapping;
-	}
+    private final TErrorStackframe frame;
 
-	public PooslSourceMapping getMapping() {
-		return mapping;
-	}
+    public StackFrameMapping(TErrorStackframe frame, PooslSourceMapping mapping) {
+        this.frame = frame;
+        this.mapping = mapping;
+    }
 
-	public TErrorStackframe getFrame() {
-		return frame;
-	}
+    public PooslSourceMapping getMapping() {
+        return mapping;
+    }
+
+    public TErrorStackframe getFrame() {
+        return frame;
+    }
 
 }

@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigDecimal;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_communication_event complex type.
+ * <p>
+ * Java class for t_communication_event complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_communication_event">
@@ -38,30 +39,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_communication_event", propOrder = {
-    "simulationTime",
-    "sender",
-    "receiver",
-    "message"
-})
+@XmlType(name = "t_communication_event", propOrder = { "simulationTime", "sender", "receiver", "message" })
 public class TCommunicationEvent {
 
     @XmlElement(name = "simulation_time", required = true)
     protected BigDecimal simulationTime;
+
     @XmlElement(required = true)
     protected TCommuncationEventNode sender;
+
     @XmlElement(required = true)
     protected TCommuncationEventNode receiver;
+
     @XmlElement(required = true)
     protected TCommunicationEventMessage message;
 
     /**
      * Gets the value of the simulationTime property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     * @return possible object is {@link BigDecimal }
+     * 
      */
     public BigDecimal getSimulationTime() {
         return simulationTime;
@@ -71,9 +68,8 @@ public class TCommunicationEvent {
      * Sets the value of the simulationTime property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     *            allowed object is {@link BigDecimal }
+     * 
      */
     public void setSimulationTime(BigDecimal value) {
         this.simulationTime = value;
@@ -82,10 +78,8 @@ public class TCommunicationEvent {
     /**
      * Gets the value of the sender property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommuncationEventNode }
-     *     
+     * @return possible object is {@link TCommuncationEventNode }
+     * 
      */
     public TCommuncationEventNode getSender() {
         return sender;
@@ -95,9 +89,8 @@ public class TCommunicationEvent {
      * Sets the value of the sender property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommuncationEventNode }
-     *     
+     *            allowed object is {@link TCommuncationEventNode }
+     * 
      */
     public void setSender(TCommuncationEventNode value) {
         this.sender = value;
@@ -106,10 +99,8 @@ public class TCommunicationEvent {
     /**
      * Gets the value of the receiver property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommuncationEventNode }
-     *     
+     * @return possible object is {@link TCommuncationEventNode }
+     * 
      */
     public TCommuncationEventNode getReceiver() {
         return receiver;
@@ -119,9 +110,8 @@ public class TCommunicationEvent {
      * Sets the value of the receiver property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommuncationEventNode }
-     *     
+     *            allowed object is {@link TCommuncationEventNode }
+     * 
      */
     public void setReceiver(TCommuncationEventNode value) {
         this.receiver = value;
@@ -130,10 +120,8 @@ public class TCommunicationEvent {
     /**
      * Gets the value of the message property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommunicationEventMessage }
-     *     
+     * @return possible object is {@link TCommunicationEventMessage }
+     * 
      */
     public TCommunicationEventMessage getMessage() {
         return message;
@@ -143,9 +131,8 @@ public class TCommunicationEvent {
      * Sets the value of the message property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommunicationEventMessage }
-     *     
+     *            allowed object is {@link TCommunicationEventMessage }
+     * 
      */
     public void setMessage(TCommunicationEventMessage value) {
         this.message = value;

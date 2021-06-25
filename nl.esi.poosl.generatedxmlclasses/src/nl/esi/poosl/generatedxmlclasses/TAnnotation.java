@@ -5,23 +5,25 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+
 import org.w3c.dom.Element;
 
-
 /**
- * <p>Java class for t_annotation complex type.
+ * <p>
+ * Java class for t_annotation complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_annotation">
@@ -38,19 +40,9 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_annotation", propOrder = {
-    "any"
-})
-@XmlSeeAlso({
-    TChannelAnnotation.class,
-    TDataClassAnnotation.class,
-    TClusterClassAnnotation.class,
-    TInstanceAnnotation.class,
-    TProcessClassAnnotation.class,
-    TPortAnnotation.class,
-    TTopLevelAnnotation.class,
-    TConnectionAnnotation.class
-})
+@XmlType(name = "t_annotation", propOrder = { "any" })
+@XmlSeeAlso({ TChannelAnnotation.class, TDataClassAnnotation.class, TClusterClassAnnotation.class, TInstanceAnnotation.class, TProcessClassAnnotation.class, TPortAnnotation.class,
+        TTopLevelAnnotation.class, TConnectionAnnotation.class })
 public class TAnnotation {
 
     @XmlAnyElement
@@ -60,21 +52,20 @@ public class TAnnotation {
      * Gets the value of the any property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAny().add(newItem);
+     * getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Element }
+     * Objects of the following type(s) are allowed in the list {@link Element }
      * 
      * 
      */

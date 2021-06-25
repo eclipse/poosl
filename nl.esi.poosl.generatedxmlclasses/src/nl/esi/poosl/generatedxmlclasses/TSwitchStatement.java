@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_switch_statement complex type.
+ * <p>
+ * Java class for t_switch_statement complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_switch_statement">
@@ -40,29 +41,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_switch_statement", propOrder = {
-    "controlExpression",
-    "_case",
-    "_default"
-})
+@XmlType(name = "t_switch_statement", propOrder = { "controlExpression", "_case", "_default" })
 public class TSwitchStatement {
 
     @XmlElement(name = "control_expression", required = true)
     protected TExpression controlExpression;
+
     @XmlElement(name = "case", required = true)
     protected List<TSwitchCaseStatement> _case;
+
     @XmlElement(name = "default")
     protected TStatement _default;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the controlExpression property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getControlExpression() {
         return controlExpression;
@@ -72,9 +70,8 @@ public class TSwitchStatement {
      * Sets the value of the controlExpression property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setControlExpression(TExpression value) {
         this.controlExpression = value;
@@ -84,21 +81,20 @@ public class TSwitchStatement {
      * Gets the value of the case property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the case property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the case property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getCase().add(newItem);
+     * getCase().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TSwitchCaseStatement }
+     * Objects of the following type(s) are allowed in the list {@link TSwitchCaseStatement }
      * 
      * 
      */
@@ -112,10 +108,8 @@ public class TSwitchStatement {
     /**
      * Gets the value of the default property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStatement }
-     *     
+     * @return possible object is {@link TStatement }
+     * 
      */
     public TStatement getDefault() {
         return _default;
@@ -125,9 +119,8 @@ public class TSwitchStatement {
      * Sets the value of the default property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStatement }
-     *     
+     *            allowed object is {@link TStatement }
+     * 
      */
     public void setDefault(TStatement value) {
         this._default = value;
@@ -136,10 +129,8 @@ public class TSwitchStatement {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -149,9 +140,8 @@ public class TSwitchStatement {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

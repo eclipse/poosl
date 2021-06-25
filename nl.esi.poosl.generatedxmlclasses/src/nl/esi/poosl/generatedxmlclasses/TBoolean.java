@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_boolean.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_boolean.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_boolean">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -33,9 +34,9 @@ import javax.xml.bind.annotation.XmlType;
 public enum TBoolean {
 
     @XmlEnumValue("true")
-    TRUE("true"),
-    @XmlEnumValue("false")
+    TRUE("true"), @XmlEnumValue("false")
     FALSE("false");
+
     private final String value;
 
     TBoolean(String v) {
@@ -47,7 +48,7 @@ public enum TBoolean {
     }
 
     public static TBoolean fromValue(String v) {
-        for (TBoolean c: TBoolean.values()) {
+        for (TBoolean c : TBoolean.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

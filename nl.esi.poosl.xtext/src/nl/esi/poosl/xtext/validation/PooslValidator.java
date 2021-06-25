@@ -6,8 +6,7 @@ package nl.esi.poosl.xtext.validation;
 /**
  * This class contains custom validation rules.
  *
- * See
- * https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
+ * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class PooslValidator extends PooslJavaValidatorUniqueIdentifiers {
 }

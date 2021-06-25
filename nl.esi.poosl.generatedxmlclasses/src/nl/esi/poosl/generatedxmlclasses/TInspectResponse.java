@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_response complex type.
+ * <p>
+ * Java class for t_inspect_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_response">
@@ -50,48 +51,44 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_response", propOrder = {
-    "name",
-    "handle",
-    "result",
-    "process",
-    "data",
-    "cluster",
-    "model",
-    "system",
-    "channel",
-    "stackframe",
-    "variable",
-    "variableContext",
-    "transition"
-})
+@XmlType(name = "t_inspect_response", propOrder = { "name", "handle", "result", "process", "data", "cluster", "model", "system", "channel", "stackframe", "variable", "variableContext", "transition" })
 public class TInspectResponse {
 
     protected String name;
+
     @XmlElement(required = true)
     protected BigInteger handle;
+
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected TObjectQueryResult result;
+
     protected TInspectProcess process;
+
     protected TInspectData data;
+
     protected TInspectCluster cluster;
+
     protected TInspectModel model;
+
     protected TInspectSystem system;
+
     protected TInspectChannel channel;
+
     protected TStackframe stackframe;
+
     protected TInspectVariable variable;
+
     @XmlElement(name = "variable_context")
     protected TInspectVariableContext variableContext;
+
     protected TInspectTransition transition;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -101,9 +98,8 @@ public class TInspectResponse {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -112,10 +108,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -125,9 +119,8 @@ public class TInspectResponse {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;
@@ -136,10 +129,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the result property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TObjectQueryResult }
-     *     
+     * @return possible object is {@link TObjectQueryResult }
+     * 
      */
     public TObjectQueryResult getResult() {
         return result;
@@ -149,9 +140,8 @@ public class TInspectResponse {
      * Sets the value of the result property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TObjectQueryResult }
-     *     
+     *            allowed object is {@link TObjectQueryResult }
+     * 
      */
     public void setResult(TObjectQueryResult value) {
         this.result = value;
@@ -160,10 +150,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the process property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectProcess }
-     *     
+     * @return possible object is {@link TInspectProcess }
+     * 
      */
     public TInspectProcess getProcess() {
         return process;
@@ -173,9 +161,8 @@ public class TInspectResponse {
      * Sets the value of the process property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectProcess }
-     *     
+     *            allowed object is {@link TInspectProcess }
+     * 
      */
     public void setProcess(TInspectProcess value) {
         this.process = value;
@@ -184,10 +171,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the data property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectData }
-     *     
+     * @return possible object is {@link TInspectData }
+     * 
      */
     public TInspectData getData() {
         return data;
@@ -197,9 +182,8 @@ public class TInspectResponse {
      * Sets the value of the data property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectData }
-     *     
+     *            allowed object is {@link TInspectData }
+     * 
      */
     public void setData(TInspectData value) {
         this.data = value;
@@ -208,10 +192,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the cluster property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectCluster }
-     *     
+     * @return possible object is {@link TInspectCluster }
+     * 
      */
     public TInspectCluster getCluster() {
         return cluster;
@@ -221,9 +203,8 @@ public class TInspectResponse {
      * Sets the value of the cluster property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectCluster }
-     *     
+     *            allowed object is {@link TInspectCluster }
+     * 
      */
     public void setCluster(TInspectCluster value) {
         this.cluster = value;
@@ -232,10 +213,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the model property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectModel }
-     *     
+     * @return possible object is {@link TInspectModel }
+     * 
      */
     public TInspectModel getModel() {
         return model;
@@ -245,9 +224,8 @@ public class TInspectResponse {
      * Sets the value of the model property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectModel }
-     *     
+     *            allowed object is {@link TInspectModel }
+     * 
      */
     public void setModel(TInspectModel value) {
         this.model = value;
@@ -256,10 +234,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the system property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectSystem }
-     *     
+     * @return possible object is {@link TInspectSystem }
+     * 
      */
     public TInspectSystem getSystem() {
         return system;
@@ -269,9 +245,8 @@ public class TInspectResponse {
      * Sets the value of the system property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectSystem }
-     *     
+     *            allowed object is {@link TInspectSystem }
+     * 
      */
     public void setSystem(TInspectSystem value) {
         this.system = value;
@@ -280,10 +255,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the channel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectChannel }
-     *     
+     * @return possible object is {@link TInspectChannel }
+     * 
      */
     public TInspectChannel getChannel() {
         return channel;
@@ -293,9 +266,8 @@ public class TInspectResponse {
      * Sets the value of the channel property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectChannel }
-     *     
+     *            allowed object is {@link TInspectChannel }
+     * 
      */
     public void setChannel(TInspectChannel value) {
         this.channel = value;
@@ -304,10 +276,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the stackframe property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TStackframe }
-     *     
+     * @return possible object is {@link TStackframe }
+     * 
      */
     public TStackframe getStackframe() {
         return stackframe;
@@ -317,9 +287,8 @@ public class TInspectResponse {
      * Sets the value of the stackframe property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TStackframe }
-     *     
+     *            allowed object is {@link TStackframe }
+     * 
      */
     public void setStackframe(TStackframe value) {
         this.stackframe = value;
@@ -328,10 +297,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the variable property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectVariable }
-     *     
+     * @return possible object is {@link TInspectVariable }
+     * 
      */
     public TInspectVariable getVariable() {
         return variable;
@@ -341,9 +308,8 @@ public class TInspectResponse {
      * Sets the value of the variable property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectVariable }
-     *     
+     *            allowed object is {@link TInspectVariable }
+     * 
      */
     public void setVariable(TInspectVariable value) {
         this.variable = value;
@@ -352,10 +318,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the variableContext property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectVariableContext }
-     *     
+     * @return possible object is {@link TInspectVariableContext }
+     * 
      */
     public TInspectVariableContext getVariableContext() {
         return variableContext;
@@ -365,9 +329,8 @@ public class TInspectResponse {
      * Sets the value of the variableContext property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectVariableContext }
-     *     
+     *            allowed object is {@link TInspectVariableContext }
+     * 
      */
     public void setVariableContext(TInspectVariableContext value) {
         this.variableContext = value;
@@ -376,10 +339,8 @@ public class TInspectResponse {
     /**
      * Gets the value of the transition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectTransition }
-     *     
+     * @return possible object is {@link TInspectTransition }
+     * 
      */
     public TInspectTransition getTransition() {
         return transition;
@@ -389,9 +350,8 @@ public class TInspectResponse {
      * Sets the value of the transition property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectTransition }
-     *     
+     *            allowed object is {@link TInspectTransition }
+     * 
      */
     public void setTransition(TInspectTransition value) {
         this.transition = value;

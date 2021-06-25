@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_poosl_specification complex type.
+ * <p>
+ * Java class for t_poosl_specification complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_poosl_specification">
@@ -39,34 +39,30 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_poosl_specification", propOrder = {
-    "name",
-    "dataClasses",
-    "processClasses",
-    "clusterClasses",
-    "topLevelSpecification",
-    "description"
-})
+@XmlType(name = "t_poosl_specification", propOrder = { "name", "dataClasses", "processClasses", "clusterClasses", "topLevelSpecification", "description" })
 public class TPooslSpecification {
 
     protected String name;
+
     @XmlElement(name = "data_classes", required = true)
     protected TDataClasses dataClasses;
+
     @XmlElement(name = "process_classes")
     protected TProcessClasses processClasses;
+
     @XmlElement(name = "cluster_classes")
     protected TClusterClasses clusterClasses;
+
     @XmlElement(name = "top_level_specification")
     protected TTopLevelSpecification topLevelSpecification;
+
     protected String description;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -76,9 +72,8 @@ public class TPooslSpecification {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -87,10 +82,8 @@ public class TPooslSpecification {
     /**
      * Gets the value of the dataClasses property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TDataClasses }
-     *     
+     * @return possible object is {@link TDataClasses }
+     * 
      */
     public TDataClasses getDataClasses() {
         return dataClasses;
@@ -100,9 +93,8 @@ public class TPooslSpecification {
      * Sets the value of the dataClasses property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TDataClasses }
-     *     
+     *            allowed object is {@link TDataClasses }
+     * 
      */
     public void setDataClasses(TDataClasses value) {
         this.dataClasses = value;
@@ -111,10 +103,8 @@ public class TPooslSpecification {
     /**
      * Gets the value of the processClasses property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TProcessClasses }
-     *     
+     * @return possible object is {@link TProcessClasses }
+     * 
      */
     public TProcessClasses getProcessClasses() {
         return processClasses;
@@ -124,9 +114,8 @@ public class TPooslSpecification {
      * Sets the value of the processClasses property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TProcessClasses }
-     *     
+     *            allowed object is {@link TProcessClasses }
+     * 
      */
     public void setProcessClasses(TProcessClasses value) {
         this.processClasses = value;
@@ -135,10 +124,8 @@ public class TPooslSpecification {
     /**
      * Gets the value of the clusterClasses property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TClusterClasses }
-     *     
+     * @return possible object is {@link TClusterClasses }
+     * 
      */
     public TClusterClasses getClusterClasses() {
         return clusterClasses;
@@ -148,9 +135,8 @@ public class TPooslSpecification {
      * Sets the value of the clusterClasses property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TClusterClasses }
-     *     
+     *            allowed object is {@link TClusterClasses }
+     * 
      */
     public void setClusterClasses(TClusterClasses value) {
         this.clusterClasses = value;
@@ -159,10 +145,8 @@ public class TPooslSpecification {
     /**
      * Gets the value of the topLevelSpecification property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TTopLevelSpecification }
-     *     
+     * @return possible object is {@link TTopLevelSpecification }
+     * 
      */
     public TTopLevelSpecification getTopLevelSpecification() {
         return topLevelSpecification;
@@ -172,9 +156,8 @@ public class TPooslSpecification {
      * Sets the value of the topLevelSpecification property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TTopLevelSpecification }
-     *     
+     *            allowed object is {@link TTopLevelSpecification }
+     * 
      */
     public void setTopLevelSpecification(TTopLevelSpecification value) {
         this.topLevelSpecification = value;
@@ -183,10 +166,8 @@ public class TPooslSpecification {
     /**
      * Gets the value of the description property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getDescription() {
         return description;
@@ -196,9 +177,8 @@ public class TPooslSpecification {
      * Sets the value of the description property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setDescription(String value) {
         this.description = value;

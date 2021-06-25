@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_connection complex type.
+ * <p>
+ * Java class for t_connection complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_connection">
@@ -36,24 +36,22 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_connection", propOrder = {
-    "annotation"
-})
+@XmlType(name = "t_connection", propOrder = { "annotation" })
 public class TConnection {
 
     protected TConnectionAnnotation annotation;
+
     @XmlAttribute(name = "port", required = true)
     protected String port;
+
     @XmlAttribute(name = "channel", required = true)
     protected String channel;
 
     /**
      * Gets the value of the annotation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TConnectionAnnotation }
-     *     
+     * @return possible object is {@link TConnectionAnnotation }
+     * 
      */
     public TConnectionAnnotation getAnnotation() {
         return annotation;
@@ -63,9 +61,8 @@ public class TConnection {
      * Sets the value of the annotation property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TConnectionAnnotation }
-     *     
+     *            allowed object is {@link TConnectionAnnotation }
+     * 
      */
     public void setAnnotation(TConnectionAnnotation value) {
         this.annotation = value;
@@ -74,10 +71,8 @@ public class TConnection {
     /**
      * Gets the value of the port property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getPort() {
         return port;
@@ -87,9 +82,8 @@ public class TConnection {
      * Sets the value of the port property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setPort(String value) {
         this.port = value;
@@ -98,10 +92,8 @@ public class TConnection {
     /**
      * Gets the value of the channel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getChannel() {
         return channel;
@@ -111,9 +103,8 @@ public class TConnection {
      * Sets the value of the channel property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setChannel(String value) {
         this.channel = value;

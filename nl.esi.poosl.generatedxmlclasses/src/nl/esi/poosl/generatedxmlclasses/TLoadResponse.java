@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_load_response complex type.
+ * <p>
+ * Java class for t_load_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_load_response">
@@ -37,28 +37,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_load_response", propOrder = {
-    "result",
-    "error",
-    "contents"
-})
+@XmlType(name = "t_load_response", propOrder = { "result", "error", "contents" })
 public class TLoadResponse {
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected TFileIoResult result;
+
     @XmlElement(required = true)
     protected String error;
+
     @XmlElement(required = true)
     protected String contents;
 
     /**
      * Gets the value of the result property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TFileIoResult }
-     *     
+     * @return possible object is {@link TFileIoResult }
+     * 
      */
     public TFileIoResult getResult() {
         return result;
@@ -68,9 +64,8 @@ public class TLoadResponse {
      * Sets the value of the result property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TFileIoResult }
-     *     
+     *            allowed object is {@link TFileIoResult }
+     * 
      */
     public void setResult(TFileIoResult value) {
         this.result = value;
@@ -79,10 +74,8 @@ public class TLoadResponse {
     /**
      * Gets the value of the error property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getError() {
         return error;
@@ -92,9 +85,8 @@ public class TLoadResponse {
      * Sets the value of the error property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setError(String value) {
         this.error = value;
@@ -103,10 +95,8 @@ public class TLoadResponse {
     /**
      * Gets the value of the contents property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getContents() {
         return contents;
@@ -116,9 +106,8 @@ public class TLoadResponse {
      * Sets the value of the contents property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setContents(String value) {
         this.contents = value;

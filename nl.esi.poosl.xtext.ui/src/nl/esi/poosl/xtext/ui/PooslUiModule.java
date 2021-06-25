@@ -22,65 +22,65 @@ import nl.esi.poosl.xtext.ui.references.PooslReferenceUpdaterDispatcher;
 
 @SuppressWarnings({ "restriction" })
 public class PooslUiModule extends nl.esi.poosl.xtext.ui.AbstractPooslUiModule {
-	public PooslUiModule(AbstractUIPlugin plugin) {
-		super(plugin);
-	}
+    public PooslUiModule(AbstractUIPlugin plugin) {
+        super(plugin);
+    }
 
-	public Class<? extends IFoldingRegionProvider> bindIFoldingRegionProvider() {
-		return PooslFoldingProvider.class;
-	}
+    public Class<? extends IFoldingRegionProvider> bindIFoldingRegionProvider() {
+        return PooslFoldingProvider.class;
+    }
 
-	// Based on: http://www.mo-seph.com/projects/syntaxhighlighting
-	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
-		return PooslHighlightingCalculator.class;
-	}
+    // Based on: http://www.mo-seph.com/projects/syntaxhighlighting
+    public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+        return PooslHighlightingCalculator.class;
+    }
 
-	// Based on:
-	// http://www.eclipse.org/forums/index.php?t=msg&goto=479001&#msg_479001
-	public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
-		return PooslAntlrTokenToAttributeIdMapper.class;
-	}
+    // Based on:
+    // http://www.eclipse.org/forums/index.php?t=msg&goto=479001&#msg_479001
+    public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
+        return PooslAntlrTokenToAttributeIdMapper.class;
+    }
 
-	@Override
-	public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
-		return PooslAutoEditStrategyProvider.class;
-	}
+    @Override
+    public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
+        return PooslAutoEditStrategyProvider.class;
+    }
 
-	public Class<? extends ITokenTypeToPartitionTypeMapper> bindITokenTypeToPartitionTypeMapper() {
-		return PooslTerminalsTokenTypeToPartitionMapper.class;
-	}
+    public Class<? extends ITokenTypeToPartitionTypeMapper> bindITokenTypeToPartitionTypeMapper() {
+        return PooslTerminalsTokenTypeToPartitionMapper.class;
+    }
 
-	public Class<? extends XtextEditor> bindXtextEditor() {
-		return PooslEditor.class;
-	}
+    public Class<? extends XtextEditor> bindXtextEditor() {
+        return PooslEditor.class;
+    }
 
-	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
-		return PooslHoverProvider.class;
-	}
+    public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
+        return PooslHoverProvider.class;
+    }
 
-	@Override
-	public Class<? extends IHyperlinkDetector> bindIHyperlinkDetector() {
-		return PooslHyperlinkDetector.class;
-	}
+    @Override
+    public Class<? extends IHyperlinkDetector> bindIHyperlinkDetector() {
+        return PooslHyperlinkDetector.class;
+    }
 
-	public Class<? extends EObjectAtOffsetHelper> bindEObjectAtOffsetHelper() {
-		return PooslEObjectAtOffsetHelper.class;
-	}
+    public Class<? extends EObjectAtOffsetHelper> bindEObjectAtOffsetHelper() {
+        return PooslEObjectAtOffsetHelper.class;
+    }
 
-	public Class<? extends IReferenceFinder> bindIReferenceFinder() {
-		return PooslReferenceFinder.class;
-	}
+    public Class<? extends IReferenceFinder> bindIReferenceFinder() {
+        return PooslReferenceFinder.class;
+    }
 
-	@Override
-	public Class<? extends IReferenceUpdater> bindIReferenceUpdater() {
-		return PooslReferenceUpdater.class;
-	}
+    @Override
+    public Class<? extends IReferenceUpdater> bindIReferenceUpdater() {
+        return PooslReferenceUpdater.class;
+    }
 
-	public Class<? extends ReferenceUpdaterDispatcher> bindReferenceUpdaterDispatcher() {
-		return PooslReferenceUpdaterDispatcher.class;
-	}
+    public Class<? extends ReferenceUpdaterDispatcher> bindReferenceUpdaterDispatcher() {
+        return PooslReferenceUpdaterDispatcher.class;
+    }
 
-	public Class<? extends IURIEditorOpener> bindURIEditorOpener() {
-		return PooslURIEditorOpener.class;
-	}
+    public Class<? extends IURIEditorOpener> bindURIEditorOpener() {
+        return PooslURIEditorOpener.class;
+    }
 }

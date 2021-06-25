@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_assignment complex type.
+ * <p>
+ * Java class for t_assignment complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_assignment">
@@ -33,9 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "t_assignment")
-public class TAssignment
-    extends TExpression
-{
+public class TAssignment extends TExpression {
 
     @XmlAttribute(name = "variable_name", required = true)
     protected String variableName;
@@ -43,10 +41,8 @@ public class TAssignment
     /**
      * Gets the value of the variableName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getVariableName() {
         return variableName;
@@ -56,9 +52,8 @@ public class TAssignment
      * Sets the value of the variableName property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setVariableName(String value) {
         this.variableName = value;

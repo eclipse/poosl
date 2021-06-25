@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_inspect_request complex type.
+ * <p>
+ * Java class for t_inspect_request complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_inspect_request">
@@ -39,25 +40,21 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_inspect_request", propOrder = {
-    "name",
-    "type",
-    "handle"
-})
+@XmlType(name = "t_inspect_request", propOrder = { "name", "type", "handle" })
 public class TInspectRequest {
 
     protected String name;
+
     @XmlSchemaType(name = "string")
     protected TInspectType type;
+
     protected BigInteger handle;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -67,9 +64,8 @@ public class TInspectRequest {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -78,10 +74,8 @@ public class TInspectRequest {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInspectType }
-     *     
+     * @return possible object is {@link TInspectType }
+     * 
      */
     public TInspectType getType() {
         return type;
@@ -91,9 +85,8 @@ public class TInspectRequest {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInspectType }
-     *     
+     *            allowed object is {@link TInspectType }
+     * 
      */
     public void setType(TInspectType value) {
         this.type = value;
@@ -102,10 +95,8 @@ public class TInspectRequest {
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -115,9 +106,8 @@ public class TInspectRequest {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;

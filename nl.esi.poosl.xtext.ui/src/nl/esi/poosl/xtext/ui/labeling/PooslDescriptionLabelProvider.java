@@ -9,20 +9,19 @@ import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
 import nl.esi.poosl.PooslPackage.Literals;
 
 /**
- * Provides labels for a IEObjectDescriptions and IResourceDescriptions. This
- * PooslDescriptionLabelProvider is used to create better label text for
- * References in System. Other text representations are retrieved by
+ * Provides labels for a IEObjectDescriptions and IResourceDescriptions. This PooslDescriptionLabelProvider is used to
+ * create better label text for References in System. Other text representations are retrieved by
  * {@link DefaultDescriptionLabelProvider}
  * 
  * see http://www.eclipse.org/Xtext/documentation.html#labelProvider
  */
 public class PooslDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
 
-	@Override
-	public Object text(IEObjectDescription element) {
-		if (element.getEClass() == Literals.POOSL) {
-			return "System";
-		}
-		return super.text(element);
-	}
+    @Override
+    public Object text(IEObjectDescription element) {
+        if (element.getEClass() == Literals.POOSL) {
+            return "System";
+        }
+        return super.text(element);
+    }
 }

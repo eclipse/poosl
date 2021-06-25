@@ -5,19 +5,20 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_set_variable_result.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for t_set_variable_result.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="t_set_variable_result">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -36,15 +37,12 @@ import javax.xml.bind.annotation.XmlType;
 public enum TSetVariableResult {
 
     @XmlEnumValue("unknown")
-    UNKNOWN("unknown"),
-    @XmlEnumValue("ok")
-    OK("ok"),
-    @XmlEnumValue("error")
-    ERROR("error"),
-    @XmlEnumValue("invalid_var_handle")
-    INVALID_VAR_HANDLE("invalid_var_handle"),
-    @XmlEnumValue("invalid_list_handle")
+    UNKNOWN("unknown"), @XmlEnumValue("ok")
+    OK("ok"), @XmlEnumValue("error")
+    ERROR("error"), @XmlEnumValue("invalid_var_handle")
+    INVALID_VAR_HANDLE("invalid_var_handle"), @XmlEnumValue("invalid_list_handle")
     INVALID_LIST_HANDLE("invalid_list_handle");
+
     private final String value;
 
     TSetVariableResult(String v) {
@@ -56,7 +54,7 @@ public enum TSetVariableResult {
     }
 
     public static TSetVariableResult fromValue(String v) {
-        for (TSetVariableResult c: TSetVariableResult.values()) {
+        for (TSetVariableResult c : TSetVariableResult.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

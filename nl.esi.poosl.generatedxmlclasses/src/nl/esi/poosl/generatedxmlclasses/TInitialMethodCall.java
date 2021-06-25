@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_initial_method_call complex type.
+ * <p>
+ * Java class for t_initial_method_call complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_initial_method_call">
@@ -35,24 +35,20 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_initial_method_call", propOrder = {
-    "methodCallText",
-    "processMethodCall"
-})
+@XmlType(name = "t_initial_method_call", propOrder = { "methodCallText", "processMethodCall" })
 public class TInitialMethodCall {
 
     @XmlElement(name = "method_call_text")
     protected String methodCallText;
+
     @XmlElement(name = "process_method_call", required = true)
     protected TInitialProcessMethodCall processMethodCall;
 
     /**
      * Gets the value of the methodCallText property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMethodCallText() {
         return methodCallText;
@@ -62,9 +58,8 @@ public class TInitialMethodCall {
      * Sets the value of the methodCallText property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMethodCallText(String value) {
         this.methodCallText = value;
@@ -73,10 +68,8 @@ public class TInitialMethodCall {
     /**
      * Gets the value of the processMethodCall property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInitialProcessMethodCall }
-     *     
+     * @return possible object is {@link TInitialProcessMethodCall }
+     * 
      */
     public TInitialProcessMethodCall getProcessMethodCall() {
         return processMethodCall;
@@ -86,9 +79,8 @@ public class TInitialMethodCall {
      * Sets the value of the processMethodCall property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInitialProcessMethodCall }
-     *     
+     *            allowed object is {@link TInitialProcessMethodCall }
+     * 
      */
     public void setProcessMethodCall(TInitialProcessMethodCall value) {
         this.processMethodCall = value;

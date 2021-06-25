@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_eengine_event_setup_request complex type.
+ * <p>
+ * Java class for t_eengine_event_setup_request complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_eengine_event_setup_request">
@@ -37,17 +38,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_eengine_event_setup_request", propOrder = {
-    "communicationMessagesEnable",
-    "communicationMessagesCredits",
-    "communicationMessagesCreditsEnable"
-})
+@XmlType(name = "t_eengine_event_setup_request", propOrder = { "communicationMessagesEnable", "communicationMessagesCredits", "communicationMessagesCreditsEnable" })
 public class TEengineEventSetupRequest {
 
     @XmlElement(name = "communication_messages_enable")
     protected boolean communicationMessagesEnable;
+
     @XmlElement(name = "communication_messages_credits")
     protected BigInteger communicationMessagesCredits;
+
     @XmlElement(name = "communication_messages_credits_enable")
     protected boolean communicationMessagesCreditsEnable;
 
@@ -70,10 +69,8 @@ public class TEengineEventSetupRequest {
     /**
      * Gets the value of the communicationMessagesCredits property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getCommunicationMessagesCredits() {
         return communicationMessagesCredits;
@@ -83,9 +80,8 @@ public class TEengineEventSetupRequest {
      * Sets the value of the communicationMessagesCredits property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setCommunicationMessagesCredits(BigInteger value) {
         this.communicationMessagesCredits = value;

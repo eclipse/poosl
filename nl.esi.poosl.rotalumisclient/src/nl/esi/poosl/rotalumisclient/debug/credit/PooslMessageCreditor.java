@@ -1,26 +1,27 @@
 package nl.esi.poosl.rotalumisclient.debug.credit;
 
 public class PooslMessageCreditor {
-	private static final int WINDOW = 50;
-	private static final int THRESHOLD = 5;
+    private static final int WINDOW = 50;
 
-	private int availableCredits = WINDOW;
+    private static final int THRESHOLD = 5;
 
-	private final IPooslCreditReceiver receiver;
+    private int availableCredits = WINDOW;
 
-	public PooslMessageCreditor(IPooslCreditReceiver receiver) {
-		this.receiver = receiver;
-	}
+    private final IPooslCreditReceiver receiver;
 
-	public void useCredit() {
-		availableCredits--;
-		if (availableCredits < THRESHOLD) {
-			availableCredits += WINDOW;
-			receiver.receiveCredits(WINDOW);
-		}
-	}
+    public PooslMessageCreditor(IPooslCreditReceiver receiver) {
+        this.receiver = receiver;
+    }
 
-	public int getCurrentMax() {
-		return WINDOW;
-	}
+    public void useCredit() {
+        availableCredits--;
+        if (availableCredits < THRESHOLD) {
+            availableCredits += WINDOW;
+            receiver.receiveCredits(WINDOW);
+        }
+    }
+
+    public int getCurrentMax() {
+        return WINDOW;
+    }
 }

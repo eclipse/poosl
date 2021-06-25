@@ -10,28 +10,30 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 
 public class PooslBreakpointAction implements IEditorActionDelegate {
-	private static final Logger LOGGER = Logger.getLogger(PooslBreakpointAction.class.getName());
-	IEditorPart editorPart;
-	ISelection selection;
+    private static final Logger LOGGER = Logger.getLogger(PooslBreakpointAction.class.getName());
 
-	@Override
-	public void run(IAction action) {
-		final PooslLineBreakpointTarget adapter = new PooslLineBreakpointTarget();
-		try {
-			adapter.toggleLineBreakpoints(editorPart, selection);
-		} catch (CoreException e) {
-			LOGGER.log(Level.WARNING, e.getMessage(), e);
-		}
-	}
+    IEditorPart editorPart;
 
-	@Override
-	public void selectionChanged(IAction action, ISelection selection) {
-		this.selection = selection;
-	}
+    ISelection selection;
 
-	@Override
-	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		this.editorPart = targetEditor;
-	}
+    @Override
+    public void run(IAction action) {
+        final PooslLineBreakpointTarget adapter = new PooslLineBreakpointTarget();
+        try {
+            adapter.toggleLineBreakpoints(editorPart, selection);
+        } catch (CoreException e) {
+            LOGGER.log(Level.WARNING, e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void selectionChanged(IAction action, ISelection selection) {
+        this.selection = selection;
+    }
+
+    @Override
+    public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+        this.editorPart = targetEditor;
+    }
 
 }

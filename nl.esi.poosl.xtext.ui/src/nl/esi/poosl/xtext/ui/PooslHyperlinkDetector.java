@@ -37,92 +37,88 @@ import nl.esi.poosl.xtext.ui.labeling.PooslLabelProvider;
 
 public class PooslHyperlinkDetector extends DefaultHyperlinkDetector {
 
-	private static class HyperlinkAcceptor implements IHyperlinkAcceptor {
-		private final List<IHyperlink> links;
+    private static class HyperlinkAcceptor implements IHyperlinkAcceptor {
+        private final List<IHyperlink> links;
 
-		public HyperlinkAcceptor(List<IHyperlink> links) {
-			this.links = links;
-		}
+        public HyperlinkAcceptor(List<IHyperlink> links) {
+            this.links = links;
+        }
 
-		public void accept(IHyperlink hyperlink) {
-			if (hyperlink != null) {
-				links.add(hyperlink);
-			}
-		}
-	}
+        public void accept(IHyperlink hyperlink) {
+            if (hyperlink != null) {
+                links.add(hyperlink);
+            }
+        }
+    }
 
-	@Inject
-	private Provider<XtextHyperlink> hyperlinkProvider;
+    @Inject
+    private Provider<XtextHyperlink> hyperlinkProvider;
 
-	@Override
-	public IHyperlink[] detectHyperlinks(ITextViewer textViewer, final IRegion region,
-			boolean canShowMultipleHyperlinks) {
-		IHyperlink[] hyperlinks = super.detectHyperlinks(textViewer, region, canShowMultipleHyperlinks);
-		if (hyperlinks == null) {
-			return createHyperLinks(textViewer, region);
-		}
-		return hyperlinks;
-	}
+    @Override
+    public IHyperlink[] detectHyperlinks(ITextViewer textViewer, final IRegion region, boolean canShowMultipleHyperlinks) {
+        IHyperlink[] hyperlinks = super.detectHyperlinks(textViewer, region, canShowMultipleHyperlinks);
+        if (hyperlinks == null) {
+            return createHyperLinks(textViewer, region);
+        }
+        return hyperlinks;
+    }
 
-	private IHyperlink[] createHyperLinks(ITextViewer textViewer, final IRegion region) {
-		return ((IXtextDocument) textViewer.getDocument())
-				.priorityReadOnly(new IUnitOfWork<IHyperlink[], XtextResource>() {
-					public IHyperlink[] exec(XtextResource resource) throws Exception {
-						IParseResult parseResult = resource.getParseResult();
-						ILeafNode leaf = NodeModelUtils.findLeafNodeAtOffset(parseResult.getRootNode(),
-								region.getOffset());
-						if (leaf != null && leaf.getSemanticElement() instanceof Import
-								&& leaf.getGrammarElement() instanceof RuleCall) {
-							Import imp = (Import) leaf.getSemanticElement();
-							Resource res = ImportingHelper.resolveImport(imp, isImportLib(leaf));
-							Poosl importedPoosl = ImportingHelper.toPoosl(res);
-							if (importedPoosl != null) {
-								// Create a hyperlink for the root object
-								// (poosl) of the imported resource
-								return createHyperLinksFor((XtextResource) res, leaf, res.getContents().get(0));
-							}
-						}
-						return null;
-					}
-				});
-	}
+    private IHyperlink[] createHyperLinks(ITextViewer textViewer, final IRegion region) {
+        return ((IXtextDocument) textViewer.getDocument()).priorityReadOnly(new IUnitOfWork<IHyperlink[], XtextResource>() {
+            public IHyperlink[] exec(XtextResource resource) throws Exception {
+                IParseResult parseResult = resource.getParseResult();
+                ILeafNode leaf = NodeModelUtils.findLeafNodeAtOffset(parseResult.getRootNode(), region.getOffset());
+                if (leaf != null && leaf.getSemanticElement() instanceof Import && leaf.getGrammarElement() instanceof RuleCall) {
+                    Import imp = (Import) leaf.getSemanticElement();
+                    Resource res = ImportingHelper.resolveImport(imp, isImportLib(leaf));
+                    Poosl importedPoosl = ImportingHelper.toPoosl(res);
+                    if (importedPoosl != null) {
+                        // Create a hyperlink for the root object
+                        // (poosl) of the imported resource
+                        return createHyperLinksFor((XtextResource) res, leaf, res.getContents().get(0));
+                    }
+                }
+                return null;
+            }
+        });
+    }
 
-	private boolean isImportLib(ILeafNode leaf) {
-		ICompositeNode parent = leaf.getParent();
-		for (ILeafNode iLeafNode : parent.getLeafNodes()) {
-			Object grammar = iLeafNode.getGrammarElement();
-			if (grammar instanceof Keyword) {
-				return (((Keyword) grammar).getValue().equals("importlib"));
-			}
-		}
-		return false;
-	}
+    private boolean isImportLib(ILeafNode leaf) {
+        ICompositeNode parent = leaf.getParent();
+        for (ILeafNode iLeafNode : parent.getLeafNodes()) {
+            Object grammar = iLeafNode.getGrammarElement();
+            if (grammar instanceof Keyword) {
+                return (((Keyword) grammar).getValue().equals("importlib"));
+            }
+        }
+        return false;
+    }
 
-	private IHyperlink[] createHyperLinksFor(XtextResource resource, ILeafNode sourceNode, EObject targetObject) {
-		// The code in this method is based on the
-		// org.eclipse.xtext.ui.editor.hyperlinking.HyperlinkHelper
-		ITextRegion textRegion = sourceNode.getTextRegion();
-		IRegion region = new Region(textRegion.getOffset(), textRegion.getLength());
-		PooslLabelProvider labelProvider = new PooslLabelProvider(null);
-		URIConverter uriConverter = resource.getResourceSet().getURIConverter();
-		String hyperlinkText = "Open '" + labelProvider.getText(targetObject) + "' in a Poosl editor.";
-		URI uri = EcoreUtil.getURI(targetObject);
-		URI normalized = uri.isPlatformResource() ? uri : uriConverter.normalize(uri);
+    private IHyperlink[] createHyperLinksFor(XtextResource resource, ILeafNode sourceNode, EObject targetObject) {
+        // The code in this method is based on the
+        // org.eclipse.xtext.ui.editor.hyperlinking.HyperlinkHelper
+        ITextRegion textRegion = sourceNode.getTextRegion();
+        IRegion region = new Region(textRegion.getOffset(), textRegion.getLength());
+        PooslLabelProvider labelProvider = new PooslLabelProvider(null);
+        URIConverter uriConverter = resource.getResourceSet().getURIConverter();
+        String hyperlinkText = "Open '" + labelProvider.getText(targetObject) + "' in a Poosl editor.";
+        URI uri = EcoreUtil.getURI(targetObject);
+        URI normalized = uri.isPlatformResource() ? uri : uriConverter.normalize(uri);
 
-		XtextHyperlink result = hyperlinkProvider.get();
-		result.setHyperlinkRegion(region);
-		result.setURI(normalized);
-		result.setHyperlinkText(hyperlinkText);
-		return addHyperLink(result);
-	}
+        XtextHyperlink result = hyperlinkProvider.get();
+        result.setHyperlinkRegion(region);
+        result.setURI(normalized);
+        result.setHyperlinkText(hyperlinkText);
+        return addHyperLink(result);
+    }
 
-	private IHyperlink[] addHyperLink(IHyperlink link) {
-		List<IHyperlink> links = Lists.newArrayList();
-		IHyperlinkAcceptor acceptor = new HyperlinkAcceptor(links);
-		acceptor.accept(link);
-		if (!links.isEmpty()) {
-			return Iterables.toArray(links, IHyperlink.class);
-		}
-		return new IHyperlink[0];
-	}
+    private IHyperlink[] addHyperLink(IHyperlink link) {
+        List<IHyperlink> links = Lists.newArrayList();
+        IHyperlinkAcceptor acceptor = new HyperlinkAcceptor(links);
+        acceptor.accept(link);
+        if (!links.isEmpty()) {
+            return Iterables.toArray(links, IHyperlink.class);
+        }
+        return new IHyperlink[0];
+    }
 }

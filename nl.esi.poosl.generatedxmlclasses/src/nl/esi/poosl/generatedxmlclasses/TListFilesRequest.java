@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_list_files_request complex type.
+ * <p>
+ * Java class for t_list_files_request complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_list_files_request">
@@ -35,9 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_list_files_request", propOrder = {
-    "pooslSpecification"
-})
+@XmlType(name = "t_list_files_request", propOrder = { "pooslSpecification" })
 public class TListFilesRequest {
 
     @XmlElement(name = "poosl_specification", required = true)
@@ -46,10 +45,8 @@ public class TListFilesRequest {
     /**
      * Gets the value of the pooslSpecification property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getPooslSpecification() {
         return pooslSpecification;
@@ -59,9 +56,8 @@ public class TListFilesRequest {
      * Sets the value of the pooslSpecification property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setPooslSpecification(BigInteger value) {
         this.pooslSpecification = value;

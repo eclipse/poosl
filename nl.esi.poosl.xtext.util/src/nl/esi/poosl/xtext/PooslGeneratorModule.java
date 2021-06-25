@@ -9,19 +9,19 @@ import org.eclipse.xtext.xtext.generator.model.project.IXtextProjectConfig;
 
 public class PooslGeneratorModule extends DefaultGeneratorModule {
 
-	public Class<? extends XtextGeneratorNaming> bindNaming() {
-		return PooslGeneratorNaming.class;
-	}
+    public Class<? extends XtextGeneratorNaming> bindNaming() {
+        return PooslGeneratorNaming.class;
+    }
 
-	public static class PooslGeneratorNaming extends XtextGeneratorNaming {
+    public static class PooslGeneratorNaming extends XtextGeneratorNaming {
 
-		@Inject
-		IXtextProjectConfig projectConfig;
+        @Inject
+        IXtextProjectConfig projectConfig;
 
-		@Override
-		public TypeReference getEclipsePluginActivator() {
-			String pluginName = projectConfig.getEclipsePlugin().getName();
-			return new TypeReference(pluginName + ".internal", "PooslActivator");
-		}
-	}
+        @Override
+        public TypeReference getEclipsePluginActivator() {
+            String pluginName = projectConfig.getEclipsePlugin().getName();
+            return new TypeReference(pluginName + ".internal", "PooslActivator");
+        }
+    }
 }

@@ -17,113 +17,118 @@ import org.eclipse.ui.ide.ResourceSelectionUtil;
 import org.eclipse.ui.navigator.ICommonMenuConstants;
 
 public class PooslEditGroup extends ActionGroup {
-	private Clipboard clipboard;
-	private PooslCopyAction copyAction;
-	private PooslDeleteAction deleteAction;
-	private PooslPasteAction pasteAction;
-	private TextActionHandler textActionHandler;
-	private final Shell shell;
+    private Clipboard clipboard;
 
-	/**
-	 *
-	 * @param aShell
-	 */
-	public PooslEditGroup(Shell aShell) {
-		shell = aShell;
-		makeActions();
-	}
+    private PooslCopyAction copyAction;
 
-	@Override
-	public void dispose() {
-		if (clipboard != null) {
-			clipboard.dispose();
-			clipboard = null;
-		}
-		super.dispose();
-	}
+    private PooslDeleteAction deleteAction;
 
-	@Override
-	public void fillContextMenu(IMenuManager menu) {
-		IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
+    private PooslPasteAction pasteAction;
 
-		boolean anyResourceSelected = !selection.isEmpty() && ResourceSelectionUtil.allResourcesAreOfType(selection,
-				IResource.PROJECT | IResource.FOLDER | IResource.FILE);
+    private TextActionHandler textActionHandler;
 
-		copyAction.selectionChanged(selection);
-		menu.appendToGroup(ICommonMenuConstants.GROUP_EDIT, copyAction);
-		pasteAction.selectionChanged(selection);
-		menu.appendToGroup(ICommonMenuConstants.GROUP_EDIT, pasteAction);
+    private final Shell shell;
 
-		if (anyResourceSelected) {
-			deleteAction.selectionChanged(selection);
-			menu.appendToGroup(ICommonMenuConstants.GROUP_EDIT, deleteAction);
-		}
-	}
+    /**
+     *
+     * @param aShell
+     */
+    public PooslEditGroup(Shell aShell) {
+        shell = aShell;
+        makeActions();
+    }
 
-	@Override
-	public void fillActionBars(IActionBars actionBars) {
+    @Override
+    public void dispose() {
+        if (clipboard != null) {
+            clipboard.dispose();
+            clipboard = null;
+        }
+        super.dispose();
+    }
 
-		if (textActionHandler == null) {
-			textActionHandler = new TextActionHandler(actionBars);
-		}
-		textActionHandler.setCopyAction(copyAction);
-		textActionHandler.setPasteAction(pasteAction);
-		textActionHandler.setDeleteAction(deleteAction);
-		updateActionBars();
+    @Override
+    public void fillContextMenu(IMenuManager menu) {
+        IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
 
-		textActionHandler.updateActionBars();
-	}
+        boolean anyResourceSelected = !selection.isEmpty() && ResourceSelectionUtil.allResourcesAreOfType(selection, IResource.PROJECT | IResource.FOLDER | IResource.FILE);
 
-	/**
-	 * Handles a key pressed event by invoking the appropriate action.
-	 *
-	 * @param event The Key Event
-	 */
-	public void handleKeyPressed(KeyEvent event) {
-		if (event.character == SWT.DEL && event.stateMask == 0) {
-			if (deleteAction.isEnabled()) {
-				deleteAction.run();
-			}
+        copyAction.selectionChanged(selection);
+        menu.appendToGroup(ICommonMenuConstants.GROUP_EDIT, copyAction);
+        pasteAction.selectionChanged(selection);
+        menu.appendToGroup(ICommonMenuConstants.GROUP_EDIT, pasteAction);
 
-			// Swallow the event.
-			event.doit = false;
-		}
-	}
+        if (anyResourceSelected) {
+            deleteAction.selectionChanged(selection);
+            menu.appendToGroup(ICommonMenuConstants.GROUP_EDIT, deleteAction);
+        }
+    }
 
-	private void makeActions() {
-		clipboard = new Clipboard(shell.getDisplay());
+    @Override
+    public void fillActionBars(IActionBars actionBars) {
 
-		pasteAction = new PooslPasteAction(shell, clipboard);
-		ISharedImages images = PlatformUI.getWorkbench().getSharedImages();
-		pasteAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE_DISABLED));
-		pasteAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
-		pasteAction.setActionDefinitionId(PooslPasteAction.ID);
+        if (textActionHandler == null) {
+            textActionHandler = new TextActionHandler(actionBars);
+        }
+        textActionHandler.setCopyAction(copyAction);
+        textActionHandler.setPasteAction(pasteAction);
+        textActionHandler.setDeleteAction(deleteAction);
+        updateActionBars();
 
-		IShellProvider sp = new IShellProvider() {
-			@Override
-			public Shell getShell() {
-				return shell;
-			}
-		};
+        textActionHandler.updateActionBars();
+    }
 
-		copyAction = new PooslCopyAction(shell, clipboard, pasteAction);
-		copyAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY_DISABLED));
-		copyAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
-		copyAction.setActionDefinitionId(PooslCopyAction.ID);
+    /**
+     * Handles a key pressed event by invoking the appropriate action.
+     *
+     * @param event
+     *            The Key Event
+     */
+    public void handleKeyPressed(KeyEvent event) {
+        if (event.character == SWT.DEL && event.stateMask == 0) {
+            if (deleteAction.isEnabled()) {
+                deleteAction.run();
+            }
 
-		deleteAction = new PooslDeleteAction(sp);
-		deleteAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE_DISABLED));
-		deleteAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-		deleteAction.setActionDefinitionId(PooslDeleteAction.ID);
-	}
+            // Swallow the event.
+            event.doit = false;
+        }
+    }
 
-	@Override
-	public void updateActionBars() {
-		IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
+    private void makeActions() {
+        clipboard = new Clipboard(shell.getDisplay());
 
-		copyAction.selectionChanged(selection);
-		pasteAction.selectionChanged(selection);
-		deleteAction.selectionChanged(selection);
-	}
+        pasteAction = new PooslPasteAction(shell, clipboard);
+        ISharedImages images = PlatformUI.getWorkbench().getSharedImages();
+        pasteAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE_DISABLED));
+        pasteAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
+        pasteAction.setActionDefinitionId(PooslPasteAction.ID);
+
+        IShellProvider sp = new IShellProvider() {
+            @Override
+            public Shell getShell() {
+                return shell;
+            }
+        };
+
+        copyAction = new PooslCopyAction(shell, clipboard, pasteAction);
+        copyAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY_DISABLED));
+        copyAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
+        copyAction.setActionDefinitionId(PooslCopyAction.ID);
+
+        deleteAction = new PooslDeleteAction(sp);
+        deleteAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE_DISABLED));
+        deleteAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+        deleteAction.setActionDefinitionId(PooslDeleteAction.ID);
+    }
+
+    @Override
+    public void updateActionBars() {
+        IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
+
+        copyAction.selectionChanged(selection);
+        pasteAction.selectionChanged(selection);
+        deleteAction.selectionChanged(selection);
+    }
 
 }

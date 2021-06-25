@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_channel_internal complex type.
+ * <p>
+ * Java class for t_channel_internal complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_channel_internal">
@@ -36,25 +36,20 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_channel_internal", propOrder = {
-    "annotation"
-})
-@XmlSeeAlso({
-    TChannel.class
-})
+@XmlType(name = "t_channel_internal", propOrder = { "annotation" })
+@XmlSeeAlso({ TChannel.class })
 public class TChannelInternal {
 
     protected TChannelAnnotation annotation;
+
     @XmlAttribute(name = "name")
     protected String name;
 
     /**
      * Gets the value of the annotation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TChannelAnnotation }
-     *     
+     * @return possible object is {@link TChannelAnnotation }
+     * 
      */
     public TChannelAnnotation getAnnotation() {
         return annotation;
@@ -64,9 +59,8 @@ public class TChannelInternal {
      * Sets the value of the annotation property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TChannelAnnotation }
-     *     
+     *            allowed object is {@link TChannelAnnotation }
+     * 
      */
     public void setAnnotation(TChannelAnnotation value) {
         this.annotation = value;
@@ -75,10 +69,8 @@ public class TChannelInternal {
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -88,9 +80,8 @@ public class TChannelInternal {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;

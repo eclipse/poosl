@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_message complex type.
+ * <p>
+ * Java class for t_message complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_message">
@@ -38,14 +39,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_message", propOrder = {
-    "argument"
-})
+@XmlType(name = "t_message", propOrder = { "argument" })
 public class TMessage {
 
     protected List<TPooslTypeAttribute> argument;
+
     @XmlAttribute(name = "type")
     protected TMessageType type;
+
     @XmlAttribute(name = "name")
     protected String name;
 
@@ -53,21 +54,20 @@ public class TMessage {
      * Gets the value of the argument property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the argument property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the argument property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getArgument().add(newItem);
+     * getArgument().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TPooslTypeAttribute }
+     * Objects of the following type(s) are allowed in the list {@link TPooslTypeAttribute }
      * 
      * 
      */
@@ -81,10 +81,8 @@ public class TMessage {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TMessageType }
-     *     
+     * @return possible object is {@link TMessageType }
+     * 
      */
     public TMessageType getType() {
         return type;
@@ -94,9 +92,8 @@ public class TMessage {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TMessageType }
-     *     
+     *            allowed object is {@link TMessageType }
+     * 
      */
     public void setType(TMessageType value) {
         this.type = value;
@@ -105,10 +102,8 @@ public class TMessage {
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -118,9 +113,8 @@ public class TMessage {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;

@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_process_class complex type.
+ * <p>
+ * Java class for t_process_class complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_process_class">
@@ -44,40 +45,37 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_process_class", propOrder = {
-    "_interface",
-    "superClass",
-    "instantiationParameter",
-    "instanceVariable",
-    "initialMethodCall",
-    "processMethod",
-    "annotation"
-})
+@XmlType(name = "t_process_class", propOrder = { "_interface", "superClass", "instantiationParameter", "instanceVariable", "initialMethodCall", "processMethod", "annotation" })
 public class TProcessClass {
 
     @XmlElement(name = "interface", required = true)
     protected TInterface _interface;
+
     @XmlElement(name = "super_class")
     protected String superClass;
+
     @XmlElement(name = "instantiation_parameter")
     protected List<TTypedVariable> instantiationParameter;
+
     @XmlElement(name = "instance_variable")
     protected List<TTypedVariable> instanceVariable;
+
     @XmlElement(name = "initial_method_call", required = true)
     protected TInitialMethodCall initialMethodCall;
+
     @XmlElement(name = "process_method")
     protected List<TProcessMethod> processMethod;
+
     protected TProcessClassAnnotation annotation;
+
     @XmlAttribute(name = "name", required = true)
     protected String name;
 
     /**
      * Gets the value of the interface property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInterface }
-     *     
+     * @return possible object is {@link TInterface }
+     * 
      */
     public TInterface getInterface() {
         return _interface;
@@ -87,9 +85,8 @@ public class TProcessClass {
      * Sets the value of the interface property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInterface }
-     *     
+     *            allowed object is {@link TInterface }
+     * 
      */
     public void setInterface(TInterface value) {
         this._interface = value;
@@ -98,10 +95,8 @@ public class TProcessClass {
     /**
      * Gets the value of the superClass property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getSuperClass() {
         return superClass;
@@ -111,9 +106,8 @@ public class TProcessClass {
      * Sets the value of the superClass property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setSuperClass(String value) {
         this.superClass = value;
@@ -123,21 +117,20 @@ public class TProcessClass {
      * Gets the value of the instantiationParameter property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the instantiationParameter property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the instantiationParameter property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInstantiationParameter().add(newItem);
+     * getInstantiationParameter().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TTypedVariable }
+     * Objects of the following type(s) are allowed in the list {@link TTypedVariable }
      * 
      * 
      */
@@ -152,21 +145,20 @@ public class TProcessClass {
      * Gets the value of the instanceVariable property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the instanceVariable property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the instanceVariable property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInstanceVariable().add(newItem);
+     * getInstanceVariable().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TTypedVariable }
+     * Objects of the following type(s) are allowed in the list {@link TTypedVariable }
      * 
      * 
      */
@@ -180,10 +172,8 @@ public class TProcessClass {
     /**
      * Gets the value of the initialMethodCall property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInitialMethodCall }
-     *     
+     * @return possible object is {@link TInitialMethodCall }
+     * 
      */
     public TInitialMethodCall getInitialMethodCall() {
         return initialMethodCall;
@@ -193,9 +183,8 @@ public class TProcessClass {
      * Sets the value of the initialMethodCall property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInitialMethodCall }
-     *     
+     *            allowed object is {@link TInitialMethodCall }
+     * 
      */
     public void setInitialMethodCall(TInitialMethodCall value) {
         this.initialMethodCall = value;
@@ -205,21 +194,20 @@ public class TProcessClass {
      * Gets the value of the processMethod property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the processMethod property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the processMethod property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getProcessMethod().add(newItem);
+     * getProcessMethod().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TProcessMethod }
+     * Objects of the following type(s) are allowed in the list {@link TProcessMethod }
      * 
      * 
      */
@@ -233,10 +221,8 @@ public class TProcessClass {
     /**
      * Gets the value of the annotation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TProcessClassAnnotation }
-     *     
+     * @return possible object is {@link TProcessClassAnnotation }
+     * 
      */
     public TProcessClassAnnotation getAnnotation() {
         return annotation;
@@ -246,9 +232,8 @@ public class TProcessClass {
      * Sets the value of the annotation property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TProcessClassAnnotation }
-     *     
+     *            allowed object is {@link TProcessClassAnnotation }
+     * 
      */
     public void setAnnotation(TProcessClassAnnotation value) {
         this.annotation = value;
@@ -257,10 +242,8 @@ public class TProcessClass {
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -270,9 +253,8 @@ public class TProcessClass {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;

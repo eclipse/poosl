@@ -10,29 +10,31 @@ import org.eclipse.xtext.formatting2.regionaccess.ITextSegment;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 public class PooslAutoWrapper implements IAutowrapFormatter {
-	private final IHiddenRegion last;
-	private final Procedure1<IHiddenRegionFormatter> formatting;
-	private boolean hasWrapped = false;
+    private final IHiddenRegion last;
 
-	public PooslAutoWrapper(IHiddenRegion last, Procedure1<IHiddenRegionFormatter> formatting) {
-		this.last = last;
-		this.formatting = formatting;
-	}
+    private final Procedure1<IHiddenRegionFormatter> formatting;
 
-	@Override
-	public void format(ITextSegment region, IHiddenRegionFormatting wrapped, IFormattableDocument document) {
-		if (!hasWrapped) {
-			IHiddenRegion hiddenRegion = null;
-			if (region instanceof IHiddenRegion) {
-				hiddenRegion = (IHiddenRegion) region;
-			} else if (region instanceof IHiddenRegionPart) {
-				hiddenRegion = ((IHiddenRegionPart) region).getHiddenRegion();
-			}
+    private boolean hasWrapped = false;
 
-			if (hiddenRegion != null) {
-				document.set(hiddenRegion, last, formatting);
-			}
-			hasWrapped = true;
-		}
-	}
+    public PooslAutoWrapper(IHiddenRegion last, Procedure1<IHiddenRegionFormatter> formatting) {
+        this.last = last;
+        this.formatting = formatting;
+    }
+
+    @Override
+    public void format(ITextSegment region, IHiddenRegionFormatting wrapped, IFormattableDocument document) {
+        if (!hasWrapped) {
+            IHiddenRegion hiddenRegion = null;
+            if (region instanceof IHiddenRegion) {
+                hiddenRegion = (IHiddenRegion) region;
+            } else if (region instanceof IHiddenRegionPart) {
+                hiddenRegion = ((IHiddenRegionPart) region).getHiddenRegion();
+            }
+
+            if (hiddenRegion != null) {
+                document.set(hiddenRegion, last, formatting);
+            }
+            hasWrapped = true;
+        }
+    }
 }

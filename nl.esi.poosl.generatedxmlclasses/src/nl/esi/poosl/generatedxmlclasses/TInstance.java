@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_instance complex type.
+ * <p>
+ * Java class for t_instance complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_instance">
@@ -42,21 +43,22 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_instance", propOrder = {
-    "instantiationExpression",
-    "connection",
-    "annotation"
-})
+@XmlType(name = "t_instance", propOrder = { "instantiationExpression", "connection", "annotation" })
 public class TInstance {
 
     @XmlElement(name = "instantiation_expression")
     protected List<TInstantiationExpression> instantiationExpression;
+
     protected List<TConnection> connection;
+
     protected TInstanceAnnotation annotation;
+
     @XmlAttribute(name = "type")
     protected TInstanceType type;
+
     @XmlAttribute(name = "class")
     protected String clazz;
+
     @XmlAttribute(name = "name")
     protected String name;
 
@@ -64,21 +66,20 @@ public class TInstance {
      * Gets the value of the instantiationExpression property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the instantiationExpression property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the instantiationExpression property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getInstantiationExpression().add(newItem);
+     * getInstantiationExpression().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TInstantiationExpression }
+     * Objects of the following type(s) are allowed in the list {@link TInstantiationExpression }
      * 
      * 
      */
@@ -93,21 +94,20 @@ public class TInstance {
      * Gets the value of the connection property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the connection property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the connection property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getConnection().add(newItem);
+     * getConnection().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TConnection }
+     * Objects of the following type(s) are allowed in the list {@link TConnection }
      * 
      * 
      */
@@ -121,10 +121,8 @@ public class TInstance {
     /**
      * Gets the value of the annotation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInstanceAnnotation }
-     *     
+     * @return possible object is {@link TInstanceAnnotation }
+     * 
      */
     public TInstanceAnnotation getAnnotation() {
         return annotation;
@@ -134,9 +132,8 @@ public class TInstance {
      * Sets the value of the annotation property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInstanceAnnotation }
-     *     
+     *            allowed object is {@link TInstanceAnnotation }
+     * 
      */
     public void setAnnotation(TInstanceAnnotation value) {
         this.annotation = value;
@@ -145,10 +142,8 @@ public class TInstance {
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TInstanceType }
-     *     
+     * @return possible object is {@link TInstanceType }
+     * 
      */
     public TInstanceType getType() {
         return type;
@@ -158,9 +153,8 @@ public class TInstance {
      * Sets the value of the type property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TInstanceType }
-     *     
+     *            allowed object is {@link TInstanceType }
+     * 
      */
     public void setType(TInstanceType value) {
         this.type = value;
@@ -169,10 +163,8 @@ public class TInstance {
     /**
      * Gets the value of the clazz property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getClazz() {
         return clazz;
@@ -182,9 +174,8 @@ public class TInstance {
      * Sets the value of the clazz property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setClazz(String value) {
         this.clazz = value;
@@ -193,10 +184,8 @@ public class TInstance {
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -206,9 +195,8 @@ public class TInstance {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;

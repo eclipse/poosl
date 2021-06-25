@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_instantiation_expression complex type.
+ * <p>
+ * Java class for t_instantiation_expression complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_instantiation_expression">
@@ -37,26 +37,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_instantiation_expression", propOrder = {
-    "bodyText",
-    "bodyExpression"
-})
+@XmlType(name = "t_instantiation_expression", propOrder = { "bodyText", "bodyExpression" })
 public class TInstantiationExpression {
 
     @XmlElement(name = "body_text")
     protected String bodyText;
+
     @XmlElement(name = "body_expression", required = true)
     protected TExpression bodyExpression;
+
     @XmlAttribute(name = "parameter_name", required = true)
     protected String parameterName;
 
     /**
      * Gets the value of the bodyText property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getBodyText() {
         return bodyText;
@@ -66,9 +63,8 @@ public class TInstantiationExpression {
      * Sets the value of the bodyText property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setBodyText(String value) {
         this.bodyText = value;
@@ -77,10 +73,8 @@ public class TInstantiationExpression {
     /**
      * Gets the value of the bodyExpression property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getBodyExpression() {
         return bodyExpression;
@@ -90,9 +84,8 @@ public class TInstantiationExpression {
      * Sets the value of the bodyExpression property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setBodyExpression(TExpression value) {
         this.bodyExpression = value;
@@ -101,10 +94,8 @@ public class TInstantiationExpression {
     /**
      * Gets the value of the parameterName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getParameterName() {
         return parameterName;
@@ -114,9 +105,8 @@ public class TInstantiationExpression {
      * Sets the value of the parameterName property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setParameterName(String value) {
         this.parameterName = value;

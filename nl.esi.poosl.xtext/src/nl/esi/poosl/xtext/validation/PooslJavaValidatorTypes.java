@@ -52,455 +52,426 @@ import nl.esi.poosl.xtext.helpers.HelperFunctions;
 import nl.esi.poosl.xtext.helpers.PooslVariableTypeHelper;
 
 public class PooslJavaValidatorTypes extends PooslJavaValidatorAcyclicRelations {
-	private static final String SIGNATURE_EXPRESSIONS_INCOMPATIBLE = "Expressions of type {0} is incompatible with type String";
-	private static final String RECEPTION_INCOMPATIBLE = "Reception condition of type {0} is incompatible with type Boolean";
-	private static final String CONDITION_INCOMPATIBLE = "Condition of type {0} is incompatible with type Boolean";
-	private static final String GUARD_INCOMPATIBLE = "Guard of type {0} is incompatible with type Boolean";
-	private static final String DELAY_INCOMPATIBLE = "Delay of type {0} is incompatible with type Integer and Real";
+    private static final String SIGNATURE_EXPRESSIONS_INCOMPATIBLE = "Expressions of type {0} is incompatible with type String";
 
-	private static final String PROCESSMETHOD_OVERRIDDE_OUTPUT_TYPE = "Output types {0} are not equal to, or subtypes of, the output types {1} of the overridden method in class {2}";
-	private static final String PROCESSMETHOD_OVERRIDDE_INPUT_TYPE = "Input types {0} are not equal to, or supertypes of, the input types {1} of the overridden method in class {2}";
-	private static final String DATAMETHOD_RETURN_TYPE = "Method body of type {0} is not compatible with method return type {1}";
-	private static final String DATAMETHOD_OVERRIDDEN_RETURN_TYPE = "Return type {0} is not equal to, or subtype of, the return type {1} of the overridden method in class {2}";
-	private static final String DATAMETHOD_TYPES = "Parameter types {0} are not equal to, or supertypes of, the parameter types {1} of the overridden method in class {2}";
+    private static final String RECEPTION_INCOMPATIBLE = "Reception condition of type {0} is incompatible with type Boolean";
 
-	private static final String SIGNATURE_RECEIVE_NOT_FOUND = "No receive message {0} of port {1} with {2} variables";
-	private static final String SIGNATURE_RECEIVE_INCOMPATIBLE = "Variable of type {0} is incompatible with declaration type {1}";
-	private static final String SIGNATURE_RECEIVE_GLOBAL_NOT_FOUND = "No receive message {0} with these argument types as arguments";
+    private static final String CONDITION_INCOMPATIBLE = "Condition of type {0} is incompatible with type Boolean";
 
-	private static final String SIGNATURE_SEND_GLOBAL_NOT_FOUND = "No send message {0} with these argument types as arguments";
-	private static final String SIGNATURE_SEND_INCOMPATIBLE = "Argument of type {0} is incompatible with declaration type {1}";
-	private static final String SIGNATURE_SEND_NOT_FOUND = "No send message {0} of port {1} with {2} arguments";
+    private static final String GUARD_INCOMPATIBLE = "Guard of type {0} is incompatible with type Boolean";
 
-	private static final String PROCESSMETHOD_CALL_OUTPUT_INCOMPATIBLE = "Output variable of type {0} is incompatible with declaration type {1}";
-	private static final String PROCESSMETHOD_CALL_OUTPUT_SIZE = "Expected {0} output variables instead of {1}";
-	private static final String PROCESSMETHOD_CALL_ARG_INCOMPATIBLE = "Input argument of type {0} is incompatible with declaration type {1}";
-	private static final String PROCESSMETHOD_CALL_ARG_SIZE = "Expected {0} input arguments instead of {1}";
-	public static final String NOT_DECLARED = "{0} ''{1}'' is not declared.";
+    private static final String DELAY_INCOMPATIBLE = "Delay of type {0} is incompatible with type Integer and Real";
 
-	private static final String INSTANCE_PARAMETERS_INCOMPATIBLE = "Expression of type {0} is not compatible with variable of type {1}";
+    private static final String PROCESSMETHOD_OVERRIDDE_OUTPUT_TYPE = "Output types {0} are not equal to, or subtypes of, the output types {1} of the overridden method in class {2}";
 
-	private final PooslTypeSystem typeSystem = new PooslTypeSystem(this);
+    private static final String PROCESSMETHOD_OVERRIDDE_INPUT_TYPE = "Input types {0} are not equal to, or supertypes of, the input types {1} of the overridden method in class {2}";
 
-	public void generateError(String message, EObject source, EStructuralFeature feature, int index, String code,
-			String... issueCode) {
-		error(message, source, feature, index, code, issueCode);
-	}
+    private static final String DATAMETHOD_RETURN_TYPE = "Method body of type {0} is not compatible with method return type {1}";
 
-	public void generateWarning(String message, EObject source, EStructuralFeature feature, int index, String code,
-			String... issueCode) {
-		warning(message, source, feature, index, code, WarningType.TYPECHECK, issueCode);
-	}
+    private static final String DATAMETHOD_OVERRIDDEN_RETURN_TYPE = "Return type {0} is not equal to, or subtype of, the return type {1} of the overridden method in class {2}";
 
-	// --- Methods -------
+    private static final String DATAMETHOD_TYPES = "Parameter types {0} are not equal to, or supertypes of, the parameter types {1} of the overridden method in class {2}";
 
-	@Check(CheckType.FAST)
-	public void checkTypesDataMethodReturn(DataMethod dataMethod) {
-		Resource resource = dataMethod.eResource();
-		String returnTypeName = dataMethod.getReturnType();
-		String bodyTypeName = typeSystem.getAndCheckExpressionType(dataMethod.getBody());
-		if (!TypingHelper.isCompatible(resource, bodyTypeName, returnTypeName)) {
-			warning(MessageFormat.format(DATAMETHOD_RETURN_TYPE, bodyTypeName, returnTypeName),
-					Literals.DATA_METHOD__RETURN_TYPE, PooslIssueCodes.INVALID_RETURN_TYPE, WarningType.TYPECHECK,
-					bodyTypeName, returnTypeName);
-		}
-	}
+    private static final String SIGNATURE_RECEIVE_NOT_FOUND = "No receive message {0} of port {1} with {2} variables";
 
-	@Check(CheckType.FAST)
-	public void checkTypesDataMethodNamed(DataMethodNamed dataMethod) {
-		checkTypesDataMethod(dataMethod, dataMethod.getName(), Literals.DATA_CLASS__DATA_METHODS_NAMED);
-	}
+    private static final String SIGNATURE_RECEIVE_INCOMPATIBLE = "Variable of type {0} is incompatible with declaration type {1}";
 
-	@Check(CheckType.FAST)
-	public void checkTypesDataMethodUnaryOperator(DataMethodUnaryOperator dataMethod) {
-		checkTypesDataMethod(dataMethod, dataMethod.getName().getLiteral(),
-				Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR);
-	}
+    private static final String SIGNATURE_RECEIVE_GLOBAL_NOT_FOUND = "No receive message {0} with these argument types as arguments";
 
-	@Check(CheckType.FAST)
-	public void checkTypesDataMethodBinaryOperator(DataMethodBinaryOperator dataMethod) {
-		checkTypesDataMethod(dataMethod, dataMethod.getName().getLiteral(),
-				Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR);
-	}
+    private static final String SIGNATURE_SEND_GLOBAL_NOT_FOUND = "No send message {0} with these argument types as arguments";
 
-	private void checkTypesDataMethod(DataMethod dataMethod, String name, EReference literal) {
-		Resource resource = dataMethod.eResource();
-		DataClass dClass = (DataClass) dataMethod.eContainer();
+    private static final String SIGNATURE_SEND_INCOMPATIBLE = "Argument of type {0} is incompatible with declaration type {1}";
 
-		List<String> types = TypingHelper.getDeclarationTypeNames(dataMethod.getParameters());
-		String outputType = dataMethod.getReturnType();
-		String superClass = HelperFunctions.getCorrectedDataClassExtendsAsString(dClass);
-		List<IEObjectDescription> methods = PooslCache.get(resource).getDataMethods(superClass, name, types.size(),
-				literal);
+    private static final String SIGNATURE_SEND_NOT_FOUND = "No send message {0} of port {1} with {2} arguments";
 
-		for (IEObjectDescription dMethod : methods) {
-			List<String> typesP = PooslDataMethodDescription.getParameterTypeNames(dMethod);
+    private static final String PROCESSMETHOD_CALL_OUTPUT_INCOMPATIBLE = "Output variable of type {0} is incompatible with declaration type {1}";
 
-			String dClassName = PooslDataMethodDescription.getClassName(dMethod);
-			if (!TypingHelper.isSubtype(resource, typesP, types)) {
-				StringBuilder sbTypes = new StringBuilder();
-				FormattingHelper.formatTypes(sbTypes, types);
-				StringBuilder sbTypesP = new StringBuilder();
-				FormattingHelper.formatTypes(sbTypesP, typesP);
+    private static final String PROCESSMETHOD_CALL_OUTPUT_SIZE = "Expected {0} output variables instead of {1}";
 
-				warning(MessageFormat.format(DATAMETHOD_TYPES, sbTypes, sbTypesP, dClassName),
-						Literals.DATA_METHOD__PARAMETERS, PooslIssueCodes.INVALID_OVERRIDE_PARAMETER_TYPE,
-						WarningType.TYPECHECK, sbTypesP.toString());
-			}
+    private static final String PROCESSMETHOD_CALL_ARG_INCOMPATIBLE = "Input argument of type {0} is incompatible with declaration type {1}";
 
-			String outputTypeP = PooslDataMethodDescription.getReturnType(dMethod);
-			if (!TypingHelper.isSubtype(resource, outputType, outputTypeP)) {
-				warning(MessageFormat.format(DATAMETHOD_OVERRIDDEN_RETURN_TYPE, outputType, outputTypeP, dClassName),
-						Literals.DATA_METHOD__RETURN_TYPE, PooslIssueCodes.INVALID_OVERRIDE_RETURN_TYPE,
-						WarningType.TYPECHECK, outputTypeP);
-			}
-		}
-	}
+    private static final String PROCESSMETHOD_CALL_ARG_SIZE = "Expected {0} input arguments instead of {1}";
 
-	@Check(CheckType.FAST)
-	public void checkTypesProcessMethod(ProcessMethod pMethod) {
-		Resource resource = pMethod.eResource();
-		ProcessClass pClass = (ProcessClass) pMethod.eContainer();
-		String superClassName = pClass.getSuperClass();
+    public static final String NOT_DECLARED = "{0} ''{1}'' is not declared.";
 
-		if (superClassName != null) {
-			List<String> inputTypes = TypingHelper.getDeclarationTypeNames(pMethod.getInputParameters());
-			List<String> outputTypes = TypingHelper.getDeclarationTypeNames(pMethod.getOutputParameters());
+    private static final String INSTANCE_PARAMETERS_INCOMPATIBLE = "Expression of type {0} is not compatible with variable of type {1}";
 
-			IEObjectDescription parentMethod = PooslCache.get(resource)
-					.getProcessMethods(superClassName, inputTypes.size(), outputTypes.size()).get(pMethod.getName());
-			if (parentMethod != null) {
-				List<String> inputTypesP = PooslProcessMethodDescription.getInputParameterTypeNames(parentMethod);
-				List<String> outputTypesP = PooslProcessMethodDescription.getOutputParameterTypeNames(parentMethod);
+    private final PooslTypeSystem typeSystem = new PooslTypeSystem(this);
 
-				if (!TypingHelper.isSubtype(resource, inputTypesP, inputTypes)) {
-					StringBuilder sbTypes = new StringBuilder();
-					FormattingHelper.formatTypes(sbTypes, inputTypes);
-					StringBuilder sbTypesP = new StringBuilder();
-					FormattingHelper.formatTypes(sbTypesP, inputTypesP);
+    public void generateError(String message, EObject source, EStructuralFeature feature, int index, String code, String... issueCode) {
+        error(message, source, feature, index, code, issueCode);
+    }
 
-					warning(MessageFormat.format(PROCESSMETHOD_OVERRIDDE_INPUT_TYPE, sbTypes, sbTypesP, superClassName),
-							Literals.PROCESS_METHOD__INPUT_PARAMETERS,
-							PooslIssueCodes.INVALID_OVERRIDE_INPUT_PARAMETER_TYPE, WarningType.TYPECHECK,
-							sbTypesP.toString());
-				}
+    public void generateWarning(String message, EObject source, EStructuralFeature feature, int index, String code, String... issueCode) {
+        warning(message, source, feature, index, code, WarningType.TYPECHECK, issueCode);
+    }
 
-				if (!TypingHelper.isSubtype(resource, outputTypes, outputTypesP)) {
-					StringBuilder sbTypes = new StringBuilder();
-					FormattingHelper.formatTypes(sbTypes, outputTypes);
-					StringBuilder sbTypesP = new StringBuilder();
-					FormattingHelper.formatTypes(sbTypesP, outputTypesP);
+    // --- Methods -------
 
-					warning(MessageFormat.format(PROCESSMETHOD_OVERRIDDE_OUTPUT_TYPE, sbTypes, sbTypesP,
-							superClassName), Literals.PROCESS_METHOD__OUTPUT_PARAMETERS,
-							PooslIssueCodes.INVALID_OVERRIDE_OUTPUT_PARAMETER_TYPE, WarningType.TYPECHECK);
-				}
-			}
-		}
-	}
+    @Check(CheckType.FAST)
+    public void checkTypesDataMethodReturn(DataMethod dataMethod) {
+        Resource resource = dataMethod.eResource();
+        String returnTypeName = dataMethod.getReturnType();
+        String bodyTypeName = typeSystem.getAndCheckExpressionType(dataMethod.getBody());
+        if (!TypingHelper.isCompatible(resource, bodyTypeName, returnTypeName)) {
+            warning(MessageFormat.format(DATAMETHOD_RETURN_TYPE, bodyTypeName, returnTypeName), Literals.DATA_METHOD__RETURN_TYPE, PooslIssueCodes.INVALID_RETURN_TYPE, WarningType.TYPECHECK,
+                    bodyTypeName, returnTypeName);
+        }
+    }
 
-	// --- Statement -------
+    @Check(CheckType.FAST)
+    public void checkTypesDataMethodNamed(DataMethodNamed dataMethod) {
+        checkTypesDataMethod(dataMethod, dataMethod.getName(), Literals.DATA_CLASS__DATA_METHODS_NAMED);
+    }
 
-	@Check(CheckType.FAST)
-	public void checkTypesExpressionStatement(ExpressionStatement statement) {
-		typeSystem.getAndCheckExpressionType(statement.getExpression());
-	}
+    @Check(CheckType.FAST)
+    public void checkTypesDataMethodUnaryOperator(DataMethodUnaryOperator dataMethod) {
+        checkTypesDataMethod(dataMethod, dataMethod.getName().getLiteral(), Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR);
+    }
 
-	@Check(CheckType.FAST)
-	public void checkTypesDelayStatement(DelayStatement statement) {
-		Resource resource = statement.eResource();
-		Expression expression = statement.getExpression();
-		String typeName = typeSystem.getAndCheckExpressionType(expression);
-		if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_FLOAT)
-				&& !TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_INTEGER)
-				&& !TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_REAL)) {
-			warning(MessageFormat.format(DELAY_INCOMPATIBLE, typeName), expression, null, PooslIssueCodes.TYPECHECK,
-					WarningType.TYPECHECK);
-		}
-	}
+    @Check(CheckType.FAST)
+    public void checkTypesDataMethodBinaryOperator(DataMethodBinaryOperator dataMethod) {
+        checkTypesDataMethod(dataMethod, dataMethod.getName().getLiteral(), Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR);
+    }
 
-	@Check(CheckType.FAST)
-	public void checkTypesGuardedStatement(GuardedStatement statement) {
-		Resource resource = statement.eResource();
-		Expression expressions = statement.getGuard();
-		String typeName = typeSystem.getAndCheckExpressionType(expressions);
-		if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-			warning(MessageFormat.format(GUARD_INCOMPATIBLE, typeName), expressions, null,
-					PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
-		}
-	}
+    private void checkTypesDataMethod(DataMethod dataMethod, String name, EReference literal) {
+        Resource resource = dataMethod.eResource();
+        DataClass dClass = (DataClass) dataMethod.eContainer();
 
-	@Check(CheckType.FAST)
-	public void checkTypesIfStatement(IfStatement statement) {
-		Resource resource = statement.eResource();
-		Expression expressions = statement.getCondition();
-		String typeName = typeSystem.getAndCheckExpressionType(expressions);
-		if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-			warning(MessageFormat.format(CONDITION_INCOMPATIBLE, typeName), expressions, null,
-					PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
-		}
-	}
+        List<String> types = TypingHelper.getDeclarationTypeNames(dataMethod.getParameters());
+        String outputType = dataMethod.getReturnType();
+        String superClass = HelperFunctions.getCorrectedDataClassExtendsAsString(dClass);
+        List<IEObjectDescription> methods = PooslCache.get(resource).getDataMethods(superClass, name, types.size(), literal);
 
-	@Check(CheckType.FAST)
-	public void checkTypesSwitchStatement(SwitchStatement statement) {
-		Expression expression = statement.getExpression();
-		String expressionType = typeSystem.getAndCheckExpressionType(expression);
+        for (IEObjectDescription dMethod : methods) {
+            List<String> typesP = PooslDataMethodDescription.getParameterTypeNames(dMethod);
 
-		for (SwitchStatementCase switchCase : statement.getCases()) {
-			Expression caseValue = switchCase.getValue();
-			String caseValueType = typeSystem.getAndCheckExpressionType(expression);
-			if (!TypingHelper.isCompatible(statement.eResource(), caseValueType, expressionType)) {
-				warning("Case condition of type " + caseValueType + " is not compatible with switch expression of type "
-						+ expressionType, caseValue, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK,
-						caseValueType, expressionType);
-			}
-		}
-	}
+            String dClassName = PooslDataMethodDescription.getClassName(dMethod);
+            if (!TypingHelper.isSubtype(resource, typesP, types)) {
+                StringBuilder sbTypes = new StringBuilder();
+                FormattingHelper.formatTypes(sbTypes, types);
+                StringBuilder sbTypesP = new StringBuilder();
+                FormattingHelper.formatTypes(sbTypesP, typesP);
 
-	@Check(CheckType.FAST)
-	public void checkTypesWhileStatement(WhileStatement statement) {
-		Resource resource = statement.eResource();
-		Expression expressions = statement.getCondition();
-		String typeName = typeSystem.getAndCheckExpressionType(expressions);
-		if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-			warning(MessageFormat.format(CONDITION_INCOMPATIBLE, typeName), expressions, null,
-					PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
-		}
-	}
+                warning(MessageFormat.format(DATAMETHOD_TYPES, sbTypes, sbTypesP, dClassName), Literals.DATA_METHOD__PARAMETERS, PooslIssueCodes.INVALID_OVERRIDE_PARAMETER_TYPE, WarningType.TYPECHECK,
+                        sbTypesP.toString());
+            }
 
-	@Check(CheckType.FAST)
-	public void checkTypesReceiveMessage(ReceiveStatement statement) {
-		Resource resource = statement.eResource();
-		ProcessClass pClass = HelperFunctions.getContainingProcessClass(statement);
-		String statementMsgName = statement.getName();
-		String statementPortName = ((PortReference) statement.getPortDescriptor()).getPort();
+            String outputTypeP = PooslDataMethodDescription.getReturnType(dMethod);
+            if (!TypingHelper.isSubtype(resource, outputType, outputTypeP)) {
+                warning(MessageFormat.format(DATAMETHOD_OVERRIDDEN_RETURN_TYPE, outputType, outputTypeP, dClassName), Literals.DATA_METHOD__RETURN_TYPE, PooslIssueCodes.INVALID_OVERRIDE_RETURN_TYPE,
+                        WarningType.TYPECHECK, outputTypeP);
+            }
+        }
+    }
 
-		List<String> argumentTypes = new ArrayList<>();
-		for (OutputVariable variable : statement.getVariables()) {
-			argumentTypes.add(PooslVariableTypeHelper.getVariableType(statement, variable.getVariable()));
-		}
-		String pName = pClass.getName();
-		if (pName != null) {
-			checkMessageSignature(resource, statement.getPortDescriptor(), pName, argumentTypes, statementMsgName,
-					statementPortName, PooslMessageType.RECEIVE);
-		}
+    @Check(CheckType.FAST)
+    public void checkTypesProcessMethod(ProcessMethod pMethod) {
+        Resource resource = pMethod.eResource();
+        ProcessClass pClass = (ProcessClass) pMethod.eContainer();
+        String superClassName = pClass.getSuperClass();
 
-		// --- getReceptionCondition() -------
-		Expression expressions = statement.getReceptionCondition();
-		String typeName = typeSystem.getAndCheckExpressionType(expressions);
-		if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-			warning(MessageFormat.format(RECEPTION_INCOMPATIBLE, typeName), expressions, null,
-					PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
-		}
+        if (superClassName != null) {
+            List<String> inputTypes = TypingHelper.getDeclarationTypeNames(pMethod.getInputParameters());
+            List<String> outputTypes = TypingHelper.getDeclarationTypeNames(pMethod.getOutputParameters());
 
-		// --- getPostCommunicationExpressions() -------
-		typeSystem.getAndCheckExpressionType(statement.getPostCommunicationExpression());
-	}
+            IEObjectDescription parentMethod = PooslCache.get(resource).getProcessMethods(superClassName, inputTypes.size(), outputTypes.size()).get(pMethod.getName());
+            if (parentMethod != null) {
+                List<String> inputTypesP = PooslProcessMethodDescription.getInputParameterTypeNames(parentMethod);
+                List<String> outputTypesP = PooslProcessMethodDescription.getOutputParameterTypeNames(parentMethod);
 
-	@Check(CheckType.FAST)
-	public void checkTypesSendMessage(SendStatement statement) {
-		Resource resource = statement.eResource();
-		ProcessClass pClass = HelperFunctions.getContainingProcessClass(statement);
-		String statementMsgName = statement.getName();
-		String statementPortName = ((PortReference) statement.getPortDescriptor()).getPort();
-		List<String> argumentTypes = typeSystem.getAndCheckExpressionsType(statement.getArguments());
-		String pName = pClass.getName();
-		if (pName != null) {
-			checkMessageSignature(resource, statement.getPortDescriptor(), pName, argumentTypes, statementMsgName,
-					statementPortName, PooslMessageType.SEND);
-		}
+                if (!TypingHelper.isSubtype(resource, inputTypesP, inputTypes)) {
+                    StringBuilder sbTypes = new StringBuilder();
+                    FormattingHelper.formatTypes(sbTypes, inputTypes);
+                    StringBuilder sbTypesP = new StringBuilder();
+                    FormattingHelper.formatTypes(sbTypesP, inputTypesP);
 
-		// --- getPostCommunicationExpressions() -------
-		typeSystem.getAndCheckExpressionType(statement.getPostCommunicationExpression());
-	}
+                    warning(MessageFormat.format(PROCESSMETHOD_OVERRIDDE_INPUT_TYPE, sbTypes, sbTypesP, superClassName), Literals.PROCESS_METHOD__INPUT_PARAMETERS,
+                            PooslIssueCodes.INVALID_OVERRIDE_INPUT_PARAMETER_TYPE, WarningType.TYPECHECK, sbTypesP.toString());
+                }
 
-	private void checkMessageSignature(Resource resource, EObject portDescriptor, String pClass,
-			List<String> argumentTypes, String statementMsgName, String statementPortName, PooslMessageType type) {
-		String invalidType;
-		EReference variables;
-		String warningNotfound;
-		String warningIncompatible;
-		String warningGlobalNotFound;
-		if (type == PooslMessageType.SEND) {
-			invalidType = PooslIssueCodes.INVALID_TYPES_SEND_STATEMENT;
-			variables = Literals.SEND_STATEMENT__ARGUMENTS;
-			warningNotfound = SIGNATURE_SEND_NOT_FOUND;
-			warningIncompatible = SIGNATURE_SEND_INCOMPATIBLE;
-			warningGlobalNotFound = SIGNATURE_SEND_GLOBAL_NOT_FOUND;
-		} else {
-			invalidType = PooslIssueCodes.INVALID_TYPES_RECEIVE_STATEMENT;
-			variables = Literals.RECEIVE_STATEMENT__VARIABLES;
-			warningNotfound = SIGNATURE_RECEIVE_NOT_FOUND;
-			warningIncompatible = SIGNATURE_RECEIVE_INCOMPATIBLE;
-			warningGlobalNotFound = SIGNATURE_RECEIVE_GLOBAL_NOT_FOUND;
-		}
+                if (!TypingHelper.isSubtype(resource, outputTypes, outputTypesP)) {
+                    StringBuilder sbTypes = new StringBuilder();
+                    FormattingHelper.formatTypes(sbTypes, outputTypes);
+                    StringBuilder sbTypesP = new StringBuilder();
+                    FormattingHelper.formatTypes(sbTypesP, outputTypesP);
 
-		if (portDescriptor instanceof PortReference) {
-			if (statementPortName != null && statementMsgName != null) {
-				List<String> declarationTypes = getDeclarationTypesOfSignature(resource, pClass, statementPortName,
-						statementMsgName, type, argumentTypes.size());
+                    warning(MessageFormat.format(PROCESSMETHOD_OVERRIDDE_OUTPUT_TYPE, sbTypes, sbTypesP, superClassName), Literals.PROCESS_METHOD__OUTPUT_PARAMETERS,
+                            PooslIssueCodes.INVALID_OVERRIDE_OUTPUT_PARAMETER_TYPE, WarningType.TYPECHECK);
+                }
+            }
+        }
+    }
 
-				if (declarationTypes == null) {
-					error(MessageFormat.format(warningNotfound, statementMsgName, statementPortName,
-							argumentTypes.size()), null, PooslIssueCodes.MISSING_MESSAGE_DECLARATION);
-				} else {
-					for (int i = 0; i < argumentTypes.size(); i++) {
-						String useTypeName = argumentTypes.get(i);
-						String declarationType = declarationTypes.get(i);
-						if (!TypingHelper.isCompatible(resource, useTypeName, declarationType)) {
-							warning(MessageFormat.format(warningIncompatible, useTypeName, declarationType), variables,
-									i, invalidType, WarningType.TYPECHECK);
-						}
-					}
-				}
-			}
-		} else if (portDescriptor instanceof PortExpression) {
-			String portDescriptorTypeName = typeSystem
-					.getAndCheckExpressionType(((PortExpression) portDescriptor).getExpression());
-			if (!TypingHelper.isCompatible(resource, portDescriptorTypeName, HelperFunctions.CLASS_NAME_STRING)) {
-				warning(MessageFormat.format(SIGNATURE_EXPRESSIONS_INCOMPATIBLE, portDescriptorTypeName),
-						portDescriptor, null, invalidType, WarningType.TYPECHECK);
-			}
+    // --- Statement -------
 
-			List<List<String>> declarationTypesList = getDeclarationTypesOfAllSignature(resource, pClass,
-					statementPortName, statementMsgName, type, argumentTypes.size());
-			if (statementMsgName != null) {
-				if (declarationTypesList.isEmpty()) {
-					error(warningNotfound, null);
-				} else {
-					boolean globalFit = false;
-					for (List<String> declarationTypes : declarationTypesList) {
-						boolean localFit = TypingHelper.isCompatible(resource, argumentTypes, declarationTypes);
-						globalFit = globalFit || localFit;
-					}
-					if (!globalFit) {
-						warning(MessageFormat.format(warningGlobalNotFound, statementMsgName), variables, null,
-								invalidType, WarningType.TYPECHECK);
-					}
-				}
-			}
-		}
-	}
+    @Check(CheckType.FAST)
+    public void checkTypesExpressionStatement(ExpressionStatement statement) {
+        typeSystem.getAndCheckExpressionType(statement.getExpression());
+    }
 
-	private static List<List<String>> getDeclarationTypesOfAllSignature(Resource resource, String pClass, String port,
-			String messageName, PooslMessageType expectedType, int paramCount) {
-		List<List<String>> signatures = new ArrayList<>();
-		if (pClass != null && port != null && expectedType != null) {
-			Iterable<IEObjectDescription> messages = Iterables.filter(
-					PooslCache.get(resource).getMessages(pClass, expectedType),
-					PooslMessageSignatureDescription.predicateMessage(port, messageName));
-			for (IEObjectDescription descr : messages) {
-				List<String> parameterTypes = PooslMessageSignatureDescription.getParameterTypes(descr);
-				if (paramCount == parameterTypes.size()) {
-					signatures.add(parameterTypes);
-				}
-			}
-		}
-		return signatures;
-	}
+    @Check(CheckType.FAST)
+    public void checkTypesDelayStatement(DelayStatement statement) {
+        Resource resource = statement.eResource();
+        Expression expression = statement.getExpression();
+        String typeName = typeSystem.getAndCheckExpressionType(expression);
+        if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_FLOAT) && !TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_INTEGER)
+                && !TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_REAL)) {
+            warning(MessageFormat.format(DELAY_INCOMPATIBLE, typeName), expression, null, PooslIssueCodes.TYPECHECK, WarningType.TYPECHECK);
+        }
+    }
 
-	private static List<String> getDeclarationTypesOfSignature(Resource resource, String pClass, String port,
-			String messageName, PooslMessageType expectedType, int paramCount) {
-		if (pClass != null && port != null && expectedType != null) {
-			Iterable<IEObjectDescription> messages = Iterables.filter(
-					PooslCache.get(resource).getMessages(pClass, expectedType),
-					PooslMessageSignatureDescription.predicateMessage(port, messageName));
-			for (IEObjectDescription descr : messages) {
-				List<String> parameterTypes = PooslMessageSignatureDescription.getParameterTypes(descr);
-				if (paramCount == parameterTypes.size()) {
-					return parameterTypes;
-				}
-			}
-		}
-		return null;
-	}
+    @Check(CheckType.FAST)
+    public void checkTypesGuardedStatement(GuardedStatement statement) {
+        Resource resource = statement.eResource();
+        Expression expressions = statement.getGuard();
+        String typeName = typeSystem.getAndCheckExpressionType(expressions);
+        if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
+            warning(MessageFormat.format(GUARD_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
+        }
+    }
 
-	@Check(CheckType.FAST)
-	public void checkTypesProcessMethodCall(ProcessMethodCall pMethodCall) {
-		Resource resource = pMethodCall.eResource();
-		String pClass = HelperFunctions.getContainingProcessClass(pMethodCall).getName();
-		if (pClass != null) {
-			String useMethodName = pMethodCall.getMethod();
-			List<Expression> useExpressions = pMethodCall.getInputArguments();
-			List<OutputVariable> useVariables = pMethodCall.getOutputVariables();
+    @Check(CheckType.FAST)
+    public void checkTypesIfStatement(IfStatement statement) {
+        Resource resource = statement.eResource();
+        Expression expressions = statement.getCondition();
+        String typeName = typeSystem.getAndCheckExpressionType(expressions);
+        if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
+            warning(MessageFormat.format(CONDITION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
+        }
+    }
 
-			IEObjectDescription pMethod = PooslCache.get(resource)
-					.getProcessMethods(pClass, useExpressions.size(), useVariables.size()).get(useMethodName);
+    @Check(CheckType.FAST)
+    public void checkTypesSwitchStatement(SwitchStatement statement) {
+        Expression expression = statement.getExpression();
+        String expressionType = typeSystem.getAndCheckExpressionType(expression);
 
-			if (pMethod == null) {
+        for (SwitchStatementCase switchCase : statement.getCases()) {
+            Expression caseValue = switchCase.getValue();
+            String caseValueType = typeSystem.getAndCheckExpressionType(expression);
+            if (!TypingHelper.isCompatible(statement.eResource(), caseValueType, expressionType)) {
+                warning("Case condition of type " + caseValueType + " is not compatible with switch expression of type " + expressionType, caseValue, null, PooslIssueCodes.INCOMPATIBLE_TYPE,
+                        WarningType.TYPECHECK, caseValueType, expressionType);
+            }
+        }
+    }
 
-				error(MessageFormat.format(NOT_DECLARED, Literals.PROCESS_METHOD.getName(), pMethodCall.getMethod()),
-						pMethodCall, Literals.PROCESS_METHOD_CALL__METHOD, Diagnostic.LINKING_DIAGNOSTIC);
-			} else {
-				// --- getInputParameter -------
-				List<String> inputParamTypes = PooslProcessMethodDescription.getInputParameterTypeNames(pMethod);
-				if (inputParamTypes.size() != useExpressions.size()) {
-					error(MessageFormat.format(PROCESSMETHOD_CALL_ARG_SIZE, inputParamTypes.size(),
-							useExpressions.size()), Literals.PROCESS_METHOD_CALL__INPUT_ARGUMENTS);
-				} else {
-					for (int i = 0; i < useExpressions.size(); i++) {
-						String useTypeName = typeSystem.getAndCheckExpressionType(useExpressions.get(i));
-						String declarationTypeName = inputParamTypes.get(i);
-						if (!TypingHelper.isCompatible(resource, useTypeName, declarationTypeName)) {
-							warning(MessageFormat.format(PROCESSMETHOD_CALL_ARG_INCOMPATIBLE, useTypeName,
-									declarationTypeName), useExpressions.get(i), null,
-									PooslIssueCodes.INVALID_INPUT_TYPES_PROCESS_METHOD_CALL, WarningType.TYPECHECK,
-									useTypeName, declarationTypeName);
-						}
-					}
-				}
+    @Check(CheckType.FAST)
+    public void checkTypesWhileStatement(WhileStatement statement) {
+        Resource resource = statement.eResource();
+        Expression expressions = statement.getCondition();
+        String typeName = typeSystem.getAndCheckExpressionType(expressions);
+        if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
+            warning(MessageFormat.format(CONDITION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
+        }
+    }
 
-				// --- getOutputVariables -------
-				List<String> outputParamTypes = PooslProcessMethodDescription.getOutputParameterTypeNames(pMethod);
-				if (outputParamTypes.size() != useVariables.size()) {
-					error(MessageFormat.format(PROCESSMETHOD_CALL_OUTPUT_SIZE, outputParamTypes.size(),
-							useVariables.size()), Literals.PROCESS_METHOD_CALL__OUTPUT_VARIABLES);
-				} else {
-					for (int i = 0; i < useVariables.size(); i++) {
-						String useTypeName = PooslVariableTypeHelper.getVariableType(pMethodCall,
-								useVariables.get(i).getVariable());
-						String declarationTypeName = outputParamTypes.get(i);
+    @Check(CheckType.FAST)
+    public void checkTypesReceiveMessage(ReceiveStatement statement) {
+        Resource resource = statement.eResource();
+        ProcessClass pClass = HelperFunctions.getContainingProcessClass(statement);
+        String statementMsgName = statement.getName();
+        String statementPortName = ((PortReference) statement.getPortDescriptor()).getPort();
 
-						if (!TypingHelper.isCompatible(resource, useTypeName, declarationTypeName)) {
-							warning(MessageFormat.format(PROCESSMETHOD_CALL_OUTPUT_INCOMPATIBLE, useTypeName,
-									declarationTypeName), Literals.PROCESS_METHOD_CALL__OUTPUT_VARIABLES, i,
-									PooslIssueCodes.INVALID_OUTPUT_TYPES_PROCESS_METHOD_CALL, WarningType.TYPECHECK);
-						}
-					}
-				}
-			}
-		}
-	}
+        List<String> argumentTypes = new ArrayList<>();
+        for (OutputVariable variable : statement.getVariables()) {
+            argumentTypes.add(PooslVariableTypeHelper.getVariableType(statement, variable.getVariable()));
+        }
+        String pName = pClass.getName();
+        if (pName != null) {
+            checkMessageSignature(resource, statement.getPortDescriptor(), pName, argumentTypes, statementMsgName, statementPortName, PooslMessageType.RECEIVE);
+        }
 
-	// --- Instance -------
+        // --- getReceptionCondition() -------
+        Expression expressions = statement.getReceptionCondition();
+        String typeName = typeSystem.getAndCheckExpressionType(expressions);
+        if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
+            warning(MessageFormat.format(RECEPTION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
+        }
 
-	@Check(CheckType.FAST)
-	public void checkTypesInstanceParameter(InstanceParameter instanceParameter) {
-		Resource resource = instanceParameter.eResource();
-		String varTypeString = getParameterDescription(instanceParameter);
+        // --- getPostCommunicationExpressions() -------
+        typeSystem.getAndCheckExpressionType(statement.getPostCommunicationExpression());
+    }
 
-		Expression expression = instanceParameter.getExpression();
-		String exprTypeString = typeSystem.getAndCheckExpressionType(expression);
-		if (!TypingHelper.isCompatible(resource, exprTypeString, varTypeString)) {
-			warning(MessageFormat.format(INSTANCE_PARAMETERS_INCOMPATIBLE, exprTypeString, varTypeString), null,
-					PooslIssueCodes.INVALID_INSTANCE_PARAMETER_TYPE, WarningType.TYPECHECK, exprTypeString,
-					varTypeString);
-		}
-	}
+    @Check(CheckType.FAST)
+    public void checkTypesSendMessage(SendStatement statement) {
+        Resource resource = statement.eResource();
+        ProcessClass pClass = HelperFunctions.getContainingProcessClass(statement);
+        String statementMsgName = statement.getName();
+        String statementPortName = ((PortReference) statement.getPortDescriptor()).getPort();
+        List<String> argumentTypes = typeSystem.getAndCheckExpressionsType(statement.getArguments());
+        String pName = pClass.getName();
+        if (pName != null) {
+            checkMessageSignature(resource, statement.getPortDescriptor(), pName, argumentTypes, statementMsgName, statementPortName, PooslMessageType.SEND);
+        }
 
-	private String getParameterDescription(InstanceParameter instanceParameter) {
-		Resource resource = instanceParameter.eResource();
-		Instance instance = (Instance) instanceParameter.eContainer();
-		String literalFromObject = instance.getClassDefinition();
-		String paramName = instanceParameter.getParameter();
+        // --- getPostCommunicationExpressions() -------
+        typeSystem.getAndCheckExpressionType(statement.getPostCommunicationExpression());
+    }
 
-		if (paramName != null) {
-			IEObjectDescription descr = PooslCache.get(resource).getInstantiableClassParameters(literalFromObject)
-					.get(paramName);
-			if (descr != null) {
-				return PooslDeclarationDescription.getType(descr);
-			}
-		}
-		return null;
-	}
+    private void checkMessageSignature(Resource resource, EObject portDescriptor, String pClass, List<String> argumentTypes, String statementMsgName, String statementPortName, PooslMessageType type) {
+        String invalidType;
+        EReference variables;
+        String warningNotfound;
+        String warningIncompatible;
+        String warningGlobalNotFound;
+        if (type == PooslMessageType.SEND) {
+            invalidType = PooslIssueCodes.INVALID_TYPES_SEND_STATEMENT;
+            variables = Literals.SEND_STATEMENT__ARGUMENTS;
+            warningNotfound = SIGNATURE_SEND_NOT_FOUND;
+            warningIncompatible = SIGNATURE_SEND_INCOMPATIBLE;
+            warningGlobalNotFound = SIGNATURE_SEND_GLOBAL_NOT_FOUND;
+        } else {
+            invalidType = PooslIssueCodes.INVALID_TYPES_RECEIVE_STATEMENT;
+            variables = Literals.RECEIVE_STATEMENT__VARIABLES;
+            warningNotfound = SIGNATURE_RECEIVE_NOT_FOUND;
+            warningIncompatible = SIGNATURE_RECEIVE_INCOMPATIBLE;
+            warningGlobalNotFound = SIGNATURE_RECEIVE_GLOBAL_NOT_FOUND;
+        }
+
+        if (portDescriptor instanceof PortReference) {
+            if (statementPortName != null && statementMsgName != null) {
+                List<String> declarationTypes = getDeclarationTypesOfSignature(resource, pClass, statementPortName, statementMsgName, type, argumentTypes.size());
+
+                if (declarationTypes == null) {
+                    error(MessageFormat.format(warningNotfound, statementMsgName, statementPortName, argumentTypes.size()), null, PooslIssueCodes.MISSING_MESSAGE_DECLARATION);
+                } else {
+                    for (int i = 0; i < argumentTypes.size(); i++) {
+                        String useTypeName = argumentTypes.get(i);
+                        String declarationType = declarationTypes.get(i);
+                        if (!TypingHelper.isCompatible(resource, useTypeName, declarationType)) {
+                            warning(MessageFormat.format(warningIncompatible, useTypeName, declarationType), variables, i, invalidType, WarningType.TYPECHECK);
+                        }
+                    }
+                }
+            }
+        } else if (portDescriptor instanceof PortExpression) {
+            String portDescriptorTypeName = typeSystem.getAndCheckExpressionType(((PortExpression) portDescriptor).getExpression());
+            if (!TypingHelper.isCompatible(resource, portDescriptorTypeName, HelperFunctions.CLASS_NAME_STRING)) {
+                warning(MessageFormat.format(SIGNATURE_EXPRESSIONS_INCOMPATIBLE, portDescriptorTypeName), portDescriptor, null, invalidType, WarningType.TYPECHECK);
+            }
+
+            List<List<String>> declarationTypesList = getDeclarationTypesOfAllSignature(resource, pClass, statementPortName, statementMsgName, type, argumentTypes.size());
+            if (statementMsgName != null) {
+                if (declarationTypesList.isEmpty()) {
+                    error(warningNotfound, null);
+                } else {
+                    boolean globalFit = false;
+                    for (List<String> declarationTypes : declarationTypesList) {
+                        boolean localFit = TypingHelper.isCompatible(resource, argumentTypes, declarationTypes);
+                        globalFit = globalFit || localFit;
+                    }
+                    if (!globalFit) {
+                        warning(MessageFormat.format(warningGlobalNotFound, statementMsgName), variables, null, invalidType, WarningType.TYPECHECK);
+                    }
+                }
+            }
+        }
+    }
+
+    private static List<List<String>> getDeclarationTypesOfAllSignature(Resource resource, String pClass, String port, String messageName, PooslMessageType expectedType, int paramCount) {
+        List<List<String>> signatures = new ArrayList<>();
+        if (pClass != null && port != null && expectedType != null) {
+            Iterable<IEObjectDescription> messages = Iterables.filter(PooslCache.get(resource).getMessages(pClass, expectedType), PooslMessageSignatureDescription.predicateMessage(port, messageName));
+            for (IEObjectDescription descr : messages) {
+                List<String> parameterTypes = PooslMessageSignatureDescription.getParameterTypes(descr);
+                if (paramCount == parameterTypes.size()) {
+                    signatures.add(parameterTypes);
+                }
+            }
+        }
+        return signatures;
+    }
+
+    private static List<String> getDeclarationTypesOfSignature(Resource resource, String pClass, String port, String messageName, PooslMessageType expectedType, int paramCount) {
+        if (pClass != null && port != null && expectedType != null) {
+            Iterable<IEObjectDescription> messages = Iterables.filter(PooslCache.get(resource).getMessages(pClass, expectedType), PooslMessageSignatureDescription.predicateMessage(port, messageName));
+            for (IEObjectDescription descr : messages) {
+                List<String> parameterTypes = PooslMessageSignatureDescription.getParameterTypes(descr);
+                if (paramCount == parameterTypes.size()) {
+                    return parameterTypes;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Check(CheckType.FAST)
+    public void checkTypesProcessMethodCall(ProcessMethodCall pMethodCall) {
+        Resource resource = pMethodCall.eResource();
+        String pClass = HelperFunctions.getContainingProcessClass(pMethodCall).getName();
+        if (pClass != null) {
+            String useMethodName = pMethodCall.getMethod();
+            List<Expression> useExpressions = pMethodCall.getInputArguments();
+            List<OutputVariable> useVariables = pMethodCall.getOutputVariables();
+
+            IEObjectDescription pMethod = PooslCache.get(resource).getProcessMethods(pClass, useExpressions.size(), useVariables.size()).get(useMethodName);
+
+            if (pMethod == null) {
+
+                error(MessageFormat.format(NOT_DECLARED, Literals.PROCESS_METHOD.getName(), pMethodCall.getMethod()), pMethodCall, Literals.PROCESS_METHOD_CALL__METHOD, Diagnostic.LINKING_DIAGNOSTIC);
+            } else {
+                // --- getInputParameter -------
+                List<String> inputParamTypes = PooslProcessMethodDescription.getInputParameterTypeNames(pMethod);
+                if (inputParamTypes.size() != useExpressions.size()) {
+                    error(MessageFormat.format(PROCESSMETHOD_CALL_ARG_SIZE, inputParamTypes.size(), useExpressions.size()), Literals.PROCESS_METHOD_CALL__INPUT_ARGUMENTS);
+                } else {
+                    for (int i = 0; i < useExpressions.size(); i++) {
+                        String useTypeName = typeSystem.getAndCheckExpressionType(useExpressions.get(i));
+                        String declarationTypeName = inputParamTypes.get(i);
+                        if (!TypingHelper.isCompatible(resource, useTypeName, declarationTypeName)) {
+                            warning(MessageFormat.format(PROCESSMETHOD_CALL_ARG_INCOMPATIBLE, useTypeName, declarationTypeName), useExpressions.get(i), null,
+                                    PooslIssueCodes.INVALID_INPUT_TYPES_PROCESS_METHOD_CALL, WarningType.TYPECHECK, useTypeName, declarationTypeName);
+                        }
+                    }
+                }
+
+                // --- getOutputVariables -------
+                List<String> outputParamTypes = PooslProcessMethodDescription.getOutputParameterTypeNames(pMethod);
+                if (outputParamTypes.size() != useVariables.size()) {
+                    error(MessageFormat.format(PROCESSMETHOD_CALL_OUTPUT_SIZE, outputParamTypes.size(), useVariables.size()), Literals.PROCESS_METHOD_CALL__OUTPUT_VARIABLES);
+                } else {
+                    for (int i = 0; i < useVariables.size(); i++) {
+                        String useTypeName = PooslVariableTypeHelper.getVariableType(pMethodCall, useVariables.get(i).getVariable());
+                        String declarationTypeName = outputParamTypes.get(i);
+
+                        if (!TypingHelper.isCompatible(resource, useTypeName, declarationTypeName)) {
+                            warning(MessageFormat.format(PROCESSMETHOD_CALL_OUTPUT_INCOMPATIBLE, useTypeName, declarationTypeName), Literals.PROCESS_METHOD_CALL__OUTPUT_VARIABLES, i,
+                                    PooslIssueCodes.INVALID_OUTPUT_TYPES_PROCESS_METHOD_CALL, WarningType.TYPECHECK);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // --- Instance -------
+
+    @Check(CheckType.FAST)
+    public void checkTypesInstanceParameter(InstanceParameter instanceParameter) {
+        Resource resource = instanceParameter.eResource();
+        String varTypeString = getParameterDescription(instanceParameter);
+
+        Expression expression = instanceParameter.getExpression();
+        String exprTypeString = typeSystem.getAndCheckExpressionType(expression);
+        if (!TypingHelper.isCompatible(resource, exprTypeString, varTypeString)) {
+            warning(MessageFormat.format(INSTANCE_PARAMETERS_INCOMPATIBLE, exprTypeString, varTypeString), null, PooslIssueCodes.INVALID_INSTANCE_PARAMETER_TYPE, WarningType.TYPECHECK, exprTypeString,
+                    varTypeString);
+        }
+    }
+
+    private String getParameterDescription(InstanceParameter instanceParameter) {
+        Resource resource = instanceParameter.eResource();
+        Instance instance = (Instance) instanceParameter.eContainer();
+        String literalFromObject = instance.getClassDefinition();
+        String paramName = instanceParameter.getParameter();
+
+        if (paramName != null) {
+            IEObjectDescription descr = PooslCache.get(resource).getInstantiableClassParameters(literalFromObject).get(paramName);
+            if (descr != null) {
+                return PooslDeclarationDescription.getType(descr);
+            }
+        }
+        return null;
+    }
 }

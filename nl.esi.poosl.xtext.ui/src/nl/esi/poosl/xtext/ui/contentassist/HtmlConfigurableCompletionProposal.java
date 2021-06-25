@@ -14,22 +14,20 @@ import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal;
 @SuppressWarnings("restriction")
 public class HtmlConfigurableCompletionProposal extends ConfigurableCompletionProposal {
 
-	public HtmlConfigurableCompletionProposal(String proposal, int replacementOffset, int replacementLength, int length,
-			Image image, StyledString displayString, IContextInformation contextInformation,
-			String additionalProposalInfo) {
-		super(proposal, replacementOffset, replacementLength, length, image, displayString, contextInformation,
-				additionalProposalInfo);
-	}
+    public HtmlConfigurableCompletionProposal(String proposal, int replacementOffset, int replacementLength, int length, Image image, StyledString displayString,
+            IContextInformation contextInformation, String additionalProposalInfo) {
+        super(proposal, replacementOffset, replacementLength, length, image, displayString, contextInformation, additionalProposalInfo);
+    }
 
-	@Override
-	public IInformationControlCreator getInformationControlCreator() {
-		return new AbstractReusableInformationControlCreator() {
-			public IInformationControl doCreateInformationControl(Shell parent) {
-				// this method implicitly initializes variable fgScrollBarSize
-				BrowserInformationControl.isAvailable(parent);
+    @Override
+    public IInformationControlCreator getInformationControlCreator() {
+        return new AbstractReusableInformationControlCreator() {
+            public IInformationControl doCreateInformationControl(Shell parent) {
+                // this method implicitly initializes variable fgScrollBarSize
+                BrowserInformationControl.isAvailable(parent);
 
-				return new BrowserInformationControl(parent, JFaceResources.DIALOG_FONT, true);
-			}
-		};
-	}
+                return new BrowserInformationControl(parent, JFaceResources.DIALOG_FONT, true);
+            }
+        };
+    }
 }

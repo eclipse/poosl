@@ -5,7 +5,6 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_transition complex type.
+ * <p>
+ * Java class for t_transition complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_transition">
@@ -37,28 +37,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_transition", propOrder = {
-    "communication",
-    "processStep",
-    "dataStep",
-    "delay"
-})
+@XmlType(name = "t_transition", propOrder = { "communication", "processStep", "dataStep", "delay" })
 public class TTransition {
 
     protected TCommunicationTransition communication;
+
     @XmlElement(name = "process_step")
     protected TProcessStepTransition processStep;
+
     @XmlElement(name = "data_step")
     protected TDataStepTransition dataStep;
+
     protected TDelayTransition delay;
 
     /**
      * Gets the value of the communication property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TCommunicationTransition }
-     *     
+     * @return possible object is {@link TCommunicationTransition }
+     * 
      */
     public TCommunicationTransition getCommunication() {
         return communication;
@@ -68,9 +64,8 @@ public class TTransition {
      * Sets the value of the communication property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TCommunicationTransition }
-     *     
+     *            allowed object is {@link TCommunicationTransition }
+     * 
      */
     public void setCommunication(TCommunicationTransition value) {
         this.communication = value;
@@ -79,10 +74,8 @@ public class TTransition {
     /**
      * Gets the value of the processStep property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TProcessStepTransition }
-     *     
+     * @return possible object is {@link TProcessStepTransition }
+     * 
      */
     public TProcessStepTransition getProcessStep() {
         return processStep;
@@ -92,9 +85,8 @@ public class TTransition {
      * Sets the value of the processStep property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TProcessStepTransition }
-     *     
+     *            allowed object is {@link TProcessStepTransition }
+     * 
      */
     public void setProcessStep(TProcessStepTransition value) {
         this.processStep = value;
@@ -103,10 +95,8 @@ public class TTransition {
     /**
      * Gets the value of the dataStep property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TDataStepTransition }
-     *     
+     * @return possible object is {@link TDataStepTransition }
+     * 
      */
     public TDataStepTransition getDataStep() {
         return dataStep;
@@ -116,9 +106,8 @@ public class TTransition {
      * Sets the value of the dataStep property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TDataStepTransition }
-     *     
+     *            allowed object is {@link TDataStepTransition }
+     * 
      */
     public void setDataStep(TDataStepTransition value) {
         this.dataStep = value;
@@ -127,10 +116,8 @@ public class TTransition {
     /**
      * Gets the value of the delay property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TDelayTransition }
-     *     
+     * @return possible object is {@link TDelayTransition }
+     * 
      */
     public TDelayTransition getDelay() {
         return delay;
@@ -140,9 +127,8 @@ public class TTransition {
      * Sets the value of the delay property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TDelayTransition }
-     *     
+     *            allowed object is {@link TDelayTransition }
+     * 
      */
     public void setDelay(TDelayTransition value) {
         this.delay = value;

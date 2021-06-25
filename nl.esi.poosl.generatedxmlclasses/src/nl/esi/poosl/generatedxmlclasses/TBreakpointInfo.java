@@ -5,20 +5,21 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_breakpoint_info complex type.
+ * <p>
+ * Java class for t_breakpoint_info complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_breakpoint_info">
@@ -39,33 +40,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_breakpoint_info", propOrder = {
-    "name",
-    "breakpointId",
-    "stmtHandle",
-    "isActive",
-    "hitCount"
-})
+@XmlType(name = "t_breakpoint_info", propOrder = { "name", "breakpointId", "stmtHandle", "isActive", "hitCount" })
 public class TBreakpointInfo {
 
     @XmlElement(required = true)
     protected String name;
+
     @XmlElement(name = "breakpoint_id", required = true)
     protected BigInteger breakpointId;
+
     @XmlElement(name = "stmt_handle")
     protected int stmtHandle;
+
     @XmlElement(name = "is_active")
     protected boolean isActive;
+
     @XmlElement(name = "hit_count")
     protected int hitCount;
 
     /**
      * Gets the value of the name property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getName() {
         return name;
@@ -75,9 +72,8 @@ public class TBreakpointInfo {
      * Sets the value of the name property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -86,10 +82,8 @@ public class TBreakpointInfo {
     /**
      * Gets the value of the breakpointId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getBreakpointId() {
         return breakpointId;
@@ -99,9 +93,8 @@ public class TBreakpointInfo {
      * Sets the value of the breakpointId property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setBreakpointId(BigInteger value) {
         this.breakpointId = value;

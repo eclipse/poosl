@@ -5,22 +5,23 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_data_method_call complex type.
+ * <p>
+ * Java class for t_data_method_call complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_data_method_call">
@@ -41,29 +42,28 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_data_method_call", propOrder = {
-    "receiver",
-    "argument"
-})
+@XmlType(name = "t_data_method_call", propOrder = { "receiver", "argument" })
 public class TDataMethodCall {
 
     @XmlElement(required = true)
     protected TExpression receiver;
+
     protected List<TExpression> argument;
+
     @XmlAttribute(name = "method_name", required = true)
     protected String methodName;
+
     @XmlAttribute(name = "super", required = true)
     protected TBoolean _super;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
     /**
      * Gets the value of the receiver property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TExpression }
-     *     
+     * @return possible object is {@link TExpression }
+     * 
      */
     public TExpression getReceiver() {
         return receiver;
@@ -73,9 +73,8 @@ public class TDataMethodCall {
      * Sets the value of the receiver property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TExpression }
-     *     
+     *            allowed object is {@link TExpression }
+     * 
      */
     public void setReceiver(TExpression value) {
         this.receiver = value;
@@ -85,21 +84,20 @@ public class TDataMethodCall {
      * Gets the value of the argument property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the argument property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the argument property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getArgument().add(newItem);
+     * getArgument().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TExpression }
+     * Objects of the following type(s) are allowed in the list {@link TExpression }
      * 
      * 
      */
@@ -113,10 +111,8 @@ public class TDataMethodCall {
     /**
      * Gets the value of the methodName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMethodName() {
         return methodName;
@@ -126,9 +122,8 @@ public class TDataMethodCall {
      * Sets the value of the methodName property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMethodName(String value) {
         this.methodName = value;
@@ -137,10 +132,8 @@ public class TDataMethodCall {
     /**
      * Gets the value of the super property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TBoolean }
-     *     
+     * @return possible object is {@link TBoolean }
+     * 
      */
     public TBoolean getSuper() {
         return _super;
@@ -150,9 +143,8 @@ public class TDataMethodCall {
      * Sets the value of the super property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TBoolean }
-     *     
+     *            allowed object is {@link TBoolean }
+     * 
      */
     public void setSuper(TBoolean value) {
         this._super = value;
@@ -161,10 +153,8 @@ public class TDataMethodCall {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -174,9 +164,8 @@ public class TDataMethodCall {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

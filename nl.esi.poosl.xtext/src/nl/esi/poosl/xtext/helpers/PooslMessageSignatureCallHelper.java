@@ -13,104 +13,105 @@ import nl.esi.poosl.xtext.custom.PooslMessageType;
 import nl.esi.poosl.xtext.descriptions.PooslMessageSignatureDescription;
 
 public class PooslMessageSignatureCallHelper {
-	private String type;
-	private String port;
-	private String name;
-	private int paramCount;
+    private String type;
 
-	private static final String STR_MESSAGETYPE_RECEIVE = "Receive";
-	private static final String STR_MESSAGETYPE_SEND = "Send";
+    private String port;
 
-	public PooslMessageSignatureCallHelper(String stringDescription) {
-		String[] result = stringDescription.split(":");
-		if (result.length == 3 || result.length == 4) {
-			port = result[0];
-			name = result[1];
-			paramCount = Integer.parseInt(result[2]);
-			if (result.length == 4)
-				type = result[3];
-		} else {
-			Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " : " + stringDescription);
-		}
-	}
+    private String name;
 
-	public PooslMessageSignatureCallHelper(ReceiveStatement stat) {
-		this.type = STR_MESSAGETYPE_RECEIVE;
-		this.port = ((PortReference) stat.getPortDescriptor()).getPort();
-		this.name = stat.getName();
-		this.paramCount = stat.getVariables().size();
-	}
+    private int paramCount;
 
-	public PooslMessageSignatureCallHelper(SendStatement stat) {
-		this.type = STR_MESSAGETYPE_SEND;
-		this.port = ((PortReference) stat.getPortDescriptor()).getPort();
-		this.name = stat.getName();
-		this.paramCount = stat.getArguments().size();
-	}
+    private static final String STR_MESSAGETYPE_RECEIVE = "Receive";
 
-	public String getType() {
-		return type;
-	}
+    private static final String STR_MESSAGETYPE_SEND = "Send";
 
-	public String getPort() {
-		return port;
-	}
+    public PooslMessageSignatureCallHelper(String stringDescription) {
+        String[] result = stringDescription.split(":");
+        if (result.length == 3 || result.length == 4) {
+            port = result[0];
+            name = result[1];
+            paramCount = Integer.parseInt(result[2]);
+            if (result.length == 4)
+                type = result[3];
+        } else {
+            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " : " + stringDescription);
+        }
+    }
 
-	public String getName() {
-		return name;
-	}
+    public PooslMessageSignatureCallHelper(ReceiveStatement stat) {
+        this.type = STR_MESSAGETYPE_RECEIVE;
+        this.port = ((PortReference) stat.getPortDescriptor()).getPort();
+        this.name = stat.getName();
+        this.paramCount = stat.getVariables().size();
+    }
 
-	public int getParamCount() {
-		return paramCount;
-	}
+    public PooslMessageSignatureCallHelper(SendStatement stat) {
+        this.type = STR_MESSAGETYPE_SEND;
+        this.port = ((PortReference) stat.getPortDescriptor()).getPort();
+        this.name = stat.getName();
+        this.paramCount = stat.getArguments().size();
+    }
 
-	@Override
-	public String toString() {
-		return getID(port, name, paramCount, type);
-	}
+    public String getType() {
+        return type;
+    }
 
-	private static String getID(String lPort, String lName, int lParamCount, String lType) {
-		return getID(lPort, lName, lParamCount) + ":" + lType;
-	}
+    public String getPort() {
+        return port;
+    }
 
-	private static String getID(String lPort, String lName, int lParamCount) {
-		return lPort + ":" + lName + ":" + lParamCount;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public static String getSignatureID(MessageSignature messageSignature, PooslMessageType messageType) {
-		String type = messageType == PooslMessageType.RECEIVE ? STR_MESSAGETYPE_RECEIVE : STR_MESSAGETYPE_SEND;
-		return getID(messageSignature.getPort().getPort(), messageSignature.getName(),
-				messageSignature.getParameters().size(), type);
-	}
+    public int getParamCount() {
+        return paramCount;
+    }
 
-	public static String getSignatureID(MessageSignature messageSignature) {
-		return getID(messageSignature.getPort().getPort(), messageSignature.getName(),
-				messageSignature.getParameters().size());
-	}
+    @Override
+    public String toString() {
+        return getID(port, name, paramCount, type);
+    }
 
-	public static String getSignatureID(IEObjectDescription description) {
-		return getID(PooslMessageSignatureDescription.getPort(description), HelperFunctions.getName(description),
-				PooslMessageSignatureDescription.getParameterTypes(description).size());
-	}
+    private static String getID(String lPort, String lName, int lParamCount, String lType) {
+        return getID(lPort, lName, lParamCount) + ":" + lType;
+    }
 
-	public static String getSignatureID(ReceiveStatement stat) {
-		String statPort = ((PortReference) stat.getPortDescriptor()).getPort();
-		String statName = stat.getName();
+    private static String getID(String lPort, String lName, int lParamCount) {
+        return lPort + ":" + lName + ":" + lParamCount;
+    }
 
-		if (statName != null && statPort != null) {
-			return getID(statPort, statName, stat.getVariables().size());
-		}
-		return null;
+    public static String getSignatureID(MessageSignature messageSignature, PooslMessageType messageType) {
+        String type = messageType == PooslMessageType.RECEIVE ? STR_MESSAGETYPE_RECEIVE : STR_MESSAGETYPE_SEND;
+        return getID(messageSignature.getPort().getPort(), messageSignature.getName(), messageSignature.getParameters().size(), type);
+    }
 
-	}
+    public static String getSignatureID(MessageSignature messageSignature) {
+        return getID(messageSignature.getPort().getPort(), messageSignature.getName(), messageSignature.getParameters().size());
+    }
 
-	public static String getSignatureID(SendStatement stat) {
-		String statPort = ((PortReference) stat.getPortDescriptor()).getPort();
-		String statName = stat.getName();
+    public static String getSignatureID(IEObjectDescription description) {
+        return getID(PooslMessageSignatureDescription.getPort(description), HelperFunctions.getName(description), PooslMessageSignatureDescription.getParameterTypes(description).size());
+    }
 
-		if (statName != null && statPort != null) {
-			return getID(statPort, statName, stat.getArguments().size());
-		}
-		return null;
-	}
+    public static String getSignatureID(ReceiveStatement stat) {
+        String statPort = ((PortReference) stat.getPortDescriptor()).getPort();
+        String statName = stat.getName();
+
+        if (statName != null && statPort != null) {
+            return getID(statPort, statName, stat.getVariables().size());
+        }
+        return null;
+
+    }
+
+    public static String getSignatureID(SendStatement stat) {
+        String statPort = ((PortReference) stat.getPortDescriptor()).getPort();
+        String statName = stat.getName();
+
+        if (statName != null && statPort != null) {
+            return getID(statPort, statName, stat.getArguments().size());
+        }
+        return null;
+    }
 }

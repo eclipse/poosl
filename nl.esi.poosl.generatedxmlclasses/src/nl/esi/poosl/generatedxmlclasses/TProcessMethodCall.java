@@ -5,11 +5,11 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -17,11 +17,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_process_method_call complex type.
+ * <p>
+ * Java class for t_process_method_call complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_process_method_call">
@@ -41,20 +42,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_process_method_call", propOrder = {
-    "argument",
-    "returnVariable"
-})
-@XmlSeeAlso({
-    TInitialProcessMethodCall.class
-})
+@XmlType(name = "t_process_method_call", propOrder = { "argument", "returnVariable" })
+@XmlSeeAlso({ TInitialProcessMethodCall.class })
 public class TProcessMethodCall {
 
     protected List<TExpression> argument;
+
     @XmlElement(name = "return_variable")
     protected List<String> returnVariable;
+
     @XmlAttribute(name = "method_name", required = true)
     protected String methodName;
+
     @XmlAttribute(name = "stmt_handle")
     protected Integer stmtHandle;
 
@@ -62,21 +61,20 @@ public class TProcessMethodCall {
      * Gets the value of the argument property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the argument property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the argument property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getArgument().add(newItem);
+     * getArgument().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TExpression }
+     * Objects of the following type(s) are allowed in the list {@link TExpression }
      * 
      * 
      */
@@ -91,21 +89,20 @@ public class TProcessMethodCall {
      * Gets the value of the returnVariable property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the returnVariable property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the returnVariable property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getReturnVariable().add(newItem);
+     * getReturnVariable().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * Objects of the following type(s) are allowed in the list {@link String }
      * 
      * 
      */
@@ -119,10 +116,8 @@ public class TProcessMethodCall {
     /**
      * Gets the value of the methodName property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMethodName() {
         return methodName;
@@ -132,9 +127,8 @@ public class TProcessMethodCall {
      * Sets the value of the methodName property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setMethodName(String value) {
         this.methodName = value;
@@ -143,10 +137,8 @@ public class TProcessMethodCall {
     /**
      * Gets the value of the stmtHandle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     * @return possible object is {@link Integer }
+     * 
      */
     public Integer getStmtHandle() {
         return stmtHandle;
@@ -156,9 +148,8 @@ public class TProcessMethodCall {
      * Sets the value of the stmtHandle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *            allowed object is {@link Integer }
+     * 
      */
     public void setStmtHandle(Integer value) {
         this.stmtHandle = value;

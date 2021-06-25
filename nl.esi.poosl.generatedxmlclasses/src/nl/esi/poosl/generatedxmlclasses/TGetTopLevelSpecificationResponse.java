@@ -5,21 +5,22 @@
 // Generated on: 2020.11.16 at 11:04:04 AM CET 
 //
 
-
 package nl.esi.poosl.generatedxmlclasses;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for t_get_top_level_specification_response complex type.
+ * <p>
+ * Java class for t_get_top_level_specification_response complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="t_get_top_level_specification_response">
@@ -37,28 +38,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_get_top_level_specification_response", propOrder = {
-    "result",
-    "className",
-    "handle"
-})
+@XmlType(name = "t_get_top_level_specification_response", propOrder = { "result", "className", "handle" })
 public class TGetTopLevelSpecificationResponse {
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected TObjectQueryResult result;
+
     @XmlElement(name = "class_name", required = true)
     protected String className;
+
     @XmlElement(required = true)
     protected BigInteger handle;
 
     /**
      * Gets the value of the result property.
      * 
-     * @return
-     *     possible object is
-     *     {@link TObjectQueryResult }
-     *     
+     * @return possible object is {@link TObjectQueryResult }
+     * 
      */
     public TObjectQueryResult getResult() {
         return result;
@@ -68,9 +65,8 @@ public class TGetTopLevelSpecificationResponse {
      * Sets the value of the result property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link TObjectQueryResult }
-     *     
+     *            allowed object is {@link TObjectQueryResult }
+     * 
      */
     public void setResult(TObjectQueryResult value) {
         this.result = value;
@@ -79,10 +75,8 @@ public class TGetTopLevelSpecificationResponse {
     /**
      * Gets the value of the className property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getClassName() {
         return className;
@@ -92,9 +86,8 @@ public class TGetTopLevelSpecificationResponse {
      * Sets the value of the className property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *            allowed object is {@link String }
+     * 
      */
     public void setClassName(String value) {
         this.className = value;
@@ -103,10 +96,8 @@ public class TGetTopLevelSpecificationResponse {
     /**
      * Gets the value of the handle property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     * @return possible object is {@link BigInteger }
+     * 
      */
     public BigInteger getHandle() {
         return handle;
@@ -116,9 +107,8 @@ public class TGetTopLevelSpecificationResponse {
      * Sets the value of the handle property.
      * 
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *            allowed object is {@link BigInteger }
+     * 
      */
     public void setHandle(BigInteger value) {
         this.handle = value;
