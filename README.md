@@ -18,12 +18,12 @@ We assume the following tools/frameworks are available
 To build the poosl project via maven you have to go run the following commands.
 
 ```
-cd ${POOSL_SRC}/org.eclipse.poosl.maven
+cd ${POOSL_SRC}/org.eclipse.poosl.parent
 mvn clean verify
 ```
 
 Executing this command will build the plugins, features and updatesite.
-The artifacts are available at __${POOSL_SRC}/org.eclipse.poosl.updatesite.target__
+The artifacts are available at __${POOSL_SRC}/org.eclipse.poosl.update.target__
 
 ## RCPTT Tests
 
@@ -52,7 +52,7 @@ To run the tests in a _Jenkins_ environment or as command line you will find the
 
 1. Checkout the poosl source+scripts into __${MY_FOLDER}/poosl__
 1. Build the plugins as descript above.
-1. We can assume the build plugin artifacts are located in __${MY_FOLDER}/poosl/org.eclipse.poosl.updatesite/target/repository__, which is the case after you do the build.
+1. We can assume the build plugin artifacts are located in __${MY_FOLDER}/poosl/org.eclipse.poosl.update/target/repository__, which is the case after you do the build.
 1. Run one of the 
     * scripts: ```{MY_FOLDER}/poosl/RCPTT/runnerScripts/*.cmd```
     * maven: ```mvn clean package -f __${MY_FOLDER}/poosl/RCPTT/runnerScripts/pom-*.xml```
