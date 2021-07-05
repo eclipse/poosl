@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde?>
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
+<target name="Poosl SDK" sequenceNumber="1625491026">
+  <locations>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.platform.sdk" version="4.17.0.I20200902-1800"/>
+      <repository id="eclipse_update" location="http://download.eclipse.org/eclipse/updates/4.17"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.7.v20200504-69f2c2b80d"/>
+      <repository id="eclipselink" location="https://download.eclipse.org/rt/eclipselink/updates/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.elk.feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.elk.algorithms.feature.feature.group" version="0.0.0"/>
+      <repository id="ELK" location="https://download.eclipse.org/elk/updates/releases/0.7.0/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.201912021457"/>
+      <repository id="rotalumis" location="http://www.es.ele.tue.nl/rotalumis/repository/release/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.xpect.sdk.feature.group" version="0.2.0.201706301756"/>
+      <repository id="xpect-tests" location="http://www.xpect-tests.org/updatesite/nightly/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.jdt.junit.runners.feature.feature.group" version="0.1.0.201411181552"/>
+      <repository id="jdt-runner" location="http://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.emf.query.feature.group" version="1.12.0.201805030653"/>
+      <unit id="org.eclipse.emf.validation.feature.group" version="1.12.2.202008210805"/>
+      <unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
+      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.23.0.v20200831-0926"/>
+      <unit id="org.eclipse.egit.feature.group" version="5.9.0.202009080501-r"/>
+      <unit id="org.eclipse.platform.ide" version="4.17.0.I20200902-1800"/>
+      <unit id="org.eclipse.xtext.xbase.feature.group" version="2.23.0.v20200831-0926"/>
+      <unit id="org.eclipse.xtext.redist.feature.group" version="2.23.0.v20200831-0926"/>
+      <unit id="org.junit" version="4.13.0.v20200204-1500"/>
+      <unit id="org.eclipse.jdt.feature.group" version="3.18.500.v20200902-1800"/>
+      <unit id="org.eclipse.pde.feature.group" version="3.14.500.v20200902-1800"/>
+      <unit id="org.eclipse.equinox.sdk.feature.group" version="3.20.300.v20200828-1034"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="2.23.0.v20200822-0801"/>
+      <repository id="eclipse_core" location="https://download.eclipse.org/releases/2020-09/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.sirius.runtime.ide.ui.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.runtime.ide.eef.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.specifier.ide.ui.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.specifier.ide.ui.aql.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.tests.support.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.runtime.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.runtime.aql.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.properties.feature.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.runtime.acceleo.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.runtime.ide.xtext.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.eef.sdk.feature.feature.group" version="2.1.5.202008270808"/>
+      <unit id="org.eclipse.eef.ext.widgets.reference.feature.feature.group" version="2.1.5.202008270808"/>
+      <unit id="org.eclipse.sirius.interpreter.feature.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.specifier.properties.feature.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.diagram.elk.feature.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.diagram.elk.sdk.feature.feature.group" version="6.4.0.202011190936"/>
+      <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-09/"/>
+    </location>
+  </locations>
+  <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+</target>

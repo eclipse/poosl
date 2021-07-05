@@ -1,0 +1,16 @@
+target "Poosl SDK" 
+
+//
+// Target platform for development
+// 
+
+// It includes source of dependencies and plugins to launch a client runtime
+
+with requirements, source
+// Source is transitive to all included elements.
+
+environment JavaSE-1.8
+
+include "build.tpd"
+
+include "dev.tpd" 

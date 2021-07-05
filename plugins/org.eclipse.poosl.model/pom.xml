@@ -10,10 +10,19 @@
     </parent>
     <artifactId>org.eclipse.poosl.model</artifactId>
     <packaging>eclipse-plugin</packaging>
-    <name>org.eclipse.poosl.model - Model</name>
+    <name>POOSL Model</name>
 	
     <build>
+    <pluginManagement>
 		<plugins>
+		<!-- 
+		Obeo:
+		Was previously integrated in the build.
+		Suspicious choice as mwe2 violates Maven component approach.
+		As code generation is iterative (modifiable)
+		code versioning is preferable.
+		
+		 -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -65,6 +74,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<!-- 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -79,18 +89,11 @@
 						
 					</filesets>
 				</configuration>					
-            </plugin>        		
-            <plugin>
-                <groupId>org.eclipse.xtend</groupId>
-                <artifactId>xtend-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
+             -->    		
+
         </plugins>
+            </pluginManagement>
     </build>
+
 </project>

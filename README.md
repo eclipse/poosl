@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Hier you will find a introduction how to setup, build and run tests.
+Here you will find a introduction how to setup, build and run tests.
 
 ## Preconditions
 
@@ -36,7 +36,7 @@ We have different ways of running the tests
 
 All the needed tests and scripts are available at __${POOSL_SRC}\RCPTT__. 
 
-### Precondiations
+### Preconditions
 
 - jdk8 is availabe
 - Only if running the scripts (not via maven)

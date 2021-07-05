@@ -1,0 +1,13 @@
+target "Poosl Build" 
+
+// all classpath to compile and run tests
+
+with requirements
+
+environment JavaSE-1.8
+
+// Do not modify, do not include sources (useless)
+
+include "runtime.tpd"
+
+include "test.tpd"

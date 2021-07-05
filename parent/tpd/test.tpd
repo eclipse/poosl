@@ -1,0 +1,43 @@
+target "Poosl test" 
+
+//
+// Dependencies for tests executions
+//
+
+with requirements
+// do not include source for this target
+// it should be used only by compiler
+
+// This target platform declare dependencies only used by automatic tests
+
+location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
+	
+	// required for tooling in xtend
+	org.eclipse.xtext.xbase.feature.group	
+	org.eclipse.xtext.redist.feature.group
+	
+	// org.eclipse.platform.feature.group (in runtime)
+	// +-> org.eclipse.ui.ide.application (default of sure-fire)
+
+	org.junit
+	org.eclipse.jdt.feature.group
+	// +-> org.eclipse.jdt.junit
+	org.eclipse.pde.feature.group
+	// +-> org.eclipse.pde.junit
+	
+}
+
+location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-09/" {
+	org.eclipse.sirius.tests.support.feature.group
+}
+
+location xpect-tests "http://www.xpect-tests.org/updatesite/nightly/" {
+	// Xpect is test suite for Xtext project
+	org.xpect.sdk.feature.group // several versions are available
+}
+
+location jdt-runner "http://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite/" {
+	// Dependencies for Xpect (no activity)
+	org.eclipse.jdt.junit.runners.feature.feature.group // several versions are available
+}
+

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.eclipse.poosl</groupId>
+	<artifactId>container</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<!-- 
+	Reminder:
+	* Changing version
+	mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=x.y.z-SNAPSHOT -Dgit.dirty=ignore
+	-->
+
+
+	<modules>
+	
+		<!-- Types of project -->
+		<module>parent</module>
+
+		<!-- Regular components -->
+		<module>plugins/org.eclipse.poosl.model</module>
+		<module>plugins/org.eclipse.poosl.model.edit</module>
+		<module>plugins/org.eclipse.poosl.model.editor</module>
+		<module>plugins/org.eclipse.poosl.xtext</module>
+		<module>plugins/org.eclipse.poosl.xtext.ide</module>
+		<module>plugins/org.eclipse.poosl.xtext.ui</module>
+		<module>plugins/org.eclipse.poosl.xtext.util</module>
+		<module>plugins/org.eclipse.poosl.generatedxmlclasses</module>
+		<module>plugins/org.eclipse.poosl.pooslproject</module>
+		<module>plugins/org.eclipse.poosl.rotalumisclient</module>
+		<module>plugins/org.eclipse.poosl.transformations</module>
+		<module>plugins/org.eclipse.poosl.legacysupport</module>
+		<module>plugins/org.eclipse.poosl.help</module>
+		<module>plugins/org.eclipse.poosl.sirius</module>
+		<module>plugins/org.eclipse.poosl.xpect</module>
+
+	</modules>
+	
+	
+	<!-- 
+
+	
+	org.eclipse.poosl.generatedxmlclasses OK
+org.eclipse.poosl.help OK
+org.eclipse.poosl.legacysupport OK
+org.eclipse.poosl.libraries - ->  Only poosl files ??
+org.eclipse.poosl.model
+org.eclipse.poosl.model.edit
+org.eclipse.poosl.model.editor
+org.eclipse.poosl.pooslproject
+org.eclipse.poosl.rotalumisclient
+org.eclipse.poosl.sirius
+org.eclipse.poosl.transformations
+org.eclipse.poosl.xpect
+org.eclipse.poosl.xsd - -> moved to generatedxmlclasses xsd
+org.eclipse.poosl.xtext
+org.eclipse.poosl.xtext.ide
+org.eclipse.poosl.xtext.ui
+org.eclipse.poosl.xtext.util
+	
+	
+	 -->
+	<profiles>
+	
+		<profile>
+		    <!-- 
+			By default, tests are executed.
+			use -Dmaven.test.skip=true to disable.
+			-->
+			<id>tests-modules</id>
+			<activation>
+				<property>
+					<name>maven.test.skip</name>
+					<value>!true</value>
+				</property>
+			</activation>
+			<modules>
+				<module>plugins/org.eclipse.poosl.xtext.tests</module>
+
+			</modules>
+		</profile>
+		
+		<profile>
+		    <!-- 
+			By default,  are executed.
+			use -Dmaven.test.skip=true to disable.
+			-->
+			<id>releng-modules</id>
+			<activation>
+				<property>
+					<name>tycho.releng.skip</name>
+					<value>!true</value>
+				</property>
+			</activation>
+			<modules>
+				<module>releng/org.eclipse.poosl.feature</module>
+				<module>releng/org.eclipse.poosl.legacysupport.feature</module>
+		        <module>releng/org.eclipse.poosl.update</module>
+			</modules>
+		</profile>
+
+		<profile>
+		    <!-- 
+			By default, tests are executed.
+			use -Dmaven.test.skip=true to disable.
+			-->
+			<id>integration-tests-modules</id>
+			<activation>
+			    <!-- 
+			    Maven (at least 3.5) doesn't support multi activation.
+			    Is required: ( !maven.test.skip + !tycho.releng.skip )
+			    This profile must be activated on command call.
+			    -->
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>plugins/rcptt/*</module>
+			</modules>
+		</profile>
+		
+
+		
+	</profiles>
+	
+	<build>
+	   <plugins>
+	       <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <version>3.0.0-M3</version>
+            <executions>
+	          	<execution>
+		            <id>show-os</id>
+		            <phase>validate</phase>
+		            <goals>
+		              <goal>display-info</goal>
+	            	</goals>
+	            </execution>
+            </executions>
+	       </plugin>
+	   </plugins>
+	
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-versions-plugin</artifactId>
+					<version>1.5.1</version>
+					<configuration>
+						<!-- List of ArtifactIds reachable by this pom. -->
+						<!-- Only the ones without project.parent. -->
+						<artifacts>container,parent</artifacts>
+					</configuration>
+				</plugin>
+				<plugin>
+					<!-- Configuration to update version -->
+					<!-- Command reminder:
+					
+					mvn -B gitflow:release -DpushRemote=false
+					option: -DversionDigitToIncrement=0  'increase major
+					option: -DversionDigitToIncrement=1  'increase minor
+					option: -DversionDigitToIncrement=2  'increase patch
+					option: (no versionDigitToIncrement) 'Last part increment
+					option: -DskipTag=true 'when tag cannot be pushed
+					
+					 -->
+					<groupId>com.amashchenko.maven.plugin</groupId>
+					<artifactId>gitflow-maven-plugin</artifactId>
+					<version>1.9.0</version>
+					<configuration>
+						<tychoBuild>true</tychoBuild>
+						<gitFlowConfig>
+							<productionBranch>master</productionBranch>
+							<developmentBranch>master</developmentBranch>
+						</gitFlowConfig>
+						<releaseRebase>true</releaseRebase>
+						<origin>origin</origin>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+	</build>
+	
+</project>

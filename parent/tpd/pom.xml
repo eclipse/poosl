@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.eclipse.poosl</groupId>
+	<artifactId>tpd</artifactId>
+	<version>1.0.0-SNAPSHOT</version><!-- Version is independent from parent version -->
+	<packaging>pom</packaging>
+	
+	<name>Target Platform Id</name>
+	
+	<!-- 
+	Version is independent from parent version:
+	When tycho:set-version is used, target platform must not be updated automatically.
+	 -->
+	
+	<properties>
+		<tp.version>1.0.0-SNAPSHOT</tp.version>
+		<tp.mode>build</tp.mode>
+	</properties>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<inherited>false</inherited>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<!-- For TPD, classifier is prefixed by '/' to enable relative include -->
+								<!-- No '..' path is allowed 
+								<artifact>
+									<file>build.tpd</file>
+									<type>tpd</type>
+									<classifier>/build</classifier>
+								</artifact>
+
+								<artifact>
+									<file>runtime.tpd</file>
+									<type>tpd</type>
+									<classifier>/runtime</classifier>
+								</artifact>
+
+								<artifact>
+									<file>test.tpd</file>
+									<type>tpd</type>
+									<classifier>/test</classifier>
+								</artifact>
+-->
+								<!-- path must match file with extension to work on full or incremental build  -->
+								<artifact>
+									<file>${tp.mode}.target</file>
+									<type>target</type>
+									<classifier>${tp.mode}</classifier>
+								</artifact>
+								
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+						<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				</plugins>
+		</pluginManagement>
+
+
+	</build>
+
+
+	<profiles>
+		<profile>
+			<id>from-TPD</id>
+
+			<build>
+				<plugins>
+<!--  fails 
+- missing
+- starting too late : should be done in 
+@Component(role = AbstractMavenLifecycleParticipant.class, hint = "TychoMavenLifecycleListener")
+-->
+					<plugin>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-eclipserun-plugin</artifactId>
+
+						<executions>
+							<execution>
+								<phase>generate-resources</phase> <!-- from tpd to target -->
+								<goals>
+									<goal>eclipse-run</goal>
+								</goals>
+
+								<configuration>
+									<repositories>
+										<repository>
+											<id>eclipse-oxygen</id>
+											<layout>p2</layout>
+											<url>http://download.eclipse.org/releases/oxygen/</url>
+										</repository>
+										<repository>
+											<id>eclipse-cbi-oxygen</id>
+											<layout>p2</layout>
+											<url>http://download.eclipse.org/cbi/updates/aggregator/headless/4.7/</url>
+										</repository>
+									</repositories>
+
+									<applicationsArgs>
+										<args>-consoleLog</args>
+										<args>-application</args>
+										<args>tpd.converter</args>
+										<args>build.tpd</args>
+										<args>sdk.tpd</args>
+									</applicationsArgs>
+					
+
+							<!-- Set dependencies to launch the application -->
+									<dependencies>
+										<dependency>
+											<artifactId>org.eclipse.cbi.targetplatform-feature</artifactId>
+											<type>eclipse-feature</type>
+										</dependency>
+										<dependency>
+											<artifactId>org.eclipse.equinox.p2.sdk</artifactId>
+											<type>eclipse-feature</type>
+										</dependency>
+									</dependencies>
+								</configuration>
+
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>

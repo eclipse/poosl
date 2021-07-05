@@ -1,0 +1,39 @@
+target "Poosl SDK" 
+
+//
+// Components used only in development env
+// 
+
+with requirements
+
+environment JavaSE-1.8
+
+location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
+
+	// no need to declare SDK as 'source' properties if equivalent (only no examples)
+	// maybe epp.package is enough ?
+	org.eclipse.emf.query.feature.group
+	org.eclipse.emf.validation.feature.group
+	org.eclipse.gef.feature.group
+
+	org.eclipse.xtext.sdk.feature.group
+    org.eclipse.egit.feature.group // egit is required in runtime as:
+    // - test projects are committed,
+    // - eclipse.platform includes team,
+    // - team detect egit but cannot deal with it.
+    org.eclipse.platform.ide
+}
+
+
+location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-09/" {
+	org.eclipse.sirius.runtime.ide.ui.feature.group
+	org.eclipse.sirius.runtime.ide.eef.feature.group
+	org.eclipse.sirius.specifier.ide.ui.feature.group
+	org.eclipse.sirius.specifier.ide.ui.aql.feature.group	
+}
+
+//location modit "http://update.obeo.fr/livraisonsClients/Huawei/modit_v0.6_p2/" {
+//	org.mypsycho.emf.modit_feature.feature.group
+//	org.mypsycho.emf.modit.sirius_feature.feature.group
+//}
+

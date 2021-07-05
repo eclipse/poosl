@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.eclipse.poosl</groupId>
+		<artifactId>org.eclipse.poosl.parent</artifactId>		
+		<version>4.2.2-SNAPSHOT</version>
+		<relativePath>../../parent</relativePath>
+	</parent>
+	<artifactId>org.eclipse.poosl.xtext.tests</artifactId>
+	<packaging>eclipse-test-plugin</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<configuration>
+					<!-- 
+					Suspicious configuration: useUIThread only apply if useUIHarness
+					-->
+					<useUIThread>false</useUIThread>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

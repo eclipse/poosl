@@ -11,6 +11,6 @@
 	</parent>
 	<artifactId>org.eclipse.poosl.help</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>org.eclipse.poosl.help - Help documentation for POOSL</name>
+	<name>Help for POOSL</name>
 
 </project>

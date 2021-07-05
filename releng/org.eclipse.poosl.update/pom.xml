@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+     <groupId>org.eclipse.poosl</groupId>
+     <artifactId>org.eclipse.poosl.parent</artifactId>
+     <!-- You should change this and the MANIFEST.MF to your versioning scheme -->
+     <version>4.2.2-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+  </parent>
+
+  <artifactId>org.eclipse.poosl.update</artifactId>
+  <packaging>eclipse-repository</packaging>
+
+</project> 
