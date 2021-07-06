@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.eclipse.poosl</groupId>
-		<artifactId>org.eclipse.poosl.parent</artifactId>
+		<artifactId>parent</artifactId>
 		<version>4.2.2-SNAPSHOT</version>
-		<relativePath>../../packaging/org.eclipse.poosl.parent/pom.xml</relativePath>
+		<relativePath>../../parent</relativePath>
 	</parent>
 	<artifactId>org.eclipse.poosl.xtext.util</artifactId>
 	<packaging>eclipse-plugin</packaging>

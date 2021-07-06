@@ -16,7 +16,11 @@ import org.junit.runners.Suite.SuiteClasses;
         /*    */// PooslLinkingTest.class, //
                 // PooslScopingTest.class,
         PooslValidationMiscTest.class, //
-        PooslValidationUnusedTest.class, PooslValidationUniqueTest.class, PooslValidationTypeCheckTest.class, PooslValidationChannelTest.class, PooslValidationImportingTest.class,
+        PooslValidationUnusedTest.class, 
+        PooslValidationUniqueTest.class, 
+        PooslValidationTypeCheckTest.class, 
+        PooslValidationChannelTest.class, 
+        PooslValidationImportingTest.class,
         PooslValidationSuppressTest.class })
 
 @RunWith(Suite.class)

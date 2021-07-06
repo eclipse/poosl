@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.eclipse.poosl</groupId>
-		<artifactId>org.eclipse.poosl.parent</artifactId>
+		<artifactId>parent</artifactId>
 		<!-- You should change this and the MANIFEST.MF to your versioning scheme -->
 		<version>4.2.2-SNAPSHOT</version>
-		<relativePath>../../packaging/org.eclipse.poosl.parent/pom.xml</relativePath>
+		<relativePath>../../parent</relativePath>
 	</parent>
 	<artifactId>org.eclipse.poosl.xtext.ui</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>Poosl xtext UI</name>	
+	<name>Poosl Xtext UI</name>	
 </project>

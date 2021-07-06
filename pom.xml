@@ -7,6 +7,8 @@
 	<artifactId>container</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
+	
+	<name>POM Container</name>
 
 	<!-- 
 	Reminder:
@@ -35,7 +37,6 @@
 		<module>plugins/org.eclipse.poosl.legacysupport</module>
 		<module>plugins/org.eclipse.poosl.help</module>
 		<module>plugins/org.eclipse.poosl.sirius</module>
-		<module>plugins/org.eclipse.poosl.xpect</module>
 
 	</modules>
 	
@@ -78,14 +79,14 @@ org.eclipse.poosl.xtext.util
 				</property>
 			</activation>
 			<modules>
-				<module>plugins/org.eclipse.poosl.xtext.tests</module>
-
+				<module>tests/org.eclipse.poosl.xtext.tests</module>
+				<module>tests/org.eclipse.poosl.xpect</module>
 			</modules>
 		</profile>
 		
 		<profile>
 		    <!-- 
-			By default,  are executed.
+			By default, tests are executed.
 			use -Dmaven.test.skip=true to disable.
 			-->
 			<id>releng-modules</id>
@@ -104,8 +105,8 @@ org.eclipse.poosl.xtext.util
 
 		<profile>
 		    <!-- 
-			By default, tests are executed.
-			use -Dmaven.test.skip=true to disable.
+			By default, integration tests are skip. IN PROGRESS
+			use -P integration-tests-modules to enable.
 			-->
 			<id>integration-tests-modules</id>
 			<activation>
@@ -117,7 +118,7 @@ org.eclipse.poosl.xtext.util
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
-				<module>plugins/rcptt/*</module>
+				<module>plugins/rcptt/?</module>
 			</modules>
 		</profile>
 		

@@ -13,4 +13,5 @@
 
 	<artifactId>org.eclipse.poosl.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
+	<name>POOSL Feature</name>
 </project>

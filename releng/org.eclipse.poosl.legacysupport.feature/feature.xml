@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.poosl.sdk.legacysupport"
+      id="org.eclipse.poosl.legacysupport.feature"
       label="Legacy Support for POOSL IDE"
       version="4.2.2.qualifier"
       provider-name="TNO ESI">

@@ -4,15 +4,23 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.eclipse.poosl</groupId>
-		<artifactId>org.eclipse.poosl.parent</artifactId>
+		<artifactId>parent</artifactId>
 		<version>4.2.2-SNAPSHOT</version>
-		<relativePath>../../packaging/org.eclipse.poosl.parent/pom.xml</relativePath>
+		<relativePath>../../parent</relativePath>
 	</parent>
 	<artifactId>org.eclipse.poosl.xtext</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>org.eclipse.poosl.xtext - Grammar</name>
+	<name>POOSL XText Grammar</name>
 	
+			
 	<build>
+	<!-- 
+	Obeo: Suspicious
+	Are xtext files required at runtime ?
+	If true, it should be in build.properties
+	Otherwise, it should be only source.jar.
+	
+	 -->
         <resources>
             <resource>
             	<directory>src</directory>
@@ -23,6 +31,8 @@
         </resources>
 
 		<plugins>
+		<!-- 
+			NO DYNAMIC GENERATION
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -65,12 +75,12 @@
 						<artifactId>org.eclipse.xtext.xtext.generator</artifactId>
 						<version>${xtext-version}</version>
 					</dependency>					
-					<!-- deprecated
+					<!- - deprecated
 					<dependency>
 						<groupId>org.eclipse.xtext</groupId>
 						<artifactId>org.eclipse.xtext.xtext</artifactId>
 						<version>${xtext-version}</version>
-					</dependency>-->
+					</dependency>- ->
 					<dependency>
 						<groupId>org.eclipse.xtext</groupId>
 						<artifactId>org.eclipse.xtext.xbase</artifactId>
@@ -83,6 +93,10 @@
 					  </dependency>
 				</dependencies>
 			</plugin>
+			-->
+			<!-- 
+			Obeo:
+			This only applies to classic maven, not tycho.
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -103,10 +117,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>xtend-maven-plugin</artifactId>
-			</plugin>
+ -->
 		</plugins>
+		 
 	</build>
 </project>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.poosl.sdk"
+      id="org.eclipse.poosl.feature"
       label="POOSL IDE"
       version="4.2.2.qualifier"
       provider-name="TNO ESI">
@@ -49,25 +49,30 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
    </url>
 
    <requires>
-      <import plugin="org.eclipse.poosl.xtext"/>
+   <!-- Obeo: this is suspicious 
+      <import plugin="org.eclipse.poosl.xtext"/> included
+      <import plugin="org.eclipse.poosl.xtext.ui"/> included
+      <import plugin="org.eclipse.poosl.xtext.util"/> included
+      <import plugin="org.eclipse.poosl.model"/> included
+      <import plugin="org.eclipse.poosl.model.edit"/> included
+	  <import plugin="org.eclipse.poosl.generatedxmlclasses"/> included
+      <import plugin="org.eclipse.poosl.rotalumisclient"/> included
+      -->
       <import plugin="org.eclipse.ui.workbench"/>
       <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipse.jface"/>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.jobs"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.poosl.model"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.expressions"/>
-      <import plugin="org.eclipse.poosl.generatedxmlclasses"/>
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.ui.ide" version="3.9.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.resources" version="3.8.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.equinox.registry"/>
       <import plugin="org.apache.commons.lang"/>
-      <import plugin="org.eclipse.poosl.rotalumisclient"/>
       <import plugin="org.eclipse.xtext.ui"/>
       <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
@@ -77,7 +82,6 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
       <import plugin="org.eclipse.xtext.common.types.ui"/>
       <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
       <import plugin="org.eclipse.compare"/>
-      <import plugin="org.eclipse.poosl.model.edit"/>
       <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.apache.log4j"/>
       <import plugin="org.apache.commons.logging"/>
@@ -90,13 +94,11 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
       <import plugin="org.eclipse.ui.console"/>
       <import plugin="org.eclipse.swt"/>
       <import plugin="org.junit"/>
-      <import plugin="org.eclipse.poosl.xtext.ui"/>
       <import plugin="org.eclipse.ui.navigator"/>
       <import plugin="org.eclipse.ui.navigator.resources"/>
       <import plugin="org.eclipse.xtext" version="2.12.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.help"/>
       <import plugin="org.eclipse.core.runtime" version="3.10.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.poosl.xtext.util"/>
       <import plugin="org.eclipse.xtext.ide"/>
       <import plugin="org.eclipse.xtext.xbase.ide"/>
       <import plugin="org.eclipse.xtext.generator"/>
@@ -207,6 +209,7 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          version="0.0.0"
          unpack="false"/>
 
+<!-- is editor relevant with xtext ?? -->
    <plugin
          id="org.eclipse.poosl.model.editor"
          download-size="0"

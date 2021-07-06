@@ -4,11 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.poosl</groupId>
-	<artifactId>org.eclipse.poosl.parent</artifactId>
-	<!-- You should change this and the MANIFEST.MF to your versioning scheme -->
+	<artifactId>parent</artifactId>
 	<version>4.2.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>org.eclipse.poosl complete Maven build</name>
+	<name>POM parent</name>
 
 	<properties>
 		<mwe2-version>2.11.3</mwe2-version> <!-- usage ? -->

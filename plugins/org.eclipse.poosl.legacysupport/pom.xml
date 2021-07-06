@@ -4,12 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.eclipse.poosl</groupId>
-		<artifactId>org.eclipse.poosl.parent</artifactId>
-		<!-- You should change this and the MANIFEST.MF to your versioning scheme -->
+		<artifactId>parent</artifactId>
 		<version>4.2.2-SNAPSHOT</version>
-		<relativePath>../../packaging/org.eclipse.poosl.parent/pom.xml</relativePath>
+		<relativePath>../../parent</relativePath>
 	</parent>
 	<artifactId>org.eclipse.poosl.legacysupport</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>Legacysupport for POOSL IDE</name>	
+	<name>POOSL Support for Legacy</name>	
 </project>

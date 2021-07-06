@@ -211,6 +211,9 @@
 		    <repository url="http://www.acanda.ch/eclipse-pmd/release/latest" />
 		    <requirement name="ch.acanda.eclipse.pmd.feature.feature.group" />
 
+			<repository url="https://spotbugs.github.io/eclipse/" />
+		    <requirement name="com.github.spotbugs.plugin.eclipse.feature.group" />
+
 			<repository url="https://ecd-plugin.github.io/update/" />
 			<requirement name="org.sf.feeling.decompiler.cfr.feature.group" />
 			<requirement name="org.sf.feeling.decompiler.feature.group" />
@@ -304,7 +307,7 @@ https://www.eclipse.org/modeling/mdt/downloads/
 	    <ul>SDK for different target environment: J2EE and Eclipse.</ul>
 	    <ul>Team tools: Git, maven, oomph, mylyn</ul>
 	    <ul>Documentation and quality: Asciidoc, Checkstyle.</ul>
-	    <ul>Extra JVM language: Kotlin</ul>
+	    <ul>Extra JVM language: (Kotlin - removed) </ul>
 	    </li>
 	    <br/>
 		Thanks to EclipseSource for providing the base of this configuration.<br/>
