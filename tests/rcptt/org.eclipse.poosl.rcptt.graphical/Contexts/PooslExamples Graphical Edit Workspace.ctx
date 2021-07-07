@@ -8,9 +8,9 @@ Id: _D4iC4F1qEeaic9IZ0_T0eQ
 Runtime-Version: 2.3.0.201806262310
 Save-Time: 9/8/20 3:43 PM
 
-------=_contents/org.eclipse.poosl.examples/libraries/structures.poosl-4cca1378-935b-38bd-a748-5b506da30b25
+------=_contents/nl.esi.poosl.examples/libraries/structures.poosl-4cca1378-935b-38bd-a748-5b506da30b25
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/libraries/structures.poosl
+Entry-Name: contents/nl.esi.poosl.examples/libraries/structures.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtPdtyG0euz0yV/6Gj
 hy0yoWwrcV4ky1WWnFTRF8k2E29SyT6MyJE1ZymOlkPa0dmcfz8A+oa+zYWkLtnsVm0szvR0o9G4NYBG
@@ -186,10 +186,10 @@ LNj3fKHZCjnSNFznhvWJpHeEASXdyPFbN2AxyKY0aPTxy/FJbgV2uGATHpbOCOe6Wl0DWTnRWvOp9HYc
 OwnNwQTx42M55qE47sJy0a7qOO//AVBLBwjp0y9H+ycAAMIKAQBQSwECFAAUAAgICAAAACEA6dMvR/sn
 AADCCgEACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAOigA
 AAAA
-------=_contents/org.eclipse.poosl.examples/libraries/structures.poosl-4cca1378-935b-38bd-a748-5b506da30b25--
-------=_contents/org.eclipse.poosl.examples/models-complex/TeenageHomework/TeenageHomework.poosl-100600c4-5090-3dd3-8253-afc27c570f53
+------=_contents/nl.esi.poosl.examples/libraries/structures.poosl-4cca1378-935b-38bd-a748-5b506da30b25--
+------=_contents/nl.esi.poosl.examples/models-complex/TeenageHomework/TeenageHomework.poosl-100600c4-5090-3dd3-8253-afc27c570f53
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/TeenageHomework/TeenageHomework.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/TeenageHomework/TeenageHomework.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9V99v20YMfpb+CvrN
 DjLb25AXB0GQLcAWbGmCxFhRFH04S7QtRLoT7k72vLX/+8jTSZYsee28tHlIFPHI44+PH6nJBObrxAD+
@@ -214,10 +214,10 @@ TzKcq1v1q7+z3gbOoRQxnz/Iqm494qWKCvMguwbCoHfbmsFPSqUo5Hl36aplr7uLfDUmPX2vuT59rxm8
 frD4gmbHkeFxBUvatLFvdlyB1QUBn7/9JU3XMPgb9nGPG2bO67HbfAufWKPMx7iqVuNo9Qo+/QNQSwcI
 nSknwLkEAAAHEQAAUEsBAhQAFAAICAgAAAAhAJ0pJ8C5BAAABxEAAAgACQAAAAAAAAAAAAAAAAAAAC5j
 b250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAPgEAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-complex/TeenageHomework/TeenageHomework.poosl-100600c4-5090-3dd3-8253-afc27c570f53--
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/TriMedia.txt-897b6388-c057-39d4-9f09-ab9159eb16ad
+------=_contents/nl.esi.poosl.examples/models-complex/TeenageHomework/TeenageHomework.poosl-100600c4-5090-3dd3-8253-afc27c570f53--
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/TriMedia.txt-897b6388-c057-39d4-9f09-ab9159eb16ad
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/TriMedia.txt
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/TriMedia.txt
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB1ks1qxCAUhddd+A7B
 tZTr9SdmtgPdFQqZFyhB2tAmmSYZpmHIu1edxlowd+XV4+fhHm+EPo3262L7ZqGHB1cIv8UIPQ79bL/n
@@ -226,10 +226,10 @@ q+uebTeMy59KVlzhpkJwunVldyxmsVwlWG8xi0WpSr2pOKIxESuy2DCQ6BZ2sFopEbGqFFJGrMxitUyw
 ULjKYSsjQP5XbViVxVY6wSq941ZgqU0cFbhAIlbnZws+Jna/EKznsFwLE91KDUlkZRZr0tlWez8hpBR/
 Aip0kZH1B1BLBwjosd37BAEAALsCAABQSwECFAAUAAgICAAAACEA6LHd+wQBAAC7AgAACAAJAAAAAAAA
 AAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAQwEAAAAA
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/TriMedia.txt-897b6388-c057-39d4-9f09-ab9159eb16ad--
-------=_contents/org.eclipse.poosl.examples/libraries/SocketProcess.poosl-c7f759cf-3641-3e00-9226-41f06ce2cfa8
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/TriMedia.txt-897b6388-c057-39d4-9f09-ab9159eb16ad--
+------=_contents/nl.esi.poosl.examples/libraries/SocketProcess.poosl-c7f759cf-3641-3e00-9226-41f06ce2cfa8
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/libraries/SocketProcess.poosl
+Entry-Name: contents/nl.esi.poosl.examples/libraries/SocketProcess.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB9VU1PGzEQPSdS/sP0
 lqBAWvUGQhWiVI1KKSJUPVQcvLsT1sJrR7Y3USp+fGds7xcELpusZ/zm+fnN7GIBF7dL2KJ10mj4fPIR
@@ -249,10 +249,10 @@ mQ5BfoSd9CW8uKfBdOgGy2GHtdjP1/QpbMfyc59fKRwHHyCmnDdSW9rLS4HucMzwcuyrpkDHjMdIRyt9
 fAakujMeYNWNoq7IQSXT2o7BOLWX3xb4D1BLBwj2LleobgMAAJcIAABQSwECFAAUAAgICAAAACEA9i5X
 qG4DAACXCAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAA
 rQMAAAAA
-------=_contents/org.eclipse.poosl.examples/libraries/SocketProcess.poosl-c7f759cf-3641-3e00-9226-41f06ce2cfa8--
-------=_contents/org.eclipse.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl-6c5dfdac-f5f8-342c-a472-60c24ae7d707
+------=_contents/nl.esi.poosl.examples/libraries/SocketProcess.poosl-c7f759cf-3641-3e00-9226-41f06ce2cfa8--
+------=_contents/nl.esi.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl-6c5dfdac-f5f8-342c-a472-60c24ae7d707
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADNWEtz2zYQPku/Yu2T
 lChS5ZlelKaZRGk7viSduD1lcoBISEJDAiwBWlWT/Pd+ePABUnHUjN2pxwcSwC738e23Cy0W9NteaOJ/
@@ -285,10 +285,10 @@ Aic+tS4tItyW4y92vRoylCWoKOtrd/vp586vDl15gIrXR214Pm5+FhiPkrYU2yoegMR2je8RXAvA5aod
 XNqfZpanW4fdugqCVycFr+4UTPZMStDRePSxQyY2gjNXDcvO85V7ps//AFBLBwiHhD3mjAYAAOAWAABQ
 SwECFAAUAAgICAAAACEAh4Q95owGAADgFgAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAA
 AABQSwUGAAAAAAEAAQA/AAAAywYAAAAA
-------=_contents/org.eclipse.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl-6c5dfdac-f5f8-342c-a472-60c24ae7d707--
-------=_contents/org.eclipse.poosl.examples/models-complex/Fisher/fischer.poosl-26b15988-642a-3819-9846-81b351218de8
+------=_contents/nl.esi.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl-6c5dfdac-f5f8-342c-a472-60c24ae7d707--
+------=_contents/nl.esi.poosl.examples/models-complex/Fisher/fischer.poosl-26b15988-642a-3819-9846-81b351218de8
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/Fisher/fischer.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/Fisher/fischer.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAClVktvGzcQPq8B/4ex
 LtG2qh7pzYYRqErj6tAmSAL0zF2NpI24pEpybSlJ/3uHr31Jig0UMKwlOe/55iMnE3hX6HyL6pWGsjIV
@@ -312,10 +312,10 @@ qN6vCagbxcqWWlNd39fG/wmAZvAL1FbbqTThvSAXm3f9xglzKQW6a91Npb2M6saNQEtwl/VG+ltkHEf+
 Z0rzdkI3dBumLZnZeZlZyKaTJImepO0a7yAd7LitfMuEoKra02+RRadjy2txNfMrpzu2e57rW9K2PC1x
 v+yFFDT/A1BLBwiGB6bsiAQAAL4NAABQSwECFAAUAAgICAAAACEAhgem7IgEAAC+DQAACAAJAAAAAAAA
 AAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAxwQAAAAA
-------=_contents/org.eclipse.poosl.examples/models-complex/Fisher/fischer.poosl-26b15988-642a-3819-9846-81b351218de8--
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/application.poosl-bed8807f-5b14-3fa2-8896-695ba681a3a2
+------=_contents/nl.esi.poosl.examples/models-complex/Fisher/fischer.poosl-26b15988-642a-3819-9846-81b351218de8--
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/application.poosl-bed8807f-5b14-3fa2-8896-695ba681a3a2
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/MPSoC/application.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/MPSoC/application.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtHWtv28jxcwL4P6wF
 9EAmPsck9UjuqhiOfUYNOI/auvZDURxoibbZyKRAUsmll/vv3Tdnn5Rk51kXh9ie2Z2ZnZ3ncsnmN4uy
@@ -400,10 +400,10 @@ zySUUGNuBRq08oAFYJoArCoJK0biiKiRgIOlDfQ5EdhaIlZrIZGKiIDAXAhim0CDCZygsXkGRQCiYYNR
 EDHgMhBctA3sCzi00GigLj6RiL6KaBc4hAjT3kaCDdv2/wFQSwcIRHlPP7QSAAAtggAAUEsBAhQAFAAI
 CAgAAAAhAER5Tz+0EgAALYIAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAA
 AAABAAEAPwAAAPMSAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/application.poosl-bed8807f-5b14-3fa2-8896-695ba681a3a2--
-------=_contents/org.eclipse.poosl.examples/models-complex/MarsRover/marsrover.poosl-ffe1fbcf-031f-3b7e-ab71-454cea698b1c
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/application.poosl-bed8807f-5b14-3fa2-8896-695ba681a3a2--
+------=_contents/nl.esi.poosl.examples/models-complex/MarsRover/marsrover.poosl-ffe1fbcf-031f-3b7e-ab71-454cea698b1c
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/MarsRover/marsrover.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/MarsRover/marsrover.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADNV01v4zYQPUu/YuyT
 nQr5RFBgt26QokCxQBcNFgv0zEiMzVomtSQVx232v3eGHxIl2enurRdDHA5n5r15GtEXZ/CRaQNaPXMN
@@ -429,10 +429,10 @@ LvP6G8v04Zv43wpzdP+ziDAXIJJDhn2oICkm1Q9mvnUhyw2TEq9xefYPXm335yjfAgiFf3Jxz/HyAV+j
 R4NWxxY9Oc+mK1fp3tdt7asCYinnePP5+i9QSwcIkFTBAtcEAABHEAAAUEsBAhQAFAAICAgAAAAhAJBU
 wQLXBAAARxAAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAA
 ABYFAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-complex/MarsRover/marsrover.poosl-ffe1fbcf-031f-3b7e-ab71-454cea698b1c--
-------=_contents/org.eclipse.poosl.examples/libraries/json.poosl-6f191ac9-ed3b-33f5-9d57-9a4c509f2229
+------=_contents/nl.esi.poosl.examples/models-complex/MarsRover/marsrover.poosl-ffe1fbcf-031f-3b7e-ab71-454cea698b1c--
+------=_contents/nl.esi.poosl.examples/libraries/json.poosl-6f191ac9-ed3b-33f5-9d57-9a4c509f2229
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/libraries/json.poosl
+Entry-Name: contents/nl.esi.poosl.examples/libraries/json.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADdWt9z2zYSfpZn/D9s
 +VCLsR3HidO7kePOKHEzl7aOMlU691DngaKgGFeKVEnKra/O/97FLxIAAYqyqc7NZfJgkdjFAt+Hbxcg
@@ -476,10 +476,10 @@ HtZu1ORLP2rSogbshpTjy2o/MuIcFw5rtKVctK39OY3ZpaUo71EAuq7+Dn1vKQGb5/1Kyj8C9/+g/V8e
 q/27wH+LBNA/BbbMAr0G0DEVXP0FUEsHCLcmfFEKCQAAYjMAAFBLAQIUABQACAgIAAAAIQC3JnxRCgkA
 AGIzAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAABJCQAA
 AAA=
-------=_contents/org.eclipse.poosl.examples/libraries/json.poosl-6f191ac9-ed3b-33f5-9d57-9a4c509f2229--
-------=_contents/org.eclipse.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2
+------=_contents/nl.esi.poosl.examples/libraries/json.poosl-6f191ac9-ed3b-33f5-9d57-9a4c509f2229--
+------=_contents/nl.esi.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/.project
+Entry-Name: contents/nl.esi.poosl.examples/.project
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB1UctOBCEQPLuJ/7CZ
 u43e9sDOJmo8etH9AITOiOEVGsx8vsAwq2P01lVdRVc3/DRbs//ESNq743AHt8MenfRKu+k4nF+fbg7D
@@ -488,10 +488,10 @@ hw/FKpxqTJ/r4wQojQ6EMCecE2QN9C4iqgXfVyPG7yjFKeKUawbqmG0Jzn5P68wap4xOOWJXL2CThHTU
 mWDpgPUKTTlm369GaY7/3H/u8dx0P71rXWNcjrf9nC9QSwcIa2RbBOEAAADbAQAAUEsBAhQAFAAICAgA
 AAAhAGtkWwThAAAA2wEAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAAB
 AAEAPwAAACABAAAAAA==
-------=_contents/org.eclipse.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2--
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/system.poosl-89967929-4287-341a-bc9d-36c5e54698be
+------=_contents/nl.esi.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2--
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/system.poosl-89967929-4287-341a-bc9d-36c5e54698be
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/MPSoC/system.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/MPSoC/system.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVVU1P20AQPRMp/2Gb
 QxWjNOQTqlaoCukFqaCIpGe02BO8Yu21dtekKfDfO7PexDY4oObi+L3Z+XgzsxZJprRlHZ5lUoTcCpX2
@@ -509,10 +509,10 @@ sFBUbUC7NJMkT2m8ILrYFqNR2A0GJIo3w4nXbwyGJEbThxG1+Z/vZeFwfPCLie1BAwwWxhxrk7QiT9W1
 6FN/DJ6nxvSxJJx6R9yAUbnGpWIvb85c5Os16OopL8QH55oq2zlp5prQvr9L2Ms/UEsHCBasBbwNAwAA
 tggAAFBLAQIUABQACAgIAAAAIQAWrAW8DQMAALYIAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVU
 BQABAAAAAFBLBQYAAAAAAQABAD8AAABMAwAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/system.poosl-89967929-4287-341a-bc9d-36c5e54698be--
-------=_contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl-0c0bbea1-573d-3d3f-bca9-b7c07e10832b
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/system.poosl-89967929-4287-341a-bc9d-36c5e54698be--
+------=_contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl-0c0bbea1-573d-3d3f-bca9-b7c07e10832b
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADNG9ty00ry2fqKIU8y
 mBDLZh9YfCgCZFdVua2TrbJra+vURBolAlkykkzIwvn37Z6bRqNRcMDnwItj9fT09L17Wk66WhdlTfb2
@@ -576,10 +576,10 @@ LRypFoBXKVUzgs6KKhuTzoqqHNPOCi8e1R3UjpWZJ12vkfAffh76dmlG8LV33+ulGX8n/piMD+DPurhl
 pf+3/YOhy2KBy0gBeJkqdcjdN6reTPBiO1/Q53HA1cG4G2Pj5/zVvAqug/3njth6jigu93TmRLd0/V6H
 nAVtN3OZpvErpZrGu/4PUEsHCJKuf4zwDQAA0TwAAFBLAQIUABQACAgIAAAAIQCSrn+M8A0AANE8AAAI
 AAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAAvDgAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl-0c0bbea1-573d-3d3f-bca9-b7c07e10832b--
-------=_contents/org.eclipse.poosl.examples/models-complex/PARProtocol/par.poosl-994706b2-75c3-3d50-8dc8-9957f3f9a1fd
+------=_contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl-0c0bbea1-573d-3d3f-bca9-b7c07e10832b--
+------=_contents/nl.esi.poosl.examples/models-complex/PARProtocol/par.poosl-994706b2-75c3-3d50-8dc8-9957f3f9a1fd
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/PARProtocol/par.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/PARProtocol/par.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADNWFtv2zYUfpZ+BeMn
 qXMcS21fVnhFMa/DsCANkmLvtEwlXGRRJemkWbf/vsObROriOCkGDAgciTw3fuecjxTPXqFLJqik9wR9
@@ -611,10 +611,10 @@ Fcrfwlo7vfamwtOcuL1YoddLrVt7h4xM7WDhoSOYz0fmG7+e1Xbvv7c9BhMj1AALeKOj8JM1WMxCX6mg
 IJCFyZaBekwDvkJQEJrVyKdU7NdMT0lnUan4SjYZC/slFESWaZXQiS8/7iIbV5heRjYVkz0KzzV/8bZo
 x0IJBHVN/gtQSwcIWLJOK2kGAAB9GgAAUEsBAhQAFAAICAgAAAAhAFiyTitpBgAAfRoAAAgACQAAAAAA
 AAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAKgGAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-complex/PARProtocol/par.poosl-994706b2-75c3-3d50-8dc8-9957f3f9a1fd--
-------=_contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/archive.cps-7504e099-99fb-3906-8181-325902f650ff
+------=_contents/nl.esi.poosl.examples/models-complex/PARProtocol/par.poosl-994706b2-75c3-3d50-8dc8-9957f3f9a1fd--
+------=_contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/simulator/archive.cps-7504e099-99fb-3906-8181-325902f650ff
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/archive.cps
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/simulator/archive.cps
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtGwt7FNX1TiCQQHhH
 BBQVxReoKALKs4R3FAiQYARRmOxOkoHNzDIzCwktrVaKtvZlH7S2tvXRl7a1lfan9Ef0V7Q9z927O7uZ
@@ -671,10 +671,10 @@ lgjjaJ8JqGn/EdmJ2tHpHzcOd/q7KD4kwtcsGZ2rKi44jF/JshyXxdtO5U/Q6IfTIvyp1fG6WP65DHBT
 LG8zlS0IgzMouPIdUzFedakObP/TMlD1/xcmeVPubRYfbTsjcjdFx+fWOOp9W5dtK/L/D1BLBwjddR/X
 NQwAAA1AAABQSwECFAAUAAgICAAAACEA3XUf1zUMAAANQAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRl
 bnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAdAwAAAAA
-------=_contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/archive.cps-7504e099-99fb-3906-8181-325902f650ff--
-------=_contents/org.eclipse.poosl.examples/models-basic/Lottery/Lottery.poosl-8562ab17-0543-3eb3-a6bf-7c7ff852f287
+------=_contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/simulator/archive.cps-7504e099-99fb-3906-8181-325902f650ff--
+------=_contents/nl.esi.poosl.examples/models-basic/Lottery/Lottery.poosl-8562ab17-0543-3eb3-a6bf-7c7ff852f287
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/Lottery/Lottery.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/Lottery/Lottery.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADFWNtuGzcQfZYA/wPz
 JgW2FSdv8g1N2jQGXFtwDBRFkQdqNZLYrsjtkrLjNv33niG5V61sx05bAwlWXM7hXM5clqORuF4qK+iz
@@ -708,10 +708,10 @@ N1Dn/9Wn7aA3TQeB/P7mN1Qj6ccqf0cNnZACt0S6WzGFyTQj/FfdzG3TLsZ0vKW7hxmo3dvjlLPZ2znG
 fdZQYx7p9/4qOzXTfbf8CuNf4u9/AFBLBwi3Aw+qswYAAFAYAABQSwECFAAUAAgICAAAACEAtwMPqrMG
 AABQGAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAA8gYA
 AAAA
-------=_contents/org.eclipse.poosl.examples/models-basic/Lottery/Lottery.poosl-8562ab17-0543-3eb3-a6bf-7c7ff852f287--
-------=_contents/org.eclipse.poosl.examples/models-complex/ATMSwitch/switch.poosl-984cf6d7-cde3-3a9c-93cd-68108ae2292d
+------=_contents/nl.esi.poosl.examples/models-basic/Lottery/Lottery.poosl-8562ab17-0543-3eb3-a6bf-7c7ff852f287--
+------=_contents/nl.esi.poosl.examples/models-complex/ATMSwitch/switch.poosl-984cf6d7-cde3-3a9c-93cd-68108ae2292d
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/ATMSwitch/switch.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/ATMSwitch/switch.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADdV99v2zYQfrYB/w9s
 n6zOcyJKe2mXDsnqDAHWJmi6p2EPtEzX3GTRIOnUWdP/fUdSoiiKduItTwMC27w7frwf3x2Zk1fo/NN7
@@ -739,10 +739,10 @@ l+bFZgp64O1mLz//AYcAYnVDBIE7lIpxBhlt4fDzwmXPC5c/F5w3b3UCvaE6DtT4sDo7rM776g53d1PN
 3rqSU96wYqo5XBfEl2aNNPOleSPNPammmR/llLUq3FFhX5V1VJmvyjuqXKv+AVBLBwh2UlssYwUAAFkW
 AABQSwECFAAUAAgICAAAACEAdlJbLGMFAABZFgAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUA
 AQAAAABQSwUGAAAAAAEAAQA/AAAAogUAAAAA
-------=_contents/org.eclipse.poosl.examples/models-complex/ATMSwitch/switch.poosl-984cf6d7-cde3-3a9c-93cd-68108ae2292d--
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/MIPS.txt-0ec79303-2668-3d51-bef8-f68b97b5994c
+------=_contents/nl.esi.poosl.examples/models-complex/ATMSwitch/switch.poosl-984cf6d7-cde3-3a9c-93cd-68108ae2292d--
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/MIPS.txt-0ec79303-2668-3d51-bef8-f68b97b5994c
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/MIPS.txt
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/MIPS.txt
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB10s1qhDAQB/BzD76D
 5CwlHzOTuNeF3goF9wWKhFZadasuW1l898YUsymNc3L0zy/DxFvGngb7dbFdPbPDgytBmvsqMnbsu8l+
@@ -751,10 +751,10 @@ zeK6Z9v2w3xPgeLcbCkJqGlZil9WJllhIhZohxUGlNxSgtBAYFWSlRBPizusIkMQDi8FysBCkoV4CTx3
 lWIJUdHf1MZikjUYsbQ3reRgQkoa0vdpKcnqeFqxXplz/y9BagpXBrwkHlidZMuYNXvT+nVuKQVGuD8h
 W34AUEsHCCsSL58AAQAAuwIAAFBLAQIUABQACAgIAAAAIQArEi+fAAEAALsCAAAIAAkAAAAAAAAAAAAA
 AAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAA/AQAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/MIPS.txt-0ec79303-2668-3d51-bef8-f68b97b5994c--
-------=_contents/org.eclipse.poosl.examples/models-basic/Scheduling/PreEmptive.poosl-b6b4345a-cd74-3838-8646-719cfa85b878
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/MIPS.txt-0ec79303-2668-3d51-bef8-f68b97b5994c--
+------=_contents/nl.esi.poosl.examples/models-basic/Scheduling/PreEmptive.poosl-b6b4345a-cd74-3838-8646-719cfa85b878
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/Scheduling/PreEmptive.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/Scheduling/PreEmptive.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9Vk1z0zAQPdu/YpuT
 XWhSrul0eigM6UwOmSYznFV7E4vaUpCUhkD576wsx5bsEhiG0kPqaHfffr1nZTKBVcE14FdWbUuEHCsp
@@ -772,10 +772,10 @@ A/RTgN7/9DCcpN/JS3M42cnsLzsZcOQVZKYPpJCKOEe/j0RmGd/Kadrpw87JXU80w2lz0XSHdiLeaVYw
 IUimcfS9BRvPF2+hhRi3yD8Cp1nrZCE9r59QSwcI62IXZfcCAADyCQAAUEsBAhQAFAAICAgAAAAhAOti
 F2X3AgAA8gkAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAA
 ADYDAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-basic/Scheduling/PreEmptive.poosl-b6b4345a-cd74-3838-8646-719cfa85b878--
-------=_contents/org.eclipse.poosl.examples/models-basic/Scheduling/Timeout.poosl-4f7d2264-8008-33f5-ab09-02c430c54634
+------=_contents/nl.esi.poosl.examples/models-basic/Scheduling/PreEmptive.poosl-b6b4345a-cd74-3838-8646-719cfa85b878--
+------=_contents/nl.esi.poosl.examples/models-basic/Scheduling/Timeout.poosl-4f7d2264-8008-33f5-ab09-02c430c54634
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/Scheduling/Timeout.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/Scheduling/Timeout.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9Vk1v2zAMPdu/gs3J
 7tqkG7ZLiqIY0mHoaUETYGfFZmKttpxJ8rJu3X8fKcWOP9KhA9bl4MAS+UiR74meTGCZSQP4XRTbHCHF
@@ -793,10 +793,10 @@ omGVG9rMF72/sq+8VDoXORt6IfrN/sBx+0fqeOAkT1o2ijxK3cFL6FfYJfWcqgbBCzDXPBj61qHe0keP
 SphCzTfO9AgBuVrvLigXP2Gm+0FB2SWZUIroHgY/G4Qxn/VsP43GjT5//QZQSwcIFf7lwAkDAACRCQAA
 UEsBAhQAFAAICAgAAAAhABX+5cAJAwAAkQkAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEA
 AAAAUEsFBgAAAAABAAEAPwAAAEgDAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-basic/Scheduling/Timeout.poosl-4f7d2264-8008-33f5-ab09-02c430c54634--
-------=_contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/common.poosl-24b0a299-bd9a-3555-b8f5-d43134d7989e
+------=_contents/nl.esi.poosl.examples/models-basic/Scheduling/Timeout.poosl-4f7d2264-8008-33f5-ab09-02c430c54634--
+------=_contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/common.poosl-24b0a299-bd9a-3555-b8f5-d43134d7989e
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/common.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/common.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACNVs1u2zAMPsdPIeRQ
 uGiXpocd1s4D0nWHAv1D0hdQZCbRqliBJDfLsIcfZVm2lNhJgSCwyI8ff0TS5uuNVIYMR6Mr/Ak+V1Rx
@@ -815,10 +815,10 @@ trMmZbv9J0rRXbD8mx3LVsDewwWLt8CDbU4mQkz8hg1AGEakwVevKsFNrT25Ad6uuICI4izl5HtWdQEW
 4i+2Wy7ttO6RRSYOTU3KXSc5D9yuCTzJ6EMlMPwPUEsHCCvRA7U3AwAAQgoAAFBLAQIUABQACAgIAAAA
 IQAr0QO1NwMAAEIKAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQAB
 AD8AAAB2AwAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/common.poosl-24b0a299-bd9a-3555-b8f5-d43134d7989e--
-------=_contents/org.eclipse.poosl.examples/libraries/performance.poosl-3da4fd2f-253f-3152-a2db-3705ccdb7477
+------=_contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/common.poosl-24b0a299-bd9a-3555-b8f5-d43134d7989e--
+------=_contents/nl.esi.poosl.examples/libraries/performance.poosl-3da4fd2f-253f-3152-a2db-3705ccdb7477
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/libraries/performance.poosl
+Entry-Name: contents/nl.esi.poosl.examples/libraries/performance.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtHV1z27jxWZnJf8Dp
 4UZ0JJtfEiU7l5mcm2szYyeZJG1n2vSBliibrUw6JBXbmfz47gIECICgRNmS7V5PGSsSCez3LnaxFHlw
@@ -913,10 +913,10 @@ QZzMGx5Hq4+VQBt/e1ijkuPoE4VE4+KzgsT2FEqQN6PwX1+KikT9bO06Owm0UTPSHz/fOmBwITXFjNVy
 1FBHto0ZGvzNIoY2uS1tbaOFBv5feN1R5dlmO/h5/VIiqaT8W4O5TRyqA91WBGor+HWmfLfQwyb/F1BL
 Bwh8n8HgIxUAAOWGAABQSwECFAAUAAgICAAAACEAfJ/B4CMVAADlhgAACAAJAAAAAAAAAAAAAAAAAAAA
 LmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAYhUAAAAA
-------=_contents/org.eclipse.poosl.examples/libraries/performance.poosl-3da4fd2f-253f-3152-a2db-3705ccdb7477--
-------=_contents/org.eclipse.poosl.examples/models-complex/Wireless/wireless.poosl-5d478550-1476-3cc2-8cf4-87d46efeda80
+------=_contents/nl.esi.poosl.examples/libraries/performance.poosl-3da4fd2f-253f-3152-a2db-3705ccdb7477--
+------=_contents/nl.esi.poosl.examples/models-complex/Wireless/wireless.poosl-5d478550-1476-3cc2-8cf4-87d46efeda80
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/Wireless/wireless.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/Wireless/wireless.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADdV0tv20YQPkuA/sPY
 h4K01Ti2Yx/aqoZjIKgPToAoQM7UamVtI5ECdxXbrfPfO/uepUjKCXLqSdzZmdl5fPPQyRFkUqw3K7EQ
@@ -946,10 +946,10 @@ Z7EN802TNemkE3hDmS/2MF9Q5ss9zJfI7MaGDtm/4KLxCivQfZ+R73PzHcxOThfJ6dKcSAperWfwLXmC
 LeMT8fvcfMcn8BRdT+4u8QTf/gNQSwcIG6Zlf8EFAAAtFwAAUEsBAhQAFAAICAgAAAAhABumZX/BBQAA
 LRcAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAAAGAAAA
 AA==
-------=_contents/org.eclipse.poosl.examples/models-complex/Wireless/wireless.poosl-5d478550-1476-3cc2-8cf4-87d46efeda80--
-------=_contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer.xml-79e7d207-7e4c-3a21-a290-1c47091d2e74
+------=_contents/nl.esi.poosl.examples/models-complex/Wireless/wireless.poosl-5d478550-1476-3cc2-8cf4-87d46efeda80--
+------=_contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer.xml-79e7d207-7e4c-3a21-a290-1c47091d2e74
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer.xml
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer.xml
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtXVuT27YVfs+vUPiQ
 h2ZcRU6d2K12M740Hc003UzWHT90MhosCUloKYAhwPVuJj8+IEhqxSt4QJCg4vppTQE4Hw7OnZez/u7h
@@ -998,10 +998,10 @@ e3xidX4ITdxeFuyGncJJtrvDtGZMqbycIDWGDVVI62VJ0QptbdTLtWDRNsT3ONzyCPtkR/xKTbG6uXyZ
 mohVN6lX7OHi1k/UWou2z7uKthph6ytoOiFrMAKdElASysbT1wjjm+zTVy1FJKj4QVSoEW1h8hpMYuW3
 01rrZavQpt6a8drl3wFQSwcIXwDzNmsKAADHlAAAUEsBAhQAFAAICAgAAAAhAF8A8zZrCgAAx5QAAAgA
 CQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAKoKAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer.xml-79e7d207-7e4c-3a21-a290-1c47091d2e74--
-------=_contents/org.eclipse.poosl.examples/models-basic/SocketExample/socket_example.poosl-986c59c1-3997-3256-b5e6-bcf56e5b32eb
+------=_contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer.xml-79e7d207-7e4c-3a21-a290-1c47091d2e74--
+------=_contents/nl.esi.poosl.examples/models-basic/SocketExample/socket_example.poosl-986c59c1-3997-3256-b5e6-bcf56e5b32eb
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/SocketExample/socket_example.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/SocketExample/socket_example.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADFVk1v2zgQPVuA/sNY
 Jzl17PTYBEUPQdEa2BbBukDPtDy2iFKkStJputv97ztDUrbkxN0E2LSGYVgk5735fOJ8Dp9q6QDvRNMq
@@ -1022,10 +1022,10 @@ tHo6cbm/OkXD5fENM4gi218PrmADlGR0CYPbYfneOP9RNBhmWJlKqJpWiilwwj/umhXlmLZeXby6+E/2
 5UDyE3tcfAQ7vc1+xprU70SyOh5m2L9XqlqQj8plo79TZmaMP4V+RsIS/JPzoWiaDvUdT4f+BVBLBwg1
 fPssyAMAAIUMAABQSwECFAAUAAgICAAAACEANXz7LMgDAACFDAAACAAJAAAAAAAAAAAAAAAAAAAALmNv
 bnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAABwQAAAAA
-------=_contents/org.eclipse.poosl.examples/models-basic/SocketExample/socket_example.poosl-986c59c1-3997-3256-b5e6-bcf56e5b32eb--
-------=_contents/org.eclipse.poosl.examples/libraries/distributions.poosl-6d83d9a1-6c27-3fa6-8456-f097b328f2ad
+------=_contents/nl.esi.poosl.examples/models-basic/SocketExample/socket_example.poosl-986c59c1-3997-3256-b5e6-bcf56e5b32eb--
+------=_contents/nl.esi.poosl.examples/libraries/distributions.poosl-6d83d9a1-6c27-3fa6-8456-f097b328f2ad
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/libraries/distributions.poosl
+Entry-Name: contents/nl.esi.poosl.examples/libraries/distributions.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtXOtv2zgS/5wC/R94
 +bCQGjnx+9G0BZJub69o0hR10m2xuzjINp3oYEs+SU6TIH/8zQxJiZRkWc6j6R1ucdfY4pCcF38zJEfe
@@ -1106,10 +1106,10 @@ VYJNLejpZaMPd4trGlMUFqs2Mmhatbyt1cn+Gf8Zy0Rd6OQzxhNR1WssUWV0yIzNbL7QdjmzmVZLeZGf
 wGZZjUqD7OU4kOlENtP+M/6DzkQqOkHxgcpaf8h0+yupf97EzkLo/wBQSwcIeq7toMoRAAAbXQAAUEsB
 AhQAFAAICAgAAAAhAHqu7aDKEQAAG10AAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAA
 UEsFBgAAAAABAAEAPwAAAAkSAAAAAA==
-------=_contents/org.eclipse.poosl.examples/libraries/distributions.poosl-6d83d9a1-6c27-3fa6-8456-f097b328f2ad--
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/platform.poosl-7ad2cf4c-073c-3fb3-bdb7-9f0feacfa70c
+------=_contents/nl.esi.poosl.examples/libraries/distributions.poosl-6d83d9a1-6c27-3fa6-8456-f097b328f2ad--
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/platform.poosl-7ad2cf4c-073c-3fb3-bdb7-9f0feacfa70c
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/MPSoC/platform.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/MPSoC/platform.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtPWtz27qxn52Z/AdY
 HzpkojiOnTudJkfHkyjO1Hfix1hO+7HDSLDNhiJVkrLj2+S/38V78SIp2+c0vbedM7UELBaLxb6wWCj5
@@ -1205,10 +1205,10 @@ wxT5sxE4IBEodVghkFpf9+2vr/HXKQpTJHITodiL8U9zngseS2rssE6Q5LftB9peW22h4C80mRUa6um8
 1v1g6+tA6zQcUwYDFVcMdkJQ5Mf/AlBLBwjY+LW3OxUAAJFzAABQSwECFAAUAAgICAAAACEA2Pi1tzsV
 AACRcwAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAehUA
 AAAA
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/platform.poosl-7ad2cf4c-073c-3fb3-bdb7-9f0feacfa70c--
-------=_contents/org.eclipse.poosl.examples/models-basic/VendingMachine/VendingMachine.poosl-a7f72559-605f-3542-8be1-33df46a5ba1b
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/platform.poosl-7ad2cf4c-073c-3fb3-bdb7-9f0feacfa70c--
+------=_contents/nl.esi.poosl.examples/models-basic/VendingMachine/VendingMachine.poosl-a7f72559-605f-3542-8be1-33df46a5ba1b
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/VendingMachine/VendingMachine.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/VendingMachine/VendingMachine.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9Vk1v2zAMPdu/grm1
 W5qs2K3ZEGw9FcPWYiu2w7CDYjONVlsyJDldMey/j5TsWHbSNOg+cghsSqQeKfI9T6dwvZIW8IcoqwIh
@@ -1229,10 +1229,10 @@ s4TK6mSJJ7p2fkN0bIAakd9oQPq9kz0V/5tjd3NupOaDsj9vyz68O1aCw269f2Fk+BdEbu+tw5I6ndpA
 ZZz1hrvPOqLcJPeS0Kx7H/m0bfDVPxD/03FPRk+P02wllCKhSJOf0A824RqMuy9yz6i/fgNQSwcIpkYU
 fcYDAADODQAAUEsBAhQAFAAICAgAAAAhAKZGFH3GAwAAzg0AAAgACQAAAAAAAAAAAAAAAAAAAC5jb250
 ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAAUEAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-basic/VendingMachine/VendingMachine.poosl-a7f72559-605f-3542-8be1-33df46a5ba1b--
-------=_contents/org.eclipse.poosl.examples/models-basic/Jobshop/jobshop.poosl-5cde5be5-f0ed-3cc2-affe-ffb1a276b723
+------=_contents/nl.esi.poosl.examples/models-basic/VendingMachine/VendingMachine.poosl-a7f72559-605f-3542-8be1-33df46a5ba1b--
+------=_contents/nl.esi.poosl.examples/models-basic/Jobshop/jobshop.poosl-5cde5be5-f0ed-3cc2-affe-ffb1a276b723
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/Jobshop/jobshop.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/Jobshop/jobshop.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADFV81u2zgQPsuA32F6
 ahu4MZpjejCKBdpugS6KbvoAtDSJWEiiStLJGou++w45pGSJdOL0b3OIKXLm4/Dj/HF9Ble1NID/iLZv
@@ -1254,10 +1254,10 @@ wkp6hblT8oJjy1hB6SDyEl8msTPlJumAnXKQuBylY5a9j9ZyPL5TPSSDld9IzVtR9owR4J+C5r63IIOz
 APXynJ4FYXxBY/jmZeNiPa7V7j3r66OdCbWjEA3ZiEToYM8L/jhwCDcB3/4DUEsHCAxe7NH6AwAAiRAA
 AFBLAQIUABQACAgIAAAAIQAMXuzR+gMAAIkQAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQAB
 AAAAAFBLBQYAAAAAAQABAD8AAAA5BAAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-basic/Jobshop/jobshop.poosl-5cde5be5-f0ed-3cc2-affe-ffb1a276b723--
-------=_contents/org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl-0ec4182e-6a6e-329d-8af7-24ea73d345e3
+------=_contents/nl.esi.poosl.examples/models-basic/Jobshop/jobshop.poosl-5cde5be5-f0ed-3cc2-affe-ffb1a276b723--
+------=_contents/nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl-0ec4182e-6a6e-329d-8af7-24ea73d345e3
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9VD1PwzAQnWsp/+Ho
 1FbQ7GVgYKESqIhWoqtxro2F44tsp6IC/jvnfJR+MIAEZIhs37vnd35npykscu0BX2RRGoQMC7I+OBnQ
@@ -1269,10 +1269,10 @@ U3tkwvQI2MGuvuFBK+/UhjZw6sReBrzBEibQ0MNb9GZv1+Wf2bGg8sLgBg34rQ9YgC9R6VW8w5psLbMJ
 xDJ9kFa1J9VKqy8P3/9dZ/F40t6WwfAA6bq3Yr/2iO6G8dxULq3lh4YRry3NmJv0fAcaTy28fwBQSwcI
 xnkyt60BAADLBAAAUEsBAhQAFAAICAgAAAAhAMZ5MretAQAAywQAAAgACQAAAAAAAAAAAAAAAAAAAC5j
 b250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAOwBAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl-0ec4182e-6a6e-329d-8af7-24ea73d345e3--
-------=_contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/Bus/bus.poosl-da90bbf9-276d-3c2b-81ad-33dc42ea07f8
+------=_contents/nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl-0ec4182e-6a6e-329d-8af7-24ea73d345e3--
+------=_contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/Bus/bus.poosl-da90bbf9-276d-3c2b-81ad-33dc42ea07f8
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/Bus/bus.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/Bus/bus.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADNWU1z2zgSPUu/As5h
 i8xoZEtW9pBZbcqJk1lVJY43zp6mpqZgErKRkAQHBK14J/nv240PEiChWDObQy42CQKN7sbr190QL2sh
@@ -1323,10 +1323,10 @@ l6X9cjr6cmq/rEZfVkiXzT2wZenTiaVMcPsD5LnGi5W95LkmJ/OTk0Xc+fbTEFmLJ/ruxUHqZP4kgqgn
 OCV2VrH4XQGOYg0QWvcn+yJrbrwv0h/JY7IAA0gtdlBR/X1+ksY18iFifdzDIKZWD4z/AVBLBwiUQmjC
 zQoAANwmAABQSwECFAAUAAgICAAAACEAlEJows0KAADcJgAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRl
 bnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAADAsAAAAA
-------=_contents/org.eclipse.poosl.examples/models-complex/SoCInterconnects/Bus/bus.poosl-da90bbf9-276d-3c2b-81ad-33dc42ea07f8--
-------=_contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl-884a6ce7-2036-313f-96b3-95fdb3a44683
+------=_contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/Bus/bus.poosl-da90bbf9-276d-3c2b-81ad-33dc42ea07f8--
+------=_contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl-884a6ce7-2036-313f-96b3-95fdb3a44683
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADNVk1v4zYQPduA/8M0
 Jyv7YeTqRVF046IQ0MJBHaCHogdaGtvclUhCpJx1u/vfO/ySRVkJ2u1m21xiisM3M2/eDLlYwP2Ba8AP
@@ -1346,10 +1346,10 @@ UyOTJa1nHBkK+vdwmBwjQTxbYW+rVhsSY6+w8b0ngClV2Rcdl8KVm2tjaaYb4NHHoC9SkaBG02gzz/6j
 /t9EPidRz9IP91K9qvCIFegTUVyDVljwXeyC6wXMpn7ngoXve92Svhhti1yMy5SgXs5j7WLx6VJ97A72
 WNZgac1Stv4CUEsHCD2+FcaaAwAABA4AAFBLAQIUABQACAgIAAAAIQA9vhXGmgMAAAQOAAAIAAkAAAAA
 AAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAADZAwAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl-884a6ce7-2036-313f-96b3-95fdb3a44683--
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/ARM.txt-a13ab13b-c4a2-33a7-9a5d-87fded099627
+------=_contents/nl.esi.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl-884a6ce7-2036-313f-96b3-95fdb3a44683--
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/ARM.txt-a13ab13b-c4a2-33a7-9a5d-87fded099627
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/ARM.txt
+Entry-Name: contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/ARM.txt
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACV0kFrgzAUB/DzDvkO
 krOM5OXlJe210FthYL/AkLDKprZq6aT43RfdTC3Ew3Ly6Z9f/kbvjO8bd7m6Ku/59sUvKf5Wyviurjr3
@@ -1358,7 +1358,7 @@ Bj8dXFk3/SOlwJCdUwqtpGFIf1mIstIuWAUrLFgyMKekRQWBVXFW6wcLa221hg2FzYUBEViMsoCLtiLx
 K9oWtaHn1MzqKKtg0XZsHm0rSVkM7wQabGApytKyLdLa2Qr/NcMhkCUMrImymv79J6CRwrNs+AFQSwcI
 CO8um/kAAAC6AgAAUEsBAhQAFAAICAgAAAAhAAjvLpv5AAAAugIAAAgACQAAAAAAAAAAAAAAAAAAAC5j
 b250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAADgBAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-complex/MPSoC/simulator/ARM.txt-a13ab13b-c4a2-33a7-9a5d-87fded099627--
+------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/ARM.txt-a13ab13b-c4a2-33a7-9a5d-87fded099627--
 ------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
 Content-Type: q7/binary
 Entry-Name: .q7.content
@@ -1380,9 +1380,9 @@ Qzde34NWl6T45ZbUjY+9NmLQX1BLBwhEBGF38AIAAJMOAABQSwECFAAUAAgICAAAACEARARhd/ACAACT
 DgAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAALwMAAAAA
 
 ------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
-------=_contents/org.eclipse.poosl.examples/representations.aird-5956c20e-b13e-3d0d-a402-10316f844c04
+------=_contents/nl.esi.poosl.examples/representations.aird-5956c20e-b13e-3d0d-a402-10316f844c04
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/representations.aird
+Entry-Name: contents/nl.esi.poosl.examples/representations.aird
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtXXtz2siy//9W3e9A
 +Z5bJ6myg4QBg8ves34mJH5jJxtvbblkkEGxkIgk/MinPzMjAULqERppRhKOajcJiNF0T0/Pb7rn0b3z
@@ -1536,4 +1536,4 @@ HeSNY9xjphPhQXcRShx7Uzh2HX0bt8Qxjjj2NoKIA5ITEUWcKGdUHK7VjiK+VP9ihBHP5upBRCRx7ycs
 DPxgpzpr/fbhnqHor7aGn/8XUEsHCJpBnT3PIgAAzwECAFBLAQIUABQACAgIAAAAIQCaQZ09zyIAAM8B
 AgAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAAOIwAAAAA=
 
-------=_contents/org.eclipse.poosl.examples/representations.aird-5956c20e-b13e-3d0d-a402-10316f844c04--
+------=_contents/nl.esi.poosl.examples/representations.aird-5956c20e-b13e-3d0d-a402-10316f844c04--

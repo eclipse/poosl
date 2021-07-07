@@ -8,9 +8,9 @@ Id: _0f97UCMJEemTAfKT-AIu5w
 Runtime-Version: 2.4.0.201808022310
 Save-Time: 1/28/19 3:34 PM
 
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExample/socket_example.poosl-631c4516-ae9c-35dc-aed4-62d9e2639d2f
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExample/socket_example.poosl-631c4516-ae9c-35dc-aed4-62d9e2639d2f
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/SocketExample/socket_example.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/SocketExample/socket_example.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9Vl1P2zAUfU6l/ofb
 PqWltPAKQntAaKsEEhqT9myc28YisTPbLbDBf9/1R5qkpUyTCgVa7Jt7zv3yqWdj+JELA/jEyqpAyLBU
@@ -30,10 +30,10 @@ cY5dt4Ohkb4wCeEGtVkGhXRn1lgmea0Q8SZpqKuNTHSORnzirHUlc47x1vmOY3zirCXOPGd05ywc95+I
 N3U9mEA7Znj19uDWsUfIV38pSv4CUEsHCCGCLapqAwAAcgsAAFBLAQIUABQACAgIAAAAIQAhgi2qagMA
 AHILAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAACpAwAA
 AAA=
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExample/socket_example.poosl-631c4516-ae9c-35dc-aed4-62d9e2639d2f--
-------=_contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileToCopy.txt-54039e28-ed72-3146-93e7-519bcb6b8c12
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExample/socket_example.poosl-631c4516-ae9c-35dc-aed4-62d9e2639d2f--
+------=_contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileToCopy.txt-54039e28-ed72-3146-93e7-519bcb6b8c12
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileToCopy.txt
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileToCopy.txt
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACNWttu5boNfd/A/gd/
 gJEf6NPBnBYYoC1aHMy8K7aSqPBljy0FOH/fRS5SkpNBp8BcdhJbosjFxUUqf9+PuA7pcZZ1mPdlP4Yz
@@ -93,20 +93,20 @@ npFtaDcheinRWuvJSJbhttHrlW7ce2MdLzx+2gLbpE2IvOkIF52EnNcgUVpTMVih/Di43XmVnOTnYTLq
 W3oR9S3ZK+h0DzHAeMjfAzqsiYCdSl71hqvdefpsg0XBE4LOEjT7T2od9Da8mzaw5es0hhds9hQtZ2v9
 N6q53/4LUEsHCEh0vy73DAAA3SUAAFBLAQIUABQACAgIAAAAIQBIdL8u9wwAAN0lAAAIAAkAAAAAAAAA
 AAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAA2DQAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileToCopy.txt-54039e28-ed72-3146-93e7-519bcb6b8c12--
-------=_contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.ini-6f1bfdf9-bcc8-32c6-8e36-0606b2c07140
+------=_contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileToCopy.txt-54039e28-ed72-3146-93e7-519bcb6b8c12--
+------=_contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileCopy.ini-6f1bfdf9-bcc8-32c6-8e36-0606b2c07140
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.ini
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileCopy.ini
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACLTsvMSQ0vyixJLYpV
 gAFerpLKglRbN6CUf2mJAhLg5QKpz0vMTbXV09N3zi/ITE0BKdMrqUBRB1SoQBzg5YoGGRmUmpiCwwme
 ebhdAJIPyQe6oxLDBQhn8HIBAFBLBwhfJGuoXAAAAOYAAABQSwECFAAUAAgICAAAACEAXyRrqFwAAADm
 AAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAmwAAAAAA
 
-------=_contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.ini-6f1bfdf9-bcc8-32c6-8e36-0606b2c07140--
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExample/simulator/archive.cps-1c39fb09-3409-3f35-8dd8-8ac430019f3f
+------=_contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileCopy.ini-6f1bfdf9-bcc8-32c6-8e36-0606b2c07140--
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExample/simulator/archive.cps-1c39fb09-3409-3f35-8dd8-8ac430019f3f
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/SocketExample/simulator/archive.cps
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/SocketExample/simulator/archive.cps
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtW2mMHMUVrtkde3d8
 cRmCOXdtYy7b2AZzGR/r9cEa2+t7ORZM72zvbtsz3ePpWXsXEnPYmCMmkJCQEAjkIJCLhIT8i/hFpCjK
@@ -178,19 +178,19 @@ WBicMv1LLvqVJ0mOYJ62MIhXH1oYxJS/5+iUTz05gjlpYTCvn1sYxJ1/5Og0H669jPlnLqLhhx/lKNvA
 hT0NX323ZSzmBcZgDtjGwbSxmP8DUEsHCHayeSiaDwAAHU0AAFBLAQIUABQACAgIAAAAIQB2snkomg8A
 AB1NAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAADZDwAA
 AAA=
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExample/simulator/archive.cps-1c39fb09-3409-3f35-8dd8-8ac430019f3f--
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini-ea69a587-0902-30ac-805f-cc8989e7e9a0
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExample/simulator/archive.cps-1c39fb09-3409-3f35-8dd8-8ac430019f3f--
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini-ea69a587-0902-30ac-805f-cc8989e7e9a0
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACLDs5Pzk4tcc7JTM0r
 ieXlKqksSLVFFuPlysgvLslLzE21zclPTswB8Xi5CvKLSuLzSnOTUotsLQ3MDABQSwcIS0zceTwAAABH
 AAAAUEsBAhQAFAAICAgAAAAhAEtM3Hk8AAAARwAAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQF
 AAEAAAAAUEsFBgAAAAABAAEAPwAAAHsAAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini-ea69a587-0902-30ac-805f-cc8989e7e9a0--
-------=_contents/org.eclipse.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini-ea69a587-0902-30ac-805f-cc8989e7e9a0--
+------=_contents/nl.esi.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/.project
+Entry-Name: contents/nl.esi.poosl.examples/.project
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACFkD0OwjAMhWeQuEPV
 nQQ2hlAkQIwswAFCapWg/ClOUY9PEgKoLGz+np/tl7DNoFX1AI/SmnW9JIu6AiNsK023ri/nw3xVb5rZ
@@ -198,10 +198,10 @@ lDlv7yDCHlB46UJ0R3XCDNfQGEUAJXHWYqwGrp0CZDT3kklYrcGEhtF3ldSyETPQEV17qdqTA5Go4C6O
 ctNmpdy1viMglHQIZAgwBNJLgjfuoX3xNg2C/0aJk9x3fcqAhelYYPT3WlHeceLp0Hso7hf8T3LMvhQk
 +/Pa76LP88ff+wRQSwcIXZroscwAAACdAQAAUEsBAhQAFAAICAgAAAAhAF2a6LHMAAAAnQEAAAgACQAA
 AAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAAsBAAAAAA==
-------=_contents/org.eclipse.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2--
-------=_contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.poosl-95431e7b-3eb3-3261-bbcc-ab293a105fc1
+------=_contents/nl.esi.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2--
+------=_contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileCopy.poosl-95431e7b-3eb3-3261-bbcc-ab293a105fc1
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileCopy.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC1Uk1PwzAMPTe/wtzW
 aVvvcODAh4SEhARInE3rbpHSJErMoGL77zjpyuhuSJCDldjvvTh+qSpY/uVSVaWqOdx8YOcNgQ+uphiB
@@ -211,25 +211,25 @@ Xl5I+rSh78JUX+b5LwY9O780tCUDsY9MHURPtW51jaydTR4M+XHaQrmmVtoS1yzcakNX0udKZgMYIYHA
 tcC9p1y8s6ukUbSyH+z7tcTDGx81BvPFosho69Hn8VPIwE/+SL1Ba8kI7hOOPSzgJ2uVDrAfIUPyBJL9
 gf0XUEsHCBirbUw8AQAAJgMAAFBLAQIUABQACAgIAAAAIQAYq21MPAEAACYDAAAIAAkAAAAAAAAAAAAA
 AAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAB7AQAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.poosl-95431e7b-3eb3-3261-bbcc-ab293a105fc1--
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini-b5c3698b-e48a-322a-be7c-c61ebecaccdf
+------=_contents/nl.esi.poosl.examples/models-cosim/FileCopy/FileCopy.poosl-95431e7b-3eb3-3261-bbcc-ab293a105fc1--
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini-b5c3698b-e48a-322a-be7c-c61ebecaccdf
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACLDs5Pzk4tCU4tKkst
 iuXlKqksSLVFFuPlKsgvKonPK81NSi2ytTQwM+Dl4uUCAFBLBwiPqdreLwAAADcAAABQSwECFAAUAAgI
 CAAAACEAj6na3i8AAAA3AAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAA
 AAEAAQA/AAAAbgAAAAAA
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini-b5c3698b-e48a-322a-be7c-c61ebecaccdf--
-------=_contents/org.eclipse.poosl.examples/.settings/org.eclipse.poosl.xtext.Poosl.prefs-30f7a8f5-8ec7-3e45-9517-226658bcf6e2
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini-b5c3698b-e48a-322a-be7c-c61ebecaccdf--
+------=_contents/nl.esi.poosl.examples/.settings/nl.esi.poosl.xtext.Poosl.prefs-30f7a8f5-8ec7-3e45-9517-226658bcf6e2
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/.settings/org.eclipse.poosl.xtext.Poosl.prefs
+Entry-Name: contents/nl.esi.poosl.examples/.settings/nl.esi.poosl.xtext.Poosl.prefs
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB1zMEJgFAMBNG7YCtB
 C/jFaFxhISQhQev3IB69Do+BGrMhWThRcEXLjWqGj3WeMqJN6GrXgWW4CZryVuNeWxH9sZ/HA1BLBwhn
 lrR/RAAAAGMAAABQSwECFAAUAAgICAAAACEAZ5a0f0QAAABjAAAACAAJAAAAAAAAAAAAAAAAAAAALmNv
 bnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAgwAAAAAA
-------=_contents/org.eclipse.poosl.examples/.settings/org.eclipse.poosl.xtext.Poosl.prefs-30f7a8f5-8ec7-3e45-9517-226658bcf6e2--
+------=_contents/nl.esi.poosl.examples/.settings/nl.esi.poosl.xtext.Poosl.prefs-30f7a8f5-8ec7-3e45-9517-226658bcf6e2--
 ------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
 Content-Type: q7/binary
 Entry-Name: .q7.content
@@ -245,9 +245,9 @@ Q/uhAnr1VCCkw/x6pLlW9OlGpTeQPcMZcGXD3etitjh87xE8TbdRuQ3kc3JDw/2s3C3/fHASi26uNUNP
 /J96sTh02BPpH1BLBwgLmyR3uwEAAEkGAABQSwECFAAUAAgICAAAACEAC5skd7sBAABJBgAACAAJAAAA
 AAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAA+gEAAAAA
 ------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl-8fcd4c1b-47fe-33fe-8ebd-c3041d36545f
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl-8fcd4c1b-47fe-33fe-8ebd-c3041d36545f
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9Vl1P2zAUfU6l/ofb
 PqWltPAKQntAaKsEEhpIezbObWOR2JntFtjYf9/1R5qkpUyTCgVabOeecz9PPRvDfS4M4DMrqwIhw1JJ
@@ -266,19 +266,19 @@ IQCknaY4gtMJtFGOoX0+ornZkeY7N0Sh/pqSZjuC+aY+/0s13/wO+zAJvFfVcUFJpWvbC7lVgqmQU/pj
 H7tqh4ON9JF3d74Xgii6MTWWSY6mnpN4YzRUykYbOvMQnzhrCSvPGd0XCzfcv+P21OWPvmVbbPDHX1iS
 v1BLBwivS0BLVgMAAA4LAABQSwECFAAUAAgICAAAACEAr0tAS1YDAAAOCwAACAAJAAAAAAAAAAAAAAAA
 AAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAlQMAAAAA
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl-8fcd4c1b-47fe-33fe-8ebd-c3041d36545f--
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExample/socket_example.ini-9217cbca-00a6-33cc-a90c-b863dced3e61
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl-8fcd4c1b-47fe-33fe-8ebd-c3041d36545f--
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExample/socket_example.ini-9217cbca-00a6-33cc-a90c-b863dced3e61
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/SocketExample/socket_example.ini
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/SocketExample/socket_example.ini
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACLLs5Pzk4tCU4tKkst
 iuXlKqksSLUNRhLj5SrILyqJzyvNTUotsrU0MDPg5eLlioZoc87JTM0rQdUGEePlysgvLslLzE21zclP
 TswB8TCNAgBQSwcIW0Vd91EAAAB+AAAAUEsBAhQAFAAICAgAAAAhAFtFXfdRAAAAfgAAAAgACQAAAAAA
 AAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAJAAAAAAAA==
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExample/socket_example.ini-9217cbca-00a6-33cc-a90c-b863dced3e61--
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl-168253d6-3283-35cf-a540-671e6ab382b5
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExample/socket_example.ini-9217cbca-00a6-33cc-a90c-b863dced3e61--
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl-168253d6-3283-35cf-a540-671e6ab382b5
 Content-Type: q7/binary
-Entry-Name: contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl
+Entry-Name: contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9Vk1PGzEQPW+k/IdJ
 TpsQEriCUA8ItZFAQgWpZ+OdZC127a3tBGjpf+/4Y7O7CaGqFAiQYHv93syb8YtnY7jPhQF8ZmVVIGRY
@@ -297,4 +297,4 @@ rh4CQNppiiM4nUAb5Rja6yM6NzvWfOcOUai/JtFsxzDf9Od/ueab32EfZoH3qjouSFS6tr1QWCWYCjnJ
 H/vYVTssNNZ35zsh3KBcbIKqwySvTSFeHg0VsnGGzmmIT5y1bmH9Hs8Z3RcLB/I7LkydfvQt2+KDP/7C
 kvwFUEsHCDdu41lYAwAADgsAAFBLAQIUABQACAgIAAAAIQA3buNZWAMAAA4LAAAIAAkAAAAAAAAAAAAA
 AAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAACXAwAAAAA=
-------=_contents/org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl-168253d6-3283-35cf-a540-671e6ab382b5--
+------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl-168253d6-3283-35cf-a540-671e6ab382b5--
