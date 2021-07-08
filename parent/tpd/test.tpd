@@ -31,7 +31,15 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020
 	org.eclipse.sirius.tests.support.feature.group
 }
 
-location xpect-tests "http://www.xpect-tests.org/updatesite/nightly/" {
+location xpect-tests "http://www.xpect-tests.org/updatesite/nightly/local" {
+	// Issue
+	// Public p2 is composite with:
+	// http://meysholdt.github.com/eclipse_jdt_junit_runners/updatesite/
+	// But it fails as real URL is:
+	// http://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite/
+	
+	// Eclipse can handle it (log an error) but maven rejects.
+	
 	// Xpect is test suite for Xtext project
 	org.xpect.sdk.feature.group // several versions are available
 }

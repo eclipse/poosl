@@ -189,12 +189,14 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          version="0.0.0"
          unpack="false"/>
 
+<!-- OBEO: investigate on www.es.ele.tue.nl
    <plugin
          id="org.eclipse.poosl.rotalumisclient"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+-->
 
    <plugin
          id="org.eclipse.poosl.help"
@@ -225,14 +227,16 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.persistence.moxy"
+         id="jakarta.xml.bind-api"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
+<!-- OBEO why to embed those. 
+They are provided by standard release -->
    <plugin
-         id="jakarta.xml.bind-api"
+         id="org.eclipse.persistence.moxy"
          download-size="0"
          install-size="0"
          version="0.0.0"

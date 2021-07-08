@@ -6,7 +6,7 @@ target "Poosl SDK"
 
 with requirements
 
-environment JavaSE-1.8
+environment JavaSE-11
 
 location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 

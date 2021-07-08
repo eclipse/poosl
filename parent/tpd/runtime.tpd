@@ -41,6 +41,8 @@ location eclipse_update "http://download.eclipse.org/eclipse/updates/4.17" {
 
 location eclipselink "https://download.eclipse.org/rt/eclipselink/updates/" {
    org.eclipse.persistence.sdk.feature.group // 2.7.7 ??
+   // +-> org.eclipse.persistence.moxy
+   // +-> jakarta.xml.bind-api
 }
 
 //// was 
@@ -92,6 +94,7 @@ location ELK "https://download.eclipse.org/elk/updates/releases/0.7.0/" {
     // org.eclipse.elk.graphviz.feature.feature.group
 }
 
+// Feature to run simulations.
 location rotalumis "http://www.es.ele.tue.nl/rotalumis/repository/release/" { // ou integration ?
 	nl.tue.rotalumis.sdk.feature.group
 }
