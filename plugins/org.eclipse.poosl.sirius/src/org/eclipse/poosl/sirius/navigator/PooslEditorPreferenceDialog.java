@@ -60,8 +60,10 @@ public class PooslEditorPreferenceDialog extends Dialog {
      * Create the dialog.
      * 
      * @param parentShell
+     * @param dialogLabel
+     * @param diagramDescription
+     * @param isClassDiagramShown
      */
-
     public PooslEditorPreferenceDialog(Shell parentShell, String dialogLabel, String diagramDescription, boolean isClassDiagramShown) {
         super(parentShell);
         this.dialogLabel = dialogLabel;

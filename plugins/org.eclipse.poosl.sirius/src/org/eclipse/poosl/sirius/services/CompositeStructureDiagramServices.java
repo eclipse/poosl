@@ -124,6 +124,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
      * 
      * @param instance
      *            The instance to check the unconnected ports for.
+     * @param instancePorts
      * @return A list of Ports to be added as a graphical element to the provided instance.
      */
     private List<Port> getUnconnectedPorts(Instance instance, List<InstancePort> instancePorts) {
@@ -153,8 +154,8 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     /**
      * get Channels that have dont have 2 connections from a cluster used by "ChannelCluster" and "Channelsystem".
      * 
-     * @param archClass
-     *            The ArchitecturalClass
+     * @param cluster
+     *            The ClusterClass
      * @return Lists of channels
      */
     public List<Channel> getChannels(ClusterClass cluster) {
@@ -250,7 +251,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     /**
      * Private helper function to get all uniqueInstancePorts from the provided ClusterClass.
      * 
-     * @param cc
+     * @param cluster
      *            The ClusterClass from which to get all the unique instanceports.
      * @return A hashmap containing the unique instanceports with keys of their instanceName+portName.
      */

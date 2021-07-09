@@ -11,7 +11,7 @@ public final class FileURIConverter {
      * Convert normal file uri to new uri that is allowed in API.
      * 
      * @param input
-     * @return
+     * @return the converted uri
      */
     public static String toConversion(String input) {
         StringBuilder output = new StringBuilder();
@@ -73,7 +73,7 @@ public final class FileURIConverter {
      * Convert url encoded file scheme to normal scheme.
      * 
      * @param input
-     * @return
+     * @return the converted uri
      */
     public static String fromConversion(String input) {
         int bIndex = 0;

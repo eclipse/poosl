@@ -36,10 +36,11 @@ final class PooslSuperClassDescription {
     }
 
     /**
-     * Adds the name of object to usedElements if interested
+     * Adds the name of object to usedElements if interested.
      * 
-     * @param usedElements
+     * @param used
      *            container created with {@link #initUsedElements()}
+     * @param local
      * @param object
      *            element to add to the usedelements
      */

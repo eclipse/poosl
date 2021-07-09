@@ -252,13 +252,15 @@ public final class PooslReferenceHelper {
     // --- Find all Identifiers -------
 
     /**
-     * Find existing process method names with the same number of input and output arguments s. This method is used for
+     * Find existing process method names with the same number of input and output arguments. This method is used for
      * renaming process methods. It returns names that are already in use (thus not allowed) and excludes the name of
      * the method that is being renamed
      * 
-     * @param statement
-     * @param excludedObject
-     * @return
+     * @param call
+     *            the method call
+     * @param excludedObjectURI
+     *            the renamed method uri
+     * @return names already in use
      */
     public static Iterable<String> getProcessMethodNamesByNumberOfInputAndOutputArguments(ProcessMethodCall call, final URI excludedObjectURI) {
         Iterable<IEObjectDescription> methods = PooslScopeProvider.helperscope_ProcessMethodCall_method(call).getAllElements();
@@ -281,7 +283,7 @@ public final class PooslReferenceHelper {
      * 
      * @param statement
      * @param excludedObject
-     * @return
+     * @return the signature names
      */
     public static Iterable<String> getExistingSendSignatureNamesByPortAndNumberOfParameters(SendStatement statement, URI excludedObject) {
         Resource resource = statement.eResource();
@@ -298,7 +300,7 @@ public final class PooslReferenceHelper {
      * 
      * @param statement
      * @param excludedObject
-     * @return
+     * @return the signature names
      */
     public static Iterable<String> getExistingReceiveSignatureNamesByPortAndNumberOfParameters(ReceiveStatement statement, URI excludedObject) {
         Resource resource = statement.eResource();

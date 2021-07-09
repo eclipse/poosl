@@ -1,6 +1,8 @@
 package org.eclipse.poosl.rotalumisclient.sourcemapping;
 
 public class PooslSourceMapping {
+    private static final String WHITESPACE = " ";
+
     private static final String EMPTY_SOURCETEXT = "...";
 
     private final String filePath;
@@ -60,7 +62,7 @@ public class PooslSourceMapping {
     /**
      * Get the source text as a single line without comments.
      * 
-     * @return
+     * @return the single line text
      */
     public String getSingleLineSourceText() {
         if (singleLine == null) {
@@ -69,11 +71,11 @@ public class PooslSourceMapping {
             }
             singleLine = sourceText;
             // replace comments, source http://ostermiller.org/findcomment.html
-            singleLine = singleLine.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", " ");
+            singleLine = singleLine.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", WHITESPACE);
             // replace whitespaces
-            singleLine = singleLine.replaceAll("\\n", " ").replaceAll("\\t", " ").replaceAll("\\r", "");
+            singleLine = singleLine.replaceAll("\\n", WHITESPACE).replaceAll("\\t", WHITESPACE).replaceAll("\\r", "");
             // remove unnecessary whitespaces
-            singleLine = singleLine.trim().replaceAll(" +", " ");
+            singleLine = singleLine.trim().replaceAll(" +", WHITESPACE);
         }
         return singleLine;
     }

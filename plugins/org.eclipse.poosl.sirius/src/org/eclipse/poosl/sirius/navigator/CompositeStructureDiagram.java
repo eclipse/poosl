@@ -35,6 +35,7 @@ public final class CompositeStructureDiagram {
     /**
      * find a main cluster in poosl
      * 
+     * @param poosl
      * @return Main ClusterClass, returns null if there are multiple or none.
      */
     private static EObject getMainCluster(Poosl poosl) {

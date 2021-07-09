@@ -19,6 +19,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public final class PooslProjectSupport {
 
+    /**
+     * The xtext project nature.
+     */
     public static final String NATURE_ID = "org.eclipse.xtext.ui.shared.xtextNature";
 
     private static final Logger LOGGER = Logger.getLogger(PooslProjectSupport.class.getName());
@@ -33,7 +36,7 @@ public final class PooslProjectSupport {
      * 
      * @param projectName
      * @param location
-     * @return
+     * @return the created project
      * @throws CoreException
      */
     public static IProject createProject(String projectName, URI location) throws CoreException {
@@ -52,6 +55,7 @@ public final class PooslProjectSupport {
      * 
      * @param location
      * @param projectName
+     * @return the created project
      * @throws CoreException
      */
     private static IProject createBaseProject(String projectName, URI location) throws CoreException {
@@ -89,7 +93,6 @@ public final class PooslProjectSupport {
      * Create a folder structure with a parent root, overlay, and a few child folders.
      * 
      * @param newProject
-     * @param paths
      * @throws CoreException
      */
     private static void addProjectStructure(IProject newProject) throws CoreException {

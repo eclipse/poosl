@@ -1041,13 +1041,14 @@ public class PooslFormatter extends AbstractFormatter2 {
     }
 
     /**
-     * return true if multiline formatting is applied
+     * return true if multiline formatting is applied.
      * 
+     * @param fromRegion
+     * @param toRegion
      * @param declarations
      * @param oneSpaceWrap
-     * @param mRegionFinder
      * @param document
-     * @return
+     * @return true if multiline formatting is applied
      */
     private boolean formatMutlilineDeclarations(ISemanticRegion fromRegion, ISemanticRegion toRegion, EList<Declaration> declarations, Procedure1<IHiddenRegionFormatter> oneSpaceWrap,
             IFormattableDocument document) {

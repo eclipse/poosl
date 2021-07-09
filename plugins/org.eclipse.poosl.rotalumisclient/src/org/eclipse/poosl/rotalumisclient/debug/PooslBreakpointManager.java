@@ -140,6 +140,7 @@ public class PooslBreakpointManager {
         TBreakpointInfo breakpoint = state.getBreakpoints().getBreakpoint().get(0);
         pooslSourceMap.getSourceMapping(breakpoint.getStmtHandle(), new PooslSourceMappingListener(false) {
 
+            @Override
             public void requestedSourceMapping(PooslSourceMapping mapping) {
                 LOGGER.fine("Execution state response has breakpoint: " + mapping);
                 TTransition transition = state.getTransition();
@@ -166,7 +167,7 @@ public class PooslBreakpointManager {
      * @param threads
      * @param sourceMapping
      * @param transition
-     * @return
+     * @return the poosl thread
      * @throws DebugException
      *             if the thread could not be found by name
      */

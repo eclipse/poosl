@@ -40,12 +40,12 @@ public class Poosl2Html {
     private static final Logger LOGGER = Logger.getLogger(Poosl2Html.class.getName());
 
     private static final String HTML_HEADER = "<html>\n<head>\n\t<style>body{font-family:Arial;} "
-    + "h3{font-size: 1.2em; margin-bottom: 0em;}h4{font-size: 1em; margin-bottom: 0em;}div.indented{margin-left:2em;}</style>\n</head>\n<body>";
+            + "h3{font-size: 1.2em; margin-bottom: 0em;}h4{font-size: 1em; margin-bottom: 0em;}div.indented{margin-left:2em;}</style>\n</head>\n<body>";
 
     private static final String HTML_FOOTER = "\n</body>\n</html>";
 
     @Inject
-    protected IEObjectDocumentationProvider documentationProvider;
+    private IEObjectDocumentationProvider documentationProvider;
 
     public static void main(String[] args) {
         String input = "";

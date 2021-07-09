@@ -49,6 +49,7 @@ public final class PooslDataClassDescription {
      *            elements created with {@link #initUsedElements()}
      * @param startObject
      *            The container to check for used elements
+     * @param localVariables
      */
     private static void findUsedElements(Set<String> usedVariables, Set<String> localVariables, EObject startObject) {
         TreeIterator<EObject> allProperContents = EcoreUtil.getAllProperContents(startObject, false);

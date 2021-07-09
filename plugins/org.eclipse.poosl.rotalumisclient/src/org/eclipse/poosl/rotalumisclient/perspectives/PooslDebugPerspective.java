@@ -7,6 +7,8 @@ import org.eclipse.ui.IPerspectiveFactory;
 import org.eclipse.ui.console.IConsoleConstants;
 
 public class PooslDebugPerspective implements IPerspectiveFactory {
+    private static final String TOP_LITERAL = "top";
+
     private IPageLayout factory;
 
     @Override
@@ -23,17 +25,16 @@ public class PooslDebugPerspective implements IPerspectiveFactory {
         // Creates the overall folder layout.
         // Note that each new Folder uses a percentage of the remaining
         // EditorArea.
-        factory.createFolder("top", // NON-NLS-1
-                IPageLayout.TOP, 0.4f, factory.getEditorArea());
+        factory.createFolder(TOP_LITERAL, IPageLayout.TOP, 0.4f, factory.getEditorArea());
         IFolderLayout insideTop = factory.createFolder("insideTop", // NON-NLS-1
-                IPageLayout.LEFT, 0.33f, "top");
+                IPageLayout.LEFT, 0.33f, TOP_LITERAL);
         insideTop.addView(PooslConstants.ID_POOSL_DEBUGVIEW); // NON-NLS-1
         IFolderLayout insideTop1 = factory.createFolder("insideTop1", // NON-NLS-1
-                IPageLayout.LEFT, 0.5f, "top");
+                IPageLayout.LEFT, 0.5f, TOP_LITERAL);
 
         insideTop1.addView(PooslConstants.ID_POOSL_PETVIEW); // NON-NLS-1
         IFolderLayout insideTop2 = factory.createFolder("insideTop2", // NON-NLS-1
-                IPageLayout.LEFT, 0.05f, "top");
+                IPageLayout.LEFT, 0.05f, TOP_LITERAL);
         insideTop2.addView(PooslConstants.ID_POOSL_VARIABLESVIEW); // NON-NLS-1
         IFolderLayout right = factory.createFolder("right", // NON-NLS-1
                 IPageLayout.RIGHT, 0.5f, factory.getEditorArea());

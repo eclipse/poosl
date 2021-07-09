@@ -95,6 +95,7 @@ public final class GraphicalEditorHelper {
      * 
      * @param project
      *            The project to which the nature must be added
+     * @param monitor
      * @return True if adding the nature succeeded
      */
     private static boolean addModelingNature(final IProject project, IProgressMonitor monitor) {
@@ -118,7 +119,7 @@ public final class GraphicalEditorHelper {
      * 
      * @param target
      * @param session
-     * @return
+     * @return the given object within the sirius session
      */
     public static EObject getSiriusObject(EObject target, Session session) {
         URI uri = EcoreUtil.getURI(target);
@@ -177,12 +178,11 @@ public final class GraphicalEditorHelper {
     }
 
     /**
-     * Get description for the object that is used to make a new representation
+     * Get description for the object that is used to make a new representation.
      * 
-     * @param session
      * @param object
      * @param vps
-     * @return
+     * @return the representation description
      */
     private static RepresentationDescription getDescription(EObject object, Collection<Viewpoint> vps) {
         Collection<RepresentationDescription> possiblediagrams = DialectManager.INSTANCE.getAvailableRepresentationDescriptions(vps, object);
@@ -194,11 +194,11 @@ public final class GraphicalEditorHelper {
     }
 
     /**
-     * find an existing representation for the target
+     * find an existing representation for the target.
      * 
      * @param session
      * @param target
-     * @return
+     * @return the representation descriptor
      */
     private static DRepresentationDescriptor getExistingDescriptor(Session session, EObject target) {
         Collection<DRepresentationDescriptor> descriptors = getAllObjectDescriptors(session, target);
@@ -315,6 +315,7 @@ public final class GraphicalEditorHelper {
      * This method is used to go from Graphical editor to another graphical editor.
      * 
      * @param target
+     * @param documentation
      */
     public static void openGraphicalEditor(final EObject target, final String documentation) {
         try {
@@ -375,6 +376,7 @@ public final class GraphicalEditorHelper {
      *            Contains the objects that are used for opening the diagram
      * @param openClassDiagram
      *            if true opens the class diagram
+     * @param editor
      */
     public static void openGraphicalEditorFromFile(IFile file, IEditorPart editor, Poosl poosl, boolean openClassDiagram) {
         if (openClassDiagram) {
@@ -401,8 +403,7 @@ public final class GraphicalEditorHelper {
      *            EObject from which the diagram must be shown
      * @param editor
      *            The editor is used to determine the active project
-     * @return
-     * @return
+     * @param activeProject
      */
     public static void openGraphicalEditor(final EObject target, final IEditorPart editor, final IProject activeProject) {
         try {
@@ -478,6 +479,7 @@ public final class GraphicalEditorHelper {
      *            true to open the session if a closed one is found
      * @param create
      *            true to create session if none can be found
+     * @param monitor
      * @return
      */
     public static Session getSession(IProject activeProject, IEditorPart editor, boolean create, boolean open, IProgressMonitor monitor) {
@@ -651,6 +653,7 @@ public final class GraphicalEditorHelper {
      * @param diagramTarget
      * @param session
      * @param launchID
+     * @param instance
      * @return the debug diagram
      */
     private static DRepresentationDescriptor getDebugRepresentation(EObject diagramTarget, Session session, String launchID, String instance) {

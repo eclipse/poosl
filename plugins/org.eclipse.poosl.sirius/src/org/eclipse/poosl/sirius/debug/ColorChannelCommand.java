@@ -32,6 +32,7 @@ public class ColorChannelCommand extends RecordingCommand {
      * @param descriptors
      *            {@link Set} of {@link DRepresentationDescriptor}s to delete.
      * @param pathCalculators
+     * @param messages
      */
     public ColorChannelCommand(Session session, List<DRepresentationDescriptor> descriptors, Map<String, PooslDrawMessage> messages, Map<String, PathCalculator> pathCalculators) {
         super(session.getTransactionalEditingDomain(), COMMAND_LABEL);

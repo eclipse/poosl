@@ -59,6 +59,7 @@ public final class TextualEditorHelper {
      *            The object to be shown in the texteditor
      * @param selectTarget
      *            Set false if you dont want to search and highlight the eobject
+     * @param showInstance
      * @return succeeded
      */
     public static boolean openTextualEditor(EObject sourceObject, boolean selectTarget, boolean showInstance) {

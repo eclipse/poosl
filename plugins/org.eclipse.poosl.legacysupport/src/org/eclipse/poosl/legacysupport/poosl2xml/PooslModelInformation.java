@@ -79,6 +79,7 @@ public class PooslModelInformation {
      * 
      * @param originalObject
      *            The model element to add to the mapping
+     * @param breakpointSupported
      * @return the identifier given to the input object
      */
     public Integer addMapping(EObject originalObject, Boolean breakpointSupported) {

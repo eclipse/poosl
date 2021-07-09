@@ -62,6 +62,8 @@ public final class ConnectedPortsHelper {
      *            the {@link PooslChannelHelper} from which the instance port will be retrieved
      * @param history
      *            to avoid cyclic channels {@link PooslInstanceHelper} will get added to history {@link Set}
+     * @param resource
+     * @param ancestorChain
      */
     private static void getConnectedProcessPorts(List<InstanceAndPort> connectedProcessPorts, Resource resource, List<InstanceAndPort> ancestorChain, PooslChannelHelper channelHelper,
             Set<PooslInstanceHelper> history) {
@@ -118,6 +120,7 @@ public final class ConnectedPortsHelper {
             return portName;
         }
 
+        @Override
         public String toString() {
             StringBuilder builder = new StringBuilder();
             for (InstanceAndPort ancestor : ancestorChain) {

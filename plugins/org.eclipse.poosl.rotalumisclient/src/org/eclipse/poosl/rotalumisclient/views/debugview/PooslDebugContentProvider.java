@@ -127,8 +127,9 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
 
     /**
      * Creates {@link PooslDebugView.TreeItem} if the parent is {@link PooslDebugTarget} or
-     * {@link PooslDebugView.TreeItem} and adds them to parentchildren
+     * {@link PooslDebugView.TreeItem} and adds them to parentchildren.
      * 
+     * @param viewer
      * @param parent
      *            {@link PooslDebugTarget} or {@link PooslDebugView.TreeItem}
      * @param target
@@ -176,7 +177,7 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
 
         for (Object object : children) {
             if (object instanceof PooslDebugTreeItem) {
-                addTreeItems(viewer, (PooslDebugTreeItem) object, target);
+                addTreeItems(viewer, object, target);
             }
         }
         parentchildren.put(parent, children);

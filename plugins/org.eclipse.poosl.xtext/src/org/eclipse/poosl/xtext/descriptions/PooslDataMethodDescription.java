@@ -175,7 +175,7 @@ public final class PooslDataMethodDescription {
      * Returns methods with the init annotation.
      * 
      * @param clazz
-     * @return
+     * @return the predicate
      */
     public static Predicate<IEObjectDescription> predicateDataMethodInit(final String clazz) {
         return new Predicate<IEObjectDescription>() {

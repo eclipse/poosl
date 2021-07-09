@@ -86,14 +86,17 @@ public class PooslSourceMap {
 
     /**
      * Returns the text from the file on the specified line and offset. Rotalumis can only provide the source location
-     * and not the text
+     * and not the text.
      * 
+     * @param handle
      * @param filePath
-     * @param lineNumber
-     * @param offset
-     * @param length
+     * @param bLine
+     * @param bColumn
+     * @param bOffset
+     * @param eLine
+     * @param eColumn
+     * @param eOffset
      * @return PooslSourceMapping or EMPTY_MAPPING when anything fails
-     * @throws FileNotFoundException
      */
     private PooslSourceMapping createSourceMapping(int handle, String filePath, int bLine, int bColumn, int bOffset, int eLine, int eColumn, int eOffset) {
 

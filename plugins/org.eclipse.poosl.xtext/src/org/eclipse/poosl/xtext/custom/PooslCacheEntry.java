@@ -612,7 +612,7 @@ public class PooslCacheEntry {
      * @param containsKey
      * @param map
      * @param pName
-     * @return
+     * @return the description id
      */
     private String getDescriptionIDWithDouble(boolean containsKey, Map<String, IEObjectDescription> map, String pName) {
         if (containsKey) {

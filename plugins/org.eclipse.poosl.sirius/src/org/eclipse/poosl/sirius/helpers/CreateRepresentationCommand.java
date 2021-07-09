@@ -44,6 +44,8 @@ public class CreateRepresentationCommand extends RecordingCommand {
      *            the semantic element on which to create the representation
      * @param launchID
      *            if lauchID is not null or empty provided it will make a communication diagram
+     * @param instance
+     * @param monitor
      */
     public CreateRepresentationCommand(Session session, RepresentationDescription description, EObject eObject, String launchID, String instance, IProgressMonitor monitor) {
         super(session.getTransactionalEditingDomain(), "Create Representation");

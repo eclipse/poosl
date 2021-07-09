@@ -92,6 +92,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
                         ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
@@ -111,6 +112,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
                         ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
@@ -136,6 +138,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
                         ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
@@ -155,6 +158,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
                         ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
@@ -180,6 +184,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
                         ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
@@ -200,6 +205,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
                         ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
@@ -285,6 +291,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         if (element instanceof Expression) {
                             applyConversionMethod(issue, (Expression) element, context);
@@ -299,6 +306,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         ReceiveStatement statement = (ReceiveStatement) element;
 
@@ -321,6 +329,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         ProcessMethodCall pMethodCall = (ProcessMethodCall) element.eContainer();
@@ -352,6 +361,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         if (element instanceof Expression) {
                             applyConversionMethod(issue, (Expression) element, context);
@@ -367,6 +377,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         ProcessMethodCall pMethodCall = (ProcessMethodCall) element;
@@ -402,6 +413,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
 
                         ProcessMethodCall pMethodCall = (ProcessMethodCall) element;
@@ -458,6 +470,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         InstanceParameter currentIParameter = (InstanceParameter) element;
@@ -497,6 +510,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         if (element instanceof InstanceParameter) {
                             applyConversionMethod(issue, ((InstanceParameter) element).getExpression(), context);
@@ -512,6 +526,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         if (element instanceof Expression) {
                             applyConversionMethod(issue, (Expression) element, context);
@@ -527,6 +542,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         if (element instanceof DataMethodNamed) {
                             DataMethodNamed dataMethod = (DataMethodNamed) element;
@@ -550,6 +566,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         if (element instanceof DataMethodNamed) {
                             applyConversionMethod(issue, ((DataMethodNamed) element).getBody(), context);
@@ -565,6 +582,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         DataMethod dataMethod = (DataMethod) element;
@@ -610,6 +628,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         DataMethod dataMethod = (DataMethod) element;
@@ -637,6 +656,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         ProcessMethod pMethod = (ProcessMethod) element;
@@ -663,6 +683,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         ProcessMethod pMethod = (ProcessMethod) element;
                         Resource resource = pMethod.eResource();
@@ -702,6 +723,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         AssignmentExpression assignmentExpression = (AssignmentExpression) element;
                         Resource resource = assignmentExpression.eResource();
@@ -725,6 +747,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         if (element instanceof AssignmentExpression) {
                             applyConversionMethod(issue, ((AssignmentExpression) element).getExpression(), context);
@@ -833,9 +856,9 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
      * Returns messages used in this process.
      * 
      * @param pClass
-     * @return
+     * @param usedSendMessages
+     * @param usedReceiveMessages
      */
-
     public static void getUsedMessagesFromProcess(ProcessClass pClass, List<SendStatement> usedSendMessages, List<ReceiveStatement> usedReceiveMessages) {
         for (ProcessMethod pMethod : pClass.getMethods()) {
             if (pMethod instanceof ProcessMethod) {

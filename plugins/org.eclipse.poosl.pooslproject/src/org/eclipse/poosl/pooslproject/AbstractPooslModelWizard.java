@@ -19,6 +19,9 @@ public abstract class AbstractPooslModelWizard extends Wizard implements INewWiz
 
     private static final String WIZARD_NAME = "New Poosl model with system";
 
+    /**
+     * The current selection.
+     */
     protected IStructuredSelection selection;
 
     private IWorkbench workbench;

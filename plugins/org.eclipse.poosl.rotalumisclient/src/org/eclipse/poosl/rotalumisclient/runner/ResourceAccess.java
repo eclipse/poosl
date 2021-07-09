@@ -23,7 +23,7 @@ public final class ResourceAccess {
     }
 
     public static class ArchivedResourceInfo extends ResourceInfo {
-        public static final Logger LOG = Logger.getLogger(ArchivedResourceInfo.class.getName());
+        private static final Logger LOG = Logger.getLogger(ArchivedResourceInfo.class.getName());
 
         public ArchivedResourceInfo(URI location) {
             super(location);
@@ -172,6 +172,9 @@ public final class ResourceAccess {
     }
 
     public abstract static class ResourceInfo {
+        /**
+         * The resource location.
+         */
         protected final URI location;
 
         public ResourceInfo(URI location) {

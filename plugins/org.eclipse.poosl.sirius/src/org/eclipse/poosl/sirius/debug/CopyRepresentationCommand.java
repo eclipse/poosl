@@ -31,14 +31,16 @@ public class CopyRepresentationCommand extends RecordingCommand {
      * 
      * @param domain
      *            the current editing domain.
-     * @param discriptors
+     * @param descriptors
      *            the representations to copy.
      * @param session
      *            the current session.
+     * @param instance
+     * @param launch
      */
-    public CopyRepresentationCommand(TransactionalEditingDomain domain, Collection<DRepresentationDescriptor> discriptors, Session session, String launch, String instance) {
+    public CopyRepresentationCommand(TransactionalEditingDomain domain, Collection<DRepresentationDescriptor> descriptors, Session session, String launch, String instance) {
         super(domain, COMMAND_LABEL);
-        this.descriptors = discriptors;
+        this.descriptors = descriptors;
         this.launch = launch;
         this.session = session;
         this.instance = instance;

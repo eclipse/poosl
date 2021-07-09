@@ -10,6 +10,9 @@ import org.eclipse.debug.core.model.ITerminate;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 
 public abstract class PooslDebugElement extends PlatformObject implements IDebugElement, ITerminate {
+    /**
+     * The debug target of the element.
+     */
     protected PooslDebugTarget target;
 
     public PooslDebugElement(PooslDebugTarget target) {

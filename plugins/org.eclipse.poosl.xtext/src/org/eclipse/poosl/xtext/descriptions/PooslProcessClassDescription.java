@@ -75,10 +75,13 @@ public final class PooslProcessClassDescription {
     /**
      * Get the used elements for the process class
      * 
+     * @param usedMethods
+     * @param usedPorts
+     * @param usedReceive
+     * @param usedSend
+     * @param usedVariables
      * @param pClass
-     * @return
      */
-
     private static void getProcessUsedElements(Set<String> usedMethods, Set<String> usedPorts, Set<String> usedReceive, Set<String> usedSend, Set<String> usedVariables, ProcessClass pClass) {
         for (MessageSignature messageSignature : pClass.getReceiveMessages()) {
             usedPorts.add(messageSignature.getPort().getPort());
@@ -99,10 +102,13 @@ public final class PooslProcessClassDescription {
     /**
      * Find the used elements contained in the eobject and eobject itself wil also be checked
      * 
+     * @param usedMethods
+     * @param usedReceive
+     * @param usedSend
+     * @param usedVariables
+     * @param localVariables
      * @param startObject
      *            The container to check for used elements
-     * @param usedElements
-     *            elements created with {@link #initUsedElements()}
      */
     private static void findUsedElements(Set<String> usedMethods, Set<String> usedReceive, Set<String> usedSend, Set<String> usedVariables, Set<String> localVariables, EObject startObject) {
         if (startObject == null)
@@ -122,10 +128,13 @@ public final class PooslProcessClassDescription {
     /**
      * Adds the name of object to usedElements if interested
      * 
-     * @param usedElements
-     *            container created with {@link #initUsedElements()}
+     * @param usedMethods
+     * @param usedReceive
+     * @param usedSend
+     * @param usedVariables
      * @param object
      *            element to add to the usedelements
+     * @param localVariables
      */
     private static void addUsedElement(Set<String> usedMethods, Set<String> usedReceive, Set<String> usedSend, Set<String> usedVariables, EObject object, Set<String> localVariables) {
         PooslSuperClassDescription.addUsedVariables(usedVariables, localVariables, object);
@@ -168,7 +177,7 @@ public final class PooslProcessClassDescription {
      * Get all local variable names of the processMethod.
      * 
      * @param processMethod
-     * @return
+     * @return the local variables
      */
     private static Set<String> getLocalVariables(ProcessMethod processMethod) {
         Set<String> localVariables = new HashSet<>();

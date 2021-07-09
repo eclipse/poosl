@@ -7,6 +7,8 @@ import org.eclipse.ui.IPerspectiveFactory;
 import org.eclipse.ui.console.IConsoleConstants;
 
 public class PooslEditPerspective implements IPerspectiveFactory {
+    private static final String LEFT_LITERAL = "left";
+
     private IPageLayout factory;
 
     @Override
@@ -23,14 +25,13 @@ public class PooslEditPerspective implements IPerspectiveFactory {
         // Creates the overall folder layout.
         // Note that each new Folder uses a percentage of the remaining
         // EditorArea.
-        factory.createFolder("left", // NON-NLS-1
-                IPageLayout.LEFT, 0.25f, factory.getEditorArea());
+        factory.createFolder(LEFT_LITERAL, IPageLayout.LEFT, 0.25f, factory.getEditorArea());
         IFolderLayout topleft = factory.createFolder("topleft", // NON-NLS-1
-                IPageLayout.TOP, 0.5f, "left");
+                IPageLayout.TOP, 0.5f, LEFT_LITERAL);
         topleft.addView("org.eclipse.ui.navigator.ProjectExplorer");
 
         IFolderLayout bottomleft = factory.createFolder("bottomleft", // NON-NLS-1
-                IPageLayout.BOTTOM, 0.5f, "left");
+                IPageLayout.BOTTOM, 0.5f, LEFT_LITERAL);
         bottomleft.addView(IPageLayout.ID_OUTLINE);
 
         IFolderLayout bottom = factory.createFolder("bottom", // NON-NLS-1

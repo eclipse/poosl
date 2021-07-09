@@ -75,7 +75,7 @@ public final class ViewHelper {
      * 
      * @param target
      * @param secondID
-     * @return
+     * @return <true> if the id represents the target
      */
     public static boolean isTargetID(IDebugTarget target, String secondID) {
         try {
@@ -118,7 +118,7 @@ public final class ViewHelper {
      * Get target name based on the secondID.
      * 
      * @param secondID
-     * @return
+     * @return the target name
      */
     public static String getDebugTargetName(String secondID) {
         String targetName = "";
@@ -136,7 +136,7 @@ public final class ViewHelper {
      * Get thread name based on the secondid.
      * 
      * @param secondID
-     * @return
+     * @return the thread name
      */
     public static String getThreadName(String secondID) {
         String threadName = "";

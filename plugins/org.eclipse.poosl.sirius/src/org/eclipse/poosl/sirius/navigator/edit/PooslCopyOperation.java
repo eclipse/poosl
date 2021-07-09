@@ -582,6 +582,7 @@ public class PooslCopyOperation {
      *            the resources to copy
      * @param destination
      *            the path of the destination container
+     * @param monitor
      * @return <code>true</code> if the copy operation completed without errors.
      */
     private boolean performCopyWithAutoRename(IResource[] resources, IPath destination, IProgressMonitor monitor) {

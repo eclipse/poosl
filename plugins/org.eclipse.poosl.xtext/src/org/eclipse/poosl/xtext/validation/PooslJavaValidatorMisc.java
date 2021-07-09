@@ -125,8 +125,6 @@ public class PooslJavaValidatorMisc extends PooslJavaValidatorUnusedElements {
      * location.
      * 
      * @param imp
-     * @param importLibs
-     * @param mapping
      */
     private void checkImportLibLocations(Import imp) {
         Resource resource = imp.eResource();
