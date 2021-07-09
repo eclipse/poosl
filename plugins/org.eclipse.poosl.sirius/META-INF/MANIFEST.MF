@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.poosl.sirius
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.poosl.sirius;singleton:=true
 Bundle-Version: 4.2.2.qualifier
 Bundle-Activator: org.eclipse.poosl.sirius.Activator
@@ -47,3 +47,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.apache.commons.lang,
  org.eclipse.debug.ui.contexts
 Automatic-Module-Name: org.eclipse.poosl.sirius
+Bundle-Vendor: %providerName

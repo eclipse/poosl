@@ -11,6 +11,6 @@
 	</parent>
 	<artifactId>org.eclipse.poosl.pooslproject</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>POOSL Project Support</name>
+	<name>POOSL Wizards</name>
 
 </project>

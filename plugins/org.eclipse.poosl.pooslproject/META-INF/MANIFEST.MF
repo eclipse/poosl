@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: POOSL Wizards
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.poosl.pooslproject;singleton:=true
 Bundle-Version: 4.2.2.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-11
@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.equinox.registry,
  org.apache.commons.lang,
  org.eclipse.poosl.rotalumisclient
-Bundle-Vendor: TNO ESI
+Bundle-Vendor: %providerName
 Import-Package: org.eclipse.ui.internal.navigator,
  org.eclipse.ui.navigator,
  org.eclipse.ui.navigator.resources

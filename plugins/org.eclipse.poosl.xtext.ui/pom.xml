@@ -11,5 +11,5 @@
 	</parent>
 	<artifactId>org.eclipse.poosl.xtext.ui</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>Poosl Xtext UI</name>	
+	<name>POOSL Xtext UI</name>	
 </project>

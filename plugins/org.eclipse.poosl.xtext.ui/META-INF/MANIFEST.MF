@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: POOSL Xtext UI
-Bundle-Vendor: TNO ESI
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
 Bundle-Version: 4.2.2.qualifier
 Bundle-SymbolicName: org.eclipse.poosl.xtext.ui;singleton:=true
 Bundle-ActivationPolicy: lazy

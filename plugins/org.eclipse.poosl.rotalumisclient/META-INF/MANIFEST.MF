@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: POOSL Rotalumis Client
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.poosl.rotalumisclient;singleton:=true
 Bundle-Version: 4.2.2.qualifier
 Export-Package: org.eclipse.poosl.rotalumisclient,
@@ -54,7 +54,7 @@ Import-Package: org.apache.commons.lang,
  org.eclipse.xtext.ui.editor,
  org.eclipse.xtext.ui.editor.model,
  org.eclipse.xtext.ui.editor.preferences.fields
-Bundle-Vendor: TNO ESI
+Bundle-Vendor: %providerName
 Bundle-Activator: org.eclipse.poosl.rotalumisclient.Activator
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.poosl.rotalumisclient

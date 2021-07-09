@@ -9,4 +9,5 @@
 	</parent>
 	<artifactId>org.eclipse.poosl.xtext.util</artifactId>
 	<packaging>eclipse-plugin</packaging>
+	<name>POOSL Xtext Util</name>
 </project>

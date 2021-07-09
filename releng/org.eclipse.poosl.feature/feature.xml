@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.poosl.feature"
-      label="POOSL IDE"
+      label="%featureName"
       version="4.2.2.qualifier"
-      provider-name="TNO ESI">
+      provider-name="%providerName">
 
    <description>
-      This plug-in contains a full POOSL IDE with validation, quickfixes and debug possibilities.
+      %description
    </description>
 
    <copyright>
-      Copyright (c) 2019, ESI (TNO). All rights
-reserved.
+      %copyright
    </copyright>
 
    <license url="">

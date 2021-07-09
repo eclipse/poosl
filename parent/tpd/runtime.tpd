@@ -12,7 +12,10 @@ with requirements
 
 location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 	org.eclipse.equinox.sdk.feature.group  // TODO This to broad !!
-	org.eclipse.xtext.sdk.feature.group
+	
+	org.eclipse.xtext.sdk.feature.group // This to broad, 
+	// Maybe only xtext.runtime, xtext.redist, xtext.xbase 
+	
     org.eclipse.emf.sdk.feature.group 
     
     /*
@@ -33,6 +36,7 @@ location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 	org.eclipse.emf.transaction.feature.group
 	// +-> emf, emf.edit, emf.edit.ui
      */
+
 }
 
 location eclipse_update "http://download.eclipse.org/eclipse/updates/4.17" {

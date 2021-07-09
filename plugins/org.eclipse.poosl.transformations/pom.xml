@@ -11,6 +11,6 @@
 	</parent>
 	<artifactId>org.eclipse.poosl.transformations</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>POOS Transformations</name>
+	<name>POOSL Transformations</name>
 
 </project>

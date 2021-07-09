@@ -14,4 +14,23 @@
 	<artifactId>org.eclipse.poosl.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
 	<name>POOSL Feature</name>
+	
+	<build>
+		<plugins>
+		    <plugin>
+		      <groupId>org.eclipse.tycho</groupId>
+		      <artifactId>tycho-source-plugin</artifactId>
+			  <configuration>
+			  <!-- Following plugin have no source -->
+	
+			  	<excludes>
+			  	
+  					<plugin id="org.eclipse.poosl.help"/>
+  					<plugin id="jakarta.xml.bind-api"/>
+				</excludes>
+
+			  </configuration>
+		    </plugin>
+		</plugins>
+	</build>
 </project>

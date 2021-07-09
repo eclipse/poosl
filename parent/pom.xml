@@ -14,10 +14,11 @@
 	
 	    <tp.version>1.0.0-SNAPSHOT</tp.version>
 		<tp.mode>build</tp.mode>
-		<tycho.version>1.7.0</tycho.version>
-		<xtend.version>2.23.0</xtend.version>
+		<!-- was: 1.7.0 : issue with unexpected a.jre.javase[16.0.0,16.0.0] dependency -->
+		<tycho.version>2.3.0</tycho.version>
+		<xtend.version>2.25.0</xtend.version>
 		<!-- Xtend plugin does not take source version from TPD  -->
-		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.source>11</maven.compiler.source>
 		<project.build.sourceEncoding>windows-1252</project.build.sourceEncoding> <!-- TODO turn into UTF-8 -->
 
 		<!-- supported: warning|error|ignore -->
@@ -51,6 +52,24 @@
 				</configuration>
 			</plugin>
 			
+							    
+				    <plugin>
+<!-- 
+See https://wiki.eclipse.org/Tycho/Reference_Card#Source_Features
+for p2-metadata in feature
+ -->
+				      <groupId>org.eclipse.tycho</groupId>
+				      <artifactId>tycho-p2-plugin</artifactId>
+				      <executions>
+				        <execution>
+				          <id>attach-p2-metadata</id>
+				          <phase>package</phase>
+				          <goals>
+				            <goal>p2-metadata</goal>
+				          </goals>
+				        </execution>
+				      </executions>
+				    </plugin>
 			
 		</plugins>
 		
@@ -254,13 +273,14 @@
 			</activation>
 			<build>
 				<plugins>
-				
+				<!-- Obeo:
+					NO KEY STORE available
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jarsigner-plugin</artifactId>
 						<configuration>
-								<!-- TODO deal with pom parent reference -->
-							<keystore>..\..\parent\PooslKeyStore</keystore>
+								<!- - TODO deal with pom parent reference - ->
+							<keystore>../../parent/PooslKeyStore</keystore>
 							<storepass>POOSLIDE</storepass>
 							<alias>Poosl</alias>
 							<keypass>POOSLIDE</keypass>
@@ -272,7 +292,7 @@
 							</execution>
 						</executions>
 					</plugin>
-				
+				 -->
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>tycho-source-plugin</artifactId>
@@ -299,35 +319,18 @@
 				<plugins>
 				
 				    <plugin>
-				      <groupId>org.eclipse.tycho.extras</groupId>
-				      <artifactId>tycho-source-feature-plugin</artifactId>
+				      <groupId>org.eclipse.tycho</groupId>
+				      <artifactId>tycho-source-plugin</artifactId>
 				      <executions>
 				        <execution>
 				          <id>source-feature</id>
-				          <phase>package</phase>
 				          <goals>
-				            <goal>source-feature</goal>
+				            <goal>feature-source</goal>
 				          </goals>
 				        </execution>
 				      </executions>
 				    </plugin>
-				    <plugin>
-<!-- 
-See https://wiki.eclipse.org/Tycho/Reference_Card#Source_Features
-for p2-metadata in feature
- -->
-				      <groupId>org.eclipse.tycho</groupId>
-				      <artifactId>tycho-p2-plugin</artifactId>
-				      <executions>
-				        <execution>
-				          <id>attach-p2-metadata</id>
-				          <phase>package</phase>
-				          <goals>
-				            <goal>p2-metadata</goal>
-				          </goals>
-				        </execution>
-				      </executions>
-				    </plugin>
+
 
     			</plugins>
 			</build>

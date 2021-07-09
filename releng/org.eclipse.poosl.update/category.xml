@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature id="org.eclipse.poosl.sdk">
+   <feature id="org.eclipse.poosl.feature">
       <category name="org.eclipse.poosl"/>
    </feature>
-   <feature id="org.eclipse.poosl.sdk.legacysupport">
+   <feature id="org.eclipse.poosl.legacysupport.feature">
       <category name="org.eclipse.poosl"/>
    </feature>
    <category-def name="org.eclipse.poosl" label="Poosl"/>
+   
+   <!-- 
+   This fails on dependencies resolution
+   don't know why :
+   http://codeandme.blogspot.com/2015/10/tycho-12-build-source-features.html?_sm_au_=iVVZ26V1WWnsZ26R
+   <feature id="org.eclipse.poosl.feature.source" />
+    -->
 </site>

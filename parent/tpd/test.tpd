@@ -12,9 +12,10 @@ with requirements
 
 location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 	
-	// required for tooling in xtend
-	org.eclipse.xtext.xbase.feature.group	
-	org.eclipse.xtext.redist.feature.group
+	// Required for tooling in xtend
+	// Included org.eclipse.xtext.sdk.feature.group
+	// org.eclipse.xtext.xbase.feature.group	
+	// org.eclipse.xtext.redist.feature.group
 	
 	// org.eclipse.platform.feature.group (in runtime)
 	// +-> org.eclipse.ui.ide.application (default of sure-fire)

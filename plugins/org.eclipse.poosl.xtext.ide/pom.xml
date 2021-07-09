@@ -9,6 +9,6 @@
 	</parent>
 	<artifactId>org.eclipse.poosl.xtext.ide</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>Poosl Xtext IDE</name>
+	<name>POOSL Xtext IDE</name>
 	
 </project>
