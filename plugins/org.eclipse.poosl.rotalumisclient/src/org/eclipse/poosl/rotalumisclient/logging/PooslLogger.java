@@ -16,7 +16,7 @@ import org.eclipse.poosl.rotalumisclient.Activator;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 
 public final class PooslLogger {
-    private static FileHandler fileHTML = null;
+    private static FileHandler fileHTML;
 
     private static final Logger LOGGER = Logger.getLogger("org.eclipse.poosl");
 

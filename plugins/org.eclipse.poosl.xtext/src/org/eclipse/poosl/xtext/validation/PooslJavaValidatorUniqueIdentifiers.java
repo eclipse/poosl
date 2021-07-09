@@ -34,6 +34,7 @@ import org.eclipse.poosl.NewExpression;
 import org.eclipse.poosl.OutputVariable;
 import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.PooslPackage;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.Port;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
@@ -41,7 +42,6 @@ import org.eclipse.poosl.ProcessMethodCall;
 import org.eclipse.poosl.ReceiveStatement;
 import org.eclipse.poosl.Variable;
 import org.eclipse.poosl.VariableExpression;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.custom.PooslCacheEntry;
 import org.eclipse.poosl.xtext.custom.PooslMessageType;
@@ -160,7 +160,7 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
 
     public void checkDataSuperClass(DataClass dClass) {
         String superClass = dClass.getSuperClass();
-        if (superClass != null && PooslCache.get(dClass.eResource()).getDataClass(superClass) == null && !HelperFunctions.permanentDataClasses.contains(superClass)) {
+        if (superClass != null && PooslCache.get(dClass.eResource()).getDataClass(superClass) == null && !HelperFunctions.PERMANENT_DATA_CLASSES.contains(superClass)) {
             error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(), superClass), dClass, Literals.DATA_CLASS__SUPER_CLASS, Diagnostic.LINKING_DIAGNOSTIC);
         }
     }

@@ -49,7 +49,9 @@ public class PooslDrawMessage {
     }
 
     /**
-     * @return {@link Map} diagram name as key and the messagepath as value, may return null
+     * Returns a {@link Map} diagram name as key and the messagepath as value, may return null.
+     * 
+     * @return the diagram/messagePath map
      */
     public Map<String, MessagePath> getMessagePaths() {
         return messagePaths;

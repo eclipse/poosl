@@ -6,7 +6,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -82,7 +81,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
 
     private static final Logger LOGGER = Logger.getLogger(LaunchDelegate.class.getName());
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     @Override
     public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
@@ -223,7 +222,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
         final boolean isRandomSeed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
         String seed;
         if (isRandomSeed) {
-            seed = Integer.toString(random.nextInt(Integer.MAX_VALUE));
+            seed = Integer.toString(RANDOM.nextInt(Integer.MAX_VALUE));
         } else {
             String seedString = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
             seed = (LaunchConfigurationPooslTab.isInteger(seedString)) ? seedString : "1";
@@ -235,8 +234,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
         List<String> includes = ImportingHelper.getIncludes(project);
         List<String> absolute = new ArrayList<>();
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-        for (Iterator<String> it = includes.iterator(); it.hasNext();) {
-            String include = it.next();
+        for (String include : includes) {
             IPath includePath = new Path(include);
             if (!includePath.isAbsolute()) {
                 IProject iProject = root.getProject(includePath.segment(0));

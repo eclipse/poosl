@@ -5,7 +5,7 @@ import java.text.MessageFormat;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.poosl.ClusterClass;
 
-public class DiagramNameHelper {
+public final class DiagramNameHelper {
     public static final String COMMUNICATION_DIAGRAM_PREFIX = "<COMM>";
 
     private static final String CLASS_DIAGRAM_LABEL = "Classes ({0})";

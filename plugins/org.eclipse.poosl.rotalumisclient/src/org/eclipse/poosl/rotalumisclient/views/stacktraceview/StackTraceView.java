@@ -51,7 +51,57 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
 
 public class StackTraceView extends ViewPart {
+    private static final String SPACE = " ";
+
+    private static final String EOL = "\r\n";
+
     private static final Logger LOGGER = Logger.getLogger(StackTraceView.class.getName());
+
+    private static final Comparator<StackFrameMapping> STACK_FRAME_COMPARATOR = new Comparator<StackFrameMapping>() {
+        @Override
+        public int compare(StackFrameMapping frame1, StackFrameMapping frame2) {
+            if (frame1 == null || frame1.getFrame() == null) {
+                return 1;
+            } else if (frame2 == null || frame2.getFrame() == null) {
+                return 0;
+            } else {
+                return frame1.getFrame().getId().compareTo(frame2.getFrame().getId());
+            }
+        }
+    };
+
+    IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
+        @Override
+        public void handleDebugEvents(DebugEvent[] debugEvents) {
+            for (int i = 0; i < debugEvents.length; i++) {
+                DebugEvent debugEvent = debugEvents[i];
+                if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.ENGINE_ERROR && debugEvent.getSource() instanceof PooslDebugTarget) {
+
+                    final PooslDebugTarget debugTarget = (PooslDebugTarget) debugEvent.getSource();
+                    if (debugContext == null || debugContext != debugTarget) {
+                        setDebugContext(debugTarget);
+                    }
+                }
+            }
+        }
+    };
+
+    IDebugContextListener debugContextListener = new IDebugContextListener() {
+        @Override
+        public void debugContextChanged(DebugContextEvent event) {
+            if (event.getContext() instanceof IStructuredSelection) {
+                Object element = ((IStructuredSelection) event.getContext()).getFirstElement();
+                if (element instanceof PooslDebugElement) {
+                    IDebugTarget target = ((PooslDebugElement) element).getDebugTarget();
+                    if (target instanceof PooslDebugTarget) {
+                        setDebugContext((PooslDebugTarget) target);
+                        return;
+                    }
+                }
+            }
+            clear();
+        }
+    };
 
     private PooslDebugTarget debugContext;
 
@@ -67,18 +117,7 @@ public class StackTraceView extends ViewPart {
 
     private Label lblTitleErrorMessage;
 
-    private static final Comparator<StackFrameMapping> STACK_FRAME_COMPARATOR = new Comparator<StackFrameMapping>() {
-        @Override
-        public int compare(StackFrameMapping frame1, StackFrameMapping frame2) {
-            if (frame1 == null || frame1.getFrame() == null) {
-                return 1;
-            } else if (frame2 == null || frame2.getFrame() == null) {
-                return 0;
-            } else {
-                return frame1.getFrame().getId().compareTo(frame2.getFrame().getId());
-            }
-        }
-    };
+    private Action copyTraceAction;
 
     /**
      * Create contents of the view part.
@@ -107,7 +146,7 @@ public class StackTraceView extends ViewPart {
 
         GridData gdTxtErrorMessage = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         gdTxtErrorMessage.heightHint = 55;
-        gdTxtErrorMessage.minimumHeight = 50;//
+        gdTxtErrorMessage.minimumHeight = 50;
         txtErrorMessage.setLayoutData(gdTxtErrorMessage);
         txtErrorMessage.setEditable(false);
         formToolkit.adapt(txtErrorMessage, true, true);
@@ -233,41 +272,6 @@ public class StackTraceView extends ViewPart {
         }
     }
 
-    IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
-        @Override
-        public void handleDebugEvents(DebugEvent[] debugEvents) {
-            for (int i = 0; i < debugEvents.length; i++) {
-                DebugEvent debugEvent = debugEvents[i];
-                if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.ENGINE_ERROR && debugEvent.getSource() instanceof PooslDebugTarget) {
-
-                    final PooslDebugTarget debugTarget = (PooslDebugTarget) debugEvent.getSource();
-                    if (debugContext == null || debugContext != debugTarget) {
-                        setDebugContext(debugTarget);
-                    }
-                }
-            }
-        }
-    };
-
-    IDebugContextListener debugContextListener = new IDebugContextListener() {
-        @Override
-        public void debugContextChanged(DebugContextEvent event) {
-            if (event.getContext() instanceof IStructuredSelection) {
-                Object element = ((IStructuredSelection) event.getContext()).getFirstElement();
-                if (element instanceof PooslDebugElement) {
-                    IDebugTarget target = ((PooslDebugElement) element).getDebugTarget();
-                    if (target instanceof PooslDebugTarget) {
-                        setDebugContext((PooslDebugTarget) target);
-                        return;
-                    }
-                }
-            }
-            clear();
-        }
-    };
-
-    private Action copyTraceAction;
-
     private void clear() {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
@@ -337,12 +341,12 @@ public class StackTraceView extends ViewPart {
 
     private String createCopyString() {
         String info = "";
-        info += lblTitleErrorMessage.getText() + " ";
-        info += txtErrorMessage.getText() + "\r\n";
-        info += lblTitleProcessName.getText() + " ";
-        info += lblProcessName.getText() + "\r\n";
+        info += lblTitleErrorMessage.getText() + SPACE;
+        info += txtErrorMessage.getText() + EOL;
+        info += lblTitleProcessName.getText() + SPACE;
+        info += lblProcessName.getText() + EOL;
         for (String item : listViewer.getList().getItems()) {
-            info += " " + item + "\r\n";
+            info += SPACE + item + EOL;
         }
         return info;
 

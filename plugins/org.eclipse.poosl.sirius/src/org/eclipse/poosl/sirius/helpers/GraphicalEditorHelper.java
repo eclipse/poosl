@@ -71,7 +71,7 @@ import org.eclipse.ui.navigator.CommonNavigator;
 import org.eclipse.ui.navigator.INavigatorContentService;
 
 @SuppressWarnings("restriction")
-public class GraphicalEditorHelper {
+public final class GraphicalEditorHelper {
     private static final String WARNING_MODELING_PROJECT_EXPLORER = "Modeling extension in the project explorer could not be removed.";
 
     private static final String SIRIUS_EXPLORER_CONTENT_ID = "org.eclipse.sirius.ui.resource.content.session";
@@ -114,7 +114,7 @@ public class GraphicalEditorHelper {
     }
 
     /**
-     * Gets the sirius eobject thats corresponds to the given eobject
+     * Gets the sirius eobject thats corresponds to the given eobject.
      * 
      * @param target
      * @param session
@@ -130,10 +130,6 @@ public class GraphicalEditorHelper {
         }
     }
 
-    /**
-     * @param airdfile
-     * @return new session
-     */
     private static Session createSession(IProject project, IEditorPart editor, IProgressMonitor monitor) {
         String pathName = project.getFullPath().append(ModelingProject.DEFAULT_REPRESENTATIONS_FILE_NAME).toString();
         URI sessionResourceURI = URI.createPlatformResourceURI(pathName, true);
@@ -472,7 +468,7 @@ public class GraphicalEditorHelper {
     }
 
     /**
-     * Get a graphical {@link Session} for the project
+     * Get a graphical {@link Session} for the project.
      * 
      * @param activeProject
      *            the project to look at for a session

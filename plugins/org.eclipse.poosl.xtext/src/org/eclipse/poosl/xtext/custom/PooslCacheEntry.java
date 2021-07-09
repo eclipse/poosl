@@ -20,9 +20,9 @@ import org.eclipse.poosl.DataMethodNamed;
 import org.eclipse.poosl.DataMethodUnaryOperator;
 import org.eclipse.poosl.Import;
 import org.eclipse.poosl.Poosl;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.descriptions.PooslClusterClassDescription;
 import org.eclipse.poosl.xtext.descriptions.PooslDataClassDescription;
 import org.eclipse.poosl.xtext.descriptions.PooslDataMethodDescription;
@@ -323,7 +323,7 @@ public class PooslCacheEntry {
         return results;
     }
 
-    private IEObjectDescription getCorrectedDataClassExtends(Resource resource, IEObjectDescription dClass) {
+    private IEObjectDescription getCorrectedDataClassExtends(Resource r, IEObjectDescription dClass) {
         String resultAsString = HelperFunctions.getCorrectedDataClassExtendsAsString(dClass);
         if (resultAsString == null) {
             return null;
@@ -672,7 +672,8 @@ public class PooslCacheEntry {
             // the local ancestors)
             // Classes in the current resource (globalScope cannot be used)
             Map<String, ProcessClass> local = getLocalProcessClasses();
-            for (Iterator<String> iterator = names.iterator(); iterator.hasNext();) {
+            Iterator<String> iterator = names.iterator();
+            while (iterator.hasNext()) {
                 String pName = iterator.next();
                 ProcessClass localClass = local.get(pName);
                 if (localClass != null) {

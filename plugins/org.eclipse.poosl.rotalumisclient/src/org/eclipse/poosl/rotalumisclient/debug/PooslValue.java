@@ -21,8 +21,8 @@ public class PooslValue extends PooslDebugElement implements IValue {
         this.listHandle = listHandle;
     }
 
-    public void setVariables(IVariable[] vars) {
-        this.vars = vars;
+    public void setVariables(IVariable[] pVars) {
+        this.vars = pVars;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PooslValue extends PooslDebugElement implements IValue {
     @Override
     public String getValueString() throws DebugException {
         String typeName = var.getType();
-        if (HelperFunctions.primitiveDataClasses.contains(typeName)) {
+        if (HelperFunctions.PRIMITIVE_DATA_CLASSES.contains(typeName)) {
             return var.getLiteral();
         } else {
             return var.getLiteral() + " (id=" + var.getObject() + ")";

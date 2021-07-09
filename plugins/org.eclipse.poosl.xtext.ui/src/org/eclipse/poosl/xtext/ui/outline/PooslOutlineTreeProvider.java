@@ -21,6 +21,7 @@ import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 
+// @CHECKSTYLE:OFF Naming inherited from XText generation
 public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
     private static final String LABEL_DATA_CLASSES = "Data classes";
 

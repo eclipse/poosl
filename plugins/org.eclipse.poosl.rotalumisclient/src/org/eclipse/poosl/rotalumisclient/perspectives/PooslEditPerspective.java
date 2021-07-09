@@ -9,8 +9,9 @@ import org.eclipse.ui.console.IConsoleConstants;
 public class PooslEditPerspective implements IPerspectiveFactory {
     private IPageLayout factory;
 
-    public void createInitialLayout(IPageLayout factory) {
-        this.factory = factory;
+    @Override
+    public void createInitialLayout(IPageLayout pFactory) {
+        this.factory = pFactory;
         addViews();
         addActionSets();
         addNewWizardShortcuts();
@@ -52,9 +53,9 @@ public class PooslEditPerspective implements IPerspectiveFactory {
     }
 
     private void addNewWizardShortcuts() {
-        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.projectwizard");// NON-NLS-1
-        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewizard");// NON-NLS-1
-        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewithsystemwizard");// NON-NLS-1
+        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.projectwizard"); // NON-NLS-1
+        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewizard"); // NON-NLS-1
+        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewithsystemwizard"); // NON-NLS-1
     }
 
     private void addViewShortcuts() {

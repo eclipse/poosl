@@ -10,7 +10,8 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.common.base.Predicate;
 
-public class PooslDeclarationDescription {
+public final class PooslDeclarationDescription {
+    
     private static final String STR_CLASS = "Class";
 
     private static final String STR_IS_FROM_DATA_CLASS = "IsFromDataClass";

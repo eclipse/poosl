@@ -13,10 +13,10 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StyledCellLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.StyledString.Styler;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.poosl.generatedxmlclasses.TTransition;
 import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
 import org.eclipse.poosl.rotalumisclient.debug.PooslThread;
-import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -50,6 +50,20 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
 
     private Image debugTargetTerminatedImage;
 
+    private Styler executableColorStyler = new Styler() {
+        @Override
+        public void applyStyles(TextStyle textStyle) {
+            textStyle.foreground = EXECUTABLE_COLOR;
+        }
+    };
+
+    private Styler executableDelayColorStyler = new Styler() {
+        @Override
+        public void applyStyles(TextStyle textStyle) {
+            textStyle.foreground = EXECUTABLE_DELAY_COLOR;
+        }
+    };
+
     public PooslDebugLabelProvider() {
         super();
         try {
@@ -73,20 +87,6 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
         debugTargetSuspendedImage.dispose();
         debugTargetTerminatedImage.dispose();
     }
-
-    private Styler executableColorStyler = new Styler() {
-        @Override
-        public void applyStyles(TextStyle textStyle) {
-            textStyle.foreground = EXECUTABLE_COLOR;
-        }
-    };
-
-    private Styler executableDelayColorStyler = new Styler() {
-        @Override
-        public void applyStyles(TextStyle textStyle) {
-            textStyle.foreground = EXECUTABLE_DELAY_COLOR;
-        }
-    };
 
     @Override
     public void update(ViewerCell cell) {

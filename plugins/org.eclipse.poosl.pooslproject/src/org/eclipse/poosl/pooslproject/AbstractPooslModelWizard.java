@@ -19,9 +19,9 @@ public abstract class AbstractPooslModelWizard extends Wizard implements INewWiz
 
     private static final String WIZARD_NAME = "New Poosl model with system";
 
-    private IWorkbench workbench;
-
     protected IStructuredSelection selection;
+
+    private IWorkbench workbench;
 
     public AbstractPooslModelWizard() {
         super();
@@ -29,9 +29,9 @@ public abstract class AbstractPooslModelWizard extends Wizard implements INewWiz
     }
 
     @Override
-    public void init(IWorkbench workbench, IStructuredSelection selection) {
-        this.workbench = workbench;
-        this.selection = selection;
+    public void init(IWorkbench wkbch, IStructuredSelection sel) {
+        this.workbench = wkbch;
+        this.selection = sel;
     }
 
     protected boolean openFile(IFile file) {

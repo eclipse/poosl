@@ -57,6 +57,14 @@ import org.eclipse.ui.IEditorPart;
  * @author Koen Staal
  */
 public class ExternalCalls implements IExternalJavaAction {
+    private static final String PARAMETER_ELEMENT = "element";
+
+    private static final String PARAMETER_TARGET = "target";
+
+    private static final String PARAMETER_SOURCE = "source";
+
+    private static final String PARAMETER_VIEW = "view";
+
     private static final String ACTION_EDIT_PARAMETER = "editparameter";
 
     private static final String ACTION_EDIT_VARIABLE = "editvariable";
@@ -290,7 +298,7 @@ public class ExternalCalls implements IExternalJavaAction {
     }
 
     private void showHideDebugElements(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        Object view = parameters.get("view");
+        Object view = parameters.get(PARAMETER_VIEW);
 
         if (view instanceof ArrayList<?>) {
             view = ((ArrayList<?>) view).get(0);
@@ -332,7 +340,7 @@ public class ExternalCalls implements IExternalJavaAction {
     private boolean isChannelConnection(EdgeTarget edgeside) {
         if (edgeside instanceof DNode) {
             DNode node = (DNode) edgeside;
-            return (node.getTarget() instanceof Channel);
+            return node.getTarget() instanceof Channel;
         }
         return false;
     }
@@ -345,121 +353,121 @@ public class ExternalCalls implements IExternalJavaAction {
     }
 
     private void deleteContainment(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        Object view = parameters.get("view");
+        Object view = parameters.get(PARAMETER_VIEW);
 
         if (view instanceof DEdge) {
             DEdge edge = (DEdge) view;
 
             if (edge.getSourceNode() instanceof DNodeList && edge.getTargetNode() instanceof DNodeList) {
                 CreationHelper.deleteContainment(((DNodeList) edge.getSourceNode()).getTarget(), ((DNodeList) edge.getTargetNode()).getTarget());
-                doValidate(parameters.get("element"), parameters.get("view"));
+                doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
             }
         }
     }
 
     private void createContainment(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject source = (EObject) parameters.get("source");
-        EObject target = (EObject) parameters.get("target");
+        EObject source = (EObject) parameters.get(PARAMETER_SOURCE);
+        EObject target = (EObject) parameters.get(PARAMETER_TARGET);
         CreationHelper.createContainment(source, target);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
 
     }
 
     private void createSystem(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject container = (EObject) parameters.get("element");
+        EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (container instanceof Poosl) {
             CreationHelper.createSystem((Poosl) container);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
 
     }
 
     private void deleteCluster(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject element = (EObject) parameters.get("element");
+        EObject element = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (element instanceof ClusterClass) {
             CreationHelper.deleteClusterClass((ClusterClass) element);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void deleteData(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject element = (EObject) parameters.get("element");
+        EObject element = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (element instanceof DataClass) {
             CreationHelper.deleteDataClass((DataClass) element);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void deleteProcess(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject element = (EObject) parameters.get("element");
+        EObject element = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (element instanceof ProcessClass) {
             CreationHelper.deleteProcessClass((ProcessClass) element);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
 
     }
 
     private void createCluster(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject container = (EObject) parameters.get("element");
+        EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (container instanceof Poosl) {
             CreationHelper.createClusterClass((Poosl) container);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void createData(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject container = (EObject) parameters.get("element");
+        EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (container instanceof Poosl) {
             CreationHelper.createDataClass((Poosl) container);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void createProcess(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject container = (EObject) parameters.get("element");
+        EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (container instanceof Poosl) {
             CreationHelper.createProcessClass((Poosl) container);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void createInheritance(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        EObject source = (EObject) parameters.get("source");
-        EObject target = (EObject) parameters.get("target");
+        EObject source = (EObject) parameters.get(PARAMETER_SOURCE);
+        EObject target = (EObject) parameters.get(PARAMETER_TARGET);
         CreationHelper.createInheritance(source, target);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void deleteInheritance(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject element = (EObject) parameters.get("element");
+        EObject element = (EObject) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteInheritance(element);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void deleteExternPort(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        EObject eobject = (EObject) parameters.get("element");
+        EObject eobject = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (eobject instanceof Port) {
             CreationHelper.deletePort((Port) eobject);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void deleteMethod(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        EObject method = (EObject) parameters.get("element");
+        EObject method = (EObject) parameters.get(PARAMETER_ELEMENT);
         if (method instanceof ProcessMethod) {
             CreationHelper.deleteMethod((ProcessMethod) method);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         } else if (method instanceof DataMethod) {
             CreationHelper.deleteMethod((DataMethod) method);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
@@ -467,8 +475,8 @@ public class ExternalCalls implements IExternalJavaAction {
         if (!eobjects.isEmpty()) {
             EObject target = eobjects.iterator().next();
             if (target instanceof Variable) {
-                CreationHelper.editVariable(((Variable) target));
-                doValidate(parameters.get("element"), parameters.get("view"));
+                CreationHelper.editVariable((Variable) target);
+                doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
             }
         }
     }
@@ -477,8 +485,8 @@ public class ExternalCalls implements IExternalJavaAction {
         if (!eobjects.isEmpty()) {
             EObject target = eobjects.iterator().next();
             if (target instanceof Variable) {
-                CreationHelper.editParameter(((Variable) target));
-                doValidate(parameters.get("element"), parameters.get("view"));
+                CreationHelper.editParameter((Variable) target);
+                doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
             }
         }
     }
@@ -489,11 +497,11 @@ public class ExternalCalls implements IExternalJavaAction {
             if (target instanceof ProcessMethod) {
                 ProcessMethod processMethod = (ProcessMethod) target;
                 CreationHelper.editMethod(processMethod);
-                doValidate(parameters.get("element"), parameters.get("view"));
+                doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
             } else if (target instanceof DataMethod) {
                 DataMethod datamethod = (DataMethod) target;
                 CreationHelper.editMethod(datamethod);
-                doValidate(parameters.get("element"), parameters.get("view"));
+                doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
             }
         }
     }
@@ -505,30 +513,30 @@ public class ExternalCalls implements IExternalJavaAction {
      * @param parameters
      */
     private void deleteParameter(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        Variable var = (Variable) parameters.get("element");
+        Variable var = (Variable) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteParameter(var);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void deleteInstanceVariable(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        Variable var = (Variable) parameters.get("element");
+        Variable var = (Variable) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteInstanceVariable(var);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void createMethod(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        EObject container = (EObject) parameters.get("element");
+        EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
         if (container instanceof ProcessMethod || container instanceof DataMethod) {
             container = container.eContainer();
         } else if (container instanceof Variable) {
             container = container.eContainer().eContainer();
         }
         CreationHelper.createMethod(container);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void createParameter(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        EObject container = (EObject) parameters.get("element");
+        EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
         if (container instanceof ProcessMethod) {
             container = container.eContainer();
         } else if (container instanceof Variable) {
@@ -538,19 +546,19 @@ public class ExternalCalls implements IExternalJavaAction {
         if (container instanceof InstantiableClass) {
             InstantiableClass instantiableclass = (InstantiableClass) container;
             CreationHelper.createParameter(instantiableclass);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void createInstanceVariable(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        EObject container = (EObject) parameters.get("element");
+        EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
         if (container instanceof ProcessMethod || container instanceof DataMethod) {
             container = container.eContainer();
         } else if (container instanceof Variable) {
             container = container.eContainer().eContainer();
         }
         CreationHelper.createVariable(container);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void handleDoubleClickClassDiagramMember(Collection<? extends EObject> eobjects) {
@@ -564,16 +572,16 @@ public class ExternalCalls implements IExternalJavaAction {
 
     private void deletePortFromInstance(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
 
-        EObject eobject = (EObject) parameters.get("element");
+        EObject eobject = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (eobject instanceof InstancePort) {
             InstancePort instancePort = (InstancePort) eobject;
             CreationHelper.deleteInstancePort(instancePort);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         } else if (eobject instanceof Port) {
             Port port = (Port) eobject;
             CreationHelper.deletePort(port);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
 
     }
@@ -581,11 +589,11 @@ public class ExternalCalls implements IExternalJavaAction {
     private void createConnection(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
 
         Object sourcelement = parameters.get("sourceview");
-        Object source = parameters.get("source");
+        Object source = parameters.get(PARAMETER_SOURCE);
         EObject sourceobject = getModelElement(source, sourcelement);
 
         Object targetelement = parameters.get("targetview");
-        Object target = parameters.get("target");
+        Object target = parameters.get(PARAMETER_TARGET);
         EObject targetobject = getModelElement(target, targetelement);
 
         CreationHelper.createConnection(sourceobject, targetelement, targetobject);
@@ -594,9 +602,9 @@ public class ExternalCalls implements IExternalJavaAction {
     }
 
     private void reconnectConnection(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        Object source = parameters.get("source");
+        Object source = parameters.get(PARAMETER_SOURCE);
         Object targetelement = parameters.get("targetview");
-        Object target = parameters.get("target");
+        Object target = parameters.get(PARAMETER_TARGET);
         EObject targetobject = getModelElement(target, targetelement);
 
         CreationHelper.reconnectConnection(source, targetelement, targetobject);
@@ -631,43 +639,43 @@ public class ExternalCalls implements IExternalJavaAction {
     }
 
     private void createPort(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        EObject object = (EObject) parameters.get("element");
+        EObject object = (EObject) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.createNewPort(object);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void deleteport(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        Port port = (Port) parameters.get("element");
+        Port port = (Port) parameters.get(PARAMETER_ELEMENT);
         if (port.eContainer() instanceof ClusterClass) {
             ClusterClass cl = (ClusterClass) port.eContainer();
             cl.getPorts().remove(port);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void deleteInstance(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        Instance instance = (Instance) parameters.get("element");
+        Instance instance = (Instance) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteInstance(instance);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void deleteConnection(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        if (parameters.get("view") instanceof DEdge) {
-            DEdge connection = (DEdge) parameters.get("view");
+        if (parameters.get(PARAMETER_VIEW) instanceof DEdge) {
+            DEdge connection = (DEdge) parameters.get(PARAMETER_VIEW);
 
             CreationHelper.deleteChannelConnection(connection);
-            doValidate(parameters.get("element"), parameters.get("view"));
+            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
         }
     }
 
     private void createInstance(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        ClusterClass container = (ClusterClass) parameters.get("element");
+        ClusterClass container = (ClusterClass) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.createNewInstance(container);
-        doValidate(parameters.get("element"), parameters.get("view"));
+        doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
     private void openGraphicalEditor(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        Object diagramObject = parameters.get("view");
+        Object diagramObject = parameters.get(PARAMETER_VIEW);
         if (diagramObject instanceof ArrayList<?>) {
             diagramObject = ((ArrayList<?>) diagramObject).get(0);
         }

@@ -478,6 +478,29 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         }
     };
 
+    private ILaunchListener launchListener = new ILaunchListener() {
+        @Override
+        public void launchRemoved(ILaunch launch) {
+            // Local variable is needed to avoid NullPointerException on isTerminated
+            Object debugContext = lastDebugContext;
+            if (debugContext instanceof PooslDebugTarget) {
+                if (((PooslDebugTarget) debugContext).isTerminated()) {
+                    lastDebugContext = null;
+                }
+            }
+        }
+    
+        @Override
+        public void launchChanged(ILaunch launch) {
+            // do nothing
+        }
+    
+        @Override
+        public void launchAdded(ILaunch launch) {
+            // do nothing
+        }
+    };
+
     private void setDebugTarget(PooslDebugTarget target) {
         if (target != lastDebugContext && target != null) {
             lastDebugContext = target;
@@ -500,29 +523,6 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             }
         }
     }
-
-    private ILaunchListener launchListener = new ILaunchListener() {
-        @Override
-        public void launchRemoved(ILaunch launch) {
-            // Local variable is needed to avoid NullPointerException on isTerminated
-            Object debugContext = lastDebugContext;
-            if (debugContext instanceof PooslDebugTarget) {
-                if (((PooslDebugTarget) debugContext).isTerminated()) {
-                    lastDebugContext = null;
-                }
-            }
-        }
-
-        @Override
-        public void launchChanged(ILaunch launch) {
-            // do nothing
-        }
-
-        @Override
-        public void launchAdded(ILaunch launch) {
-            // do nothing
-        }
-    };
 
     @Override
     public void createPartControl(Composite parent) {
@@ -610,16 +610,16 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         update(messageArray, true, lastProcessedSerialNumber);
     }
 
-    public void update(PooslDiagramMessage[] messageArray, boolean internalUpdate, int serialNumber) {
-        if (messageArray == null)
+    public void update(PooslDiagramMessage[] pMessageArray, boolean pInternalUpdate, int pSerialNumber) {
+        if (pMessageArray == null)
             return;
-        if (!internalUpdate) {
-            this.messageArray = messageArray.clone();
+        if (!pInternalUpdate) {
+            this.messageArray = pMessageArray.clone();
         }
-        int startIndex = Math.max(lastProcessedSerialNumber, serialNumber - messageArray.length);
+        int startIndex = Math.max(lastProcessedSerialNumber, pSerialNumber - pMessageArray.length);
         boolean messageAdded = false;
-        for (int i = startIndex; i < serialNumber; i++) {
-            PooslDiagramMessage msg = messageArray[i % messageArray.length];
+        for (int i = startIndex; i < pSerialNumber; i++) {
+            PooslDiagramMessage msg = pMessageArray[i % pMessageArray.length];
             PooslDrawableDiagramMessage drawableMessage = getFilteredDrawableMessage(msg);
             if (drawableMessage != null) {
                 drawableMessage.setSerialNumber(i);
@@ -631,7 +631,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         // Clear messages that are no longer in the array.
         List<PooslDrawableDiagramMessage> messagesToRemove = new ArrayList<>();
         for (PooslDrawableDiagramMessage drawMessage : drawMessages) {
-            if (drawMessage.getSerialNumber() < serialNumber - messageArray.length) {
+            if (drawMessage.getSerialNumber() < pSerialNumber - pMessageArray.length) {
                 messagesToRemove.add(drawMessage);
             }
         }
@@ -647,7 +647,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 verticalScrollBar.setSelection(newSelection);
                 canvas.redraw();
             } else {
-                verticalScrollBar.setSelection(verticalScrollBar.getSelection() - (serialNumber - lastProcessedSerialNumber));
+                verticalScrollBar.setSelection(verticalScrollBar.getSelection() - (pSerialNumber - lastProcessedSerialNumber));
             }
             horizontalScrollBar.setMaximum(drawLifeLines.size());
         }
@@ -660,13 +660,13 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             canvas.redraw();
             previousHorizontalSelect = horizontalScrollBar.getSelection();
         }
-        if (internalUpdate) {
+        if (pInternalUpdate) {
             canvas.redraw();
         }
-        if (scrollLock && (serialNumber - lastProcessedSerialNumber) > 0) {
+        if (scrollLock && (pSerialNumber - lastProcessedSerialNumber) > 0) {
             canvas.redraw();
         }
-        lastProcessedSerialNumber = serialNumber;
+        lastProcessedSerialNumber = pSerialNumber;
     }
 
     private PooslDrawableDiagramMessage getFilteredDrawableMessage(PooslDiagramMessage msg) {
@@ -725,11 +725,11 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
 
         private static final double ARROW_SIZE = 10;
 
+        private static final String NOTHING_TO_DISPLAY = "Nothing to display.";
+
         private Font smallFont;
 
         private Font largeFont;
-
-        private static final String NOTHING_TO_DISPLAY = "Nothing to display.";
 
         @Override
         public void paintControl(PaintEvent e) {

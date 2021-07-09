@@ -19,7 +19,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.part.ViewPart;
 
-public class ViewHelper {
+public final class ViewHelper {
     private static final String SECONDID_SPLIT = "<>";
 
     private static final Logger LOGGER = Logger.getLogger(ViewHelper.class.getName());
@@ -61,7 +61,7 @@ public class ViewHelper {
      */
     public static boolean isThreadID(PooslThread thread, String secondID) {
         String threadId = getSecondId(thread);
-        return (secondID == null || threadId.equals(secondID));
+        return secondID == null || threadId.equals(secondID);
     }
 
     /**
@@ -80,7 +80,7 @@ public class ViewHelper {
     public static boolean isTargetID(IDebugTarget target, String secondID) {
         try {
             String targetName = target.getName();
-            return (secondID == null || targetName.equals(getDebugTargetName(secondID)));
+            return secondID == null || targetName.equals(getDebugTargetName(secondID));
         } catch (DebugException e) {
             LOGGER.log(Level.WARNING, "Could not compare secondary id with DebugTarget.", e);
         }
@@ -115,7 +115,7 @@ public class ViewHelper {
     }
 
     /**
-     * Get target name based on the secondID
+     * Get target name based on the secondID.
      * 
      * @param secondID
      * @return
@@ -133,7 +133,7 @@ public class ViewHelper {
     }
 
     /**
-     * Get thread name based on the secondid
+     * Get thread name based on the secondid.
      * 
      * @param secondID
      * @return

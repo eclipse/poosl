@@ -5,7 +5,7 @@ import org.eclipse.sirius.diagram.ui.tools.api.format.IFormatDataManagerProvider
 import org.eclipse.sirius.diagram.ui.tools.api.format.SiriusFormatDataManager;
 
 /**
- * Provides the {@link PooslFormatDataManager} for sirius's {@link DDiagram}
+ * Provides the {@link PooslFormatDataManager} for sirius's {@link DDiagram}.
  * 
  * @author kstaal
  */

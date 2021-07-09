@@ -101,201 +101,8 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
 
     private static final Logger LOGGER = Logger.getLogger(PooslDebugTarget.class.getName());
 
-    private PooslSourceMap pooslSourceMap;
-
-    // Datastore and functions for handling sequence diagram messages
-    private PooslSequenceDiagramMessageProvider pooslSequenceDiagramMessageProvider;
-
-    private final Client client;
-
-    private final ILaunch launch;
-
-    private final IProcess process;
-
-    private final String name;
-
-    private final String projectName;
-
-    // Debug information
-    private BigInteger modelHandle = BigInteger.ONE;
-
-    private final Map<String, BigInteger> files2handle = new HashMap<>();
-
-    private final Map<Integer, String> requests = new HashMap<>();
-
-    private final Map<BigInteger, PooslVariable> setVariableRequests = new HashMap<>();
-
-    // known breakpoints
-    private final PooslBreakpointManager breakpointManager = new PooslBreakpointManager();
-
-    private final Map<Integer, PooslStackFrame> stackFrames = new HashMap<>();
-
-    private final List<String> includes;
-
-    private final PooslMessageCreditor messageCreditor;
-
-    private final ExternMessageInformer externMessageInformer;
-
-    // Store the PooslThread objects created from the models processes
-    private PooslThread[] threads;
-
-    private final PooslInstanceMap pooslInstanceMap = new PooslInstanceMap();
-
-    // contextActivationToken is used to add/remove the poosl debug context to
-    // provide key bindings
-    private IContextActivation contextActivationToken;
-
-    // Store the current possible transitions. (empty when running)
-    private List<TTransition> possibleTransitions = new ArrayList<>();
-
-    // Store the simulated time. (empty when running)
-    private String simulatedTime = "";
-
-    private TEengineEventErrorResponse stacktrace;
-
-    private String externalConfigPath;
-
-    private boolean edited = false;
-
-    private boolean relaunch = false;
-
-    private boolean extensionInformedStop = false;
-
-    private boolean commEventsEnabled = true;
-
-    private final CompileJob compileJob = new CompileJob();
-
-    private Timer timer;
-
-    private boolean isTerminated = false;
-
-    private boolean isSuspended = true;
-
-    private boolean isDisconnected = false;
-
-    public PooslDebugTarget(ILaunch launch, IProcess process, Client client, Process proc, List<String> includes) throws CoreException {
-        super(null);
-        this.launch = launch;
-        this.process = process;
-        this.client = client;
-        this.target = this;
-        this.includes = includes;
-
-        // Set the name for this debugTarget to the name of the model
-        String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
-        this.name = modelPath.substring(modelPath.lastIndexOf(File.separator) + 1);
-        // Get the projectName from the launchConfiguration
-        projectName = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, "");
-
-        // Initialize the Sequence diagram message provider
-        messageCreditor = new PooslMessageCreditor(this);
-        externMessageInformer = new ExternMessageInformer();
-
-        // Add all listeners to the debug target
-        Display.getDefault().asyncExec(new AddListeners());
-        // Create a simulator watcher that terminates the debugTarget if the
-        // process is killed or terminated.
-        Thread simulatorTerminationWatcher = new Thread(new SimulatorTerminationWatcher(this, proc, projectName));
-        simulatorTerminationWatcher.setName("Simulator termination watcher");
-        simulatorTerminationWatcher.start();
-
-        // Send compile request to rotalumis
-        client.setDebugTarget(this);
-    }
-
-    public void start() throws CoreException {
-        compileJob.setUser(true);
-        compileJob.setPriority(Job.INTERACTIVE);
-        compileJob.schedule();
-
-        try {
-            String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
-            String rfcModelPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(modelPath));
-            String rfcBasicPath = null;
-            if (!ImportingHelper.useDefaultBasicclasses()) {
-                String basicString = ImportingHelper.getBasicAbsoluteString();
-                rfcBasicPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(basicString));
-            }
-            String rawExternalConfigPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, "");
-            if (rawExternalConfigPath != null) {
-                externalConfigPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(rawExternalConfigPath));
-            }
-
-            client.compile(rfcModelPath, rfcBasicPath, includes);
-        } catch (Exception e) {
-            PooslDebugHelper.showErrorMessage("Launch failed", "Could not read the file locations.");
-            terminate();
-        }
-    }
-
-    private final class AddListeners implements Runnable {
-        public void run() {
-            final IWorkbench workbench = PlatformUI.getWorkbench();
-            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-            if (window == null) {
-                LOGGER.log(Level.SEVERE, "Could not get active workbench window when trying to add required listeners.");
-                try {
-                    target.terminate();
-                } catch (DebugException e) {
-                    LOGGER.log(Level.SEVERE, "Could not terminate target after adding of listeners failed.", e);
-                }
-            }
-            // Get the context service and active our debug context to enable
-            // key bindings
-            IContextService contextService = workbench.getService(IContextService.class);
-            if (contextService != null) {
-                contextActivationToken = contextService.activateContext("org.eclipse.poosl.rotalumisclient.debugcontext");
-            }
-            // Add a debug context and debug event listener to react on debug
-            // changes
-
-            IDebugContextService service = DebugUITools.getDebugContextManager().getContextService(window);
-            service.addDebugContextListener(debugContextListener);
-            DebugPlugin.getDefault().addDebugEventListener(debugEventSetListener);
-            // Add this debugtarget as a breakpointlistener
-            DebugPlugin.getDefault().getBreakpointManager().addBreakpointListener(target);
-            // Add a resource change listener to listen to save actions from the
-            // user during debugging
-            ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
-            // Switch to the debugging perspective
-            try {
-                workbench.showPerspective(PooslConstants.ID_POOSL_DEBUG_PERSPECTIVE, window);
-            } catch (WorkbenchException e) {
-                LOGGER.log(Level.WARNING, "Could not switch to debug perspective:", e);
-            }
-        }
-    }
-
-    private final class RemoveListeners implements Runnable {
-        public void run() {
-            final IWorkbench workbench = PlatformUI.getWorkbench();
-            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-            if (window == null) {
-                LOGGER.log(Level.SEVERE, "Could not get active workbench window when trying to remove required listeners.");
-                try {
-                    target.terminate();
-                } catch (DebugException e) {
-                    LOGGER.log(Level.SEVERE, "Could not terminate target after removing of listeners failed.", e);
-                }
-            }
-            // Deactive the poosl debug context to remove key bindings again.
-            IContextService contextService = workbench.getService(IContextService.class);
-            if (contextService != null) {
-                contextService.deactivateContext(contextActivationToken);
-            }
-            // Remove debug context and debug event listeners.
-            DebugPlugin.getDefault().removeDebugEventListener(debugEventSetListener);
-
-            IDebugContextService service = DebugUITools.getDebugContextManager().getContextService(window);
-            service.removeDebugContextListener(debugContextListener);
-            // Remove breakpoint listener.
-            DebugPlugin.getDefault().getBreakpointManager().removeBreakpointListener(target);
-            // Remove the resourcechange listener
-            ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
-        }
-    }
-
     IResourceChangeListener resourceChangeListener = new IResourceChangeListener() {
+        @Override
         public void resourceChanged(IResourceChangeEvent event) {
             // we are only interested in POST_CHANGE events
             if (event.getType() != IResourceChangeEvent.POST_CHANGE) {
@@ -304,6 +111,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
             IResourceDelta rootDelta = event.getDelta();
             final List<IResource> changed = new ArrayList<>();
             IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
+                @Override
                 public boolean visit(IResourceDelta delta) {
                     // only interested in changed resources (not added or removed)
                     // only interested in content changes
@@ -354,14 +162,6 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
             }
         }
     };
-
-    public void extentensionsInformStop() {
-        if (!extensionInformedStop) {
-            extensionInformedStop = true;
-            ExternLaunchStopInformer stopInformer = new ExternLaunchStopInformer();
-            stopInformer.executeInformLaunchStopped(launch);
-        }
-    }
 
     IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
         @Override
@@ -473,6 +273,210 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
             }
         }
     };
+
+    private PooslSourceMap pooslSourceMap;
+
+    // Datastore and functions for handling sequence diagram messages
+    private PooslSequenceDiagramMessageProvider pooslSequenceDiagramMessageProvider;
+
+    private final Client client;
+
+    private final ILaunch launch;
+
+    private final IProcess process;
+
+    private final String name;
+
+    private final String projectName;
+
+    // Debug information
+    private BigInteger modelHandle = BigInteger.ONE;
+
+    private final Map<String, BigInteger> files2handle = new HashMap<>();
+
+    private final Map<Integer, String> requests = new HashMap<>();
+
+    private final Map<BigInteger, PooslVariable> setVariableRequests = new HashMap<>();
+
+    // known breakpoints
+    private final PooslBreakpointManager breakpointManager = new PooslBreakpointManager();
+
+    private final Map<Integer, PooslStackFrame> stackFrames = new HashMap<>();
+
+    private final List<String> includes;
+
+    private final PooslMessageCreditor messageCreditor;
+
+    private final ExternMessageInformer externMessageInformer;
+
+    // Store the PooslThread objects created from the models processes
+    private PooslThread[] threads;
+
+    private final PooslInstanceMap pooslInstanceMap = new PooslInstanceMap();
+
+    // contextActivationToken is used to add/remove the poosl debug context to
+    // provide key bindings
+    private IContextActivation contextActivationToken;
+
+    // Store the current possible transitions. (empty when running)
+    private List<TTransition> possibleTransitions = new ArrayList<>();
+
+    // Store the simulated time. (empty when running)
+    private String simulatedTime = "";
+
+    private TEengineEventErrorResponse stacktrace;
+
+    private String externalConfigPath;
+
+    private boolean edited;
+
+    private boolean relaunch;
+
+    private boolean extensionInformedStop;
+
+    private boolean commEventsEnabled = true;
+
+    private final CompileJob compileJob = new CompileJob();
+
+    private Timer timer;
+
+    private boolean isTerminated;
+
+    private boolean isSuspended = true;
+
+    private boolean isDisconnected;
+
+    public PooslDebugTarget(ILaunch launch, IProcess process, Client client, Process proc, List<String> includes) throws CoreException {
+        super(null);
+        this.launch = launch;
+        this.process = process;
+        this.client = client;
+        this.target = this;
+        this.includes = includes;
+
+        // Set the name for this debugTarget to the name of the model
+        String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
+        this.name = modelPath.substring(modelPath.lastIndexOf(File.separator) + 1);
+        // Get the projectName from the launchConfiguration
+        projectName = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, "");
+
+        // Initialize the Sequence diagram message provider
+        messageCreditor = new PooslMessageCreditor(this);
+        externMessageInformer = new ExternMessageInformer();
+
+        // Add all listeners to the debug target
+        Display.getDefault().asyncExec(new AddListeners());
+        // Create a simulator watcher that terminates the debugTarget if the
+        // process is killed or terminated.
+        Thread simulatorTerminationWatcher = new Thread(new SimulatorTerminationWatcher(this, proc, projectName));
+        simulatorTerminationWatcher.setName("Simulator termination watcher");
+        simulatorTerminationWatcher.start();
+
+        // Send compile request to rotalumis
+        client.setDebugTarget(this);
+    }
+
+    public void start() throws CoreException {
+        compileJob.setUser(true);
+        compileJob.setPriority(Job.INTERACTIVE);
+        compileJob.schedule();
+
+        try {
+            String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
+            String rfcModelPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(modelPath));
+            String rfcBasicPath = null;
+            if (!ImportingHelper.useDefaultBasicclasses()) {
+                String basicString = ImportingHelper.getBasicAbsoluteString();
+                rfcBasicPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(basicString));
+            }
+            String rawExternalConfigPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, "");
+            if (rawExternalConfigPath != null) {
+                externalConfigPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(rawExternalConfigPath));
+            }
+
+            client.compile(rfcModelPath, rfcBasicPath, includes);
+        } catch (Exception e) {
+            PooslDebugHelper.showErrorMessage("Launch failed", "Could not read the file locations.");
+            terminate();
+        }
+    }
+
+    private final class AddListeners implements Runnable {
+        @Override
+        public void run() {
+            final IWorkbench workbench = PlatformUI.getWorkbench();
+            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+            if (window == null) {
+                LOGGER.log(Level.SEVERE, "Could not get active workbench window when trying to add required listeners.");
+                try {
+                    target.terminate();
+                } catch (DebugException e) {
+                    LOGGER.log(Level.SEVERE, "Could not terminate target after adding of listeners failed.", e);
+                }
+            }
+            // Get the context service and active our debug context to enable
+            // key bindings
+            IContextService contextService = workbench.getService(IContextService.class);
+            if (contextService != null) {
+                contextActivationToken = contextService.activateContext("org.eclipse.poosl.rotalumisclient.debugcontext");
+            }
+            // Add a debug context and debug event listener to react on debug
+            // changes
+
+            IDebugContextService service = DebugUITools.getDebugContextManager().getContextService(window);
+            service.addDebugContextListener(debugContextListener);
+            DebugPlugin.getDefault().addDebugEventListener(debugEventSetListener);
+            // Add this debugtarget as a breakpointlistener
+            DebugPlugin.getDefault().getBreakpointManager().addBreakpointListener(target);
+            // Add a resource change listener to listen to save actions from the
+            // user during debugging
+            ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
+            // Switch to the debugging perspective
+            try {
+                workbench.showPerspective(PooslConstants.ID_POOSL_DEBUG_PERSPECTIVE, window);
+            } catch (WorkbenchException e) {
+                LOGGER.log(Level.WARNING, "Could not switch to debug perspective:", e);
+            }
+        }
+    }
+
+    private final class RemoveListeners implements Runnable {
+        @Override
+        public void run() {
+            final IWorkbench workbench = PlatformUI.getWorkbench();
+            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+            if (window == null) {
+                LOGGER.log(Level.SEVERE, "Could not get active workbench window when trying to remove required listeners.");
+                try {
+                    target.terminate();
+                } catch (DebugException e) {
+                    LOGGER.log(Level.SEVERE, "Could not terminate target after removing of listeners failed.", e);
+                }
+            }
+            // Deactive the poosl debug context to remove key bindings again.
+            IContextService contextService = workbench.getService(IContextService.class);
+            if (contextService != null) {
+                contextService.deactivateContext(contextActivationToken);
+            }
+            // Remove debug context and debug event listeners.
+            DebugPlugin.getDefault().removeDebugEventListener(debugEventSetListener);
+
+            IDebugContextService service = DebugUITools.getDebugContextManager().getContextService(window);
+            service.removeDebugContextListener(debugContextListener);
+            // Remove breakpoint listener.
+            DebugPlugin.getDefault().getBreakpointManager().removeBreakpointListener(target);
+            // Remove the resourcechange listener
+            ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+        }
+    }
+
+    public void extentensionsInformStop() {
+        if (!extensionInformedStop) {
+            extensionInformedStop = true;
+            ExternLaunchStopInformer stopInformer = new ExternLaunchStopInformer();
+            stopInformer.executeInformLaunchStopped(launch);
+        }
+    }
 
     /**
      * This function is responsible to react to all possible responses from the simulation. Responses are parsed by the
@@ -1001,9 +1005,6 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
         return name;
     }
 
-    /**
-     * @return the error
-     */
     public TEengineEventErrorResponse getStackTrace() {
         return stacktrace;
     }
@@ -1173,11 +1174,11 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
     }
 
     class CompileJob extends Job {
-        private boolean isSetup = false;
+        private boolean isSetup;
 
-        private boolean isFailed = false;
+        private boolean isFailed;
 
-        public CompileJob() {
+        CompileJob() {
             super("Compiling model");
         }
 
@@ -1259,7 +1260,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
 
         if (current.getDelay() != null) {
             if (update.getDelay() != null) {
-                return equalHandle(current.getDelay().getHandle(), (update.getDelay().getHandle()));
+                return equalHandle(current.getDelay().getHandle(), update.getDelay().getHandle());
             } else {
                 return false;
             }
@@ -1270,7 +1271,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
         }
         if (current.getCommunication() != null) {
             if (update.getCommunication() != null) {
-                return equalHandle(current.getCommunication().getHandle(), (update.getCommunication().getHandle()));
+                return equalHandle(current.getCommunication().getHandle(), update.getCommunication().getHandle());
             } else {
                 return false;
             }
@@ -1281,7 +1282,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
         }
         if (current.getDataStep() != null) {
             if (update.getDataStep() != null) {
-                return equalHandle(current.getDataStep().getHandle(), (update.getDataStep().getHandle()));
+                return equalHandle(current.getDataStep().getHandle(), update.getDataStep().getHandle());
             } else {
                 return false;
             }
@@ -1292,7 +1293,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
         }
         if (current.getProcessStep() != null) {
             if (update.getProcessStep() != null) {
-                return equalHandle(current.getProcessStep().getHandle(), (update.getProcessStep().getHandle()));
+                return equalHandle(current.getProcessStep().getHandle(), update.getProcessStep().getHandle());
             } else {
                 return false;
             }

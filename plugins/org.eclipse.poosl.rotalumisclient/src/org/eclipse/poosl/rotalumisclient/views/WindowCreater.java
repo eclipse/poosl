@@ -36,7 +36,7 @@ import org.eclipse.ui.PartInitException;
  * @author staalk
  *
  */
-public class WindowCreater {
+public final class WindowCreater {
     private static final String POOSL_THREAD_WINDOW = "POOSL_THREAD_WINDOW";
 
     private WindowCreater() {
@@ -281,7 +281,7 @@ public class WindowCreater {
 
         private final boolean horizontal;
 
-        public WindowShape(int width, int height, boolean horizontal) {
+        WindowShape(int width, int height, boolean horizontal) {
             super();
             this.x = 100;
             this.y = 100;

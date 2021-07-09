@@ -14,7 +14,7 @@
     <module name="SuppressionCommentFilter"/>
     <module name="SuppressWarningsHolder"/>
     <module name="JavadocMethod">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
     </module>
     <module name="JavadocStyle">
       <property name="severity" value="error"/>
@@ -29,7 +29,7 @@
       <metadata name="com.atlassw.tools.eclipse.checkstyle.lastEnabledSeverity" value="error"/>
     </module>
     <module name="JavadocVariable">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="scope" value="protected"/>
     </module>
     <module name="ConstantName">
@@ -77,20 +77,20 @@
       <property name="severity" value="error"/>
     </module>
     <module name="AnonInnerLength">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="max" value="40"/>
     </module>
     <module name="ExecutableStatementCount">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="max" value="60"/>
       <property name="tokens" value="INSTANCE_INIT,STATIC_INIT,METHOD_DEF,CTOR_DEF"/>
     </module>
     <module name="MethodLength">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="max" value="100"/>
     </module>
     <module name="ParameterNumber">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
     </module>
     <module name="EmptyForInitializerPad">
       <property name="severity" value="error"/>
@@ -179,14 +179,14 @@
       <metadata name="com.atlassw.tools.eclipse.checkstyle.lastEnabledSeverity" value="error"/>
     </module>
     <module name="IllegalCatch">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="illegalClassNames" value="java.lang.Exception, java.lang.Throwable, java.lang.RuntimeException, java.lang.Error"/>
     </module>
     <module name="IllegalThrows">
       <property name="severity" value="error"/>
     </module>
     <module name="InnerAssignment">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
     </module>
     <module name="MagicNumber">
       <property name="severity" value="ignore"/>
@@ -198,17 +198,17 @@
       <property name="severity" value="error"/>
     </module>
     <module name="ModifiedControlVariable">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
     </module>
     <module name="MultipleStringLiterals">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="allowedDuplicates" value="2"/>
     </module>
     <module name="MultipleVariableDeclarations">
       <property name="severity" value="error"/>
     </module>
     <module name="NestedIfDepth">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="max" value="3"/>
     </module>
     <module name="NestedTryDepth">
@@ -219,10 +219,10 @@
       <property name="severity" value="error"/>
     </module>
     <module name="ParameterAssignment">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
     </module>
     <module name="ReturnCount">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="maxForVoid" value="2"/>
       <property name="format" value="^insertionIndexFor$"/>
     </module>
@@ -258,7 +258,7 @@
       <property name="severity" value="error"/>
     </module>
     <module name="ThrowsCount">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
       <property name="max" value="3"/>
     </module>
     <module name="VisibilityModifier">
@@ -267,7 +267,7 @@
       <property name="protectedAllowed" value="true"/>
     </module>
     <module name="BooleanExpressionComplexity">
-      <property name="severity" value="warning"/>
+      <property name="severity" value="error"/>
     </module>
     <module name="ClassDataAbstractionCoupling">
       <property name="severity" value="info"/>

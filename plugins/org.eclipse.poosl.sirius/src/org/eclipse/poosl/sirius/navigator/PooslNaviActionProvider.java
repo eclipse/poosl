@@ -13,7 +13,7 @@ import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 public class PooslNaviActionProvider extends CommonActionProvider {
     private PooslOpenAction action;
 
-    private boolean contribute = false;
+    private boolean contribute;
 
     public PooslNaviActionProvider() {
     }

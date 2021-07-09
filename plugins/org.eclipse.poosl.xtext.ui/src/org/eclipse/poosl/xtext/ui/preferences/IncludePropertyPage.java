@@ -147,7 +147,7 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
                 dialog.addFilter(new ViewerFilter() {
                     @Override
                     public boolean select(Viewer viewer, Object parentElement, Object element) {
-                        return (element instanceof IFolder || element instanceof IProject);
+                        return element instanceof IFolder || element instanceof IProject;
                     }
                 });
                 dialog.setBlockOnOpen(true);
@@ -312,7 +312,7 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
         Map<String, String> newValues = new HashMap<>();
         newValues.put(GlobalConstants.PREFERENCES_INCLUDE_VERSION, GlobalConstants.PREFERENCES_VERSION);
 
-        for (ListIterator<String> it = locations.listIterator(); it.hasNext();) {
+        for (ListIterator<String> it = locations.listIterator(); it.hasNext(); ) {
             int i = it.nextIndex();
             String location = it.next();
             newValues.put(GlobalConstants.PREFERENCES_INCLUDE_KEY + i, location);

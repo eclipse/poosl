@@ -24,10 +24,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 public class PooslEditorPreferenceDialog extends Dialog {
-    private static final String TEXTUAL_EDITOR = "Textual Editor";
-
-    private static final String GRAPHICAL_EDITOR = "Graphical Editor ({0})";
-
     public static final String CLASS_DIAGRAM = "Class Diagram";
 
     public static final String DIAGRAM_NAME_SYSTEM = " of System";
@@ -35,6 +31,10 @@ public class PooslEditorPreferenceDialog extends Dialog {
     public static final String DIAGRAM_NAME_CLUSTER = " of Cluster ";
 
     public static final String COMPOSITE_STRUCTURE_DIAGRAM = "Composite Structure Diagram";
+
+    private static final String TEXTUAL_EDITOR = "Textual Editor";
+
+    private static final String GRAPHICAL_EDITOR = "Graphical Editor ({0})";
 
     private static final Point MINIMUM_SIZE = new Point(500, 300);
 

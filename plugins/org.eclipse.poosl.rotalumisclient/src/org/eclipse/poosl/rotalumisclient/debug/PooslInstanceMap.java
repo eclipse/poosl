@@ -76,8 +76,6 @@ public class PooslInstanceMap {
      * 
      * @param target
      *            The requesting PooslDebugTarget that wants to create threads.
-     * @param model
-     *            The Poosl model to create threads from
      * @return A new array with PooslThreads
      */
     public PooslThread[] createThreads(PooslDebugTarget target) {

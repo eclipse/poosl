@@ -51,31 +51,31 @@ abstract class NewMethodDialog extends TitleAreaDialog {
 
     private static final String TXT_METHOD = "newMethod";
 
+    protected final List<String> existingVariables;
+
+    protected final String[] dataclasses;
+
     private String name;
 
     private Map<TextDeclaration, Declaration> inputVariables = new HashMap<>();
 
     private final List<String> existingmethods;
 
-    protected final List<String> existingVariables;
-
-    protected final String[] dataclasses;
-
     private Text txtName;
 
     private Table inputTable;
 
-    public NewMethodDialog(Shell parentShell, EObject container) {
+    NewMethodDialog(Shell parentShell, EObject container) {
         super(parentShell);
         existingmethods = getExistingMethods(container);
         existingVariables = CreationHelper.getExistingVariablesFromClass(container);
         dataclasses = PooslCache.get(container.eResource()).getDataClassMap().keySet().toArray(new String[0]);
     }
 
-    protected void setMethod(String name, EList<Declaration> declarations) {
-        this.name = name;
+    protected void setMethod(String pName, EList<Declaration> declarations) {
+        this.name = pName;
         inputVariables = getDeclarations(declarations);
-        existingmethods.remove(name);
+        existingmethods.remove(pName);
     }
 
     protected Map<TextDeclaration, Declaration> getDeclarations(EList<Declaration> declarations) {
@@ -428,9 +428,9 @@ abstract class NewMethodDialog extends TitleAreaDialog {
         super.okPressed();
     }
 
-    private boolean methodNameAvailable(String name) {
+    private boolean methodNameAvailable(String pName) {
         for (String methodname : existingmethods) {
-            if (methodname.equalsIgnoreCase(name)) {
+            if (methodname.equalsIgnoreCase(pName)) {
                 return false;
             }
         }
@@ -446,18 +446,20 @@ abstract class NewMethodDialog extends TitleAreaDialog {
     }
 
     public class TextDeclaration {
+        private static final String COMMA = ",";
+
         private String type;
 
         private List<String> variables;
 
-        public TextDeclaration(List<String> vars, String type) {
+        TextDeclaration(List<String> vars, String type) {
             variables = vars;
             this.type = type;
         }
 
-        public TextDeclaration(String name, String type) {
+        TextDeclaration(String name, String type) {
             variables = new ArrayList<>();
-            String[] split = name.split(",");
+            String[] split = name.split(COMMA);
             for (int i = 0; i < split.length; i++) {
                 variables.add(split[i].trim());
             }
@@ -480,20 +482,20 @@ abstract class NewMethodDialog extends TitleAreaDialog {
             this.variables = variables;
         }
 
-        public void addVariable(String name) {
+        public void addVariable(String pName) {
             if (variables == null) {
                 variables = new ArrayList<>();
             }
-            String[] vars = name.split(",");
+            String[] vars = pName.split(COMMA);
             for (int i = 0; i < vars.length; i++) {
                 variables.add(vars[i].trim());
             }
         }
 
-        public void setVariables(String name) {
+        public void setVariables(String pName) {
             variables = new ArrayList<>();
 
-            String[] vars = name.split(",");
+            String[] vars = pName.split(COMMA);
             for (int i = 0; i < vars.length; i++) {
                 variables.add(vars[i].trim());
             }

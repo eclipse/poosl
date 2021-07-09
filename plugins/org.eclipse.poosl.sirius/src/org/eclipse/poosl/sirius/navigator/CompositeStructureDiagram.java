@@ -9,14 +9,14 @@ import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 
-public class CompositeStructureDiagram {
+public final class CompositeStructureDiagram {
 
     private CompositeStructureDiagram() {
         throw new IllegalStateException("Utility class");
     }
 
     /**
-     * Returns the main target for a composite structure diagram in the poosl model
+     * Returns the main target for a composite structure diagram in the poosl model.
      * 
      * @param poosl
      * @return null if not appropriate target is found
@@ -35,7 +35,7 @@ public class CompositeStructureDiagram {
     /**
      * find a main cluster in poosl
      * 
-     * @return Main ClusterClass, returns null if there are multiple or none
+     * @return Main ClusterClass, returns null if there are multiple or none.
      */
     private static EObject getMainCluster(Poosl poosl) {
         Set<String> clusterSet = new HashSet<>();

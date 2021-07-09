@@ -55,6 +55,8 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
 import com.google.common.collect.Lists;
 
 public class Client {
+    private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
+
     private static final Charset CHARSET = StandardCharsets.ISO_8859_1;
 
     private static final int MAX_REQUEST_SIZE = 256 * 1024 * 1024;
@@ -68,8 +70,6 @@ public class Client {
     private final ObjectFactory objFactory;
 
     private PooslDebugTarget debugTarget;
-
-    private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
 
     private final Marshaller marshaller;
 
@@ -136,7 +136,7 @@ public class Client {
 
         InputStream socketInStream;
 
-        public ResponseListener(Socket socket) {
+        ResponseListener(Socket socket) {
             this.listenerSocket = socket;
             try {
                 socketInStream = listenerSocket.getInputStream();

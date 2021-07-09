@@ -17,11 +17,11 @@ import org.eclipse.poosl.DataClass;
 import org.eclipse.poosl.DataMethod;
 import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstancePort;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.Port;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.impl.ChannelImpl;
 import org.eclipse.poosl.sirius.helpers.NameHelper;
 import org.eclipse.poosl.xtext.custom.PooslCache;
@@ -71,7 +71,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Will return a list of {@link EObject} ports and instanceports of the instance
+     * Will return a list of {@link EObject} ports and instanceports of the instance.
      * 
      * @param instance
      *            The ports of this instance will be returned
@@ -94,7 +94,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Returns the name of the port
+     * Returns the name of the port.
      * 
      * @param object
      *            Is an {@link InstancePort} or a {@link Port}
@@ -109,7 +109,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Return is a string describing the instance, used in system and cluster diagram
+     * Return is a string describing the instance, used in system and cluster diagram.
      * 
      * @param instance
      *            the instance
@@ -151,7 +151,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * get Channels that have dont have 2 connections from a cluster used by "ChannelCluster" and "Channelsystem"
+     * get Channels that have dont have 2 connections from a cluster used by "ChannelCluster" and "Channelsystem".
      * 
      * @param archClass
      *            The ArchitecturalClass
@@ -168,7 +168,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Determines the number of connections of the given channel, used to decide if a channel should be shown
+     * Determines the number of connections of the given channel, used to decide if a channel should be shown.
      * 
      * @param channel
      *            the Channel
@@ -183,7 +183,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Get number of unique instance ports
+     * Get number of unique instance ports.
      * 
      * @param ch
      * @return Number of unique instance points
@@ -195,7 +195,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Determines if a straight line from the given port to another port needs to be drawn
+     * Determines if a straight line from the given port to another port needs to be drawn.
      * 
      * @param p
      *            (external)Port or instanceport
@@ -265,7 +265,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * puts all the instanceports in the given map
+     * puts all the instanceports in the given map.
      * 
      * @param allUniqueInstancePorts
      * @param ch
@@ -279,28 +279,28 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Returns true if the object should have the option to change the color in the menu
+     * Returns true if the object should have the option to change the color in the menu.
      * 
      * @param object
      * @return
      */
     public boolean showMenuChangeColor(EObject object) {
-        return (object instanceof Port || object instanceof InstancePort || object instanceof Channel);
+        return object instanceof Port || object instanceof InstancePort || object instanceof Channel;
     }
 
     /**
-     * Returns true if the object should have the option to go to the textual editor
+     * Returns true if the object should have the option to go to the textual editor.
      * 
      * @param object
      * @return
      */
     public boolean showMenuOpenTextualEditor(EObject object) {
-        return (!isBundleResource(object) && (object instanceof Instance || object instanceof ClusterClass || object instanceof ProcessClass || object instanceof DataClass
-                || object instanceof Variable || object instanceof ProcessMethod || object instanceof DataMethod || object instanceof org.eclipse.poosl.Poosl));
+        return !isBundleResource(object) && (object instanceof Instance || object instanceof ClusterClass || object instanceof ProcessClass || object instanceof DataClass || object instanceof Variable
+                || object instanceof ProcessMethod || object instanceof DataMethod || object instanceof org.eclipse.poosl.Poosl);
     }
 
     /**
-     * Returns true if the object should have the option to go to the textual editor of the instance
+     * Returns true if the object should have the option to go to the textual editor of the instance.
      * 
      * @param object
      * @return
@@ -310,7 +310,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Returns true if the object should have the option to go to the graphical editor
+     * Returns true if the object should have the option to go to the graphical editor.
      * 
      * @param object
      * @return
@@ -325,7 +325,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Returns true if the object should have the option to go to the structure diagram from the structure diagram
+     * Returns true if the object should have the option to go to the structure diagram from the structure diagram.
      * 
      * @param object
      * @return
@@ -339,28 +339,28 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * return true if the object has the option to have instances
+     * return true if the object has the option to have instances.
      * 
      * @param object
      * @return
      */
     public boolean canCreateInstance(EObject object) {
-        return (object instanceof ClusterClass);
+        return object instanceof ClusterClass;
     }
 
     /**
-     * return true if the object has the option to have ports
+     * return true if the object has the option to have ports.
      * 
      * @param object
      * @return
      */
     public boolean canCreatePort(EObject object) {
-        return (object instanceof ClusterClass || object instanceof Instance);
+        return object instanceof ClusterClass || object instanceof Instance;
     }
 
     /**
      * this method is used to create channels, if a line can be drawn to the object to represent a channel it returns
-     * true
+     * true.
      * 
      * @param object
      * @return
@@ -372,7 +372,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
             if (object instanceof InstancePort) {
                 return true;
             } else {
-                return (object instanceof Channel);
+                return object instanceof Channel;
             }
         }
     }

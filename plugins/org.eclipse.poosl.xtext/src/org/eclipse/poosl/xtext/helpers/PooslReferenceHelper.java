@@ -23,6 +23,7 @@ import org.eclipse.poosl.InstantiableClass;
 import org.eclipse.poosl.MessageParameter;
 import org.eclipse.poosl.NewExpression;
 import org.eclipse.poosl.OutputVariable;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.Port;
 import org.eclipse.poosl.PortReference;
 import org.eclipse.poosl.ProcessClass;
@@ -31,7 +32,6 @@ import org.eclipse.poosl.ReceiveStatement;
 import org.eclipse.poosl.SendStatement;
 import org.eclipse.poosl.UnaryOperatorExpression;
 import org.eclipse.poosl.VariableExpression;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.custom.PooslMessageType;
 import org.eclipse.poosl.xtext.custom.PooslTypeSystem;
@@ -45,7 +45,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class PooslReferenceHelper {
+public final class PooslReferenceHelper {
 
     private PooslReferenceHelper() {
         throw new IllegalStateException("Utility class");

@@ -6,10 +6,10 @@ import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.DataClass;
 import org.eclipse.poosl.DataMethod;
 import org.eclipse.poosl.MessageSignature;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.xtext.ui.editor.hover.html.DefaultEObjectHoverProvider;
 
 public class PooslHoverProvider extends DefaultEObjectHoverProvider {

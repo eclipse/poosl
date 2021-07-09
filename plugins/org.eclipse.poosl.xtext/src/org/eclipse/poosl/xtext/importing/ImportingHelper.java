@@ -31,6 +31,8 @@ public final class ImportingHelper {
 
     private static final String BASIC_CLASSES_PATH = Thread.currentThread().getContextClassLoader().getResource(BASIC_CLASSES_JAR_PATH).toString();
 
+    private static final char[] HEX_CHARS = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F' };
+
     private ImportingHelper() {
         throw new IllegalStateException("Utility class");
     }
@@ -368,6 +370,4 @@ public final class ImportingHelper {
             return false;
         }
     }
-
-    private static final char[] HEX_CHARS = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F' };
 }

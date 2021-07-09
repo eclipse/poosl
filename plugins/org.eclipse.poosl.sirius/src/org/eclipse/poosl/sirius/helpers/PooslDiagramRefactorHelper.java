@@ -40,12 +40,12 @@ import org.eclipse.sirius.viewpoint.DRepresentationElement;
 import org.eclipse.sirius.viewpoint.ViewpointPackage;
 
 /**
- * Class containing utility for copying diagrams
+ * Class containing utility for copying diagrams.
  * 
  * @author kstaal
  *
  */
-public class PooslDiagramRefactorHelper {
+public final class PooslDiagramRefactorHelper {
     private static final String CONTAINER_GET_MEMBERS_FAILED = "Could not get members from IContainer.";
 
     private static final String COPY_FOLDER_FAILED = "Could not copy resources from folder.";

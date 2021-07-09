@@ -30,7 +30,7 @@ import org.eclipse.ui.progress.UIJob;
 public class GraphicalDebugUpdater {
     private static final Logger LOGGER = Logger.getLogger(GraphicalDebugUpdater.class.getName());
 
-    private static final Map<String, List<URI>> lockedFiles = new HashMap<>();
+    private static final Map<String, List<URI>> LOCKED_FILES = new HashMap<>();
 
     /**
      * This map contains messages that need still need to be drawn. When the message is drawn it is removed from this
@@ -104,14 +104,15 @@ public class GraphicalDebugUpdater {
         drawMessages.remove(launchID);
         lastMessages.remove(launchID);
         instancePortMappings.remove(launchID);
-        lockedFiles.remove(launchID);
+        LOCKED_FILES.remove(launchID);
         verifyLockedFiles();
     }
 
     public static void verifyLockedFiles() {
         try {
             List<String> currentLaunches = GraphicalEditorHelper.getCurrentLaunchIDs();
-            for (Iterator<String> iterator = lockedFiles.keySet().iterator(); iterator.hasNext();) {
+            Iterator<String> iterator = LOCKED_FILES.keySet().iterator();
+            while (iterator.hasNext()) {
                 String launchID = iterator.next();
                 if (!currentLaunches.contains(launchID)) {
                     iterator.remove();
@@ -137,7 +138,7 @@ public class GraphicalDebugUpdater {
     }
 
     class UpdateAllDiagramsViewJob extends UIJob {
-        public UpdateAllDiagramsViewJob() {
+        UpdateAllDiagramsViewJob() {
             super("Updating All Diagrams");
         }
 
@@ -145,7 +146,8 @@ public class GraphicalDebugUpdater {
         public IStatus runInUIThread(IProgressMonitor monitor) {
             Map<String, PooslDrawMessage> currentDrawMessages = new HashMap<>();
 
-            for (Iterator<String> iterator = drawMessages.keySet().iterator(); iterator.hasNext();) {
+            Iterator<String> iterator = drawMessages.keySet().iterator();
+            while (iterator.hasNext()) {
                 PooslDrawMessage drawMessage = drawMessages.remove(iterator.next());
                 currentDrawMessages.put(drawMessage.getMessage().getLaunch(), drawMessage);
             }
@@ -182,7 +184,7 @@ public class GraphicalDebugUpdater {
 
         private Session session;
 
-        public UpdateSingleDiagramViewJob(Session session, DRepresentationDescriptor descriptor) {
+        UpdateSingleDiagramViewJob(Session session, DRepresentationDescriptor descriptor) {
             super("Updating Single Diagram");
             this.session = session;
             this.descriptor = descriptor;
@@ -207,11 +209,11 @@ public class GraphicalDebugUpdater {
     public void launchStarted(String launchID, Map<String, String> instancePortMap, List<URI> files) {
         notSetupLaunches.add(launchID);
         this.instancePortMappings.put(launchID, instancePortMap);
-        lockedFiles.put(launchID, files);
+        LOCKED_FILES.put(launchID, files);
     }
 
     public Map<String, List<URI>> getLockedFiles() {
-        return lockedFiles;
+        return LOCKED_FILES;
     }
 
     public boolean isSetup(String launchID) {

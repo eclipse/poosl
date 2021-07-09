@@ -24,10 +24,10 @@ import org.eclipse.poosl.OperatorBinary;
 import org.eclipse.poosl.OperatorUnary;
 import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.PooslPackage;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 import org.eclipse.poosl.xtext.helpers.PooslReferenceHelper;
 import org.eclipse.poosl.xtext.importing.ImportingHelper;
@@ -41,7 +41,7 @@ import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
-public class TextualEditorHelper {
+public final class TextualEditorHelper {
     private static final Logger LOGGER = Logger.getLogger(TextualEditorHelper.class.getName());
 
     private TextualEditorHelper() {
@@ -53,7 +53,7 @@ public class TextualEditorHelper {
     }
 
     /**
-     * Opens the texteditor and selects the corresponding EObject if needed
+     * Opens the texteditor and selects the corresponding EObject if needed.
      * 
      * @param sourceObject
      *            The object to be shown in the texteditor

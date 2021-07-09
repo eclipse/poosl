@@ -29,10 +29,6 @@ public class PooslEditGroup extends ActionGroup {
 
     private final Shell shell;
 
-    /**
-     *
-     * @param aShell
-     */
     public PooslEditGroup(Shell aShell) {
         shell = aShell;
         makeActions();

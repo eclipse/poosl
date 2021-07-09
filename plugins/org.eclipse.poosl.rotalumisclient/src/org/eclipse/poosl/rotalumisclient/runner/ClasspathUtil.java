@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 import com.google.common.collect.Sets;
 
-public class ClasspathUtil {
+public final class ClasspathUtil {
     private static final String BUNDLE_SYMBOLIC_NAME = "Bundle-SymbolicName";
 
     private static final Logger LOG = Logger.getLogger(ClasspathUtil.class.getName());

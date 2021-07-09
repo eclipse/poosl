@@ -12,7 +12,7 @@ import org.eclipse.poosl.OutputVariable;
 import org.eclipse.poosl.VariableExpression;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-class PooslSuperClassDescription {
+final class PooslSuperClassDescription {
     private static final String STR_SUPER_CLASS = "SuperClass";
 
     private static final String STR_USED_VARIABLES = "UsedVariables";

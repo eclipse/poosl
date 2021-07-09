@@ -43,11 +43,11 @@ import com.google.common.collect.Iterables;
 
 public class PooslResourceDescription extends DefaultResourceDescription {
 
+    private Set<URI> recursiveDependencies;
+
     public PooslResourceDescription(Resource resource, IDefaultResourceDescriptionStrategy strategy, IResourceScopeCache cache) {
         super(resource, strategy, cache);
     }
-
-    private Set<URI> recursiveDependencies;
 
     public Set<URI> getRecursiveDependencies() {
         return recursiveDependencies;

@@ -5,12 +5,11 @@ package org.eclipse.poosl.xtext;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.poosl.PooslPackage;
-import org.eclipse.poosl.xtext.PooslStandaloneSetupGenerated;
 
 import com.google.inject.Injector;
 
 /**
- * Initialization support for running Xtext languages without equinox extension registry
+ * Initialization support for running Xtext languages without equinox extension registry.
  */
 public class PooslStandaloneSetup extends PooslStandaloneSetupGenerated {
 

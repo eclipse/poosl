@@ -16,15 +16,15 @@ import org.eclipse.poosl.generatedxmlclasses.TVariable;
 
 @SuppressWarnings("restriction")
 public class PooslVariable extends PooslDebugElement implements IVariable {
+    private static final Logger LOGGER = Logger.getLogger(PooslVariable.class.getName());
+
     private final String name;
 
     private PooslValue value;
 
     private String newExpression;
 
-    private boolean isChanged = false;
-
-    private static final Logger LOGGER = Logger.getLogger(PooslVariable.class.getName());
+    private boolean isChanged;
 
     public PooslVariable(PooslDebugTarget target, String name) {
         super(target);
@@ -47,8 +47,8 @@ public class PooslVariable extends PooslDebugElement implements IVariable {
 
     class PooslDebugElementLabelProvider extends VariableLabelProvider {
         @Override
-        protected String getValueText(IVariable variable, IValue value, IPresentationContext context) throws CoreException {
-            return value.getValueString();
+        protected String getValueText(IVariable variable, IValue pValue, IPresentationContext context) throws CoreException {
+            return pValue.getValueString();
         }
     }
 
@@ -93,7 +93,7 @@ public class PooslVariable extends PooslDebugElement implements IVariable {
     }
 
     @Override
-    public boolean verifyValue(IValue value) throws DebugException {
+    public boolean verifyValue(IValue pValue) throws DebugException {
         return false;
     }
 

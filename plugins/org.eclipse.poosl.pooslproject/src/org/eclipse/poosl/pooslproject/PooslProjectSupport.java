@@ -17,10 +17,11 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class PooslProjectSupport {
-    private static final Logger LOGGER = Logger.getLogger(PooslProjectSupport.class.getName());
+public final class PooslProjectSupport {
 
     public static final String NATURE_ID = "org.eclipse.xtext.ui.shared.xtextNature";
+
+    private static final Logger LOGGER = Logger.getLogger(PooslProjectSupport.class.getName());
 
     private PooslProjectSupport() {
         throw new IllegalStateException("Utility class");
@@ -28,7 +29,7 @@ public class PooslProjectSupport {
 
     /**
      * For this marvelous project we need to: - create the default Eclipse project - add the custom project nature -
-     * create the folder structure
+     * create the folder structure.
      * 
      * @param projectName
      * @param location

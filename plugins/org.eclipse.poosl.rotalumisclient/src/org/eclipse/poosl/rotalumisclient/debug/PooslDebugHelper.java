@@ -39,6 +39,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
+ * Utility class for debug.
+ * 
  * @author Jeroen van Schelven
  *
  */
@@ -50,7 +52,7 @@ public final class PooslDebugHelper {
     }
 
     /**
-     * Get the named thread from the array of threads by it's name
+     * Get the named thread from the array of threads by it's name.
      * 
      * @param threads
      *            The array of threads to search

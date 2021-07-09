@@ -1,6 +1,6 @@
 package org.eclipse.poosl.sirius;
 
-public class Messages {
+public final class Messages {
     public static final String ERROR_MODELLING_TITLE = "Convert Project to Modeling project";
 
     public static final String ERROR_MODELLING_MESSAGE = "Impossible to convert the project: {0}";

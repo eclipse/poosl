@@ -38,12 +38,12 @@ import org.eclipse.poosl.generatedxmlclasses.TProcessClass;
 import org.eclipse.poosl.generatedxmlclasses.TProcessMethod;
 import org.eclipse.poosl.generatedxmlclasses.TTypedVariable;
 
-public class Xml2xtext {
+public final class Xml2xtext {
+    static TPooslSpecification pooslSpec;
+
     private static final String COULD_NOT_COMPLETE_XTEXT_TRANSFORMATION = "Could not complete xtext transformation.";
 
     private static final Logger LOGGER = Logger.getLogger(Xml2xtext.class.getName());
-
-    static TPooslSpecification pooslSpec;
 
     private Xml2xtext() {
         // Hide the public constructor

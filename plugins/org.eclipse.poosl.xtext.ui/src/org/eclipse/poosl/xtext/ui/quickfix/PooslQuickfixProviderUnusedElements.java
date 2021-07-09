@@ -238,7 +238,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
         for (TextChange textChange : changes) {
             IXtextDocument correctDoc = doc;
             XtextEditor editor = null;
-            if ((res != textChange.resource)) {
+            if (res != textChange.resource) {
                 editor = openEditor(textChange.resource);
                 if (editor != null) {
                     correctDoc = editor.getDocument();
@@ -277,7 +277,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
     protected boolean applyTextChange(IXtextDocument doc, Resource res, EObject object, int offset, int length, String tekst) {
         IXtextDocument correctDoc = doc;
         XtextEditor editor = null;
-        if ((res != object.eResource())) {
+        if (res != object.eResource()) {
             editor = openEditor(object.eResource());
             if (editor != null) {
                 correctDoc = editor.getDocument();
@@ -299,7 +299,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
     protected boolean applyTextChange(IXtextDocument doc, Resource res, EObject object, EStructuralFeature ref, String tekst) {
         IXtextDocument correctDoc = doc;
         XtextEditor editor = null;
-        if ((res != object.eResource())) {
+        if (res != object.eResource()) {
             editor = openEditor(object.eResource());
             if (editor != null) {
                 correctDoc = editor.getDocument();
@@ -369,7 +369,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
             } else if (previousLeafNodeEndedWithNewline && "".equals(hidden.trim())) {
                 indentAfterLastNewline = indentAfterLastNewline + hidden;
             }
-            previousLeafNodeEndedWithNewline = (newLine + 1 == hidden.length());
+            previousLeafNodeEndedWithNewline = newLine + 1 == hidden.length();
 
             if (iterator.hasNext()) {
                 leafNode = iterator.next();

@@ -168,7 +168,7 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     }
 
     /**
-     * Get Session without having to provide the monitor and still use the Progress Service from non gui context
+     * Get Session without having to provide the monitor and still use the Progress Service from non gui context.
      * 
      * @param activeProject
      * @param editor
@@ -178,6 +178,7 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     public static Session getSession(final IProject activeProject, final IEditorPart editor, final boolean create) {
         final Set<Session> sessions = new HashSet<>();
         IRunnableWithProgress runnable = new IRunnableWithProgress() {
+            @Override
             public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
                 sessions.add(GraphicalEditorHelper.getSession(activeProject, editor, create, false, monitor));
             }

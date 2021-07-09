@@ -138,7 +138,7 @@ public class CreateRepresentationCommand extends RecordingCommand {
         return launchID != null && !launchID.isEmpty();
     }
 
-    private void addResource(final EObject diagramTarget, final Session session) {
+    private void addResource(final EObject diagramTarget, final Session pSession) {
         Poosl poosl;
         if (diagramTarget instanceof Poosl) {
             poosl = (Poosl) diagramTarget;
@@ -147,7 +147,7 @@ public class CreateRepresentationCommand extends RecordingCommand {
         }
 
         for (Resource resource : ImportingHelper.computeAllDependencies(poosl.eResource())) {
-            session.addSemanticResource(resource.getURI(), monitor);
+            pSession.addSemanticResource(resource.getURI(), monitor);
         }
     }
 }

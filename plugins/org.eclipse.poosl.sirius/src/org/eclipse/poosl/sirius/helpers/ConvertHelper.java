@@ -14,7 +14,7 @@ import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.sirius.IPreferenceConstants;
 import org.eclipse.poosl.xtext.importing.ImportingHelper;
 
-public class ConvertHelper {
+public final class ConvertHelper {
 
     private ConvertHelper() {
         throw new IllegalStateException("Utility class");

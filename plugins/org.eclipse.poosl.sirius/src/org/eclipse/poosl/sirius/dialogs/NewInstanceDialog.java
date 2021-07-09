@@ -105,9 +105,9 @@ public class NewInstanceDialog extends TitleAreaDialog {
         loadedClass = inst;
     }
 
-    private int getIndex(String[] classes, String name) {
+    private int getIndex(String[] classes, String pName) {
         for (int i = 0; i < classes.length; i++) {
-            if (classes[i].equals(name)) {
+            if (classes[i].equals(pName)) {
                 return i;
             }
         }

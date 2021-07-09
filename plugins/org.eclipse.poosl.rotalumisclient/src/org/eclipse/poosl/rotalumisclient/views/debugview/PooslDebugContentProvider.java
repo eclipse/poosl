@@ -23,7 +23,7 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslThread;
 /**
  * This is the Tree Content Provider for the {@link PooslDebugView} Uses the lauchmanager to show PooslDebugTargets.
  * Creates parent {@link PooslDebugView.TreeItem} of the clusterclasses based on the thread names. The treeitems are
- * created when new launches are added or removed
+ * created when new launches are added or removed.
  * 
  * @author staalk
  *

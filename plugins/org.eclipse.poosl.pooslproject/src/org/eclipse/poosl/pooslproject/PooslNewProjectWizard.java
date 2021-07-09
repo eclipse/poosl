@@ -24,6 +24,9 @@ public class PooslNewProjectWizard extends Wizard implements INewWizard {
 
     private WizardNewProjectCreationPage pageOne;
 
+    /**
+     * Constructor.
+     */
     public PooslNewProjectWizard() {
         super();
         setWindowTitle(WIZARD_NAME);
@@ -50,7 +53,7 @@ public class PooslNewProjectWizard extends Wizard implements INewWizard {
                 pageOne.setErrorMessage("A project with that name but different capitalization already exists in the workspace.");
             }
             LOGGER.log(Level.WARNING, "Error trying to create project.", e);
-            return false;
+            project = null;
         }
 
         if (project != null) {
@@ -64,9 +67,8 @@ public class PooslNewProjectWizard extends Wizard implements INewWizard {
                 }
             }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override

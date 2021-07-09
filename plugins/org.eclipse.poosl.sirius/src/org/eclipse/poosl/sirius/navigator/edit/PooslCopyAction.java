@@ -21,20 +21,20 @@ import org.eclipse.ui.part.ResourceTransfer;
 
 /**
  * Action to copy the resource and its sirius diagrams Based on the not extendable
- * org.eclipse.ui.internal.navigator.resources.actions.CopyAction
+ * org.eclipse.ui.internal.navigator.resources.actions.CopyAction.
  * 
- * @author kstaal *
+ * @author kstaal
  */
 
 public class PooslCopyAction extends SelectionListenerAction {
-    private static final String TOOLTIP = "Copy Resources and referenced diagrams";
-
-    private static final String LABEL = "Copy (including Diagrams)";
-
     /**
      * The id of this action.
      */
     public static final String ID = "PooslCopyAction"; //$NON-NLS-1$
+
+    private static final String TOOLTIP = "Copy Resources and referenced diagrams";
+
+    private static final String LABEL = "Copy (including Diagrams)";
 
     /**
      * The shell in which to show any dialogs.

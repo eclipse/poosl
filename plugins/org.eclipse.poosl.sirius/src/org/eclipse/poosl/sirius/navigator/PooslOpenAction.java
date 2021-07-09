@@ -19,8 +19,8 @@ public class PooslOpenAction extends Action {
         this.page = page;
     }
 
-    public void selectionChanged(IStructuredSelection selection) {
-        this.selection = selection;
+    public void selectionChanged(IStructuredSelection sel) {
+        this.selection = sel;
     }
 
     @Override

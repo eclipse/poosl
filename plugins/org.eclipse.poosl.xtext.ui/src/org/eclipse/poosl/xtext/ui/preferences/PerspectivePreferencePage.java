@@ -38,7 +38,7 @@ public class PerspectivePreferencePage extends PreferencePage implements IWorkbe
 
     /**
      * Adds a description {@link Label}, location {@link #basicClassesControl}, browse {@link Button} and use default
-     * selection {@link PerspectivePreferencePage#useEditPerspectiveButton} to the parent {@link #composite}
+     * selection {@link PerspectivePreferencePage#useEditPerspectiveButton} to the parent {@link #composite}.
      */
     @Override
     protected Control createContents(Composite parent) {
@@ -56,7 +56,6 @@ public class PerspectivePreferencePage extends PreferencePage implements IWorkbe
      * 
      * @param parent
      *            The {@link Composite} which the button will be added
-     * @return Return the created button
      */
     private void addEditPerspectiveButton(Composite parent) {
         dontaskEditPerspectiveButton = new Button(parent, SWT.CHECK);

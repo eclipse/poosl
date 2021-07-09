@@ -25,7 +25,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-public class UpdateHelper {
+public final class UpdateHelper {
     private UpdateHelper() {
         throw new IllegalStateException("Utility class");
     }

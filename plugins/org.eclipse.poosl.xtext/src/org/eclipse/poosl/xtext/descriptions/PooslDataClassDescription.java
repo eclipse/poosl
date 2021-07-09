@@ -12,14 +12,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.poosl.DataClass;
 import org.eclipse.poosl.DataMethod;
 import org.eclipse.poosl.Declaration;
-import org.eclipse.poosl.Variable;
 import org.eclipse.poosl.PooslPackage.Literals;
+import org.eclipse.poosl.Variable;
 import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.common.collect.Iterables;
 
-public class PooslDataClassDescription {
+public final class PooslDataClassDescription {
 
     private PooslDataClassDescription() {
         throw new IllegalStateException("Utility class");

@@ -2,7 +2,6 @@ package org.eclipse.poosl.sirius.dialogs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +49,7 @@ public class NewMethodProcessDialog extends NewMethodDialog {
     protected ArrayList<String> getExistingMethods(EObject container) {
         ProcessClass processClass = (ProcessClass) container;
         ArrayList<String> methods = new ArrayList<>();
-        for (Iterator<ProcessMethod> iterator = processClass.getMethods().iterator(); iterator.hasNext();) {
-            ProcessMethod processMethod = iterator.next();
+        for (ProcessMethod processMethod : processClass.getMethods()) {
             methods.add(processMethod.getName());
         }
         return methods;

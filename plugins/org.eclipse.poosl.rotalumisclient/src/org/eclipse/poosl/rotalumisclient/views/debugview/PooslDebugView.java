@@ -67,6 +67,100 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
 
     private static final int TREE_EXPANSION = 3;
 
+    ILaunchListener launchListener = new ILaunchListener() {
+        @Override
+        public void launchRemoved(ILaunch launch) {
+            IDebugTarget target = launch.getDebugTarget();
+            if (target instanceof PooslDebugTarget) {
+                PooslDebugTarget pooslTarget = (PooslDebugTarget) target;
+                pooslTarget.extentensionsInformStop();
+            }
+    
+            IProcess[] processes = launch.getProcesses();
+            DebugPlugin plugin = DebugPlugin.getDefault();
+            if (plugin != null) {
+                ILaunchManager launchManager = plugin.getLaunchManager();
+                if (launchManager != null && launchManager.getLaunches().length == 0) {
+                    PlatformUI.getWorkbench().getDisplay().asyncExec(new ResetListenersRunnable());
+                }
+            }
+    
+            IWorkbench workbench = PlatformUI.getWorkbench();
+            if (workbench != null) {
+                workbench.getDisplay().asyncExec(new InputChangedRunnable());
+            }
+    
+            for (int i = 0; i < processes.length; i++) {
+                try {
+                    processes[i].terminate();
+                } catch (DebugException e) {
+                    LOGGER.log(Level.WARNING, "Process could not be terminated" + processes[i].getLabel(), e.getSuppressed());
+                }
+            }
+        }
+    
+        @Override
+        public void launchChanged(ILaunch launch) {
+            if (launch.getDebugTarget() != null) {
+                IWorkbench workbench = PlatformUI.getWorkbench();
+                if (workbench != null) {
+                    workbench.getDisplay().asyncExec(new InputChangedRunnable());
+                }
+            }
+        }
+    
+        @Override
+        public void launchAdded(ILaunch launch) {
+            IWorkbench workbench = PlatformUI.getWorkbench();
+            if (workbench != null) {
+                workbench.getDisplay().asyncExec(new InputChangedRunnable());
+            }
+        }
+    };
+
+    IDebugEventSetListener debugEventListener = new IDebugEventSetListener() {
+        @Override
+        public void handleDebugEvents(DebugEvent[] events) {
+            for (DebugEvent debugEvent : events) {
+                final Object source = debugEvent.getSource();
+                if (source instanceof PooslDebugTarget) {
+                    // POOSL Model
+                    if (debugEvent.getKind() == DebugEvent.SUSPEND || debugEvent.getKind() == DebugEvent.RESUME || debugEvent.getKind() == DebugEvent.TERMINATE
+                            || (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.STOPPED_STATE)) {
+                        PlatformUI.getWorkbench().getDisplay().asyncExec(new NotifyListenersRunnable());
+                        PlatformUI.getWorkbench().getDisplay().asyncExec(new UpdateRunnable());
+                    } else if (debugEvent.getKind() == DebugEvent.CHANGE) {
+                        PlatformUI.getWorkbench().getDisplay().asyncExec(new UpdateRunnable());
+                    }
+                } else if (source instanceof PooslThread) {
+                    // POOSL Process
+                    if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && (debugEvent.getDetail() == PooslConstants.BREAKPOINT_HIT || debugEvent.getDetail() == PooslConstants.ERROR_STATE)) {
+                        PlatformUI.getWorkbench().getDisplay().asyncExec(new SelectThreadRunnable((PooslThread) source));
+                    }
+                } else {
+                    // do nothing
+                }
+            }
+        }
+    };
+
+    /**
+     * Sets the selection variable and notifies listeners unless update tree is false. This method will set updatetree
+     * always to true
+     */
+    ISelectionChangedListener treeSelectionChangedListener = new ISelectionChangedListener() {
+        @Override
+        public void selectionChanged(SelectionChangedEvent event) {
+            if (!event.getSelection().isEmpty()) {
+                selection = event.getSelection();
+                if (update) {
+                    notifyListeners();
+                }
+                update = true;
+            }
+        }
+    };
+
     private ISelection selection;
 
     private final ListenerList<IDebugContextListener> listenerList = new ListenerList<>();
@@ -81,7 +175,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
         treeViewer.setContentProvider(new PooslDebugContentProvider());
         treeViewer.setLabelProvider(new PooslDebugLabelProvider());
         treeViewer.addSelectionChangedListener(treeSelectionChangedListener);
-        treeViewer.addDoubleClickListener(PooslProcessStep.doubleClickListener);
+        treeViewer.addDoubleClickListener(PooslProcessStep.DOUBLE_CLICK_LISTENER);
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (plugin != null) {
             ILaunchManager launchManager = plugin.getLaunchManager();
@@ -126,83 +220,6 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
         super.dispose();
     }
 
-    ILaunchListener launchListener = new ILaunchListener() {
-        @Override
-        public void launchRemoved(ILaunch launch) {
-            IDebugTarget target = launch.getDebugTarget();
-            if (target instanceof PooslDebugTarget) {
-                PooslDebugTarget pooslTarget = (PooslDebugTarget) target;
-                pooslTarget.extentensionsInformStop();
-            }
-
-            IProcess[] processes = launch.getProcesses();
-            DebugPlugin plugin = DebugPlugin.getDefault();
-            if (plugin != null) {
-                ILaunchManager launchManager = plugin.getLaunchManager();
-                if (launchManager != null && launchManager.getLaunches().length == 0) {
-                    PlatformUI.getWorkbench().getDisplay().asyncExec(new ResetListenersRunnable());
-                }
-            }
-
-            IWorkbench workbench = PlatformUI.getWorkbench();
-            if (workbench != null) {
-                workbench.getDisplay().asyncExec(new InputChangedRunnable());
-            }
-
-            for (int i = 0; i < processes.length; i++) {
-                try {
-                    processes[i].terminate();
-                } catch (DebugException e) {
-                    LOGGER.log(Level.WARNING, "Process could not be terminated" + processes[i].getLabel(), e.getSuppressed());
-                }
-            }
-        }
-
-        @Override
-        public void launchChanged(ILaunch launch) {
-            if (launch.getDebugTarget() != null) {
-                IWorkbench workbench = PlatformUI.getWorkbench();
-                if (workbench != null) {
-                    workbench.getDisplay().asyncExec(new InputChangedRunnable());
-                }
-            }
-        }
-
-        @Override
-        public void launchAdded(ILaunch launch) {
-            IWorkbench workbench = PlatformUI.getWorkbench();
-            if (workbench != null) {
-                workbench.getDisplay().asyncExec(new InputChangedRunnable());
-            }
-        }
-    };
-
-    IDebugEventSetListener debugEventListener = new IDebugEventSetListener() {
-        @Override
-        public void handleDebugEvents(DebugEvent[] events) {
-            for (DebugEvent debugEvent : events) {
-                final Object source = debugEvent.getSource();
-                if (source instanceof PooslDebugTarget) {
-                    // POOSL Model
-                    if (debugEvent.getKind() == DebugEvent.SUSPEND || debugEvent.getKind() == DebugEvent.RESUME || debugEvent.getKind() == DebugEvent.TERMINATE
-                            || (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.STOPPED_STATE)) {
-                        PlatformUI.getWorkbench().getDisplay().asyncExec(new NotifyListenersRunnable());
-                        PlatformUI.getWorkbench().getDisplay().asyncExec(new UpdateRunnable());
-                    } else if (debugEvent.getKind() == DebugEvent.CHANGE) {
-                        PlatformUI.getWorkbench().getDisplay().asyncExec(new UpdateRunnable());
-                    }
-                } else if (source instanceof PooslThread) {
-                    // POOSL Process
-                    if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && (debugEvent.getDetail() == PooslConstants.BREAKPOINT_HIT || debugEvent.getDetail() == PooslConstants.ERROR_STATE)) {
-                        PlatformUI.getWorkbench().getDisplay().asyncExec(new SelectThreadRunnable((PooslThread) source));
-                    }
-                } else {
-                    // do nothing
-                }
-            }
-        }
-    };
-
     /**
      * Find and select thread in the debugview treeviewer
      * 
@@ -225,23 +242,6 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
             LOGGER.log(Level.SEVERE, e.getMessage(), e.getSuppressed());
         }
     }
-
-    /**
-     * Sets the selection variable and notifies listeners unless update tree is false. This method will set updatetree
-     * always to true
-     */
-    ISelectionChangedListener treeSelectionChangedListener = new ISelectionChangedListener() {
-        @Override
-        public void selectionChanged(SelectionChangedEvent event) {
-            if (!event.getSelection().isEmpty()) {
-                selection = event.getSelection();
-                if (update) {
-                    notifyListeners();
-                }
-                update = true;
-            }
-        }
-    };
 
     class NotifyListenersRunnable implements Runnable {
         @Override
@@ -294,7 +294,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
     class SelectThreadRunnable implements Runnable {
         private PooslThread thread;
 
-        public SelectThreadRunnable(PooslThread thread) {
+        SelectThreadRunnable(PooslThread thread) {
             super();
             this.thread = thread;
         }

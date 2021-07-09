@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
-public class ExtensionHelper {
+public final class ExtensionHelper {
     private static final String POOSL_DEUBUG_ATTRIBUTE = "class";
 
     private static final String IPOOSLDEBUGINFORMER_ID = "org.eclipse.poosl.rotalumisclient.debuginformer";

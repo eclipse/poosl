@@ -16,21 +16,6 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("restriction")
 public class StackTraceVariableView extends VariablesView {
 
-    @Override
-    public void createPartControl(Composite parent) {
-        super.createPartControl(parent);
-
-        DebugPlugin plugin = DebugPlugin.getDefault();
-        if (plugin != null) {
-            plugin.addDebugEventListener(debugEventSetListener);
-        }
-
-        IWorkbench workbench = PlatformUI.getWorkbench();
-        if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_stacktrace_variables");
-        }
-    }
-
     IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
         @Override
         public void handleDebugEvents(DebugEvent[] events) {
@@ -49,6 +34,21 @@ public class StackTraceVariableView extends VariablesView {
             }
         }
     };
+
+    @Override
+    public void createPartControl(Composite parent) {
+        super.createPartControl(parent);
+
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        if (plugin != null) {
+            plugin.addDebugEventListener(debugEventSetListener);
+        }
+
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        if (workbench != null) {
+            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_stacktrace_variables");
+        }
+    }
 
     @Override
     public Viewer createViewer(Composite parent) {

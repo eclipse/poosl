@@ -12,19 +12,19 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.poosl.Declaration;
 import org.eclipse.poosl.MessageSignature;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.ProcessMethodCall;
 import org.eclipse.poosl.ReceiveStatement;
 import org.eclipse.poosl.SendStatement;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.helpers.PooslMessageSignatureCallHelper;
 import org.eclipse.poosl.xtext.helpers.PooslProcessMethodParser;
 import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-public class PooslProcessClassDescription {
+public final class PooslProcessClassDescription {
     private static final String STR_INITIAL_METHOD = "initialMethod";
 
     private static final String STR_USED_PROCESS_METHODS = "UsedProcessMethods";

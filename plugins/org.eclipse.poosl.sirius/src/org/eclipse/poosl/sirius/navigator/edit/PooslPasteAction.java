@@ -27,14 +27,16 @@ import org.eclipse.ui.part.ResourceTransfer;
  *
  */
 public class PooslPasteAction extends SelectionListenerAction {
-    private static final String LABEL = "Paste (including Diagrams)";
-
-    private static final String TOOLTIP = "Paste Resources and referenced diagrams";
-
     /**
      * The id of this action.
      */
-    public static final String ID = "PooslPasteAction";//$NON-NLS-1$
+    public static final String ID = "PooslPasteAction"; //$NON-NLS-1$
+
+    private static final Logger LOGGER = Logger.getLogger(PooslPasteAction.class.getName());
+
+    private static final String LABEL = "Paste (including Diagrams)";
+
+    private static final String TOOLTIP = "Paste Resources and referenced diagrams";
 
     /**
      * The shell in which to show any dialogs.
@@ -45,8 +47,6 @@ public class PooslPasteAction extends SelectionListenerAction {
      * System clipboard
      */
     private final Clipboard clipboard;
-
-    private static final Logger LOGGER = Logger.getLogger(PooslPasteAction.class.getName());
 
     /**
      * Creates a new action.

@@ -1,7 +1,6 @@
 package org.eclipse.poosl.sirius.dialogs;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.poosl.DataClass;
@@ -89,18 +88,15 @@ public class NewMethodDataDialog extends NewMethodDialog {
         DataClass dataClass = (DataClass) container;
         ArrayList<String> methods = new ArrayList<>();
 
-        for (Iterator<DataMethodNamed> iterator = dataClass.getDataMethodsNamed().iterator(); iterator.hasNext();) {
-            DataMethodNamed dataMethodNamed = iterator.next();
+        for (DataMethodNamed dataMethodNamed : dataClass.getDataMethodsNamed()) {
             methods.add(dataMethodNamed.getName());
         }
 
-        for (Iterator<DataMethodUnaryOperator> iterator2 = dataClass.getDataMethodsUnaryOperator().iterator(); iterator2.hasNext();) {
-            DataMethodUnaryOperator dataMethodUnaryOperator = iterator2.next();
+        for (DataMethodUnaryOperator dataMethodUnaryOperator : dataClass.getDataMethodsUnaryOperator()) {
             methods.add(dataMethodUnaryOperator.getName().getName());
         }
-
-        for (Iterator<DataMethodBinaryOperator> iterator3 = dataClass.getDataMethodsBinaryOperator().iterator(); iterator3.hasNext();) {
-            DataMethodBinaryOperator dataMethodBinaryOperator = iterator3.next();
+        
+        for (DataMethodBinaryOperator dataMethodBinaryOperator : dataClass.getDataMethodsBinaryOperator()) {
             methods.add(dataMethodBinaryOperator.getName().getName());
         }
         return methods;

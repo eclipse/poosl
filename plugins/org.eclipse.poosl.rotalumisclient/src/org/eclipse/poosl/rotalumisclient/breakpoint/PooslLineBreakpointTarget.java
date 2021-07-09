@@ -110,7 +110,7 @@ public class PooslLineBreakpointTarget implements IToggleBreakpointsTarget, ITog
             actualSemanticObject = ((SwitchStatementCase) actualSemanticObject).getBody();
         }
         while (actualSemanticObject instanceof StatementSequence) {
-            StatementSequence sequence = ((StatementSequence) actualSemanticObject);
+            StatementSequence sequence = (StatementSequence) actualSemanticObject;
             if (!sequence.getStatements().isEmpty()) {
                 actualSemanticObject = sequence.getStatements().get(0);
             } else {

@@ -15,16 +15,16 @@ import com.google.common.base.Predicate;
  * To allow using the default IQualifiedNameConverter and overloading methods, the SelectableBasedScope never considers
  * two IEObjectDescriptions to shadow each other.
  */
-public class PooslSelectableBasedScope extends SelectableBasedScope {
+public final class PooslSelectableBasedScope extends SelectableBasedScope {
+    private PooslSelectableBasedScope(IScope outer, ISelectable selectable, Predicate<IEObjectDescription> filter, EClass type, boolean ignoreCase) {
+        super(outer, selectable, filter, type, ignoreCase);
+    }
+
     public static IScope createScope(IScope outer, ISelectable selectable, Predicate<IEObjectDescription> filter, EClass type, boolean ignoreCase) {
         if (selectable == null || selectable.isEmpty()) {
             return outer;
         }
         return new PooslSelectableBasedScope(outer, selectable, filter, type, ignoreCase);
-    }
-
-    private PooslSelectableBasedScope(IScope outer, ISelectable selectable, Predicate<IEObjectDescription> filter, EClass type, boolean ignoreCase) {
-        super(outer, selectable, filter, type, ignoreCase);
     }
 
     @Override

@@ -26,6 +26,12 @@ import com.google.common.collect.MapMaker;
 public class PooslPermissionAuthority implements IPermissionAuthority {
     private final Set<URI> creatingURIs = new HashSet<>();
 
+    /** the authority listeners. */
+    private List<IAuthorityListener> listeners = new CopyOnWriteArrayList<>();
+
+    /** the locked objects. */
+    private ConcurrentMap<EObject, Object> lockedObjects = new MapMaker().concurrencyLevel(4).weakKeys().makeMap();
+
     public PooslPermissionAuthority() {
     }
 
@@ -160,12 +166,6 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
     public LockStatus getLockStatus(EObject element) {
         return isLocked(element) ? LockStatus.LOCKED_BY_OTHER : LockStatus.NOT_LOCKED;
     }
-
-    /** the authority listeners. */
-    private List<IAuthorityListener> listeners = new CopyOnWriteArrayList<>();
-
-    /** the locked objects. */
-    private ConcurrentMap<EObject, Object> lockedObjects = new MapMaker().concurrencyLevel(4).weakKeys().makeMap();
 
     /**
      * Check if an object is locked or not.

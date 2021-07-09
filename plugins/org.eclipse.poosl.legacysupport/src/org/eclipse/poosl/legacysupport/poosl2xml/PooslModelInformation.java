@@ -14,6 +14,8 @@ import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 public class PooslModelInformation {
+    private static final String SPACE = " ";
+
     private Integer currentIdentifier = 0;
 
     private String modelPath = "";
@@ -75,7 +77,7 @@ public class PooslModelInformation {
     /**
      * This function will add the given model element to the mapping and give a unique identifier to it.
      * 
-     * @param object
+     * @param originalObject
      *            The model element to add to the mapping
      * @return the identifier given to the input object
      */
@@ -90,12 +92,12 @@ public class PooslModelInformation {
             correctedObject = originalObject;
             tokenText = NodeModelUtils.getTokenText(NodeModelUtils.getNode(correctedObject));
         }
-        tokenText = tokenText.replace("\t", " ");
-        tokenText = tokenText.replace("\r", " ");
-        tokenText = tokenText.replace("\n", " ");
+        tokenText = tokenText.replace("\t", SPACE);
+        tokenText = tokenText.replace("\r", SPACE);
+        tokenText = tokenText.replace("\n", SPACE);
         // Remove double spaces and replace them by single ones
         while (tokenText.contains("  ")) {
-            tokenText = tokenText.replace("  ", " ");
+            tokenText = tokenText.replace("  ", SPACE);
         }
         tokenText = tokenText.trim();
 

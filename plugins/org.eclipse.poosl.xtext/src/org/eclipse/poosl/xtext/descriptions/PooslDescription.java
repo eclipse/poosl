@@ -17,7 +17,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.util.Pair;
 import org.eclipse.xtext.util.Tuples;
 
-public class PooslDescription {
+public final class PooslDescription {
     private static final String IMPORT_SEPARATOR = ",";
 
     private static final String STR_IMPORTS = "imports";
@@ -93,10 +93,11 @@ public class PooslDescription {
     }
 
     /**
+     * Returns a list of resolved/unresolved importlib pairs. Pair.getFirst() contains the resolved importlib location,
+     * Pair.getSecond() contains the unresolved. If the importlib could not be resolved Pair.getFirst() is empty.
+     * 
      * @param descr
-     * @return Returns a list of resolved/unresolved importlib pairs. Pair.getFirst() contains the resolved importlib
-     *         location, Pair.getSecond() contains the unresolved. If the importlib could not be resolved
-     *         Pair.getFirst() is empty
+     * @return a list of resolved/unresolved importlib pairs.
      */
     public static List<Pair<String, String>> getImportLibRaw(IEObjectDescription descr) {
         String importlibs = descr.getUserData(STR_IMPORTLIBS);

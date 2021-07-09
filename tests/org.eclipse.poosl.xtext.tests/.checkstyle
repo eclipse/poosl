@@ -8,7 +8,7 @@
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
   <filter name="FilesFromPackage" enabled="true">
-    <filter-data value="xtend-gen"/>
+    <filter-data value="target/xtend-gen"/>
     <filter-data value="src-gen"/>
   </filter>
 </fileset-config>

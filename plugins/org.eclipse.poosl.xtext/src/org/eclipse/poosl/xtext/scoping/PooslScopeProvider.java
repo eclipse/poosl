@@ -18,11 +18,11 @@ import org.eclipse.poosl.Declaration;
 import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstancePort;
 import org.eclipse.poosl.InstantiableClass;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.ProcessMethodCall;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.custom.PooslMessageType;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
@@ -45,6 +45,7 @@ import com.google.common.collect.Iterables;
  * @author kstaal
  *
  */
+// @CHECKSTYLE:OFF naming inherited from XText generation
 public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
 
     @Override
@@ -161,7 +162,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
 
     public static IScope getScopeInstanceParameterParameter(EObject context) {
         EObject obj = context;
-        while ((obj != null)) {
+        while (obj != null) {
             if (obj instanceof Instance) {
                 Resource resource = obj.eResource();
                 String definitionName = ((Instance) obj).getClassDefinition();

@@ -1,6 +1,6 @@
 package org.eclipse.poosl.rotalumisclient.runner;
 
-public class FileURIConverter {
+public final class FileURIConverter {
 
     private FileURIConverter() {
         throw new IllegalStateException("Utility class");
@@ -8,7 +8,7 @@ public class FileURIConverter {
 
     // rfc1738 converter
     /**
-     * Convert normal file uri to new uri that is allowed in API
+     * Convert normal file uri to new uri that is allowed in API.
      * 
      * @param input
      * @return
@@ -22,7 +22,7 @@ public class FileURIConverter {
             int c = bytes[i];
 
             if (c < 0x00) {
-                c = (c & 0xFF);
+                c = c & 0xFF;
                 escape = true;
             } else if (c < 0x20 || c > 0x7F) {
                 escape = true;
@@ -70,7 +70,7 @@ public class FileURIConverter {
     }
 
     /**
-     * Convert url encoded file scheme to normal scheme
+     * Convert url encoded file scheme to normal scheme.
      * 
      * @param input
      * @return

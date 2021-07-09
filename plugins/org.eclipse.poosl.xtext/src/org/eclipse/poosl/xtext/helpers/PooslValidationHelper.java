@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-public class PooslValidationHelper {
+public final class PooslValidationHelper {
     // DO_CHECK can be enabled for debugging purposes
     private static final boolean DO_CHECK = false;
 

@@ -27,8 +27,8 @@ public class PooslBreakpointAction implements IEditorActionDelegate {
     }
 
     @Override
-    public void selectionChanged(IAction action, ISelection selection) {
-        this.selection = selection;
+    public void selectionChanged(IAction action, ISelection sel) {
+        this.selection = sel;
     }
 
     @Override

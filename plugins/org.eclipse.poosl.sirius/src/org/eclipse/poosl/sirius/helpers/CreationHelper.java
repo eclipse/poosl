@@ -30,23 +30,23 @@ import org.eclipse.poosl.OperatorBinary;
 import org.eclipse.poosl.OperatorUnary;
 import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.PooslFactory;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.Port;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.ProcessMethodCall;
 import org.eclipse.poosl.ReturnExpression;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.impl.PooslFactoryImpl;
 import org.eclipse.poosl.sirius.dialogs.NameDialog;
+import org.eclipse.poosl.sirius.dialogs.NameDialog.PooslClassType;
 import org.eclipse.poosl.sirius.dialogs.NewInstanceDialog;
+import org.eclipse.poosl.sirius.dialogs.NewInstanceDialog.Type;
 import org.eclipse.poosl.sirius.dialogs.NewMethodDataDialog;
 import org.eclipse.poosl.sirius.dialogs.NewMethodProcessDialog;
 import org.eclipse.poosl.sirius.dialogs.NewPortDialog;
 import org.eclipse.poosl.sirius.dialogs.NewVariableDialog;
 import org.eclipse.poosl.sirius.dialogs.PooslProgressMonitor;
-import org.eclipse.poosl.sirius.dialogs.NameDialog.PooslClassType;
-import org.eclipse.poosl.sirius.dialogs.NewInstanceDialog.Type;
 import org.eclipse.poosl.sirius.services.CompositeStructureDiagramServices;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
@@ -73,7 +73,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-public class CreationHelper {
+public final class CreationHelper {
     private static final String MESSAGE_TITLE_ADD_PORT = "Adding port";
 
     private static final String MESSAGE_ADD_PORT = "You are adding a port to an instance. Continuing will add a port to ";
@@ -405,9 +405,9 @@ public class CreationHelper {
     public static void deleteInstance(Instance instance) {
         if (isEditAllowed(instance) && instance.eContainer() instanceof ClusterClass) {
             ClusterClass cluster = (ClusterClass) instance.eContainer();
-            for (Iterator<Channel> channelIt = cluster.getChannels().iterator(); channelIt.hasNext();) {
+            for (Iterator<Channel> channelIt = cluster.getChannels().iterator(); channelIt.hasNext(); ) {
                 Channel channel = channelIt.next();
-                for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext();) {
+                for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); ) {
                     InstancePort instanceport = iterator.next();
                     if (instanceport.getInstance() == instance) {
                         iterator.remove();
@@ -668,7 +668,7 @@ public class CreationHelper {
         for (int i = 0; i < variables.size(); i++) {
             if (i < existingvars) {
                 declaration.getVariables().get(i).setName(variables.get(i));
-            } else {// create new variable if needed
+            } else { // create new variable if needed
                 Variable var = pooslFactory.createVariable();
                 var.setName(variables.get(i));
                 declaration.getVariables().add(var);
@@ -758,7 +758,7 @@ public class CreationHelper {
         if (sourceport.eContainer() instanceof ClusterClass) {
             ClusterClass cluster = (ClusterClass) sourceport.eContainer();
             for (Channel clChannel : cluster.getChannels()) {
-                if ((clChannel.getExternalPort() == sourceport)) {
+                if (clChannel.getExternalPort() == sourceport) {
                     return clChannel;
                 }
             }
@@ -951,7 +951,7 @@ public class CreationHelper {
             if (allowed) {
                 for (ClusterClass cClass : classesusingport) {
                     for (Channel channel : cClass.getChannels()) {
-                        for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext();) {
+                        for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); ) {
                             InstancePort instancePort = iterator.next();
                             String iPort = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : "";
                             if (iPort.equals(port.getName())) {

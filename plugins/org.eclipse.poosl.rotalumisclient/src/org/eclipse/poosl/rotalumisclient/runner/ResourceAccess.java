@@ -16,7 +16,7 @@ import org.eclipse.poosl.rotalumisclient.runner.IBundleInfo.Context;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
-public class ResourceAccess {
+public final class ResourceAccess {
 
     private ResourceAccess() {
         throw new IllegalStateException("Utility class");
@@ -118,18 +118,24 @@ public class ResourceAccess {
 
         @Override
         public List<URI> find(Context context) {
+            List<URI> res = null;
             switch (context) {
             case CLASSPATH:
-                return Collections.singletonList(resolve(output));
+                res = Collections.singletonList(resolve(output));
+                break;
             case ROOT:
-                return Collections.singletonList(location);
+                res = Collections.singletonList(location);
+                break;
             case SOURCE:
                 List<URI> result = Lists.newArrayList();
                 for (String src : sourceFolders)
                     result.add(resolve(src));
-                return result;
+                res = result;
+                break;
+            default:
+                res = Collections.emptyList();
             }
-            return Collections.emptyList();
+            return res;
         }
 
         @Override

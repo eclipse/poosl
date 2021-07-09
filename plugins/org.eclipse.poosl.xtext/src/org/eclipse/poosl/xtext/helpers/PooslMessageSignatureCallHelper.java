@@ -12,6 +12,10 @@ import org.eclipse.poosl.xtext.descriptions.PooslMessageSignatureDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public class PooslMessageSignatureCallHelper {
+    private static final String STR_MESSAGETYPE_SEND = "Send";
+
+    private static final String STR_MESSAGETYPE_RECEIVE = "Receive";
+
     private String type;
 
     private String port;
@@ -19,10 +23,6 @@ public class PooslMessageSignatureCallHelper {
     private String name;
 
     private int paramCount;
-
-    private static final String STR_MESSAGETYPE_RECEIVE = "Receive";
-
-    private static final String STR_MESSAGETYPE_SEND = "Send";
 
     public PooslMessageSignatureCallHelper(String stringDescription) {
         String[] result = stringDescription.split(":");

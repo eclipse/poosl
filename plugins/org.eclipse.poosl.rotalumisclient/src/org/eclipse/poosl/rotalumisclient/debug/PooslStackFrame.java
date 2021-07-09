@@ -222,7 +222,7 @@ public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
             if (pooslValue.getVariables().length == 0) {
                 // Disable the change value of subvariables by giving it no listhandle
                 // TODO to be removed after Rotalumis fix
-                BigInteger listHandle = null;// pooslValue.getListHandle();
+                BigInteger listHandle = null; // pooslValue.getListHandle();
                 IVariable[] vars = new IVariable[variableList.size()];
                 for (int i = 0; i < variableList.size(); i++) {
                     vars[i] = new PooslVariable(target, variableList.get(i), listHandle);

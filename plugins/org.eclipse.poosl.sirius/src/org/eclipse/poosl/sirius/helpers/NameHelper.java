@@ -12,7 +12,7 @@ import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 
-public class NameHelper {
+public final class NameHelper {
     private static final Logger LOGGER = Logger.getLogger(NameHelper.class.getName());
 
     private static final String TXT_INSTANCE = "newInstance";

@@ -13,7 +13,7 @@ import org.eclipse.poosl.xtext.descriptions.PooslDeclarationDescription;
 import org.eclipse.poosl.xtext.scoping.PooslScopeProvider;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-public class PooslVariableTypeHelper {
+public final class PooslVariableTypeHelper {
 
     private PooslVariableTypeHelper() {
         throw new IllegalStateException("Utility class");

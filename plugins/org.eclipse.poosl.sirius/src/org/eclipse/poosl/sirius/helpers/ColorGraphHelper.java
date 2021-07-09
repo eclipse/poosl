@@ -31,7 +31,7 @@ import org.eclipse.sirius.viewpoint.RGBValues;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
-public class ColorGraphHelper {
+public final class ColorGraphHelper {
     private static final String PARAMETER_VIEW = "view";
 
     private static final int LINE_WIDTH = 2;
@@ -42,7 +42,7 @@ public class ColorGraphHelper {
 
     private static final int DEFAULT_LINE_WIDTH = 2;
 
-    private static RGB mColor = null;
+    private static RGB mColor;
 
     private ColorGraphHelper() {
         throw new IllegalStateException("Utility class");
@@ -102,9 +102,9 @@ public class ColorGraphHelper {
         } else {
             DEdge edge = null;
             if (!nodeSpec.getIncomingEdges().isEmpty()) {
-                edge = (nodeSpec.getIncomingEdges().get(0));
+                edge = nodeSpec.getIncomingEdges().get(0);
             } else if (!nodeSpec.getOutgoingEdges().isEmpty()) {
-                edge = (nodeSpec.getOutgoingEdges().get(0));
+                edge = nodeSpec.getOutgoingEdges().get(0);
             }
 
             if (edge != null) {
@@ -280,23 +280,22 @@ public class ColorGraphHelper {
         }
 
         if (source != null && source.getPort() != null && source.getParent() != null) {
-            Boolean channelConnection = (target == null);
+            Boolean channelConnection = target == null;
             if (source.getPort().equals(drawPath.getReceiverPort()) && source.getParent().equals(drawPath.getReceiver())) {
-                return (channelConnection) ? EdgeType.TOCHANNELRECEIVER : EdgeType.RECEIVER;
+                return channelConnection ? EdgeType.TOCHANNELRECEIVER : EdgeType.RECEIVER;
 
             } else if (source.getPort().equals(drawPath.getSenderPort()) && source.getParent().equals(drawPath.getSender())) {
-                return (channelConnection) ? EdgeType.TOCHANNELSENDER : EdgeType.SENDER;
-
+                return channelConnection ? EdgeType.TOCHANNELSENDER : EdgeType.SENDER;
             }
         }
         if (target != null && target.getPort() != null && target.getParent() != null) {
-            Boolean channelConnection = (source == null);
+            Boolean channelConnection = source == null;
             if (target.getPort().equals(drawPath.getReceiverPort()) && target.getParent().equals(drawPath.getReceiver())) {
 
-                return (channelConnection) ? EdgeType.FROMCHANNELSENDER : EdgeType.SENDER;
+                return channelConnection ? EdgeType.FROMCHANNELSENDER : EdgeType.SENDER;
 
             } else if (target.getPort().equals(drawPath.getSenderPort()) && target.getParent().equals(drawPath.getSender())) {
-                return (channelConnection) ? EdgeType.FROMCHANNELRECEIVER : EdgeType.RECEIVER;
+                return channelConnection ? EdgeType.FROMCHANNELRECEIVER : EdgeType.RECEIVER;
             }
         }
 

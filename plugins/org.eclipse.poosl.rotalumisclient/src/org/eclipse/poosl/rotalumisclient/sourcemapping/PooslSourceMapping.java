@@ -58,7 +58,7 @@ public class PooslSourceMapping {
     }
 
     /**
-     * Get the source text as a single line without comments
+     * Get the source text as a single line without comments.
      * 
      * @return
      */

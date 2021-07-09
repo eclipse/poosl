@@ -11,10 +11,10 @@ import org.eclipse.poosl.Declaration;
 import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstantiableClass;
 import org.eclipse.poosl.Poosl;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.sirius.helpers.NameHelper;
 import org.eclipse.poosl.xtext.custom.FormattingHelper;
 import org.eclipse.poosl.xtext.custom.PooslCache;
@@ -111,14 +111,14 @@ public class ClassDiagramServices extends AbstractServices {
             DNodeList node = (DNodeList) object;
             if (node.getParentDiagram() instanceof DSemanticDecorator) {
                 DSemanticDecorator diagram = (DSemanticDecorator) node.getParentDiagram();
-                return (diagram.getTarget().eResource().equals(node.getTarget().eResource()));
+                return diagram.getTarget().eResource().equals(node.getTarget().eResource());
             }
         }
         return false;
     }
 
     public Boolean isBasicClass(DataClass dClass) {
-        return !HelperFunctions.defaultDataClasses.contains(dClass.getName());
+        return !HelperFunctions.DEFAULT_DATA_CLASSES.contains(dClass.getName());
     }
 
     public String getNumberOfInstances(DEdge object) {
@@ -184,7 +184,7 @@ public class ClassDiagramServices extends AbstractServices {
     }
 
     public boolean hasVariables(EObject object) {
-        return (partDataClass(object) || partProcessClass(object));
+        return partDataClass(object) || partProcessClass(object);
     }
 
     public boolean hasParameters(EObject object) {
@@ -193,35 +193,35 @@ public class ClassDiagramServices extends AbstractServices {
         } else if (object instanceof ProcessMethod) {
             return true;
         } else if (object instanceof Variable) {
-            return (object.eContainer().eContainer() instanceof InstantiableClass);
+            return object.eContainer().eContainer() instanceof InstantiableClass;
         }
         return false;
     }
 
     public boolean hasMethods(EObject object) {
-        return (partDataClass(object) || partProcessClass(object));
+        return partDataClass(object) || partProcessClass(object);
     }
 
     private boolean partDataClass(EObject object) {
-        if ((object instanceof ProcessClass || object instanceof ProcessMethod)) {
+        if (object instanceof ProcessClass || object instanceof ProcessMethod) {
             return true;
         } else if (object instanceof Variable) {
-            return (object.eContainer().eContainer() instanceof ProcessClass);
+            return object.eContainer().eContainer() instanceof ProcessClass;
         }
         return false;
     }
 
     private boolean partProcessClass(EObject object) {
-        if ((object instanceof DataClass || object instanceof DataMethod)) {
+        if (object instanceof DataClass || object instanceof DataMethod) {
             return true;
         } else if (object instanceof Variable) {
-            return (object.eContainer().eContainer() instanceof DataClass);
+            return object.eContainer().eContainer() instanceof DataClass;
         }
         return false;
     }
 
     public boolean isMethod(EObject object) {
-        return ((object instanceof ProcessMethod || object instanceof DataMethod) && !isBundleResource(object));
+        return (object instanceof ProcessMethod || object instanceof DataMethod) && !isBundleResource(object);
     }
 
     public boolean isVariable(EObject object) {
@@ -250,9 +250,9 @@ public class ClassDiagramServices extends AbstractServices {
 
     public boolean canInherit(EObject object) {
         if (object instanceof DataClass) {
-            return (((DataClass) object).getSuperClass() == null);
+            return ((DataClass) object).getSuperClass() == null;
         } else if (object instanceof ProcessClass) {
-            return (((ProcessClass) object).getSuperClass() == null);
+            return ((ProcessClass) object).getSuperClass() == null;
         }
         return false;
     }
@@ -276,13 +276,13 @@ public class ClassDiagramServices extends AbstractServices {
 
     public boolean canCreateSystem(EObject object) {
         if (object instanceof Poosl) {
-            return (HelperFunctions.getSystem((Poosl) object) == null);
+            return HelperFunctions.getSystem((Poosl) object) == null;
         }
         return false;
     }
 
     public boolean canBeContained(EObject object) {
-        return (object instanceof InstantiableClass && ((InstantiableClass) object).getName() != null);
+        return object instanceof InstantiableClass && ((InstantiableClass) object).getName() != null;
     }
 
     public static String getUniqueClusterName(EObject container, String original) {

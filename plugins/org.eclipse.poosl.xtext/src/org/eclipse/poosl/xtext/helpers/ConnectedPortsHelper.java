@@ -13,7 +13,7 @@ import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.descriptions.PooslClusterClassDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-public class ConnectedPortsHelper {
+public final class ConnectedPortsHelper {
 
     private ConnectedPortsHelper() {
         throw new IllegalStateException("Utility class");

@@ -12,12 +12,12 @@ import org.eclipse.poosl.AbortStatement;
 import org.eclipse.poosl.GuardedStatement;
 import org.eclipse.poosl.InterruptStatement;
 import org.eclipse.poosl.ParStatement;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.ProcessMethodCall;
 import org.eclipse.poosl.SelStatement;
 import org.eclipse.poosl.Statement;
 import org.eclipse.poosl.StatementSequence;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.custom.FormattingHelper;
 import org.eclipse.poosl.xtext.helpers.PooslProcessMethodParser;
 import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
@@ -26,7 +26,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class PooslProcessMethodDescription {
+public final class PooslProcessMethodDescription {
     private static final String STR_CLASS = "Class";
 
     private static final String STR_INPUT_PARAMETERS = "InputParameters";

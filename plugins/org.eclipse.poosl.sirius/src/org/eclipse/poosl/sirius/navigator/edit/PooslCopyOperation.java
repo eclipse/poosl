@@ -61,6 +61,10 @@ import org.eclipse.ui.internal.ide.dialogs.IDEResourceInfoUtils;
 @SuppressWarnings("restriction")
 public class PooslCopyOperation {
 
+    private static final Logger LOGGER = Logger.getLogger(PooslCopyOperation.class.getName());
+
+    private static final IResource[] EMPTY_RESOURCE_ARRAY = new IResource[0];
+
     /**
      * Status containing the errors detected when running the operation or <code>null</code> if no errors detected.
      */
@@ -74,25 +78,23 @@ public class PooslCopyOperation {
     /**
      * Whether or not the copy has been canceled by the user.
      */
-    private boolean canceled = false;
+    private boolean canceled;
 
     /**
      * Whether or not the operation creates virtual folders and links instead of folders and files.
      */
-    private boolean createVirtualFoldersAndLinks = false;
+    private boolean createVirtualFoldersAndLinks;
 
     /**
      * Whether or not the operation creates links instead of folders and files.
      */
-    private boolean createLinks = false;
+    private boolean createLinks;
 
     /**
      * Overwrite all flag.
      */
 
     private String[] modelProviderIds;
-
-    private static final IResource[] EMPTY_RESOURCE_ARRAY = new IResource[0];
 
     /**
      * Creates a new operation initialized with a shell.
@@ -296,8 +298,6 @@ public class PooslCopyOperation {
 
         return copiedResources[0];
     }
-
-    private static final Logger LOGGER = Logger.getLogger(PooslCopyOperation.class.getName());
 
     private void display(InvocationTargetException e) {
         LOGGER.log(Level.WARNING, MessageFormat.format("Exception in {0}.performCopy(): {1}", getClass().getName(), e.getTargetException()), e.getCause());

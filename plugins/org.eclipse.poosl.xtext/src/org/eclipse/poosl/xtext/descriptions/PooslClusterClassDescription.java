@@ -17,7 +17,7 @@ import org.eclipse.poosl.xtext.helpers.PooslChannelHelper;
 import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-public class PooslClusterClassDescription {
+public final class PooslClusterClassDescription {
     private static final String STR_CHANNELS = "Channels";
 
     private static final String STR_INSTANCES = "Instances";

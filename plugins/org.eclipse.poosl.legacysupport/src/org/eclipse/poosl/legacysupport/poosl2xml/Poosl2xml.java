@@ -178,13 +178,23 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 public class Poosl2xml {
+    private static final String DOT = ".";
+
+    private static final String OPTION_B = "b";
+
+    private static final String OPTION_V = "v";
+
+    private static final String FALSE = "FALSE";
+
+    private static final String TRUE = "TRUE";
+
     private static final String COULD_NOT_COMPLETE_XML_TRANSFORMATION = "Could not complete xml transformation.";
 
     private static final String XSLT_URI = "platform:/plugin/org.eclipse.poosl.legacysupport/src/org/eclipse/poosl/legacysupport/poosl2xml/as_shesim_model.xslt";
 
     private static final Logger LOGGER = Logger.getLogger(Poosl2xml.class.getName());
 
-    private static final ObjectFactory objFact = new ObjectFactory();
+    private static final ObjectFactory OBJ_FACT = new ObjectFactory();
 
     private boolean isSHESimXml;
 
@@ -202,8 +212,8 @@ public class Poosl2xml {
     public static void main(String[] args) {
         String cmdBasicClasses = "";
         Options options = new Options();
-        options.addOption("v", "novalidation", false, "Setting this flag will skip the validation step in the transformation");
-        options.addOption("b", "basicclasses", true, "Use this basic classes file instead of the default one");
+        options.addOption(OPTION_V, "novalidation", false, "Setting this flag will skip the validation step in the transformation");
+        options.addOption(OPTION_B, "basicclasses", true, "Use this basic classes file instead of the default one");
         CommandLineParser cmdParser = new BasicParser();
         CommandLine cmd = null;
         HelpFormatter formatter = new HelpFormatter();
@@ -217,17 +227,17 @@ public class Poosl2xml {
         if (cmd != null && args.length > 0) {
             String input = args[0];
             boolean validate = true;
-            if (cmd.hasOption("v")) {
+            if (cmd.hasOption(OPTION_V)) {
                 validate = false;
             }
-            if (cmd.hasOption("b")) {
-                cmdBasicClasses = cmd.getOptionValue("b");
+            if (cmd.hasOption(OPTION_B)) {
+                cmdBasicClasses = cmd.getOptionValue(OPTION_B);
                 if (cmdBasicClasses.equals(input)) {
                     System.out.println("Basic classes cannot be the same as the FILE");
                     printHelp(formatter, options);
                     return;
                 }
-                if (!cmd.hasOption("v")) {
+                if (!cmd.hasOption(OPTION_V)) {
                     System.out.println("Validation is not available when specifying basic classes. Please add option -v.");
                     printHelp(formatter, options);
                     return;
@@ -293,7 +303,7 @@ public class Poosl2xml {
     }
 
     /**
-     * Will generate {@link PooslModeInformation} from the given inputFile
+     * Will generate {@link PooslModeInformation} from the given inputFile.
      * 
      * @param inputFile
      *            the absolute path to file, for example: C:\dir\hello_world.poosl
@@ -322,7 +332,7 @@ public class Poosl2xml {
     }
 
     /**
-     * Will generate {@link PooslModeInformation} from the given Poosl model
+     * Will generate {@link PooslModeInformation} from the given Poosl model.
      * 
      * @param poosl
      *            The poosl model
@@ -333,11 +343,6 @@ public class Poosl2xml {
      * @param validate
      *            If true the inputFile and all imported files will be validated, if validate fails a
      *            {@link PooslValidationException} will be thrown A IProgressMonitor to track progress, null is allowed
-     * @param asSHESim
-     *            Generate SHESIM xml
-     * @param validate
-     *            If true the inputFile and all imported files will be validated, if validate fails a
-     *            {@link PooslValidationException} will be thrown
      * @return PooslModelInformation created from the Poosl model
      * @throws FileNotFoundException
      * @throws UnsupportedEncodingException
@@ -582,8 +587,8 @@ public class Poosl2xml {
                 String iName = instanceName + "/" + tInstance.getName();
                 instances.put(iName, tInstance.getType());
                 for (TConnection tConnection : tInstance.getConnection()) {
-                    String extern = instanceName + "." + cc.getChannel().get(Integer.parseInt(tConnection.getChannel())).getOutputPort();
-                    instancePortMap.put(iName + "." + tConnection.getPort(), extern);
+                    String extern = instanceName + DOT + cc.getChannel().get(Integer.parseInt(tConnection.getChannel())).getOutputPort();
+                    instancePortMap.put(iName + DOT + tConnection.getPort(), extern);
                 }
 
                 if (tInstance.getType().equals(TInstanceType.CLUSTER)) {
@@ -627,7 +632,7 @@ public class Poosl2xml {
                 }
             }
             if (port == null) {
-                port = objFact.createTPort();
+                port = OBJ_FACT.createTPort();
                 port.setName(superClassPort.getName());
                 targetInterface.getPort().add(port);
             }
@@ -638,13 +643,13 @@ public class Poosl2xml {
     }
 
     private TPooslSpecification createPooslSpec(boolean asSHESim, Poosl poosl) {
-        TPooslSpecification pooslSpec = objFact.createTPooslSpecification();
+        TPooslSpecification pooslSpec = OBJ_FACT.createTPooslSpecification();
         // ######## Create DataClasses container and fill with classes ########
-        TDataClasses pooslDataClasses = objFact.createTDataClasses();
+        TDataClasses pooslDataClasses = OBJ_FACT.createTDataClasses();
         for (DataClass dc : poosl.getDataClasses()) {
-            TDataClass dataClass = objFact.createTDataClass();
+            TDataClass dataClass = OBJ_FACT.createTDataClass();
             dataClass.setName(dc.getName());
-            dataClass.setNative(TBoolean.valueOf(dc.isNative() ? "TRUE" : "FALSE"));
+            dataClass.setNative(TBoolean.valueOf(dc.isNative() ? TRUE : FALSE));
             dataClass.setSuperClass(HelperFunctions.getCorrectedDataClassExtendsAsString(dc));
             dataClass.getInstanceVariable().addAll(translateDeclarations(dc.getInstanceVariables()));
             dataClass.getDataMethod().addAll(translateDataMethods(dc.getDataMethodsNamed()));
@@ -655,14 +660,14 @@ public class Poosl2xml {
         pooslSpec.setDataClasses(pooslDataClasses);
 
         // ##### Create ProcessClasses container and fill with classes #####
-        TProcessClasses processClasses = objFact.createTProcessClasses();
+        TProcessClasses processClasses = OBJ_FACT.createTProcessClasses();
         for (ProcessClass pc : poosl.getProcessClasses()) {
-            TProcessClass processClass = objFact.createTProcessClass();
+            TProcessClass processClass = OBJ_FACT.createTProcessClass();
             processClass.setName(pc.getName());
             processClass.setSuperClass(pc.getSuperClass());
             processClass.getInstanceVariable().addAll(translateDeclarations(pc.getInstanceVariables()));
             processClass.getInstantiationParameter().addAll(translateDeclarations(pc.getParameters()));
-            TInterface interFace = objFact.createTInterface();
+            TInterface interFace = OBJ_FACT.createTInterface();
             EList<MessageSignature> receiveMessages = pc.getReceiveMessages();
             EList<MessageSignature> sendMessages = pc.getSendMessages();
             interFace.getPort().addAll(translatePorts(pc.getPorts()));
@@ -672,8 +677,8 @@ public class Poosl2xml {
 
             ProcessMethodCall pcInitialMethodCall = pc.getInitialMethodCall();
             if (pcInitialMethodCall != null) {
-                TInitialMethodCall initialMethodCall = objFact.createTInitialMethodCall();
-                TInitialProcessMethodCall initialProcessMethodCall = objFact.createTInitialProcessMethodCall();
+                TInitialMethodCall initialMethodCall = OBJ_FACT.createTInitialMethodCall();
+                TInitialProcessMethodCall initialProcessMethodCall = OBJ_FACT.createTInitialProcessMethodCall();
                 initialProcessMethodCall.setMethodName(pcInitialMethodCall.getMethod());
                 initialProcessMethodCall.setStmtHandle(modelInfo.addMapping(pcInitialMethodCall));
                 for (Expression e : pcInitialMethodCall.getInputArguments()) {
@@ -698,10 +703,10 @@ public class Poosl2xml {
         pooslSpec.setProcessClasses(processClasses);
 
         // ####### Create Clusterclasses container and fill with classes #####
-        TClusterClasses clusterClasses = objFact.createTClusterClasses();
+        TClusterClasses clusterClasses = OBJ_FACT.createTClusterClasses();
         for (ClusterClass cc : poosl.getClusterClasses()) {
-            TClusterClass clusterClass = objFact.createTClusterClass();
-            TClusterInterface clusterInterface = objFact.createTClusterInterface();
+            TClusterClass clusterClass = OBJ_FACT.createTClusterClass();
+            TClusterInterface clusterInterface = OBJ_FACT.createTClusterInterface();
             clusterInterface.getPort().addAll(translatePorts(cc.getPorts()));
             clusterClass.setInterface(clusterInterface);
             clusterClass.getChannel().addAll(translateChannelsClusterClass(cc.getChannels()));
@@ -719,7 +724,7 @@ public class Poosl2xml {
         // classes #####################
         ClusterClass system = HelperFunctions.getSystem(poosl);
         if (system != null) {
-            TTopLevelSpecification topLevelSpecification = objFact.createTTopLevelSpecification();
+            TTopLevelSpecification topLevelSpecification = OBJ_FACT.createTTopLevelSpecification();
             topLevelSpecification.getChannel().addAll(translateChannelsSystem(system.getChannels()));
             topLevelSpecification.getInstance().addAll(translateInstances(system.getInstances()));
             pooslSpec.setTopLevelSpecification(topLevelSpecification);
@@ -729,12 +734,12 @@ public class Poosl2xml {
 
     private void translateMessages(TInterface interFace, EList<MessageSignature> receiveMessages, EList<MessageSignature> sendMessages) {
         for (MessageSignature messageSignature : sendMessages) {
-            TMessage message = objFact.createTMessage();
+            TMessage message = OBJ_FACT.createTMessage();
             message.setType(TMessageType.WRITE);
             translateMessagePart(interFace, messageSignature, message);
         }
         for (MessageSignature messageSignature : receiveMessages) {
-            TMessage message = objFact.createTMessage();
+            TMessage message = OBJ_FACT.createTMessage();
             message.setType(TMessageType.READ);
             translateMessagePart(interFace, messageSignature, message);
         }
@@ -744,7 +749,7 @@ public class Poosl2xml {
         String portName = messageSignature.getPort().getPort();
         message.setName(messageSignature.getName());
         for (MessageParameter messageParameter : messageSignature.getParameters()) {
-            TPooslTypeAttribute typeAttribute = objFact.createTPooslTypeAttribute();
+            TPooslTypeAttribute typeAttribute = OBJ_FACT.createTPooslTypeAttribute();
             typeAttribute.setType(messageParameter.getType());
             message.getArgument().add(typeAttribute);
         }
@@ -756,7 +761,7 @@ public class Poosl2xml {
             }
         }
         if (destinationPort == null) {
-            destinationPort = objFact.createTPort();
+            destinationPort = OBJ_FACT.createTPort();
             destinationPort.setName(portName);
             interFace.getPort().add(destinationPort);
         }
@@ -766,7 +771,7 @@ public class Poosl2xml {
     private List<TPort> translatePorts(EList<Port> ports) {
         List<TPort> translatedPorts = new ArrayList<>();
         for (Port port : ports) {
-            TPort translatedPort = objFact.createTPort();
+            TPort translatedPort = OBJ_FACT.createTPort();
             translatedPort.setName(port.getName());
             translatedPorts.add(translatedPort);
         }
@@ -783,7 +788,7 @@ public class Poosl2xml {
                 }
             }
             if (!found) {
-                TChannel channel = objFact.createTChannel();
+                TChannel channel = OBJ_FACT.createTChannel();
                 channel.setName("Unconnected" + port.getName());
                 channel.setOutputPort(port.getName());
                 newChannels.add(channel);
@@ -795,7 +800,7 @@ public class Poosl2xml {
     private List<TChannelInternal> translateChannelsSystem(EList<Channel> channels) {
         List<TChannelInternal> translatedChannels = new ArrayList<>();
         for (Channel c : channels) {
-            TChannelInternal channelInternal = objFact.createTChannelInternal();
+            TChannelInternal channelInternal = OBJ_FACT.createTChannelInternal();
             channelInternal.setName(String.valueOf(getChannelIndex(c)));
             translatedChannels.add(channelInternal);
         }
@@ -805,7 +810,7 @@ public class Poosl2xml {
     private List<TChannel> translateChannelsClusterClass(EList<Channel> channels) {
         List<TChannel> translatedChannels = new ArrayList<>();
         for (Channel c : channels) {
-            TChannel channel = objFact.createTChannel();
+            TChannel channel = OBJ_FACT.createTChannel();
             channel.setName(String.valueOf(getChannelIndex(c)));
             if (c.getExternalPort() != null) {
                 channel.setOutputPort(c.getExternalPort().getName());
@@ -826,7 +831,7 @@ public class Poosl2xml {
     private List<TInstance> translateInstances(EList<Instance> instances) {
         List<TInstance> translatedInstances = new ArrayList<>();
         for (Instance i : instances) {
-            TInstance instance = objFact.createTInstance();
+            TInstance instance = OBJ_FACT.createTInstance();
             instance.setName(i.getName());
             instance.setClazz(i.getClassDefinition());
             for (InstanceParameter a : i.getInstanceParameters()) {
@@ -843,7 +848,7 @@ public class Poosl2xml {
     }
 
     private TInstantiationExpression translateInstanceParameter(InstanceParameter a) {
-        TInstantiationExpression instantiationExpression = objFact.createTInstantiationExpression();
+        TInstantiationExpression instantiationExpression = OBJ_FACT.createTInstantiationExpression();
         instantiationExpression.setParameterName(a.getParameter());
         instantiationExpression.setBodyExpression(translateExpression(a.getExpression()));
         if (isSHESimXml) {
@@ -856,7 +861,7 @@ public class Poosl2xml {
         List<TConnection> translatedConnections = new ArrayList<>();
         for (InstancePort instancePort : channel.getInstancePorts()) {
             if (instancePort.getInstance().equals(i)) {
-                TConnection connection = objFact.createTConnection();
+                TConnection connection = OBJ_FACT.createTConnection();
                 connection.setPort((instancePort.getPort() != null) ? instancePort.getPort().getPort() : "");
                 connection.setChannel(String.valueOf(getChannelIndex(channel)));
                 translatedConnections.add(connection);
@@ -868,11 +873,11 @@ public class Poosl2xml {
     private List<TProcessMethod> translateProcessMethods(EList<ProcessMethod> methods) {
         List<TProcessMethod> processMethods = new ArrayList<>();
         for (ProcessMethod pm : methods) {
-            TProcessMethod processMethod = objFact.createTProcessMethod();
+            TProcessMethod processMethod = OBJ_FACT.createTProcessMethod();
             processMethod.setName(pm.getName());
             processMethod.setBodyStatement(translateStatement(pm.getBody()));
             if (pm.getBody() != null && isSHESimXml) {
-                processMethod.setBodyText(parseComments(NodeModelUtils.getNode(pm)) + ".");
+                processMethod.setBodyText(parseComments(NodeModelUtils.getNode(pm)) + DOT);
             }
             processMethod.getOutputParameter().addAll(translateDeclarations(pm.getOutputParameters()));
             processMethod.getArgument().addAll(translateDeclarations(pm.getInputParameters()));
@@ -885,7 +890,7 @@ public class Poosl2xml {
     private List<TDataMethod> translateDataMethods(EList<? extends DataMethod> methods) {
         List<TDataMethod> dataMethods = new ArrayList<>();
         for (DataMethod dm : methods) {
-            TDataMethod dataMethod = objFact.createTDataMethod();
+            TDataMethod dataMethod = OBJ_FACT.createTDataMethod();
             if (dm instanceof DataMethodNamed) {
                 dataMethod.setName(((DataMethodNamed) dm).getName());
             } else if (dm instanceof DataMethodBinaryOperator) {
@@ -893,13 +898,13 @@ public class Poosl2xml {
             } else if (dm instanceof DataMethodUnaryOperator) {
                 dataMethod.setName(((DataMethodUnaryOperator) dm).getName().getLiteral());
             }
-            dataMethod.setNative(TBoolean.valueOf(dm.isNative() ? "TRUE" : "FALSE"));
+            dataMethod.setNative(TBoolean.valueOf(dm.isNative() ? TRUE : FALSE));
             dataMethod.setReturnType(dm.getReturnType());
             if (dm.getBody() != null) {
                 dataMethod.setBodyExpression(translateExpression(dm.getBody()));
             }
             if (dm.getBody() != null && isSHESimXml) {
-                dataMethod.setBodyText(parseComments(NodeModelUtils.getNode(dm)) + ".");
+                dataMethod.setBodyText(parseComments(NodeModelUtils.getNode(dm)) + DOT);
             }
             dataMethod.getArgument().addAll(translateDeclarations(dm.getParameters()));
             dataMethod.getLocalVariable().addAll(translateDeclarations(dm.getLocalVariables()));
@@ -912,7 +917,7 @@ public class Poosl2xml {
         List<TTypedVariable> variables = new ArrayList<>();
         for (Declaration d : declarations) {
             for (Variable v : d.getVariables()) {
-                TTypedVariable typedVariable = objFact.createTTypedVariable();
+                TTypedVariable typedVariable = OBJ_FACT.createTTypedVariable();
                 typedVariable.setName(v.getName());
                 typedVariable.setType(d.getType());
                 variables.add(typedVariable);
@@ -922,36 +927,36 @@ public class Poosl2xml {
     }
 
     private TExpression translateExpression(Expression ex) {
-        TExpression expression = objFact.createTExpression();
+        TExpression expression = OBJ_FACT.createTExpression();
         translateExpression(ex, expression);
         return expression;
     }
 
     private void translateExpression(Expression ex, TExpression expression) {
         if (ex instanceof ReturnExpression) {
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsReturn(translateExpression(((ReturnExpression) ex).getExpression())));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsReturn(translateExpression(((ReturnExpression) ex).getExpression())));
         } else if (ex instanceof BooleanConstant) {
-            TConstant constant = objFact.createTConstant();
+            TConstant constant = OBJ_FACT.createTConstant();
             constant.setType(TConstantType.BOOLEAN);
             constant.setValue(((BooleanConstant) ex).getValue());
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsConstant(constant));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsConstant(constant));
         } else if (ex instanceof IntegerConstant) {
-            TConstant constant = objFact.createTConstant();
+            TConstant constant = OBJ_FACT.createTConstant();
             constant.setType(TConstantType.INTEGER);
             constant.setValue(getTokenTextWithoutHiddenTokens(NodeModelUtils.getNode(ex)));
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsConstant(constant));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsConstant(constant));
         } else if (ex instanceof CharacterConstant) {
-            TConstant constant = objFact.createTConstant();
+            TConstant constant = OBJ_FACT.createTConstant();
             constant.setType(TConstantType.CHARACTER);
             constant.setValue(((CharacterConstant) ex).getValue());
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsConstant(constant));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsConstant(constant));
         } else if (ex instanceof RealConstant) {
-            TConstant constant = objFact.createTConstant();
+            TConstant constant = OBJ_FACT.createTConstant();
             constant.setType(TConstantType.REAL);
             constant.setValue(getTokenTextWithoutHiddenTokens(NodeModelUtils.getNode(ex)));
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsConstant(constant));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsConstant(constant));
         } else if (ex instanceof StringConstant) {
-            TConstant constant = objFact.createTConstant();
+            TConstant constant = OBJ_FACT.createTConstant();
             constant.setType(TConstantType.STRING);
             /*
              * Currently there is a workaround in Rotalumis that removes the outer most double quotes This is legacy
@@ -960,72 +965,72 @@ public class Poosl2xml {
              * surrounding quotes here.
              */
             constant.setValue(((StringConstant) ex).getValue());
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsConstant(constant));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsConstant(constant));
         } else if (ex instanceof NilConstant) {
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsNil(objFact.createTEmpty()));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsNil(OBJ_FACT.createTEmpty()));
         } else if (ex instanceof SelfExpression) {
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsSelf(objFact.createTEmpty()));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsSelf(OBJ_FACT.createTEmpty()));
         } else if (ex instanceof VariableExpression) {
-            TVariableRef var = translateVariable(((VariableExpression) ex));
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsVariable(var));
+            TVariableRef var = translateVariable((VariableExpression) ex);
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsVariable(var));
         } else if (ex instanceof IfExpression) {
-            TIfExpression ifExpression = objFact.createTIfExpression();
+            TIfExpression ifExpression = OBJ_FACT.createTIfExpression();
             ifExpression.setCondition(translateExpression(((IfExpression) ex).getCondition()));
             if (((IfExpression) ex).getElseClause() != null) {
                 ifExpression.setElse(translateExpression(((IfExpression) ex).getElseClause()));
             }
             ifExpression.setThen(translateExpression(((IfExpression) ex).getThenClause()));
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsIf(ifExpression));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsIf(ifExpression));
         } else if (ex instanceof AssignmentExpression) {
-            TAssignment assignment = objFact.createTAssignment();
+            TAssignment assignment = OBJ_FACT.createTAssignment();
             AssignmentExpression assignmentExpression = (AssignmentExpression) ex;
             assignment.setVariableName((assignmentExpression.getVariable() != null) ? assignmentExpression.getVariable() : "");
             translateExpression(assignmentExpression.getExpression(), assignment);
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsAssignment(assignment));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsAssignment(assignment));
         } else if (ex instanceof BinaryOperatorExpression) {
-            TBinaryOperation binaryOperation = objFact.createTBinaryOperation();
+            TBinaryOperation binaryOperation = OBJ_FACT.createTBinaryOperation();
             binaryOperation.setStmtHandle(modelInfo.addMapping(ex, false));
             binaryOperation.setLeftOperand(translateExpression(((BinaryOperatorExpression) ex).getLeftOperand()));
             binaryOperation.setRightOperand(translateExpression(((BinaryOperatorExpression) ex).getRightOperand()));
             binaryOperation.setOperator(TBinaryOperator.fromValue(((BinaryOperatorExpression) ex).getName().getLiteral()));
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsBinaryOperation(binaryOperation));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsBinaryOperation(binaryOperation));
         } else if (ex instanceof UnaryOperatorExpression) {
-            TUnaryOperation unaryOperation = objFact.createTUnaryOperation();
+            TUnaryOperation unaryOperation = OBJ_FACT.createTUnaryOperation();
             unaryOperation.setStmtHandle(modelInfo.addMapping(ex, false));
             unaryOperation.setOperand(translateExpression(((UnaryOperatorExpression) ex).getOperand()));
             unaryOperation.setOperator(TUnaryOperator.fromValue(((UnaryOperatorExpression) ex).getName().getLiteral()));
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsUnaryOperation(unaryOperation));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsUnaryOperation(unaryOperation));
         } else if (ex instanceof NewExpression) {
-            TObjectCreation objectCreation = objFact.createTObjectCreation();
+            TObjectCreation objectCreation = OBJ_FACT.createTObjectCreation();
             objectCreation.setDataClass(((NewExpression) ex).getDataClass());
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsNew(objectCreation));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsNew(objectCreation));
         } else if (ex instanceof CurrentTimeExpression) {
-            TCurrentTime currentTime = objFact.createTCurrentTime();
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsCurrentTime(currentTime));
+            TCurrentTime currentTime = OBJ_FACT.createTCurrentTime();
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsCurrentTime(currentTime));
         } else if (ex instanceof DataMethodCallExpression) {
-            TDataMethodCall dataMethodCall = objFact.createTDataMethodCall();
+            TDataMethodCall dataMethodCall = OBJ_FACT.createTDataMethodCall();
             dataMethodCall.setStmtHandle(modelInfo.addMapping(ex, false));
             dataMethodCall.setMethodName(((DataMethodCallExpression) ex).getName());
             dataMethodCall.setReceiver(translateExpression(((DataMethodCallExpression) ex).getTarget()));
             for (Expression argumentExpression : ((DataMethodCallExpression) ex).getArguments()) {
                 dataMethodCall.getArgument().add(translateExpression(argumentExpression));
             }
-            dataMethodCall.setSuper(TBoolean.valueOf(((DataMethodCallExpression) ex).isOnSuperClass() ? "TRUE" : "FALSE"));
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsDataMethodCall(dataMethodCall));
+            dataMethodCall.setSuper(TBoolean.valueOf(((DataMethodCallExpression) ex).isOnSuperClass() ? TRUE : FALSE));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsDataMethodCall(dataMethodCall));
         } else if (ex instanceof ExpressionSequence) {
-            TExpressions expressions = objFact.createTExpressions();
+            TExpressions expressions = OBJ_FACT.createTExpressions();
             for (Expression e : ((ExpressionSequence) ex).getExpressions()) {
                 expressions.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().addAll(translateExpression(e).getSequenceOfExpressionsOrAssignmentOrDataMethodCall());
             }
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsSequenceOfExpressions(expressions));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsSequenceOfExpressions(expressions));
         } else if (ex instanceof WhileExpression) {
-            TWhileExpression whileExpression = objFact.createTWhileExpression();
+            TWhileExpression whileExpression = OBJ_FACT.createTWhileExpression();
             whileExpression.setCondition(translateExpression(((WhileExpression) ex).getCondition()));
             whileExpression.setBody(translateExpression(((WhileExpression) ex).getBody()));
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsWhile(whileExpression));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsWhile(whileExpression));
         } else if (ex instanceof SwitchExpression) {
             SwitchExpression switchExpression = (SwitchExpression) ex;
-            TSwitchExpression tSwitchExpression = objFact.createTSwitchExpression();
+            TSwitchExpression tSwitchExpression = OBJ_FACT.createTSwitchExpression();
             tSwitchExpression.setControlExpression(translateExpression(switchExpression.getExpression()));
 
             if (switchExpression.getDefaultBody() != null) {
@@ -1033,40 +1038,40 @@ public class Poosl2xml {
             }
 
             for (SwitchExpressionCase switchExpressionCase : switchExpression.getCases()) {
-                TSwitchCaseExpression tExpressionCase = objFact.createTSwitchCaseExpression();
+                TSwitchCaseExpression tExpressionCase = OBJ_FACT.createTSwitchCaseExpression();
                 tExpressionCase.setValueExpression(translateExpression(switchExpressionCase.getValue()));
                 tExpressionCase.setBody(translateExpression(switchExpressionCase.getBody()));
                 tSwitchExpression.getCase().add(tExpressionCase);
             }
 
-            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(objFact.createTExpressionsSwitch(tSwitchExpression));
+            expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsSwitch(tSwitchExpression));
         } else {
             LOGGER.warning("Unimplemented expression: " + ex.getClass().getName());
         }
     }
 
     private TStatement translateStatement(Statement st) {
-        TStatement statement = objFact.createTStatement();
+        TStatement statement = OBJ_FACT.createTStatement();
         if (st instanceof AbortStatement) {
-            TAbort abort = objFact.createTAbort();
+            TAbort abort = OBJ_FACT.createTAbort();
             abort.setStmtHandle(modelInfo.addMapping((AbortStatement) st));
             abort.setNormalBehavior(translateStatement(((AbortStatement) st).getNormalClause()));
             abort.setAbortingBehavior(translateStatement(((AbortStatement) st).getAbortingClause()));
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsAbort(abort));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsAbort(abort));
         } else if (st instanceof StatementSequence) {
-            TStatements sequence = objFact.createTStatements();
+            TStatements sequence = OBJ_FACT.createTStatements();
             sequence.setStmtHandle(modelInfo.addMapping((StatementSequence) st));
             for (Statement tempStatement : ((StatementSequence) st).getStatements()) {
                 TStatement translatedStatement = translateStatement(tempStatement);
                 sequence.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().addAll(translatedStatement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements());
             }
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsSequenceOfStatements(sequence));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsSequenceOfStatements(sequence));
         } else if (st instanceof SkipStatement) {
-            TEmpty skip = objFact.createTEmpty();
+            TEmpty skip = OBJ_FACT.createTEmpty();
             skip.setStmtHandle(modelInfo.addMapping((SkipStatement) st));
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsSkip(skip));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsSkip(skip));
         } else if (st instanceof SendStatement) {
-            TMessageSend messageSend = objFact.createTMessageSend();
+            TMessageSend messageSend = OBJ_FACT.createTMessageSend();
             messageSend.setStmtHandle(modelInfo.addMapping((SendStatement) st));
             String messagePortName = ((PortReference) ((SendStatement) st).getPortDescriptor()).getPort();
             messageSend.setMessageName(((SendStatement) st).getName());
@@ -1077,9 +1082,9 @@ public class Poosl2xml {
             for (Expression ex : ((SendStatement) st).getArguments()) {
                 messageSend.getArgument().add(translateExpression(ex));
             }
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsMessageSend(messageSend));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsMessageSend(messageSend));
         } else if (st instanceof ReceiveStatement) {
-            TMessageReceive messageReceive = objFact.createTMessageReceive();
+            TMessageReceive messageReceive = OBJ_FACT.createTMessageReceive();
             messageReceive.setStmtHandle(modelInfo.addMapping((ReceiveStatement) st));
             String messagePortName = ((PortReference) ((ReceiveStatement) st).getPortDescriptor()).getPort();
             messageReceive.setMessageName(((ReceiveStatement) st).getName());
@@ -1093,57 +1098,57 @@ public class Poosl2xml {
             for (OutputVariable v : ((ReceiveStatement) st).getVariables()) {
                 messageReceive.getVariable().add(v.getVariable());
             }
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsMessageReceive(messageReceive));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsMessageReceive(messageReceive));
         } else if (st instanceof IfStatement) {
-            TIfStatement ifStatement = objFact.createTIfStatement();
+            TIfStatement ifStatement = OBJ_FACT.createTIfStatement();
             ifStatement.setStmtHandle(modelInfo.addMapping((IfStatement) st));
             ifStatement.setCondition(translateExpression(((IfStatement) st).getCondition()));
             ifStatement.setThen(translateStatement(((IfStatement) st).getThenClause()));
             if (((IfStatement) st).getElseClause() != null) {
                 ifStatement.setElse(translateStatement(((IfStatement) st).getElseClause()));
             }
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsIf(ifStatement));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsIf(ifStatement));
         } else if (st instanceof ParStatement) {
-            TStatements listOfParStatements = objFact.createTStatements();
+            TStatements listOfParStatements = OBJ_FACT.createTStatements();
             listOfParStatements.setStmtHandle(modelInfo.addMapping((ParStatement) st));
             for (Statement parStatement : ((ParStatement) st).getClauses()) {
                 TStatement translatedStatement = translateStatement(parStatement);
                 listOfParStatements.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().addAll(translatedStatement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements());
             }
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsParallelStatements(listOfParStatements));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsParallelStatements(listOfParStatements));
         } else if (st instanceof SelStatement) {
-            TStatements listOfSelStatements = objFact.createTStatements();
+            TStatements listOfSelStatements = OBJ_FACT.createTStatements();
             listOfSelStatements.setStmtHandle(modelInfo.addMapping((SelStatement) st));
             for (Statement selStatement : ((SelStatement) st).getClauses()) {
                 TStatement translatedStatement = translateStatement(selStatement);
                 listOfSelStatements.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().addAll(translatedStatement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements());
             }
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsSelectStatements(listOfSelStatements));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsSelectStatements(listOfSelStatements));
         } else if (st instanceof DelayStatement) {
             TExpression delay = translateExpression(((DelayStatement) st).getExpression());
             delay.setStmtHandle(modelInfo.addMapping((DelayStatement) st));
-            JAXBElement<TExpression> jaxbDelay = objFact.createTStatementsDelay(delay);
+            JAXBElement<TExpression> jaxbDelay = OBJ_FACT.createTStatementsDelay(delay);
             statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(jaxbDelay);
         } else if (st instanceof ExpressionStatement) {
             TExpression expression = translateExpression(((ExpressionStatement) st).getExpression());
             expression.setStmtHandle(modelInfo.addMapping((ExpressionStatement) st));
-            JAXBElement<TExpression> jaxbExpression = objFact.createTStatementsExpression(expression);
+            JAXBElement<TExpression> jaxbExpression = OBJ_FACT.createTStatementsExpression(expression);
             statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(jaxbExpression);
         } else if (st instanceof GuardedStatement) {
-            TGuard guard = objFact.createTGuard();
+            TGuard guard = OBJ_FACT.createTGuard();
             guard.setStmtHandle(modelInfo.addMapping((GuardedStatement) st));
             guard.setStatement(translateStatement(((GuardedStatement) st).getStatement()));
             guard.setExpression(translateExpression(((GuardedStatement) st).getGuard()));
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsGuard(guard));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsGuard(guard));
 
         } else if (st instanceof InterruptStatement) {
-            TInterrupt interrupt = objFact.createTInterrupt();
+            TInterrupt interrupt = OBJ_FACT.createTInterrupt();
             interrupt.setStmtHandle(modelInfo.addMapping((InterruptStatement) st));
             interrupt.setNormalBehavior(translateStatement(((InterruptStatement) st).getNormalClause()));
             interrupt.setInterruptingBehavior(translateStatement(((InterruptStatement) st).getInterruptingClause()));
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsInterrupt(interrupt));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsInterrupt(interrupt));
         } else if (st instanceof ProcessMethodCall) {
-            TProcessMethodCall processMethodCall = objFact.createTProcessMethodCall();
+            TProcessMethodCall processMethodCall = OBJ_FACT.createTProcessMethodCall();
             processMethodCall.setStmtHandle(modelInfo.addMapping((ProcessMethodCall) st));
             String processMethodCallName = ((ProcessMethodCall) st).getMethod();
             processMethodCall.setMethodName(processMethodCallName);
@@ -1153,16 +1158,16 @@ public class Poosl2xml {
             for (OutputVariable v : ((ProcessMethodCall) st).getOutputVariables()) {
                 processMethodCall.getReturnVariable().add(v.getVariable());
             }
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsProcessMethodCall(processMethodCall));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsProcessMethodCall(processMethodCall));
         } else if (st instanceof WhileStatement) {
-            TWhileStatement whileStatement = objFact.createTWhileStatement();
+            TWhileStatement whileStatement = OBJ_FACT.createTWhileStatement();
             whileStatement.setStmtHandle(modelInfo.addMapping((WhileStatement) st));
             whileStatement.setCondition(translateExpression(((WhileStatement) st).getCondition()));
             whileStatement.setBody(translateStatement(((WhileStatement) st).getBody()));
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsWhile(whileStatement));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsWhile(whileStatement));
         } else if (st instanceof SwitchStatement) {
             SwitchStatement switchStatement = (SwitchStatement) st;
-            TSwitchStatement tSwitchStatement = objFact.createTSwitchStatement();
+            TSwitchStatement tSwitchStatement = OBJ_FACT.createTSwitchStatement();
             tSwitchStatement.setStmtHandle(modelInfo.addMapping(switchStatement));
             tSwitchStatement.setControlExpression(translateExpression(switchStatement.getExpression()));
 
@@ -1170,13 +1175,13 @@ public class Poosl2xml {
                 tSwitchStatement.setDefault(translateStatement(switchStatement.getDefaultBody()));
             }
             for (SwitchStatementCase switchStatementCase : switchStatement.getCases()) {
-                TSwitchCaseStatement tStatementCase = objFact.createTSwitchCaseStatement();
+                TSwitchCaseStatement tStatementCase = OBJ_FACT.createTSwitchCaseStatement();
                 tStatementCase.setValueExpression(translateExpression(switchStatementCase.getValue()));
                 tStatementCase.setStmtHandle(modelInfo.addMapping(switchStatementCase));
                 tStatementCase.setBody(translateStatement(switchStatementCase.getBody()));
                 tSwitchStatement.getCase().add(tStatementCase);
             }
-            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(objFact.createTStatementsSwitch(tSwitchStatement));
+            statement.getSequenceOfStatementsOrParallelStatementsOrSelectStatements().add(OBJ_FACT.createTStatementsSwitch(tSwitchStatement));
 
         } else {
             LOGGER.warning("Unimplemented statement: " + st.getClass().getName());
@@ -1186,7 +1191,7 @@ public class Poosl2xml {
 
     private TVariableRef translateVariable(VariableExpression ex) {
         String name = (ex.getVariable() != null) ? ex.getVariable().trim() : "";
-        TVariableRef variableRef = objFact.createTVariableRef();
+        TVariableRef variableRef = OBJ_FACT.createTVariableRef();
         variableRef.setName(name);
         return variableRef;
     }

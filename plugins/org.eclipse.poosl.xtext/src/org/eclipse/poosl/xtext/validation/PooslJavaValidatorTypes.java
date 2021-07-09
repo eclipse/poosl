@@ -21,6 +21,7 @@ import org.eclipse.poosl.IfStatement;
 import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstanceParameter;
 import org.eclipse.poosl.OutputVariable;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.PortExpression;
 import org.eclipse.poosl.PortReference;
 import org.eclipse.poosl.ProcessClass;
@@ -31,7 +32,6 @@ import org.eclipse.poosl.SendStatement;
 import org.eclipse.poosl.SwitchStatement;
 import org.eclipse.poosl.SwitchStatementCase;
 import org.eclipse.poosl.WhileStatement;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.custom.FormattingHelper;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.custom.PooslMessageType;
@@ -51,6 +51,8 @@ import org.eclipse.xtext.validation.CheckType;
 import com.google.common.collect.Iterables;
 
 public class PooslJavaValidatorTypes extends PooslJavaValidatorAcyclicRelations {
+    public static final String NOT_DECLARED = "{0} ''{1}'' is not declared.";
+
     private static final String SIGNATURE_EXPRESSIONS_INCOMPATIBLE = "Expressions of type {0} is incompatible with type String";
 
     private static final String RECEPTION_INCOMPATIBLE = "Reception condition of type {0} is incompatible with type Boolean";
@@ -90,8 +92,6 @@ public class PooslJavaValidatorTypes extends PooslJavaValidatorAcyclicRelations 
     private static final String PROCESSMETHOD_CALL_ARG_INCOMPATIBLE = "Input argument of type {0} is incompatible with declaration type {1}";
 
     private static final String PROCESSMETHOD_CALL_ARG_SIZE = "Expected {0} input arguments instead of {1}";
-
-    public static final String NOT_DECLARED = "{0} ''{1}'' is not declared.";
 
     private static final String INSTANCE_PARAMETERS_INCOMPATIBLE = "Expression of type {0} is not compatible with variable of type {1}";
 

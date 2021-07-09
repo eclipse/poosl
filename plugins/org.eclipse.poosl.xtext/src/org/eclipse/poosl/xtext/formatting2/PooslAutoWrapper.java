@@ -14,7 +14,7 @@ public class PooslAutoWrapper implements IAutowrapFormatter {
 
     private final Procedure1<IHiddenRegionFormatter> formatting;
 
-    private boolean hasWrapped = false;
+    private boolean hasWrapped;
 
     public PooslAutoWrapper(IHiddenRegion last, Procedure1<IHiddenRegionFormatter> formatting) {
         this.last = last;

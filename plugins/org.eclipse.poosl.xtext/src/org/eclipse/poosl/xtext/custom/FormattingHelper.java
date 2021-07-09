@@ -16,11 +16,11 @@ import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstantiableClass;
 import org.eclipse.poosl.MessageParameter;
 import org.eclipse.poosl.MessageSignature;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.Port;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.descriptions.PooslDataMethodDescription;
 import org.eclipse.poosl.xtext.descriptions.PooslDeclarationDescription;
 import org.eclipse.poosl.xtext.descriptions.PooslProcessMethodDescription;
@@ -241,7 +241,7 @@ public final class FormattingHelper {
             }
 
             if (includePorts) {
-                Iterable<String> ports = (hasName) ? PooslCache.get(iClass.eResource()).getInstantiableClassPorts(iClass.getName()).keySet()
+                Iterable<String> ports = hasName ? PooslCache.get(iClass.eResource()).getInstantiableClassPorts(iClass.getName()).keySet()
                         : Iterables.transform(iClass.getPorts(), new Function<Port, String>() {
                             @Override
                             public String apply(Port port) {

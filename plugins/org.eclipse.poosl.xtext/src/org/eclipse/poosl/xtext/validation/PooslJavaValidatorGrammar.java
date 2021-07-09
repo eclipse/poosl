@@ -11,10 +11,10 @@ import org.eclipse.poosl.DataMethodCallExpression;
 import org.eclipse.poosl.Declaration;
 import org.eclipse.poosl.GuardedStatement;
 import org.eclipse.poosl.PooslPackage;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ReturnExpression;
 import org.eclipse.poosl.SelfExpression;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
@@ -51,7 +51,7 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
 
         private final String text;
 
-        private Annotations(final String text) {
+        Annotations(final String text) {
             this.text = text;
         }
 

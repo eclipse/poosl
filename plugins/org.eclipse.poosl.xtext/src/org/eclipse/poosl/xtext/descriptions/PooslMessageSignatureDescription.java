@@ -18,7 +18,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class PooslMessageSignatureDescription {
+public final class PooslMessageSignatureDescription {
     private static final String STR_PORT = "Port";
 
     private static final String STR_CLASS = "Class";

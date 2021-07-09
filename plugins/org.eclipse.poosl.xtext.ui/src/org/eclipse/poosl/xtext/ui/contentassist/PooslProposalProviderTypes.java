@@ -13,6 +13,7 @@ import org.eclipse.poosl.Declaration;
 import org.eclipse.poosl.Expression;
 import org.eclipse.poosl.InstantiableClass;
 import org.eclipse.poosl.NewExpression;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.PortReference;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
@@ -20,7 +21,6 @@ import org.eclipse.poosl.ReceiveStatement;
 import org.eclipse.poosl.SendStatement;
 import org.eclipse.poosl.Statement;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.custom.PooslMessageType;
 import org.eclipse.poosl.xtext.custom.PooslTypeSystem;
@@ -45,6 +45,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+//@CHECKSTYLE:OFF naming inherited from XText generation
 public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
     private static final int DEFAULT_PRIORITY = 400;
 
@@ -96,7 +97,7 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
         Iterable<IEObjectDescription> allowedSuperClasses = Iterables.filter(PooslCache.get(model.eResource()).getAllRelevantDataClasses(), new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
-                return !HelperFunctions.primitiveDataClasses.contains(HelperFunctions.getName(input));
+                return !HelperFunctions.PRIMITIVE_DATA_CLASSES.contains(HelperFunctions.getName(input));
             }
 
         });

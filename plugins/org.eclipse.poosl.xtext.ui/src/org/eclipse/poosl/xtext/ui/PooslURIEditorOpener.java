@@ -17,7 +17,7 @@ import org.eclipse.xtext.ui.editor.LanguageSpecificURIEditorOpener;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 
 public class PooslURIEditorOpener extends LanguageSpecificURIEditorOpener {
-    private static final Logger logger = Logger.getLogger(PooslURIEditorOpener.class);
+    private static final Logger LOGGER = Logger.getLogger(PooslURIEditorOpener.class);
 
     @Override
     public IEditorPart open(URI uri, EReference crossReference, int indexInList, boolean select) {
@@ -38,9 +38,9 @@ public class PooslURIEditorOpener extends LanguageSpecificURIEditorOpener {
                 }
 
             } catch (WrappedException e) {
-                logger.error("Error while opening editor part for EMF URI '" + uri + "'", e.getCause());
+                LOGGER.error("Error while opening editor part for EMF URI '" + uri + "'", e.getCause());
             } catch (PartInitException partInitException) {
-                logger.error("Error while opening editor part for EMF URI '" + uri + "'", partInitException);
+                LOGGER.error("Error while opening editor part for EMF URI '" + uri + "'", partInitException);
             }
         }
         return part;

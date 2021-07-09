@@ -11,12 +11,12 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
  *
  */
 public class PooslDiagramLifeline implements IPropertySource {
-    private final String name;
-
     private static final String PROPERTY_NAME = "poosldiagramlifeline.name";
 
     // class definition
     private static final IPropertyDescriptor[] PROPERTIES = new IPropertyDescriptor[] { new PropertyDescriptor(PROPERTY_NAME, "Hierarchical name") };
+
+    private final String name;
 
     public PooslDiagramLifeline(String name) {
         this.name = name;

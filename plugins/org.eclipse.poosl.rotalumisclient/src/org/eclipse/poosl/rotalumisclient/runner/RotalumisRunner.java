@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.poosl.rotalumisclient.runner.IBundleInfo.Context;
 
-public class RotalumisRunner {
+public final class RotalumisRunner {
     private static final String ERROR_MESSAGE_ROTALUMIS_EXTRACTION = "Could not find or extract the Rotalumis engine at:\n {0}\n "
             + "(Exclamation marks are not supported in the path at the end of a directory name.)";
 

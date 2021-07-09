@@ -20,7 +20,18 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-public class PooslProcessStep {
+public final class PooslProcessStep {
+
+    public static final IDoubleClickListener DOUBLE_CLICK_LISTENER = new IDoubleClickListener() {
+        @Override
+        public void doubleClick(DoubleClickEvent event) {
+            Object obj = ((TreeSelection) event.getSelection()).getFirstElement();
+            if (obj instanceof PooslThread) {
+                doProcessStep((PooslThread) obj);
+            }
+        }
+    };
+
     private static final Logger LOGGER = Logger.getLogger(PooslProcessStep.class.getName());
 
     private PooslProcessStep() {
@@ -62,14 +73,4 @@ public class PooslProcessStep {
             }
         });
     }
-
-    public static final IDoubleClickListener doubleClickListener = new IDoubleClickListener() {
-        @Override
-        public void doubleClick(DoubleClickEvent event) {
-            Object obj = ((TreeSelection) event.getSelection()).getFirstElement();
-            if (obj instanceof PooslThread) {
-                doProcessStep((PooslThread) obj);
-            }
-        }
-    };
 }

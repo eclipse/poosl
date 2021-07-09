@@ -1,9 +1,13 @@
 package org.eclipse.poosl.legacysupport.poosl2xml;
 
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.bind.JAXBException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -84,7 +88,7 @@ public class CommandHandler implements IHandler {
             LOGGER.log(Level.WARNING, e.getMessage(), e);
             showXmlError(e);
             return false;
-        } catch (Exception e) {
+        } catch (FileNotFoundException | JAXBException | UnsupportedEncodingException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return false;
         }

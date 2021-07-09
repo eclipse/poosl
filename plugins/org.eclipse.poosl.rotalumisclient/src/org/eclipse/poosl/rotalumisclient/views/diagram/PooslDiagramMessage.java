@@ -17,8 +17,6 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
  *
  */
 public class PooslDiagramMessage implements IPropertySource {
-    private final TCommunicationEvent communicationEvent;
-
     private static final String PROPERTY_SEND_PORT = "poosldiagrammessage.sendport";
 
     private static final String PROPERTY_RECEIVE_PORT = "poosldiagrammessage.receiveport";
@@ -26,6 +24,8 @@ public class PooslDiagramMessage implements IPropertySource {
     private static final String PROPERTY_TIMESTAMP = "poosldiagrammessage.timestamp";
 
     private static final String PROPERTY_MESSAGE = "poosldiagrammessage.message";
+
+    private final TCommunicationEvent communicationEvent;
 
     private final IPropertyDescriptor[] properties;
 
@@ -118,13 +118,13 @@ public class PooslDiagramMessage implements IPropertySource {
     }
 
     class CommunicationMessageParamater implements IPropertySource {
-        Parameter parameter;
-
         private static final String PROPERTY_MESSAGE_PARAMETER_VALUE = "poosldiagrammessage.message.parameter.value";
 
         private static final String PROPERTY_MESSAGE_PARAMETER_TYPE = "poosldiagrammessage.message.parameter.type";
 
-        public CommunicationMessageParamater(Parameter parameter) {
+        Parameter parameter;
+
+        CommunicationMessageParamater(Parameter parameter) {
             this.parameter = parameter;
         }
 

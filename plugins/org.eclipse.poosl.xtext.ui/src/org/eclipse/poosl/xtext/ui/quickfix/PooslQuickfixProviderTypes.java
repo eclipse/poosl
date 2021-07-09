@@ -26,6 +26,7 @@ import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstanceParameter;
 import org.eclipse.poosl.MessageSignature;
 import org.eclipse.poosl.OutputVariable;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.PortReference;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
@@ -34,7 +35,6 @@ import org.eclipse.poosl.ReceiveStatement;
 import org.eclipse.poosl.SendStatement;
 import org.eclipse.poosl.Statement;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.custom.FormattingHelper;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.custom.PooslMessageType;
@@ -830,7 +830,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
     }
 
     /**
-     * Returns messages used in this process /**
+     * Returns messages used in this process.
      * 
      * @param pClass
      * @return
@@ -871,7 +871,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
 
         private Boolean newMessage;
 
-        public MessageChange(MessageSignature signature) {
+        MessageChange(MessageSignature signature) {
             id = PooslMessageSignatureCallHelper.getSignatureID(signature);
             this.signature = signature;
             int sizeParams = signature.getParameters().size();
@@ -883,7 +883,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
             newMessage = false;
         }
 
-        public MessageChange(String sigId, List<String> types) {
+        MessageChange(String sigId, List<String> types) {
             id = sigId;
             changedTypes = new String[types.size()];
             for (int i = 0; i < changedTypes.length; i++) {

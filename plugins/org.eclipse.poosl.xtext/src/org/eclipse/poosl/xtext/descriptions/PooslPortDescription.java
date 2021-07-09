@@ -10,7 +10,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.common.base.Predicate;
 
-public class PooslPortDescription {
+public final class PooslPortDescription {
     private static final String STR_CLASS = "Class";
 
     private PooslPortDescription() {

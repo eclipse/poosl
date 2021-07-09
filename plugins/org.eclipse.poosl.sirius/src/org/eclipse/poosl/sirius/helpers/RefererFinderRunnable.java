@@ -20,10 +20,10 @@ import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.DataClass;
 import org.eclipse.poosl.DataMethod;
 import org.eclipse.poosl.Instance;
+import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.ProcessMethodCall;
-import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.ui.internal.PooslActivator;
 import org.eclipse.poosl.xtext.ui.references.PooslReferenceFinder;
 import org.eclipse.xtext.findReferences.IReferenceFinder;
@@ -47,6 +47,17 @@ public class RefererFinderRunnable implements IRunnableWithProgress {
                                                           // org.eclipse.poosl.xtext.ui.references.PooslReferenceFinder
 
     private static Provider<ResourceAccess> resourceAccesProvider;
+
+    private EObject result;
+
+    private final EObject element;
+
+    private final Resource resource;
+
+    public RefererFinderRunnable(EObject element, Resource resource) {
+        this.element = element;
+        this.resource = resource;
+    }
 
     private static PooslReferenceFinder getPooslReferenceFinder(Resource resource) {
         if (pooslRefererFinder == null) {
@@ -74,17 +85,6 @@ public class RefererFinderRunnable implements IRunnableWithProgress {
             resourceAccesProvider = PooslActivator.getInstance().getInjector("org.eclipse.poosl.xtext.Poosl").getProvider(ResourceAccess.class);
         }
         return resourceAccesProvider;
-    }
-
-    private EObject result = null;
-
-    private final EObject element;
-
-    private final Resource resource;
-
-    public RefererFinderRunnable(EObject element, Resource resource) {
-        this.element = element;
-        this.resource = resource;
     }
 
     @Override

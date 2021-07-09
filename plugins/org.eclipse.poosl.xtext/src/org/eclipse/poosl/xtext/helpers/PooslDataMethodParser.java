@@ -7,7 +7,8 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 
-public class PooslDataMethodParser {
+public final class PooslDataMethodParser {
+    
     private static final String SEPARATOR = "-";
 
     private PooslDataMethodParser() {

@@ -66,16 +66,16 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.progress.WorkbenchJob;
 
 /**
- * Action to delete the resource and its sirius diagrams Based on {@link DeleteResourceAction}
+ * Action to delete the resource and its sirius diagrams Based on {@link DeleteResourceAction}.
  * 
  * @author kstaal
  *
  */
 @SuppressWarnings("restriction")
 public class PooslDeleteAction extends SelectionListenerAction {
-    private static final Logger LOGGER = Logger.getLogger(PooslDeleteAction.class.getName());
-
     public static final String ID = "org.eclipse.poosl.sirius.edit.delete"; //$NON-NLS-1$
+
+    private static final Logger LOGGER = Logger.getLogger(PooslDeleteAction.class.getName());
 
     private static final String DELETING_RESOURCES = "Deleting resources";
 
@@ -182,6 +182,16 @@ public class PooslDeleteAction extends SelectionListenerAction {
 
         private Button radio2;
 
+        private SelectionListener selectionListener = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                Button button = (Button) e.widget;
+                if (button.getSelection()) {
+                    deleteContent = button == radio1;
+                }
+            }
+        };
+
         DeleteProjectDialog(Shell parentShell, List<? extends IResource> projects) {
             super(parentShell, getTitle(projects), null, // accept the
                     // default window
@@ -206,7 +216,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
                 IProject project = (IProject) projects.get(0);
                 return NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmProject1, project.getName());
             }
-            return NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmProjectN, Integer.valueOf((projects.size())));
+            return NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmProjectN, Integer.valueOf(projects.size()));
         }
 
         @Override
@@ -271,16 +281,6 @@ public class PooslDeleteAction extends SelectionListenerAction {
 
             return composite;
         }
-
-        private SelectionListener selectionListener = new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                Button button = (Button) e.widget;
-                if (button.getSelection()) {
-                    deleteContent = (button == radio1);
-                }
-            }
-        };
 
         boolean getDeleteContent() {
             return deleteContent;
@@ -545,7 +545,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
 
                         statusJob.setSystem(true);
                         statusJob.schedule();
-                        try {// block until the status is ready
+                        try { // block until the status is ready
                             statusJob.join();
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
@@ -581,7 +581,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
 
     /**
      * The <code>DeleteResourceAction</code> implementation of this <code>SelectionListenerAction</code> method disables
-     * the action if the selection contains phantom resources or non-resources
+     * the action if the selection contains phantom resources or non-resources.
      */
     @Override
     protected boolean updateSelection(IStructuredSelection selection) {

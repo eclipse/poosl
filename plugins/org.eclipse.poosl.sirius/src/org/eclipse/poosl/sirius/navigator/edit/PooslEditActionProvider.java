@@ -8,7 +8,7 @@ import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonViewerSite;
 
 public class PooslEditActionProvider extends CommonActionProvider {
-    private boolean contribute = false;
+    private boolean contribute;
 
     private PooslEditGroup editGroup;
 

@@ -1,7 +1,6 @@
 package org.eclipse.poosl.rotalumisclient.launch;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,8 +118,7 @@ public class LaunchShortcut implements ILaunchShortcut {
         sourceContainers.add(projectContainer);
 
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-        for (Iterator<String> it = ImportingHelper.getIncludes(project).iterator(); it.hasNext();) {
-            String include = it.next();
+        for (String include : ImportingHelper.getIncludes(project)) {
             IPath includePath = new Path(include);
             if (!includePath.isAbsolute()) {
                 IProject iProject = root.getProject(includePath.segment(0));

@@ -19,6 +19,8 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
  *
  */
 public class PooslDebugTreeItem extends PooslDebugElement implements IThread {
+    private static final int PRIME = 31;
+
     private String name;
 
     private final List<IThread> threads;
@@ -183,8 +185,6 @@ public class PooslDebugTreeItem extends PooslDebugElement implements IThread {
     private Viewer getOuterType() {
         return outerType;
     }
-
-    private static final int PRIME = 31;
 
     @Override
     public int hashCode() {

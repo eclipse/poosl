@@ -154,9 +154,9 @@ public class PooslSequenceDiagramConfigurationView extends CheckedTreeSelectionD
         return filterSetting;
     }
 
-    public void setInitialFilterSetting(boolean filterSetting) {
-        this.filterSetting = filterSetting;
-        initialFilterSetting = filterSetting;
+    public void setInitialFilterSetting(boolean pFilterSetting) {
+        this.filterSetting = pFilterSetting;
+        initialFilterSetting = pFilterSetting;
     }
 
     @Override
@@ -174,8 +174,8 @@ public class PooslSequenceDiagramConfigurationView extends CheckedTreeSelectionD
         super.okPressed();
     }
 
-    public void setMessageCount(int messageSerialNumber) {
-        this.messageSerialNumber = messageSerialNumber;
+    public void setMessageCount(int pMessageSerialNumber) {
+        this.messageSerialNumber = pMessageSerialNumber;
     }
 
     @Override

@@ -39,7 +39,7 @@ public class PooslHyperlinkDetector extends DefaultHyperlinkDetector {
     private static class HyperlinkAcceptor implements IHyperlinkAcceptor {
         private final List<IHyperlink> links;
 
-        public HyperlinkAcceptor(List<IHyperlink> links) {
+        HyperlinkAcceptor(List<IHyperlink> links) {
             this.links = links;
         }
 
@@ -87,7 +87,7 @@ public class PooslHyperlinkDetector extends DefaultHyperlinkDetector {
         for (ILeafNode iLeafNode : parent.getLeafNodes()) {
             Object grammar = iLeafNode.getGrammarElement();
             if (grammar instanceof Keyword) {
-                return (((Keyword) grammar).getValue().equals("importlib"));
+                return ((Keyword) grammar).getValue().equals("importlib");
             }
         }
         return false;

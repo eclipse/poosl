@@ -8,7 +8,6 @@ import org.eclipse.poosl.xtext.descriptions.PooslDeclarationDescription;
 import org.eclipse.poosl.xtext.descriptions.PooslMessageSignatureDescription;
 import org.eclipse.poosl.xtext.descriptions.PooslPortDescription;
 import org.eclipse.poosl.xtext.descriptions.PooslProcessMethodDescription;
-import org.eclipse.poosl.xtext.ui.contentassist.AbstractPooslProposalProvider;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public class PooslProposalProviderLabel extends AbstractPooslProposalProvider {

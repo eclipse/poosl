@@ -9,7 +9,6 @@ import org.eclipse.poosl.Annotation;
 import org.eclipse.poosl.Expression;
 import org.eclipse.poosl.PooslPackage;
 import org.eclipse.poosl.StringConstant;
-import org.eclipse.poosl.xtext.validation.AbstractPooslValidator;
 import org.eclipse.xtext.validation.ValidationMessageAcceptor;
 
 public class PooslJavaValidatorSuppress extends AbstractPooslValidator {
@@ -24,7 +23,7 @@ public class PooslJavaValidatorSuppress extends AbstractPooslValidator {
 
         private final boolean allowSuppressed;
 
-        private WarningType(final String text, final boolean canBeSuppressed) {
+        WarningType(final String text, final boolean canBeSuppressed) {
             this.text = text;
             this.allowSuppressed = canBeSuppressed;
         }
@@ -41,7 +40,7 @@ public class PooslJavaValidatorSuppress extends AbstractPooslValidator {
             return value;
         byte[] bytes;
         try {
-            bytes = value.getBytes(("UTF-8")); //$NON-NLS-1$
+            bytes = value.getBytes("UTF-8"); //$NON-NLS-1$
         } catch (UnsupportedEncodingException uee) {
             // cannot validate further
             return value;

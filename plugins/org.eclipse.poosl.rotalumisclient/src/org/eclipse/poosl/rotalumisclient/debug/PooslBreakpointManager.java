@@ -41,10 +41,10 @@ public class PooslBreakpointManager {
 
     private BigInteger modelHandle;
 
-    public void configureBreakpointManager(Client client, Map<String, BigInteger> filesToHandle, BigInteger modelHandle) {
-        this.client = client;
-        this.filesToHandle = filesToHandle;
-        this.modelHandle = modelHandle;
+    public void configureBreakpointManager(Client pClient, Map<String, BigInteger> pFilesToHandle, BigInteger pModelHandle) {
+        this.client = pClient;
+        this.filesToHandle = pFilesToHandle;
+        this.modelHandle = pModelHandle;
 
         addAllBreakpoints();
     }

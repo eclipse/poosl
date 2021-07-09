@@ -248,7 +248,7 @@ public class PooslSequenceDiagramMessageProvider {
     private class UpdateDiagramViewJob extends UIJob {
         private PooslDebugTarget target;
 
-        public UpdateDiagramViewJob(String name, PooslDebugTarget target) {
+        UpdateDiagramViewJob(String name, PooslDebugTarget target) {
             super(name);
             this.target = target;
         }

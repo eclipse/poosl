@@ -21,6 +21,10 @@ import org.eclipse.poosl.generatedxmlclasses.TSourcePosition;
 import org.eclipse.poosl.rotalumisclient.Client;
 
 public class PooslSourceMap {
+    public static final PooslSourceMapping EMPTY_MAPPING = new PooslSourceMapping("", -1, -1, -1, -1, -1, "...");
+
+    private static final Logger LOGGER = Logger.getLogger(PooslSourceMap.class.getName());
+
     private final Client client;
 
     private final Map<BigInteger, String> handle2Files;
@@ -28,10 +32,6 @@ public class PooslSourceMap {
     private final Map<Integer, PooslSourceMapping> sourceMappings = new HashMap<>();
 
     private final Map<Integer, PooslSourceMappingListener> requestedMappings = new HashMap<>();
-
-    public static final PooslSourceMapping EMPTY_MAPPING = new PooslSourceMapping("", -1, -1, -1, -1, -1, "...");
-
-    private static final Logger LOGGER = Logger.getLogger(PooslSourceMap.class.getName());
 
     public PooslSourceMap(Client client, Map<String, BigInteger> filesToHandle) {
         this.client = client;

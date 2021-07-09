@@ -19,7 +19,7 @@ import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
-public class PooslDiagramDeleteHelper {
+public final class PooslDiagramDeleteHelper {
     private static final String DELETE_DIAGRAMS_FAILED = "Could not delete the diagrams.";
 
     private static final Logger LOGGER = Logger.getLogger(PooslDiagramDeleteHelper.class.getName());
@@ -28,7 +28,7 @@ public class PooslDiagramDeleteHelper {
     }
 
     /**
-     * Wrapper for closeAndDeleteDiagrams
+     * Wrapper for closeAndDeleteDiagrams.
      * 
      * @param shell
      * @param session
@@ -42,7 +42,7 @@ public class PooslDiagramDeleteHelper {
 
     /**
      * Close any open diagrams and delete them using {@link CloseAndDeleteDiagramRunnable} and
-     * {@link DeleteDiagramRunnable}
+     * {@link DeleteDiagramRunnable}.
      * 
      * @param shell
      * @param session2Descriptors

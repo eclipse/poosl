@@ -19,7 +19,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class PooslDataMethodDescription {
+public final class PooslDataMethodDescription {
     private static final String STR_CLASS = "Class";
 
     private static final String STR_PARAMETERS = "Parameters";
@@ -172,16 +172,16 @@ public class PooslDataMethodDescription {
     }
 
     /**
-     * Returns methods with the init annotation
+     * Returns methods with the init annotation.
      * 
-     * @param _class
+     * @param clazz
      * @return
      */
-    public static Predicate<IEObjectDescription> predicateDataMethodInit(final String _class) {
+    public static Predicate<IEObjectDescription> predicateDataMethodInit(final String clazz) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
-                return _class.equals(getClassName(input)) && isInitMethod(input);
+                return clazz.equals(getClassName(input)) && isInitMethod(input);
             }
         };
     }

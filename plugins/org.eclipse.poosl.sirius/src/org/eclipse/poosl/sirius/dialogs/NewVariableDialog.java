@@ -59,9 +59,6 @@ public class NewVariableDialog extends TitleAreaDialog {
         dataclasses = PooslCache.get(resource).getDataClassMap().keySet().toArray(new String[0]);
     }
 
-    /**
-     * @wbp.parser.constructor
-     */
     public NewVariableDialog(Shell parentShell, String[] dataclasses, String typeVariable, List<String> variableNames) {
         super(parentShell);
         this.dialogVarType = typeVariable;

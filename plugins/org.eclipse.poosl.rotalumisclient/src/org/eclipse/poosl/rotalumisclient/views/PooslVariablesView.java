@@ -38,79 +38,7 @@ import org.eclipse.ui.PlatformUI;
 public class PooslVariablesView extends VariablesView {
     private static final Logger LOGGER = Logger.getLogger(PooslVariablesView.class.getName());
 
-    private PooslThread input = null;
-
-    @Override
-    public void createPartControl(Composite parent) {
-        super.createPartControl(parent);
-        IWorkbench workbench = PlatformUI.getWorkbench();
-        if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_variables");
-        }
-        DebugPlugin plugin = DebugPlugin.getDefault();
-        if (plugin != null) {
-            ILaunchManager launchManager = plugin.getLaunchManager();
-            if (launchManager != null) {
-                launchManager.addLaunchListener(launchListener);
-            }
-            plugin.addDebugEventListener(debugEventSetListener);
-        }
-    }
-
-    @Override
-    public Viewer createViewer(Composite parent) {
-        Viewer viewer = super.createViewer(parent);
-        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                sendInspectDebugEvent(event.getSelection());
-            }
-        });
-        if ((viewer instanceof TreeModelViewer)) {
-            ((TreeModelViewer) viewer).addTreeListener(new ITreeViewerListener() {
-                @Override
-                public void treeExpanded(TreeExpansionEvent event) {
-                    sendInspectDebugEvent(event.getElement());
-                }
-
-                @Override
-                public void treeCollapsed(TreeExpansionEvent event) {
-                    // do nothing
-                }
-            });
-
-        }
-        return viewer;
-    }
-
-    private void sendInspectDebugEvent(Object source) {
-        DebugPlugin plugin = DebugPlugin.getDefault();
-        if (plugin != null) {
-            plugin.fireDebugEventSet(new DebugEvent[] { new DebugEvent(source, DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_REQUEST) });
-        }
-    }
-
-    @Override
-    protected void setViewerInput(Object context) {
-        if (context instanceof PooslThread) {
-            PooslThread thread = (PooslThread) context;
-            input = thread;
-            if (ViewHelper.isThreadID(thread, getViewSite().getSecondaryId())) {
-                IStackFrame stackFrame = thread.getStackFrame();
-                if (stackFrame != null) {
-                    super.setViewerInput(stackFrame);
-                } else {
-                    super.setViewerInput(context);
-                }
-            }
-        } else if (context instanceof PooslDebugElement && getViewSite().getSecondaryId() == null) {
-            super.setViewerInput(null);
-        }
-    }
-
-    private void clearViewerInput() {
-        super.setViewerInput(null);
-    }
+    private PooslThread input;
 
     IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
         @Override
@@ -180,7 +108,7 @@ public class PooslVariablesView extends VariablesView {
                 if (getViewSite().getSecondaryId() == null) {
                     if (getViewer() != null && getViewer().getInput() instanceof IStackFrame) {
                         IStackFrame stackframe = (IStackFrame) getViewer().getInput();
-                        clear = (stackframe != null && stackframe.getDebugTarget() != null && stackframe.getDebugTarget() == debugTarget);
+                        clear = stackframe != null && stackframe.getDebugTarget() != null && stackframe.getDebugTarget() == debugTarget;
                     }
                 } else {
                     clear = ViewHelper.isTargetID(launch.getDebugTarget(), getViewSite().getSecondaryId());
@@ -218,6 +146,78 @@ public class PooslVariablesView extends VariablesView {
             // do nothing
         }
     };
+
+    @Override
+    public void createPartControl(Composite parent) {
+        super.createPartControl(parent);
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        if (workbench != null) {
+            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_variables");
+        }
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        if (plugin != null) {
+            ILaunchManager launchManager = plugin.getLaunchManager();
+            if (launchManager != null) {
+                launchManager.addLaunchListener(launchListener);
+            }
+            plugin.addDebugEventListener(debugEventSetListener);
+        }
+    }
+
+    @Override
+    public Viewer createViewer(Composite parent) {
+        Viewer viewer = super.createViewer(parent);
+        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                sendInspectDebugEvent(event.getSelection());
+            }
+        });
+        if (viewer instanceof TreeModelViewer) {
+            ((TreeModelViewer) viewer).addTreeListener(new ITreeViewerListener() {
+                @Override
+                public void treeExpanded(TreeExpansionEvent event) {
+                    sendInspectDebugEvent(event.getElement());
+                }
+
+                @Override
+                public void treeCollapsed(TreeExpansionEvent event) {
+                    // do nothing
+                }
+            });
+
+        }
+        return viewer;
+    }
+
+    private void sendInspectDebugEvent(Object source) {
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        if (plugin != null) {
+            plugin.fireDebugEventSet(new DebugEvent[] { new DebugEvent(source, DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_REQUEST) });
+        }
+    }
+
+    @Override
+    protected void setViewerInput(Object context) {
+        if (context instanceof PooslThread) {
+            PooslThread thread = (PooslThread) context;
+            input = thread;
+            if (ViewHelper.isThreadID(thread, getViewSite().getSecondaryId())) {
+                IStackFrame stackFrame = thread.getStackFrame();
+                if (stackFrame != null) {
+                    super.setViewerInput(stackFrame);
+                } else {
+                    super.setViewerInput(context);
+                }
+            }
+        } else if (context instanceof PooslDebugElement && getViewSite().getSecondaryId() == null) {
+            super.setViewerInput(null);
+        }
+    }
+
+    private void clearViewerInput() {
+        super.setViewerInput(null);
+    }
 
     @Override
     public void dispose() {

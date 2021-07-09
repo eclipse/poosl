@@ -16,6 +16,8 @@ import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.sirius.viewpoint.description.AnnotationEntry;
 
 public class DiagramDebugNote {
+    private static final String EOL = "\n";
+
     private static final String MESSAGE_DESCRIPTION = "* Message: ";
 
     private static final String MESSAGE_SIMTIME = "* Time: ";
@@ -70,7 +72,7 @@ public class DiagramDebugNote {
             if (message != null && owner != null) {
                 empty = message.getMessagePath(owner) == null;
             }
-            note.setDescription((empty) ? createNoteMessage(null) : createNoteMessage(message.getMessage()));
+            note.setDescription(empty ? createNoteMessage(null) : createNoteMessage(message.getMessage()));
         }
     }
 
@@ -88,7 +90,7 @@ public class DiagramDebugNote {
             simTime = rawMessage.getSimTime();
             StringBuilder paramBuilder = new StringBuilder();
             for (String key : rawMessage.getParameters().keySet()) {
-                paramBuilder.append("-- " + key + ": " + rawMessage.getParameters().get(key) + "\n");
+                paramBuilder.append("-- " + key + ": " + rawMessage.getParameters().get(key) + EOL);
             }
             parameterInfo = paramBuilder.toString();
         }
@@ -96,11 +98,11 @@ public class DiagramDebugNote {
         StringBuilder builder = new StringBuilder();
         // First word (MESSAGE_DESCRIPTION) in the note acts as an identifier to find
         // the note later on
-        builder.append(MESSAGE_DESCRIPTION + messageNameInfo + "\n");
-        builder.append(MESSAGE_SIMTIME + simTime + "\n");
-        builder.append(MESSAGE_SENDER + senderInfo + "\n");
-        builder.append(MESSAGE_RECEIVER + receiverInfo + "\n");
-        builder.append(MESSAGE_PARAMETERS + "\n");
+        builder.append(MESSAGE_DESCRIPTION + messageNameInfo + EOL);
+        builder.append(MESSAGE_SIMTIME + simTime + EOL);
+        builder.append(MESSAGE_SENDER + senderInfo + EOL);
+        builder.append(MESSAGE_RECEIVER + receiverInfo + EOL);
+        builder.append(MESSAGE_PARAMETERS + EOL);
         builder.append(parameterInfo);
         return builder.toString();
     }

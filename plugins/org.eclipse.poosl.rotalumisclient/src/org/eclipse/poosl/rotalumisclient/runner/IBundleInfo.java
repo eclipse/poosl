@@ -19,7 +19,7 @@ import com.google.common.collect.Maps;
 
 public interface IBundleInfo {
 
-    public class BundleInfo implements IBundleInfo {
+    class BundleInfo implements IBundleInfo {
         private ResourceInfo info;
 
         private final URI location;
@@ -64,11 +64,11 @@ public interface IBundleInfo {
         }
     }
 
-    public enum Context {
+    enum Context {
         CLASSPATH, ROOT, SOURCE
     }
 
-    public class Delegate implements Registry {
+    class Delegate implements Registry {
         private IBundleInfo.Registry delegate;
 
         public Delegate() {
@@ -101,7 +101,7 @@ public interface IBundleInfo {
     }
 
     public interface Registry {
-        public final Registry INSTANCE = EcorePlugin.IS_ECLIPSE_RUNNING ? new Delegate() : new StandaloneBundleRegistry();
+        Registry INSTANCE = EcorePlugin.IS_ECLIPSE_RUNNING ? new Delegate() : new StandaloneBundleRegistry();
 
         Collection<String> getAllBundleNames();
 
@@ -112,7 +112,7 @@ public interface IBundleInfo {
         IBundleInfo getBundle(String symbolicName);
     }
 
-    public class StandaloneBundleRegistry implements IBundleInfo.Registry {
+    class StandaloneBundleRegistry implements IBundleInfo.Registry {
         public static final Logger LOG = Logger.getLogger(StandaloneBundleRegistry.class.getName());
 
         private final Map<URI, IBundleInfo> locationToBundle;
