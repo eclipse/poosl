@@ -53,9 +53,10 @@ public class AssignmentExpressionItemProvider extends ExpressionItemProvider {
      * @generated
      */
     protected void addVariablePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_AssignmentExpression_variable_feature"), getString("_UI_PropertyDescriptor_description", "_UI_AssignmentExpression_variable_feature", "_UI_AssignmentExpression_type"),
-                PooslPackage.Literals.ASSIGNMENT_EXPRESSION__VARIABLE, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_AssignmentExpression_variable_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_AssignmentExpression_variable_feature", "_UI_AssignmentExpression_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.ASSIGNMENT_EXPRESSION__VARIABLE, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -95,7 +96,7 @@ public class AssignmentExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/AssignmentExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/AssignmentExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -106,7 +107,8 @@ public class AssignmentExpressionItemProvider extends ExpressionItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((AssignmentExpression) object).getVariable();
-        return label == null || label.length() == 0 ? getString("_UI_AssignmentExpression_type") : getString("_UI_AssignmentExpression_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_AssignmentExpression_type") : //$NON-NLS-1$
+                getString("_UI_AssignmentExpression_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

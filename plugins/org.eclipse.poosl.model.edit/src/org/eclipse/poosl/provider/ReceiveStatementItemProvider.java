@@ -54,9 +54,10 @@ public class ReceiveStatementItemProvider extends StatementItemProvider {
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_ReceiveStatement_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_ReceiveStatement_name_feature", "_UI_ReceiveStatement_type"),
-                PooslPackage.Literals.RECEIVE_STATEMENT__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_ReceiveStatement_name_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_ReceiveStatement_name_feature", "_UI_ReceiveStatement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.RECEIVE_STATEMENT__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -65,9 +66,10 @@ public class ReceiveStatementItemProvider extends StatementItemProvider {
      * @generated
      */
     protected void addVariablesPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_ReceiveStatement_variables_feature"), getString("_UI_PropertyDescriptor_description", "_UI_ReceiveStatement_variables_feature", "_UI_ReceiveStatement_type"),
-                PooslPackage.Literals.RECEIVE_STATEMENT__VARIABLES, true, false, true, null, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_ReceiveStatement_variables_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_ReceiveStatement_variables_feature", "_UI_ReceiveStatement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.RECEIVE_STATEMENT__VARIABLES, true, false, true, null, null, null));
     }
 
     /**
@@ -109,7 +111,7 @@ public class ReceiveStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ReceiveStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ReceiveStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -120,7 +122,8 @@ public class ReceiveStatementItemProvider extends StatementItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((ReceiveStatement) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_ReceiveStatement_type") : getString("_UI_ReceiveStatement_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_ReceiveStatement_type") : //$NON-NLS-1$
+                getString("_UI_ReceiveStatement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -264,7 +267,8 @@ public class ReceiveStatementItemProvider extends StatementItemProvider {
         boolean qualify = childFeature == PooslPackage.Literals.RECEIVE_STATEMENT__RECEPTION_CONDITION || childFeature == PooslPackage.Literals.RECEIVE_STATEMENT__POST_COMMUNICATION_EXPRESSION;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

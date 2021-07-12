@@ -55,8 +55,8 @@ public class DataMethodCallExpressionItemProvider extends ExpressionItemProvider
      */
     protected void addOnSuperClassPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(
-                createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataMethodCallExpression_onSuperClass_feature"),
-                        getString("_UI_PropertyDescriptor_description", "_UI_DataMethodCallExpression_onSuperClass_feature", "_UI_DataMethodCallExpression_type"),
+                createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataMethodCallExpression_onSuperClass_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_DataMethodCallExpression_onSuperClass_feature", "_UI_DataMethodCallExpression_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         PooslPackage.Literals.DATA_METHOD_CALL_EXPRESSION__ON_SUPER_CLASS, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
     }
 
@@ -67,8 +67,8 @@ public class DataMethodCallExpressionItemProvider extends ExpressionItemProvider
      */
     protected void addNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataMethodCallExpression_name_feature"),
-                        getString("_UI_PropertyDescriptor_description", "_UI_DataMethodCallExpression_name_feature", "_UI_DataMethodCallExpression_type"),
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataMethodCallExpression_name_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_DataMethodCallExpression_name_feature", "_UI_DataMethodCallExpression_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         PooslPackage.Literals.DATA_METHOD_CALL_EXPRESSION__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
@@ -110,7 +110,7 @@ public class DataMethodCallExpressionItemProvider extends ExpressionItemProvider
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/DataMethodCallExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/DataMethodCallExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -121,7 +121,8 @@ public class DataMethodCallExpressionItemProvider extends ExpressionItemProvider
     @Override
     public String getText(Object object) {
         String label = ((DataMethodCallExpression) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_DataMethodCallExpression_type") : getString("_UI_DataMethodCallExpression_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_DataMethodCallExpression_type") : //$NON-NLS-1$
+                getString("_UI_DataMethodCallExpression_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -261,7 +262,8 @@ public class DataMethodCallExpressionItemProvider extends ExpressionItemProvider
         boolean qualify = childFeature == PooslPackage.Literals.DATA_METHOD_CALL_EXPRESSION__TARGET || childFeature == PooslPackage.Literals.DATA_METHOD_CALL_EXPRESSION__ARGUMENTS;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

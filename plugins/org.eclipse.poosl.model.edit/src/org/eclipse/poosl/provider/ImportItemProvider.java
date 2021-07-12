@@ -58,9 +58,9 @@ public class ImportItemProvider extends ItemProviderAdapter implements IEditingD
      * @generated
      */
     protected void addImportURIPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_Import_importURI_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_Import_importURI_feature", "_UI_Import_type"), PooslPackage.Literals.IMPORT__IMPORT_URI, true, false, false,
-                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_Import_importURI_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Import_importURI_feature", "_UI_Import_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                PooslPackage.Literals.IMPORT__IMPORT_URI, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -70,7 +70,7 @@ public class ImportItemProvider extends ItemProviderAdapter implements IEditingD
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Import"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Import")); //$NON-NLS-1$
     }
 
     /**
@@ -81,7 +81,8 @@ public class ImportItemProvider extends ItemProviderAdapter implements IEditingD
     @Override
     public String getText(Object object) {
         String label = ((Import) object).getImportURI();
-        return label == null || label.length() == 0 ? getString("_UI_Import_type") : getString("_UI_Import_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_Import_type") : //$NON-NLS-1$
+                getString("_UI_Import_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

@@ -50,9 +50,10 @@ public class NewExpressionItemProvider extends ExpressionItemProvider {
      * @generated
      */
     protected void addDataClassPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_NewExpression_dataClass_feature"), getString("_UI_PropertyDescriptor_description", "_UI_NewExpression_dataClass_feature", "_UI_NewExpression_type"),
-                PooslPackage.Literals.NEW_EXPRESSION__DATA_CLASS, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_NewExpression_dataClass_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_NewExpression_dataClass_feature", "_UI_NewExpression_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.NEW_EXPRESSION__DATA_CLASS, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -62,7 +63,7 @@ public class NewExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/NewExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/NewExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -73,7 +74,8 @@ public class NewExpressionItemProvider extends ExpressionItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((NewExpression) object).getDataClass();
-        return label == null || label.length() == 0 ? getString("_UI_NewExpression_type") : getString("_UI_NewExpression_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_NewExpression_type") : //$NON-NLS-1$
+                getString("_UI_NewExpression_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

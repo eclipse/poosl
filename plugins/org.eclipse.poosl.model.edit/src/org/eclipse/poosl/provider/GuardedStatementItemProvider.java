@@ -82,7 +82,7 @@ public class GuardedStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/GuardedStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/GuardedStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -92,7 +92,7 @@ public class GuardedStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_GuardedStatement_type");
+        return getString("_UI_GuardedStatement_type"); //$NON-NLS-1$
     }
 
     /**

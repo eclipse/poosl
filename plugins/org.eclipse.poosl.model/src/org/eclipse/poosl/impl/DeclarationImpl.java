@@ -210,7 +210,7 @@ public class DeclarationImpl extends EObjectImpl implements Declaration {
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (type: ");
+        result.append(" (type: "); //$NON-NLS-1$
         result.append(type);
         result.append(')');
         return result.toString();

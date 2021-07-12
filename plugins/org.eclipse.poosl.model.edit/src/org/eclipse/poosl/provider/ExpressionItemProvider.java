@@ -54,7 +54,7 @@ public class ExpressionItemProvider extends ItemProviderAdapter
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Expression_type");
+        return getString("_UI_Expression_type"); //$NON-NLS-1$
     }
 
     /**

@@ -46,7 +46,7 @@ public class CurrentTimeExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/CurrentTimeExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/CurrentTimeExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -56,7 +56,7 @@ public class CurrentTimeExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_CurrentTimeExpression_type");
+        return getString("_UI_CurrentTimeExpression_type"); //$NON-NLS-1$
     }
 
     /**

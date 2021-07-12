@@ -55,8 +55,8 @@ public class ProcessMethodCallItemProvider extends StatementItemProvider {
      */
     protected void addOutputVariablesPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(
-                createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_ProcessMethodCall_outputVariables_feature"),
-                        getString("_UI_PropertyDescriptor_description", "_UI_ProcessMethodCall_outputVariables_feature", "_UI_ProcessMethodCall_type"),
+                createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_ProcessMethodCall_outputVariables_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_ProcessMethodCall_outputVariables_feature", "_UI_ProcessMethodCall_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         PooslPackage.Literals.PROCESS_METHOD_CALL__OUTPUT_VARIABLES, true, false, true, null, null, null));
     }
 
@@ -66,9 +66,10 @@ public class ProcessMethodCallItemProvider extends StatementItemProvider {
      * @generated
      */
     protected void addMethodPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_ProcessMethodCall_method_feature"), getString("_UI_PropertyDescriptor_description", "_UI_ProcessMethodCall_method_feature", "_UI_ProcessMethodCall_type"),
-                PooslPackage.Literals.PROCESS_METHOD_CALL__METHOD, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_ProcessMethodCall_method_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_ProcessMethodCall_method_feature", "_UI_ProcessMethodCall_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.PROCESS_METHOD_CALL__METHOD, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -108,7 +109,7 @@ public class ProcessMethodCallItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ProcessMethodCall"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ProcessMethodCall")); //$NON-NLS-1$
     }
 
     /**
@@ -119,7 +120,8 @@ public class ProcessMethodCallItemProvider extends StatementItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((ProcessMethodCall) object).getMethod();
-        return label == null || label.length() == 0 ? getString("_UI_ProcessMethodCall_type") : getString("_UI_ProcessMethodCall_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_ProcessMethodCall_type") : //$NON-NLS-1$
+                getString("_UI_ProcessMethodCall_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

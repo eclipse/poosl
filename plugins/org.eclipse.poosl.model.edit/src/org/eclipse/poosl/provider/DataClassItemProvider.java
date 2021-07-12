@@ -55,9 +55,9 @@ public class DataClassItemProvider extends AnnotableItemProvider {
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataClass_name_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_DataClass_name_feature", "_UI_DataClass_type"), PooslPackage.Literals.DATA_CLASS__NAME, true, false, false,
-                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataClass_name_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_DataClass_name_feature", "_UI_DataClass_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                PooslPackage.Literals.DATA_CLASS__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -66,9 +66,9 @@ public class DataClassItemProvider extends AnnotableItemProvider {
      * @generated
      */
     protected void addNativePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataClass_native_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_DataClass_native_feature", "_UI_DataClass_type"), PooslPackage.Literals.DATA_CLASS__NATIVE, true, false, false,
-                ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataClass_native_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_DataClass_native_feature", "_UI_DataClass_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                PooslPackage.Literals.DATA_CLASS__NATIVE, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -77,9 +77,10 @@ public class DataClassItemProvider extends AnnotableItemProvider {
      * @generated
      */
     protected void addSuperClassPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_DataClass_superClass_feature"), getString("_UI_PropertyDescriptor_description", "_UI_DataClass_superClass_feature", "_UI_DataClass_type"),
-                PooslPackage.Literals.DATA_CLASS__SUPER_CLASS, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataClass_superClass_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_DataClass_superClass_feature", "_UI_DataClass_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.DATA_CLASS__SUPER_CLASS, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -122,7 +123,7 @@ public class DataClassItemProvider extends AnnotableItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/DataClass"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/DataClass")); //$NON-NLS-1$
     }
 
     /**
@@ -133,7 +134,8 @@ public class DataClassItemProvider extends AnnotableItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((DataClass) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_DataClass_type") : getString("_UI_DataClass_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_DataClass_type") : //$NON-NLS-1$
+                getString("_UI_DataClass_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

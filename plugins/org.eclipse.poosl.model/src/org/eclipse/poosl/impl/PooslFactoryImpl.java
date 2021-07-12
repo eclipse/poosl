@@ -243,7 +243,7 @@ public class PooslFactoryImpl extends EFactoryImpl implements PooslFactory {
         case PooslPackage.ANNOTATION:
             return createAnnotation();
         default:
-            throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+            throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -260,7 +260,7 @@ public class PooslFactoryImpl extends EFactoryImpl implements PooslFactory {
         case PooslPackage.OPERATOR_BINARY:
             return createOperatorBinaryFromString(eDataType, initialValue);
         default:
-            throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+            throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -277,7 +277,7 @@ public class PooslFactoryImpl extends EFactoryImpl implements PooslFactory {
         case PooslPackage.OPERATOR_BINARY:
             return convertOperatorBinaryToString(eDataType, instanceValue);
         default:
-            throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+            throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -982,7 +982,7 @@ public class PooslFactoryImpl extends EFactoryImpl implements PooslFactory {
     public OperatorUnary createOperatorUnaryFromString(EDataType eDataType, String initialValue) {
         OperatorUnary result = OperatorUnary.get(initialValue);
         if (result == null)
-            throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+            throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         return result;
     }
 
@@ -1003,7 +1003,7 @@ public class PooslFactoryImpl extends EFactoryImpl implements PooslFactory {
     public OperatorBinary createOperatorBinaryFromString(EDataType eDataType, String initialValue) {
         OperatorBinary result = OperatorBinary.get(initialValue);
         if (result == null)
-            throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+            throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         return result;
     }
 

@@ -248,7 +248,7 @@ public class ProcessMethodCallImpl extends StatementImpl implements ProcessMetho
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (method: ");
+        result.append(" (method: "); //$NON-NLS-1$
         result.append(method);
         result.append(')');
         return result.toString();

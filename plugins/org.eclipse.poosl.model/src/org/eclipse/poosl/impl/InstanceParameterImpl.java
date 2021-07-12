@@ -239,7 +239,7 @@ public class InstanceParameterImpl extends EObjectImpl implements InstanceParame
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (parameter: ");
+        result.append(" (parameter: "); //$NON-NLS-1$
         result.append(parameter);
         result.append(')');
         return result.toString();

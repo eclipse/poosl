@@ -152,7 +152,7 @@ public class VariableExpressionImpl extends ExpressionImpl implements VariableEx
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (variable: ");
+        result.append(" (variable: "); //$NON-NLS-1$
         result.append(variable);
         result.append(')');
         return result.toString();

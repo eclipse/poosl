@@ -354,7 +354,7 @@ public class SendStatementImpl extends StatementImpl implements SendStatement {
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (name: ");
+        result.append(" (name: "); //$NON-NLS-1$
         result.append(name);
         result.append(')');
         return result.toString();

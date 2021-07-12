@@ -335,9 +335,9 @@ public class DataMethodCallExpressionImpl extends ExpressionImpl implements Data
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (onSuperClass: ");
+        result.append(" (onSuperClass: "); //$NON-NLS-1$
         result.append(onSuperClass);
-        result.append(", name: ");
+        result.append(", name: "); //$NON-NLS-1$
         result.append(name);
         result.append(')');
         return result.toString();

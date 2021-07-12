@@ -61,9 +61,10 @@ public class MessageSignatureItemProvider extends ItemProviderAdapter
      * @generated
      */
     protected void addPortPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_MessageSignature_port_feature"), getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_port_feature", "_UI_MessageSignature_type"),
-                PooslPackage.Literals.MESSAGE_SIGNATURE__PORT, true, false, true, null, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_MessageSignature_port_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_port_feature", "_UI_MessageSignature_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.MESSAGE_SIGNATURE__PORT, true, false, true, null, null, null));
     }
 
     /**
@@ -72,9 +73,10 @@ public class MessageSignatureItemProvider extends ItemProviderAdapter
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_MessageSignature_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_name_feature", "_UI_MessageSignature_type"),
-                PooslPackage.Literals.MESSAGE_SIGNATURE__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_MessageSignature_name_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_name_feature", "_UI_MessageSignature_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.MESSAGE_SIGNATURE__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -83,9 +85,10 @@ public class MessageSignatureItemProvider extends ItemProviderAdapter
      * @generated
      */
     protected void addParametersPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_MessageSignature_parameters_feature"), getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_parameters_feature", "_UI_MessageSignature_type"),
-                PooslPackage.Literals.MESSAGE_SIGNATURE__PARAMETERS, true, false, true, null, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_MessageSignature_parameters_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_parameters_feature", "_UI_MessageSignature_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.MESSAGE_SIGNATURE__PARAMETERS, true, false, true, null, null, null));
     }
 
     /**
@@ -96,7 +99,8 @@ public class MessageSignatureItemProvider extends ItemProviderAdapter
     @Override
     public String getText(Object object) {
         String label = ((MessageSignature) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_MessageSignature_type") : getString("_UI_MessageSignature_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_MessageSignature_type") : //$NON-NLS-1$
+                getString("_UI_MessageSignature_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

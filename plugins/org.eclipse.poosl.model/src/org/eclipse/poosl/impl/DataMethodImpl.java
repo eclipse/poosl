@@ -372,9 +372,9 @@ public abstract class DataMethodImpl extends AnnotableImpl implements DataMethod
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (native: ");
+        result.append(" (native: "); //$NON-NLS-1$
         result.append(native_);
-        result.append(", returnType: ");
+        result.append(", returnType: "); //$NON-NLS-1$
         result.append(returnType);
         result.append(')');
         return result.toString();

@@ -52,9 +52,10 @@ public class DataMethodUnaryOperatorItemProvider extends DataMethodItemProvider 
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_DataMethodUnaryOperator_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_DataMethodUnaryOperator_name_feature", "_UI_DataMethodUnaryOperator_type"),
-                PooslPackage.Literals.DATA_METHOD_UNARY_OPERATOR__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataMethodUnaryOperator_name_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_DataMethodUnaryOperator_name_feature", "_UI_DataMethodUnaryOperator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.DATA_METHOD_UNARY_OPERATOR__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -64,7 +65,7 @@ public class DataMethodUnaryOperatorItemProvider extends DataMethodItemProvider 
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/DataMethodUnaryOperator"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/DataMethodUnaryOperator")); //$NON-NLS-1$
     }
 
     /**
@@ -76,7 +77,8 @@ public class DataMethodUnaryOperatorItemProvider extends DataMethodItemProvider 
     public String getText(Object object) {
         OperatorUnary labelValue = ((DataMethodUnaryOperator) object).getName();
         String label = labelValue == null ? null : labelValue.toString();
-        return label == null || label.length() == 0 ? getString("_UI_DataMethodUnaryOperator_type") : getString("_UI_DataMethodUnaryOperator_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_DataMethodUnaryOperator_type") : //$NON-NLS-1$
+                getString("_UI_DataMethodUnaryOperator_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -123,7 +125,8 @@ public class DataMethodUnaryOperatorItemProvider extends DataMethodItemProvider 
         boolean qualify = childFeature == PooslPackage.Literals.DATA_METHOD__PARAMETERS || childFeature == PooslPackage.Literals.DATA_METHOD__LOCAL_VARIABLES;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

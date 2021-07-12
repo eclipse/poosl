@@ -53,9 +53,10 @@ public class ProcessMethodItemProvider extends AnnotableItemProvider {
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_ProcessMethod_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_ProcessMethod_name_feature", "_UI_ProcessMethod_type"),
-                PooslPackage.Literals.PROCESS_METHOD__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_ProcessMethod_name_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_ProcessMethod_name_feature", "_UI_ProcessMethod_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.PROCESS_METHOD__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -98,7 +99,7 @@ public class ProcessMethodItemProvider extends AnnotableItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ProcessMethod"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ProcessMethod")); //$NON-NLS-1$
     }
 
     /**
@@ -109,7 +110,8 @@ public class ProcessMethodItemProvider extends AnnotableItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((ProcessMethod) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_ProcessMethod_type") : getString("_UI_ProcessMethod_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_ProcessMethod_type") : //$NON-NLS-1$
+                getString("_UI_ProcessMethod_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -201,7 +203,8 @@ public class ProcessMethodItemProvider extends AnnotableItemProvider {
                 || childFeature == PooslPackage.Literals.PROCESS_METHOD__LOCAL_VARIABLES;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

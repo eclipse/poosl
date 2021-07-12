@@ -82,7 +82,7 @@ public class WhileExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/WhileExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/WhileExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -92,7 +92,7 @@ public class WhileExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_WhileExpression_type");
+        return getString("_UI_WhileExpression_type"); //$NON-NLS-1$
     }
 
     /**
@@ -228,7 +228,8 @@ public class WhileExpressionItemProvider extends ExpressionItemProvider {
         boolean qualify = childFeature == PooslPackage.Literals.WHILE_EXPRESSION__CONDITION || childFeature == PooslPackage.Literals.WHILE_EXPRESSION__BODY;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

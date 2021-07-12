@@ -81,7 +81,7 @@ public class StatementSequenceItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/StatementSequence"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/StatementSequence")); //$NON-NLS-1$
     }
 
     /**
@@ -91,7 +91,7 @@ public class StatementSequenceItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_StatementSequence_type");
+        return getString("_UI_StatementSequence_type"); //$NON-NLS-1$
     }
 
     /**

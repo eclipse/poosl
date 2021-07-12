@@ -81,7 +81,7 @@ public class DelayStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/DelayStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/DelayStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -91,7 +91,7 @@ public class DelayStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_DelayStatement_type");
+        return getString("_UI_DelayStatement_type"); //$NON-NLS-1$
     }
 
     /**

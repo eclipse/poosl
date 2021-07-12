@@ -46,7 +46,7 @@ public class StatementSequenceRoundBracketItemProvider extends StatementSequence
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/StatementSequenceRoundBracket"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/StatementSequenceRoundBracket")); //$NON-NLS-1$
     }
 
     /**
@@ -56,7 +56,7 @@ public class StatementSequenceRoundBracketItemProvider extends StatementSequence
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_StatementSequenceRoundBracket_type");
+        return getString("_UI_StatementSequenceRoundBracket_type"); //$NON-NLS-1$
     }
 
     /**

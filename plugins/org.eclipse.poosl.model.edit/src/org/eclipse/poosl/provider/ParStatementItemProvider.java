@@ -81,7 +81,7 @@ public class ParStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ParStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ParStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -91,7 +91,7 @@ public class ParStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_ParStatement_type");
+        return getString("_UI_ParStatement_type"); //$NON-NLS-1$
     }
 
     /**

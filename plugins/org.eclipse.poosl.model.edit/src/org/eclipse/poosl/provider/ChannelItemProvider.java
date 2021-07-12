@@ -114,7 +114,7 @@ public class ChannelItemProvider extends AnnotableItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Channel"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Channel")); //$NON-NLS-1$
     }
 
     /**
@@ -124,7 +124,7 @@ public class ChannelItemProvider extends AnnotableItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Channel_type");
+        return getString("_UI_Channel_type"); //$NON-NLS-1$
     }
 
     /**

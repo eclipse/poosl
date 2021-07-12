@@ -89,7 +89,7 @@ public class AnnotableItemProvider extends ItemProviderAdapter
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Annotable_type");
+        return getString("_UI_Annotable_type"); //$NON-NLS-1$
     }
 
     /**

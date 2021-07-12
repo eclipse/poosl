@@ -92,7 +92,7 @@ public class PooslItemProvider extends ItemProviderAdapter implements IEditingDo
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Poosl"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Poosl")); //$NON-NLS-1$
     }
 
     /**
@@ -102,7 +102,7 @@ public class PooslItemProvider extends ItemProviderAdapter implements IEditingDo
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Poosl_type");
+        return getString("_UI_Poosl_type"); //$NON-NLS-1$
     }
 
     /**
@@ -163,7 +163,8 @@ public class PooslItemProvider extends ItemProviderAdapter implements IEditingDo
         boolean qualify = childFeature == PooslPackage.Literals.POOSL__IMPORTS || childFeature == PooslPackage.Literals.POOSL__IMPORT_LIBS;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

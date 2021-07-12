@@ -81,7 +81,7 @@ public class SelStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/SelStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/SelStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -91,7 +91,7 @@ public class SelStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_SelStatement_type");
+        return getString("_UI_SelStatement_type"); //$NON-NLS-1$
     }
 
     /**

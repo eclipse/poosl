@@ -54,7 +54,7 @@ public class PortDescriptorItemProvider extends ItemProviderAdapter
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_PortDescriptor_type");
+        return getString("_UI_PortDescriptor_type"); //$NON-NLS-1$
     }
 
     /**

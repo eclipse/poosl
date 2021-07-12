@@ -50,9 +50,10 @@ public class PortReferenceItemProvider extends PortDescriptorItemProvider {
      * @generated
      */
     protected void addPortPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_PortReference_port_feature"), getString("_UI_PropertyDescriptor_description", "_UI_PortReference_port_feature", "_UI_PortReference_type"),
-                PooslPackage.Literals.PORT_REFERENCE__PORT, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_PortReference_port_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_PortReference_port_feature", "_UI_PortReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.PORT_REFERENCE__PORT, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -62,7 +63,7 @@ public class PortReferenceItemProvider extends PortDescriptorItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/PortReference"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/PortReference")); //$NON-NLS-1$
     }
 
     /**
@@ -73,7 +74,8 @@ public class PortReferenceItemProvider extends PortDescriptorItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((PortReference) object).getPort();
-        return label == null || label.length() == 0 ? getString("_UI_PortReference_type") : getString("_UI_PortReference_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_PortReference_type") : //$NON-NLS-1$
+                getString("_UI_PortReference_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

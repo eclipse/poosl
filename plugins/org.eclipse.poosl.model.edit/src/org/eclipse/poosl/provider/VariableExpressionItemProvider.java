@@ -50,9 +50,10 @@ public class VariableExpressionItemProvider extends ExpressionItemProvider {
      * @generated
      */
     protected void addVariablePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_VariableExpression_variable_feature"), getString("_UI_PropertyDescriptor_description", "_UI_VariableExpression_variable_feature", "_UI_VariableExpression_type"),
-                PooslPackage.Literals.VARIABLE_EXPRESSION__VARIABLE, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_VariableExpression_variable_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_VariableExpression_variable_feature", "_UI_VariableExpression_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.VARIABLE_EXPRESSION__VARIABLE, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -62,7 +63,7 @@ public class VariableExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/VariableExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/VariableExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -73,7 +74,8 @@ public class VariableExpressionItemProvider extends ExpressionItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((VariableExpression) object).getVariable();
-        return label == null || label.length() == 0 ? getString("_UI_VariableExpression_type") : getString("_UI_VariableExpression_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_VariableExpression_type") : //$NON-NLS-1$
+                getString("_UI_VariableExpression_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

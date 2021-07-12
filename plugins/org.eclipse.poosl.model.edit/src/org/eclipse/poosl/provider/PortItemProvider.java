@@ -58,9 +58,9 @@ public class PortItemProvider extends ItemProviderAdapter implements IEditingDom
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_Port_name_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_Port_name_feature", "_UI_Port_type"), PooslPackage.Literals.PORT__NAME, true, false, false,
-                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_Port_name_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_Port_name_feature", "_UI_Port_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                PooslPackage.Literals.PORT__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -70,7 +70,7 @@ public class PortItemProvider extends ItemProviderAdapter implements IEditingDom
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Port"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Port")); //$NON-NLS-1$
     }
 
     /**
@@ -81,7 +81,8 @@ public class PortItemProvider extends ItemProviderAdapter implements IEditingDom
     @Override
     public String getText(Object object) {
         String label = ((Port) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_Port_type") : getString("_UI_Port_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_Port_type") : //$NON-NLS-1$
+                getString("_UI_Port_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

@@ -83,7 +83,7 @@ public class SwitchStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/SwitchStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/SwitchStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -93,7 +93,7 @@ public class SwitchStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_SwitchStatement_type");
+        return getString("_UI_SwitchStatement_type"); //$NON-NLS-1$
     }
 
     /**

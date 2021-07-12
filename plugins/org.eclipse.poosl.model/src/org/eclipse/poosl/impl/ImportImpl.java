@@ -152,7 +152,7 @@ public class ImportImpl extends EObjectImpl implements Import {
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (importURI: ");
+        result.append(" (importURI: "); //$NON-NLS-1$
         result.append(importURI);
         result.append(')');
         return result.toString();

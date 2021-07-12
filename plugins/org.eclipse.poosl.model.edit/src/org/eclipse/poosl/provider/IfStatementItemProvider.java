@@ -83,7 +83,7 @@ public class IfStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/IfStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/IfStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -93,7 +93,7 @@ public class IfStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_IfStatement_type");
+        return getString("_UI_IfStatement_type"); //$NON-NLS-1$
     }
 
     /**
@@ -250,7 +250,8 @@ public class IfStatementItemProvider extends StatementItemProvider {
         boolean qualify = childFeature == PooslPackage.Literals.IF_STATEMENT__THEN_CLAUSE || childFeature == PooslPackage.Literals.IF_STATEMENT__ELSE_CLAUSE;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

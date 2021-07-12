@@ -46,7 +46,7 @@ public class ExpressionSequenceRoundBracketItemProvider extends ExpressionSequen
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ExpressionSequenceRoundBracket"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ExpressionSequenceRoundBracket")); //$NON-NLS-1$
     }
 
     /**
@@ -56,7 +56,7 @@ public class ExpressionSequenceRoundBracketItemProvider extends ExpressionSequen
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_ExpressionSequenceRoundBracket_type");
+        return getString("_UI_ExpressionSequenceRoundBracket_type"); //$NON-NLS-1$
     }
 
     /**

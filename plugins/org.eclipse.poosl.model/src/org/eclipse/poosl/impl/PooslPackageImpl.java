@@ -2964,398 +2964,398 @@ public class PooslPackageImpl extends EPackageImpl implements PooslPackage {
         clusterClassEClass.getESuperTypes().add(this.getInstantiableClass());
 
         // Initialize classes and features; add operations and parameters
-        initEClass(pooslEClass, Poosl.class, "Poosl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getPoosl_Imports(), this.getImport(), null, "imports", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        initEClass(pooslEClass, Poosl.class, "Poosl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getPoosl_Imports(), this.getImport(), null, "imports", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPoosl_DataClasses(), this.getDataClass(), null, "dataClasses", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getPoosl_DataClasses(), this.getDataClass(), null, "dataClasses", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPoosl_ProcessClasses(), this.getProcessClass(), null, "processClasses", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getPoosl_ProcessClasses(), this.getProcessClass(), null, "processClasses", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPoosl_ClusterClasses(), this.getClusterClass(), null, "clusterClasses", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getPoosl_ClusterClasses(), this.getClusterClass(), null, "clusterClasses", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPoosl_ImportLibs(), this.getImport(), null, "importLibs", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getPoosl_ImportLibs(), this.getImport(), null, "importLibs", null, 0, -1, Poosl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getImport_ImportURI(), ecorePackage.getEString(), "importURI", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getImport_ImportURI(), ecorePackage.getEString(), "importURI", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(channelEClass, Channel.class, "Channel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getChannel_ExternalPort(), this.getPort(), null, "externalPort", null, 0, 1, Channel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        initEClass(channelEClass, Channel.class, "Channel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getChannel_ExternalPort(), this.getPort(), null, "externalPort", null, 0, 1, Channel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getChannel_InstancePorts(), this.getInstancePort(), null, "instancePorts", null, 0, -1, Channel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getChannel_InstancePorts(), this.getInstancePort(), null, "instancePorts", null, 0, -1, Channel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(instancePortEClass, InstancePort.class, "InstancePort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getInstancePort_Instance(), this.getInstance(), null, "instance", null, 0, 1, InstancePort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        initEClass(instancePortEClass, InstancePort.class, "InstancePort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getInstancePort_Instance(), this.getInstance(), null, "instance", null, 0, 1, InstancePort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getInstancePort_Port(), this.getPortReference(), null, "port", null, 0, 1, InstancePort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getInstancePort_Port(), this.getPortReference(), null, "port", null, 0, 1, InstancePort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(instanceEClass, Instance.class, "Instance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getInstance_Name(), ecorePackage.getEString(), "name", null, 0, 1, Instance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        initEClass(instanceEClass, Instance.class, "Instance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getInstance_Name(), ecorePackage.getEString(), "name", null, 0, 1, Instance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, //$NON-NLS-1$
                 IS_ORDERED);
-        initEReference(getInstance_InstanceParameters(), this.getInstanceParameter(), null, "instanceParameters", null, 0, -1, Instance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getInstance_InstanceParameters(), this.getInstanceParameter(), null, "instanceParameters", null, 0, -1, Instance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getInstance_ClassDefinition(), ecorePackage.getEString(), "classDefinition", null, 0, 1, Instance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        initEAttribute(getInstance_ClassDefinition(), ecorePackage.getEString(), "classDefinition", null, 0, 1, Instance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(instanceParameterEClass, InstanceParameter.class, "InstanceParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getInstanceParameter_Expression(), this.getExpression(), null, "expression", null, 0, 1, InstanceParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(instanceParameterEClass, InstanceParameter.class, "InstanceParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getInstanceParameter_Expression(), this.getExpression(), null, "expression", null, 0, 1, InstanceParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getInstanceParameter_Parameter(), ecorePackage.getEString(), "parameter", null, 0, 1, InstanceParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        initEAttribute(getInstanceParameter_Parameter(), ecorePackage.getEString(), "parameter", null, 0, 1, InstanceParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
                 !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(instantiableClassEClass, InstantiableClass.class, "InstantiableClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getInstantiableClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, InstantiableClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        initEClass(instantiableClassEClass, InstantiableClass.class, "InstantiableClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getInstantiableClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, InstantiableClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getInstantiableClass_Parameters(), this.getDeclaration(), null, "parameters", null, 0, -1, InstantiableClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getInstantiableClass_Parameters(), this.getDeclaration(), null, "parameters", null, 0, -1, InstantiableClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getInstantiableClass_Ports(), this.getPort(), null, "ports", null, 0, -1, InstantiableClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getInstantiableClass_Ports(), this.getPort(), null, "ports", null, 0, -1, InstantiableClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(portEClass, Port.class, "Port", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getPort_Name(), ecorePackage.getEString(), "name", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        initEClass(portEClass, Port.class, "Port", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getPort_Name(), ecorePackage.getEString(), "name", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, //$NON-NLS-1$
                 IS_ORDERED);
 
-        initEClass(declarationEClass, Declaration.class, "Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDeclaration_Variables(), this.getVariable(), null, "variables", null, 0, -1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEClass(declarationEClass, Declaration.class, "Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getDeclaration_Variables(), this.getVariable(), null, "variables", null, 0, -1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDeclaration_Type(), ecorePackage.getEString(), "type", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEAttribute(getDeclaration_Type(), ecorePackage.getEString(), "type", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, //$NON-NLS-1$
                 IS_ORDERED);
 
-        initEClass(dataClassEClass, DataClass.class, "DataClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDataClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        initEClass(dataClassEClass, DataClass.class, "DataClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getDataClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, //$NON-NLS-1$
                 IS_ORDERED);
-        initEAttribute(getDataClass_Native(), ecorePackage.getEBoolean(), "native", null, 0, 1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEAttribute(getDataClass_Native(), ecorePackage.getEBoolean(), "native", null, 0, 1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataClass_InstanceVariables(), this.getDeclaration(), null, "instanceVariables", null, 0, -1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getDataClass_InstanceVariables(), this.getDeclaration(), null, "instanceVariables", null, 0, -1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataClass_DataMethodsNamed(), this.getDataMethodNamed(), null, "dataMethodsNamed", null, 0, -1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getDataClass_DataMethodsNamed(), this.getDataMethodNamed(), null, "dataMethodsNamed", null, 0, -1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataClass_DataMethodsUnaryOperator(), this.getDataMethodUnaryOperator(), null, "dataMethodsUnaryOperator", null, 0, -1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE,
+        initEReference(getDataClass_DataMethodsUnaryOperator(), this.getDataMethodUnaryOperator(), null, "dataMethodsUnaryOperator", null, 0, -1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
                 IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataClass_DataMethodsBinaryOperator(), this.getDataMethodBinaryOperator(), null, "dataMethodsBinaryOperator", null, 0, -1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE,
+        initEReference(getDataClass_DataMethodsBinaryOperator(), this.getDataMethodBinaryOperator(), null, "dataMethodsBinaryOperator", null, 0, -1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
                 IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDataClass_SuperClass(), ecorePackage.getEString(), "superClass", null, 0, 1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEAttribute(getDataClass_SuperClass(), ecorePackage.getEString(), "superClass", null, 0, 1, DataClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(dataMethodEClass, DataMethod.class, "DataMethod", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDataMethod_Native(), ecorePackage.getEBoolean(), "native", null, 0, 1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(dataMethodEClass, DataMethod.class, "DataMethod", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getDataMethod_Native(), ecorePackage.getEBoolean(), "native", null, 0, 1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataMethod_Parameters(), this.getDeclaration(), null, "parameters", null, 0, -1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getDataMethod_Parameters(), this.getDeclaration(), null, "parameters", null, 0, -1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataMethod_LocalVariables(), this.getDeclaration(), null, "localVariables", null, 0, -1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getDataMethod_LocalVariables(), this.getDeclaration(), null, "localVariables", null, 0, -1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataMethod_Body(), this.getExpression(), null, "body", null, 0, 1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getDataMethod_Body(), this.getExpression(), null, "body", null, 0, 1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDataMethod_ReturnType(), ecorePackage.getEString(), "returnType", null, 0, 1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEAttribute(getDataMethod_ReturnType(), ecorePackage.getEString(), "returnType", null, 0, 1, DataMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(dataMethodNamedEClass, DataMethodNamed.class, "DataMethodNamed", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDataMethodNamed_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataMethodNamed.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(dataMethodNamedEClass, DataMethodNamed.class, "DataMethodNamed", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getDataMethodNamed_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataMethodNamed.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(dataMethodUnaryOperatorEClass, DataMethodUnaryOperator.class, "DataMethodUnaryOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDataMethodUnaryOperator_Name(), this.getOperatorUnary(), "name", null, 0, 1, DataMethodUnaryOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        initEClass(dataMethodUnaryOperatorEClass, DataMethodUnaryOperator.class, "DataMethodUnaryOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getDataMethodUnaryOperator_Name(), this.getOperatorUnary(), "name", null, 0, 1, DataMethodUnaryOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
                 !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(dataMethodBinaryOperatorEClass, DataMethodBinaryOperator.class, "DataMethodBinaryOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDataMethodBinaryOperator_Name(), this.getOperatorBinary(), "name", null, 0, 1, DataMethodBinaryOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        initEClass(dataMethodBinaryOperatorEClass, DataMethodBinaryOperator.class, "DataMethodBinaryOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getDataMethodBinaryOperator_Name(), this.getOperatorBinary(), "name", null, 0, 1, DataMethodBinaryOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
                 !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(expressionSequenceEClass, ExpressionSequence.class, "ExpressionSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getExpressionSequence_Expressions(), this.getExpression(), null, "expressions", null, 0, -1, ExpressionSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(expressionSequenceEClass, ExpressionSequence.class, "ExpressionSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getExpressionSequence_Expressions(), this.getExpression(), null, "expressions", null, 0, -1, ExpressionSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(expressionSequenceRoundBracketEClass, ExpressionSequenceRoundBracket.class, "ExpressionSequenceRoundBracket", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(expressionSequenceRoundBracketEClass, ExpressionSequenceRoundBracket.class, "ExpressionSequenceRoundBracket", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(assignmentExpressionEClass, AssignmentExpression.class, "AssignmentExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getAssignmentExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, AssignmentExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(assignmentExpressionEClass, AssignmentExpression.class, "AssignmentExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getAssignmentExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, AssignmentExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getAssignmentExpression_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, AssignmentExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        initEAttribute(getAssignmentExpression_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, AssignmentExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
                 !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(currentTimeExpressionEClass, CurrentTimeExpression.class, "CurrentTimeExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(currentTimeExpressionEClass, CurrentTimeExpression.class, "CurrentTimeExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(dataMethodCallExpressionEClass, DataMethodCallExpression.class, "DataMethodCallExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDataMethodCallExpression_Target(), this.getExpression(), null, "target", null, 0, 1, DataMethodCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(dataMethodCallExpressionEClass, DataMethodCallExpression.class, "DataMethodCallExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getDataMethodCallExpression_Target(), this.getExpression(), null, "target", null, 0, 1, DataMethodCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDataMethodCallExpression_OnSuperClass(), ecorePackage.getEBoolean(), "onSuperClass", "false", 0, 1, DataMethodCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE,
+        initEAttribute(getDataMethodCallExpression_OnSuperClass(), ecorePackage.getEBoolean(), "onSuperClass", "false", 0, 1, DataMethodCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$ //$NON-NLS-2$
                 IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDataMethodCallExpression_Name(), ecorePackage.getEString(), "name", "", 0, 1, DataMethodCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        initEAttribute(getDataMethodCallExpression_Name(), ecorePackage.getEString(), "name", "", 0, 1, DataMethodCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$ //$NON-NLS-2$
                 !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataMethodCallExpression_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, DataMethodCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEReference(getDataMethodCallExpression_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, DataMethodCallExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(ifExpressionEClass, IfExpression.class, "IfExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getIfExpression_Condition(), this.getExpression(), null, "condition", null, 0, 1, IfExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(ifExpressionEClass, IfExpression.class, "IfExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getIfExpression_Condition(), this.getExpression(), null, "condition", null, 0, 1, IfExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIfExpression_ThenClause(), this.getExpression(), null, "thenClause", null, 0, 1, IfExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getIfExpression_ThenClause(), this.getExpression(), null, "thenClause", null, 0, 1, IfExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIfExpression_ElseClause(), this.getExpression(), null, "elseClause", null, 0, 1, IfExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(switchExpressionEClass, SwitchExpression.class, "SwitchExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSwitchExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, SwitchExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSwitchExpression_Cases(), this.getSwitchExpressionCase(), null, "cases", null, 0, -1, SwitchExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSwitchExpression_DefaultBody(), this.getExpression(), null, "defaultBody", null, 0, 1, SwitchExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getIfExpression_ElseClause(), this.getExpression(), null, "elseClause", null, 0, 1, IfExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(switchExpressionCaseEClass, SwitchExpressionCase.class, "SwitchExpressionCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSwitchExpressionCase_Value(), this.getExpression(), null, "value", null, 0, 1, SwitchExpressionCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(switchExpressionEClass, SwitchExpression.class, "SwitchExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getSwitchExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, SwitchExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSwitchExpressionCase_Body(), this.getExpression(), null, "body", null, 0, 1, SwitchExpressionCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getSwitchExpression_Cases(), this.getSwitchExpressionCase(), null, "cases", null, 0, -1, SwitchExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSwitchExpression_DefaultBody(), this.getExpression(), null, "defaultBody", null, 0, 1, SwitchExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(newExpressionEClass, NewExpression.class, "NewExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getNewExpression_DataClass(), ecorePackage.getEString(), "dataClass", null, 0, 1, NewExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        initEClass(switchExpressionCaseEClass, SwitchExpressionCase.class, "SwitchExpressionCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getSwitchExpressionCase_Value(), this.getExpression(), null, "value", null, 0, 1, SwitchExpressionCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSwitchExpressionCase_Body(), this.getExpression(), null, "body", null, 0, 1, SwitchExpressionCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(newExpressionEClass, NewExpression.class, "NewExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getNewExpression_DataClass(), ecorePackage.getEString(), "dataClass", null, 0, 1, NewExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(returnExpressionEClass, ReturnExpression.class, "ReturnExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getReturnExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, ReturnExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(returnExpressionEClass, ReturnExpression.class, "ReturnExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getReturnExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, ReturnExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(selfExpressionEClass, SelfExpression.class, "SelfExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(selfExpressionEClass, SelfExpression.class, "SelfExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(variableExpressionEClass, VariableExpression.class, "VariableExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getVariableExpression_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, VariableExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        initEClass(variableExpressionEClass, VariableExpression.class, "VariableExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getVariableExpression_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, VariableExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
                 !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(whileExpressionEClass, WhileExpression.class, "WhileExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getWhileExpression_Condition(), this.getExpression(), null, "condition", null, 0, 1, WhileExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(whileExpressionEClass, WhileExpression.class, "WhileExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getWhileExpression_Condition(), this.getExpression(), null, "condition", null, 0, 1, WhileExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getWhileExpression_Body(), this.getExpression(), null, "body", null, 0, 1, WhileExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getWhileExpression_Body(), this.getExpression(), null, "body", null, 0, 1, WhileExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(binaryOperatorExpressionEClass, BinaryOperatorExpression.class, "BinaryOperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getBinaryOperatorExpression_LeftOperand(), this.getExpression(), null, "leftOperand", null, 0, 1, BinaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEClass(binaryOperatorExpressionEClass, BinaryOperatorExpression.class, "BinaryOperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getBinaryOperatorExpression_LeftOperand(), this.getExpression(), null, "leftOperand", null, 0, 1, BinaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBinaryOperatorExpression_Name(), this.getOperatorBinary(), "name", null, 0, 1, BinaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        initEAttribute(getBinaryOperatorExpression_Name(), this.getOperatorBinary(), "name", null, 0, 1, BinaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
                 !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBinaryOperatorExpression_RightOperand(), this.getExpression(), null, "rightOperand", null, 0, 1, BinaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEReference(getBinaryOperatorExpression_RightOperand(), this.getExpression(), null, "rightOperand", null, 0, 1, BinaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(unaryOperatorExpressionEClass, UnaryOperatorExpression.class, "UnaryOperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getUnaryOperatorExpression_Name(), this.getOperatorUnary(), "name", null, 0, 1, UnaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        initEClass(unaryOperatorExpressionEClass, UnaryOperatorExpression.class, "UnaryOperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getUnaryOperatorExpression_Name(), this.getOperatorUnary(), "name", null, 0, 1, UnaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
                 !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getUnaryOperatorExpression_Operand(), this.getExpression(), null, "operand", null, 0, 1, UnaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getUnaryOperatorExpression_Operand(), this.getExpression(), null, "operand", null, 0, 1, UnaryOperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(booleanConstantEClass, BooleanConstant.class, "BooleanConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getBooleanConstant_Value(), ecorePackage.getEString(), "value", null, 1, 1, BooleanConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(booleanConstantEClass, BooleanConstant.class, "BooleanConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getBooleanConstant_Value(), ecorePackage.getEString(), "value", null, 1, 1, BooleanConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(characterConstantEClass, CharacterConstant.class, "CharacterConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getCharacterConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, CharacterConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        initEClass(characterConstantEClass, CharacterConstant.class, "CharacterConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getCharacterConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, CharacterConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(integerConstantEClass, IntegerConstant.class, "IntegerConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getIntegerConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, IntegerConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(integerConstantEClass, IntegerConstant.class, "IntegerConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getIntegerConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, IntegerConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(nilConstantEClass, NilConstant.class, "NilConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(nilConstantEClass, NilConstant.class, "NilConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(realConstantEClass, RealConstant.class, "RealConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getRealConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, RealConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(realConstantEClass, RealConstant.class, "RealConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getRealConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, RealConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(floatConstantEClass, FloatConstant.class, "FloatConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getFloatConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, FloatConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(floatConstantEClass, FloatConstant.class, "FloatConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getFloatConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, FloatConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(stringConstantEClass, StringConstant.class, "StringConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getStringConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, StringConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(stringConstantEClass, StringConstant.class, "StringConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getStringConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, StringConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(environmentConstantEClass, EnvironmentConstant.class, "EnvironmentConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getEnvironmentConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, EnvironmentConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        initEClass(environmentConstantEClass, EnvironmentConstant.class, "EnvironmentConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getEnvironmentConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, EnvironmentConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(processClassEClass, ProcessClass.class, "ProcessClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getProcessClass_ReceiveMessages(), this.getMessageSignature(), null, "receiveMessages", null, 0, -1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEClass(processClassEClass, ProcessClass.class, "ProcessClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getProcessClass_ReceiveMessages(), this.getMessageSignature(), null, "receiveMessages", null, 0, -1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessClass_SendMessages(), this.getMessageSignature(), null, "sendMessages", null, 0, -1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getProcessClass_SendMessages(), this.getMessageSignature(), null, "sendMessages", null, 0, -1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessClass_InstanceVariables(), this.getDeclaration(), null, "instanceVariables", null, 0, -1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getProcessClass_InstanceVariables(), this.getDeclaration(), null, "instanceVariables", null, 0, -1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessClass_Methods(), this.getProcessMethod(), null, "methods", null, 0, -1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getProcessClass_Methods(), this.getProcessMethod(), null, "methods", null, 0, -1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessClass_InitialMethodCall(), this.getProcessMethodCall(), null, "initialMethodCall", null, 0, 1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEReference(getProcessClass_InitialMethodCall(), this.getProcessMethodCall(), null, "initialMethodCall", null, 0, 1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getProcessClass_SuperClass(), ecorePackage.getEString(), "superClass", null, 0, 1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        initEAttribute(getProcessClass_SuperClass(), ecorePackage.getEString(), "superClass", null, 0, 1, ProcessClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(messageSignatureEClass, MessageSignature.class, "MessageSignature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMessageSignature_Name(), ecorePackage.getEString(), "name", null, 0, 1, MessageSignature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(messageSignatureEClass, MessageSignature.class, "MessageSignature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getMessageSignature_Name(), ecorePackage.getEString(), "name", null, 0, 1, MessageSignature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
-        initEReference(getMessageSignature_Parameters(), this.getMessageParameter(), null, "parameters", null, 0, -1, MessageSignature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getMessageSignature_Parameters(), this.getMessageParameter(), null, "parameters", null, 0, -1, MessageSignature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMessageSignature_Port(), this.getPortReference(), null, "port", null, 0, 1, MessageSignature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getMessageSignature_Port(), this.getPortReference(), null, "port", null, 0, 1, MessageSignature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(messageParameterEClass, MessageParameter.class, "MessageParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMessageParameter_Type(), ecorePackage.getEString(), "type", null, 0, 1, MessageParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(messageParameterEClass, MessageParameter.class, "MessageParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getMessageParameter_Type(), ecorePackage.getEString(), "type", null, 0, 1, MessageParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(processMethodEClass, ProcessMethod.class, "ProcessMethod", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getProcessMethod_Name(), ecorePackage.getEString(), "name", null, 0, 1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(processMethodEClass, ProcessMethod.class, "ProcessMethod", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getProcessMethod_Name(), ecorePackage.getEString(), "name", null, 0, 1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessMethod_InputParameters(), this.getDeclaration(), null, "inputParameters", null, 0, -1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getProcessMethod_InputParameters(), this.getDeclaration(), null, "inputParameters", null, 0, -1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessMethod_OutputParameters(), this.getDeclaration(), null, "outputParameters", null, 0, -1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getProcessMethod_OutputParameters(), this.getDeclaration(), null, "outputParameters", null, 0, -1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessMethod_LocalVariables(), this.getDeclaration(), null, "localVariables", null, 0, -1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getProcessMethod_LocalVariables(), this.getDeclaration(), null, "localVariables", null, 0, -1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessMethod_Body(), this.getStatement(), null, "body", null, 0, 1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getProcessMethod_Body(), this.getStatement(), null, "body", null, 0, 1, ProcessMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(statementEClass, Statement.class, "Statement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(statementEClass, Statement.class, "Statement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(statementSequenceEClass, StatementSequence.class, "StatementSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getStatementSequence_Statements(), this.getStatement(), null, "statements", null, 0, -1, StatementSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(statementSequenceRoundBracketEClass, StatementSequenceRoundBracket.class, "StatementSequenceRoundBracket", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(abortStatementEClass, AbortStatement.class, "AbortStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getAbortStatement_NormalClause(), this.getStatement(), null, "normalClause", null, 0, 1, AbortStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAbortStatement_AbortingClause(), this.getStatement(), null, "abortingClause", null, 0, 1, AbortStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(statementSequenceEClass, StatementSequence.class, "StatementSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getStatementSequence_Statements(), this.getStatement(), null, "statements", null, 0, -1, StatementSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(delayStatementEClass, DelayStatement.class, "DelayStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDelayStatement_Expression(), this.getExpression(), null, "expression", null, 0, 1, DelayStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(statementSequenceRoundBracketEClass, StatementSequenceRoundBracket.class, "StatementSequenceRoundBracket", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+        initEClass(abortStatementEClass, AbortStatement.class, "AbortStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getAbortStatement_NormalClause(), this.getStatement(), null, "normalClause", null, 0, 1, AbortStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAbortStatement_AbortingClause(), this.getStatement(), null, "abortingClause", null, 0, 1, AbortStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(expressionStatementEClass, ExpressionStatement.class, "ExpressionStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getExpressionStatement_Expression(), this.getExpression(), null, "expression", null, 0, 1, ExpressionStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(delayStatementEClass, DelayStatement.class, "DelayStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getDelayStatement_Expression(), this.getExpression(), null, "expression", null, 0, 1, DelayStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(guardedStatementEClass, GuardedStatement.class, "GuardedStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getGuardedStatement_Guard(), this.getExpression(), null, "guard", null, 0, 1, GuardedStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getGuardedStatement_Statement(), this.getStatement(), null, "statement", null, 0, 1, GuardedStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(expressionStatementEClass, ExpressionStatement.class, "ExpressionStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getExpressionStatement_Expression(), this.getExpression(), null, "expression", null, 0, 1, ExpressionStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(ifStatementEClass, IfStatement.class, "IfStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getIfStatement_Condition(), this.getExpression(), null, "condition", null, 0, 1, IfStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(guardedStatementEClass, GuardedStatement.class, "GuardedStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getGuardedStatement_Guard(), this.getExpression(), null, "guard", null, 0, 1, GuardedStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIfStatement_ThenClause(), this.getStatement(), null, "thenClause", null, 0, 1, IfStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIfStatement_ElseClause(), this.getStatement(), null, "elseClause", null, 0, 1, IfStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getGuardedStatement_Statement(), this.getStatement(), null, "statement", null, 0, 1, GuardedStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(switchStatementEClass, SwitchStatement.class, "SwitchStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSwitchStatement_Expression(), this.getExpression(), null, "expression", null, 0, 1, SwitchStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(ifStatementEClass, IfStatement.class, "IfStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getIfStatement_Condition(), this.getExpression(), null, "condition", null, 0, 1, IfStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSwitchStatement_Cases(), this.getSwitchStatementCase(), null, "cases", null, 0, -1, SwitchStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getIfStatement_ThenClause(), this.getStatement(), null, "thenClause", null, 0, 1, IfStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSwitchStatement_DefaultBody(), this.getStatement(), null, "defaultBody", null, 0, 1, SwitchStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(switchStatementCaseEClass, SwitchStatementCase.class, "SwitchStatementCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSwitchStatementCase_Value(), this.getExpression(), null, "value", null, 0, 1, SwitchStatementCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSwitchStatementCase_Body(), this.getStatement(), null, "body", null, 0, 1, SwitchStatementCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getIfStatement_ElseClause(), this.getStatement(), null, "elseClause", null, 0, 1, IfStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(interruptStatementEClass, InterruptStatement.class, "InterruptStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getInterruptStatement_NormalClause(), this.getStatement(), null, "normalClause", null, 0, 1, InterruptStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(switchStatementEClass, SwitchStatement.class, "SwitchStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getSwitchStatement_Expression(), this.getExpression(), null, "expression", null, 0, 1, SwitchStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getInterruptStatement_InterruptingClause(), this.getStatement(), null, "interruptingClause", null, 0, 1, InterruptStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEReference(getSwitchStatement_Cases(), this.getSwitchStatementCase(), null, "cases", null, 0, -1, SwitchStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSwitchStatement_DefaultBody(), this.getStatement(), null, "defaultBody", null, 0, 1, SwitchStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(switchStatementCaseEClass, SwitchStatementCase.class, "SwitchStatementCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getSwitchStatementCase_Value(), this.getExpression(), null, "value", null, 0, 1, SwitchStatementCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSwitchStatementCase_Body(), this.getStatement(), null, "body", null, 0, 1, SwitchStatementCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(interruptStatementEClass, InterruptStatement.class, "InterruptStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getInterruptStatement_NormalClause(), this.getStatement(), null, "normalClause", null, 0, 1, InterruptStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+                !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getInterruptStatement_InterruptingClause(), this.getStatement(), null, "interruptingClause", null, 0, 1, InterruptStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(parStatementEClass, ParStatement.class, "ParStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getParStatement_Clauses(), this.getStatement(), null, "clauses", null, 0, -1, ParStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEClass(parStatementEClass, ParStatement.class, "ParStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getParStatement_Clauses(), this.getStatement(), null, "clauses", null, 0, -1, ParStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(processMethodCallEClass, ProcessMethodCall.class, "ProcessMethodCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getProcessMethodCall_InputArguments(), this.getExpression(), null, "inputArguments", null, 0, -1, ProcessMethodCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEClass(processMethodCallEClass, ProcessMethodCall.class, "ProcessMethodCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getProcessMethodCall_InputArguments(), this.getExpression(), null, "inputArguments", null, 0, -1, ProcessMethodCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessMethodCall_OutputVariables(), this.getOutputVariable(), null, "outputVariables", null, 0, -1, ProcessMethodCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEReference(getProcessMethodCall_OutputVariables(), this.getOutputVariable(), null, "outputVariables", null, 0, -1, ProcessMethodCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getProcessMethodCall_Method(), ecorePackage.getEString(), "method", null, 0, 1, ProcessMethodCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        initEAttribute(getProcessMethodCall_Method(), ecorePackage.getEString(), "method", null, 0, 1, ProcessMethodCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(receiveStatementEClass, ReceiveStatement.class, "ReceiveStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getReceiveStatement_PortDescriptor(), this.getPortDescriptor(), null, "portDescriptor", null, 0, 1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEClass(receiveStatementEClass, ReceiveStatement.class, "ReceiveStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getReceiveStatement_PortDescriptor(), this.getPortDescriptor(), null, "portDescriptor", null, 0, 1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getReceiveStatement_Name(), ecorePackage.getEString(), "name", null, 0, 1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEAttribute(getReceiveStatement_Name(), ecorePackage.getEString(), "name", null, 0, 1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
-        initEReference(getReceiveStatement_Variables(), this.getOutputVariable(), null, "variables", null, 0, -1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getReceiveStatement_Variables(), this.getOutputVariable(), null, "variables", null, 0, -1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getReceiveStatement_ReceptionCondition(), this.getExpression(), null, "receptionCondition", null, 0, 1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        initEReference(getReceiveStatement_ReceptionCondition(), this.getExpression(), null, "receptionCondition", null, 0, 1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
                 IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getReceiveStatement_PostCommunicationExpression(), this.getExpression(), null, "postCommunicationExpression", null, 0, 1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE,
+        initEReference(getReceiveStatement_PostCommunicationExpression(), this.getExpression(), null, "postCommunicationExpression", null, 0, 1, ReceiveStatement.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
                 IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(sendStatementEClass, SendStatement.class, "SendStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSendStatement_PortDescriptor(), this.getPortDescriptor(), null, "portDescriptor", null, 0, 1, SendStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(sendStatementEClass, SendStatement.class, "SendStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getSendStatement_PortDescriptor(), this.getPortDescriptor(), null, "portDescriptor", null, 0, 1, SendStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSendStatement_Name(), ecorePackage.getEString(), "name", null, 0, 1, SendStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEAttribute(getSendStatement_Name(), ecorePackage.getEString(), "name", null, 0, 1, SendStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
-        initEReference(getSendStatement_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, SendStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getSendStatement_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, SendStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSendStatement_PostCommunicationExpression(), this.getExpression(), null, "postCommunicationExpression", null, 0, 1, SendStatement.class, !IS_TRANSIENT, !IS_VOLATILE,
+        initEReference(getSendStatement_PostCommunicationExpression(), this.getExpression(), null, "postCommunicationExpression", null, 0, 1, SendStatement.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
                 IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(selStatementEClass, SelStatement.class, "SelStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSelStatement_Clauses(), this.getStatement(), null, "clauses", null, 0, -1, SelStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEClass(selStatementEClass, SelStatement.class, "SelStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getSelStatement_Clauses(), this.getStatement(), null, "clauses", null, 0, -1, SelStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(skipStatementEClass, SkipStatement.class, "SkipStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(skipStatementEClass, SkipStatement.class, "SkipStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(whileStatementEClass, WhileStatement.class, "WhileStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getWhileStatement_Condition(), this.getExpression(), null, "condition", null, 0, 1, WhileStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(whileStatementEClass, WhileStatement.class, "WhileStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getWhileStatement_Condition(), this.getExpression(), null, "condition", null, 0, 1, WhileStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getWhileStatement_Body(), this.getStatement(), null, "body", null, 0, 1, WhileStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getWhileStatement_Body(), this.getStatement(), null, "body", null, 0, 1, WhileStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(portDescriptorEClass, PortDescriptor.class, "PortDescriptor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(portDescriptorEClass, PortDescriptor.class, "PortDescriptor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-        initEClass(portExpressionEClass, PortExpression.class, "PortExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getPortExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, PortExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(portExpressionEClass, PortExpression.class, "PortExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getPortExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, PortExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(portReferenceEClass, PortReference.class, "PortReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getPortReference_Port(), ecorePackage.getEString(), "port", null, 0, 1, PortReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(portReferenceEClass, PortReference.class, "PortReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getPortReference_Port(), ecorePackage.getEString(), "port", null, 0, 1, PortReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
 
-        initEClass(clusterClassEClass, ClusterClass.class, "ClusterClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getClusterClass_Channels(), this.getChannel(), null, "channels", null, 0, -1, ClusterClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEClass(clusterClassEClass, ClusterClass.class, "ClusterClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getClusterClass_Channels(), this.getChannel(), null, "channels", null, 0, -1, ClusterClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getClusterClass_Instances(), this.getInstance(), null, "instances", null, 0, -1, ClusterClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEReference(getClusterClass_Instances(), this.getInstance(), null, "instances", null, 0, -1, ClusterClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(outputVariableEClass, OutputVariable.class, "OutputVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getOutputVariable_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, OutputVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        initEClass(outputVariableEClass, OutputVariable.class, "OutputVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getOutputVariable_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, OutputVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
                 IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getAnnotation_Name(), ecorePackage.getEString(), "name", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEAttribute(getAnnotation_Name(), ecorePackage.getEString(), "name", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, //$NON-NLS-1$
                 !IS_DERIVED, IS_ORDERED);
-        initEReference(getAnnotation_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        initEReference(getAnnotation_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, //$NON-NLS-1$
                 !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(annotableEClass, Annotable.class, "Annotable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getAnnotable_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Annotable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        initEClass(annotableEClass, Annotable.class, "Annotable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+        initEReference(getAnnotable_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Annotable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
                 !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
-        initEEnum(operatorUnaryEEnum, OperatorUnary.class, "OperatorUnary");
+        initEEnum(operatorUnaryEEnum, OperatorUnary.class, "OperatorUnary"); //$NON-NLS-1$
         addEEnumLiteral(operatorUnaryEEnum, OperatorUnary.MINUS);
         addEEnumLiteral(operatorUnaryEEnum, OperatorUnary.NOT);
 
-        initEEnum(operatorBinaryEEnum, OperatorBinary.class, "OperatorBinary");
+        initEEnum(operatorBinaryEEnum, OperatorBinary.class, "OperatorBinary"); //$NON-NLS-1$
         addEEnumLiteral(operatorBinaryEEnum, OperatorBinary.ADD);
         addEEnumLiteral(operatorBinaryEEnum, OperatorBinary.SUBTRACT);
         addEEnumLiteral(operatorBinaryEEnum, OperatorBinary.MULTIPLY);

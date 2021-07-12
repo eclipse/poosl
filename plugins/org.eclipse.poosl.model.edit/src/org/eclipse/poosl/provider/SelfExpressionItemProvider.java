@@ -46,7 +46,7 @@ public class SelfExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/SelfExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/SelfExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -56,7 +56,7 @@ public class SelfExpressionItemProvider extends ExpressionItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_SelfExpression_type");
+        return getString("_UI_SelfExpression_type"); //$NON-NLS-1$
     }
 
     /**

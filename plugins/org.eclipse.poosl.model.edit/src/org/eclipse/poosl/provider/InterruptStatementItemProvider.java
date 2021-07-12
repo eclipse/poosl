@@ -82,7 +82,7 @@ public class InterruptStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/InterruptStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/InterruptStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -92,7 +92,7 @@ public class InterruptStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_InterruptStatement_type");
+        return getString("_UI_InterruptStatement_type"); //$NON-NLS-1$
     }
 
     /**
@@ -204,7 +204,8 @@ public class InterruptStatementItemProvider extends StatementItemProvider {
         boolean qualify = childFeature == PooslPackage.Literals.INTERRUPT_STATEMENT__NORMAL_CLAUSE || childFeature == PooslPackage.Literals.INTERRUPT_STATEMENT__INTERRUPTING_CLAUSE;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

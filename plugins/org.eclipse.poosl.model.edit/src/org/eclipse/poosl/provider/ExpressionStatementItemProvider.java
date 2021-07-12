@@ -81,7 +81,7 @@ public class ExpressionStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ExpressionStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ExpressionStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -91,7 +91,7 @@ public class ExpressionStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_ExpressionStatement_type");
+        return getString("_UI_ExpressionStatement_type"); //$NON-NLS-1$
     }
 
     /**

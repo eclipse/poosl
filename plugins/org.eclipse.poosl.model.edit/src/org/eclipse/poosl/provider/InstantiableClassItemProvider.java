@@ -53,9 +53,10 @@ public class InstantiableClassItemProvider extends AnnotableItemProvider {
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_InstantiableClass_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_InstantiableClass_name_feature", "_UI_InstantiableClass_type"),
-                PooslPackage.Literals.INSTANTIABLE_CLASS__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_InstantiableClass_name_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_InstantiableClass_name_feature", "_UI_InstantiableClass_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.INSTANTIABLE_CLASS__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -96,7 +97,7 @@ public class InstantiableClassItemProvider extends AnnotableItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/InstantiableClass"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/InstantiableClass")); //$NON-NLS-1$
     }
 
     /**
@@ -107,7 +108,8 @@ public class InstantiableClassItemProvider extends AnnotableItemProvider {
     @Override
     public String getText(Object object) {
         String label = ((InstantiableClass) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_InstantiableClass_type") : getString("_UI_InstantiableClass_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_InstantiableClass_type") : //$NON-NLS-1$
+                getString("_UI_InstantiableClass_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

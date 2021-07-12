@@ -433,11 +433,11 @@ public class DataClassImpl extends AnnotableImpl implements DataClass {
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (name: ");
+        result.append(" (name: "); //$NON-NLS-1$
         result.append(name);
-        result.append(", native: ");
+        result.append(", native: "); //$NON-NLS-1$
         result.append(native_);
-        result.append(", superClass: ");
+        result.append(", superClass: "); //$NON-NLS-1$
         result.append(superClass);
         result.append(')');
         return result.toString();

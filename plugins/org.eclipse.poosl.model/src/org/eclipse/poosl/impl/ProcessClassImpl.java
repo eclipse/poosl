@@ -394,7 +394,7 @@ public class ProcessClassImpl extends InstantiableClassImpl implements ProcessCl
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (superClass: ");
+        result.append(" (superClass: "); //$NON-NLS-1$
         result.append(superClass);
         result.append(')');
         return result.toString();

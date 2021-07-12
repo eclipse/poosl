@@ -54,9 +54,9 @@ public class DataMethodItemProvider extends AnnotableItemProvider {
      * @generated
      */
     protected void addNativePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataMethod_native_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_DataMethod_native_feature", "_UI_DataMethod_type"), PooslPackage.Literals.DATA_METHOD__NATIVE, true, false, false,
-                ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataMethod_native_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_DataMethod_native_feature", "_UI_DataMethod_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                PooslPackage.Literals.DATA_METHOD__NATIVE, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -65,9 +65,10 @@ public class DataMethodItemProvider extends AnnotableItemProvider {
      * @generated
      */
     protected void addReturnTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_DataMethod_returnType_feature"), getString("_UI_PropertyDescriptor_description", "_UI_DataMethod_returnType_feature", "_UI_DataMethod_type"),
-                PooslPackage.Literals.DATA_METHOD__RETURN_TYPE, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_DataMethod_returnType_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_DataMethod_returnType_feature", "_UI_DataMethod_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.DATA_METHOD__RETURN_TYPE, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -109,7 +110,7 @@ public class DataMethodItemProvider extends AnnotableItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/DataMethod"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/DataMethod")); //$NON-NLS-1$
     }
 
     /**
@@ -120,7 +121,7 @@ public class DataMethodItemProvider extends AnnotableItemProvider {
     @Override
     public String getText(Object object) {
         DataMethod dataMethod = (DataMethod) object;
-        return getString("_UI_DataMethod_type") + " " + dataMethod.isNative();
+        return getString("_UI_DataMethod_type") + " " + dataMethod.isNative(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -220,7 +221,8 @@ public class DataMethodItemProvider extends AnnotableItemProvider {
         boolean qualify = childFeature == PooslPackage.Literals.DATA_METHOD__PARAMETERS || childFeature == PooslPackage.Literals.DATA_METHOD__LOCAL_VARIABLES;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

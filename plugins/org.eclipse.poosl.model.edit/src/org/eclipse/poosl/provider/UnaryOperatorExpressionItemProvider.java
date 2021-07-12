@@ -54,9 +54,10 @@ public class UnaryOperatorExpressionItemProvider extends ExpressionItemProvider 
      * @generated
      */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_UnaryOperatorExpression_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_UnaryOperatorExpression_name_feature", "_UI_UnaryOperatorExpression_type"),
-                PooslPackage.Literals.UNARY_OPERATOR_EXPRESSION__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_UnaryOperatorExpression_name_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_UnaryOperatorExpression_name_feature", "_UI_UnaryOperatorExpression_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.UNARY_OPERATOR_EXPRESSION__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -96,7 +97,7 @@ public class UnaryOperatorExpressionItemProvider extends ExpressionItemProvider 
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/UnaryOperatorExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/UnaryOperatorExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -108,7 +109,8 @@ public class UnaryOperatorExpressionItemProvider extends ExpressionItemProvider 
     public String getText(Object object) {
         OperatorUnary labelValue = ((UnaryOperatorExpression) object).getName();
         String label = labelValue == null ? null : labelValue.toString();
-        return label == null || label.length() == 0 ? getString("_UI_UnaryOperatorExpression_type") : getString("_UI_UnaryOperatorExpression_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_UnaryOperatorExpression_type") : //$NON-NLS-1$
+                getString("_UI_UnaryOperatorExpression_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

@@ -46,7 +46,7 @@ public class SkipStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/SkipStatement"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/SkipStatement")); //$NON-NLS-1$
     }
 
     /**
@@ -56,7 +56,7 @@ public class SkipStatementItemProvider extends StatementItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_SkipStatement_type");
+        return getString("_UI_SkipStatement_type"); //$NON-NLS-1$
     }
 
     /**

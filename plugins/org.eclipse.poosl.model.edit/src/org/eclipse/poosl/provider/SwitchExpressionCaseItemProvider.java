@@ -90,7 +90,7 @@ public class SwitchExpressionCaseItemProvider extends ItemProviderAdapter
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/SwitchExpressionCase"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/SwitchExpressionCase")); //$NON-NLS-1$
     }
 
     /**
@@ -100,7 +100,7 @@ public class SwitchExpressionCaseItemProvider extends ItemProviderAdapter
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_SwitchExpressionCase_type");
+        return getString("_UI_SwitchExpressionCase_type"); //$NON-NLS-1$
     }
 
     /**
@@ -236,7 +236,8 @@ public class SwitchExpressionCaseItemProvider extends ItemProviderAdapter
         boolean qualify = childFeature == PooslPackage.Literals.SWITCH_EXPRESSION_CASE__VALUE || childFeature == PooslPackage.Literals.SWITCH_EXPRESSION_CASE__BODY;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

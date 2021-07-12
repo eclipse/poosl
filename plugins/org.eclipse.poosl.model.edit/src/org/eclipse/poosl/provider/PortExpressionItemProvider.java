@@ -81,7 +81,7 @@ public class PortExpressionItemProvider extends PortDescriptorItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_PortExpression_type");
+        return getString("_UI_PortExpression_type"); //$NON-NLS-1$
     }
 
     /**

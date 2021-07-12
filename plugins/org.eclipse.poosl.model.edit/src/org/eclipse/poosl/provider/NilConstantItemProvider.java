@@ -46,7 +46,7 @@ public class NilConstantItemProvider extends ExpressionItemProvider {
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/NilConstant"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/NilConstant")); //$NON-NLS-1$
     }
 
     /**
@@ -56,7 +56,7 @@ public class NilConstantItemProvider extends ExpressionItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_NilConstant_type");
+        return getString("_UI_NilConstant_type"); //$NON-NLS-1$
     }
 
     /**

@@ -58,9 +58,10 @@ public class OutputVariableItemProvider extends ItemProviderAdapter
      * @generated
      */
     protected void addVariablePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_OutputVariable_variable_feature"), getString("_UI_PropertyDescriptor_description", "_UI_OutputVariable_variable_feature", "_UI_OutputVariable_type"),
-                PooslPackage.Literals.OUTPUT_VARIABLE__VARIABLE, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_OutputVariable_variable_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_OutputVariable_variable_feature", "_UI_OutputVariable_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.OUTPUT_VARIABLE__VARIABLE, true, false, true, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
     /**
@@ -70,7 +71,7 @@ public class OutputVariableItemProvider extends ItemProviderAdapter
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/OutputVariable"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/OutputVariable")); //$NON-NLS-1$
     }
 
     /**
@@ -81,7 +82,8 @@ public class OutputVariableItemProvider extends ItemProviderAdapter
     @Override
     public String getText(Object object) {
         String label = ((OutputVariable) object).getVariable();
-        return label == null || label.length() == 0 ? getString("_UI_OutputVariable_type") : getString("_UI_OutputVariable_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_OutputVariable_type") : //$NON-NLS-1$
+                getString("_UI_OutputVariable_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

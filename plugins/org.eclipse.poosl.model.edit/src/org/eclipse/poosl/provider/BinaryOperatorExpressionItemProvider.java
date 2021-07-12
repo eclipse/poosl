@@ -55,8 +55,8 @@ public class BinaryOperatorExpressionItemProvider extends ExpressionItemProvider
      */
     protected void addNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_BinaryOperatorExpression_name_feature"),
-                        getString("_UI_PropertyDescriptor_description", "_UI_BinaryOperatorExpression_name_feature", "_UI_BinaryOperatorExpression_type"),
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_BinaryOperatorExpression_name_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_BinaryOperatorExpression_name_feature", "_UI_BinaryOperatorExpression_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         PooslPackage.Literals.BINARY_OPERATOR_EXPRESSION__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
     }
 
@@ -98,7 +98,7 @@ public class BinaryOperatorExpressionItemProvider extends ExpressionItemProvider
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/BinaryOperatorExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/BinaryOperatorExpression")); //$NON-NLS-1$
     }
 
     /**
@@ -110,7 +110,8 @@ public class BinaryOperatorExpressionItemProvider extends ExpressionItemProvider
     public String getText(Object object) {
         OperatorBinary labelValue = ((BinaryOperatorExpression) object).getName();
         String label = labelValue == null ? null : labelValue.toString();
-        return label == null || label.length() == 0 ? getString("_UI_BinaryOperatorExpression_type") : getString("_UI_BinaryOperatorExpression_type") + " " + label;
+        return label == null || label.length() == 0 ? getString("_UI_BinaryOperatorExpression_type") : //$NON-NLS-1$
+                getString("_UI_BinaryOperatorExpression_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
@@ -249,7 +250,8 @@ public class BinaryOperatorExpressionItemProvider extends ExpressionItemProvider
         boolean qualify = childFeature == PooslPackage.Literals.BINARY_OPERATOR_EXPRESSION__LEFT_OPERAND || childFeature == PooslPackage.Literals.BINARY_OPERATOR_EXPRESSION__RIGHT_OPERAND;
 
         if (qualify) {
-            return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+            return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+                    new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

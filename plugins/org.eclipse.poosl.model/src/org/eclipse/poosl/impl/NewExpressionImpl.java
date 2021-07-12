@@ -151,7 +151,7 @@ public class NewExpressionImpl extends ExpressionImpl implements NewExpression {
             return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (dataClass: ");
+        result.append(" (dataClass: "); //$NON-NLS-1$
         result.append(dataClass);
         result.append(')');
         return result.toString();
