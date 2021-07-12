@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup.workingsets:WorkingSetTask
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
+    xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore">
+  <workingSet
+      name="Poosl"
+      id="org.eclipse.poosl-plugins">
+    <predicate
+        xsi:type="predicates:AndPredicate">
+      <operand
+          xsi:type="predicates:NamePredicate"
+          pattern=".*\.poosl.*"/>
+      <operand
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*\/plugins\/.*"/>
+    </predicate>
+  </workingSet>
+  <workingSet
+      name="Poosl tests"
+      id="org.eclipse.poosl-test">
+    <predicate
+        xsi:type="predicates:AndPredicate">
+      <operand
+          xsi:type="predicates:NamePredicate"
+          pattern=".*\.poosl.*"/>
+      <operand
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*\/tests\/.*"/>
+    </predicate>
+  </workingSet>
+  <workingSet
+      name="Poosl releng"
+      id="org.eclipse.poosl-releng">
+    <predicate
+        xsi:type="predicates:AndPredicate">
+      <operand
+          xsi:type="predicates:NamePredicate"
+          pattern=".*\.poosl.*"/>
+      <operand
+          xsi:type="predicates:OrPredicate">
+        <operand
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*\/releng\/.*"/>
+        <operand
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*\/parent"/>
+      </operand>
+    </predicate>
+  </workingSet>
+</setup.workingsets:WorkingSetTask>
