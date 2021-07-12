@@ -7,6 +7,19 @@ import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming;
 import org.eclipse.xtext.xtext.generator.model.TypeReference;
 import org.eclipse.xtext.xtext.generator.model.project.IXtextProjectConfig;
 
+/**
+ * Generator module with Poosl naming convention.
+ * <p>
+ * By default, generator uses name based on plugin name.
+ * <br>
+ * Poosl project forces the name to 'PooslActivator'.
+ * </br>
+ * </p>
+ * 
+ * 
+ * @author Obeo
+ */
+@SuppressWarnings("restriction")
 public class PooslGeneratorModule extends DefaultGeneratorModule {
 
     public Class<? extends XtextGeneratorNaming> bindNaming() {
@@ -17,6 +30,7 @@ public class PooslGeneratorModule extends DefaultGeneratorModule {
 
         @Inject
         IXtextProjectConfig projectConfig;
+
 
         @Override
         public TypeReference getEclipsePluginActivator() {

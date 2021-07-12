@@ -9,3 +9,4 @@ Require-Bundle: org.eclipse.xtext,
   org.eclipse.xtext.generator
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.eclipse.poosl.xtext.util
+Import-Package: org.apache.log4j;version="1.2.15"
