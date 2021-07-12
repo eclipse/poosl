@@ -13,7 +13,9 @@ import org.apache.commons.lang.StringUtils;
 //This custom formatter formats parts of a log record to a single line
 public class PooslHtmlFormatter extends Formatter {
     // This method is called for every log record
+    @Override
     public String format(LogRecord rec) {
+        // CHECKSTYLE:OFF text generation
         StringBuilder buf = new StringBuilder();
         buf.append("<tr style=\"color:");
         if (rec.getLevel() == Level.SEVERE) {
@@ -47,6 +49,7 @@ public class PooslHtmlFormatter extends Formatter {
             buf.append("</pre>");
         }
         buf.append("</td></tr>\n");
+        // CHECKSTYLE:ON
         return buf.toString();
     }
 

@@ -61,6 +61,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         BinaryOperatorExpression dataMethodCall = (BinaryOperatorExpression) element;
@@ -77,7 +78,9 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                             varType = HelperFunctions.CLASS_NAME_OBJECT;
                         }
                         String returnType = HelperFunctions.CLASS_NAME_OBJECT;
+                        // CHECKSTYLE:OFF code gen
                         String method = "\n\t" + dataMethodCall.getName() + "(arg : " + varType + ") : " + returnType + "\n" + "\t\treturn self";
+                        // CHECKSTYLE:ON
                         EObject targetType = dataDescr.getEObjectOrProxy();
                         if (targetType.eIsProxy()) {
                             targetType = EcoreUtil2.resolve(targetType, element);
@@ -96,6 +99,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         Resource resource = element.eResource();
                         BinaryOperatorExpression dataMethodCall = (BinaryOperatorExpression) element;
@@ -127,6 +131,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         UnaryOperatorExpression dataMethodCall = (UnaryOperatorExpression) element;
@@ -139,7 +144,9 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         }
 
                         String returnType = HelperFunctions.CLASS_NAME_OBJECT;
+                        // CHECKSTYLE:OFF code gen
                         String method = "\n\t" + dataMethodCall.getName().getLiteral() + " : " + returnType + "\n\t\treturn self";
+                        // CHECKSTYLE:ON
                         EObject object = targetDescr.getEObjectOrProxy();
                         if (object.eIsProxy()) {
                             object = EcoreUtil2.resolve(object, element);
@@ -162,6 +169,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         DataMethodCallExpression dataMethodCall = (DataMethodCallExpression) element;
@@ -175,7 +183,9 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
 
                         String vars = createArgumentString(dataMethodCall.getArguments());
                         String returnType = HelperFunctions.CLASS_NAME_OBJECT;
+                        // CHECKSTYLE:OFF code gen
                         String method = "\n\t" + dataMethodCall.getName() + "(" + vars + ") : " + returnType + "\n\t\treturn self";
+                        // CHECKSTYLE:ON
                         EObject object = targetDescr.getEObjectOrProxy();
                         if (object.eIsProxy()) {
                             object = EcoreUtil2.resolve(object, element);
@@ -196,6 +206,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         Resource resource = element.eResource();
                         DataMethodCallExpression dataMethodCall = (DataMethodCallExpression) element;
@@ -347,6 +358,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
                                 String dataClass = "\n\ndata class " + missingDeclarationName + " extends Object" + "\nvariables" + "\nmethods";
                                 if (!applyTextChange(context.getXtextDocument(), element.eResource(), element, context.getXtextDocument().getLength(), 0, dataClass)) {
@@ -361,6 +373,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) throws Exception {
                                 String clusterClass = "\n\ncluster class " + missingDeclarationName + "()\nports" + "\ninstances" + "\n\tsomeInstance: someClass()" + "\nchannels\n";
                                 if (!applyTextChange(context.getXtextDocument(), element.eResource(), element, context.getXtextDocument().getLength(), 0, clusterClass)) {
@@ -375,6 +388,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
                                 String processClass = "\n\nprocess class " + missingDeclarationName + "\nports" + "\nmessages\nvariables\ninit\n\tsomeMethod()()\nmethods"
                                         + "\n\tsomeMethod()()\n\t\tskip";
@@ -390,9 +404,11 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
                                 ProcessClass pClass = HelperFunctions.getContainingProcessClass(element);
                                 if (pClass != null) {
+                                    // CHECKSTYLE:OFF code gen
                                     String input = "";
                                     String output = "";
 
@@ -418,6 +434,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
 
                                     String method = "\n\t" + missingDeclarationName + "(" + input + ")(" + output + ") | | \n\t\tskip";
                                     INode lastNode = getLastMethodNode(pClass);
+                                    // CHECKSTYLE:ON
                                     if (lastNode == null || !applyTextChange(context.getXtextDocument(), element.eResource(), pClass, lastNode.getTotalEndOffset(), 0, method)) {
                                         showWarning("Could not create process method '" + missingDeclarationName + "'.");
                                     }
@@ -431,6 +448,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
                                 InstancePort instancePort = (InstancePort) element;
                                 if (instancePort.getInstance() == null || instancePort.getInstance().getClassDefinition() == null) {
@@ -454,6 +472,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
                                 EObject container = element.eContainer();
                                 while (!(container instanceof InstantiableClass) && container != null) {
@@ -478,6 +497,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
 
                                 ProcessClass pClass = HelperFunctions.getContainingProcessClass(element);
@@ -498,6 +518,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
                                 EObject container = element.eContainer();
                                 while (!(container instanceof ProcessClass || container instanceof DataClass) && container != null) {
@@ -525,6 +546,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
                                 EObject container = element.eContainer();
                                 while (!(container instanceof ProcessMethod || container instanceof DataMethod) && container != null) {
@@ -534,9 +556,9 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                                 StringBuilder decl = new StringBuilder(" " + missingDeclarationName + " : " + HelperFunctions.CLASS_NAME_OBJECT);
                                 INode lastNode = null;
                                 if (container instanceof ProcessMethod) {
-                                    lastNode = getLastLocalVarNode((ProcessMethod) container, decl, Literals.PROCESS_METHOD__LOCAL_VARIABLES, Literals.PROCESS_METHOD__BODY);
+                                    lastNode = getLastLocalVarNode(container, decl, Literals.PROCESS_METHOD__LOCAL_VARIABLES, Literals.PROCESS_METHOD__BODY);
                                 } else if (container instanceof DataMethod) {
-                                    lastNode = getLastLocalVarNode((DataMethod) container, decl, Literals.DATA_METHOD__LOCAL_VARIABLES, Literals.DATA_METHOD__BODY);
+                                    lastNode = getLastLocalVarNode(container, decl, Literals.DATA_METHOD__LOCAL_VARIABLES, Literals.DATA_METHOD__BODY);
                                 }
 
                                 if (lastNode != null && applyTextChange(context.getXtextDocument(), element.eResource(), container, lastNode.getTotalEndOffset(), 0, decl.toString())) {
@@ -552,6 +574,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         null, // description
                         null, // icon
                         new ISemanticModification() {
+                            @Override
                             public void apply(EObject element, IModificationContext context) {
                                 InstanceParameter iParam = (InstanceParameter) element;
                                 EObject container = iParam.eContainer();

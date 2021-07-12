@@ -37,6 +37,8 @@ import org.eclipse.xtext.validation.Issue;
 
 public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
 
+    private static final String SEPARATOR = ", ";
+
     @Fix(PooslIssueCodes.UNKNOWN_ANNOTATION)
     public void unknownAnnotation(final Issue issue, IssueResolutionAcceptor acceptor) {
         addSuppressWarning(issue, acceptor, WarningType.ANNOTATION);
@@ -182,7 +184,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                             for (String param : parameterNames) {
                                 if (!usedParameters.contains(param)) {
                                     if (decl.length() != 0)
-                                        decl.append(", ");
+                                        decl.append(SEPARATOR);
                                     decl.append(param + " := nil");
                                 }
                             }
@@ -311,10 +313,10 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
         // create String with new the new ports to append to original channel
         StringBuilder builder = new StringBuilder();
         for (String newPort : newPorts) {
-            builder.append(", " + newPort);
+            builder.append(SEPARATOR + newPort);
         }
         if (originalChannel.getExternalPort() == null && extPort != null) {
-            builder.append(", " + extPort);
+            builder.append(SEPARATOR + extPort);
         }
 
         INode lastNode = getLastChannelPortNode(originalChannel);
@@ -369,7 +371,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
         // Case: instance with parameters
         List<INode> nodes = NodeModelUtils.findNodesForFeature(instance, Literals.INSTANCE__INSTANCE_PARAMETERS);
         if (!nodes.isEmpty()) {
-            decl.insert(0, ", ");
+            decl.insert(0, SEPARATOR);
             return nodes.get(nodes.size() - 1);
         }
 

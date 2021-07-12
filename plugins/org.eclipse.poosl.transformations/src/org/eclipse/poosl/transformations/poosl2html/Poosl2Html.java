@@ -79,6 +79,7 @@ public class Poosl2Html {
         }
     }
 
+    // CHECKSTYLE:OFF text generation
     private void run(Poosl poosl, String path) {
         StringBuilder html = new StringBuilder();
         String file = path.substring(path.lastIndexOf(File.separator) + 1);
@@ -231,6 +232,7 @@ public class Poosl2Html {
         appendHtmlFooter(html);
         writeHtmlToFile(html, path);
     }
+    // CHECKSTYLE:ON
 
     private void appendVariables(StringBuilder html, EList<Declaration> declarations) {
         appendH3(html, "Variables:");
@@ -278,6 +280,7 @@ public class Poosl2Html {
         html.append(HTML_HEADER);
     }
 
+    // CHECKSTYLE:OFF text generation
     private void appendToc(StringBuilder html, Poosl poosl, String file) {
         html.append("<h1>").append(file).append("</h1>");
         if (!poosl.getDataClasses().isEmpty()) {
@@ -306,6 +309,7 @@ public class Poosl2Html {
             html.append("</ul>");
         }
     }
+    // CHECKSTYLE:ON
 
     private static boolean hasNamedClusterClass(Poosl poosl) {
         for (ClusterClass clusterClass : poosl.getClusterClasses()) {

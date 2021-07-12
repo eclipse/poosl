@@ -65,7 +65,9 @@ public final class Xml2xtext {
                 };
                 for (File xmlFile : fInput.listFiles(xmlFilter)) {
                     StringBuilder stringBuilder = new StringBuilder(xmlFile.getAbsolutePath());
+                    // CHECKSTYLE:OFF
                     stringBuilder.replace(stringBuilder.lastIndexOf("."), stringBuilder.length(), ".poosl");
+                    // CHECKSTYLE:ON
                     String outputFile = stringBuilder.toString();
 
                     try (FileWriter fileWriter = new FileWriter(outputFile); InputStream inputStream = parse(xmlFile.getAbsolutePath())) {
@@ -120,6 +122,7 @@ public final class Xml2xtext {
         }
         pooslSpec = xmlPooslRoot.getValue();
 
+        // CHECKSTYLE:OFF text generation
         for (TDataClass dc : pooslSpec.getDataClasses().getDataClass()) {
             if (dc.getNative() == TBoolean.TRUE) {
                 stringWriter.append("native ");
@@ -251,7 +254,7 @@ public final class Xml2xtext {
             }
             stringWriter.append("\n");
         }
-
+        // CHECKSTYLE:ON
         return stringWriter;
     }
 

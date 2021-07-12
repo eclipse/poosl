@@ -69,7 +69,7 @@ public final class ResourceAccess {
 
         @Override
         public String toString() {
-            return this.getClass().getSimpleName() + ",location=" + location.toString();
+            return prettyPrint(this.getClass().getSimpleName(), location.toString());
         }
 
     }
@@ -100,7 +100,7 @@ public final class ResourceAccess {
 
         @Override
         public String toString() {
-            return this.getClass().getSimpleName() + ",location=" + location.toString();
+            return prettyPrint(this.getClass().getSimpleName(), location.toString());
         }
 
     }
@@ -237,5 +237,9 @@ public final class ResourceAccess {
             }
             return new GeneralProjectInfo(uri);
         }
+    }
+
+    private static String prettyPrint(String className, String location) {
+        return className + ",location=" + location;
     }
 }

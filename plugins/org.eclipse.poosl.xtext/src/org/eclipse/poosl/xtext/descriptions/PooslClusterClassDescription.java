@@ -18,6 +18,8 @@ import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public final class PooslClusterClassDescription {
+    private static final String SEMICOLON = ";";
+
     private static final String STR_CHANNELS = "Channels";
 
     private static final String STR_INSTANCES = "Instances";
@@ -41,7 +43,7 @@ public final class PooslClusterClassDescription {
             String iName = instance.getName();
             String iClass = instance.getClassDefinition();
             if (iName != null && iClass != null) {
-                instances.append(iName + ":" + iClass + ";");
+                instances.append(iName + ":" + iClass + SEMICOLON);
             }
         }
         userData.put(STR_INSTANCES, instances.toString());
@@ -51,7 +53,7 @@ public final class PooslClusterClassDescription {
         StringBuilder channels = new StringBuilder();
         for (Channel channel : cClass.getChannels()) {
             PooslChannelHelper channelDescr = new PooslChannelHelper(channel);
-            channels.append(channelDescr.toString()).append(";");
+            channels.append(channelDescr.toString()).append(SEMICOLON);
         }
         userData.put(STR_CHANNELS, channels.toString());
     }
@@ -64,7 +66,7 @@ public final class PooslClusterClassDescription {
 
         Map<String, String> allInstances = new HashMap<>();
         String instancesString = descr.getUserData(STR_INSTANCES);
-        String[] instanceDescriptions = instancesString.split(";");
+        String[] instanceDescriptions = instancesString.split(SEMICOLON);
         for (String instanceDescription : instanceDescriptions) {
             if (!instanceDescription.isEmpty()) {
                 String[] instClass = instanceDescription.split(":");
@@ -113,7 +115,7 @@ public final class PooslClusterClassDescription {
 
     private static String[] getSplittedChannels(IEObjectDescription descr) {
         String channelsString = descr.getUserData(STR_CHANNELS);
-        return channelsString.split(";");
+        return channelsString.split(SEMICOLON);
     }
 
     private static boolean checkValidity(IEObjectDescription descr) {

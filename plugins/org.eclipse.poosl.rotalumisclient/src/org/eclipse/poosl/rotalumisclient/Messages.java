@@ -1,6 +1,6 @@
 package org.eclipse.poosl.rotalumisclient;
 
-//@CHECKSTYLE:OFF
+// CHECKSTYLE:OFF
 public final class Messages {
     public static final String RESULT_OK = "ok";
 

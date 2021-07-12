@@ -45,7 +45,7 @@ import com.google.common.collect.Iterables;
  * @author kstaal
  *
  */
-// @CHECKSTYLE:OFF naming inherited from XText generation
+// CHECKSTYLE:OFF naming inherited from XText generation
 public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
 
     @Override

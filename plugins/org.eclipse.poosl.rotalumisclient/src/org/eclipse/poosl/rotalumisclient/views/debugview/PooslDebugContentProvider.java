@@ -29,6 +29,8 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslThread;
  *
  */
 public class PooslDebugContentProvider implements ITreeContentProvider {
+    private static final String SLASH = "/";
+
     private static final Logger LOGGER = Logger.getLogger(PooslDebugContentProvider.class.getName());
 
     private Map<Object, List<Object>> parentchildren;
@@ -36,7 +38,7 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
     private List<IDebugTarget> debugtargets;
 
     public Object[] getTreeSegments(PooslThread thread) throws DebugException {
-        String[] result = thread.getName().split("/");
+        String[] result = thread.getName().split(SLASH);
         Object[] segments = new Object[result.length];
         segments[0] = thread.getDebugTarget();
         int index = result.length - 1;
@@ -60,7 +62,7 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
      * @throws DebugException
      */
     private PooslDebugTreeItem findTreeParent(PooslThread thread) throws DebugException {
-        String[] result = thread.getName().split("/");
+        String[] result = thread.getName().split(SLASH);
         int level = result.length - 2;
         if (level != 0 && parentchildren != null) {
 
@@ -151,7 +153,7 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
         Map<String, List<IThread>> sameparent = new LinkedHashMap<>();
         if (threads != null) {
             for (IThread iThread : threads) {
-                String[] result = iThread.getName().split("/");
+                String[] result = iThread.getName().split(SLASH);
                 if (result.length > 0) {
                     if (result.length == level + 1) {
                         // process class

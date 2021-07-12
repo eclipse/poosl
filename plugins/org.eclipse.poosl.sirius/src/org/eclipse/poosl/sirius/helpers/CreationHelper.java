@@ -74,6 +74,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public final class CreationHelper {
+    private static final String COMMA = ",";
+
     private static final String MESSAGE_TITLE_ADD_PORT = "Adding port";
 
     private static final String MESSAGE_ADD_PORT = "You are adding a port to an instance. Continuing will add a port to ";
@@ -653,7 +655,7 @@ public final class CreationHelper {
     }
 
     public static Declaration editDeclarationVariables(Declaration declaration, String name) {
-        String[] split = name.split(",");
+        String[] split = name.split(COMMA);
         List<String> variables = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             variables.add(split[i].trim());
@@ -696,7 +698,7 @@ public final class CreationHelper {
             NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesWithoutDeclaration(declaration), "parameter");
             StringBuilder varname = new StringBuilder();
             for (int i = 0; i < declaration.getVariables().size(); i++) {
-                varname = (i > 0) ? varname.append(",") : varname;
+                varname = (i > 0) ? varname.append(COMMA) : varname;
                 varname.append(declaration.getVariables().get(i).getName());
             }
             variableDialog.setVariable(varname.toString(), declaration.getType());
@@ -1005,7 +1007,7 @@ public final class CreationHelper {
 
     private static Declaration createDeclaration(String name, String type) {
         ArrayList<String> variables = new ArrayList<>();
-        String[] vars = name.split(",");
+        String[] vars = name.split(COMMA);
         for (int i = 0; i < vars.length; i++) {
             variables.add(vars[i].trim());
         }

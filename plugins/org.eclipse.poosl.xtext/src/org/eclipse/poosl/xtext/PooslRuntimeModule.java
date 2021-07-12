@@ -5,7 +5,7 @@ import org.eclipse.xtext.linking.ILinkingDiagnosticMessageProvider;
 import org.eclipse.xtext.parser.antlr.ISyntaxErrorMessageProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 
-//@CHECKSTYLE:OFF naming inherited from XText generation
+// CHECKSTYLE:OFF naming inherited from XText generation
 public class PooslRuntimeModule extends org.eclipse.poosl.xtext.AbstractPooslRuntimeModule {
     public Class<? extends org.eclipse.xtext.resource.IResourceDescription.Manager> bindIResourceDescription$Manager() {
         return org.eclipse.poosl.xtext.importing.PooslResourceDescriptionManager.class;

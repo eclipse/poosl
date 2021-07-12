@@ -20,6 +20,8 @@ import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 
 public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
+    private static final String ANNOTATION_SEPARATOR = ", ";
+
     private static final String NATIVE_METHOD_EMPTY = "The body of a native data method should be empty";
 
     private static final String DATA_METHOD_EMPTY = "The body of a non-native data method should not be empty";
@@ -151,7 +153,7 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
         Annotations eAnnotation = getEnumAnnotation(annotation);
 
         if (eAnnotation == null) {
-            warning("Annotation is not recognized. (Supported annotation are " + Annotations.SUPPRESSWARNINGS + ", " + Annotations.INIT + ", " + Annotations.TEST + ", " + Annotations.ERROR + " and "
+            warning("Annotation is not recognized. (Supported annotation are " + Annotations.SUPPRESSWARNINGS + ANNOTATION_SEPARATOR + Annotations.INIT + ANNOTATION_SEPARATOR + Annotations.TEST + ANNOTATION_SEPARATOR + Annotations.ERROR + " and "
                     + Annotations.SKIP + ")", annotation, PooslPackage.Literals.ANNOTATION__NAME, PooslIssueCodes.UNKNOWN_ANNOTATION, WarningType.ANNOTATION);
         } else {
             switch (eAnnotation) {

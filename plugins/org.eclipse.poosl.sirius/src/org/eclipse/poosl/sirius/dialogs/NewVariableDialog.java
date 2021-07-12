@@ -24,6 +24,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class NewVariableDialog extends TitleAreaDialog {
+    private static final String COMMA = ",";
+
     private static final String ERROR_MESSAGE_INSTANCE = "Cannot define %s. The name is empty or already in use.";
 
     private static final String ERROR_TITLE_INSTANCE = "Cannot define %s.";
@@ -159,7 +161,7 @@ public class NewVariableDialog extends TitleAreaDialog {
 
     private boolean doubleName(String name) {
         Set<String> set = new HashSet<>();
-        String[] seperate = name.split(",");
+        String[] seperate = name.split(COMMA);
         for (int i = 0; i < seperate.length; i++) {
             if (!set.add(seperate[i].trim())) {
                 return false;
@@ -169,7 +171,7 @@ public class NewVariableDialog extends TitleAreaDialog {
     }
 
     private boolean variableNameAvailable(String name) {
-        String[] seperate = name.split(",");
+        String[] seperate = name.split(COMMA);
         for (int i = 0; i < seperate.length; i++) {
             for (String variablename : variableNames) {
                 if (variablename.equalsIgnoreCase(name)) {
@@ -191,7 +193,7 @@ public class NewVariableDialog extends TitleAreaDialog {
     public void setVariable(String name, String type) {
         this.varName = name;
         this.varType = type;
-        String[] seperate = name.split(",");
+        String[] seperate = name.split(COMMA);
         for (int i = 0; i < seperate.length; i++) {
             variableNames.remove(seperate[i]);
         }
@@ -202,13 +204,13 @@ public class NewVariableDialog extends TitleAreaDialog {
         for (int i = 0; i < declaration.getVariables().size(); i++) {
             String newname = declaration.getVariables().get(i).getName();
             variableNames.remove(newname);
-            varname = (i > 0) ? varname.append(",") : varname;
+            varname = (i > 0) ? varname.append(COMMA) : varname;
             varname.append(newname);
         }
 
         this.varName = varname.toString();
         this.varType = declaration.getType();
-        String[] seperate = varName.split(",");
+        String[] seperate = varName.split(COMMA);
         for (int i = 0; i < seperate.length; i++) {
             variableNames.remove(seperate[i]);
         }
@@ -219,13 +221,13 @@ public class NewVariableDialog extends TitleAreaDialog {
         for (int i = 0; i < declaration.getVariables().size(); i++) {
             String newname = declaration.getVariables().get(i);
             variableNames.remove(newname);
-            varname = (i > 0) ? varname.append(",") : varname;
+            varname = (i > 0) ? varname.append(COMMA) : varname;
             varname.append(newname);
         }
 
         this.varName = varname.toString();
         this.varType = declaration.getType();
-        String[] seperate = varName.split(",");
+        String[] seperate = varName.split(COMMA);
         for (int i = 0; i < seperate.length; i++) {
             variableNames.remove(seperate[i]);
         }

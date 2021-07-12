@@ -8,12 +8,14 @@ import org.eclipse.poosl.Channel;
 import org.eclipse.poosl.InstancePort;
 
 public class PooslChannelHelper {
+    private static final String COMMA = ",";
+
     private String externalPortName;
 
     private List<PooslInstancePortHelper> instancePorts = new ArrayList<>();
 
     public PooslChannelHelper(String aClassName, String stringDescription, Map<String, String> instances) {
-        String[] ports = stringDescription.split(",");
+        String[] ports = stringDescription.split(COMMA);
         if (ports != null && ports.length != 0) {
             for (int i = 0; i < ports.length; i++) {
                 if (!ports[i].contains(":")) {
@@ -45,10 +47,10 @@ public class PooslChannelHelper {
     public String toString() {
         StringBuilder channelDescriptions = new StringBuilder();
         if (getExternalPortName() != null && !getExternalPortName().isEmpty()) {
-            channelDescriptions.append(getExternalPortName()).append(",");
+            channelDescriptions.append(getExternalPortName()).append(COMMA);
         }
         for (PooslInstancePortHelper ip : getInstancePorts()) {
-            channelDescriptions.append(ip.toString()).append(",");
+            channelDescriptions.append(ip.toString()).append(COMMA);
         }
         return channelDescriptions.toString();
     }

@@ -12,6 +12,8 @@ import org.eclipse.poosl.xtext.descriptions.PooslMessageSignatureDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public class PooslMessageSignatureCallHelper {
+    private static final String COLON = ":";
+
     private static final String STR_MESSAGETYPE_SEND = "Send";
 
     private static final String STR_MESSAGETYPE_RECEIVE = "Receive";
@@ -25,7 +27,7 @@ public class PooslMessageSignatureCallHelper {
     private int paramCount;
 
     public PooslMessageSignatureCallHelper(String stringDescription) {
-        String[] result = stringDescription.split(":");
+        String[] result = stringDescription.split(COLON);
         if (result.length == 3 || result.length == 4) {
             port = result[0];
             name = result[1];
@@ -73,11 +75,11 @@ public class PooslMessageSignatureCallHelper {
     }
 
     private static String getID(String lPort, String lName, int lParamCount, String lType) {
-        return getID(lPort, lName, lParamCount) + ":" + lType;
+        return getID(lPort, lName, lParamCount) + COLON + lType;
     }
 
     private static String getID(String lPort, String lName, int lParamCount) {
-        return lPort + ":" + lName + ":" + lParamCount;
+        return lPort + COLON + lName + COLON + lParamCount;
     }
 
     public static String getSignatureID(MessageSignature messageSignature, PooslMessageType messageType) {

@@ -86,6 +86,36 @@ import com.google.inject.Inject;
 
 public class PooslFormatter extends AbstractFormatter2 {
 
+    private static final String KEYWORD_OD = "od";
+
+    private static final String KEYWORD_DO = "do";
+
+    private static final String KEYWORD_SWITCH = "switch";
+
+    private static final String KEYWORD_FI = "fi";
+
+    private static final String KEYWORD_ELSE = "else";
+
+    private static final String KEYWORD_THEN = "then";
+
+    private static final String KEYWORD_IF = "if";
+
+    private static final String KEYWORD_CLUSTER = "cluster";
+
+    private static final String PAR_CLOSE = ")";
+
+    private static final String PAR_OPEN = "(";
+
+    private static final String KEYWORD_PORTS = "ports";
+
+    private static final String KEYWORD_METHODS = "methods";
+
+    private static final String KEYWORD_CLASS = "class";
+
+    private static final String KEYWORD_DATA = "data";
+
+    private static final String KEYWORD_VARIABLES = "variables";
+
     private static final Procedure1<IHiddenRegionFormatter> NO_SPACE = new Procedure1<IHiddenRegionFormatter>() {
         @Override
         public void apply(final IHiddenRegionFormatter it) {
@@ -212,12 +242,12 @@ public class PooslFormatter extends AbstractFormatter2 {
         format(cluster.getAnnotations(), document);
 
         ClusterClassElements grammar = pooslGrammar.getClusterClassAccess();
-        Procedure1<IHiddenRegionFormatter> oneSpaceWrap = createOneSpaceWrapUpTo(regionFinder.keyword("ports"), INDENT);
+        Procedure1<IHiddenRegionFormatter> oneSpaceWrap = createOneSpaceWrapUpTo(regionFinder.keyword(KEYWORD_PORTS), INDENT);
 
-        document.append(regionFinder.keyword("cluster"), oneSpaceWrap);
-        document.append(regionFinder.keyword("class"), oneSpaceWrap);
+        document.append(regionFinder.keyword(KEYWORD_CLUSTER), oneSpaceWrap);
+        document.append(regionFinder.keyword(KEYWORD_CLASS), oneSpaceWrap);
         document.append(regionFinder.feature(Literals.INSTANTIABLE_CLASS__NAME), NO_SPACE);
-        keywordsOnNewLine(cluster, document, "ports", "instances", "channels");
+        keywordsOnNewLine(cluster, document, KEYWORD_PORTS, "instances", "channels");
         commaSpacing(regionFinder, oneSpaceWrap, document);
 
         // difference between comma's in cluster class
@@ -225,7 +255,7 @@ public class PooslFormatter extends AbstractFormatter2 {
         commaSpacing(regionFinder, grammar.getCommaKeyword_6_1_0(), document); // ports
         commaSpacing(regionFinder, grammar.getCommaKeyword_6_2(), document);
 
-        List<Pair<ISemanticRegion, ISemanticRegion>> brackets = regionFinder.keywordPairs("(", ")");
+        List<Pair<ISemanticRegion, ISemanticRegion>> brackets = regionFinder.keywordPairs(PAR_OPEN, PAR_CLOSE);
         if (!brackets.isEmpty()) {
             formatBracketDeclarations(cluster.getParameters(), brackets.get(0), oneSpaceWrap, document);
         }
@@ -251,14 +281,14 @@ public class PooslFormatter extends AbstractFormatter2 {
         topElementEmptyLine(data, document);
         ISemanticRegionsFinder regionFinder = textRegionExtensions.regionFor(data);
         format(data.getAnnotations(), document);
-        Procedure1<IHiddenRegionFormatter> oneSpaceWrap = createOneSpaceWrapUpTo(regionFinder.keyword("variables"), INDENT);
+        Procedure1<IHiddenRegionFormatter> oneSpaceWrap = createOneSpaceWrapUpTo(regionFinder.keyword(KEYWORD_VARIABLES), INDENT);
 
-        document.append(regionFinder.keyword("data"), oneSpaceWrap);
-        document.append(regionFinder.keyword("class"), oneSpaceWrap);
+        document.append(regionFinder.keyword(KEYWORD_DATA), oneSpaceWrap);
+        document.append(regionFinder.keyword(KEYWORD_CLASS), oneSpaceWrap);
         formatExtend(regionFinder, oneSpaceWrap, document);
 
         commaSpacing(regionFinder, ONE_SPACE, document);
-        keywordsOnNewLine(data, document, "variables", "methods");
+        keywordsOnNewLine(data, document, KEYWORD_VARIABLES, KEYWORD_METHODS);
 
         indentList(data.getInstanceVariables(), document);
         for (Declaration instanceVariables : data.getInstanceVariables()) {
@@ -296,7 +326,7 @@ public class PooslFormatter extends AbstractFormatter2 {
         commaSpacing(mRegionFinder, oneSpaceWrap, document);
         colonSpacing(mRegionFinder, document);
 
-        List<Pair<ISemanticRegion, ISemanticRegion>> keywordPairs = mRegionFinder.keywordPairs("(", ")");
+        List<Pair<ISemanticRegion, ISemanticRegion>> keywordPairs = mRegionFinder.keywordPairs(PAR_OPEN, PAR_CLOSE);
         if (!keywordPairs.isEmpty()) {
             formatBracketDeclarations(dMethod.getParameters(), keywordPairs.get(0), oneSpaceWrap, document);
         }
@@ -313,10 +343,10 @@ public class PooslFormatter extends AbstractFormatter2 {
         format(process.getAnnotations(), document);
 
         ProcessClassElements grammar = pooslGrammar.getProcessClassAccess();
-        Procedure1<IHiddenRegionFormatter> oneSpaceWrap = createOneSpaceWrapUpTo(regionFinder.keyword("ports"), INDENT);
+        Procedure1<IHiddenRegionFormatter> oneSpaceWrap = createOneSpaceWrapUpTo(regionFinder.keyword(KEYWORD_PORTS), INDENT);
 
         document.append(regionFinder.keyword("process"), oneSpaceWrap);
-        document.append(regionFinder.keyword("class"), oneSpaceWrap);
+        document.append(regionFinder.keyword(KEYWORD_CLASS), oneSpaceWrap);
 
         // difference between comma's in process class
         commaSpacing(regionFinder, grammar.getCommaKeyword_4_1_1_0(), oneSpaceWrap, document); // process parameters
@@ -328,9 +358,9 @@ public class PooslFormatter extends AbstractFormatter2 {
         commaSpacing(regionFinder, grammar.getCommaKeyword_11_2(), document);
 
         formatExtend(regionFinder, oneSpaceWrap, document);
-        keywordsOnNewLine(process, document, "ports", "messages", "variables", "init", "methods");
+        keywordsOnNewLine(process, document, KEYWORD_PORTS, "messages", KEYWORD_VARIABLES, "init", KEYWORD_METHODS);
 
-        List<Pair<ISemanticRegion, ISemanticRegion>> brackets = regionFinder.keywordPairs("(", ")");
+        List<Pair<ISemanticRegion, ISemanticRegion>> brackets = regionFinder.keywordPairs(PAR_OPEN, PAR_CLOSE);
         if (!brackets.isEmpty()) {
             document.prepend(brackets.get(0).getKey(), NO_SPACE);
             formatBracketDeclarations(process.getParameters(), brackets.get(0), oneSpaceWrap, document);
@@ -387,7 +417,7 @@ public class PooslFormatter extends AbstractFormatter2 {
 
         commaSpacing(mRegionFinder, oneSpaceWrapMethod, document);
 
-        List<Pair<ISemanticRegion, ISemanticRegion>> mBrackets = mRegionFinder.keywordPairs("(", ")");
+        List<Pair<ISemanticRegion, ISemanticRegion>> mBrackets = mRegionFinder.keywordPairs(PAR_OPEN, PAR_CLOSE);
         if (mBrackets.size() == 2) {
             document.append(mBrackets.get(0).getValue(), NO_SPACE);
             formatBracketDeclarations(method.getInputParameters(), mBrackets.get(0), oneSpaceWrapMethod, document);
@@ -510,20 +540,20 @@ public class PooslFormatter extends AbstractFormatter2 {
     }
 
     private void format(IfExpression expression, IFormattableDocument document, ISemanticRegionsFinder regionFinder, Procedure1<IHiddenRegionFormatter> oneSpaceWrapper, boolean singleLine) {
-        document.append(regionFinder.keyword("if"), ONE_SPACE_NO_WRAP);
-        ISemanticRegion kwThen = regionFinder.keyword("then");
+        document.append(regionFinder.keyword(KEYWORD_IF), ONE_SPACE_NO_WRAP);
+        ISemanticRegion kwThen = regionFinder.keyword(KEYWORD_THEN);
         Procedure1<IHiddenRegionFormatter> oneSpaceCondition = getOneSpaceWrapIncluding(kwThen);
 
         Procedure1<IHiddenRegionFormatter> lineFormat = getLineFormatting(singleLine, oneSpaceWrapper);
         document.prepend(kwThen, oneSpaceCondition);
         document.append(kwThen, lineFormat);
 
-        ISemanticRegion kwElse = regionFinder.keyword("else");
-        ISemanticRegion kwFi = regionFinder.keyword("fi");
+        ISemanticRegion kwElse = regionFinder.keyword(KEYWORD_ELSE);
+        ISemanticRegion kwFi = regionFinder.keyword(KEYWORD_FI);
         if (kwElse != null) {
             document.prepend(kwElse, lineFormat);
             ISemanticRegion nextSemanticRegion = kwElse.getNextSemanticRegion();
-            if (nextSemanticRegion != null && nextSemanticRegion.getText().equals("if")) {
+            if (nextSemanticRegion != null && nextSemanticRegion.getText().equals(KEYWORD_IF)) {
                 // else if
                 document.append(kwElse, oneSpaceWrapper);
                 document.prepend(kwFi, oneSpaceWrapper);
@@ -543,8 +573,8 @@ public class PooslFormatter extends AbstractFormatter2 {
     }
 
     private void format(SwitchExpression expression, IFormattableDocument document, ISemanticRegionsFinder regionFinder, Procedure1<IHiddenRegionFormatter> oneSpaceWrapper, boolean singleLine) {
-        document.append(regionFinder.keyword("switch"), oneSpaceWrapper);
-        List<Pair<ISemanticRegion, ISemanticRegion>> keywordPairs = regionFinder.keywordPairs("do", "od");
+        document.append(regionFinder.keyword(KEYWORD_SWITCH), oneSpaceWrapper);
+        List<Pair<ISemanticRegion, ISemanticRegion>> keywordPairs = regionFinder.keywordPairs(KEYWORD_DO, KEYWORD_OD);
 
         Procedure1<IHiddenRegionFormatter> oneSpaceWrapperCondition = getOneSpaceWrapIncluding(keywordPairs.isEmpty() ? null : keywordPairs.get(0).getKey());
 
@@ -561,7 +591,7 @@ public class PooslFormatter extends AbstractFormatter2 {
             ISemanticRegion kwCase = cRegionFinder.keyword("case");
             document.prepend(kwCase, lineFormat);
 
-            ISemanticRegion kwThen = cRegionFinder.keyword("then");
+            ISemanticRegion kwThen = cRegionFinder.keyword(KEYWORD_THEN);
             Procedure1<IHiddenRegionFormatter> oneSpaceCaseCondition = getOneSpaceWrapIncluding(kwThen);
 
             document.append(kwCase, oneSpaceCaseCondition);
@@ -583,12 +613,12 @@ public class PooslFormatter extends AbstractFormatter2 {
 
     private void format(WhileExpression expression, IFormattableDocument document, ISemanticRegionsFinder regionFinder, Procedure1<IHiddenRegionFormatter> oneSpaceWrapper, boolean singleLine) {
         document.append(regionFinder.keyword("while"), oneSpaceWrapper);
-        ISemanticRegion kwDo = regionFinder.keyword("do");
+        ISemanticRegion kwDo = regionFinder.keyword(KEYWORD_DO);
         Procedure1<IHiddenRegionFormatter> oneSpaceWrapperCond = getOneSpaceWrapIncluding(kwDo);
 
         document.prepend(kwDo, oneSpaceWrapperCond);
         document.append(kwDo, getLineFormatting(singleLine, oneSpaceWrapper));
-        document.prepend(regionFinder.keyword("od"), getLineFormatting(singleLine, oneSpaceWrapper));
+        document.prepend(regionFinder.keyword(KEYWORD_OD), getLineFormatting(singleLine, oneSpaceWrapper));
 
         format(expression.getCondition(), document, oneSpaceWrapperCond, singleLine);
         indent(expression.getBody(), document, singleLine);
@@ -629,7 +659,7 @@ public class PooslFormatter extends AbstractFormatter2 {
 
     private void format(NewExpression expression, IFormattableDocument document, Procedure1<IHiddenRegionFormatter> oneSpaceWrapper, ISemanticRegionsFinder regionFinder) {
         ISemanticRegion kwNew = regionFinder.keyword("new");
-        if (kwNew.immediatelyFollowing().keyword("(") != null) {
+        if (kwNew.immediatelyFollowing().keyword(PAR_OPEN) != null) {
             document.append(kwNew, NO_SPACE);
         } else {
             document.append(kwNew, oneSpaceWrapper);
@@ -686,30 +716,30 @@ public class PooslFormatter extends AbstractFormatter2 {
     }
 
     private void format(WhileStatement statement, IFormattableDocument document, ISemanticRegionsFinder regionFinder, Procedure1<IHiddenRegionFormatter> oneSpaceWrapper, boolean singleLine) {
-        ISemanticRegion kwDo = regionFinder.keyword("do");
+        ISemanticRegion kwDo = regionFinder.keyword(KEYWORD_DO);
         Procedure1<IHiddenRegionFormatter> oneSpaceWrapperCondition = getOneSpaceWrapIncluding(kwDo);
 
         document.prepend(kwDo, oneSpaceWrapperCondition);
         document.append(kwDo, getLineFormatting(singleLine, oneSpaceWrapper));
-        document.prepend(regionFinder.keyword("od"), getLineFormatting(singleLine, oneSpaceWrapper));
+        document.prepend(regionFinder.keyword(KEYWORD_OD), getLineFormatting(singleLine, oneSpaceWrapper));
         format(statement.getCondition(), document, oneSpaceWrapperCondition, singleLine);
         indent(statement.getBody(), document, singleLine);
         format(statement.getBody(), document, null, singleLine);
     }
 
     private void format(IfStatement statement, IFormattableDocument document, ISemanticRegionsFinder regionFinder, Procedure1<IHiddenRegionFormatter> oneSpaceWrapper, boolean singleLine) {
-        ISemanticRegion kwThen = regionFinder.keyword("then");
+        ISemanticRegion kwThen = regionFinder.keyword(KEYWORD_THEN);
         Procedure1<IHiddenRegionFormatter> oneSpaceWrapperCondition = getOneSpaceWrapIncluding(kwThen);
 
         Procedure1<IHiddenRegionFormatter> lineFormat = getLineFormatting(singleLine, oneSpaceWrapper);
         document.prepend(kwThen, oneSpaceWrapperCondition);
         document.append(kwThen, lineFormat);
-        ISemanticRegion kwElse = regionFinder.keyword("else");
-        ISemanticRegion kwFi = regionFinder.keyword("fi");
+        ISemanticRegion kwElse = regionFinder.keyword(KEYWORD_ELSE);
+        ISemanticRegion kwFi = regionFinder.keyword(KEYWORD_FI);
         if (kwElse != null) {
             document.prepend(kwElse, lineFormat);
             ISemanticRegion nextSemanticRegion = kwElse.getNextSemanticRegion();
-            if (nextSemanticRegion != null && nextSemanticRegion.getText().equals("if")) {
+            if (nextSemanticRegion != null && nextSemanticRegion.getText().equals(KEYWORD_IF)) {
                 // else if
                 document.append(kwElse, oneSpaceWrapper);
                 document.prepend(kwFi, oneSpaceWrapper);
@@ -729,8 +759,8 @@ public class PooslFormatter extends AbstractFormatter2 {
     }
 
     private void format(SwitchStatement statement, IFormattableDocument document, ISemanticRegionsFinder regionFinder, Procedure1<IHiddenRegionFormatter> oneSpaceWrapper, boolean singleLine) {
-        document.append(regionFinder.keyword("switch"), oneSpaceWrapper);
-        List<Pair<ISemanticRegion, ISemanticRegion>> keywordPairs = regionFinder.keywordPairs("do", "od");
+        document.append(regionFinder.keyword(KEYWORD_SWITCH), oneSpaceWrapper);
+        List<Pair<ISemanticRegion, ISemanticRegion>> keywordPairs = regionFinder.keywordPairs(KEYWORD_DO, KEYWORD_OD);
 
         Procedure1<IHiddenRegionFormatter> oneSpaceWrapCondition = getOneSpaceWrapIncluding(keywordPairs.isEmpty() ? null : keywordPairs.get(0).getKey());
 
@@ -747,7 +777,7 @@ public class PooslFormatter extends AbstractFormatter2 {
             ISemanticRegion kwCase = cRegionFinder.keyword("case");
             document.prepend(kwCase, lineFormat);
 
-            ISemanticRegion kwThen = cRegionFinder.keyword("then");
+            ISemanticRegion kwThen = cRegionFinder.keyword(KEYWORD_THEN);
             Procedure1<IHiddenRegionFormatter> oneSpaceCaseCondition = getOneSpaceWrapIncluding(kwThen);
 
             document.append(kwCase, oneSpaceCaseCondition);
@@ -859,7 +889,7 @@ public class PooslFormatter extends AbstractFormatter2 {
     }
 
     private void formatRoundBracketSequence(EList<? extends EObject> list, IFormattableDocument document, ISemanticRegionsFinder regionFinder, Boolean singleLine) {
-        List<Pair<ISemanticRegion, ISemanticRegion>> brackets = regionFinder.keywordPairs("(", ")");
+        List<Pair<ISemanticRegion, ISemanticRegion>> brackets = regionFinder.keywordPairs(PAR_OPEN, PAR_CLOSE);
         singleLine |= list.size() < 2;
         formatBracketsSingleOrMulti(singleLine, document, brackets);
     }
@@ -1088,7 +1118,7 @@ public class PooslFormatter extends AbstractFormatter2 {
     }
 
     private static void bracketPairSpacing(ISemanticRegionsFinder regionFinder, IFormattableDocument document) {
-        for (Pair<ISemanticRegion, ISemanticRegion> pair : regionFinder.keywordPairs("(", ")")) {
+        for (Pair<ISemanticRegion, ISemanticRegion> pair : regionFinder.keywordPairs(PAR_OPEN, PAR_CLOSE)) {
             document.prepend(pair.getKey(), NO_SPACE);
             document.append(pair.getKey(), NO_SPACE);
             document.prepend(pair.getValue(), NO_SPACE);
@@ -1111,7 +1141,7 @@ public class PooslFormatter extends AbstractFormatter2 {
     }
 
     private static void methodCallBracketSpacing(ISemanticRegionsFinder regionFinder, IFormattableDocument document) {
-        for (Pair<ISemanticRegion, ISemanticRegion> pair : regionFinder.keywordPairs("(", ")")) {
+        for (Pair<ISemanticRegion, ISemanticRegion> pair : regionFinder.keywordPairs(PAR_OPEN, PAR_CLOSE)) {
             document.surround(pair.getKey(), NO_SPACE);
             document.prepend(pair.getValue(), NO_SPACE);
         }

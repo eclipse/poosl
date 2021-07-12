@@ -45,7 +45,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
-//@CHECKSTYLE:OFF naming inherited from XText generation
+// CHECKSTYLE:OFF naming inherited from XText generation
 public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
     private static final int DEFAULT_PRIORITY = 400;
 

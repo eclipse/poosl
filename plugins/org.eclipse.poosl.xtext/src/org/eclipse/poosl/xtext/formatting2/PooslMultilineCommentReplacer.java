@@ -33,7 +33,7 @@ public class PooslMultilineCommentReplacer extends MultilineCommentReplacer {
 
         String oldIndentation = lines.get(0).getIndentation().getText();
         String indentationString = context.getIndentationString();
-        String newIndentation = indentationString + " " + prefix + " ";
+        String newIndentation = indentationString + ' ' + prefix + ' ';
 
         for (int i = 1; i < lines.size() - 1; i++) {
             ITextSegment line = lines.get(i);
@@ -52,7 +52,7 @@ public class PooslMultilineCommentReplacer extends MultilineCommentReplacer {
         }
         if (lines.size() > 1) {
             ILineRegion line = lines.get(lines.size() - 1);
-            context.addReplacement(line.getIndentation().replaceWith(indentationString + " "));
+            context.addReplacement(line.getIndentation().replaceWith(indentationString + ' '));
         }
         return context;
     }

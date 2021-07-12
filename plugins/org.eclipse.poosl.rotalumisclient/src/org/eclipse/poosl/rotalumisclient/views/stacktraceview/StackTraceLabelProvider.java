@@ -12,7 +12,7 @@ public class StackTraceLabelProvider extends LabelProvider {
     public String getText(Object element) {
         if (element instanceof TErrorStackframe) {
             TErrorStackframe stackframe = (TErrorStackframe) element;
-            return stackframe.getId().toString() + " " + stackframe.getMethod();
+            return stackframe.getId().toString() + ' ' + stackframe.getMethod();
         } else if (element instanceof StackFrameMapping) {
             StackFrameMapping frameMapping = (StackFrameMapping) element;
             String mappingInfo = "";
@@ -26,7 +26,7 @@ public class StackTraceLabelProvider extends LabelProvider {
             } catch (Exception e) {
                 // do nothing
             }
-            return frameMapping.getFrame().getId().toString() + " " + frameMapping.getFrame().getMethod() + " " + mappingInfo;
+            return frameMapping.getFrame().getId().toString() + ' ' + frameMapping.getFrame().getMethod() + ' ' + mappingInfo;
         }
         return super.getText(element);
     }

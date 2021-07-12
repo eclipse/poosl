@@ -226,7 +226,7 @@ public class PooslJavaValidatorTypes extends PooslJavaValidatorAcyclicRelations 
         Expression expressions = statement.getGuard();
         String typeName = typeSystem.getAndCheckExpressionType(expressions);
         if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-            warning(MessageFormat.format(GUARD_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
+            warning(MessageFormat.format(GUARD_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, HelperFunctions.CLASS_NAME_INTEGER);
         }
     }
 
@@ -236,7 +236,7 @@ public class PooslJavaValidatorTypes extends PooslJavaValidatorAcyclicRelations 
         Expression expressions = statement.getCondition();
         String typeName = typeSystem.getAndCheckExpressionType(expressions);
         if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-            warning(MessageFormat.format(CONDITION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
+            warning(MessageFormat.format(CONDITION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, HelperFunctions.CLASS_NAME_INTEGER);
         }
     }
 
@@ -261,7 +261,7 @@ public class PooslJavaValidatorTypes extends PooslJavaValidatorAcyclicRelations 
         Expression expressions = statement.getCondition();
         String typeName = typeSystem.getAndCheckExpressionType(expressions);
         if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-            warning(MessageFormat.format(CONDITION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
+            warning(MessageFormat.format(CONDITION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, HelperFunctions.CLASS_NAME_INTEGER);
         }
     }
 
@@ -285,7 +285,7 @@ public class PooslJavaValidatorTypes extends PooslJavaValidatorAcyclicRelations 
         Expression expressions = statement.getReceptionCondition();
         String typeName = typeSystem.getAndCheckExpressionType(expressions);
         if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-            warning(MessageFormat.format(RECEPTION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, "Boolean");
+            warning(MessageFormat.format(RECEPTION_INCOMPATIBLE, typeName), expressions, null, PooslIssueCodes.INCOMPATIBLE_TYPE, WarningType.TYPECHECK, typeName, HelperFunctions.CLASS_NAME_INTEGER);
         }
 
         // --- getPostCommunicationExpressions() -------

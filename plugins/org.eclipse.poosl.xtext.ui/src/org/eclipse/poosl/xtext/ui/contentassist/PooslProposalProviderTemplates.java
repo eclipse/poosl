@@ -20,7 +20,7 @@ import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 
-//@CHECKSTYLE:OFF Naming inherited from XText generation
+// CHECKSTYLE:OFF Naming inherited from XText generation
 public class PooslProposalProviderTemplates extends PooslProposalProviderTerminals {
     private static final String EXPL_SYNCHRONOUS_COMMUNICATION = "<br/><br/>Message communication is synchronous and unicast. Send and receive statements are blocked until a pair of them can be executed together, with <ul><li>identical message names,</li><li>identical number of parameters, and</li><li>ports that are connected via channels.</li></ul>";
 
