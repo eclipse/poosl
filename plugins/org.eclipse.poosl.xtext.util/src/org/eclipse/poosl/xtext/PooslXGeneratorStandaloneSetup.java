@@ -42,26 +42,26 @@ public class PooslXGeneratorStandaloneSetup extends XtextGeneratorStandaloneSetu
     }
     
 
-    
     protected File findProjectFile(File f) {
-        File parentFile = f.getParentFile();
-        if (parentFile == null ||
-                !f.getName().equals(WELL_KNOWN_CLASSPATH[1])) {
+        File container = withParentWhen(
+                withParentWhen(f, WELL_KNOWN_CLASSPATH[1]), 
+                WELL_KNOWN_CLASSPATH[0]);
+        if (container == null) {
             return null;
         }
-        File grandParentFile = parentFile.getParentFile();
-        if (grandParentFile == null || 
-                !parentFile.getName().equals(WELL_KNOWN_CLASSPATH[0])
-                ) {
-            return null;
-        }
-        File projectFile = new File(grandParentFile, PROJECT_FILENAME);
+        File projectFile = new File(container, PROJECT_FILENAME);
         if (projectFile.exists()) {
-            log.warn("Fix Project path for " + grandParentFile.getName()); // NON-NLS-1 only in build
-            return projectFile;
+            // Default behavior logs a warning
+            // This notifies of the fix
+            log.warn("Fix Project path for " + container.getName()); // NON-NLS-1
         }
-        return null;
+        return projectFile;
     }
     
+    private static File withParentWhen(File file, String when) {
+        return file != null && file.getName().equals(when)
+            ? file.getParentFile() 
+            : null;
+    }
     
 }
