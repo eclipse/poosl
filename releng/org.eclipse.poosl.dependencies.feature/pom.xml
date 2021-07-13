@@ -11,7 +11,12 @@
 		<relativePath>../../parent</relativePath>
 	</parent>
 
-	<artifactId>org.eclipse.poosl.legacysupport.feature</artifactId>
+	<artifactId>org.eclipse.poosl.dependencies.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
-	<name>POOSL Legacy Support Feature</name>
+	<name>POOSL Dependencies Feature</name>
+	
+	<properties>
+		<!-- No need to expose sources of dependencies -->
+		<source.feature.skip>true</source.feature.skip>
+	</properties>
 </project>

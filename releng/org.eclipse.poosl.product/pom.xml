@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.eclipse.poosl</groupId>
+		<artifactId>parent</artifactId>
+		<version>4.2.2-SNAPSHOT</version>
+		<relativePath>../../parent</relativePath>
+	</parent>
+	
+	<artifactId>org.eclipse.poosl.product</artifactId>
+	<packaging>eclipse-repository</packaging>
+	<name>POOSL Stand-alone Product</name>
+
+	<properties>
+		<product-id>org.eclipse.poosl.product</product-id>
+		<archive-file-name>poosl</archive-file-name>
+		<root-folder-name>poosl</root-folder-name>
+	</properties>
+	
+	
+	<build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-director-plugin</artifactId>
+        <executions>
+          <execution>
+            <!-- install the product for all configured os/ws/arch environments 
+              using p2 director -->
+            <id>materialize-products</id>
+            <goals>
+              <goal>materialize-products</goal>
+            </goals>
+          </execution>
+          <execution>
+            <!-- (optional) create product zips (one per os/ws/arch) -->
+            <id>archive-products</id>
+            <goals>
+              <goal>archive-products</goal>
+            </goals>
+          </execution>
+        </executions>
+        <!-- (optional) customize the root folder name of the product zip -->
+        <configuration>
+          <products>
+            <product>
+              <id>${product-id}</id>
+              <rootFolder>${root-folder-name}</rootFolder>
+              <rootFolders>
+              	<macosx>poosl.app</macosx>
+              </rootFolders>
+              <archiveFileName>${archive-file-name}</archiveFileName>
+            </product>
+          </products>
+        </configuration>
+      </plugin>
+      <!-- workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=349421 
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/products/${product-id}/icons/</outputDirectory>
+              <nonFilteredFileExtensions>
+                <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                <nonFilteredFileExtension>xpm</nonFilteredFileExtension>
+                <nonFilteredFileExtension>icns</nonFilteredFileExtension>
+                <nonFilteredFileExtension>png</nonFilteredFileExtension>
+                <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+                <nonFilteredFileExtension>bmp</nonFilteredFileExtension>
+              </nonFilteredFileExtensions>
+              <resources>
+                <resource>
+                  <directory>../icons</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+-->
+    </plugins>
+  </build>
+</project>

@@ -99,7 +99,9 @@ org.eclipse.poosl.xtext.util
 			<modules>
 				<module>releng/org.eclipse.poosl.feature</module>
 				<module>releng/org.eclipse.poosl.legacysupport.feature</module>
+				<module>releng/org.eclipse.poosl.dependencies.feature</module>
 		        <module>releng/org.eclipse.poosl.update</module>
+		        <module>releng/org.eclipse.poosl.product</module>
 			</modules>
 		</profile>
 

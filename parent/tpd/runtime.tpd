@@ -11,40 +11,75 @@ with requirements
 // This target platform declare dependencies of components to be release
 
 location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
-	org.eclipse.equinox.sdk.feature.group  // TODO This to broad !!
+	// org.eclipse.equinox.sdk.feature.group  // TODO This to broad !!
 	
-	org.eclipse.xtext.sdk.feature.group // This to broad, 
-	// Maybe only xtext.runtime, xtext.redist, xtext.xbase 
+	 org.eclipse.platform.feature.group
+	// +-> org.eclipse.ui.ide.application (default of sure-fire)
+	// +-> equinox.app
+	// +-> org.eclipse.rcp.feature.group
+	// +-> org.eclipse.e4.core.tools.feature.feature.group
 	
-    org.eclipse.emf.sdk.feature.group 
+	javax.activation
+	
+	org.eclipse.xtext.redist.feature.group
+	
+    org.eclipse.emf.feature.group
+    org.eclipse.emf.transaction.feature.group
+    
+    org.eclipse.acceleo.feature.group
+    org.eclipse.acceleo.query.feature.group
+    org.eclipse.ocl.feature.group
+    // (Required by %.acceleo.common)
+    
+    // For product:  
+    
+	// no need to declare SDK as 'source' properties if equivalent (only no examples)
+	// maybe epp.package is enough ?
+	org.eclipse.emf.query.feature.group
+	org.eclipse.emf.validation.feature.group
+	org.eclipse.gef.feature.group
+	
+    org.eclipse.egit.feature.group // egit is required in runtime as:
+    // - test projects are committed,
+    // - eclipse.platform includes team,
+    // - team detect egit but cannot deal with it.
+    org.eclipse.platform.ide
+    org.eclipse.equinox.executable.feature.group // implicit dependency of product.
     
     /*
-    org.eclipse.platform.feature.group
-	// also include
-	// +-> org.eclipse.ui.ide.application (default of sure-fire)
-	
 	org.eclipse.core.runtime.feature.feature.group
 	// +-> equinox.app
 	org.eclipse.equinox.core.feature.feature.group
 	org.eclipse.equinox.executable.feature.group	
 	
-	org.eclipse.rcp.feature.group
-	org.eclipse.e4.core.tools.feature.feature.group
-	javax.activation
+	
 
 	org.eclipse.emf.feature.group
 	org.eclipse.emf.transaction.feature.group
 	// +-> emf, emf.edit, emf.edit.ui
      */
+    
+    // TODO move to test following when MWE2 moved to tool:
+    org.eclipse.jdt.feature.group // required by MWE2 used in a final plugin.
+    // (Used in Xtext)
+	org.eclipse.emf.mwe2.launcher.feature.group
+	// +-> org.eclipse.emf.mwe2.launcher
+	
+	// Required by xtext.generator:
+	org.eclipse.xpand.feature.group
+	org.eclipse.xtend.feature.group
+	org.eclipse.xtend.ui.feature.group // required by xtend but not included.
+	org.eclipse.emf.mwe.core.feature.feature.group // required by xtend
+	org.eclipse.emf.mwe.ui.feature.feature.group
 
 }
 
 location eclipse_update "http://download.eclipse.org/eclipse/updates/4.17" {
-	org.eclipse.platform.sdk// TODO This to broad !!
+	org.eclipse.platform.sdk // required ??
 }
 
 location eclipselink "https://download.eclipse.org/rt/eclipselink/updates/" {
-   org.eclipse.persistence.sdk.feature.group // 2.7.7 ??
+   org.eclipse.persistence.moxy.feature.group // 2.7.7 ??
    // +-> org.eclipse.persistence.moxy
    // +-> jakarta.xml.bind-api
 }
@@ -69,8 +104,6 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020
 	
 	org.eclipse.sirius.runtime.ide.ui.feature.group
 	org.eclipse.sirius.runtime.ide.eef.feature.group
-	org.eclipse.sirius.specifier.ide.ui.feature.group
-	org.eclipse.sirius.specifier.ide.ui.aql.feature.group
 
 	// Acceleo3 is still in use in ODesign
 	// this should be removed when updated.
@@ -81,17 +114,18 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020
 
 	// EEF and ELK are not currently in used
 	// but propects are high.
-	org.eclipse.eef.sdk.feature.feature.group
+	org.eclipse.eef.sdk.feature.feature.group // only EEF feature is SDK
 	org.eclipse.eef.ext.widgets.reference.feature.feature.group
 	org.eclipse.sirius.interpreter.feature.feature.group
-	org.eclipse.sirius.specifier.properties.feature.feature.group
 	
 	org.eclipse.sirius.diagram.elk.feature.feature.group
-	org.eclipse.sirius.diagram.elk.sdk.feature.feature.group
+
 }
 
 
 location ELK "https://download.eclipse.org/elk/updates/releases/0.7.0/" {
+	// This is included in org.eclipse.sirius.diagram.elk.feature.feature.group
+	// but not the last version or source
     org.eclipse.elk.feature.feature.group lazy
     org.eclipse.elk.algorithms.feature.feature.group lazy
     // graphviz algos requires tool installation

@@ -241,6 +241,11 @@ for p2-metadata in feature
 			      <artifactId>tycho-p2-plugin</artifactId>
 			      <version>${tycho.version}</version>
 				</plugin>
+			    <plugin>
+			      <groupId>org.eclipse.tycho</groupId>
+			      <artifactId>tycho-p2-director-plugin</artifactId>
+			      <version>${tycho.version}</version>
+				</plugin>
 				<plugin>
 			      <groupId>org.eclipse.tycho.extras</groupId>
 			      <artifactId>tycho-source-feature-plugin</artifactId>
@@ -315,6 +320,14 @@ for p2-metadata in feature
 					<exists>feature.xml</exists>
 				</file>
 			</activation>
+			
+			<properties>
+				<!-- 
+				When a feature does not need source (only dependencies).
+				-->
+				<source.feature.skip>false</source.feature.skip>
+			</properties>
+			
 			<build>
 				<plugins>
 				
@@ -329,6 +342,9 @@ for p2-metadata in feature
 				          </goals>
 				        </execution>
 				      </executions>
+				      <configuration>
+				      	<skip>${source.feature.skip}</skip>
+				      </configuration>
 				    </plugin>
 
 

@@ -47,16 +47,11 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
       <discovery label="Rotalumis release" url="http://www.es.ele.tue.nl/rotalumis/repository/integration/"/>
    </url>
 
+   <includes
+         id="nl.tue.rotalumis.sdk"
+         version="0.0.0"/>
+
    <requires>
-   <!-- Obeo: this is suspicious 
-      <import plugin="org.eclipse.poosl.xtext"/> included
-      <import plugin="org.eclipse.poosl.xtext.ui"/> included
-      <import plugin="org.eclipse.poosl.xtext.util"/> included
-      <import plugin="org.eclipse.poosl.model"/> included
-      <import plugin="org.eclipse.poosl.model.edit"/> included
-	  <import plugin="org.eclipse.poosl.generatedxmlclasses"/> included
-      <import plugin="org.eclipse.poosl.rotalumisclient"/> included
-      -->
       <import plugin="org.eclipse.ui.workbench"/>
       <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipse.jface"/>
@@ -72,6 +67,8 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
       <import plugin="org.eclipse.core.resources" version="3.8.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.equinox.registry"/>
       <import plugin="org.apache.commons.lang"/>
+      <import plugin="org.eclipse.ui.navigator"/>
+      <import plugin="org.eclipse.ui.navigator.resources"/>
       <import plugin="org.eclipse.xtext.ui"/>
       <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
@@ -81,33 +78,18 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
       <import plugin="org.eclipse.xtext.common.types.ui"/>
       <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
       <import plugin="org.eclipse.compare"/>
+      <import plugin="org.eclipse.xtext" version="2.12.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.help"/>
       <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.apache.log4j"/>
       <import plugin="org.apache.commons.logging"/>
       <import plugin="org.eclipse.xtext.util"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.xtext.common.types"/>
-      <import plugin="org.eclipse.xtext.xbase.lib"/>
-      <import plugin="org.eclipse.team.core"/>
-      <import plugin="org.eclipse.debug.ui"/>
-      <import plugin="org.eclipse.ui.console"/>
-      <import plugin="org.eclipse.swt"/>
-      <import plugin="org.junit"/>
-      <import plugin="org.eclipse.ui.navigator"/>
-      <import plugin="org.eclipse.ui.navigator.resources"/>
-      <import plugin="org.eclipse.xtext" version="2.12.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.help"/>
       <import plugin="org.eclipse.core.runtime" version="3.10.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.ide"/>
       <import plugin="org.eclipse.xtext.xbase.ide"/>
       <import plugin="org.eclipse.xtext.generator"/>
-      <import plugin="nl.tue.rotalumis.executables" version="4.1.0.201911181023" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.e4.ui.workbench" version="1.3.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.e4.ui.model.workbench" version="1.1.100" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.e4.ui.di" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.forms" version="3.6.200" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.e4.core.di" version="1.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.platform" version="4.7.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.edit"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
       <import plugin="org.eclipse.emf.edit.ui"/>
@@ -127,9 +109,15 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
       <import plugin="org.eclipse.sirius.ecore.extender" version="4.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide.application"/>
       <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.debug.ui"/>
       <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.8.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.swt"/>
       <import plugin="javax.annotation" version="1.3.5" match="greaterOrEqual"/>
-      <import plugin="javax.xml"/>
+      <import plugin="org.eclipse.poosl.xtext.ide" version="4.2.0" match="greaterOrEqual"/>
+      <import plugin="jakarta.xml.bind-api" version="2.3.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.persistence.moxy" version="2.7.7" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.xbase.lib" version="2.14.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.poosl.rotalumisclient" version="4.1.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -188,15 +176,6 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          version="0.0.0"
          unpack="false"/>
 
-<!-- OBEO: investigate on www.es.ele.tue.nl
-   <plugin
-         id="org.eclipse.poosl.rotalumisclient"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
--->
-
    <plugin
          id="org.eclipse.poosl.help"
          download-size="0"
@@ -210,7 +189,6 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          version="0.0.0"
          unpack="false"/>
 
-<!-- is editor relevant with xtext ?? -->
    <plugin
          id="org.eclipse.poosl.model.editor"
          download-size="0"
@@ -226,30 +204,7 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          unpack="false"/>
 
    <plugin
-         id="jakarta.xml.bind-api"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-<!-- OBEO why to embed those. 
-They are provided by standard release -->
-   <plugin
-         id="org.eclipse.persistence.moxy"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.persistence.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.persistence.asm"
+         id="org.eclipse.poosl.rotalumisclient"
          download-size="0"
          install-size="0"
          version="0.0.0"

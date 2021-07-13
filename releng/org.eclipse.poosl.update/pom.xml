@@ -12,5 +12,6 @@
 
   <artifactId>org.eclipse.poosl.update</artifactId>
   <packaging>eclipse-repository</packaging>
+  <name>POOSL P2 update-site</name>
 
 </project> 

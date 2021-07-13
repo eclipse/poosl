@@ -21,11 +21,25 @@ location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 	// +-> org.eclipse.ui.ide.application (default of sure-fire)
 
 	org.junit
+	
 	org.eclipse.jdt.feature.group
 	// +-> org.eclipse.jdt.junit
+	
 	org.eclipse.pde.feature.group
 	// +-> org.eclipse.pde.junit
 	
+	org.eclipse.xtext.sdk.feature.group
+	// +-> org.eclipse.xtext.xbase.testing
+	
+	org.eclipse.emf.mwe2.launcher.feature.group
+	// +-> org.eclipse.emf.mwe2.launcher
+	
+	org.eclipse.xpand.feature.group
+	// (required by xtext.generator)
+
+	org.eclipse.xtend.feature.group
+	// (required by xtext.generator)
+
 }
 
 location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-09/" {
@@ -34,7 +48,7 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020
 
 location xpect-tests "http://www.xpect-tests.org/updatesite/nightly/local" {
 	// Issue
-	// Public p2 is composite with:
+	// Public p2 is composite including:
 	// http://meysholdt.github.com/eclipse_jdt_junit_runners/updatesite/
 	// But it fails as real URL is:
 	// http://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite/

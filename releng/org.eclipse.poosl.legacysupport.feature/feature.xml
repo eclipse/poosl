@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.poosl.legacysupport.feature"
-      label="Legacy Support for POOSL IDE"
+      label="%featureName"
       version="4.2.2.qualifier"
-      provider-name="TNO ESI">
+      provider-name="%providerName">
 
    <description>
-      This Plug-in adds the following features to the POOSL IDE.
-* Import SHESim v3.0 XML files and convert them to POOSL files.
-* Export POOSL model to SHESim v3.0 XML with defaults for graphical layout.
+      %description
    </description>
 
    <copyright>
-      Copyright (c) 2019, ESI (TNO). All rights reserved.
+      %copyright
    </copyright>
 
    <license url="">
