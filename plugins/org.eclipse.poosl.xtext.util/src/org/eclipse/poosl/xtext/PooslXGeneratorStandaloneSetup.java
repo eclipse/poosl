@@ -19,18 +19,17 @@ import com.google.inject.Injector;
  */
 public class PooslXGeneratorStandaloneSetup extends XtextGeneratorStandaloneSetup {
 
-
-    private Logger log = Logger.getLogger(getClass());
-    
     /** Path matching .classpath content */
     private static final String[] WELL_KNOWN_CLASSPATH = {
-            "target",
-            "jdt-classes"
+            "target",  // NON-NLS-1
+            "jdt-classes",  // NON-NLS-1
     };
     
     /** Eclipse project descriptor */ 
-    private static final String PROJECT_FILENAME = ".project";
-    
+    private static final String PROJECT_FILENAME = ".project"; // NON-NLS-1
+
+    private Logger log = Logger.getLogger(getClass());
+
     @Override
     public void initialize(Injector injector) {
         super.initialize(injector);
@@ -58,7 +57,7 @@ public class PooslXGeneratorStandaloneSetup extends XtextGeneratorStandaloneSetu
         }
         File projectFile = new File(grandParentFile, PROJECT_FILENAME);
         if (projectFile.exists()) {
-            log.warn("Fix Project path for " + grandParentFile.getName());
+            log.warn("Fix Project path for " + grandParentFile.getName()); // NON-NLS-1 only in build
             return projectFile;
         }
         return null;
