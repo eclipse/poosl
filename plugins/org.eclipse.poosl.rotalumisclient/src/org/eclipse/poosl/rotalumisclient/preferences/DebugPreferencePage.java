@@ -39,7 +39,7 @@ public class DebugPreferencePage extends PreferencePage implements IWorkbenchPre
 
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_preferences_simulator");
+            workbench.getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_preferences_simulator"); //$NON-NLS-1$
         }
 
         label = new Label(main, SWT.NONE);

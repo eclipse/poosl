@@ -165,7 +165,7 @@ public class PooslThread extends PooslDebugElement implements IThread {
     }
 
     public void addStackFrame(List<TVariable> list) throws DebugException {
-        stackframe = new PooslStackFrame(target, this, name + "/stackframe", list, globalHandle);
+        stackframe = new PooslStackFrame(target, this, name + "/stackframe", list, globalHandle); //$NON-NLS-1$
     }
 
     public void clearStackFrames() {

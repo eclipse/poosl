@@ -163,7 +163,7 @@ public class Client {
                     }
 
                     String trimmedheader = headerBuilder.toString().trim();
-                    if (!trimmedheader.startsWith("ROT ")) {
+                    if (!trimmedheader.startsWith("ROT ")) { //$NON-NLS-1$
                         LOGGER.log(Level.SEVERE, "Rotalumis message contains wrong format, is it up to date?");
                         return;
                     }
@@ -180,7 +180,7 @@ public class Client {
                     if (stringBuilder.length() > 0) {
                         final Response response = unmarshal(Response.class, stringBuilder);
                         if (response != null) {
-                            LOGGER.finer("<pre>" + stringBuilder.toString() + "</pre>");
+                            LOGGER.finer("<pre>" + stringBuilder.toString() + "</pre>"); //$NON-NLS-1$ //$NON-NLS-2$
                             if (debugTarget == null) {
                                 throw new IllegalStateException("Debugtarget should have been set");
                             }
@@ -406,7 +406,7 @@ public class Client {
     }
 
     public synchronized IStatus sendRequest(Request request) {
-        String requestMessage = "";
+        String requestMessage = ""; //$NON-NLS-1$
         try {
             requestMessage = marshal(request);
         } catch (JAXBException e) {
@@ -414,7 +414,7 @@ public class Client {
             return new Status(Status.ERROR, PooslConstants.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_MARSHAL_FAILED, e.getCause());
         }
         LOGGER.finest("Message length: " + requestMessage.length());
-        LOGGER.finer("<pre>" + requestMessage + "</pre>");
+        LOGGER.finer("<pre>" + requestMessage + "</pre>"); //$NON-NLS-1$ //$NON-NLS-2$
 
         if (requestMessage.length() > MAX_REQUEST_SIZE) {
             LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_TOO_LARGE);
@@ -423,7 +423,7 @@ public class Client {
 
         byte[] msg = requestMessage.getBytes(CHARSET);
 
-        String size = String.format("ROT %08X", msg.length);
+        String size = String.format("ROT %08X", msg.length); //$NON-NLS-1$
         if (socket != null && socket.isConnected() && !socket.isClosed()) {
             try {
                 socketOutWriter.write(size);
@@ -490,7 +490,7 @@ public class Client {
         LOGGER.fine("Inspect model");
         Request request = objFactory.createRequest();
         TInspectRequest inspectRequest = objFactory.createTInspectRequest();
-        inspectRequest.setName("model");
+        inspectRequest.setName("model"); //$NON-NLS-1$
         inspectRequest.setType(TInspectType.MODEL);
         request.setInspect(inspectRequest);
         sendRequest(request);

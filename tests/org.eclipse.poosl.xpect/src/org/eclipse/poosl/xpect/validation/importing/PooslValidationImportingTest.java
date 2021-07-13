@@ -25,7 +25,7 @@ public class PooslValidationImportingTest extends ValidationTest {
     @ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
     public void contains(IPooslLinesExpectation expectation, @IssuesByLine Multimap<IRegion, Issue> line2issue, @NextLine IRegion line, ValidationTestConfig cfg) {
         List<String> issues = getActualIssues(line2issue, line, cfg, Severity.ERROR, Severity.WARNING, Severity.INFO, Severity.IGNORE);
-        expectation.assertContains("", issues);
+        expectation.assertContains("", issues); //$NON-NLS-1$
     }
 
 }

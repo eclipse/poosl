@@ -7,7 +7,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 import org.eclipse.ui.console.IConsoleConstants;
 
 public class PooslEditPerspective implements IPerspectiveFactory {
-    private static final String LEFT_LITERAL = "left";
+    private static final String LEFT_LITERAL = "left"; //$NON-NLS-1$
 
     private IPageLayout factory;
 
@@ -26,26 +26,26 @@ public class PooslEditPerspective implements IPerspectiveFactory {
         // Note that each new Folder uses a percentage of the remaining
         // EditorArea.
         factory.createFolder(LEFT_LITERAL, IPageLayout.LEFT, 0.25f, factory.getEditorArea());
-        IFolderLayout topleft = factory.createFolder("topleft", // NON-NLS-1
+        IFolderLayout topleft = factory.createFolder("topleft", // NON-NLS-1 //$NON-NLS-1$
                 IPageLayout.TOP, 0.5f, LEFT_LITERAL);
-        topleft.addView("org.eclipse.ui.navigator.ProjectExplorer");
+        topleft.addView("org.eclipse.ui.navigator.ProjectExplorer"); //$NON-NLS-1$
 
-        IFolderLayout bottomleft = factory.createFolder("bottomleft", // NON-NLS-1
+        IFolderLayout bottomleft = factory.createFolder("bottomleft", // NON-NLS-1 //$NON-NLS-1$
                 IPageLayout.BOTTOM, 0.5f, LEFT_LITERAL);
         bottomleft.addView(IPageLayout.ID_OUTLINE);
 
-        IFolderLayout bottom = factory.createFolder("bottom", // NON-NLS-1
+        IFolderLayout bottom = factory.createFolder("bottom", // NON-NLS-1 //$NON-NLS-1$
                 IPageLayout.BOTTOM, 0.8f, factory.getEditorArea());
         bottom.addView(IConsoleConstants.ID_CONSOLE_VIEW);
-        bottom.addView("org.eclipse.ui.views.ProblemView");
-        bottom.addView("org.eclipse.debug.ui.BreakpointView");
-        bottom.addView("org.eclipse.ui.views.TaskList");
-        bottom.addView("org.eclipse.ui.views.PropertySheet");
+        bottom.addView("org.eclipse.ui.views.ProblemView"); //$NON-NLS-1$
+        bottom.addView("org.eclipse.debug.ui.BreakpointView"); //$NON-NLS-1$
+        bottom.addView("org.eclipse.ui.views.TaskList"); //$NON-NLS-1$
+        bottom.addView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
     }
 
     private void addActionSets() {
-        factory.addActionSet("org.eclipse.debug.ui.launchActionSet"); // NON-NLS-1
-        factory.addActionSet("org.eclipse.debug.ui.breakpointActionSet"); // NON-NLS-1
+        factory.addActionSet("org.eclipse.debug.ui.launchActionSet"); // NON-NLS-1 //$NON-NLS-1$
+        factory.addActionSet("org.eclipse.debug.ui.breakpointActionSet"); // NON-NLS-1 //$NON-NLS-1$
         factory.addActionSet(IPageLayout.ID_NAVIGATE_ACTION_SET);
     }
 
@@ -54,9 +54,9 @@ public class PooslEditPerspective implements IPerspectiveFactory {
     }
 
     private void addNewWizardShortcuts() {
-        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.projectwizard"); // NON-NLS-1
-        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewizard"); // NON-NLS-1
-        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewithsystemwizard"); // NON-NLS-1
+        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.projectwizard"); // NON-NLS-1 //$NON-NLS-1$
+        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewizard"); // NON-NLS-1 //$NON-NLS-1$
+        factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewithsystemwizard"); // NON-NLS-1 //$NON-NLS-1$
     }
 
     private void addViewShortcuts() {

@@ -53,16 +53,16 @@ public class ImportWizardPage extends WizardNewFileCreationPage {
         fileSelectionLayout.marginHeight = 0;
         fileSelectionArea.setLayout(fileSelectionLayout);
 
-        editor = new FileFieldEditor("fileSelect", "Select File: ", fileSelectionArea);
+        editor = new FileFieldEditor("fileSelect", "Select File: ", fileSelectionArea); //$NON-NLS-1$
         editor.getTextControl(fileSelectionArea).addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 IPath path = new Path(ImportWizardPage.this.editor.getStringValue());
                 path = path.removeFileExtension();
-                path = path.addFileExtension("poosl");
+                path = path.addFileExtension("poosl"); //$NON-NLS-1$
                 setFileName(path.lastSegment());
             }
         });
-        String[] extensions = new String[] { "*.xml;" };
+        String[] extensions = new String[] { "*.xml;" }; //$NON-NLS-1$
         editor.setFileExtensions(extensions);
         fileSelectionArea.moveAbove(null);
     }
@@ -96,6 +96,6 @@ public class ImportWizardPage extends WizardNewFileCreationPage {
      */
     @Override
     protected IStatus validateLinkedResource() {
-        return new Status(IStatus.OK, "org.eclipse.poosl.xml", IStatus.OK, "", null);
+        return new Status(IStatus.OK, "org.eclipse.poosl.xml", IStatus.OK, "", null); //$NON-NLS-1$ //$NON-NLS-2$
     }
 }

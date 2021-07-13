@@ -29,7 +29,7 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslThread;
  *
  */
 public class PooslDebugContentProvider implements ITreeContentProvider {
-    private static final String SLASH = "/";
+    private static final String SLASH = "/"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(PooslDebugContentProvider.class.getName());
 

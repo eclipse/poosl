@@ -19,8 +19,8 @@ public class PooslStandaloneSetup extends PooslStandaloneSetupGenerated {
 
     @Override
     public void register(Injector injector) {
-        if (!EPackage.Registry.INSTANCE.containsKey("http://www.esi.nl/comma/actions/Actions")) {
-            EPackage.Registry.INSTANCE.put("http://poosl.eclipse.org/poosl/3.0.0", PooslPackage.eINSTANCE);
+        if (!EPackage.Registry.INSTANCE.containsKey("http://www.esi.nl/comma/actions/Actions")) { //$NON-NLS-1$
+            EPackage.Registry.INSTANCE.put("http://poosl.eclipse.org/poosl/3.0.0", PooslPackage.eINSTANCE); //$NON-NLS-1$
         }
 
         super.register(injector);

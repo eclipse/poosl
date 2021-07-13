@@ -35,9 +35,9 @@ import javax.xml.bind.annotation.XmlType;
 public enum TInstantiateResult {
 
     @XmlEnumValue("ok")
-    OK("ok"), @XmlEnumValue("invalid specification")
-    INVALID_SPECIFICATION("invalid specification"), @XmlEnumValue("unknown handle")
-    UNKNOWN_HANDLE("unknown handle");
+    OK("ok"), @XmlEnumValue("invalid specification") //$NON-NLS-1$
+    INVALID_SPECIFICATION("invalid specification"), @XmlEnumValue("unknown handle") //$NON-NLS-1$
+    UNKNOWN_HANDLE("unknown handle"); //$NON-NLS-1$
 
     private final String value;
 

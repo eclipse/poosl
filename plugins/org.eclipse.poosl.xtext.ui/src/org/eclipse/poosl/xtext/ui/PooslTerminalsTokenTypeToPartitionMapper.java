@@ -6,9 +6,9 @@ public class PooslTerminalsTokenTypeToPartitionMapper extends TerminalsTokenType
 
     @Override
     protected String calculateId(String tokenName, int tokenType) {
-        if ("RULE_POOSL_STRING".equals(tokenName)) {
+        if ("RULE_POOSL_STRING".equals(tokenName)) { //$NON-NLS-1$
             return STRING_LITERAL_PARTITION;
-        } else if ("RULE_CHARACTER".equals(tokenName)) {
+        } else if ("RULE_CHARACTER".equals(tokenName)) { //$NON-NLS-1$
             return STRING_LITERAL_PARTITION;
         } else {
             return super.calculateId(tokenName, tokenType);

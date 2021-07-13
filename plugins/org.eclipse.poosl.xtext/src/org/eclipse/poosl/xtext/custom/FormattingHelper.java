@@ -33,17 +33,17 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 
 public final class FormattingHelper {
-    private static final String SEPARATOR_CLASS_METHOD = ".";
+    private static final String SEPARATOR_CLASS_METHOD = "."; //$NON-NLS-1$
 
     private static final String PREFIX_PORTS = " with ports: ";
 
-    private static final String PREFIX_PARAMETERS = "(";
+    private static final String PREFIX_PARAMETERS = "("; //$NON-NLS-1$
 
-    private static final String SEPARATOR_VARIABLE = ", ";
+    private static final String SEPARATOR_VARIABLE = ", "; //$NON-NLS-1$
 
-    private static final String POSTFIX_PARAMETERS = ")";
+    private static final String POSTFIX_PARAMETERS = ")"; //$NON-NLS-1$
 
-    private static final String PREFIX_TYPE = ": ";
+    private static final String PREFIX_TYPE = ": "; //$NON-NLS-1$
 
     private FormattingHelper() {
         throw new IllegalStateException("Utility class");
@@ -314,11 +314,11 @@ public final class FormattingHelper {
 
     public static List<String> unformatDeclarationsToTypeNames(String formattedString) {
         List<String> declarations = new ArrayList<>();
-        if (formattedString != null && !formattedString.isEmpty() && !formattedString.equals("()")) {
+        if (formattedString != null && !formattedString.isEmpty() && !formattedString.equals("()")) { //$NON-NLS-1$
             String withoutBrackets = formattedString.substring(1, formattedString.length() - 1);
-            String[] vars = withoutBrackets.split(",");
+            String[] vars = withoutBrackets.split(","); //$NON-NLS-1$
             for (String var : vars) {
-                String[] def = var.split(":");
+                String[] def = var.split(":"); //$NON-NLS-1$
                 if (def.length == 2 && !def[0].isEmpty() && !def[1].isEmpty()) {
                     declarations.add(def[1].trim());
                 }
@@ -329,7 +329,7 @@ public final class FormattingHelper {
 
     public static int unformatDeclarationsToSize(String formattedString) {
         if (formattedString != null && formattedString.length() > 2) {
-            return formattedString.split(",").length;
+            return formattedString.split(",").length; //$NON-NLS-1$
         }
         return 0;
     }

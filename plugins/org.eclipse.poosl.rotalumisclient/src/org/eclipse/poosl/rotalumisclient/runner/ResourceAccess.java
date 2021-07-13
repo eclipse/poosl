@@ -143,7 +143,7 @@ public final class ResourceAccess {
             for (URI uri : find(context)) {
                 File parent = new File(uri.toFileString());
                 if (new File(parent, fileName).exists())
-                    return URI.createURI(fileName).resolve(uri.hasTrailingPathSeparator() ? uri : uri.appendSegment(""));
+                    return URI.createURI(fileName).resolve(uri.hasTrailingPathSeparator() ? uri : uri.appendSegment("")); //$NON-NLS-1$
             }
             return null;
         }
@@ -163,9 +163,9 @@ public final class ResourceAccess {
         @Override
         public String toString() {
             StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-            builder.append(",location=" + location.toString());
-            builder.append(",classpath=" + output);
-            builder.append(",source=" + sourceFolders);
+            builder.append(",location=" + location.toString()); //$NON-NLS-1$
+            builder.append(",classpath=" + output); //$NON-NLS-1$
+            builder.append(",source=" + sourceFolders); //$NON-NLS-1$
             return builder.toString();
         }
 
@@ -230,7 +230,7 @@ public final class ResourceAccess {
         if (uri.isArchive())
             return new ArchivedResourceInfo(uri);
         else {
-            File dot = new File(uri.toFileString() + ".classpath");
+            File dot = new File(uri.toFileString() + ".classpath"); //$NON-NLS-1$
             if (dot.isFile()) {
                 DotClasspath dotClasspath = new DotClasspath(dot);
                 return new JavaProjectInfo(uri, dotClasspath.getSources(), dotClasspath.getOutput());
@@ -240,6 +240,6 @@ public final class ResourceAccess {
     }
 
     private static String prettyPrint(String className, String location) {
-        return className + ",location=" + location;
+        return className + ",location=" + location; //$NON-NLS-1$
     }
 }

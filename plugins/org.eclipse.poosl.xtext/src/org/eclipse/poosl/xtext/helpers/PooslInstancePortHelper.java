@@ -19,15 +19,15 @@ public class PooslInstancePortHelper {
     public PooslInstancePortHelper(InstancePort iPort) {
         ClusterClass arch = (ClusterClass) iPort.eContainer().eContainer();
         String aClassName = (arch.getName() != null) ? arch.getName() : GlobalConstants.POOSL_SYSTEM;
-        String instanceName = (iPort.getInstance() != null) ? iPort.getInstance().getName() : "";
+        String instanceName = (iPort.getInstance() != null) ? iPort.getInstance().getName() : ""; //$NON-NLS-1$
 
         instanceHelper = new PooslInstanceHelper(aClassName, instanceName);
-        port = (iPort.getPort() != null) ? iPort.getPort().getPort() : "";
+        port = (iPort.getPort() != null) ? iPort.getPort().getPort() : ""; //$NON-NLS-1$
         instantiableClass = getClassDefinition(instanceName, arch);
     }
 
     public PooslInstancePortHelper(String aClassName, String description, Map<String, String> instances) {
-        String[] portDescr = description.split(":");
+        String[] portDescr = description.split(":"); //$NON-NLS-1$
         if (portDescr.length == 2) {
             instanceHelper = new PooslInstanceHelper(aClassName, portDescr[0]);
             port = portDescr[1];
@@ -43,7 +43,7 @@ public class PooslInstancePortHelper {
                 return instance.getClassDefinition();
             }
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     public PooslInstanceHelper getInstance() {
@@ -60,6 +60,6 @@ public class PooslInstancePortHelper {
 
     @Override
     public String toString() {
-        return getInstance().getInstanceName() + ":" + getPortName();
+        return getInstance().getInstanceName() + ":" + getPortName(); //$NON-NLS-1$
     }
 }

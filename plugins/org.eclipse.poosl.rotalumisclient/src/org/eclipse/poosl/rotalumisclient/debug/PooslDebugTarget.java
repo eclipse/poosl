@@ -118,7 +118,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
                     if ((delta.getKind() == IResourceDelta.CHANGED) && (delta.getFlags() & IResourceDelta.CONTENT) != 0) {
                         IResource resource = delta.getResource();
                         // only interested in files with the "poosl" extension
-                        if (resource.getType() == IResource.FILE && "poosl".equalsIgnoreCase(resource.getFileExtension()) && resource.getLocation().toString().contains(projectName)) {
+                        if (resource.getType() == IResource.FILE && "poosl".equalsIgnoreCase(resource.getFileExtension()) && resource.getLocation().toString().contains(projectName)) { //$NON-NLS-1$
                             changed.add(resource);
                         }
                     }
@@ -136,9 +136,9 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
-                        String targetName = "?";
+                        String targetName = "?"; //$NON-NLS-1$
                         try {
-                            targetName = " for " + target.getName() + "?";
+                            targetName = " for " + target.getName() + "?"; //$NON-NLS-2$
                         } catch (DebugException e1) {
                             LOGGER.log(Level.WARNING, "Could not get debug target name.", e1.getSuppressed());
                         }
@@ -178,7 +178,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
                     return;
                 }
 
-                String threadName = "";
+                String threadName = ""; //$NON-NLS-1$
                 if (context instanceof IThread) {
                     IThread thread = (IThread) context;
                     try {
@@ -322,7 +322,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
     private List<TTransition> possibleTransitions = new ArrayList<>();
 
     // Store the simulated time. (empty when running)
-    private String simulatedTime = "";
+    private String simulatedTime = ""; //$NON-NLS-1$
 
     private TEengineEventErrorResponse stacktrace;
 
@@ -355,10 +355,10 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
         this.includes = includes;
 
         // Set the name for this debugTarget to the name of the model
-        String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
+        String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
         this.name = modelPath.substring(modelPath.lastIndexOf(File.separator) + 1);
         // Get the projectName from the launchConfiguration
-        projectName = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, "");
+        projectName = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
 
         // Initialize the Sequence diagram message provider
         messageCreditor = new PooslMessageCreditor(this);
@@ -382,14 +382,14 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
         compileJob.schedule();
 
         try {
-            String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
+            String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
             String rfcModelPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(modelPath));
             String rfcBasicPath = null;
             if (!ImportingHelper.useDefaultBasicclasses()) {
                 String basicString = ImportingHelper.getBasicAbsoluteString();
                 rfcBasicPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(basicString));
             }
-            String rawExternalConfigPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, "");
+            String rawExternalConfigPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
             if (rawExternalConfigPath != null) {
                 externalConfigPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(rawExternalConfigPath));
             }
@@ -418,7 +418,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
             // key bindings
             IContextService contextService = workbench.getService(IContextService.class);
             if (contextService != null) {
-                contextActivationToken = contextService.activateContext("org.eclipse.poosl.rotalumisclient.debugcontext");
+                contextActivationToken = contextService.activateContext("org.eclipse.poosl.rotalumisclient.debugcontext"); //$NON-NLS-1$
             }
             // Add a debug context and debug event listener to react on debug
             // changes
@@ -502,7 +502,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
             }
         } else if (response.getEengineEventError() != null) {
             stacktrace = response.getEengineEventError();
-            LOGGER.fine("Engine error: " + stacktrace.getError() + " - " + stacktrace.getProcessPath() + ":" + stacktrace.getStmtHandle());
+            LOGGER.fine("Engine error: " + stacktrace.getError() + " - " + stacktrace.getProcessPath() + ":" + stacktrace.getStmtHandle()); //$NON-NLS-2$ //$NON-NLS-3$
 
             PooslThread errorThread = PooslDebugHelper.getThreadByName(threads, stacktrace.getProcessPath());
             if (errorThread == null && threads != null && threads.length > 0 && threads[0] instanceof PooslThread) {
@@ -512,7 +512,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
             TErrorStacktrace errorStackTrace = stacktrace.getStacktrace();
             if (errorStackTrace != null && errorStackTrace.getStackframe() != null) {
                 for (TErrorStackframe errorFrame : errorStackTrace.getStackframe()) {
-                    PooslStackFrame stackFrame = new PooslStackFrame(this, errorThread, stacktrace.getProcessPath() + "/stackframe" + errorFrame.getId(),
+                    PooslStackFrame stackFrame = new PooslStackFrame(this, errorThread, stacktrace.getProcessPath() + "/stackframe" + errorFrame.getId(), //$NON-NLS-1$
                             errorFrame.getVariableContextGlobal().getVariable(), null);
                     stackFrame.addLocalVariables(errorFrame.getVariableContextLocal().getVariable(), null);
                     stackFrames.put(errorFrame.getId(), stackFrame);
@@ -540,10 +540,10 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
             }
         } else if (response.getCommand() != null) {
             TCommandResponse commandResponse = response.getCommand();
-            LOGGER.fine("Command response: " + commandResponse.getType() + " " + commandResponse.getResult());
+            LOGGER.fine("Command response: " + commandResponse.getType() + " " + commandResponse.getResult()); //$NON-NLS-2$
             switch (commandResponse.getType()) {
             case RUN:
-                simulatedTime = "";
+                simulatedTime = ""; //$NON-NLS-1$
                 for (IThread t : getThreads()) {
                     t.resume();
                 }
@@ -564,7 +564,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
                 startTransitionRequester();
                 break;
             case STOP:
-                simulatedTime = "";
+                simulatedTime = ""; //$NON-NLS-1$
                 client.disconnect();
                 fireEvent(new DebugEvent(this, DebugEvent.TERMINATE, DebugEvent.CLIENT_REQUEST));
                 if (process.canTerminate() && !process.isTerminated()) {
@@ -623,7 +623,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
                             fireEvent(new DebugEvent(pooslStackFrame, DebugEvent.CHANGE, DebugEvent.CONTENT));
                         }
                     }
-                    LOGGER.fine("Inspect response data: " + handle + " - " + inspectResponse.getData().getLiteral() + ":" + inspectResponse.getData().getType());
+                    LOGGER.fine("Inspect response data: " + handle + " - " + inspectResponse.getData().getLiteral() + ":" + inspectResponse.getData().getType()); //$NON-NLS-2$ //$NON-NLS-3$
                 }
             } else if (inspectResponse.getVariableContext() != null) {
                 // Variable context inspect response received so update
@@ -733,7 +733,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
                     breakpointManager.handleBreakpointHit(this, state, pooslSourceMap);
                 }
 
-            } else if ("stopped".equals(state.getState())) {
+            } else if ("stopped".equals(state.getState())) { //$NON-NLS-1$
                 isSuspended = true;
                 fireEvent(new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.STOPPED_STATE));
 
@@ -769,7 +769,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
             } else {
                 // Got execution state event without breakpoints so conform to
                 // the new state (for now the simulator only sends paused)
-                if ("paused".equals(state.getState()) && !isSuspended()) {
+                if ("paused".equals(state.getState()) && !isSuspended()) { //$NON-NLS-1$
                     isSuspended = true;
                     fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
                     client.getTransitions();
@@ -824,7 +824,7 @@ public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget,
                     thread.getRotalumisStackFrames();
                 }
             } else {
-                LOGGER.warning("Variable could not be set for handle " + varRequest.getVarHandle() + " with error " + varRequest.getError() + "  " + varRequest.getResult());
+                LOGGER.warning("Variable could not be set for handle " + varRequest.getVarHandle() + " with error " + varRequest.getError() + "  " + varRequest.getResult()); //$NON-NLS-3$
                 PooslDebugHelper.showErrorMessage(Messages.DIALOG_SETVARIABLE_TITLE, Messages.DIALOG_SETVARIABLE_TEXT);
             }
         } else {

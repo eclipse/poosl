@@ -20,7 +20,7 @@ public class PooslLineBreakpoint extends LineBreakpoint {
         super();
         IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
             public void run(IProgressMonitor monitor) throws CoreException {
-                IMarker marker = resource.createMarker("org.eclipse.poosl.rotalumisclient.pooslLineBreakpointMarker");
+                IMarker marker = resource.createMarker("org.eclipse.poosl.rotalumisclient.pooslLineBreakpointMarker"); //$NON-NLS-1$
                 setMarker(marker);
                 marker.setAttribute(IBreakpoint.ENABLED, true);
                 marker.setAttribute(IBreakpoint.PERSISTED, true);

@@ -21,7 +21,7 @@ public class Activator extends AbstractUIPlugin {
     /**
      * The plug-in ID.
      */
-    public static final String PLUGIN_ID = "org.eclipse.poosl.transformations";
+    public static final String PLUGIN_ID = "org.eclipse.poosl.transformations"; //$NON-NLS-1$
 
     /**
      * The shared instance.

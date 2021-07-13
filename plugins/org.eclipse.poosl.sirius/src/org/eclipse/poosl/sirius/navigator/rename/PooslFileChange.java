@@ -25,7 +25,7 @@ import org.eclipse.sirius.business.api.session.Session;
  *
  */
 public class PooslFileChange extends Change {
-    private static final String NAME = "PooslFileChange";
+    private static final String NAME = "PooslFileChange"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(PooslFileChange.class.getName());
 

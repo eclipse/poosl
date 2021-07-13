@@ -14,13 +14,13 @@ import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 public class PooslModelInformation {
-    private static final String SPACE = " ";
+    private static final String SPACE = " "; //$NON-NLS-1$
 
     private Integer currentIdentifier = 0;
 
-    private String modelPath = "";
+    private String modelPath = ""; //$NON-NLS-1$
 
-    private String xmlPath = "";
+    private String xmlPath = ""; //$NON-NLS-1$
 
     private Map<SourceMapping, Integer> modelToIdentifierMapping;
 
@@ -84,21 +84,21 @@ public class PooslModelInformation {
      */
     public Integer addMapping(EObject originalObject, Boolean breakpointSupported) {
         currentIdentifier++;
-        String tokenText = "";
+        String tokenText = ""; //$NON-NLS-1$
         EObject correctedObject;
         if (originalObject instanceof GuardedStatementImpl) {
             correctedObject = ((GuardedStatementImpl) originalObject).getGuard();
-            tokenText = "[" + NodeModelUtils.getTokenText(NodeModelUtils.getNode(correctedObject)) + "]";
+            tokenText = "[" + NodeModelUtils.getTokenText(NodeModelUtils.getNode(correctedObject)) + "]"; //$NON-NLS-1$ //$NON-NLS-2$
         } else {
             correctedObject = originalObject;
             tokenText = NodeModelUtils.getTokenText(NodeModelUtils.getNode(correctedObject));
         }
-        tokenText = tokenText.replace("\t", SPACE);
-        tokenText = tokenText.replace("\r", SPACE);
-        tokenText = tokenText.replace("\n", SPACE);
+        tokenText = tokenText.replace("\t", SPACE); //$NON-NLS-1$
+        tokenText = tokenText.replace("\r", SPACE); //$NON-NLS-1$
+        tokenText = tokenText.replace("\n", SPACE); //$NON-NLS-1$
         // Remove double spaces and replace them by single ones
-        while (tokenText.contains("  ")) {
-            tokenText = tokenText.replace("  ", SPACE);
+        while (tokenText.contains("  ")) { //$NON-NLS-1$
+            tokenText = tokenText.replace("  ", SPACE); //$NON-NLS-1$
         }
         tokenText = tokenText.trim();
 
@@ -111,8 +111,8 @@ public class PooslModelInformation {
 
     private String createXMLPath() {
         StringBuilder stringBuilder = new StringBuilder(modelPath);
-        stringBuilder.replace(stringBuilder.lastIndexOf(File.separator), stringBuilder.lastIndexOf(File.separator), File.separator + "simulator");
-        stringBuilder.replace(stringBuilder.lastIndexOf("."), stringBuilder.length(), ".xml");
+        stringBuilder.replace(stringBuilder.lastIndexOf(File.separator), stringBuilder.lastIndexOf(File.separator), File.separator + "simulator"); //$NON-NLS-1$
+        stringBuilder.replace(stringBuilder.lastIndexOf("."), stringBuilder.length(), ".xml"); //$NON-NLS-1$ //$NON-NLS-2$
         return stringBuilder.toString();
     }
 

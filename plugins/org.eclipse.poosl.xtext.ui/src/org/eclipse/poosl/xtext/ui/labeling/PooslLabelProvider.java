@@ -84,7 +84,7 @@ public class PooslLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObjec
     Object text(Port port) {
         InstantiableClass iClass = (InstantiableClass) port.eContainer();
         if (iClass.getName() != null) {
-            return iClass.getName() + "." + port.getName();
+            return iClass.getName() + "." + port.getName(); //$NON-NLS-1$
         }
         return port.getName();
     }
@@ -94,7 +94,7 @@ public class PooslLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObjec
     Object text(Instance instance) {
         ClusterClass cClass = (ClusterClass) instance.eContainer();
         if (cClass.getName() != null) {
-            return cClass.getName() + "." + instance.getName();
+            return cClass.getName() + "." + instance.getName(); //$NON-NLS-1$
         }
         return instance.getName();
 

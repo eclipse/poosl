@@ -37,7 +37,7 @@ import org.eclipse.xtext.validation.Issue;
 
 public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
 
-    private static final String SEPARATOR = ", ";
+    private static final String SEPARATOR = ", "; //$NON-NLS-1$
 
     @Fix(PooslIssueCodes.UNKNOWN_ANNOTATION)
     public void unknownAnnotation(final Issue issue, IssueResolutionAcceptor acceptor) {
@@ -53,7 +53,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                     new ISemanticModification() {
                         public void apply(EObject element, IModificationContext context) {
                             NewExpression expr = (NewExpression) element;
-                            StringBuilder builder = new StringBuilder(" ");
+                            StringBuilder builder = new StringBuilder(" "); //$NON-NLS-1$
                             builder.append(PooslDataMethodParser.getMethodName(dataMethodString));
                             builder.append(PooslProposalProviderTypes.createDefaultParameterList(PooslDataMethodParser.getNumberArgs(dataMethodString)));
 
@@ -86,7 +86,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                         Port port = (Port) element;
                         ClusterClass cClass = (ClusterClass) port.eContainer();
 
-                        String channel = "\n\t{ " + port.getName() + " }";
+                        String channel = "\n\t{ " + port.getName() + " }"; //$NON-NLS-1$ //$NON-NLS-2$
                         INode lastNode = getLastChannelNode(cClass);
                         if (lastNode != null && applyTextChange(context.getXtextDocument(), element.eResource(), cClass, lastNode.getTotalEndOffset(), 0, channel)) {
                             return;
@@ -101,7 +101,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
         if (!nodes.isEmpty())
             return nodes.get(nodes.size() - 1);
         for (ILeafNode iLeafNode : NodeModelUtils.getNode(aClass).getLeafNodes()) {
-            if (!iLeafNode.isHidden() && iLeafNode.getText().equals("channels"))
+            if (!iLeafNode.isHidden() && iLeafNode.getText().equals("channels")) //$NON-NLS-1$
                 return iLeafNode;
         }
         return null;
@@ -114,7 +114,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                 null, // icon
                 new ISemanticModification() {
                     public void apply(EObject element, IModificationContext context) {
-                        applyTextChange(context.getXtextDocument(), element.eResource(), element, null, "");
+                        applyTextChange(context.getXtextDocument(), element.eResource(), element, null, ""); //$NON-NLS-1$
                     }
                 });
     }
@@ -128,7 +128,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                 new ISemanticModification() {
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         IXtextDocument xtextDocument = context.getXtextDocument();
-                        xtextDocument.replace(issue.getOffset(), 0, "return ");
+                        xtextDocument.replace(issue.getOffset(), 0, "return "); //$NON-NLS-1$
                     }
                 });
     }
@@ -142,7 +142,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                 new ISemanticModification() {
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         IXtextDocument xtextDocument = context.getXtextDocument();
-                        xtextDocument.replace(issue.getOffset(), "return".length(), "");
+                        xtextDocument.replace(issue.getOffset(), "return".length(), ""); //$NON-NLS-1$ //$NON-NLS-2$
                     }
                 });
     }
@@ -155,7 +155,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                 new ISemanticModification() {
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
                         IXtextDocument xtextDocument = context.getXtextDocument();
-                        xtextDocument.replace(issue.getOffset(), "=".length(), ":=");
+                        xtextDocument.replace(issue.getOffset(), "=".length(), ":="); //$NON-NLS-1$ //$NON-NLS-2$
                     }
                 });
     }
@@ -180,12 +180,12 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                                 }
                             }
 
-                            StringBuilder decl = new StringBuilder("");
+                            StringBuilder decl = new StringBuilder(""); //$NON-NLS-1$
                             for (String param : parameterNames) {
                                 if (!usedParameters.contains(param)) {
                                     if (decl.length() != 0)
                                         decl.append(SEPARATOR);
-                                    decl.append(param + " := nil");
+                                    decl.append(param + " := nil"); //$NON-NLS-1$
                                 }
                             }
 
@@ -208,7 +208,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                     public void apply(EObject element, IModificationContext context) throws BadLocationException {
 
                         InstancePort originalPort = (InstancePort) element;
-                        String portName = (originalPort.getPort() != null) ? originalPort.getPort().getPort() : "";
+                        String portName = (originalPort.getPort() != null) ? originalPort.getPort().getPort() : ""; //$NON-NLS-1$
                         Channel originalChannel = (Channel) originalPort.eContainer();
                         ClusterClass aClass = (ClusterClass) originalChannel.eContainer();
 
@@ -216,7 +216,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                         for (Channel channel : aClass.getChannels()) {
                             if (!channel.equals(originalChannel)) {
                                 for (InstancePort instancePort : channel.getInstancePorts()) {
-                                    String iPortName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : "";
+                                    String iPortName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
                                     if (instancePort.getInstance().equals(originalPort.getInstance()) && iPortName.equals(portName)) {
                                         channelsToRemove.add(channel);
                                     }
@@ -262,7 +262,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                 "URI could not be resolved relative to the current file.\nHowever it can be resolved using the Poosl include paths.", null, new IModification() {
                     @Override
                     public void apply(IModificationContext context) throws Exception {
-                        context.getXtextDocument().replace(issue.getOffset(), 6, "importlib");
+                        context.getXtextDocument().replace(issue.getOffset(), 6, "importlib"); //$NON-NLS-1$
                     }
                 });
     }
@@ -273,7 +273,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                 "URI could not be resolved using the Poosl include paths.\nHowever it can be resolved relative to the current file.", null, new IModification() {
                     @Override
                     public void apply(IModificationContext context) throws Exception {
-                        context.getXtextDocument().replace(issue.getOffset(), 9, "import");
+                        context.getXtextDocument().replace(issue.getOffset(), 9, "import"); //$NON-NLS-1$
                     }
                 });
     }
@@ -290,9 +290,9 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
                 INode prevNode = getInstancePortSeparator(portNode);
                 if (portNode != null) {
                     if (prevNode == null) {
-                        changes.add(new TextChange(originalChannel.eResource(), portNode.getOffset(), portNode.getLength(), ""));
+                        changes.add(new TextChange(originalChannel.eResource(), portNode.getOffset(), portNode.getLength(), "")); //$NON-NLS-1$
                     } else {
-                        changes.add(new TextChange(originalChannel.eResource(), prevNode.getOffset(), portNode.getTotalEndOffset() - prevNode.getOffset(), ""));
+                        changes.add(new TextChange(originalChannel.eResource(), prevNode.getOffset(), portNode.getTotalEndOffset() - prevNode.getOffset(), "")); //$NON-NLS-1$
                     }
                 }
             }
@@ -308,7 +308,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
             }
             if (channel.getExternalPort() != null && extPort == null)
                 extPort = channel.getExternalPort().getName();
-            changes.add(new TextChange(channel, ""));
+            changes.add(new TextChange(channel, "")); //$NON-NLS-1$
         }
         // create String with new the new ports to append to original channel
         StringBuilder builder = new StringBuilder();
@@ -329,7 +329,7 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
 
     private INode getInstancePortSeparator(ICompositeNode portNode) {
         INode node = portNode;
-        while (portNode != null && !portNode.getText().equals(",") && !(portNode instanceof HiddenLeafNode)) {
+        while (portNode != null && !portNode.getText().equals(",") && !(portNode instanceof HiddenLeafNode)) { //$NON-NLS-1$
             node = portNode.getPreviousSibling();
         }
         return node;
@@ -359,9 +359,9 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
         Instance instance = instancePort.getInstance();
         if (instance != null) {
             String instanceName = instance.getName();
-            String portName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : "";
+            String portName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
             if (instanceName != null && portName != null) {
-                return instanceName + "." + portName;
+                return instanceName + "." + portName; //$NON-NLS-1$
             }
         }
         return null;
@@ -377,14 +377,14 @@ public class PooslQuickfixProviderMisc extends PooslQuickfixProviderTypes {
 
         // Case: instance without parameters but with ()
         for (ILeafNode iLeafNode : NodeModelUtils.findActualNodeFor(instance).getLeafNodes()) {
-            if (!iLeafNode.isHidden() && iLeafNode.getText().equals("(")) {
+            if (!iLeafNode.isHidden() && iLeafNode.getText().equals("(")) { //$NON-NLS-1$
                 return iLeafNode;
             }
         }
 
         // Case: instance without parameters and without ()
-        decl.insert(0, "(");
-        decl.append(")");
+        decl.insert(0, "("); //$NON-NLS-1$
+        decl.append(")"); //$NON-NLS-1$
         return NodeModelUtils.getNode(instance);
     }
 }

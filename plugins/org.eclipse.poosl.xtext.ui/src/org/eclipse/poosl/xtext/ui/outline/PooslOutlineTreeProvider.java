@@ -23,9 +23,9 @@ import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 
 // CHECKSTYLE:OFF Naming inherited from XText generation
 public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
-    private static final String LABEL_DATA_CLASSES = "Data classes";
+    private static final String LABEL_DATA_CLASSES = "Data classes"; //$NON-NLS-1$
 
-    private static final String LABEL_PROCESS_CLASSES = "Process classes";
+    private static final String LABEL_PROCESS_CLASSES = "Process classes"; //$NON-NLS-1$
 
     private static final String LABEL_CLUSTER_CLASSES = "Cluster classes";
 
@@ -206,30 +206,30 @@ public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 
         String imageStr = null;
         if (modelElement instanceof Poosl) {
-            imageStr = "full/obj16/Poosl";
+            imageStr = "full/obj16/Poosl"; //$NON-NLS-1$
         } else if (modelElement instanceof ClusterClass) {
-            imageStr = "full/obj16/ClusterClass";
+            imageStr = "full/obj16/ClusterClass"; //$NON-NLS-1$
         } else if (modelElement instanceof DataClass) {
-            imageStr = "full/obj16/DataClass";
+            imageStr = "full/obj16/DataClass"; //$NON-NLS-1$
         } else if (modelElement instanceof ProcessClass) {
-            imageStr = "full/obj16/ProcessClass";
+            imageStr = "full/obj16/ProcessClass"; //$NON-NLS-1$
         } else if (modelElement instanceof ProcessMethod) {
-            imageStr = "full/obj16/ProcessMethod";
+            imageStr = "full/obj16/ProcessMethod"; //$NON-NLS-1$
         } else if (modelElement instanceof DataMethodNamed) {
-            imageStr = "full/obj16/DataMethod";
+            imageStr = "full/obj16/DataMethod"; //$NON-NLS-1$
         } else if (modelElement instanceof Instance) {
-            imageStr = "full/obj16/Instance";
+            imageStr = "full/obj16/Instance"; //$NON-NLS-1$
         } else if (modelElement instanceof DataMethodUnaryOperator) {
-            imageStr = "full/obj16/DataMethodUnaryOperator";
+            imageStr = "full/obj16/DataMethodUnaryOperator"; //$NON-NLS-1$
         } else if (modelElement instanceof DataMethodBinaryOperator) {
-            imageStr = "full/obj16/DataMethodBinaryOperator";
+            imageStr = "full/obj16/DataMethodBinaryOperator"; //$NON-NLS-1$
         }
 
         Object imageObj = null;
         if (imageStr != null) {
             imageObj = PooslEditPlugin.INSTANCE.getImage(imageStr);
         } else {
-            imageStr = "full/obj16/GenericValue";
+            imageStr = "full/obj16/GenericValue"; //$NON-NLS-1$
             imageObj = EMFEditPlugin.INSTANCE.getImage(imageStr);
         }
         return ExtendedImageRegistry.INSTANCE.getImage(imageObj);

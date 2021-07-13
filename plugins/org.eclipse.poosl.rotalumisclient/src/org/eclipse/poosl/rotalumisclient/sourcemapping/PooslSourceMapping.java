@@ -1,9 +1,9 @@
 package org.eclipse.poosl.rotalumisclient.sourcemapping;
 
 public class PooslSourceMapping {
-    private static final String WHITESPACE = " ";
+    private static final String WHITESPACE = " "; //$NON-NLS-1$
 
-    private static final String EMPTY_SOURCETEXT = "...";
+    private static final String EMPTY_SOURCETEXT = "..."; //$NON-NLS-1$
 
     private final String filePath;
 
@@ -71,11 +71,11 @@ public class PooslSourceMapping {
             }
             singleLine = sourceText;
             // replace comments, source http://ostermiller.org/findcomment.html
-            singleLine = singleLine.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", WHITESPACE);
+            singleLine = singleLine.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", WHITESPACE); //$NON-NLS-1$
             // replace whitespaces
-            singleLine = singleLine.replaceAll("\\n", WHITESPACE).replaceAll("\\t", WHITESPACE).replaceAll("\\r", "");
+            singleLine = singleLine.replaceAll("\\n", WHITESPACE).replaceAll("\\t", WHITESPACE).replaceAll("\\r", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             // remove unnecessary whitespaces
-            singleLine = singleLine.trim().replaceAll(" +", WHITESPACE);
+            singleLine = singleLine.trim().replaceAll(" +", WHITESPACE); //$NON-NLS-1$
         }
         return singleLine;
     }

@@ -98,7 +98,7 @@ public class NewInstanceDialog extends TitleAreaDialog {
         processclasses = reorderNames(NameHelper.getAllProcessNames(poosl));
         clusterclasses = reorderNames(NameHelper.getAllClusterNames(poosl));
         instances = NameHelper.getInstanceNames(container);
-        containerName = (container.getName() != null) ? container.getName() : "";
+        containerName = (container.getName() != null) ? container.getName() : ""; //$NON-NLS-1$
     }
 
     public void setInstantiableClass(InstantiableClass inst) {

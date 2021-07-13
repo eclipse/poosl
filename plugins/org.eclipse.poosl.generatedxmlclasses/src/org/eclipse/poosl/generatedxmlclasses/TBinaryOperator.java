@@ -46,20 +46,20 @@ import javax.xml.bind.annotation.XmlType;
 public enum TBinaryOperator {
 
     @XmlEnumValue("+")
-    ADD("+"), @XmlEnumValue("-")
-    SUBTRACT("-"), @XmlEnumValue("*")
-    MULTIPLY("*"), @XmlEnumValue("/")
-    DIVIDE("/"), @XmlEnumValue("=")
-    EQUAL("="), @XmlEnumValue("!=")
-    UNEQUAL("!="), @XmlEnumValue("==")
-    IDENTICAL("=="), @XmlEnumValue("!==")
-    NOT_IDENTICAL("!=="), @XmlEnumValue("&")
-    AND("&"), @XmlEnumValue("|")
-    OR("|"), @XmlEnumValue("<")
-    LESS_THAN("<"), @XmlEnumValue(">")
-    GREATER_THAN(">"), @XmlEnumValue(">=")
-    AT_LEAST(">="), @XmlEnumValue("<=")
-    AT_MOST("<=");
+    ADD("+"), @XmlEnumValue("-") //$NON-NLS-1$
+    SUBTRACT("-"), @XmlEnumValue("*") //$NON-NLS-1$
+    MULTIPLY("*"), @XmlEnumValue("/") //$NON-NLS-1$
+    DIVIDE("/"), @XmlEnumValue("=") //$NON-NLS-1$
+    EQUAL("="), @XmlEnumValue("!=") //$NON-NLS-1$
+    UNEQUAL("!="), @XmlEnumValue("==") //$NON-NLS-1$
+    IDENTICAL("=="), @XmlEnumValue("!==") //$NON-NLS-1$
+    NOT_IDENTICAL("!=="), @XmlEnumValue("&") //$NON-NLS-1$
+    AND("&"), @XmlEnumValue("|") //$NON-NLS-1$
+    OR("|"), @XmlEnumValue("<") //$NON-NLS-1$
+    LESS_THAN("<"), @XmlEnumValue(">") //$NON-NLS-1$
+    GREATER_THAN(">"), @XmlEnumValue(">=") //$NON-NLS-1$
+    AT_LEAST(">="), @XmlEnumValue("<=") //$NON-NLS-1$
+    AT_MOST("<="); //$NON-NLS-1$
 
     private final String value;
 

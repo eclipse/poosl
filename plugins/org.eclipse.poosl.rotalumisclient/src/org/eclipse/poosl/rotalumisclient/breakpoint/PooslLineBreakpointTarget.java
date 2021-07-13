@@ -143,7 +143,7 @@ public class PooslLineBreakpointTarget implements IToggleBreakpointsTarget, ITog
             IResource resource = editorPart.getEditorInput().getAdapter(IResource.class);
             if (resource != null) {
                 String extension = resource.getFileExtension();
-                if (extension != null && "poosl".equals(extension)) {
+                if (extension != null && "poosl".equals(extension)) { //$NON-NLS-1$
                     return editorPart;
                 }
             }

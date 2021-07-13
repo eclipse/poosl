@@ -156,7 +156,7 @@ abstract class NewMethodDialog extends TitleAreaDialog {
         }
 
         Label lblEmpty = new Label(container, SWT.NONE);
-        lblEmpty.setText("");
+        lblEmpty.setText(""); //$NON-NLS-1$
 
         GridData emptyData = new GridData();
         emptyData.grabExcessHorizontalSpace = true;
@@ -167,7 +167,7 @@ abstract class NewMethodDialog extends TitleAreaDialog {
 
     private void addEmptyRow(Composite area) {
         Label lblEmpty = new Label(area, SWT.NONE);
-        lblEmpty.setText("");
+        lblEmpty.setText(""); //$NON-NLS-1$
 
         GridData emptyData = new GridData();
         emptyData.grabExcessHorizontalSpace = true;
@@ -446,7 +446,7 @@ abstract class NewMethodDialog extends TitleAreaDialog {
     }
 
     public class TextDeclaration {
-        private static final String COMMA = ",";
+        private static final String COMMA = ","; //$NON-NLS-1$
 
         private String type;
 

@@ -127,8 +127,8 @@ public class PooslSequenceDiagramMessageProvider {
             public void run() {
                 IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 ICommandService commandService = window.getService(ICommandService.class);
-                Command command = commandService.getCommand("org.eclipse.poosl.rotalumisclient.views.diagram.setupaction");
-                State state = command.getState("org.eclipse.ui.commands.toggleState");
+                Command command = commandService.getCommand("org.eclipse.poosl.rotalumisclient.views.diagram.setupaction"); //$NON-NLS-1$
+                State state = command.getState("org.eclipse.ui.commands.toggleState"); //$NON-NLS-1$
                 boolean enabled = (target == null) || target.isCommEventsEnabled();
                 state.setValue(enabled);
             }
@@ -207,7 +207,7 @@ public class PooslSequenceDiagramMessageProvider {
                 }
             }
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     public void setMessageFilter(Object[] filter) throws CoreException {

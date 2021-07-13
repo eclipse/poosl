@@ -152,7 +152,7 @@ public class PooslVariablesView extends VariablesView {
         super.createPartControl(parent);
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_variables");
+            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_variables"); //$NON-NLS-1$
         }
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (plugin != null) {

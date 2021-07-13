@@ -36,7 +36,7 @@ public class PooslEdgeFormatDataKey extends SemanticEdgeFormatDataKey {
             // same id's can be created; @channels.1/@instancePorts.1
             if (realObject instanceof InstancePort) {
                 InstancePort iPort = (InstancePort) realObject;
-                edgeId += "//" + iPort.getInstance().getName();
+                edgeId += "//" + iPort.getInstance().getName(); //$NON-NLS-1$
             }
             return edgeId;
 
@@ -47,7 +47,7 @@ public class PooslEdgeFormatDataKey extends SemanticEdgeFormatDataKey {
 
     @Override
     public String getId() {
-        return getSemanticElementURIFragment() + "-" + sourceNode + "-" + targetNode;
+        return getSemanticElementURIFragment() + "-" + sourceNode + "-" + targetNode; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Override

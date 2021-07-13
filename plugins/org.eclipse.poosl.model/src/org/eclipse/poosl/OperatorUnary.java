@@ -24,7 +24,7 @@ public enum OperatorUnary implements Enumerator {
      * @generated
      * @ordered
      */
-    MINUS(0, "minus", "-"),
+    MINUS(0, "minus", "-"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Not</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -33,7 +33,7 @@ public enum OperatorUnary implements Enumerator {
      * @generated
      * @ordered
      */
-    NOT(1, "not", "!");
+    NOT(1, "not", "!"); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Minus</b></em>' literal value. <!-- begin-user-doc -->

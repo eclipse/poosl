@@ -36,7 +36,7 @@ public class PooslLinesExpectationImpl extends AbstractExpectation implements IP
     }
 
     public void assertEquals(Iterable<?> actual) {
-        assertEquals("", actual);
+        assertEquals("", actual); //$NON-NLS-1$
     }
 
     public void assertEquals(String message, Iterable<?> actual) {

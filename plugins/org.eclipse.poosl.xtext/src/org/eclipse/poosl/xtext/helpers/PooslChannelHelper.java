@@ -8,7 +8,7 @@ import org.eclipse.poosl.Channel;
 import org.eclipse.poosl.InstancePort;
 
 public class PooslChannelHelper {
-    private static final String COMMA = ",";
+    private static final String COMMA = ","; //$NON-NLS-1$
 
     private String externalPortName;
 
@@ -18,7 +18,7 @@ public class PooslChannelHelper {
         String[] ports = stringDescription.split(COMMA);
         if (ports != null && ports.length != 0) {
             for (int i = 0; i < ports.length; i++) {
-                if (!ports[i].contains(":")) {
+                if (!ports[i].contains(":")) { //$NON-NLS-1$
                     externalPortName = ports[i];
                 } else {
                     instancePorts.add(new PooslInstancePortHelper(aClassName, ports[i], instances));
@@ -28,7 +28,7 @@ public class PooslChannelHelper {
     }
 
     public PooslChannelHelper(Channel channel) {
-        externalPortName = (channel.getExternalPort() != null) ? channel.getExternalPort().getName() : "";
+        externalPortName = (channel.getExternalPort() != null) ? channel.getExternalPort().getName() : ""; //$NON-NLS-1$
         for (InstancePort iPort : channel.getInstancePorts()) {
             if (iPort.getInstance() != null && iPort.getPort() != null) {
                 instancePorts.add(new PooslInstancePortHelper(iPort));

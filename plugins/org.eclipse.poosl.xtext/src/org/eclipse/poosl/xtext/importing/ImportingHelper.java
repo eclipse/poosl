@@ -27,7 +27,7 @@ import org.eclipse.poosl.xtext.GlobalConstants;
 import org.osgi.service.prefs.Preferences;
 
 public final class ImportingHelper {
-    private static final String BASIC_CLASSES_JAR_PATH = "org/eclipse/poosl/xtext/BasicClasses.poosl";
+    private static final String BASIC_CLASSES_JAR_PATH = "org/eclipse/poosl/xtext/BasicClasses.poosl"; //$NON-NLS-1$
 
     private static final String BASIC_CLASSES_PATH = Thread.currentThread().getContextClassLoader().getResource(BASIC_CLASSES_JAR_PATH).toString();
 
@@ -67,7 +67,7 @@ public final class ImportingHelper {
         if (GlobalConstants.FILE_EXTENSION.equals(importURI.fileExtension()) && importURI.isRelative()) {
             List<String> segments = importURI.segmentsList();
             String firstSegment = segments.get(0);
-            if (!segments.contains("..") && firstSegment != null && !firstSegment.startsWith("~")) {
+            if (!segments.contains("..") && firstSegment != null && !firstSegment.startsWith("~")) { //$NON-NLS-1$ //$NON-NLS-2$
                 URI location = resolveImportLibUri(base, importURI);
                 return location != null;
             }
@@ -185,7 +185,7 @@ public final class ImportingHelper {
         IPreferencesService preferencesService = Platform.getPreferencesService();
         if (preferencesService != null && !useDefaultBasicclasses()) {
             String path = preferencesService.getString(GlobalConstants.PREFERENCE_PLUGIN_ID, GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH, BASIC_CLASSES_PATH, null);
-            if (!path.startsWith("platform")) {
+            if (!path.startsWith("platform")) { //$NON-NLS-1$
                 return URI.createFileURI(path);
             }
             basicClassesLocation = path;
@@ -244,8 +244,8 @@ public final class ImportingHelper {
         List<String> includes = new ArrayList<>();
         if (project != null) {
             IPreferencesService service = Platform.getPreferencesService();
-            Preferences[] prefs = new Preferences[] { new ProjectScope(project).getNode("org.eclipse.poosl.xtext.Poosl") };
-            String version = service.get(GlobalConstants.PREFERENCES_INCLUDE_VERSION, "0", prefs);
+            Preferences[] prefs = new Preferences[] { new ProjectScope(project).getNode("org.eclipse.poosl.xtext.Poosl") }; //$NON-NLS-1$
+            String version = service.get(GlobalConstants.PREFERENCES_INCLUDE_VERSION, "0", prefs); //$NON-NLS-1$
             String key = getIncludeKey(Integer.parseInt(version), project);
             int i = 0;
             String result = service.get(key + i, null, prefs);
@@ -259,7 +259,7 @@ public final class ImportingHelper {
     }
 
     public static String getIncludeKey(Integer version, IProject project) {
-        return version > 0 ? GlobalConstants.PREFERENCES_INCLUDE_KEY : project.getName() + ".include";
+        return version > 0 ? GlobalConstants.PREFERENCES_INCLUDE_KEY : project.getName() + ".include"; //$NON-NLS-1$
     }
 
     public static String importToString(Import pImport) {
@@ -334,7 +334,7 @@ public final class ImportingHelper {
                         if (index + 1 < importString.length()) {
                             int length = 0;
                             char x = importString.charAt(index + 1);
-                            String hex = "";
+                            String hex = ""; //$NON-NLS-1$
                             while (length < 2 && isHexDigit(x)) {
                                 hex += x;
                                 length++;

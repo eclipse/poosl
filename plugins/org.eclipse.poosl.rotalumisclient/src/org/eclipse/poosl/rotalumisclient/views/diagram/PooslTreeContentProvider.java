@@ -60,7 +60,7 @@ public class PooslTreeContentProvider implements ITreeContentProvider {
                 Entry<?, ?> entry = (Entry<?, ?>) instance;
                 String tempName = (String) entry.getKey();
                 // Only add the top level elements
-                String[] tempResult = tempName.split("/");
+                String[] tempResult = tempName.split("/"); //$NON-NLS-1$
                 if (tempResult.length == 2) {
                     treeElements.put(tempName, (TInstanceType) entry.getValue());
                 }

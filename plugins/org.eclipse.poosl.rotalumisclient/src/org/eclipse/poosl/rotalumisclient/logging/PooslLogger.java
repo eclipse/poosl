@@ -18,7 +18,7 @@ import org.eclipse.poosl.rotalumisclient.PooslConstants;
 public final class PooslLogger {
     private static FileHandler fileHTML;
 
-    private static final Logger LOGGER = Logger.getLogger("org.eclipse.poosl");
+    private static final Logger LOGGER = Logger.getLogger("org.eclipse.poosl"); //$NON-NLS-1$
 
     private static IPropertyChangeListener propertyChangeListener;
 
@@ -47,7 +47,7 @@ public final class PooslLogger {
         propertyChangeListener = new IPropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
-                if ("LOG_LEVEL".equals(event.getProperty())) {
+                if ("LOG_LEVEL".equals(event.getProperty())) { //$NON-NLS-1$
                     String value = event.getNewValue().toString();
                     LOGGER.setLevel(Level.parse(value));
                     if (fileHTML != null) {
@@ -62,7 +62,7 @@ public final class PooslLogger {
         Formatter formatterHTML = new PooslHtmlFormatter();
 
         // Create HTML LOGGER
-        File logFile = new File("Logging.html");
+        File logFile = new File("Logging.html"); //$NON-NLS-1$
         if (logFile.exists()) {
             boolean result = logFile.delete();
             if (!result) {
@@ -70,7 +70,7 @@ public final class PooslLogger {
             }
         }
         try {
-            fileHTML = new FileHandler("Logging.html", false);
+            fileHTML = new FileHandler("Logging.html", false); //$NON-NLS-1$
         } catch (SecurityException | IOException e) {
             LOGGER.log(Level.WARNING, e.getMessage(), e);
         }

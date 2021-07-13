@@ -70,7 +70,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                     public void apply(EObject element, IModificationContext context) {
                         try {
                             IXtextDocument xtextDocument = context.getXtextDocument();
-                            xtextDocument.replace(issue.getOffset(), issue.getLength(), "");
+                            xtextDocument.replace(issue.getOffset(), issue.getLength(), ""); //$NON-NLS-1$
                         } catch (BadLocationException e) {
                             LOGGER.log(Level.SEVERE, "Could not apply textchange in doc: " + context.getXtextDocument() + ", of object: " + element, e);
                             showWarning("Could not remove the channel.");
@@ -89,7 +89,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                     public void apply(EObject element, IModificationContext context) {
                         try {
                             IXtextDocument xtextDocument = context.getXtextDocument();
-                            xtextDocument.replace(issue.getOffset(), issue.getLength(), "");
+                            xtextDocument.replace(issue.getOffset(), issue.getLength(), ""); //$NON-NLS-1$
                         } catch (BadLocationException e) {
                             LOGGER.log(Level.SEVERE, "Could not apply textchange in doc: " + context.getXtextDocument() + ", of object: " + element, e);
                             showWarning("Could not remove the port.");
@@ -117,12 +117,12 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                         // Send statements
                         for (MessageSignature msg : pClass.getSendMessages()) {
                             if (!usedSendMessages.contains(PooslMessageSignatureCallHelper.getSignatureID(msg, PooslMessageType.SEND)))
-                                changes.add(new TextChange(msg, ""));
+                                changes.add(new TextChange(msg, "")); //$NON-NLS-1$
                         }
                         // Receive statements
                         for (MessageSignature msg : pClass.getReceiveMessages()) {
                             if (!usedReceiveMessages.contains(PooslMessageSignatureCallHelper.getSignatureID(msg, PooslMessageType.RECEIVE)))
-                                changes.add(new TextChange(msg, ""));
+                                changes.add(new TextChange(msg, "")); //$NON-NLS-1$
                         }
 
                         if (!applyTextChanges(context.getXtextDocument(), resource, changes))
@@ -139,7 +139,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                 null, // icon
                 new ISemanticModification() {
                     public void apply(EObject element, IModificationContext context) {
-                        applyTextChange(context.getXtextDocument(), element.eResource(), element, null, "");
+                        applyTextChange(context.getXtextDocument(), element.eResource(), element, null, ""); //$NON-NLS-1$
                     }
                 });
     }
@@ -157,19 +157,19 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                         Declaration dec = (Declaration) var.eContainer();
 
                         if (dec.getVariables().size() == 1) {
-                            applyTextChange(context.getXtextDocument(), resource, dec, null, "");
+                            applyTextChange(context.getXtextDocument(), resource, dec, null, ""); //$NON-NLS-1$
                         } else {
                             ICompositeNode node = NodeModelUtils.getNode(var);
                             INode prev = getPreviousVisibleNode(node);
 
-                            if (prev.getText().equals(",")) {
-                                applyTextChange(context.getXtextDocument(), resource, dec, prev.getOffset(), node.getTotalEndOffset() - prev.getOffset(), "");
+                            if (prev.getText().equals(",")) { //$NON-NLS-1$
+                                applyTextChange(context.getXtextDocument(), resource, dec, prev.getOffset(), node.getTotalEndOffset() - prev.getOffset(), ""); //$NON-NLS-1$
                             } else {
                                 INode next = getNextVisibleNode(node);
-                                if (next.getText().equals(",")) {
-                                    applyTextChange(context.getXtextDocument(), resource, dec, node.getOffset(), next.getTotalEndOffset() - node.getOffset(), "");
+                                if (next.getText().equals(",")) { //$NON-NLS-1$
+                                    applyTextChange(context.getXtextDocument(), resource, dec, node.getOffset(), next.getTotalEndOffset() - node.getOffset(), ""); //$NON-NLS-1$
                                 } else {
-                                    applyTextChange(context.getXtextDocument(), resource, dec, null, "");
+                                    applyTextChange(context.getXtextDocument(), resource, dec, null, ""); //$NON-NLS-1$
                                 }
                             }
                         }
@@ -263,7 +263,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
             String platformString = changedResource.getURI().toPlatformString(true);
             IFile file = (IFile) ResourcesPlugin.getWorkspace().getRoot().findMember(platformString);
             try {
-                IEditorPart openedEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), "org.eclipse.poosl.xtext.Poosl");
+                IEditorPart openedEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), "org.eclipse.poosl.xtext.Poosl"); //$NON-NLS-1$
                 if (openedEditor instanceof XtextEditor) {
                     return (XtextEditor) openedEditor;
                 }
@@ -328,7 +328,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
     }
 
     protected void showWarning(final String message) {
-        LOGGER.log(Level.WARNING, QUICKFIX_FAILED + "  " + message);
+        LOGGER.log(Level.WARNING, QUICKFIX_FAILED + "  " + message); //$NON-NLS-1$
         Logger.getLogger(PooslQuickfixProviderUnresolved.class.getName());
         Display.getDefault().asyncExec(new Runnable() {
             @Override
@@ -339,14 +339,14 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
     }
 
     protected void addSuppressWarning(final Issue issue, IssueResolutionAcceptor acceptor, final WarningType type) {
-        acceptor.accept(issue, "Add @" + PooslJavaValidatorSuppress.ANNOTATION_SUPPRESSWARNINGS + "(" + type.toString() + ")", // label
+        acceptor.accept(issue, "Add @" + PooslJavaValidatorSuppress.ANNOTATION_SUPPRESSWARNINGS + "(" + type.toString() + ")", // label //$NON-NLS-2$ //$NON-NLS-3$
                 null, // description
                 null, // icon
                 new ISemanticModification() {
                     public void apply(EObject element, IModificationContext context) {
                         Annotable annotable = EcoreUtil2.getContainerOfType(element, Annotable.class);
                         if (annotable != null) {
-                            String text = "@" + PooslJavaValidatorSuppress.ANNOTATION_SUPPRESSWARNINGS + "(" + type.toString() + ")" + System.lineSeparator() + getIndent(annotable);
+                            String text = "@" + PooslJavaValidatorSuppress.ANNOTATION_SUPPRESSWARNINGS + "(" + type.toString() + ")" + System.lineSeparator() + getIndent(annotable); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                             if (!applyTextChange(context.getXtextDocument(), element.eResource(), annotable, NodeModelUtils.getNode(annotable).getOffset(), 0, text))
                                 showWarning("Could not add SuppressWarnings Annotation.");
                         }
@@ -358,7 +358,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
         ICompositeNode node = NodeModelUtils.getNode(object);
         Iterator<ILeafNode> iterator = node.getLeafNodes().iterator();
 
-        String indentAfterLastNewline = "";
+        String indentAfterLastNewline = ""; //$NON-NLS-1$
         boolean previousLeafNodeEndedWithNewline = false;
         ILeafNode leafNode = iterator.next();
         while (leafNode instanceof HiddenLeafNode) {
@@ -366,7 +366,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
             int newLine = hidden.lastIndexOf('\n');
             if (newLine != -1) {
                 indentAfterLastNewline = hidden.substring(newLine + 1);
-            } else if (previousLeafNodeEndedWithNewline && "".equals(hidden.trim())) {
+            } else if (previousLeafNodeEndedWithNewline && "".equals(hidden.trim())) { //$NON-NLS-1$
                 indentAfterLastNewline = indentAfterLastNewline + hidden;
             }
             previousLeafNodeEndedWithNewline = newLine + 1 == hidden.length();

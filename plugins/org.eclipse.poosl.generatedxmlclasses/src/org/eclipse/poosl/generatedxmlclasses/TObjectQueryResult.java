@@ -35,9 +35,9 @@ import javax.xml.bind.annotation.XmlType;
 public enum TObjectQueryResult {
 
     @XmlEnumValue("ok")
-    OK("ok"), @XmlEnumValue("unknown object")
-    UNKNOWN_OBJECT("unknown object"), @XmlEnumValue("unknown handle")
-    UNKNOWN_HANDLE("unknown handle");
+    OK("ok"), @XmlEnumValue("unknown object") //$NON-NLS-1$
+    UNKNOWN_OBJECT("unknown object"), @XmlEnumValue("unknown handle") //$NON-NLS-1$
+    UNKNOWN_HANDLE("unknown handle"); //$NON-NLS-1$
 
     private final String value;
 

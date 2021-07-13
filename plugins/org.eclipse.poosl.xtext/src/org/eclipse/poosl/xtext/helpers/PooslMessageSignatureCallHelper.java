@@ -12,11 +12,11 @@ import org.eclipse.poosl.xtext.descriptions.PooslMessageSignatureDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public class PooslMessageSignatureCallHelper {
-    private static final String COLON = ":";
+    private static final String COLON = ":"; //$NON-NLS-1$
 
-    private static final String STR_MESSAGETYPE_SEND = "Send";
+    private static final String STR_MESSAGETYPE_SEND = "Send"; //$NON-NLS-1$
 
-    private static final String STR_MESSAGETYPE_RECEIVE = "Receive";
+    private static final String STR_MESSAGETYPE_RECEIVE = "Receive"; //$NON-NLS-1$
 
     private String type;
 
@@ -35,7 +35,7 @@ public class PooslMessageSignatureCallHelper {
             if (result.length == 4)
                 type = result[3];
         } else {
-            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " : " + stringDescription);
+            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " : " + stringDescription); //$NON-NLS-1$
         }
     }
 

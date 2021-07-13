@@ -81,7 +81,7 @@ public class LaunchShortcut implements ILaunchShortcut {
     }
 
     private boolean isLaunchConfiguration(IFile file, ILaunchConfiguration iLaunchConfiguration) throws CoreException {
-        return iLaunchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "").equals(file.getLocation().toOSString());
+        return iLaunchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "").equals(file.getLocation().toOSString()); //$NON-NLS-1$
     }
 
     private ILaunchConfigurationWorkingCopy createLaunchConfiguration(ILaunchManager mgr, ILaunchConfigurationType lct, IFile file, String name) throws CoreException {
@@ -96,7 +96,7 @@ public class LaunchShortcut implements ILaunchShortcut {
 
         tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, file.getProject().getName());
         tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, file.getFullPath().toOSString());
-        tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "10001");
+        tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "10001"); //$NON-NLS-1$
         tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_TEST_CONF, isTestConfiguration());
 
         String type = tempConfiguration.getType().getSourceLocatorId();
@@ -137,8 +137,8 @@ public class LaunchShortcut implements ILaunchShortcut {
      * @throws CoreException
      */
     private void validateNewAttributes(ILaunchConfiguration configuration, IFile file) throws CoreException {
-        String projectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, "");
-        String relativePath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, "");
+        String projectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
+        String relativePath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
         if (file != null && (projectName.isEmpty() || relativePath.isEmpty())) {
             ILaunchConfigurationWorkingCopy tempConfiguration = configuration.getWorkingCopy();
             if (relativePath.isEmpty()) {

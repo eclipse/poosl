@@ -29,7 +29,7 @@ public class PooslValidationChannelTest extends ValidationTest {
 
         List<String> issues = getActualIssues(line2issue, line, cfg, Severity.WARNING);
         if (issues.size() == 0) {
-            throw new ComparisonFailure("A warning was expected but none was found.", issues.toString(), "!");
+            throw new ComparisonFailure("A warning was expected but none was found.", issues.toString(), "!"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 

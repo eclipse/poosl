@@ -72,7 +72,7 @@ public class PooslBreakpointManager {
         int lineNr = breakpoint.getMarker().getAttribute(IMarker.LINE_NUMBER, -1);
 
         if (modelHandle != null && file != null && lineNr != -1) {
-            breakpointRequests.put(file + "|" + lineNr, breakpoint);
+            breakpointRequests.put(file + "|" + lineNr, breakpoint); //$NON-NLS-1$
             client.createBreakpoint(BigInteger.ZERO, file, lineNr);
         } else {
             LOGGER.log(Level.SEVERE, "Could not set breakpoint for file " + breakpoint.getMarker().getResource().getLocation().toOSString() + ". (" + file + ", " + lineNr + ")");
@@ -172,16 +172,16 @@ public class PooslBreakpointManager {
      *             if the thread could not be found by name
      */
     public static PooslThread getBreakpointThread(IThread[] threads, PooslSourceMapping sourceMapping, TTransition transition) throws DebugException {
-        String processPath = "";
+        String processPath = ""; //$NON-NLS-1$
         BigInteger node = null;
         if (transition.getProcessStep() != null) {
             processPath = transition.getProcessStep().getProcessPath();
             node = transition.getProcessStep().getNode();
         } else if (transition.getCommunication() != null) {
-            if (sourceMapping.getSourceText().contains("!")) {
+            if (sourceMapping.getSourceText().contains("!")) { //$NON-NLS-1$
                 processPath = transition.getCommunication().getSender().getProcessPath();
                 node = transition.getCommunication().getSender().getNode();
-            } else if (sourceMapping.getSourceText().contains("?")) {
+            } else if (sourceMapping.getSourceText().contains("?")) { //$NON-NLS-1$
                 processPath = transition.getCommunication().getReceiver().getProcessPath();
                 node = transition.getCommunication().getReceiver().getNode();
             }
@@ -197,7 +197,7 @@ public class PooslBreakpointManager {
     }
 
     private String getCreatedBreakpointId(TCreateBreakpointResponse response) {
-        return response.getPosition().getFile() + "|" + response.getPosition().getLine();
+        return response.getPosition().getFile() + "|" + response.getPosition().getLine(); //$NON-NLS-1$
     }
 
     public void clear() {

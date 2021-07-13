@@ -32,7 +32,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
 public final class ColorGraphHelper {
-    private static final String PARAMETER_VIEW = "view";
+    private static final String PARAMETER_VIEW = "view"; //$NON-NLS-1$
 
     private static final int LINE_WIDTH = 2;
 
@@ -341,8 +341,8 @@ public final class ColorGraphHelper {
             String parentName = null;
             if (target instanceof InstancePort) {
                 InstancePort iPort = (InstancePort) target;
-                portName = (iPort.getPort() != null) ? iPort.getPort().getPort() : "";
-                parentName = owner + "/" + iPort.getInstance().getName();
+                portName = (iPort.getPort() != null) ? iPort.getPort().getPort() : ""; //$NON-NLS-1$
+                parentName = owner + "/" + iPort.getInstance().getName(); //$NON-NLS-1$
             } else if (target instanceof Port) {
                 Port port = (Port) target;
                 portName = port.getName();

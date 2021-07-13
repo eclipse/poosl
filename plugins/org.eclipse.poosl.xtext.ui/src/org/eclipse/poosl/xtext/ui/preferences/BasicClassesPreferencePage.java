@@ -40,9 +40,9 @@ import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 public class BasicClassesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
-    private static final String HELP_ID = "org.eclipse.poosl.help.help_preferences_basic_classes";
+    private static final String HELP_ID = "org.eclipse.poosl.help.help_preferences_basic_classes"; //$NON-NLS-1$
 
-    private static final String FILE_EXTENSION = "poosl";
+    private static final String FILE_EXTENSION = "poosl"; //$NON-NLS-1$
 
     private static final String LABEL_FILE_LOCATION = "File Location:";
 
@@ -60,7 +60,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
 
     private static final String WARNING_EMPTY = "File path cannot be empty.";
 
-    private static final String WORKSPACE_SUBSTRING = "platform:/resource";
+    private static final String WORKSPACE_SUBSTRING = "platform:/resource"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(BasicClassesPreferencePage.class.getName());
 
@@ -112,7 +112,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
                 @Override
                 public IStatus validate(Object[] selection) {
                     if (selection.length > 0 && selection[0] instanceof IFile && FILE_EXTENSION.equals(((IFile) selection[0]).getFileExtension())) {
-                        return new Status(Status.OK, GlobalConstants.PREFERENCE_PLUGIN_ID, "");
+                        return new Status(Status.OK, GlobalConstants.PREFERENCE_PLUGIN_ID, ""); //$NON-NLS-1$
                     }
                     return new Status(Status.ERROR, GlobalConstants.PREFERENCE_PLUGIN_ID, LABEL_POOSL_FILE);
                 }
@@ -285,18 +285,18 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
      * @return true is it is a poosl file
      */
     private boolean isPooslFile(String location) {
-        if (location.isEmpty() || !location.contains(".")) {
+        if (location.isEmpty() || !location.contains(".")) { //$NON-NLS-1$
             return false;
         } else {
             String extension = location.substring(location.lastIndexOf('.'));
-            return extension.equals("." + FILE_EXTENSION);
+            return extension.equals("." + FILE_EXTENSION); //$NON-NLS-1$
         }
     }
 
     @Override
     protected void performDefaults() {
         basicClassesButton.setSelection(true);
-        basicClassesControl.setText("");
+        basicClassesControl.setText(""); //$NON-NLS-1$
         basicClassesControl.setEnabled(false);
         super.performDefaults();
     }

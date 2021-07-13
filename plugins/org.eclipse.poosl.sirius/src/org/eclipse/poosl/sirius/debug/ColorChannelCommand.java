@@ -54,7 +54,7 @@ public class ColorChannelCommand extends RecordingCommand {
         for (DRepresentationDescriptor descriptor : descriptors) {
             String launchId = GraphicalEditorHelper.getLaunchIdFromDocumentation(descriptor.getDocumentation());
             PooslDrawMessage drawMessage = messages.get(launchId);
-            PathCalculator pathCalculator = (pathCalculators.get(launchId) == null) ? (new PathCalculator("")) : pathCalculators.get(launchId);
+            PathCalculator pathCalculator = (pathCalculators.get(launchId) == null) ? (new PathCalculator("")) : pathCalculators.get(launchId); //$NON-NLS-1$
             DRepresentation representation = descriptor.getRepresentation();
             ColorGraphHelper.colorChannel(representation, drawMessage, pathCalculator);
             DiagramDebugNote debugNote = new DiagramDebugNote(representation);

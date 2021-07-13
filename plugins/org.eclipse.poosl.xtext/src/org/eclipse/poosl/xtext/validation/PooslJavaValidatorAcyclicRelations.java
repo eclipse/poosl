@@ -40,9 +40,9 @@ public class PooslJavaValidatorAcyclicRelations extends PooslJavaValidatorMisc {
 
     private static final String CYCLIC_DATA = "Cyclic data class dependency: ";
 
-    private static final String ARROW = " -> ";
+    private static final String ARROW = " -> "; //$NON-NLS-1$
 
-    private static final String SEPARATOR = "_";
+    private static final String SEPARATOR = "_"; //$NON-NLS-1$
 
     public boolean checkCyclesDataClasses(DataClass dClass) {
         Resource resource = dClass.eResource();
@@ -219,7 +219,7 @@ public class PooslJavaValidatorAcyclicRelations extends PooslJavaValidatorMisc {
         String strCalledPMethod = processMethod2StringNameAndParameterCounts(calledMethod);
         if (history.contains(strCalledPMethod)) {
             if (strPMethod.equals(strCalledPMethod)) {
-                return "";
+                return ""; //$NON-NLS-1$
             }
         } else {
             history.add(strCalledPMethod);

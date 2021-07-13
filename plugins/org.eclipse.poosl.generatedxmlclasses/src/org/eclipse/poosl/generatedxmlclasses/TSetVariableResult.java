@@ -37,11 +37,11 @@ import javax.xml.bind.annotation.XmlType;
 public enum TSetVariableResult {
 
     @XmlEnumValue("unknown")
-    UNKNOWN("unknown"), @XmlEnumValue("ok")
-    OK("ok"), @XmlEnumValue("error")
-    ERROR("error"), @XmlEnumValue("invalid_var_handle")
-    INVALID_VAR_HANDLE("invalid_var_handle"), @XmlEnumValue("invalid_list_handle")
-    INVALID_LIST_HANDLE("invalid_list_handle");
+    UNKNOWN("unknown"), @XmlEnumValue("ok") //$NON-NLS-1$
+    OK("ok"), @XmlEnumValue("error") //$NON-NLS-1$
+    ERROR("error"), @XmlEnumValue("invalid_var_handle") //$NON-NLS-1$
+    INVALID_VAR_HANDLE("invalid_var_handle"), @XmlEnumValue("invalid_list_handle") //$NON-NLS-1$
+    INVALID_LIST_HANDLE("invalid_list_handle"); //$NON-NLS-1$
 
     private final String value;
 

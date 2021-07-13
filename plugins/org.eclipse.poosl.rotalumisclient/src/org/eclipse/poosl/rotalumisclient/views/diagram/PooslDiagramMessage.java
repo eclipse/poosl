@@ -17,13 +17,13 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
  *
  */
 public class PooslDiagramMessage implements IPropertySource {
-    private static final String PROPERTY_SEND_PORT = "poosldiagrammessage.sendport";
+    private static final String PROPERTY_SEND_PORT = "poosldiagrammessage.sendport"; //$NON-NLS-1$
 
-    private static final String PROPERTY_RECEIVE_PORT = "poosldiagrammessage.receiveport";
+    private static final String PROPERTY_RECEIVE_PORT = "poosldiagrammessage.receiveport"; //$NON-NLS-1$
 
-    private static final String PROPERTY_TIMESTAMP = "poosldiagrammessage.timestamp";
+    private static final String PROPERTY_TIMESTAMP = "poosldiagrammessage.timestamp"; //$NON-NLS-1$
 
-    private static final String PROPERTY_MESSAGE = "poosldiagrammessage.message";
+    private static final String PROPERTY_MESSAGE = "poosldiagrammessage.message"; //$NON-NLS-1$
 
     private final TCommunicationEvent communicationEvent;
 
@@ -60,9 +60,9 @@ public class PooslDiagramMessage implements IPropertySource {
         if (id.equals(PROPERTY_TIMESTAMP)) {
             return communicationEvent.getSimulationTime().toString();
         } else if (id.equals(PROPERTY_SEND_PORT)) {
-            return communicationEvent.getSender().getProcessPath() + "." + communicationEvent.getSender().getPortName();
+            return communicationEvent.getSender().getProcessPath() + "." + communicationEvent.getSender().getPortName(); //$NON-NLS-1$
         } else if (id.equals(PROPERTY_RECEIVE_PORT)) {
-            return communicationEvent.getReceiver().getProcessPath() + "." + communicationEvent.getReceiver().getPortName();
+            return communicationEvent.getReceiver().getProcessPath() + "." + communicationEvent.getReceiver().getPortName(); //$NON-NLS-1$
         } else if (id.equals(PROPERTY_MESSAGE)) {
             return communicationEvent.getMessage().getName();
         }
@@ -118,9 +118,9 @@ public class PooslDiagramMessage implements IPropertySource {
     }
 
     class CommunicationMessageParamater implements IPropertySource {
-        private static final String PROPERTY_MESSAGE_PARAMETER_VALUE = "poosldiagrammessage.message.parameter.value";
+        private static final String PROPERTY_MESSAGE_PARAMETER_VALUE = "poosldiagrammessage.message.parameter.value"; //$NON-NLS-1$
 
-        private static final String PROPERTY_MESSAGE_PARAMETER_TYPE = "poosldiagrammessage.message.parameter.type";
+        private static final String PROPERTY_MESSAGE_PARAMETER_TYPE = "poosldiagrammessage.message.parameter.type"; //$NON-NLS-1$
 
         Parameter parameter;
 
@@ -168,20 +168,20 @@ public class PooslDiagramMessage implements IPropertySource {
     public String getFormattedPayLoad() {
         String payload = communicationEvent.getMessage().getName();
         for (Parameter param : communicationEvent.getMessage().getParameters().getParameter()) {
-            payload += "\n    " + param.getValue() + " : " + param.getType();
+            payload += "\n    " + param.getValue() + " : " + param.getType(); //$NON-NLS-1$ //$NON-NLS-2$
         }
         return payload;
     }
 
     public String getPayload() {
-        String payload = "";
+        String payload = ""; //$NON-NLS-1$
         for (Parameter param : communicationEvent.getMessage().getParameters().getParameter()) {
-            payload += ", " + param.getValue();
+            payload += ", " + param.getValue(); //$NON-NLS-1$
         }
         if (!payload.isEmpty()) {
             payload = payload.substring(2);
         }
-        payload = communicationEvent.getMessage().getName() + "(" + payload + ")";
+        payload = communicationEvent.getMessage().getName() + "(" + payload + ")"; //$NON-NLS-1$ //$NON-NLS-2$
         return payload;
     }
 }

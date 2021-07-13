@@ -116,7 +116,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
      * @return string containing classdefinition and type
      */
     public String getInstanceName(Instance instance) {
-        return instance.getName() + " : " + instance.getClassDefinition();
+        return instance.getName() + " : " + instance.getClassDefinition(); //$NON-NLS-1$
     }
 
     /**
@@ -238,7 +238,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
         List<InstancePort> instancePorts = new ArrayList<>();
         for (InstancePort instancePort : channel.getInstancePorts()) {
             if (instancePort.getPort() != null && instancePort.getInstance() != null) {
-                instancePorts.add(allInstancePorts.get(instancePort.getInstance().getName() + "|" + instancePort.getPort().getPort()));
+                instancePorts.add(allInstancePorts.get(instancePort.getInstance().getName() + "|" + instancePort.getPort().getPort())); //$NON-NLS-1$
             }
         }
         return instancePorts;
@@ -274,7 +274,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     private static void getUniqueInstancePorts(Map<String, InstancePort> allUniqueInstancePorts, Channel ch) {
         for (InstancePort instancePort : ch.getInstancePorts()) {
             if (instancePort != null && instancePort.getPort() != null && instancePort.getInstance() != null) {
-                allUniqueInstancePorts.put(instancePort.getInstance().getName() + "|" + instancePort.getPort().getPort(), instancePort);
+                allUniqueInstancePorts.put(instancePort.getInstance().getName() + "|" + instancePort.getPort().getPort(), instancePort); //$NON-NLS-1$
             }
         }
     }

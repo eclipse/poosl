@@ -275,8 +275,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
         List<TextChange> changes = new ArrayList<>();
 
         StringBuilder messages = new StringBuilder();
-        createNewMessageText(messages, sendMessageChanges.values(), "!");
-        createNewMessageText(messages, recMessageChanges.values(), "?");
+        createNewMessageText(messages, sendMessageChanges.values(), "!"); //$NON-NLS-1$
+        createNewMessageText(messages, recMessageChanges.values(), "?"); //$NON-NLS-1$
         changes.add(new TextChange(resource, getLastMessageNode(pClass).getTotalEndOffset(), 0, messages.toString()));
 
         updateExistingMessageText(recMessageChanges.values(), changes);
@@ -593,7 +593,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         int args = HelperFunctions.computeNumberOfVariables(dataMethod.getParameters());
                         String dClassName = HelperFunctions.getCorrectedDataClassExtendsAsString(resource, dClass.getName());
                         EReference ref = null;
-                        String dMethodName = "";
+                        String dMethodName = ""; //$NON-NLS-1$
                         if (dataMethod instanceof DataMethodUnaryOperator) {
                             dMethodName = ((DataMethodUnaryOperator) dataMethod).getName().getLiteral();
                             ref = Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR;
@@ -762,15 +762,15 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
         for (MessageChange mChange : changes) {
             if (mChange.isNewMessage()) {
                 PooslMessageSignatureCallHelper message = new PooslMessageSignatureCallHelper(mChange.id);
-                messages.append("\n\t" + message.getPort() + messageType + message.getName() + "(");
+                messages.append("\n\t" + message.getPort() + messageType + message.getName() + "("); //$NON-NLS-1$ //$NON-NLS-2$
 
                 for (int i = 0; i < mChange.changedTypes.length; i++) {
                     messages.append(mChange.changedTypes[i]);
                     if (i < mChange.changedTypes.length - 1) {
-                        messages.append(",");
+                        messages.append(","); //$NON-NLS-1$
                     }
                 }
-                messages.append(")");
+                messages.append(")"); //$NON-NLS-1$
             }
         }
     }
@@ -816,7 +816,7 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
 
         ICompositeNode pNode = NodeModelUtils.findActualNodeFor(pClass);
         for (ILeafNode iLeafNode : pNode.getLeafNodes()) {
-            if (iLeafNode.getText().equals("messages")) {
+            if (iLeafNode.getText().equals("messages")) { //$NON-NLS-1$
                 return iLeafNode;
             }
         }

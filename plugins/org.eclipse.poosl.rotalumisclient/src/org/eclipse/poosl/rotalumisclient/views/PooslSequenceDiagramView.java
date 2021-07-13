@@ -153,16 +153,16 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 gc.dispose();
                 FileDialog fileDialog = new FileDialog(canvas.getShell(), SWT.SAVE);
                 fileDialog.setText("Get Device File");
-                fileDialog.setFilterExtensions(new String[] { "*.bmp", "*.jpg;*.jpeg", "*.png", "*.*" });
-                fileDialog.setFilterNames(new String[] { "Bitmap (*.bmp)", "JPEG (*.jpg;*.jpeg)", "PNG (*.png)", "All Files (*.*)" });
+                fileDialog.setFilterExtensions(new String[] { "*.bmp", "*.jpg;*.jpeg", "*.png", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                fileDialog.setFilterNames(new String[] { "Bitmap (*.bmp)", "JPEG (*.jpg;*.jpeg)", "PNG (*.png)", "All Files (*.*)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 String fileName = fileDialog.open();
                 if (fileName != null) {
                     int format = SWT.IMAGE_BMP;
-                    if (fileName.toLowerCase().endsWith(".jpg"))
+                    if (fileName.toLowerCase().endsWith(".jpg")) //$NON-NLS-1$
                         format = SWT.IMAGE_JPEG;
-                    if (fileName.toLowerCase().endsWith(".jpeg"))
+                    if (fileName.toLowerCase().endsWith(".jpeg")) //$NON-NLS-1$
                         format = SWT.IMAGE_JPEG;
-                    if (fileName.toLowerCase().endsWith(".png"))
+                    if (fileName.toLowerCase().endsWith(".png")) //$NON-NLS-1$
                         format = SWT.IMAGE_PNG;
                     ImageLoader loader = new ImageLoader();
                     loader.data = new ImageData[] { image.getImageData() };
@@ -231,7 +231,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 int i = 0;
                 for (Entry<String, TInstanceType> entry : allInstances.entrySet()) {
                     if (entry.getKey().startsWith(instanceName) && !entry.getKey().equals(instanceName)) {
-                        if (!entry.getKey().substring(instanceName.length() + 1).contains("/")) {
+                        if (!entry.getKey().substring(instanceName.length() + 1).contains("/")) { //$NON-NLS-1$
                             newFilter[i] = entry;
                             i++;
                         }
@@ -265,7 +265,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 if (firstElement instanceof PooslDiagramMessage) {
                     notifySelectionListeners();
                     try {
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.eclipse.ui.views.PropertySheet");
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
                     } catch (PartInitException e1) {
                         LOGGER.log(Level.WARNING, "Could not open propertySheet", e1);
                     }
@@ -347,9 +347,9 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                     } else if (value instanceof String) {
                         if (visibleLifeLines.containsKey(value.toString())) {
                             if (visibleLifeLines.get(value) == TInstanceType.PROCESS) {
-                                canvas.setToolTipText("<<process>>\n" + value.toString());
+                                canvas.setToolTipText("<<process>>\n" + value.toString()); //$NON-NLS-1$
                             } else if (visibleLifeLines.get(value) == TInstanceType.CLUSTER) {
-                                canvas.setToolTipText("<<cluster>>\n" + value.toString());
+                                canvas.setToolTipText("<<cluster>>\n" + value.toString()); //$NON-NLS-1$
                             }
                         }
                     } else if (value instanceof BigDecimal) {
@@ -563,7 +563,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
 
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(canvas, "org.eclipse.poosl.help.help_sequence_diagram");
+            workbench.getHelpSystem().setHelp(canvas, "org.eclipse.poosl.help.help_sequence_diagram"); //$NON-NLS-1$
         }
 
         DebugPlugin plugin = DebugPlugin.getDefault();
@@ -704,7 +704,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 lastIndex = fromProcessPart.lastIndexOf('/');
             }
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     class PooslSequenceDiagramViewPaintListener implements PaintListener {
@@ -816,21 +816,21 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             // Draw the type of the lifeline with a smal font
             gc.setFont(smallFont);
             TInstanceType inspectType = visibleLifeLines.get(lifelineName);
-            String type = "";
+            String type = ""; //$NON-NLS-1$
             if (inspectType.equals(TInstanceType.PROCESS)) {
-                type = "<<process>>";
+                type = "<<process>>"; //$NON-NLS-1$
             } else if (inspectType.equals(TInstanceType.CLUSTER)) {
-                type = "<<cluster>>";
+                type = "<<cluster>>"; //$NON-NLS-1$
             }
             gc.drawText(type, (int) (rect.x + (LIFELINE_WIDTH - gc.stringExtent(type).x) / 2), (int) rectY + 2, true);
             // Draw the class name with a larger font
             gc.setFont(largeFont);
             // Split the process name on hierarchy and only get the last part
-            String[] splittedLifeLine = lifelineName.split("/");
+            String[] splittedLifeLine = lifelineName.split("/"); //$NON-NLS-1$
             String lifelineText = splittedLifeLine[splittedLifeLine.length - 1];
             Point stringSize = gc.stringExtent(lifelineText);
             while (stringSize.x >= LIFELINE_WIDTH) {
-                lifelineText = lifelineText.substring(0, lifelineText.length() - 4) + "...";
+                lifelineText = lifelineText.substring(0, lifelineText.length() - 4) + "..."; //$NON-NLS-1$
                 stringSize = gc.stringExtent(lifelineText);
             }
             double textX = rect.x + (LIFELINE_WIDTH - stringSize.x) / 2;
@@ -869,11 +869,11 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             gc.drawLine((int) arrowX, (int) arrowY2, (int) lineX2, (int) lineY);
             // Draw Text
             String text = msg.getContent();
-            text = text.replaceAll("[\r\n\t]+", " ");
+            text = text.replaceAll("[\r\n\t]+", " "); //$NON-NLS-1$ //$NON-NLS-2$
             Point stringSize = gc.stringExtent(text);
             int maxTextLength = (int) (Math.abs((fromposition - toposition) * (LIFELINE_WIDTH + scaledLifelineMargin)) - ARROW_SIZE - MESSAGE_LINE_MARGIN);
             while (stringSize.x >= maxTextLength) {
-                text = text.substring(0, text.length() - 4) + "...";
+                text = text.substring(0, text.length() - 4) + "..."; //$NON-NLS-1$
                 stringSize = gc.stringExtent(text);
             }
             double textY = lineY - MESSAGE_LINE_MARGIN * 2;
@@ -892,7 +892,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             String simulatedTimeString = msg.getSourceMessage().getSimulatedTime().toString();
             Double simulatedTime = Double.parseDouble(simulatedTimeString);
             if (simulatedTimeString.length() > 7) {
-                NumberFormat formatter = new DecimalFormat("###.###E0");
+                NumberFormat formatter = new DecimalFormat("###.###E0"); //$NON-NLS-1$
                 formatter.setMinimumFractionDigits(3);
                 simulatedTimeString = formatter.format(simulatedTime);
             }

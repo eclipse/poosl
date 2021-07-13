@@ -60,7 +60,7 @@ public interface IBundleInfo {
 
         @Override
         public String toString() {
-            return symbolicName + ": " + getInfo();
+            return symbolicName + ": " + getInfo(); //$NON-NLS-1$
         }
     }
 
@@ -122,12 +122,12 @@ public interface IBundleInfo {
         public StandaloneBundleRegistry() {
             symbolicNameToBundle = Maps.newLinkedHashMap();
             locationToBundle = Maps.newLinkedHashMap();
-            for (URL url : ClasspathUtil.findResources("META-INF/MANIFEST.MF")) {
+            for (URL url : ClasspathUtil.findResources("META-INF/MANIFEST.MF")) { //$NON-NLS-1$
                 String name;
                 try {
                     name = ClasspathUtil.getSymbolicName(url);
                     if (name != null) {
-                        URI location = URI.createURI(url.toString()).trimSegments(2).appendSegment("");
+                        URI location = URI.createURI(url.toString()).trimSegments(2).appendSegment(""); //$NON-NLS-1$
                         BundleInfo info = createBundleInfo(name, location);
                         symbolicNameToBundle.put(name, info);
                         locationToBundle.put(location, info);
@@ -161,11 +161,11 @@ public interface IBundleInfo {
         }
 
         private URI getBundleURI(Class<?> clazz) {
-            String[] segments = clazz.getName().split("\\.");
-            String fileName = Joiner.on('/').join(segments) + ".class";
+            String[] segments = clazz.getName().split("\\."); //$NON-NLS-1$
+            String fileName = Joiner.on('/').join(segments) + ".class"; //$NON-NLS-1$
             URL resource = clazz.getClassLoader().getResource(fileName);
-            if ("jar".equals(resource.getProtocol())) {
-                return URI.createURI(resource.toString()).trimSegments(segments.length).appendSegment("");
+            if ("jar".equals(resource.getProtocol())) { //$NON-NLS-1$
+                return URI.createURI(resource.toString()).trimSegments(segments.length).appendSegment(""); //$NON-NLS-1$
             } else {
                 File classFile;
                 try {
@@ -178,8 +178,8 @@ public interface IBundleInfo {
                     }
                     File current = packageRootFolder;
                     while (current != null) {
-                        if (new File(current, ".project").isFile())
-                            return URI.createFileURI(current.toString()).appendSegment("");
+                        if (new File(current, ".project").isFile()) //$NON-NLS-1$
+                            return URI.createFileURI(current.toString()).appendSegment(""); //$NON-NLS-1$
                         current = current.getParentFile();
                     }
                     throw new RuntimeException("Could not find .project file in super-folder of " + packageRootFolder);
@@ -191,7 +191,7 @@ public interface IBundleInfo {
 
         @Override
         public String toString() {
-            return Joiner.on("\n").join(symbolicNameToBundle.values());
+            return Joiner.on("\n").join(symbolicNameToBundle.values()); //$NON-NLS-1$
         }
 
         public IBundleInfo getBundle(URI uri) {

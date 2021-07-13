@@ -25,71 +25,71 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _PooslSpecification_QNAME = new QName("uri:poosl", "poosl_specification");
+    private final static QName _PooslSpecification_QNAME = new QName("uri:poosl", "poosl_specification"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsSequenceOfExpressions_QNAME = new QName("uri:poosl", "sequence_of_expressions");
+    private final static QName _TExpressionsSequenceOfExpressions_QNAME = new QName("uri:poosl", "sequence_of_expressions"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsWhile_QNAME = new QName("uri:poosl", "while");
+    private final static QName _TExpressionsWhile_QNAME = new QName("uri:poosl", "while"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsSwitch_QNAME = new QName("uri:poosl", "switch");
+    private final static QName _TExpressionsSwitch_QNAME = new QName("uri:poosl", "switch"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsDataMethodCall_QNAME = new QName("uri:poosl", "data_method_call");
+    private final static QName _TExpressionsDataMethodCall_QNAME = new QName("uri:poosl", "data_method_call"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsNew_QNAME = new QName("uri:poosl", "new");
+    private final static QName _TExpressionsNew_QNAME = new QName("uri:poosl", "new"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsConstant_QNAME = new QName("uri:poosl", "constant");
+    private final static QName _TExpressionsConstant_QNAME = new QName("uri:poosl", "constant"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsAssignment_QNAME = new QName("uri:poosl", "assignment");
+    private final static QName _TExpressionsAssignment_QNAME = new QName("uri:poosl", "assignment"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsSelf_QNAME = new QName("uri:poosl", "self");
+    private final static QName _TExpressionsSelf_QNAME = new QName("uri:poosl", "self"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsVariable_QNAME = new QName("uri:poosl", "variable");
+    private final static QName _TExpressionsVariable_QNAME = new QName("uri:poosl", "variable"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsIf_QNAME = new QName("uri:poosl", "if");
+    private final static QName _TExpressionsIf_QNAME = new QName("uri:poosl", "if"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsBinaryOperation_QNAME = new QName("uri:poosl", "binary_operation");
+    private final static QName _TExpressionsBinaryOperation_QNAME = new QName("uri:poosl", "binary_operation"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsUnaryOperation_QNAME = new QName("uri:poosl", "unary_operation");
+    private final static QName _TExpressionsUnaryOperation_QNAME = new QName("uri:poosl", "unary_operation"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsCurrentTime_QNAME = new QName("uri:poosl", "current_time");
+    private final static QName _TExpressionsCurrentTime_QNAME = new QName("uri:poosl", "current_time"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsReturn_QNAME = new QName("uri:poosl", "return");
+    private final static QName _TExpressionsReturn_QNAME = new QName("uri:poosl", "return"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExpressionsNil_QNAME = new QName("uri:poosl", "nil");
+    private final static QName _TExpressionsNil_QNAME = new QName("uri:poosl", "nil"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsProcessMethodCall_QNAME = new QName("uri:poosl", "process_method_call");
+    private final static QName _TStatementsProcessMethodCall_QNAME = new QName("uri:poosl", "process_method_call"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsSkip_QNAME = new QName("uri:poosl", "skip");
+    private final static QName _TStatementsSkip_QNAME = new QName("uri:poosl", "skip"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsExpression_QNAME = new QName("uri:poosl", "expression");
+    private final static QName _TStatementsExpression_QNAME = new QName("uri:poosl", "expression"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsSelectStatements_QNAME = new QName("uri:poosl", "select_statements");
+    private final static QName _TStatementsSelectStatements_QNAME = new QName("uri:poosl", "select_statements"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsGuard_QNAME = new QName("uri:poosl", "guard");
+    private final static QName _TStatementsGuard_QNAME = new QName("uri:poosl", "guard"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsInterrupt_QNAME = new QName("uri:poosl", "interrupt");
+    private final static QName _TStatementsInterrupt_QNAME = new QName("uri:poosl", "interrupt"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsSequenceOfStatements_QNAME = new QName("uri:poosl", "sequence_of_statements");
+    private final static QName _TStatementsSequenceOfStatements_QNAME = new QName("uri:poosl", "sequence_of_statements"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsParallelStatements_QNAME = new QName("uri:poosl", "parallel_statements");
+    private final static QName _TStatementsParallelStatements_QNAME = new QName("uri:poosl", "parallel_statements"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsDelay_QNAME = new QName("uri:poosl", "delay");
+    private final static QName _TStatementsDelay_QNAME = new QName("uri:poosl", "delay"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsAbort_QNAME = new QName("uri:poosl", "abort");
+    private final static QName _TStatementsAbort_QNAME = new QName("uri:poosl", "abort"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsMessageSend_QNAME = new QName("uri:poosl", "message_send");
+    private final static QName _TStatementsMessageSend_QNAME = new QName("uri:poosl", "message_send"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TStatementsMessageReceive_QNAME = new QName("uri:poosl", "message_receive");
+    private final static QName _TStatementsMessageReceive_QNAME = new QName("uri:poosl", "message_receive"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExecutiontreeMethodCall_QNAME = new QName("uri:poosl", "method_call");
+    private final static QName _TExecutiontreeMethodCall_QNAME = new QName("uri:poosl", "method_call"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExecutiontreeSelect_QNAME = new QName("uri:poosl", "select");
+    private final static QName _TExecutiontreeSelect_QNAME = new QName("uri:poosl", "select"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExecutiontreeSequential_QNAME = new QName("uri:poosl", "sequential");
+    private final static QName _TExecutiontreeSequential_QNAME = new QName("uri:poosl", "sequential"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExecutiontreeStatement_QNAME = new QName("uri:poosl", "statement");
+    private final static QName _TExecutiontreeStatement_QNAME = new QName("uri:poosl", "statement"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    private final static QName _TExecutiontreeParallel_QNAME = new QName("uri:poosl", "parallel");
+    private final static QName _TExecutiontreeParallel_QNAME = new QName("uri:poosl", "parallel"); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package:

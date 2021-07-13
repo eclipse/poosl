@@ -39,16 +39,16 @@ public class Poosl2Html {
 
     private static final Logger LOGGER = Logger.getLogger(Poosl2Html.class.getName());
 
-    private static final String HTML_HEADER = "<html>\n<head>\n\t<style>body{font-family:Arial;} "
-            + "h3{font-size: 1.2em; margin-bottom: 0em;}h4{font-size: 1em; margin-bottom: 0em;}div.indented{margin-left:2em;}</style>\n</head>\n<body>";
+    private static final String HTML_HEADER = "<html>\n<head>\n\t<style>body{font-family:Arial;} " //$NON-NLS-1$
+            + "h3{font-size: 1.2em; margin-bottom: 0em;}h4{font-size: 1em; margin-bottom: 0em;}div.indented{margin-left:2em;}</style>\n</head>\n<body>"; //$NON-NLS-1$
 
-    private static final String HTML_FOOTER = "\n</body>\n</html>";
+    private static final String HTML_FOOTER = "\n</body>\n</html>"; //$NON-NLS-1$
 
     @Inject
     private IEObjectDocumentationProvider documentationProvider;
 
     public static void main(String[] args) {
-        String input = "";
+        String input = ""; //$NON-NLS-1$
         if (args.length > 0) {
             input = args[0];
         }
@@ -96,15 +96,15 @@ public class Poosl2Html {
                 if (extendsClass != null) {
                     IEObjectDescription superClass = PooslCache.get(poosl.eResource()).getDataClass(extendsClass);
                     if (superClass != null && superClass.getEObjectURI().trimFragment().equals(poosl.eResource().getURI())) {
-                        extendsClass = "<a href=\"#data-" + extendsClass + "\">" + extendsClass + "</a>";
+                        extendsClass = "<a href=\"#data-" + extendsClass + "\">" + extendsClass + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     }
-                    fullName += " (extends " + extendsClass + ")";
+                    fullName += " (extends " + extendsClass + ")"; //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 String doc = documentationProvider.getDocumentation(dataClass);
-                appendClassToHtml(html, name, fullName, "data", doc);
+                appendClassToHtml(html, name, fullName, "data", doc); //$NON-NLS-1$
                 appendVariables(html, dataClass.getInstanceVariables());
                 appendH3(html, "Methods:");
-                html.append("<div class=\"indented\">");
+                html.append("<div class=\"indented\">"); //$NON-NLS-1$
                 // Get all datamethods from the dataclass
                 List<DataMethod> dataMethods = new ArrayList<>();
                 dataMethods.addAll(dataClass.getDataMethodsUnaryOperator());
@@ -117,7 +117,7 @@ public class Poosl2Html {
                     doc = documentationProvider.getDocumentation(dataMethod);
                     appendNamedElementToHtml(html, nameBuffer.toString(), doc);
                 }
-                html.append("</div>");
+                html.append("</div>"); //$NON-NLS-1$
             }
             appendHorizontalLine(html, 100);
         }
@@ -132,20 +132,20 @@ public class Poosl2Html {
                     IEObjectDescription superClass = PooslCache.get(processClass.eResource()).getProcessClass(processClass.getSuperClass());
                     if (superClass.getEObjectURI().trimFragment().equals(EcoreUtil.getURI(processClass).trimFragment())) {
                         StringBuilder buf = new StringBuilder();
-                        buf.append("<a href=\"#process-");
+                        buf.append("<a href=\"#process-"); //$NON-NLS-1$
                         buf.append(extendsClass);
-                        buf.append("\">");
+                        buf.append("\">"); //$NON-NLS-1$
                         buf.append(extendsClass);
-                        buf.append("</a>");
+                        buf.append("</a>"); //$NON-NLS-1$
                         extendsClass = buf.toString();
                     }
-                    fullName += " (extends " + extendsClass + ")";
+                    fullName += " (extends " + extendsClass + ")"; //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 String doc = documentationProvider.getDocumentation(processClass);
-                appendClassToHtml(html, name, fullName, "process", doc);
+                appendClassToHtml(html, name, fullName, "process", doc); //$NON-NLS-1$
                 // Add parameters
                 appendH3(html, "Parameters:");
-                html.append("<div class=\"indented\">");
+                html.append("<div class=\"indented\">"); //$NON-NLS-1$
                 for (Declaration parameter : processClass.getParameters()) {
                     String type = parameter.getType();
                     for (Variable variable : parameter.getVariables()) {
@@ -153,22 +153,22 @@ public class Poosl2Html {
                         appendParameterToHtml(html, variable.getName(), type, doc);
                     }
                 }
-                html.append("</div>");
+                html.append("</div>"); //$NON-NLS-1$
 
                 appendVariables(html, processClass.getInstanceVariables());
 
                 // Add Ports
                 appendH3(html, "Ports:");
-                html.append("<div class=\"indented\">");
+                html.append("<div class=\"indented\">"); //$NON-NLS-1$
                 for (Port port : processClass.getPorts()) {
                     doc = documentationProvider.getDocumentation(port);
                     appendNamedElementToHtml(html, port.getName(), doc);
                 }
-                html.append("</div>");
+                html.append("</div>"); //$NON-NLS-1$
 
                 // Add Message signatures
                 appendH3(html, "Message signatures:");
-                html.append("<div class=\"indented\">");
+                html.append("<div class=\"indented\">"); //$NON-NLS-1$
 
                 for (MessageSignature msg : processClass.getReceiveMessages()) {
                     StringBuilder buf = new StringBuilder();
@@ -182,18 +182,18 @@ public class Poosl2Html {
                     doc = documentationProvider.getDocumentation(msg);
                     appendNamedElementToHtml(html, buf.toString(), doc);
                 }
-                html.append("</div>");
+                html.append("</div>"); //$NON-NLS-1$
 
                 // Add methods
                 appendH3(html, "Methods:");
-                html.append("<div class=\"indented\">");
+                html.append("<div class=\"indented\">"); //$NON-NLS-1$
                 for (ProcessMethod processMethod : processClass.getMethods()) {
                     StringBuilder nameBuffer = new StringBuilder();
                     FormattingHelper.formatProcessMethod(nameBuffer, processMethod, false);
                     doc = documentationProvider.getDocumentation(processMethod);
                     appendNamedElementToHtml(html, nameBuffer.toString(), doc);
                 }
-                html.append("</div>");
+                html.append("</div>"); //$NON-NLS-1$
             }
             appendHorizontalLine(html, 100);
         }
@@ -204,11 +204,11 @@ public class Poosl2Html {
                     appendHorizontalLine(html, 50);
                     String name = clusterClass.getName();
                     String doc = documentationProvider.getDocumentation(clusterClass);
-                    appendClassToHtml(html, name, name, "cluster", doc);
+                    appendClassToHtml(html, name, name, "cluster", doc); //$NON-NLS-1$
 
                     // Add parameters
                     appendH3(html, "Parameters:");
-                    html.append("<div class=\"indented\">");
+                    html.append("<div class=\"indented\">"); //$NON-NLS-1$
                     for (Declaration parameter : clusterClass.getParameters()) {
                         String type = parameter.getType();
                         for (Variable variable : parameter.getVariables()) {
@@ -216,16 +216,16 @@ public class Poosl2Html {
                             appendParameterToHtml(html, variable.getName(), type, doc);
                         }
                     }
-                    html.append("</div>");
+                    html.append("</div>"); //$NON-NLS-1$
 
                     // Add Ports
                     appendH3(html, "Ports:");
-                    html.append("<div class=\"indented\">");
+                    html.append("<div class=\"indented\">"); //$NON-NLS-1$
                     for (Port port : clusterClass.getPorts()) {
                         doc = documentationProvider.getDocumentation(port);
                         appendNamedElementToHtml(html, port.getName(), doc);
                     }
-                    html.append("</div>");
+                    html.append("</div>"); //$NON-NLS-1$
                 }
             }
         }
@@ -236,7 +236,7 @@ public class Poosl2Html {
 
     private void appendVariables(StringBuilder html, EList<Declaration> declarations) {
         appendH3(html, "Variables:");
-        html.append("<div class=\"indented\">");
+        html.append("<div class=\"indented\">"); //$NON-NLS-1$
         for (Declaration declaration : declarations) {
             for (Variable var : declaration.getVariables()) {
                 String doc = documentationProvider.getDocumentation(var);
@@ -245,35 +245,35 @@ public class Poosl2Html {
                 appendNamedElementToHtml(html, nameBuffer.toString(), doc);
             }
         }
-        html.append("</div>");
+        html.append("</div>"); //$NON-NLS-1$
     }
 
     private void appendParameterToHtml(StringBuilder html, String name, String type, String doc) {
-        html.append("<p><h4>").append(name).append(":").append(type).append("</h4>").append(doc != null ? doc : "").append("</p>");
+        html.append("<p><h4>").append(name).append(":").append(type).append("</h4>").append(doc != null ? doc : "").append("</p>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
     }
 
     private void appendHorizontalLine(StringBuilder html, int width) {
-        html.append("<hr width=\"").append(width).append("%\" align=\"left\">");
+        html.append("<hr width=\"").append(width).append("%\" align=\"left\">"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private void appendH1(StringBuilder html, String text) {
-        html.append("<h1>").append(text).append("</h1>");
+        html.append("<h1>").append(text).append("</h1>"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private void appendH3(StringBuilder html, String text) {
-        html.append("<h3>").append(text).append("</h3>");
+        html.append("<h3>").append(text).append("</h3>"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private void appendTocItem(StringBuilder html, String name, String type) {
-        html.append("<li><a href=\"#").append(type).append("-").append(name).append("\">").append(name).append("</a></li>");
+        html.append("<li><a href=\"#").append(type).append("-").append(name).append("\">").append(name).append("</a></li>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     private void appendClassToHtml(StringBuilder html, String name, String fullName, String type, String doc) {
-        html.append("<h2><a id=\"").append(type).append("-").append(name).append("\"/>").append(fullName).append("</h2>").append(doc != null ? doc : "");
+        html.append("<h2><a id=\"").append(type).append("-").append(name).append("\"/>").append(fullName).append("</h2>").append(doc != null ? doc : ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
     }
 
     private void appendNamedElementToHtml(StringBuilder html, String name, String doc) {
-        html.append("<p><h4>").append(name).append("</h4>").append(doc != null ? doc : "").append("</p>");
+        html.append("<p><h4>").append(name).append("</h4>").append(doc != null ? doc : "").append("</p>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     private void appendHtmlHeader(StringBuilder html) {
@@ -282,31 +282,31 @@ public class Poosl2Html {
 
     // CHECKSTYLE:OFF text generation
     private void appendToc(StringBuilder html, Poosl poosl, String file) {
-        html.append("<h1>").append(file).append("</h1>");
+        html.append("<h1>").append(file).append("</h1>"); //$NON-NLS-1$ //$NON-NLS-2$
         if (!poosl.getDataClasses().isEmpty()) {
             html.append("<h2>Data classes:</h2><ul>");
             for (DataClass dataClass : poosl.getDataClasses()) {
-                appendTocItem(html, dataClass.getName(), "data");
+                appendTocItem(html, dataClass.getName(), "data"); //$NON-NLS-1$
             }
-            html.append("</ul>");
+            html.append("</ul>"); //$NON-NLS-1$
         }
         if (!poosl.getProcessClasses().isEmpty()) {
             html.append("<h2>Process classes:</h2><ul>");
             for (ProcessClass processClass : poosl.getProcessClasses()) {
                 if (processClass.getName() != null) {
-                    appendTocItem(html, processClass.getName(), "process");
+                    appendTocItem(html, processClass.getName(), "process"); //$NON-NLS-1$
                 }
             }
-            html.append("</ul>");
+            html.append("</ul>"); //$NON-NLS-1$
         }
         if (hasNamedClusterClass(poosl)) {
             html.append("<h2>Cluster classes:</h2><ul>");
             for (ClusterClass clusterClass : poosl.getClusterClasses()) {
                 if (clusterClass.getName() != null) {
-                    appendTocItem(html, clusterClass.getName(), "cluster");
+                    appendTocItem(html, clusterClass.getName(), "cluster"); //$NON-NLS-1$
                 }
             }
-            html.append("</ul>");
+            html.append("</ul>"); //$NON-NLS-1$
         }
     }
     // CHECKSTYLE:ON
@@ -326,7 +326,7 @@ public class Poosl2Html {
 
     private void writeHtmlToFile(StringBuilder html, String path) {
         // Check if the simulator directory already exists
-        File workingDirectory = new File(path.substring(0, path.lastIndexOf(File.separator)) + File.separator + "documentation");
+        File workingDirectory = new File(path.substring(0, path.lastIndexOf(File.separator)) + File.separator + "documentation"); //$NON-NLS-1$
         if (!workingDirectory.exists()) {
             workingDirectory.mkdir();
         }
@@ -343,8 +343,8 @@ public class Poosl2Html {
 
     private String createHTMLPath(String path) {
         StringBuilder stringBuilder = new StringBuilder(path);
-        stringBuilder.replace(stringBuilder.lastIndexOf(File.separator), stringBuilder.lastIndexOf(File.separator), File.separator + "documentation");
-        stringBuilder.replace(stringBuilder.lastIndexOf("."), stringBuilder.length(), ".html");
+        stringBuilder.replace(stringBuilder.lastIndexOf(File.separator), stringBuilder.lastIndexOf(File.separator), File.separator + "documentation"); //$NON-NLS-1$
+        stringBuilder.replace(stringBuilder.lastIndexOf("."), stringBuilder.length(), ".html"); //$NON-NLS-1$ //$NON-NLS-2$
         return stringBuilder.toString();
     }
 }

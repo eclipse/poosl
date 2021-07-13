@@ -34,7 +34,7 @@ public final class UpdateHelper {
         IWorkbench pl = PlatformUI.getWorkbench();
         for (IWorkbenchWindow window : pl.getWorkbenchWindows()) {
             for (IWorkbenchPage page : window.getPages()) {
-                if (page.findViewReference("org.eclipse.poosl.views.debugview") != null) {
+                if (page.findViewReference("org.eclipse.poosl.views.debugview") != null) { //$NON-NLS-1$
                     return window.getShell();
                 }
             }

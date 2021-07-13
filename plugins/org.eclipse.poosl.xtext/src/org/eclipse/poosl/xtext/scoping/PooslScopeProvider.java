@@ -123,7 +123,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
                 }
             });
             Map<String, IEObjectDescription> map = new HashMap<>();
-            for (IEObjectDescription descr : PooslResourceDescription.computeExportedProcesMethods(local, "")) {
+            for (IEObjectDescription descr : PooslResourceDescription.computeExportedProcesMethods(local, "")) { //$NON-NLS-1$
                 map.put(HelperFunctions.getName(descr), descr);
             }
             String superClass = pClass.getSuperClass();
@@ -194,7 +194,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
         while (obj != null) {
             if (obj instanceof ClusterClass) {
                 InstantiableClass inst = (InstantiableClass) obj;
-                return new SimpleScope(PooslResourceDescription.computeExportedPorts(inst.getPorts(), (inst.getName() != null) ? inst.getName() : ""));
+                return new SimpleScope(PooslResourceDescription.computeExportedPorts(inst.getPorts(), (inst.getName() != null) ? inst.getName() : "")); //$NON-NLS-1$
             }
             obj = obj.eContainer();
         }
@@ -233,7 +233,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
     private static IScope helperscope_ProcessMethodCall_method(ProcessClass pClass, EReference ref) {
         Resource resource = pClass.eResource();
         if (pClass.getName() == null) {
-            Iterable<IEObjectDescription> localMethods = PooslResourceDescription.computeExportedProcesMethods(pClass.getMethods(), "");
+            Iterable<IEObjectDescription> localMethods = PooslResourceDescription.computeExportedProcesMethods(pClass.getMethods(), ""); //$NON-NLS-1$
             String superClass = pClass.getSuperClass();
             if (superClass == null) {
                 return new SimpleScope(localMethods);
@@ -258,7 +258,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
                             && HelperFunctions.computeNumberOfVariables(method.getOutputParameters()) == numberOfOutputVariables;
                 }
             });
-            Iterable<IEObjectDescription> localMethods = PooslResourceDescription.computeExportedProcesMethods(local, "");
+            Iterable<IEObjectDescription> localMethods = PooslResourceDescription.computeExportedProcesMethods(local, ""); //$NON-NLS-1$
             String superClass = pClass.getSuperClass();
             if (superClass == null) {
                 return new SimpleScope(localMethods);
@@ -275,7 +275,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
     public static IScope helperScope_DataClass_variable(DataClass dClass) {
         Resource resource = dClass.eResource();
         if (dClass.getName() == null) {
-            Iterable<IEObjectDescription> localVariables = PooslResourceDescription.computeExportedDataVariables(dClass, "");
+            Iterable<IEObjectDescription> localVariables = PooslResourceDescription.computeExportedDataVariables(dClass, ""); //$NON-NLS-1$
             String superClass = dClass.getSuperClass();
             if (superClass == null) {
                 return new SimpleScope(localVariables);
@@ -289,7 +289,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
 
     private static IScope helperScope_DataMethod_parameterAndVariable(DataMethod dMethod) {
         DataClass dClass = (DataClass) dMethod.eContainer();
-        String dClassName = (dClass.getName() != null) ? dClass.getName() : "";
+        String dClassName = (dClass.getName() != null) ? dClass.getName() : ""; //$NON-NLS-1$
         Iterable<IEObjectDescription> methodIterable = getLocalScopeVariableDescriptions(dClassName, dMethod);
         IScope classScope = helperScope_DataClass_variable(dClass);
         return new SimpleScope(classScope, methodIterable);
@@ -298,7 +298,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
     public static IScope helperScope_ProcessClass_parameterAndVariable(ProcessClass pClass) {
         Resource resource = pClass.eResource();
         if (pClass.getName() == null) {
-            Iterable<IEObjectDescription> localVariables = PooslResourceDescription.computeExportedProcessVariables(pClass, "");
+            Iterable<IEObjectDescription> localVariables = PooslResourceDescription.computeExportedProcessVariables(pClass, ""); //$NON-NLS-1$
             String superClass = pClass.getSuperClass();
             if (superClass == null) {
                 return new SimpleScope(localVariables);
@@ -313,7 +313,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
     public static IScope helperScope_ProcessMethod_parameterAndVariable(ProcessMethod pMethod) {
         ProcessClass pClass = (ProcessClass) pMethod.eContainer();
         IScope classScope = helperScope_ProcessClass_parameterAndVariable(pClass);
-        String pClassName = (pClass.getName() != null) ? pClass.getName() : "";
+        String pClassName = (pClass.getName() != null) ? pClass.getName() : ""; //$NON-NLS-1$
         Iterable<IEObjectDescription> methodIterable = getLocalScopeVariableDescriptions(pClassName, pMethod);
         return new SimpleScope(classScope, methodIterable);
     }
@@ -327,7 +327,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
     };
 
     public static Iterable<IEObjectDescription> getLocalScopeParameterDescriptions(ClusterClass cClass) {
-        return PooslResourceDescription.computeExportedClusterVariables(cClass, (cClass.getName() != null) ? cClass.getName() : "");
+        return PooslResourceDescription.computeExportedClusterVariables(cClass, (cClass.getName() != null) ? cClass.getName() : ""); //$NON-NLS-1$
     }
 
     public static Iterable<Variable> getLocalScopeParameters(ClusterClass cClass) {
@@ -361,7 +361,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
         }
         // warning: exploiting the PooslDeclaratonDescription to store the containerName
         // as class name
-        containerName = dClass + "." + ((containerName != null) ? containerName : "");
+        containerName = dClass + "." + ((containerName != null) ? containerName : ""); //$NON-NLS-1$ //$NON-NLS-2$
         Iterable<IEObjectDescription> itInputParameters = PooslResourceDescription.getVariableDescriptionsFromDeclaration(dMethod.getParameters(), containerName, false, false);
         Iterable<IEObjectDescription> itLocalVariables = PooslResourceDescription.getVariableDescriptionsFromDeclaration(dMethod.getLocalVariables(), containerName, false, false);
         return Iterables.concat(itInputParameters, itLocalVariables);
@@ -377,7 +377,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
     private static Iterable<IEObjectDescription> getLocalScopeVariableDescriptions(String pClass, ProcessMethod pMethod) {
         // warning: exploiting the PooslDeclaratonDescription to store the containerName
         // as class name
-        String containerName = pClass + "." + ((pMethod.getName() != null) ? pMethod.getName() : "");
+        String containerName = pClass + "." + ((pMethod.getName() != null) ? pMethod.getName() : ""); //$NON-NLS-1$ //$NON-NLS-2$
         Iterable<IEObjectDescription> itInputParameters = PooslResourceDescription.getVariableDescriptionsFromDeclaration(pMethod.getInputParameters(), containerName, false, false);
         Iterable<IEObjectDescription> itOutputParameters = PooslResourceDescription.getVariableDescriptionsFromDeclaration(pMethod.getOutputParameters(), containerName, false, false);
         Iterable<IEObjectDescription> itLocalVariables = PooslResourceDescription.getVariableDescriptionsFromDeclaration(pMethod.getLocalVariables(), containerName, false, false);
@@ -389,7 +389,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
     private static IScope helperScope_ProcessClass_port(ProcessClass pClass) {
         Resource resource = pClass.eResource();
         if (pClass.getName() == null) {
-            Iterable<IEObjectDescription> localPorts = PooslResourceDescription.computeExportedPorts(pClass.getPorts(), "");
+            Iterable<IEObjectDescription> localPorts = PooslResourceDescription.computeExportedPorts(pClass.getPorts(), ""); //$NON-NLS-1$
             String superClass = pClass.getSuperClass();
             if (superClass == null) {
                 return new SimpleScope(localPorts);
@@ -418,7 +418,7 @@ public class PooslScopeProvider extends AbstractDeclarativeScopeProvider {
         ProcessClass pClass = HelperFunctions.getContainingProcessClass(object);
         if (pClass.getName() == null) {
             List<IEObjectDescription> descriptions = new ArrayList<>();
-            PooslResourceDescription.computeExportedMessages(descriptions, (type == PooslMessageType.RECEIVE) ? pClass.getReceiveMessages() : pClass.getSendMessages(), "");
+            PooslResourceDescription.computeExportedMessages(descriptions, (type == PooslMessageType.RECEIVE) ? pClass.getReceiveMessages() : pClass.getSendMessages(), ""); //$NON-NLS-1$
             if (pClass.getSuperClass() != null) {
                 descriptions.addAll(PooslCache.get(resource).getMessages(pClass.getSuperClass(), type));
             }

@@ -13,11 +13,11 @@ import org.eclipse.poosl.VariableExpression;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 final class PooslSuperClassDescription {
-    private static final String STR_SUPER_CLASS = "SuperClass";
+    private static final String STR_SUPER_CLASS = "SuperClass"; //$NON-NLS-1$
 
-    private static final String STR_USED_VARIABLES = "UsedVariables";
+    private static final String STR_USED_VARIABLES = "UsedVariables"; //$NON-NLS-1$
 
-    private static final String SEPARATOR = ",";
+    private static final String SEPARATOR = ","; //$NON-NLS-1$
 
     private PooslSuperClassDescription() {
         throw new IllegalStateException("Utility class");

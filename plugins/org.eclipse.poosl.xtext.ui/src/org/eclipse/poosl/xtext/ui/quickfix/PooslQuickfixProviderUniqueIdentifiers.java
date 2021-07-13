@@ -25,7 +25,7 @@ public class PooslQuickfixProviderUniqueIdentifiers extends PooslQuickfixProvide
                         int offset = node.getOffset();
                         int length = node.getLength();
                         IXtextDocument xtextDocument = context.getXtextDocument();
-                        xtextDocument.replace(offset, length, "");
+                        xtextDocument.replace(offset, length, ""); //$NON-NLS-1$
                     }
                 });
     }
@@ -41,7 +41,7 @@ public class PooslQuickfixProviderUniqueIdentifiers extends PooslQuickfixProvide
                         int offset = node.getOffset();
                         int length = node.getLength();
                         IXtextDocument xtextDocument = context.getXtextDocument();
-                        xtextDocument.replace(offset, length, "");
+                        xtextDocument.replace(offset, length, ""); //$NON-NLS-1$
                     }
                 });
     }

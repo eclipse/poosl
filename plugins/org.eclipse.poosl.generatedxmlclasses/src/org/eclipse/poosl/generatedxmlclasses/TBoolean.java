@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 public enum TBoolean {
 
     @XmlEnumValue("true")
-    TRUE("true"), @XmlEnumValue("false")
-    FALSE("false");
+    TRUE("true"), @XmlEnumValue("false") //$NON-NLS-1$
+    FALSE("false"); //$NON-NLS-1$
 
     private final String value;
 

@@ -21,12 +21,12 @@ public class PooslXGeneratorStandaloneSetup extends XtextGeneratorStandaloneSetu
 
     /** Path matching .classpath content */
     private static final String[] WELL_KNOWN_CLASSPATH = {
-            "target",  // NON-NLS-1
-            "jdt-classes",  // NON-NLS-1
+            "target",  // NON-NLS-1 //$NON-NLS-1$
+            "jdt-classes",  // NON-NLS-1 //$NON-NLS-1$
     };
     
     /** Eclipse project descriptor */ 
-    private static final String PROJECT_FILENAME = ".project"; // NON-NLS-1
+    private static final String PROJECT_FILENAME = ".project"; // NON-NLS-1 //$NON-NLS-1$
 
     private Logger log = Logger.getLogger(getClass());
 

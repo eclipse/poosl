@@ -17,11 +17,11 @@ import org.eclipse.ui.ide.IDE;
 public class ProjectExplorerHandler extends AbstractHandler {
     private static final Logger LOGGER = Logger.getLogger(ProjectExplorerHandler.class.getName());
 
-    private static final String COMMAND_EXPLORER_OPEN_SYSTEM = "org.eclipse.poosl.commands.sirius.explorer.opensystemdiagram";
+    private static final String COMMAND_EXPLORER_OPEN_SYSTEM = "org.eclipse.poosl.commands.sirius.explorer.opensystemdiagram"; //$NON-NLS-1$
 
-    private static final String COMMAND_EXPLORER_OPEN_CLASS = "org.eclipse.poosl.commands.sirius.explorer.openclassdiagram";
+    private static final String COMMAND_EXPLORER_OPEN_CLASS = "org.eclipse.poosl.commands.sirius.explorer.openclassdiagram"; //$NON-NLS-1$
 
-    private static final String COMMAND_EXPLORER_OPEN_TEXTUAL = "org.eclipse.poosl.commands.sirius.explorer.opentextualeditor";
+    private static final String COMMAND_EXPLORER_OPEN_TEXTUAL = "org.eclipse.poosl.commands.sirius.explorer.opentextualeditor"; //$NON-NLS-1$
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {

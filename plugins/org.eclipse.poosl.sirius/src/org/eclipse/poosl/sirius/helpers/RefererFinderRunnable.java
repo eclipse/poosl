@@ -82,7 +82,7 @@ public class RefererFinderRunnable implements IRunnableWithProgress {
 
     private static Provider<ResourceAccess> getResourceAccessProvider(Resource resource) {
         if (resourceAccesProvider == null) {
-            resourceAccesProvider = PooslActivator.getInstance().getInjector("org.eclipse.poosl.xtext.Poosl").getProvider(ResourceAccess.class);
+            resourceAccesProvider = PooslActivator.getInstance().getInjector("org.eclipse.poosl.xtext.Poosl").getProvider(ResourceAccess.class); //$NON-NLS-1$
         }
         return resourceAccesProvider;
     }

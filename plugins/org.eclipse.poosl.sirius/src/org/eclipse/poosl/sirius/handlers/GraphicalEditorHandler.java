@@ -35,11 +35,11 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 public class GraphicalEditorHandler extends AbstractHandler {
     private static final Logger LOGGER = Logger.getLogger(GraphicalEditorHandler.class.getName());
 
-    private static final String COMMAND_EDITOR_CLASS_DIAGRAM = "org.eclipse.poosl.commands.sirius.editor.openclassdiagram";
+    private static final String COMMAND_EDITOR_CLASS_DIAGRAM = "org.eclipse.poosl.commands.sirius.editor.openclassdiagram"; //$NON-NLS-1$
 
-    private static final String COMMAND_EDITOR_GRAPHICAL = "org.eclipse.poosl.commands.sirius.editor.opengraphicaleditor";
+    private static final String COMMAND_EDITOR_GRAPHICAL = "org.eclipse.poosl.commands.sirius.editor.opengraphicaleditor"; //$NON-NLS-1$
 
-    private static final String COMMAND_EDITOR_STRUCTURE_DIAGRAM = "org.eclipse.poosl.commands.sirius.editor.opencompositestructurediagram";
+    private static final String COMMAND_EDITOR_STRUCTURE_DIAGRAM = "org.eclipse.poosl.commands.sirius.editor.opencompositestructurediagram"; //$NON-NLS-1$
 
     private static final String WARNING_CURSOR_POSITION_UNKNOWN = "Cursor position was not found.";
 

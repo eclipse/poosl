@@ -32,7 +32,7 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
 
     public PooslProposalProviderTemplates() {
         super();
-        templateImage = ImageDescriptor.createFromURL(getClass().getResource("/icons/poosl_template.png")).createImage();
+        templateImage = ImageDescriptor.createFromURL(getClass().getResource("/icons/poosl_template.png")).createImage(); //$NON-NLS-1$
     }
 
     private void createTemplateProposal(String name, String content, String explanation, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
@@ -42,17 +42,17 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
     private void createTemplateProposal(String name, String content, String explanation, int priority, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         String finalContent = content;
         String indent = getIndent(context);
-        String template = finalContent.replaceAll("\n", "\n" + indent);
+        String template = finalContent.replaceAll("\n", "\n" + indent); //$NON-NLS-1$ //$NON-NLS-2$
         ICompletionProposal proposal = createHtmlCompletionProposal(template, new StyledString(name), templateImage, priority, context);
         if (proposal instanceof ConfigurableCompletionProposal) {
-            while (finalContent.startsWith("\n") || finalContent.startsWith("\r")) {
+            while (finalContent.startsWith("\n") || finalContent.startsWith("\r")) { //$NON-NLS-1$ //$NON-NLS-2$
                 finalContent = finalContent.substring(1);
             }
-            finalContent = "<html><body bgcolor=\"#FFFFE1\"><style> body { font-size:9pt; font-family:'Segoe UI' }</style><pre>" + finalContent + "</pre>";
+            finalContent = "<html><body bgcolor=\"#FFFFE1\"><style> body { font-size:9pt; font-family:'Segoe UI' }</style><pre>" + finalContent + "</pre>"; //$NON-NLS-1$ //$NON-NLS-2$
             if (explanation != null) {
-                finalContent = finalContent + "<p>" + explanation + "</p>";
+                finalContent = finalContent + "<p>" + explanation + "</p>"; //$NON-NLS-1$ //$NON-NLS-2$
             }
-            finalContent = finalContent + "</body></html>";
+            finalContent = finalContent + "</body></html>"; //$NON-NLS-1$
             ((ConfigurableCompletionProposal) proposal).setAdditionalProposalInfo(finalContent);
             ((ConfigurableCompletionProposal) proposal).setProposalContextResource(context.getResource());
         }
@@ -80,115 +80,115 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
     public void complete_Import(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_Import(model, ruleCall, context, acceptor);
 
-        String template = "import \"../api/someFile.poosl\"";
+        String template = "import \"../api/someFile.poosl\""; //$NON-NLS-1$
         String explanation = "Import the data, process and cluster classes from another file.<br/><br/>The specified file location is absolute, or relative to the current file.";
-        createTemplateProposal("import library", template, explanation, context, acceptor);
+        createTemplateProposal("import library", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_ImportLib(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_ImportLib(model, ruleCall, context, acceptor);
 
-        String template = "importlib \"api/someFile.poosl\"";
+        String template = "importlib \"api/someFile.poosl\""; //$NON-NLS-1$
         String explanation = "Import the data, process and cluster classes from another file.<br/><br/>The specified file location is relative to any of the Poosl include paths, which can be configured in the project properties (Project -> Properties -> Poosl).";
-        createTemplateProposal("importlib library", template, explanation, context, acceptor);
+        createTemplateProposal("importlib library", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_DataClass(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_DataClass(model, ruleCall, context, acceptor);
 
-        String template = "data class someClass extends Object\nvariables\n\t\nmethods\n\t\n";
+        String template = "data class someClass extends Object\nvariables\n\t\nmethods\n\t\n"; //$NON-NLS-1$
         String explanation = "A data class describes a data structure with atomic operations. It contains variables and methods. Data classes can use inheritance to extend other data classes.";
-        createTemplateProposal("data class", template, explanation, context, acceptor);
+        createTemplateProposal("data class", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_ProcessClass(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_ProcessClass(model, ruleCall, context, acceptor);
 
-        String template = "process class someClass()\nports\n\t\nmessages\n\t\nvariables\n\t\ninit\n\tsomeMethod()()\nmethods\n\tsomeMethod()() | |\n\t\tskip\n";
+        String template = "process class someClass()\nports\n\t\nmessages\n\t\nvariables\n\t\ninit\n\tsomeMethod()()\nmethods\n\tsomeMethod()() | |\n\t\tskip\n"; //$NON-NLS-1$
         String explanation = "A process class describes a parametrized architectural building block with external ports. It contains variables and methods; one method is designated as the initial method. Process classes can use inheritance to extend other process classes. For each external port the messages and their parameters are described.";
-        createTemplateProposal("process class", template, explanation, context, acceptor);
+        createTemplateProposal("process class", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_ClusterClass(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_ClusterClass(model, ruleCall, context, acceptor);
 
-        String template = "cluster class someClass()\nports\n\t\ninstances\n\t\nchannels\n\t";
+        String template = "cluster class someClass()\nports\n\t\ninstances\n\t\nchannels\n\t"; //$NON-NLS-1$
         String explanation = "A cluster class describes a parametrized architectural layer with external ports. It contains instances of process classes and (other) cluster classes. The external and instance ports can be connected using channels.";
-        createTemplateProposal("cluster class", template, explanation, context, acceptor);
+        createTemplateProposal("cluster class", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_System(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_System(model, ruleCall, context, acceptor);
 
-        String template = "system\nports\n\t\ninstances\n\t\nchannels\n\t";
+        String template = "system\nports\n\t\ninstances\n\t\nchannels\n\t"; //$NON-NLS-1$
         String explanation = "The system class describes the highest architecture layer of a POOSL model with external ports for co-simulation. It contains instances of process classes and cluster classes. The external and instance ports can be connected using channels.";
-        createTemplateProposal("system specification", template, explanation, context, acceptor);
+        createTemplateProposal("system specification", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_ProcessMethod(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_ProcessMethod(model, ruleCall, context, acceptor);
-        String proposalString = "someMethod()() | |\n\tskip";
+        String proposalString = "someMethod()() | |\n\tskip"; //$NON-NLS-1$
         String explanation = "A process method describes the internal behaviour of a process class. It has input parameters, output parameters and local variables.";
-        createTemplateProposal("process method", proposalString, explanation, context, acceptor);
+        createTemplateProposal("process method", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_DataMethodNamed(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_DataMethodNamed(model, ruleCall, context, acceptor);
-        String proposalString = "someMethod() : Object | |\n\treturn nil";
+        String proposalString = "someMethod() : Object | |\n\treturn nil"; //$NON-NLS-1$
         String explanation = "A data method describes an atomic operation on a data class. It has input parameters, a return type and local variables.";
-        createTemplateProposal("data method", proposalString, explanation, context, acceptor);
+        createTemplateProposal("data method", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_Instance(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_Instance(model, ruleCall, context, acceptor);
 
-        String template = "someInstance : someClass()";
+        String template = "someInstance : someClass()"; //$NON-NLS-1$
         String explanation = "Create an instance of a process or cluster class.";
-        createTemplateProposal("class instance", template, explanation, context, acceptor);
+        createTemplateProposal("class instance", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_InstanceParameter(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_InstanceParameter(model, ruleCall, context, acceptor);
 
-        String template = "someParameter := nil";
+        String template = "someParameter := nil"; //$NON-NLS-1$
         String explanation = "Provide a value for a parameter of the instantiated proces or cluster class.";
-        createTemplateProposal("instance parameter", template, explanation, context, acceptor);
+        createTemplateProposal("instance parameter", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_Channel(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_Channel(model, ruleCall, context, acceptor);
 
-        String template = "{ }";
+        String template = "{ }"; //$NON-NLS-1$
         String explanation = "Create a channel that connects a series of ports.";
-        createTemplateProposal("channel declaration", template, explanation, context, acceptor);
+        createTemplateProposal("channel declaration", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_Port(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_Port(model, ruleCall, context, acceptor);
 
-        String template = "somePort";
+        String template = "somePort"; //$NON-NLS-1$
         String explanation = "Declare an external port of a cluster class.";
-        createTemplateProposal("port declaration", template, explanation, context, acceptor);
+        createTemplateProposal("port declaration", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_Declaration(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_Declaration(model, ruleCall, context, acceptor);
 
-        String template = "someVar : Object";
+        String template = "someVar : Object"; //$NON-NLS-1$
         String explanation = "Declare a variable or parameter of a certain type.";
-        createTemplateProposal("declaration", template, explanation, context, acceptor);
+        createTemplateProposal("declaration", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
@@ -197,88 +197,88 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
         String proposalString;
         String explanation;
 
-        proposalString = "if true then\n\tnil\nelse\n\tnil\nfi";
+        proposalString = "if true then\n\tnil\nelse\n\tnil\nfi"; //$NON-NLS-1$
         explanation = "Depending on whether the condition evaluates to true, return the first or the second body expression.";
-        createTemplateProposal("if then else expression", proposalString, explanation, context, acceptor);
+        createTemplateProposal("if then else expression", proposalString, explanation, context, acceptor); //$NON-NLS-1$
 
-        proposalString = "if true then\n\tnil\nfi";
+        proposalString = "if true then\n\tnil\nfi"; //$NON-NLS-1$
         explanation = "Depending on whether the condition evaluates to true, return the body expression or return nil.";
-        createTemplateProposal("if then  expression ", proposalString, explanation, context, acceptor);
+        createTemplateProposal("if then  expression ", proposalString, explanation, context, acceptor); //$NON-NLS-1$
         // The extra space in the name is important for ordering
     }
 
     @Override
     public void complete_SwitchExpression(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_SwitchExpression(model, ruleCall, context, acceptor);
-        String proposalString = "switch nil do\n\tcase 42 then \n\t\tnil\n\tdefault \n\t\tnil\nod";
+        String proposalString = "switch nil do\n\tcase 42 then \n\t\tnil\n\tdefault \n\t\tnil\nod"; //$NON-NLS-1$
         String explanation = "Evaluate the switch expression and all case expressions. Afterwards return the body of a case with an expression that equals the switch expression. If no such case exists, then execute the default body.";
-        createTemplateProposal("switch expression", proposalString, explanation, context, acceptor);
+        createTemplateProposal("switch expression", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_SwitchExpressionCase(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_SwitchExpression(model, ruleCall, context, acceptor);
-        String proposalString = "case 42 then \n\tnil";
-        String explanation = "";
-        createTemplateProposal("switch expression case", proposalString, explanation, context, acceptor);
+        String proposalString = "case 42 then \n\tnil"; //$NON-NLS-1$
+        String explanation = ""; //$NON-NLS-1$
+        createTemplateProposal("switch expression case", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_WhileExpression(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_WhileExpression(model, ruleCall, context, acceptor);
-        String proposalString = "while true do\n\tnil\nod";
+        String proposalString = "while true do\n\tnil\nod"; //$NON-NLS-1$
         String explanation = "As long as the condition evaluates to true, evaluate the body expression. Finally return nil.";
-        createTemplateProposal("while expression", proposalString, explanation, context, acceptor);
+        createTemplateProposal("while expression", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_NewExpression(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_NewExpression(model, ruleCall, context, acceptor);
 
-        String template = "new(Object)";
+        String template = "new(Object)"; //$NON-NLS-1$
         String explanation = "Create a new instance of a data class.";
-        createTemplateProposal("new expression", template, explanation, context, acceptor);
+        createTemplateProposal("new expression", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_EnvironmentConstant(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_EnvironmentConstant(model, ruleCall, context, acceptor);
 
-        String template = "${PATH}";
+        String template = "${PATH}"; //$NON-NLS-1$
         String explanation = "Get the value of an environment variable set in the operating system. The value must be parsable as a POOSL constant.";
-        createTemplateProposal("environment variable", template, explanation, context, acceptor);
+        createTemplateProposal("environment variable", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_ParStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_ParStatement(model, ruleCall, context, acceptor);
-        String proposalString = "par\n\tskip\nand\n\tskip\nrap";
+        String proposalString = "par\n\tskip\nand\n\tskip\nrap"; //$NON-NLS-1$
         String explanation = "Execute multiple statements in parallel, in an interleaved way.<br/><br/>Communication and synchronization within a process can only be performed through shared variables.";
-        createTemplateProposal("parallel statement", proposalString, explanation, context, acceptor);
+        createTemplateProposal("parallel statement", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_InterruptStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_InterruptStatement(model, ruleCall, context, acceptor);
-        String proposalString = "interrupt\n\tskip\nwith (\n\tskip;\n\tskip\n)";
+        String proposalString = "interrupt\n\tskip\nwith (\n\tskip;\n\tskip\n)"; //$NON-NLS-1$
         String explanation = "Execute the first statement, but temporarily suspend this execution when the other statements execute (possibly multiple times).";
-        createTemplateProposal("interrupt statement", proposalString, explanation, context, acceptor);
+        createTemplateProposal("interrupt statement", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_SelStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_SelStatement(model, ruleCall, context, acceptor);
-        String proposalString = "sel\n\tskip\nor\n\tskip\nles";
+        String proposalString = "sel\n\tskip\nor\n\tskip\nles"; //$NON-NLS-1$
         String explanation = "Non-deterministic choice between multiple alternative statements.<br/><br/>It is blocked when all alternatives are blocked. The choice is finally resolved by the first statement that executes. Fairness of the choice is not guaranteed.";
-        createTemplateProposal("select statement", proposalString, explanation, context, acceptor);
+        createTemplateProposal("select statement", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_AbortStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_AbortStatement(model, ruleCall, context, acceptor);
-        String proposalString = "abort\n\tskip\nwith (\n\tskip;\n\tskip\n)";
+        String proposalString = "abort\n\tskip\nwith (\n\tskip;\n\tskip\n)"; //$NON-NLS-1$
         String explanation = "Execute the first statement, but permanently terminate this execution when the other statements execute.";
-        createTemplateProposal("abort statement", proposalString, explanation, context, acceptor);
+        createTemplateProposal("abort statement", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
@@ -287,109 +287,109 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
         String proposalString;
         String explanation;
 
-        proposalString = "if true then\n\tskip\nelse\n\tskip\nfi";
+        proposalString = "if true then\n\tskip\nelse\n\tskip\nfi"; //$NON-NLS-1$
         explanation = "Depending on whether the condition evaluates to true, execute the first or the second body statement.<br/><br/>The evaluation of the condition and the execution of any of the body statements are two separate execution steps.";
-        createTemplateProposal("if then else statement", proposalString, explanation, context, acceptor);
+        createTemplateProposal("if then else statement", proposalString, explanation, context, acceptor); //$NON-NLS-1$
 
-        proposalString = "if true then\n\tskip\nfi";
+        proposalString = "if true then\n\tskip\nfi"; //$NON-NLS-1$
         explanation = "If the condition evaluates to true, execute the body statement.<br/><br/>The evaluation of the condition and the execution of the body statement are two separate execution steps.";
         // The extra space in the name is important for ordering
-        createTemplateProposal("if then  statement ", proposalString, explanation, context, acceptor);
+        createTemplateProposal("if then  statement ", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_SwitchStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_SwitchStatement(model, ruleCall, context, acceptor);
-        String proposalString = "switch nil do\n\tcase 42 then \n\t\tskip\n\tdefault \n\t\tskip\nod";
+        String proposalString = "switch nil do\n\tcase 42 then \n\t\tskip\n\tdefault \n\t\tskip\nod"; //$NON-NLS-1$
         String explanation = "Evaluate the switch expression and all case expressions. Afterwards execute the body statement of a case with an expression that equals the switch expression. If no such case exists, then execute the default body statement.<br/><br/>The evaluation of all expressions and the execution of any of the body statements are separate execution steps.";
-        createTemplateProposal("switch statement", proposalString, explanation, context, acceptor);
+        createTemplateProposal("switch statement", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_SwitchStatementCase(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_SwitchExpression(model, ruleCall, context, acceptor);
-        String proposalString = "case 42 then \n\tskip";
-        String explanation = "";
-        createTemplateProposal("switch statement case", proposalString, explanation, context, acceptor);
+        String proposalString = "case 42 then \n\tskip"; //$NON-NLS-1$
+        String explanation = ""; //$NON-NLS-1$
+        createTemplateProposal("switch statement case", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_WhileStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_WhileStatement(model, ruleCall, context, acceptor);
-        String proposalString = "while true do\n\tskip\nod";
+        String proposalString = "while true do\n\tskip\nod"; //$NON-NLS-1$
         String explanation = "As long as the condition evaluates to true, execute the statement.<br/><br/>The evaluation of the condition and the execution of the statement are two separate execution steps.";
-        createTemplateProposal("while statement", proposalString, explanation, context, acceptor);
+        createTemplateProposal("while statement", proposalString, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_DelayStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_DelayStatement(model, ruleCall, context, acceptor);
 
-        String template = "delay 1";
+        String template = "delay 1"; //$NON-NLS-1$
         String explanation = "Postpone the execution with a number of time units (integer or real).";
-        createTemplateProposal("delay statement", template, explanation, context, acceptor);
+        createTemplateProposal("delay statement", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_GuardedStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_GuardedStatement(model, ruleCall, context, acceptor);
 
-        String template = "[true] skip";
+        String template = "[true] skip"; //$NON-NLS-1$
         String explanation = "Block the statement whenever the guard does not evaluate to true.<br/><br/>The evaluation of the condition and the execution of the statement together form a single execution step.";
-        createTemplateProposal("guarded statement", template, explanation, context, acceptor);
+        createTemplateProposal("guarded statement", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_ProcessMethodCall(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_ProcessMethodCall(model, ruleCall, context, acceptor);
 
-        String template = "method()()";
+        String template = "method()()"; //$NON-NLS-1$
         String explanation = "Invoke a process method with a series of input parameter values and a series of output variables.<br/><br/>If the process method call is the last statement of a method, then there is no danger of stack overflow.";
-        createTemplateProposal("process method call statement", template, explanation, context, acceptor);
+        createTemplateProposal("process method call statement", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_SkipStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_SkipStatement(model, ruleCall, context, acceptor);
 
-        String template = "skip";
+        String template = "skip"; //$NON-NLS-1$
         String explanation = "Execute without any observeable effect on variables or messages.<br/><br/>If used in the context of a sel statement, a skip statement is never blocked, and can resolve the choice. This can be used to model an internal decision.";
-        createTemplateProposal("skip statement", template, explanation, context, acceptor);
+        createTemplateProposal("skip statement", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_ReceiveStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_ReceiveStatement(model, ruleCall, context, acceptor);
-        String template = "port?msg(var1, var2 | true)";
+        String template = "port?msg(var1, var2 | true)"; //$NON-NLS-1$
         String explanation = "Receive a message over a port, and assign the message parameters to variables. The (optional) condition restricts the accepted parameter values."
                 + EXPL_SYNCHRONOUS_COMMUNICATION;
-        createTemplateProposal("receive statement", template, explanation, context, acceptor);
+        createTemplateProposal("receive statement", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_SendStatement(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_SendStatement(model, ruleCall, context, acceptor);
-        String template = "port!msg(expr1, expr2)";
+        String template = "port!msg(expr1, expr2)"; //$NON-NLS-1$
         String explanation = "Send a message over a port, and add the expressions as message parameters." + EXPL_SYNCHRONOUS_COMMUNICATION;
-        createTemplateProposal("send statement", template, explanation, context, acceptor);
+        createTemplateProposal("send statement", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_MessageReceiveSignature(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_MessageReceiveSignature(model, ruleCall, context, acceptor);
 
-        String template = "somePort?someMessage(Object, Object)";
+        String template = "somePort?someMessage(Object, Object)"; //$NON-NLS-1$
         String explanation = "Declare a message that can be received by this process." + EXPL_SYNCHRONOUS_COMMUNICATION;
-        createTemplateProposal("receive message", template, explanation, context, acceptor);
+        createTemplateProposal("receive message", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
     public void complete_MessageSendSignature(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         super.complete_MessageSendSignature(model, ruleCall, context, acceptor);
 
-        String template = "somePort!someMessage(Object, Object)";
+        String template = "somePort!someMessage(Object, Object)"; //$NON-NLS-1$
         String explanation = "Declare a message that can be send by this process." + EXPL_SYNCHRONOUS_COMMUNICATION;
-        createTemplateProposal("send message", template, explanation, context, acceptor);
+        createTemplateProposal("send message", template, explanation, context, acceptor); //$NON-NLS-1$
     }
 
     @Override
@@ -427,23 +427,23 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
     }
 
     public void complete_SuppressWarningsAnnotations(WarningType warningType, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        String template = "@SuppressWarnings(" + warningType + ")";
+        String template = "@SuppressWarnings(" + warningType + ")"; //$NON-NLS-1$ //$NON-NLS-2$
         createTemplateProposal(template, template, PooslHoverProvider.SUPPRESSWARNINGS_DOCUMENTATION, ANNOTATION_PRIORITY, context, acceptor);
     }
 
     public void complete_TestAnnotations(ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        String testTemplate = "@Test";
+        String testTemplate = "@Test"; //$NON-NLS-1$
         createTemplateProposal(testTemplate, testTemplate, PooslHoverProvider.TEST_DOCUMENTATION + PooslHoverProvider.TEST_HELP_DOCUMENTATION, ANNOTATION_PRIORITY, context, acceptor);
 
-        String errorTemplate = "@Error";
+        String errorTemplate = "@Error"; //$NON-NLS-1$
         createTemplateProposal(errorTemplate, errorTemplate, PooslHoverProvider.ERROR_DOCUMENTATION + PooslHoverProvider.TEST_HELP_DOCUMENTATION, ANNOTATION_PRIORITY, context, acceptor);
 
-        String skipTemplate = "@Skip";
+        String skipTemplate = "@Skip"; //$NON-NLS-1$
         createTemplateProposal(skipTemplate, skipTemplate, PooslHoverProvider.SKIP_DOCUMENTATION + PooslHoverProvider.TEST_HELP_DOCUMENTATION, ANNOTATION_PRIORITY, context, acceptor);
     }
 
     public void complete_InitAnnotation(ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        String template = "@Init";
+        String template = "@Init"; //$NON-NLS-1$
         createTemplateProposal(template, template, PooslHoverProvider.INIT_DOCUMENTATION, ANNOTATION_PRIORITY, context, acceptor);
     }
 
@@ -457,9 +457,9 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
     private String getIndent(ContentAssistContext context) {
         INode currentNode = context.getCurrentNode();
         if (currentNode == null) {
-            return "";
+            return ""; //$NON-NLS-1$
         }
-        String indent = "";
+        String indent = ""; //$NON-NLS-1$
         indent = currentNode.getText();
         // context.getPrefix() contains already partially typed tokens.
         // If these are present they need to be stripped from the actual text so
@@ -476,19 +476,19 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
                 // indentation.
                 INode node = context.getCurrentNode();
                 if (node.getParent() != null) {
-                    indent = node.getParent().getText().replace(context.getCurrentNode().getText(), "");
+                    indent = node.getParent().getText().replace(context.getCurrentNode().getText(), ""); //$NON-NLS-1$
                 }
             }
         }
         // Indentation can include any newline characters that we want to
         // remove.
-        String[] indents = indent.split("\n");
+        String[] indents = indent.split("\n"); //$NON-NLS-1$
         if (indents.length >= 2) {
             // If more remains then only newline characters there is acutally
             // some indentation (so spaces or tabs)
-            indent = indents[1].replace("\r", "");
+            indent = indents[1].replace("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
-            indent = "";
+            indent = ""; //$NON-NLS-1$
         }
         if (indent.length() > 0) {
             // remove non whitespaces

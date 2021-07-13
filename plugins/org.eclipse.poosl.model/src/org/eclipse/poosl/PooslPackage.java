@@ -28,21 +28,21 @@ public interface PooslPackage extends EPackage {
      * 
      * @generated
      */
-    String eNAME = "poosl";
+    String eNAME = "poosl"; //$NON-NLS-1$
 
     /**
      * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
      */
-    String eNS_URI = "http://poosl.eclipse.org/poosl/3.0.0";
+    String eNS_URI = "http://poosl.eclipse.org/poosl/3.0.0"; //$NON-NLS-1$
 
     /**
      * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
      */
-    String eNS_PREFIX = "poosl";
+    String eNS_PREFIX = "poosl"; //$NON-NLS-1$
 
     /**
      * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->

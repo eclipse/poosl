@@ -24,20 +24,20 @@ public class ExternSelectionInformer {
     @Execute
     public void executeInformDebugSelection(Object debugItem) {
         IDebugTarget target = null;
-        String diagram = "system";
+        String diagram = "system"; //$NON-NLS-1$
 
         if (debugItem instanceof PooslDebugTarget) {
             target = (PooslDebugTarget) debugItem;
         } else if (debugItem instanceof PooslDebugTreeItem) {
             PooslDebugTreeItem treeItem = (PooslDebugTreeItem) debugItem;
 
-            diagram = "";
+            diagram = ""; //$NON-NLS-1$
             target = treeItem.getDebugTarget();
 
             Object item = treeItem;
             while (item instanceof PooslDebugTreeItem) {
                 PooslDebugTreeItem nameItem = (PooslDebugTreeItem) item;
-                diagram = "/" + nameItem.getName() + diagram;
+                diagram = "/" + nameItem.getName() + diagram; //$NON-NLS-1$
                 item = nameItem.getParent();
             }
         }
@@ -53,12 +53,12 @@ public class ExternSelectionInformer {
                     ExternDebugMessage message = null;
 
                     if (lastMessage != null) {
-                        message = new ExternDebugMessage(launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""),
-                                launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), lastMessage);
+                        message = new ExternDebugMessage(launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""), //$NON-NLS-1$
+                                launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), lastMessage); //$NON-NLS-1$
                     }
-                    ExternDebugItem selecteditem = new ExternDebugItem(diagram, launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""),
-                            launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""),
-                            launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""));
+                    ExternDebugItem selecteditem = new ExternDebugItem(diagram, launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), //$NON-NLS-1$
+                            launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""), //$NON-NLS-1$
+                            launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "")); //$NON-NLS-1$
                     for (IPooslDebugInformer extension : ExtensionHelper.getExtensions()) {
                         executeExtensionSelection(extension, selecteditem, message);
                     }

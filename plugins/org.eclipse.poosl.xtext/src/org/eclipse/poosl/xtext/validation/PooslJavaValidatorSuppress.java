@@ -12,12 +12,12 @@ import org.eclipse.poosl.StringConstant;
 import org.eclipse.xtext.validation.ValidationMessageAcceptor;
 
 public class PooslJavaValidatorSuppress extends AbstractPooslValidator {
-    public static final String ANNOTATION_SUPPRESSWARNINGS = "SuppressWarnings";
+    public static final String ANNOTATION_SUPPRESSWARNINGS = "SuppressWarnings"; //$NON-NLS-1$
 
     public enum WarningType {
-        UNUSED("\"unused\"", true), UNCONNECTED("\"unconnected\"", true), TYPECHECK("\"typecheck\"", true), RETURN("\"return\"", true), ANNOTATION("\"annotation\"", true),
+        UNUSED("\"unused\"", true), UNCONNECTED("\"unconnected\"", true), TYPECHECK("\"typecheck\"", true), RETURN("\"return\"", true), ANNOTATION("\"annotation\"", true), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
-        IMPORT("\"import\"", false), ASSIGNMENT("\"assignment\"", false), UNGUARDED_LOOP("\"unguardedloop\"", false);
+        IMPORT("\"import\"", false), ASSIGNMENT("\"assignment\"", false), UNGUARDED_LOOP("\"unguardedloop\"", false); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         private final String text;
 

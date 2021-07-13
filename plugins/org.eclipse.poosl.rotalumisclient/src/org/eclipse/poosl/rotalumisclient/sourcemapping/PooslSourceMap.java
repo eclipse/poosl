@@ -21,7 +21,7 @@ import org.eclipse.poosl.generatedxmlclasses.TSourcePosition;
 import org.eclipse.poosl.rotalumisclient.Client;
 
 public class PooslSourceMap {
-    public static final PooslSourceMapping EMPTY_MAPPING = new PooslSourceMapping("", -1, -1, -1, -1, -1, "...");
+    public static final PooslSourceMapping EMPTY_MAPPING = new PooslSourceMapping("", -1, -1, -1, -1, -1, "..."); //$NON-NLS-1$ //$NON-NLS-2$
 
     private static final Logger LOGGER = Logger.getLogger(PooslSourceMap.class.getName());
 
@@ -100,7 +100,7 @@ public class PooslSourceMap {
      */
     private PooslSourceMapping createSourceMapping(int handle, String filePath, int bLine, int bColumn, int bOffset, int eLine, int eColumn, int eOffset) {
 
-        String text = "";
+        String text = ""; //$NON-NLS-1$
         if (bLine == 0 && bColumn == 0 && bOffset == 0 && eLine == 0 && eColumn == 0 && eOffset == 0) {
             return EMPTY_MAPPING;
         } else if (filePath != null && bLine != -1 && bColumn != -1 && bOffset != -1 && eLine != -1 && eColumn != -1 && eOffset != -1) {
@@ -134,7 +134,7 @@ public class PooslSourceMap {
 
     public Map<BigInteger, String> convertToHandleFiles(Map<String, BigInteger> filesToHandle) {
         HashMap<BigInteger, String> handleToFiles = new HashMap<>();
-        String filePrefix = "file:";
+        String filePrefix = "file:"; //$NON-NLS-1$
         for (Entry<String, BigInteger> entry : filesToHandle.entrySet()) {
             String filePath = entry.getKey();
             if (filePath.startsWith(filePrefix)) {
@@ -155,10 +155,10 @@ public class PooslSourceMap {
             int stmtHandle = val.getStmtHandle();
             if (val instanceof TExecutiontreeMessageReceive) {
                 TExecutiontreeMessageReceive message = (TExecutiontreeMessageReceive) val;
-                requestMappingWithBackup(stmtHandle, message.getPort() + "?" + message.getMessage());
+                requestMappingWithBackup(stmtHandle, message.getPort() + "?" + message.getMessage()); //$NON-NLS-1$
             } else if (val instanceof TExecutiontreeMessageSend) {
                 TExecutiontreeMessageSend message = (TExecutiontreeMessageSend) val;
-                requestMappingWithBackup(stmtHandle, message.getPort() + "!" + message.getMessage());
+                requestMappingWithBackup(stmtHandle, message.getPort() + "!" + message.getMessage()); //$NON-NLS-1$
             }
         }
     }
@@ -168,7 +168,7 @@ public class PooslSourceMap {
             @Override
             public void requestedSourceMapping(PooslSourceMapping mapping) {
                 if (mapping == EMPTY_MAPPING) {
-                    sourceMappings.put(stmtHandle, new PooslSourceMapping("", -1, -1, -1, -1, -1, backupText));
+                    sourceMappings.put(stmtHandle, new PooslSourceMapping("", -1, -1, -1, -1, -1, backupText)); //$NON-NLS-1$
                 }
             }
         });

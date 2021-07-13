@@ -71,7 +71,7 @@ public class InstanceItemProvider extends AnnotableItemProvider {
      */
     protected void addClassDefinitionPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_Instance_classDefinition_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Instance_classDefinition_feature", "_UI_Instance_type"),
+                getString("_UI_Instance_classDefinition_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Instance_classDefinition_feature", "_UI_Instance_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 PooslPackage.Literals.INSTANCE__CLASS_DEFINITION, true, false, true, null, null, null) {
 
             @Override

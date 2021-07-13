@@ -27,16 +27,16 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 public final class PooslProcessMethodDescription {
-    private static final String STR_CLASS = "Class";
+    private static final String STR_CLASS = "Class"; //$NON-NLS-1$
 
-    private static final String STR_INPUT_PARAMETERS = "InputParameters";
+    private static final String STR_INPUT_PARAMETERS = "InputParameters"; //$NON-NLS-1$
 
-    private static final String STR_OUTPUT_PARAMETERS = "OutputParameters";
+    private static final String STR_OUTPUT_PARAMETERS = "OutputParameters"; //$NON-NLS-1$
 
-    private static final String STR_UNGUARDED_METHOD_CALLS = "UnguardedMethodCalls";
+    private static final String STR_UNGUARDED_METHOD_CALLS = "UnguardedMethodCalls"; //$NON-NLS-1$
 
     private PooslProcessMethodDescription() {
-        throw new IllegalStateException("Utility class");
+        throw new IllegalStateException("Utility class"); 
     }
 
     // --- Set -------
@@ -63,7 +63,7 @@ public final class PooslProcessMethodDescription {
     private static String unguardedCallsToString(Set<String> unguardedCalls) {
         StringBuilder builder = new StringBuilder();
         for (String string : unguardedCalls) {
-            builder.append(string).append(",");
+            builder.append(string).append(","); //$NON-NLS-1$
         }
         return builder.toString();
     }
@@ -98,7 +98,7 @@ public final class PooslProcessMethodDescription {
         String stringDescriptions = descr.getUserData(STR_UNGUARDED_METHOD_CALLS);
         List<PooslProcessMethodParser> calls = new ArrayList<>();
         if (stringDescriptions != null && stringDescriptions.length() != 0) {
-            String[] mStatements = stringDescriptions.split(",");
+            String[] mStatements = stringDescriptions.split(","); //$NON-NLS-1$
             for (int i = 0; i < mStatements.length; i++) {
                 calls.add(new PooslProcessMethodParser(mStatements[i]));
             }

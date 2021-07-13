@@ -15,13 +15,13 @@ public class StackTraceLabelProvider extends LabelProvider {
             return stackframe.getId().toString() + ' ' + stackframe.getMethod();
         } else if (element instanceof StackFrameMapping) {
             StackFrameMapping frameMapping = (StackFrameMapping) element;
-            String mappingInfo = "";
+            String mappingInfo = ""; //$NON-NLS-1$
 
             try {
                 PooslSourceMapping mapping = frameMapping.getMapping();
                 if (mapping != null && mapping != PooslSourceMap.EMPTY_MAPPING) {
                     Path path = new Path(mapping.getFilePath());
-                    mappingInfo = "(" + path.segment(path.segmentCount() - 1) + ":" + mapping.getLineNumber() + ")";
+                    mappingInfo = "(" + path.segment(path.segmentCount() - 1) + ":" + mapping.getLineNumber() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 }
             } catch (Exception e) {
                 // do nothing

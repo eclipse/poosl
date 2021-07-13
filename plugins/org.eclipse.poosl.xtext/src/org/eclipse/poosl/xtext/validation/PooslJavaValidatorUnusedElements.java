@@ -137,7 +137,7 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
             for (String pClass : pClasses) {
                 Map<String, List<String>> method2calledMethods = class2method2calledMethods.get(pClass);
                 if (method2calledMethods.containsKey(pMethod)) {
-                    methods.add(pClass + ":" + pMethod);
+                    methods.add(pClass + ":" + pMethod); //$NON-NLS-1$
 
                     List<String> calledMethods = method2calledMethods.get(pMethod);
                     for (String calledMethod : calledMethods) {

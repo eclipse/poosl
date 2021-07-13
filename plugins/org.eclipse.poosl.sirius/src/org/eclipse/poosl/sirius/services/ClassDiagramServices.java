@@ -64,7 +64,7 @@ public class ClassDiagramServices extends AbstractServices {
     }
 
     public String getInstantiableDescription(InstantiableClass inst) {
-        StringBuilder string = new StringBuilder("-");
+        StringBuilder string = new StringBuilder("-"); //$NON-NLS-1$
         string.append(inst.getName());
         FormattingHelper.formatDeclarations(string, inst.getParameters(), false);
         return string.toString();
@@ -138,7 +138,7 @@ public class ClassDiagramServices extends AbstractServices {
                 return String.valueOf(nr);
             }
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     public List<Variable> getVariables(DataClass dataclass) {

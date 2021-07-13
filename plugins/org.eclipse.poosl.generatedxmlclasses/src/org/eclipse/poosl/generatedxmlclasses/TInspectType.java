@@ -43,16 +43,16 @@ import javax.xml.bind.annotation.XmlType;
 public enum TInspectType {
 
     @XmlEnumValue("process")
-    PROCESS("process"), @XmlEnumValue("cluster")
-    CLUSTER("cluster"), @XmlEnumValue("channel")
-    CHANNEL("channel"), @XmlEnumValue("model")
-    MODEL("model"), @XmlEnumValue("system")
-    SYSTEM("system"), @XmlEnumValue("port")
-    PORT("port"), @XmlEnumValue("variable")
-    VARIABLE("variable"), @XmlEnumValue("data")
-    DATA("data"), @XmlEnumValue("stackframe")
-    STACKFRAME("stackframe"), @XmlEnumValue("variable_context")
-    VARIABLE_CONTEXT("variable_context");
+    PROCESS("process"), @XmlEnumValue("cluster") //$NON-NLS-1$
+    CLUSTER("cluster"), @XmlEnumValue("channel") //$NON-NLS-1$
+    CHANNEL("channel"), @XmlEnumValue("model") //$NON-NLS-1$
+    MODEL("model"), @XmlEnumValue("system") //$NON-NLS-1$
+    SYSTEM("system"), @XmlEnumValue("port") //$NON-NLS-1$
+    PORT("port"), @XmlEnumValue("variable") //$NON-NLS-1$
+    VARIABLE("variable"), @XmlEnumValue("data") //$NON-NLS-1$
+    DATA("data"), @XmlEnumValue("stackframe") //$NON-NLS-1$
+    STACKFRAME("stackframe"), @XmlEnumValue("variable_context") //$NON-NLS-1$
+    VARIABLE_CONTEXT("variable_context"); //$NON-NLS-1$
 
     private final String value;
 

@@ -24,7 +24,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    ADD(0, "add", "+"),
+    ADD(0, "add", "+"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Subtract</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -33,7 +33,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    SUBTRACT(1, "subtract", "-"),
+    SUBTRACT(1, "subtract", "-"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Multiply</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -42,7 +42,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    MULTIPLY(2, "multiply", "*"),
+    MULTIPLY(2, "multiply", "*"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Divide</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -51,7 +51,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    DIVIDE(3, "divide", "/"),
+    DIVIDE(3, "divide", "/"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Equal</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -60,7 +60,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    EQUAL(4, "equal", "="),
+    EQUAL(4, "equal", "="), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Unequal</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -69,7 +69,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    UNEQUAL(5, "unequal", "!="),
+    UNEQUAL(5, "unequal", "!="), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Identical</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -78,7 +78,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    IDENTICAL(6, "identical", "=="),
+    IDENTICAL(6, "identical", "=="), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Not Identical</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -87,7 +87,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    NOT_IDENTICAL(7, "notIdentical", "!=="),
+    NOT_IDENTICAL(7, "notIdentical", "!=="), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>And</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -96,7 +96,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    AND(8, "and", "&"),
+    AND(8, "and", "&"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Or</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -105,7 +105,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    OR(9, "or", "|"),
+    OR(9, "or", "|"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Less Than</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -114,7 +114,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    LESS_THAN(10, "lessThan", "<"),
+    LESS_THAN(10, "lessThan", "<"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Greater Than</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -123,7 +123,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    GREATER_THAN(11, "greaterThan", ">"),
+    GREATER_THAN(11, "greaterThan", ">"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>At Least</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -132,7 +132,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    AT_LEAST(12, "atLeast", ">="),
+    AT_LEAST(12, "atLeast", ">="), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>At Most</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -141,7 +141,7 @@ public enum OperatorBinary implements Enumerator {
      * @generated
      * @ordered
      */
-    AT_MOST(13, "atMost", "<=");
+    AT_MOST(13, "atMost", "<="); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>Add</b></em>' literal value. <!-- begin-user-doc -->

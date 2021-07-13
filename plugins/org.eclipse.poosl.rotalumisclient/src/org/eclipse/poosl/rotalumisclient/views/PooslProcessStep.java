@@ -54,7 +54,7 @@ public final class PooslProcessStep {
         menuProcessStep.setText(Messages.ACTION_MENU_PROCESS_STEP);
 
         try {
-            ImageDescriptor stepIcon = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.poosl.rotalumisclient/icons/icon_process_step.png"));
+            ImageDescriptor stepIcon = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.poosl.rotalumisclient/icons/icon_process_step.png")); //$NON-NLS-1$
             Image image = stepIcon.createImage();
             menuProcessStep.setImage(image);
         } catch (MalformedURLException e) {

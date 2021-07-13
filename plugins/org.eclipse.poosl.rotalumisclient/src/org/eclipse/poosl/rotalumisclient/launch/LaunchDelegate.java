@@ -59,25 +59,25 @@ import org.eclipse.ui.model.WorkbenchPartLabelProvider;
 import org.eclipse.ui.progress.UIJob;
 
 public class LaunchDelegate implements ILaunchConfigurationDelegate {
-    private static final String OPTION_FILE_POOSL = "--poosl";
+    private static final String OPTION_FILE_POOSL = "--poosl"; //$NON-NLS-1$
 
-    private static final String OPTION_DEBUG = "--debug";
+    private static final String OPTION_DEBUG = "--debug"; //$NON-NLS-1$
 
-    private static final String OPTION_STACKSIZE = "-l";
+    private static final String OPTION_STACKSIZE = "-l"; //$NON-NLS-1$
 
-    private static final String OPTION_SEED = "-d";
+    private static final String OPTION_SEED = "-d"; //$NON-NLS-1$
 
-    private static final String OPTION_PORT = "-p";
+    private static final String OPTION_PORT = "-p"; //$NON-NLS-1$
 
-    private static final String OPTION_INCLUDE_LIB = "-I";
+    private static final String OPTION_INCLUDE_LIB = "-I"; //$NON-NLS-1$
 
-    private static final String OPTION_BASIC_CLASSES = "--basic-classes";
+    private static final String OPTION_BASIC_CLASSES = "--basic-classes"; //$NON-NLS-1$
 
-    private static final String OPTION_TEST = "--unittest";
+    private static final String OPTION_TEST = "--unittest"; //$NON-NLS-1$
 
-    private static final String OPTION_EXTERNAL_CONFIG = "-e";
+    private static final String OPTION_EXTERNAL_CONFIG = "-e"; //$NON-NLS-1$
 
-    private static final String OPTION_QUIET = "--quiet";
+    private static final String OPTION_QUIET = "--quiet"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(LaunchDelegate.class.getName());
 
@@ -91,15 +91,15 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
 
         if (validateConfiguration(configuration)) {
             try {
-                final String confProjectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, "");
+                final String confProjectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
                 IProject project = getProject(confProjectName);
 
                 if (checkForDirtyFiles(project)) {
                     terminateLaunch(launch);
                     return;
                 }
-                final String confModelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
-                final String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, "");
+                final String confModelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
+                final String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
                 final String confLaunchMode = launch.getLaunchMode();
                 final String confMaxStackSize = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
                 final String confRotalumisPath = RotalumisRunner.getRotalumis().getAbsolutePath();
@@ -205,7 +205,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
 
             } catch (JAXBException | IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
-                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, e.getMessage() + (e.getCause() != null ? "\n\n" + e.getCause().getMessage() : ""), e);
+                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, e.getMessage() + (e.getCause() != null ? "\n\n" + e.getCause().getMessage() : ""), e); //$NON-NLS-1$ //$NON-NLS-2$
                 throw new CoreException(status);
             }
         }
@@ -225,7 +225,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
             seed = Integer.toString(RANDOM.nextInt(Integer.MAX_VALUE));
         } else {
             String seedString = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
-            seed = (LaunchConfigurationPooslTab.isInteger(seedString)) ? seedString : "1";
+            seed = (LaunchConfigurationPooslTab.isInteger(seedString)) ? seedString : "1"; //$NON-NLS-1$
         }
         return seed;
     }
@@ -268,7 +268,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
                                 if (editorInput instanceof IFileEditorInput) {
                                     IFileEditorInput fileEditorInput = (IFileEditorInput) editorInput;
                                     String filePath = fileEditorInput.getStorage().getFullPath().toString();
-                                    if (filePath.startsWith("/" + project.getName() + "/")) {
+                                    if (filePath.startsWith("/" + project.getName() + "/")) { //$NON-NLS-1$ //$NON-NLS-2$
                                         dirtyResources.put(editorReference.getEditor(true), workbenchPage);
                                     }
                                 }
@@ -286,7 +286,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
                 dirtyEditorParts[i] = editorPart;
                 i++;
             }
-            UIJob uiJob = new UIJob("") {
+            UIJob uiJob = new UIJob("") { //$NON-NLS-1$
 
                 @Override
                 public IStatus runInUIThread(IProgressMonitor monitor) {
@@ -301,9 +301,9 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
                             dirtyResources.get(dirtyResourcePart).saveEditor(dirtyResourcePart, false);
                         }
                     } else if (userInput == SelectionDialog.CANCEL) {
-                        return new Status(IStatus.CANCEL, PooslConstants.PLUGIN_ID, "");
+                        return new Status(IStatus.CANCEL, PooslConstants.PLUGIN_ID, ""); //$NON-NLS-1$
                     }
-                    return new Status(IStatus.OK, PooslConstants.PLUGIN_ID, "");
+                    return new Status(IStatus.OK, PooslConstants.PLUGIN_ID, ""); //$NON-NLS-1$
                 }
             };
             uiJob.schedule();
@@ -388,10 +388,10 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
 
     boolean validateConfiguration(ILaunchConfiguration configuration) throws CoreException {
         if (configuration != null) {
-            String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
+            String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
             String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
-            if (!"".equals(modelPath)) {
-                if (!modelPath.endsWith(".poosl")) {
+            if (!"".equals(modelPath)) { //$NON-NLS-1$
+                if (!modelPath.endsWith(".poosl")) { //$NON-NLS-1$
                     IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The selected launch configuration does not contain a valid path to a poosl model.", null);
                     LOGGER.log(Level.SEVERE, status.getMessage(), status);
                     throw new CoreException(status);

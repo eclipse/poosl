@@ -18,7 +18,7 @@ public class ExternLaunchStopInformer {
     public void executeInformLaunchStopped(ILaunch launch) {
         ILaunchConfiguration launchConfiguration = launch.getLaunchConfiguration();
         try {
-            String id = launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "");
+            String id = launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""); //$NON-NLS-1$
             for (IPooslDebugInformer extension : ExtensionHelper.getExtensions()) {
                 executeExtensionLaunch(extension, id);
             }

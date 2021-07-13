@@ -20,7 +20,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.part.ViewPart;
 
 public final class ViewHelper {
-    private static final String SECONDID_SPLIT = "<>";
+    private static final String SECONDID_SPLIT = "<>"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(ViewHelper.class.getName());
 
@@ -98,14 +98,14 @@ public final class ViewHelper {
     public static String getSecondId(PooslThread thread) {
         ILaunchConfiguration launchConfiguration = thread.getDebugTarget().getLaunch().getLaunchConfiguration();
 
-        String port = "";
+        String port = ""; //$NON-NLS-1$
         try {
-            port = launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "");
+            port = launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""); //$NON-NLS-1$
         } catch (CoreException e) {
             LOGGER.log(Level.WARNING, "Rotalumis Port could not be retrieved from the launch configuration.", e);
         }
 
-        String id = "";
+        String id = ""; //$NON-NLS-1$
         try {
             id = PooslConstants.THREAD_VIEW_ID + port + SECONDID_SPLIT + thread.getDebugTarget().getName() + SECONDID_SPLIT + thread.getName();
         } catch (DebugException e) {
@@ -121,7 +121,7 @@ public final class ViewHelper {
      * @return the target name
      */
     public static String getDebugTargetName(String secondID) {
-        String targetName = "";
+        String targetName = ""; //$NON-NLS-1$
         if (secondID != null) {
             String[] result = secondID.split(SECONDID_SPLIT);
             if (result.length == 3) {
@@ -139,7 +139,7 @@ public final class ViewHelper {
      * @return the thread name
      */
     public static String getThreadName(String secondID) {
-        String threadName = "";
+        String threadName = ""; //$NON-NLS-1$
         if (secondID != null) {
             String[] result = secondID.split(SECONDID_SPLIT);
             if (result.length == 3) {

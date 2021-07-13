@@ -21,7 +21,7 @@ import org.eclipse.xtext.util.IResourceScopeCache;
 import com.google.inject.Inject;
 
 public class PooslResourceDescriptionManager extends DefaultResourceDescriptionManager {
-    private static final String POOSL_EXTENSION = ".poosl";
+    private static final String POOSL_EXTENSION = ".poosl"; //$NON-NLS-1$
 
     // --- Identify which aspects of the models are externally visible
     // (regarding scoping and validation)

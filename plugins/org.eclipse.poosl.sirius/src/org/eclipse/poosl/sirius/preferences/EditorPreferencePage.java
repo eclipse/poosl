@@ -73,7 +73,7 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
 
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_preferences_graphical_behavior");
+            workbench.getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_preferences_graphical_behavior"); //$NON-NLS-1$
         }
 
         createProjectGroup();

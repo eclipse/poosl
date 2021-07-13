@@ -51,13 +51,13 @@ public class OpenFilePreferenceManager extends OpenPreferenceManager {
                 return PooslEditorPreferenceDialog.COMPOSITE_STRUCTURE_DIAGRAM + PooslEditorPreferenceDialog.DIAGRAM_NAME_CLUSTER + getClusterName(cluster);
             }
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     private String getClusterName(ClusterClass cluster) {
         String name = cluster.getName();
         if (name.length() > MAX_CLUSTER_NAME_LENGTH) {
-            name = name.substring(0, MAX_CLUSTER_NAME_LENGTH) + "...";
+            name = name.substring(0, MAX_CLUSTER_NAME_LENGTH) + "..."; //$NON-NLS-1$
         }
         return name;
     }

@@ -10,7 +10,7 @@ import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public class PooslProcessMethodParser {
-    private static final String PARSER_METHOD_PARAM_SEPARATOR = "|";
+    private static final String PARSER_METHOD_PARAM_SEPARATOR = "|"; //$NON-NLS-1$
 
     private String calledMethod;
 
@@ -19,13 +19,13 @@ public class PooslProcessMethodParser {
     private int numberOfOutputs;
 
     public PooslProcessMethodParser(String stringDescription) {
-        String[] properties = stringDescription.split("\\" + PARSER_METHOD_PARAM_SEPARATOR);
+        String[] properties = stringDescription.split("\\" + PARSER_METHOD_PARAM_SEPARATOR); //$NON-NLS-1$
         if (properties.length == 3) {
             this.calledMethod = properties[0];
             this.numberOfInputs = Integer.parseInt(properties[1]);
             this.numberOfOutputs = Integer.parseInt(properties[2]);
         } else {
-            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " " + stringDescription);
+            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " " + stringDescription); //$NON-NLS-1$
         }
     }
 
@@ -52,7 +52,7 @@ public class PooslProcessMethodParser {
 
     public static String getProcessMethodIDWithClassName(ProcessMethod pMethod) {
         ProcessClass pClass = (ProcessClass) pMethod.eContainer();
-        return pClass.getName() + ":" + getProcessMethodID(pMethod);
+        return pClass.getName() + ":" + getProcessMethodID(pMethod); //$NON-NLS-1$
     }
 
     public IEObjectDescription getCalledMethod(ProcessClass pClass) {

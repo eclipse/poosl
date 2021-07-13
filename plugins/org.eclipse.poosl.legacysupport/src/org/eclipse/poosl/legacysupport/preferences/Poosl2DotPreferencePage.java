@@ -30,8 +30,8 @@ public class Poosl2DotPreferencePage extends FieldEditorPreferencePage implement
 
     @Override
     protected void createFieldEditors() {
-        addField(new FileFieldEditor("GRAPHVIZ_NEATO", "&Neato executable in Graphviz bin directory: ", getFieldEditorParent()));
-        addField(new BooleanFieldEditor("HIDE_PORTS", "&Hide ports", getFieldEditorParent()));
+        addField(new FileFieldEditor("GRAPHVIZ_NEATO", "&Neato executable in Graphviz bin directory: ", getFieldEditorParent())); //$NON-NLS-1$
+        addField(new BooleanFieldEditor("HIDE_PORTS", "&Hide ports", getFieldEditorParent())); //$NON-NLS-1$
     }
 
 }

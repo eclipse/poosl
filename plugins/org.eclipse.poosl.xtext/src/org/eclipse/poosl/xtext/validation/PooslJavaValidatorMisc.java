@@ -437,7 +437,7 @@ public class PooslJavaValidatorMisc extends PooslJavaValidatorUnusedElements {
 
                 for (IEObjectDescription messageSignature : messageSignatures) {
                     List<String> paramTypes = PooslMessageSignatureDescription.getParameterTypes(messageSignature);
-                    String key = HelperFunctions.getName(messageSignature) + "|" + paramTypes.size();
+                    String key = HelperFunctions.getName(messageSignature) + "|" + paramTypes.size(); //$NON-NLS-1$
                     if (key != null) {
                         Map<ConnectedPortsHelper.InstanceAndPort, List<String>> portEntries = map.get(key);
                         if (portEntries == null) {
@@ -460,18 +460,18 @@ public class PooslJavaValidatorMisc extends PooslJavaValidatorUnusedElements {
         String expected;
         String inheritanceType;
         if (expectedMessageType == PooslMessageType.RECEIVE) {
-            actualTypeString = "!";
-            expectedTypeString = "?";
-            actual = "send";
-            expected = "receive";
-            inheritanceType = "supertype";
+            actualTypeString = "!"; //$NON-NLS-1$
+            expectedTypeString = "?"; //$NON-NLS-1$
+            actual = "send"; //$NON-NLS-1$
+            expected = "receive"; //$NON-NLS-1$
+            inheritanceType = "supertype"; //$NON-NLS-1$
 
         } else {
-            actualTypeString = "?";
-            expectedTypeString = "!";
-            actual = "receive";
-            expected = "send";
-            inheritanceType = "subtype";
+            actualTypeString = "?"; //$NON-NLS-1$
+            expectedTypeString = "!"; //$NON-NLS-1$
+            actual = "receive"; //$NON-NLS-1$
+            expected = "send"; //$NON-NLS-1$
+            inheritanceType = "subtype"; //$NON-NLS-1$
         }
 
         for (Entry<String, Map<ConnectedPortsHelper.InstanceAndPort, List<String>>> expectedEntry : expectedMap.entrySet()) {
@@ -508,7 +508,7 @@ public class PooslJavaValidatorMisc extends PooslJavaValidatorUnusedElements {
                     }
                 } else {
                     String incompatibleMessagesString = computeIncompatibleMessages(resource, actualTypeString, messageName, filteredActualPortEntries, expectedTypes, expectedMessageType);
-                    if (!"".equals(incompatibleMessagesString)) {
+                    if (!"".equals(incompatibleMessagesString)) { //$NON-NLS-1$
                         StringBuilder sbExpectedTypes = new StringBuilder();
                         FormattingHelper.formatTypes(sbExpectedTypes, expectedTypes);
                         if (channel != null) {
@@ -534,7 +534,7 @@ public class PooslJavaValidatorMisc extends PooslJavaValidatorUnusedElements {
 
             if ((expectedMessageType == PooslMessageType.RECEIVE && !TypingHelper.isSubtype(resource, actualTypes, expectedTypes))
                     || (expectedMessageType == PooslMessageType.SEND && !TypingHelper.isSubtype(resource, expectedTypes, actualTypes))) {
-                formatted.append(" " + actualPortAndProcess.toString() + actualTypeString + messageName);
+                formatted.append(" " + actualPortAndProcess.toString() + actualTypeString + messageName); //$NON-NLS-1$
                 FormattingHelper.formatTypes(formatted, actualTypes);
             }
         }
@@ -544,7 +544,7 @@ public class PooslJavaValidatorMisc extends PooslJavaValidatorUnusedElements {
     private static boolean isInstancePortUsed(Instance instance, String port, ClusterClass aClass) {
         for (Channel channel : aClass.getChannels()) {
             for (InstancePort instancePort : channel.getInstancePorts()) {
-                String instancePortName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : "";
+                String instancePortName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
                 if ((instancePort.getInstance() == instance) && (instancePortName.equals(port))) {
                     return true;
                 }

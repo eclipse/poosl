@@ -14,7 +14,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.eclipse.poosl.sirius";
+    public static final String PLUGIN_ID = "org.eclipse.poosl.sirius"; //$NON-NLS-1$
 
     public static final GraphicalDebugUpdater MESSAGEUPDATER = getUpdaterInstance();
 
@@ -47,7 +47,7 @@ public class Activator extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
         viewpoints = new HashSet<>();
-        viewpoints.addAll(ViewpointRegistry.getInstance().registerFromPlugin(PLUGIN_ID + "/description/poosl.odesign"));
+        viewpoints.addAll(ViewpointRegistry.getInstance().registerFromPlugin(PLUGIN_ID + "/description/poosl.odesign")); //$NON-NLS-1$
     }
 
     /*

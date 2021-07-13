@@ -35,7 +35,7 @@ public class PooslGeneratorModule extends DefaultGeneratorModule {
         @Override
         public TypeReference getEclipsePluginActivator() {
             String pluginName = projectConfig.getEclipsePlugin().getName();
-            return new TypeReference(pluginName + ".internal", "PooslActivator");
+            return new TypeReference(pluginName + ".internal", "PooslActivator"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 }

@@ -36,7 +36,7 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
 
     private static final Color EXECUTABLE_DELAY_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_BLUE);
 
-    private static final String TERMINATED = "<terminated> ";
+    private static final String TERMINATED = "<terminated> "; //$NON-NLS-1$
 
     private Image threadRunImage;
 
@@ -67,12 +67,12 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
     public PooslDebugLabelProvider() {
         super();
         try {
-            threadRunImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/thread_obj.png")).createImage();
-            threadSuspendedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/threads_obj.png")).createImage();
-            threadTerminatedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/threads_obj.png")).createImage();
-            debugTargetRunImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugt_obj.png")).createImage();
-            debugTargetSuspendedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugts_obj.png")).createImage();
-            debugTargetTerminatedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugtt_obj.png")).createImage();
+            threadRunImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/thread_obj.png")).createImage(); //$NON-NLS-1$
+            threadSuspendedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/threads_obj.png")).createImage(); //$NON-NLS-1$
+            threadTerminatedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/threads_obj.png")).createImage(); //$NON-NLS-1$
+            debugTargetRunImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugt_obj.png")).createImage(); //$NON-NLS-1$
+            debugTargetSuspendedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugts_obj.png")).createImage(); //$NON-NLS-1$
+            debugTargetTerminatedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugtt_obj.png")).createImage(); //$NON-NLS-1$
         } catch (MalformedURLException e) {
             LOGGER.log(Level.WARNING, e.getMessage(), e);
         }
@@ -170,7 +170,7 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
         if (element instanceof PooslDebugTarget) {
             try {
                 PooslDebugTarget target = (PooslDebugTarget) element;
-                String text = "";
+                String text = ""; //$NON-NLS-1$
                 if (target.isTerminated()) {
                     text += TERMINATED;
                 }

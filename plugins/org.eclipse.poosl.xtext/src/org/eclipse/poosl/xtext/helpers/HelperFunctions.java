@@ -56,36 +56,36 @@ public final class HelperFunctions {
 
     // === Special data classes =======
     
-    public static final String CLASS_NAME_OBJECT = "Object";
+    public static final String CLASS_NAME_OBJECT = "Object"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_ARRAY = "Array";
+    public static final String CLASS_NAME_ARRAY = "Array"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_BOOLEAN = "Boolean";
+    public static final String CLASS_NAME_BOOLEAN = "Boolean"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_CHAR = "Char";
+    public static final String CLASS_NAME_CHAR = "Char"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_FLOAT = "Float";
+    public static final String CLASS_NAME_FLOAT = "Float"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_INTEGER = "Integer";
+    public static final String CLASS_NAME_INTEGER = "Integer"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_NIL = "Nil";
+    public static final String CLASS_NAME_NIL = "Nil"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_REAL = "Real";
+    public static final String CLASS_NAME_REAL = "Real"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_STRING = "String";
+    public static final String CLASS_NAME_STRING = "String"; //$NON-NLS-1$
 
     // default basic classes
-    public static final String CLASS_NAME_FILEIN = "FileIn";
+    public static final String CLASS_NAME_FILEIN = "FileIn"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_FILEOUT = "FileOut";
+    public static final String CLASS_NAME_FILEOUT = "FileOut"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_RANDOMGENERATOR = "RandomGenerator";
+    public static final String CLASS_NAME_RANDOMGENERATOR = "RandomGenerator"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_SOCKET = "Socket";
+    public static final String CLASS_NAME_SOCKET = "Socket"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_CONSOLE = "Console";
+    public static final String CLASS_NAME_CONSOLE = "Console"; //$NON-NLS-1$
 
-    public static final String CLASS_NAME_OBSERVER = "Observer";
+    public static final String CLASS_NAME_OBSERVER = "Observer"; //$NON-NLS-1$
 
     public static final List<String> PRIMITIVE_DATA_CLASSES = Collections
     .unmodifiableList(Arrays.asList(CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL));

@@ -55,7 +55,7 @@ public class PooslVariable extends PooslDebugElement implements IVariable {
     @Override
     public void setValue(String expression) throws DebugException {
         String trimmedExpression = expression.trim();
-        if (trimmedExpression.startsWith("\"")) {
+        if (trimmedExpression.startsWith("\"")) { //$NON-NLS-1$
             // Remove (id=...) from string value
             int index = trimmedExpression.lastIndexOf('\"');
             trimmedExpression = trimmedExpression.substring(0, index + 1);
@@ -109,7 +109,7 @@ public class PooslVariable extends PooslDebugElement implements IVariable {
 
     @Override
     public String getReferenceTypeName() throws DebugException {
-        return "reftype: " + value.toString();
+        return "reftype: " + value.toString(); //$NON-NLS-1$
     }
 
     @Override

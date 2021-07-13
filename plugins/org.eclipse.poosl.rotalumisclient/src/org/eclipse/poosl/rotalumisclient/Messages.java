@@ -2,7 +2,7 @@ package org.eclipse.poosl.rotalumisclient;
 
 // CHECKSTYLE:OFF
 public final class Messages {
-    public static final String RESULT_OK = "ok";
+    public static final String RESULT_OK = "ok"; //$NON-NLS-1$
 
     public static final String DEFAULT_STOPPED_TITLE = "Simulator has stopped";
 

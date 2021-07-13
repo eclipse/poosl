@@ -11,9 +11,9 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 public final class ExtensionHelper {
-    private static final String POOSL_DEUBUG_ATTRIBUTE = "class";
+    private static final String POOSL_DEUBUG_ATTRIBUTE = "class"; //$NON-NLS-1$
 
-    private static final String IPOOSLDEBUGINFORMER_ID = "org.eclipse.poosl.rotalumisclient.debuginformer";
+    private static final String IPOOSLDEBUGINFORMER_ID = "org.eclipse.poosl.rotalumisclient.debuginformer"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(ExtensionHelper.class.getName());
 

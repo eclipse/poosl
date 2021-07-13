@@ -28,7 +28,7 @@ public class PooslEditor extends XtextEditor {
 
     PooslEditor() {
         super();
-        setHelpContextId("org.eclipse.poosl.help.help_editor");
+        setHelpContextId("org.eclipse.poosl.help.help_editor"); //$NON-NLS-1$
         checkPerspective();
     }
 
@@ -56,7 +56,7 @@ public class PooslEditor extends XtextEditor {
         IWorkbench workbench = PlatformUI.getWorkbench();
         IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
         IPerspectiveDescriptor perspective = window.getActivePage().getPerspective();
-        if (!perspective.getId().equals("org.eclipse.poosl.normalperspective") && !perspective.getId().equals("org.eclipse.poosl.debugperspective")) {
+        if (!perspective.getId().equals("org.eclipse.poosl.normalperspective") && !perspective.getId().equals("org.eclipse.poosl.debugperspective")) { //$NON-NLS-1$ //$NON-NLS-2$
             IPreferencesService preferencesService = Platform.getPreferencesService();
             boolean dontask = preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID, GlobalConstants.PREFERENCES_DONT_ASK_EDIT_PERSPECTIVE, false, null);
             if (dontask) {
@@ -75,7 +75,7 @@ public class PooslEditor extends XtextEditor {
 
     private void openPerspective(IWorkbench workbench, IWorkbenchWindow window) {
         try {
-            workbench.showPerspective("org.eclipse.poosl.normalperspective", window);
+            workbench.showPerspective("org.eclipse.poosl.normalperspective", window); //$NON-NLS-1$
         } catch (WorkbenchException e) {
             LOGGER.log(Level.WARNING, "Could not open perspective", e);
         }

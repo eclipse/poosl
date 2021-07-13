@@ -21,8 +21,8 @@ public class ExternLaunchStartInformer {
 
         ILaunchConfiguration launchConfiguration = pooslTarget.getLaunch().getLaunchConfiguration();
         try {
-            ExternLaunchStartMessage message = new ExternLaunchStartMessage(launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""),
-                    launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""),
+            ExternLaunchStartMessage message = new ExternLaunchStartMessage(launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""), //$NON-NLS-1$
+                    launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""), //$NON-NLS-1$ //$NON-NLS-2$
                     pooslTarget.getInstancePortMap(), files);
             for (IPooslDebugInformer extension : ExtensionHelper.getExtensions()) {
                 executeLaunchStart(extension, message);

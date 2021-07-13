@@ -22,7 +22,7 @@ public class SequenceDiagramPreferencePage extends FieldEditorPreferencePage imp
     @Override
     public void createControl(Composite parent) {
         super.createControl(parent);
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_preferences_sequence_diagram");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_preferences_sequence_diagram"); //$NON-NLS-1$
     }
 
     @Override

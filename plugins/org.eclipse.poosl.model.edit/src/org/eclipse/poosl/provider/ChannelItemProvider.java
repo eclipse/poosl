@@ -58,7 +58,7 @@ public class ChannelItemProvider extends AnnotableItemProvider {
      */
     protected void addExternalPortPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_Channel_externalPort_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Channel_externalPort_feature", "_UI_Channel_type"),
+                getString("_UI_Channel_externalPort_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Channel_externalPort_feature", "_UI_Channel_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 PooslPackage.Literals.CHANNEL__EXTERNAL_PORT, true, false, true, null, null, null) {
             @Override
             public Collection<?> getChoiceOfValues(Object object) {

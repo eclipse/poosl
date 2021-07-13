@@ -36,10 +36,10 @@ import javax.xml.bind.annotation.XmlType;
 public enum TPerformTransitionResponseResult {
 
     @XmlEnumValue("ok")
-    OK("ok"), @XmlEnumValue("inexecutable")
-    INEXECUTABLE("inexecutable"), @XmlEnumValue("invalid transition")
-    INVALID_TRANSITION("invalid transition"), @XmlEnumValue("invalid handle")
-    INVALID_HANDLE("invalid handle");
+    OK("ok"), @XmlEnumValue("inexecutable") //$NON-NLS-1$
+    INEXECUTABLE("inexecutable"), @XmlEnumValue("invalid transition") //$NON-NLS-1$
+    INVALID_TRANSITION("invalid transition"), @XmlEnumValue("invalid handle") //$NON-NLS-1$
+    INVALID_HANDLE("invalid handle"); //$NON-NLS-1$
 
     private final String value;
 

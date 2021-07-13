@@ -19,7 +19,7 @@ public class PooslDescriptionLabelProvider extends DefaultDescriptionLabelProvid
     @Override
     public Object text(IEObjectDescription element) {
         if (element.getEClass() == Literals.POOSL) {
-            return "System";
+            return "System"; //$NON-NLS-1$
         }
         return super.text(element);
     }

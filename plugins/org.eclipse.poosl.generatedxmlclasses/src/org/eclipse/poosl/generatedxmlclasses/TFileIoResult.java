@@ -36,11 +36,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TFileIoResult {
 
-    OK("OK"), @XmlEnumValue("file does not exist")
-    FILE_DOES_NOT_EXIST("file does not exist"), @XmlEnumValue("cannot create file")
-    CANNOT_CREATE_FILE("cannot create file"), @XmlEnumValue("disk full")
-    DISK_FULL("disk full"), @XmlEnumValue("timed out")
-    TIMED_OUT("timed out");
+    OK("OK"), @XmlEnumValue("file does not exist") //$NON-NLS-1$
+    FILE_DOES_NOT_EXIST("file does not exist"), @XmlEnumValue("cannot create file") //$NON-NLS-1$
+    CANNOT_CREATE_FILE("cannot create file"), @XmlEnumValue("disk full") //$NON-NLS-1$
+    DISK_FULL("disk full"), @XmlEnumValue("timed out") //$NON-NLS-1$
+    TIMED_OUT("timed out"); //$NON-NLS-1$
 
     private final String value;
 

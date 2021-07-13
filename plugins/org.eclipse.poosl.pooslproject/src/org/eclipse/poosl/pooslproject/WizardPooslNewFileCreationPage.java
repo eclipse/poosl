@@ -9,6 +9,6 @@ public class WizardPooslNewFileCreationPage extends WizardNewFileCreationPage {
         super(pageName, selection);
         setTitle("POOSL model Wizard");
         setDescription("Create a new POOSL model with System");
-        setFileExtension("poosl");
+        setFileExtension("poosl"); //$NON-NLS-1$
     }
 }

@@ -62,7 +62,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private static final String EXTERN_CONFIG_DIALOG_TITLE = "Select the file with the extern port configuration:";
 
-    private static final String FILE_NAME_FILTER = "*.";
+    private static final String FILE_NAME_FILTER = "*."; //$NON-NLS-1$
 
     // Validation
     private static final String VALIDATION_FILE_EMPTY = "Model path cannot be empty";
@@ -109,9 +109,9 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     private Button quietButton;
 
     // Relative model info
-    private String projectName = "";
+    private String projectName = ""; //$NON-NLS-1$
 
-    private String relativePath = "";
+    private String relativePath = ""; //$NON-NLS-1$
 
     private final ModifyListener fBasicModifyListener = new ModifyListener() {
         @Override
@@ -188,7 +188,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
         modelPathTextControl = new Text(modelGroup, SWT.BORDER);
         modelPathTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        modelPathTextControl.setText("");
+        modelPathTextControl.setText(""); //$NON-NLS-1$
         modelPathTextControl.addModifyListener(fBasicModifyListener);
 
         Button modelBrowseButton = new Button(modelGroup, SWT.PUSH);
@@ -203,7 +203,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
         externPathTextControl = new Text(externGroup, SWT.BORDER);
         externPathTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        externPathTextControl.setText("");
+        externPathTextControl.setText(""); //$NON-NLS-1$
         externPathTextControl.addModifyListener(fBasicModifyListener);
 
         Button externBrowseButton = new Button(externGroup, SWT.PUSH);
@@ -221,7 +221,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
         seedTextControl = new Text(serverGroup, SWT.BORDER);
         seedTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        seedTextControl.setText("");
+        seedTextControl.setText(""); //$NON-NLS-1$
         seedTextControl.addModifyListener(fBasicModifyListener);
 
         randomSeedButton = new Button(serverGroup, SWT.CHECK);
@@ -245,7 +245,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
         stackSizeTextControl = new Text(serverGroup, SWT.BORDER);
         stackSizeTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        stackSizeTextControl.setText("");
+        stackSizeTextControl.setText(""); //$NON-NLS-1$
 
         new Label(serverGroup, SWT.NONE);
 
@@ -255,7 +255,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
         portTextControl = new Text(serverGroup, SWT.BORDER);
         portTextControl.setLayoutData(new GridData(SWT.FILL, SWT.WRAP, true, false));
         portTextControl.addModifyListener(fBasicModifyListener);
-        portTextControl.setText("");
+        portTextControl.setText(""); //$NON-NLS-1$
 
         new Label(serverGroup, SWT.NONE);
 
@@ -293,12 +293,12 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     public void initializeFrom(ILaunchConfiguration configuration) {
         if (configuration != null) {
             try {
-                String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "");
+                String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
                 if (!modelPath.isEmpty()) {
                     modelPathTextControl.setText(modelPath);
                 }
 
-                String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, "");
+                String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
                 if (!externalConfigPath.isEmpty()) {
                     externPathTextControl.setText(externalConfigPath);
                 }
@@ -420,7 +420,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     @Override
     public Image getImage() {
         Bundle bundle = Platform.getBundle(PooslConstants.PLUGIN_ID);
-        Path path = new Path("icons/poosl_simulation.gif");
+        Path path = new Path("icons/poosl_simulation.gif"); //$NON-NLS-1$
         URL fileURL = FileLocator.find(bundle, path, null);
         InputStream inputStream = null;
         try {
@@ -439,13 +439,13 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
                 String projectLocation = iProject.getLocation().toOSString();
                 if (modelLocation.startsWith(projectLocation)) {
                     projectName = iProject.getName();
-                    relativePath = "\\" + projectName + modelLocation.substring(projectLocation.length());
+                    relativePath = "\\" + projectName + modelLocation.substring(projectLocation.length()); //$NON-NLS-1$
 
                     return;
                 }
             }
         }
-        projectName = "";
-        relativePath = "";
+        projectName = ""; //$NON-NLS-1$
+        relativePath = ""; //$NON-NLS-1$
     }
 }

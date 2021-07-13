@@ -39,13 +39,13 @@ import javax.xml.bind.annotation.XmlType;
 public enum TCommand {
 
     @XmlEnumValue("run")
-    RUN("run"), @XmlEnumValue("pause")
-    PAUSE("pause"), @XmlEnumValue("stop")
-    STOP("stop"), @XmlEnumValue("step")
-    STEP("step"), @XmlEnumValue("process-step")
-    PROCESS_STEP("process-step"), @XmlEnumValue("time-step")
-    TIME_STEP("time-step"), @XmlEnumValue("comm-step")
-    COMM_STEP("comm-step");
+    RUN("run"), @XmlEnumValue("pause") //$NON-NLS-1$
+    PAUSE("pause"), @XmlEnumValue("stop") //$NON-NLS-1$
+    STOP("stop"), @XmlEnumValue("step") //$NON-NLS-1$
+    STEP("step"), @XmlEnumValue("process-step") //$NON-NLS-1$
+    PROCESS_STEP("process-step"), @XmlEnumValue("time-step") //$NON-NLS-1$
+    TIME_STEP("time-step"), @XmlEnumValue("comm-step") //$NON-NLS-1$
+    COMM_STEP("comm-step"); //$NON-NLS-1$
 
     private final String value;
 

@@ -22,8 +22,8 @@ public class ExternMessageInformer {
             PooslDebugTarget pooslTarget = (PooslDebugTarget) target;
             if (!pooslTarget.isEdited()) {
                 try {
-                    String launchid = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "");
-                    String modelpath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, "");
+                    String launchid = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""); //$NON-NLS-1$
+                    String modelpath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
                     ExternDebugMessage externMassage = new ExternDebugMessage(launchid, modelpath, event);
                     for (IPooslDebugInformer extension : ExtensionHelper.getExtensions()) {
                         executeExtensionMessage(extension, externMassage);

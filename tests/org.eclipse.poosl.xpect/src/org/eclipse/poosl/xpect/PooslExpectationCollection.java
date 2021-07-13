@@ -16,7 +16,7 @@ public class PooslExpectationCollection extends ExpectationCollection {
             while (exIt.hasNext() && actIt.hasNext()) {
                 ExpectationItem exp = exIt.next();
                 ActualItem act = actIt.next();
-                String[] expecteds = exp.getNormalized().split("%");
+                String[] expecteds = exp.getNormalized().split("%"); //$NON-NLS-1$
                 for (int i = 0; i < expecteds.length; i++) {
                     if (!act.getNormalized().contains(expecteds[i])) {
                         return false;

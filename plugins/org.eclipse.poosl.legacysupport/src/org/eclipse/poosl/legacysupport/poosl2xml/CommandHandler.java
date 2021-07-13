@@ -42,7 +42,7 @@ public class CommandHandler implements IHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         ISelection selection = HandlerUtil.getCurrentSelection(event);
-        Boolean asSheSim = Boolean.parseBoolean(event.getParameter("org.eclipse.poosl.commands.generatexml.shesim"));
+        Boolean asSheSim = Boolean.parseBoolean(event.getParameter("org.eclipse.poosl.commands.generatexml.shesim")); //$NON-NLS-1$
 
         if (selection instanceof IStructuredSelection) {
             Set<IProject> projects = new HashSet<>();

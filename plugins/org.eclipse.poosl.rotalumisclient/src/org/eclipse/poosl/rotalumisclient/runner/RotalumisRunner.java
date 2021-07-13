@@ -31,7 +31,7 @@ public final class RotalumisRunner {
 
     private static final String RESULT_MESSAGE_ROTALUMIS_SET_EXECUTABLE = "Failed to make temporary file for Rotalumis executable at location: {0}";
 
-    private static final String ROTALUMIS_LOCATION_KEY = "POOSL_ROTALUMIS";
+    private static final String ROTALUMIS_LOCATION_KEY = "POOSL_ROTALUMIS"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(RotalumisRunner.class.getName());
 
@@ -128,36 +128,36 @@ public final class RotalumisRunner {
     private static String buildOSPath() throws CoreException {
         StringBuilder stringBuilder = new StringBuilder();
         if (SystemUtils.IS_OS_WINDOWS) {
-            stringBuilder.append("windows/");
+            stringBuilder.append("windows/"); //$NON-NLS-1$
         } else if (SystemUtils.IS_OS_LINUX) {
-            stringBuilder.append("linux/");
+            stringBuilder.append("linux/"); //$NON-NLS-1$
         } else if (SystemUtils.IS_OS_MAC) {
-            stringBuilder.append("mac/");
+            stringBuilder.append("mac/"); //$NON-NLS-1$
         } else {
             IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "There is no support for your operating system.", null);
             throw new CoreException(status);
         }
         if (SystemUtils.OS_ARCH.equals(Platform.ARCH_X86)) {
-            stringBuilder.append("32bit/");
-        } else if ("i386".equals(SystemUtils.OS_ARCH)) {
-            stringBuilder.append("32bit/");
+            stringBuilder.append("32bit/"); //$NON-NLS-1$
+        } else if ("i386".equals(SystemUtils.OS_ARCH)) { //$NON-NLS-1$
+            stringBuilder.append("32bit/"); //$NON-NLS-1$
         } else if (SystemUtils.OS_ARCH.equals(Platform.ARCH_X86_64)) {
-            stringBuilder.append("64bit/");
-        } else if ("amd64".equals(SystemUtils.OS_ARCH)) {
+            stringBuilder.append("64bit/"); //$NON-NLS-1$
+        } else if ("amd64".equals(SystemUtils.OS_ARCH)) { //$NON-NLS-1$
             // For some reason the constant for Platform.ARCH_amd64 is
             // deprecated
-            stringBuilder.append("64bit/");
+            stringBuilder.append("64bit/"); //$NON-NLS-1$
         } else {
             IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "There is no support for your architecture. (" + SystemUtils.OS_ARCH + ")", null);
             LOGGER.log(Level.SEVERE, status.getMessage(), status);
             throw new CoreException(status);
         }
         if (SystemUtils.IS_OS_WINDOWS) {
-            stringBuilder.append("rotalumis.exe");
+            stringBuilder.append("rotalumis.exe"); //$NON-NLS-1$
         } else if (SystemUtils.IS_OS_LINUX) {
-            stringBuilder.append("rotalumis");
+            stringBuilder.append("rotalumis"); //$NON-NLS-1$
         } else if (SystemUtils.IS_OS_MAC) {
-            stringBuilder.append("rotalumis");
+            stringBuilder.append("rotalumis"); //$NON-NLS-1$
         }
         return stringBuilder.toString();
     }

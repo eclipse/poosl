@@ -14,7 +14,7 @@ import org.eclipse.poosl.generatedxmlclasses.TInspectType;
 import org.eclipse.poosl.generatedxmlclasses.TInstanceType;
 
 public class PooslInstanceMap {
-    private static final String INSTANCE_PORT_SEPERATOR = ".";
+    private static final String INSTANCE_PORT_SEPERATOR = "."; //$NON-NLS-1$
 
     private final Map<String, TInstanceType> instances = new LinkedHashMap<>();
 

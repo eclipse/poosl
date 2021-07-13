@@ -242,7 +242,7 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
         treeRoot.setText("No information to display.");
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(treeParent, "org.eclipse.poosl.help.help_pet");
+            workbench.getHelpSystem().setHelp(treeParent, "org.eclipse.poosl.help.help_pet"); //$NON-NLS-1$
         }
         processStepAction = createProcessStepAction();
         createToolBarMenu();
@@ -254,7 +254,7 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
     }
 
     public void parseTree(PooslThread thread) {
-        String processName = "";
+        String processName = ""; //$NON-NLS-1$
         try {
             processName = thread.getName();
         } catch (DebugException e1) {
@@ -340,9 +340,9 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
 
         if (active) {
             String localNamePart = executionTreeElement.getName().getLocalPart();
-            if (!"guard".equals(localNamePart)) {
-                if ("sequential".equals(localNamePart) || "parallel".equals(localNamePart) || "select".equals(localNamePart) || "method_call".equals(localNamePart) || "abort".equals(localNamePart)
-                        || "interrupt".equals(localNamePart)) {
+            if (!"guard".equals(localNamePart)) { //$NON-NLS-1$
+                if ("sequential".equals(localNamePart) || "parallel".equals(localNamePart) || "select".equals(localNamePart) || "method_call".equals(localNamePart) || "abort".equals(localNamePart) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+                        || "interrupt".equals(localNamePart)) { //$NON-NLS-1$
                     child.setForeground(INACTIVE_COLOR);
                 } else {
                     active = false;
@@ -374,7 +374,7 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
                         break;
                     }
                 }
-                addChilds(executionTree, child, subElement, active && (!"sequential".equals(executionTreeElement.getName().getLocalPart()) || 0 == statements.getStatement().indexOf(bigInt)));
+                addChilds(executionTree, child, subElement, active && (!"sequential".equals(executionTreeElement.getName().getLocalPart()) || 0 == statements.getStatement().indexOf(bigInt))); //$NON-NLS-1$
             }
         } else {
             JAXBElement<? extends TExecutiontreeBase> subElement = null;
@@ -384,7 +384,7 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
                     addChilds(executionTree, child, subElement, active);
                 }
             }
-            if (subElement != null && "while".equals(executionTreeElement.getName().getLocalPart()) && !possibleTransitionIds.containsKey(executionTreeElement.getValue().getHandle())) {
+            if (subElement != null && "while".equals(executionTreeElement.getName().getLocalPart()) && !possibleTransitionIds.containsKey(executionTreeElement.getValue().getHandle())) { //$NON-NLS-1$
                 child.setForeground(INACTIVE_COLOR);
             }
         }
@@ -392,7 +392,7 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
 
     private void setText(final TreeItem child, JAXBElement<? extends TExecutiontreeBase> executionTreeElement) {
         if (executionTreeElement.getValue() instanceof TExecutiontreeStatements) {
-            String text = executionTreeElement.getName().toString().replace("{uri:poosl}", "");
+            String text = executionTreeElement.getName().toString().replace("{uri:poosl}", ""); //$NON-NLS-1$ //$NON-NLS-2$
             child.setText(text);
         } else {
             final int statementHandle = executionTreeElement.getValue().getStmtHandle();
@@ -405,7 +405,7 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
                     public void requestedSourceMapping(final PooslSourceMapping mapping) {
                         if (child != null && !child.isDisposed()) {
                             if (mapping == null) {
-                                child.setText("...");
+                                child.setText("..."); //$NON-NLS-1$
                             } else {
                                 child.setText(mapping.getSingleLineSourceText());
                             }

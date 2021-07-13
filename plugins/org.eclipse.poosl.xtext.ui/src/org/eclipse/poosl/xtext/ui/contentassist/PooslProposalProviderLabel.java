@@ -43,7 +43,7 @@ public class PooslProposalProviderLabel extends AbstractPooslProposalProvider {
             String className = PooslMessageSignatureDescription.getClassName(candidate);
             String portName = PooslMessageSignatureDescription.getPort(candidate);
             if (portName != null) {
-                second = ((className != null) ? className : "") + "." + portName;
+                second = ((className != null) ? className : "") + "." + portName; //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
 
@@ -51,7 +51,7 @@ public class PooslProposalProviderLabel extends AbstractPooslProposalProvider {
             StringBuilder buf = new StringBuilder();
             buf.append(first);
             if (second != null) {
-                buf.append(" - ");
+                buf.append(" - "); //$NON-NLS-1$
                 buf.append(second);
                 StyledString styledString = new StyledString(buf.toString());
                 styledString.setStyle(first.length(), second.length() + 3, StyledString.DECORATIONS_STYLER);

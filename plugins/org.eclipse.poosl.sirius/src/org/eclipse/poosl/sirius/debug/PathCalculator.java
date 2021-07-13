@@ -30,7 +30,7 @@ public class PathCalculator {
 
     public String getPathCounterLabel(String pathId) {
         PathCounter pCount = getPathCounter(pathId);
-        return "? " + pCount.getIn() + " / ! " + pCount.getOut();
+        return "? " + pCount.getIn() + " / ! " + pCount.getOut(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public String getPathCounterLabel(String owner, String instance, String port) {
@@ -38,6 +38,6 @@ public class PathCalculator {
     }
 
     private String getPathId(String owner, String instance, String port) {
-        return owner + "_" + instance + "_" + port;
+        return owner + "_" + instance + "_" + port; //$NON-NLS-1$ //$NON-NLS-2$
     }
 }

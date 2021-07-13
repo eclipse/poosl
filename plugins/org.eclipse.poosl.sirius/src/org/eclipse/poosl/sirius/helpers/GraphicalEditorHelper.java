@@ -74,15 +74,15 @@ import org.eclipse.ui.navigator.INavigatorContentService;
 public final class GraphicalEditorHelper {
     private static final String WARNING_MODELING_PROJECT_EXPLORER = "Modeling extension in the project explorer could not be removed.";
 
-    private static final String SIRIUS_EXPLORER_CONTENT_ID = "org.eclipse.sirius.ui.resource.content.session";
+    private static final String SIRIUS_EXPLORER_CONTENT_ID = "org.eclipse.sirius.ui.resource.content.session"; //$NON-NLS-1$
 
     private static final String WARNING_TARGET_UNKNOWN = "Could not determine diagram owner.";
 
     private static final String VIEWPOINT = "POOSL viewpoint";
 
-    private static final String AIRD_FILE_EXTENSION = ".aird";
+    private static final String AIRD_FILE_EXTENSION = ".aird"; //$NON-NLS-1$
 
-    private static final String DEFAULT_AIRD_FILE = "/representations.aird";
+    private static final String DEFAULT_AIRD_FILE = "/representations.aird"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(GraphicalEditorHelper.class.getName());
 
@@ -159,7 +159,7 @@ public final class GraphicalEditorHelper {
      * @throws CoreException
      */
     private static URI findRepresentationFile(IProject activeProject) throws CoreException {
-        final String[] airdlocation = { "" };
+        final String[] airdlocation = { "" }; //$NON-NLS-1$
         activeProject.accept(new IResourceVisitor() {
             @Override
             public boolean visit(IResource resource) throws CoreException {
@@ -239,7 +239,7 @@ public final class GraphicalEditorHelper {
     }
 
     public static String getLaunchIdFromDocumentation(String documentation) {
-        String[] info = documentation.split(",");
+        String[] info = documentation.split(","); //$NON-NLS-1$
         if (info.length == 2) {
             return info[0];
         } else {
@@ -248,7 +248,7 @@ public final class GraphicalEditorHelper {
     }
 
     public static String getInstanceFromDocumentation(String documentation) {
-        String[] info = documentation.split(",");
+        String[] info = documentation.split(","); //$NON-NLS-1$
         if (info.length == 2) {
             return info[1];
         } else {
@@ -287,7 +287,7 @@ public final class GraphicalEditorHelper {
                 if (explorer == null) {
                     page.showView(IPageLayout.ID_PROJECT_EXPLORER);
                     explorer = (CommonNavigator) page.findView(IPageLayout.ID_PROJECT_EXPLORER);
-                    IViewPart pack = page.findView("org.eclipse.jdt.ui.PackageExplorer");
+                    IViewPart pack = page.findView("org.eclipse.jdt.ui.PackageExplorer"); //$NON-NLS-1$
                     if (pack != null) {
                         page.activate(pack);
                     }
@@ -319,7 +319,7 @@ public final class GraphicalEditorHelper {
      */
     public static void openGraphicalEditor(final EObject target, final String documentation) {
         try {
-            String instanceName = "";
+            String instanceName = ""; //$NON-NLS-1$
             EObject currentTarget = target;
             if (currentTarget instanceof Instance) {
                 Instance instance = (Instance) currentTarget;
@@ -331,7 +331,7 @@ public final class GraphicalEditorHelper {
                 Session session = query.getSession();
                 if (session != null) {
                     if (documentation != null && !documentation.isEmpty()) {
-                        instanceName = getInstanceFromDocumentation(documentation) + "/" + instanceName;
+                        instanceName = getInstanceFromDocumentation(documentation) + "/" + instanceName; //$NON-NLS-1$
                         openDebugDiagram(getLaunchIdFromDocumentation(documentation), instanceName, currentTarget, session, new NullProgressMonitor());
                     } else {
                         openGraphicalEditor(currentTarget, session, new NullProgressMonitor());
@@ -537,7 +537,7 @@ public final class GraphicalEditorHelper {
         ted.getCommandStack().execute(createCommand);
         DRepresentationDescriptor createdDescriptor = createCommand.getCreatedDescriptor();
         if (createdDescriptor == null) {
-            LOGGER.severe("Representation could not be created for " + instance + ", " + launchID + ".");
+            LOGGER.severe("Representation could not be created for " + instance + ", " + launchID + "."); //$NON-NLS-2$ //$NON-NLS-3$
         }
         return createdDescriptor;
     }
@@ -696,7 +696,7 @@ public final class GraphicalEditorHelper {
     public static List<String> getCurrentLaunchIDs() throws CoreException {
         List<String> currentLaunches = new ArrayList<>();
         for (ILaunch launch : DebugPlugin.getDefault().getLaunchManager().getLaunches()) {
-            String launchID = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "");
+            String launchID = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""); //$NON-NLS-1$
             if (!launchID.isEmpty()) {
                 currentLaunches.add(launchID);
             }

@@ -19,17 +19,17 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 public final class PooslMessageSignatureDescription {
-    private static final String STR_PORT = "Port";
+    private static final String STR_PORT = "Port"; //$NON-NLS-1$
 
-    private static final String STR_CLASS = "Class";
+    private static final String STR_CLASS = "Class"; //$NON-NLS-1$
 
-    private static final String STR_TYPE = "Type";
+    private static final String STR_TYPE = "Type"; //$NON-NLS-1$
 
-    private static final String STR_MESSAGETYPE_RECEIVE = "Receive";
+    private static final String STR_MESSAGETYPE_RECEIVE = "Receive"; //$NON-NLS-1$
 
-    private static final String STR_MESSAGETYPE_SEND = "Send";
+    private static final String STR_MESSAGETYPE_SEND = "Send"; //$NON-NLS-1$
 
-    private static final String STR_PARAMETERS = "Parameters";
+    private static final String STR_PARAMETERS = "Parameters"; //$NON-NLS-1$
 
     private PooslMessageSignatureDescription() {
         throw new IllegalStateException("Utility class");
@@ -54,7 +54,7 @@ public final class PooslMessageSignatureDescription {
     private static String parametersToString(List<MessageParameter> parameters) {
         StringBuilder stringBuilder = new StringBuilder();
         for (MessageParameter msgParameter : parameters) {
-            stringBuilder.append(msgParameter.getType()).append(",");
+            stringBuilder.append(msgParameter.getType()).append(","); //$NON-NLS-1$
         }
         return stringBuilder.toString();
     }
@@ -81,7 +81,7 @@ public final class PooslMessageSignatureDescription {
 
         String stringDescription = descr.getUserData(STR_PARAMETERS);
         if (!stringDescription.isEmpty()) {
-            return Arrays.asList(stringDescription.split(","));
+            return Arrays.asList(stringDescription.split(",")); //$NON-NLS-1$
         } else {
             return Collections.emptyList();
         }

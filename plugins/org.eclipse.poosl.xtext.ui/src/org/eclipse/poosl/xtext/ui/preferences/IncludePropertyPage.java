@@ -326,7 +326,7 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
             preferenceStore.setValue(entry.getKey(), entry.getValue());
         }
         for (String entry : diff.entriesOnlyOnLeft().keySet()) {
-            preferenceStore.setValue(entry, "");
+            preferenceStore.setValue(entry, ""); //$NON-NLS-1$
         }
         currentValues = newValues;
         return diff;

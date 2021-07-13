@@ -57,101 +57,101 @@ import org.eclipse.ui.IEditorPart;
  * @author Koen Staal
  */
 public class ExternalCalls implements IExternalJavaAction {
-    private static final String PARAMETER_ELEMENT = "element";
+    private static final String PARAMETER_ELEMENT = "element"; //$NON-NLS-1$
 
-    private static final String PARAMETER_TARGET = "target";
+    private static final String PARAMETER_TARGET = "target"; //$NON-NLS-1$
 
-    private static final String PARAMETER_SOURCE = "source";
+    private static final String PARAMETER_SOURCE = "source"; //$NON-NLS-1$
 
-    private static final String PARAMETER_VIEW = "view";
+    private static final String PARAMETER_VIEW = "view"; //$NON-NLS-1$
 
-    private static final String ACTION_EDIT_PARAMETER = "editparameter";
+    private static final String ACTION_EDIT_PARAMETER = "editparameter"; //$NON-NLS-1$
 
-    private static final String ACTION_EDIT_VARIABLE = "editvariable";
+    private static final String ACTION_EDIT_VARIABLE = "editvariable"; //$NON-NLS-1$
 
-    private static final String ACTION_EDIT_METHOD = "editmethod";
+    private static final String ACTION_EDIT_METHOD = "editmethod"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_INSTANCE = "deleteinstance";
+    private static final String ACTION_DELETE_INSTANCE = "deleteinstance"; //$NON-NLS-1$
 
-    private static final String ACTION_KEY = "action";
+    private static final String ACTION_KEY = "action"; //$NON-NLS-1$
 
-    private static final String ACTION_MENU_CHANGE_COLOR = "changecolor";
+    private static final String ACTION_MENU_CHANGE_COLOR = "changecolor"; //$NON-NLS-1$
 
-    private static final String ACTION_MENU_OPEN_TEXTUAL_EDITOR = "opentextualeditor";
+    private static final String ACTION_MENU_OPEN_TEXTUAL_EDITOR = "opentextualeditor"; //$NON-NLS-1$
 
-    private static final String ACTION_MENU_OPEN_GRAPHICAL_EDITOR = "opengraphicaleditor";
+    private static final String ACTION_MENU_OPEN_GRAPHICAL_EDITOR = "opengraphicaleditor"; //$NON-NLS-1$
 
-    private static final String ACTION_MENU_OPEN_CLASS_DIAGRAM = "openclassdiagram";
+    private static final String ACTION_MENU_OPEN_CLASS_DIAGRAM = "openclassdiagram"; //$NON-NLS-1$
 
-    private static final String ACTION_DOUBLE_CLICK_EDGE = "doubleclickedge";
+    private static final String ACTION_DOUBLE_CLICK_EDGE = "doubleclickedge"; //$NON-NLS-1$
 
-    private static final String ACTION_DOUBLE_CLICK_OPENEDITOR = "doubleclickopeneditor";
+    private static final String ACTION_DOUBLE_CLICK_OPENEDITOR = "doubleclickopeneditor"; //$NON-NLS-1$
 
-    private static final String ACTION_DOUBLE_CLICK_CHANNEL = "doubleclickchannel";
+    private static final String ACTION_DOUBLE_CLICK_CHANNEL = "doubleclickchannel"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_NODE_CREATION = "createprocessclass";
+    private static final String ACTION_PALLET_NODE_CREATION = "createprocessclass"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_CREATE_PORT = "createport";
+    private static final String ACTION_PALLET_CREATE_PORT = "createport"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_DELETE_PORT = "deleteport";
+    private static final String ACTION_PALLET_DELETE_PORT = "deleteport"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_CREATE_CONNECTION = "createconnection";
+    private static final String ACTION_PALLET_CREATE_CONNECTION = "createconnection"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_RECONNECT_CONNECTION = "reconnectconnection";
+    private static final String ACTION_PALLET_RECONNECT_CONNECTION = "reconnectconnection"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_CONNECTION = "deleteconnection";
+    private static final String ACTION_DELETE_CONNECTION = "deleteconnection"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_METHOD = "deletemethod";
+    private static final String ACTION_DELETE_METHOD = "deletemethod"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_PORT_FROM_INSTANCE = "deleteportfrominstance";
+    private static final String ACTION_DELETE_PORT_FROM_INSTANCE = "deleteportfrominstance"; //$NON-NLS-1$
 
-    private static final String ACTION_DOUBLE_CLICK_CLASSDIAGRAM_MEMBER = "doubleclickclassdiagrammember";
+    private static final String ACTION_DOUBLE_CLICK_CLASSDIAGRAM_MEMBER = "doubleclickclassdiagrammember"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_CREATE_VARIABLE = "createvariable";
+    private static final String ACTION_PALLET_CREATE_VARIABLE = "createvariable"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_CREATE_PARAMETER = "createparameter";
+    private static final String ACTION_PALLET_CREATE_PARAMETER = "createparameter"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_PARAMETER = "deleteparameter";
+    private static final String ACTION_DELETE_PARAMETER = "deleteparameter"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_INSTANCE_VARIABLE = "deletevariable";
+    private static final String ACTION_DELETE_INSTANCE_VARIABLE = "deletevariable"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_CREATE_METHOD = "createmethod";
+    private static final String ACTION_PALLET_CREATE_METHOD = "createmethod"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_EXTERN_PORT = "deleteexternport";
+    private static final String ACTION_DELETE_EXTERN_PORT = "deleteexternport"; //$NON-NLS-1$
 
-    private static final String ACTION_SET_INHERITANCE = "setinheritance";
+    private static final String ACTION_SET_INHERITANCE = "setinheritance"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_INHERITANCE = "deleteinheritance";
+    private static final String ACTION_DELETE_INHERITANCE = "deleteinheritance"; //$NON-NLS-1$
 
-    private static final String ACTION_CREATE_PROCESS = "createprocess";
+    private static final String ACTION_CREATE_PROCESS = "createprocess"; //$NON-NLS-1$
 
-    private static final String ACTION_CREATE_DATA = "createdata";
+    private static final String ACTION_CREATE_DATA = "createdata"; //$NON-NLS-1$
 
-    private static final String ACTION_CREATE_CLUSTER = "createcluster";
+    private static final String ACTION_CREATE_CLUSTER = "createcluster"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_PROCESS = "deleteprocess";
+    private static final String ACTION_DELETE_PROCESS = "deleteprocess"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_CLUSTER = "deletecluster";
+    private static final String ACTION_DELETE_CLUSTER = "deletecluster"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_DATA = "deletedata";
+    private static final String ACTION_DELETE_DATA = "deletedata"; //$NON-NLS-1$
 
-    private static final String ACTION_CREATE_SYSTEM = "createsystem";
+    private static final String ACTION_CREATE_SYSTEM = "createsystem"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_SYSTEM = "deletesystem";
+    private static final String ACTION_DELETE_SYSTEM = "deletesystem"; //$NON-NLS-1$
 
-    private static final String ACTION_CREATE_CONTAINMENT = "createcontainment";
+    private static final String ACTION_CREATE_CONTAINMENT = "createcontainment"; //$NON-NLS-1$
 
-    private static final String ACTION_DELETE_CONTAINMENT = "deletecontainment";
+    private static final String ACTION_DELETE_CONTAINMENT = "deletecontainment"; //$NON-NLS-1$
 
-    private static final String ACTION_SAVE = "save";
+    private static final String ACTION_SAVE = "save"; //$NON-NLS-1$
 
-    private static final String ACTION_SHOW_HIDE_DEBUG_ELEMENTS = "showhidedebug";
+    private static final String ACTION_SHOW_HIDE_DEBUG_ELEMENTS = "showhidedebug"; //$NON-NLS-1$
 
-    private static final String ACTION_MENU_OPEN_TEXTUAL_EDITOR_TEXTUAL = "openinstancetextualeditor";
+    private static final String ACTION_MENU_OPEN_TEXTUAL_EDITOR_TEXTUAL = "openinstancetextualeditor"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(ExternalCalls.class.getName());
 
-    private static final String DEFAULT_DEBUG_LABEL = "? 0 / ! 0 ";
+    private static final String DEFAULT_DEBUG_LABEL = "? 0 / ! 0 "; //$NON-NLS-1$
 
     public ExternalCalls() {
     }
@@ -319,8 +319,8 @@ public class ExternalCalls implements IExternalJavaAction {
                     note.setVisible(false);
                     for (DEdge dEdge : diagram.getEdges()) {
                         EdgeStyle style = dEdge.getOwnedStyle();
-                        style.getBeginLabelStyle().getDescription().setLabelExpression("");
-                        style.getEndLabelStyle().getDescription().setLabelExpression("");
+                        style.getBeginLabelStyle().getDescription().setLabelExpression(""); //$NON-NLS-1$
+                        style.getEndLabelStyle().getDescription().setLabelExpression(""); //$NON-NLS-1$
                     }
                 } else {
                     note.setVisible(true);
@@ -346,7 +346,7 @@ public class ExternalCalls implements IExternalJavaAction {
     }
 
     private void save(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        Object container = parameters.get("container");
+        Object container = parameters.get("container"); //$NON-NLS-1$
         if (container instanceof EObject) {
             CreationHelper.saveChanges((EObject) container);
         }
@@ -565,7 +565,7 @@ public class ExternalCalls implements IExternalJavaAction {
         for (EObject eObject : eobjects) {
             if (eObject instanceof DDiagramElement) {
                 DDiagramElement nodeSpec = (DDiagramElement) eObject;
-                openEditor(nodeSpec.getTarget(), "");
+                openEditor(nodeSpec.getTarget(), ""); //$NON-NLS-1$
             }
         }
     }
@@ -588,11 +588,11 @@ public class ExternalCalls implements IExternalJavaAction {
 
     private void createConnection(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
 
-        Object sourcelement = parameters.get("sourceview");
+        Object sourcelement = parameters.get("sourceview"); //$NON-NLS-1$
         Object source = parameters.get(PARAMETER_SOURCE);
         EObject sourceobject = getModelElement(source, sourcelement);
 
-        Object targetelement = parameters.get("targetview");
+        Object targetelement = parameters.get("targetview"); //$NON-NLS-1$
         Object target = parameters.get(PARAMETER_TARGET);
         EObject targetobject = getModelElement(target, targetelement);
 
@@ -603,7 +603,7 @@ public class ExternalCalls implements IExternalJavaAction {
 
     private void reconnectConnection(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         Object source = parameters.get(PARAMETER_SOURCE);
-        Object targetelement = parameters.get("targetview");
+        Object targetelement = parameters.get("targetview"); //$NON-NLS-1$
         Object target = parameters.get(PARAMETER_TARGET);
         EObject targetobject = getModelElement(target, targetelement);
 
@@ -713,7 +713,7 @@ public class ExternalCalls implements IExternalJavaAction {
         EObject object = eobjects.iterator().next();
         if (object != null) {
             Poosl poosl = HelperFunctions.getContainingPoosl(object);
-            GraphicalEditorHelper.openGraphicalEditor(poosl, "");
+            GraphicalEditorHelper.openGraphicalEditor(poosl, ""); //$NON-NLS-1$
         }
     }
 

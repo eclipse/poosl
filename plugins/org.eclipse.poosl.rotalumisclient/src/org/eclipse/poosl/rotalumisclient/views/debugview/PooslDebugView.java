@@ -196,7 +196,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
         treeViewer.refresh();
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_debug");
+            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_debug"); //$NON-NLS-1$
             workbench.getDisplay().asyncExec(new NotifyListenersRunnable());
         }
         updateContextMenu();
@@ -393,7 +393,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
 
         ImageDescriptor stepIcon = null;
         try {
-            stepIcon = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.poosl.rotalumisclient/icons/icon_open_communication_diagram.png"));
+            stepIcon = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.poosl.rotalumisclient/icons/icon_open_communication_diagram.png")); //$NON-NLS-1$
             menuNewWindow.setImage(stepIcon.createImage());
         } catch (MalformedURLException e) {
             LOGGER.log(Level.FINE, "Could not find diagram icon");
@@ -416,7 +416,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
         menuNewWindow.setText(Messages.ACTION_MENU_NEW_WINDOW);
         ImageDescriptor stepIcon = null;
         try {
-            stepIcon = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.poosl.rotalumisclient/icons/icon_open_process_window.png"));
+            stepIcon = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.poosl.rotalumisclient/icons/icon_open_process_window.png")); //$NON-NLS-1$
             menuNewWindow.setImage(stepIcon.createImage());
         } catch (MalformedURLException e) {
             LOGGER.log(Level.FINE, "Could not find step icon");

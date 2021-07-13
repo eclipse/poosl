@@ -94,7 +94,7 @@ public final class FileURIConverter {
     }
 
     public static String removeFilePrefix(String string) {
-        if (string.startsWith("file://")) {
+        if (string.startsWith("file://")) { //$NON-NLS-1$
             return string.substring(7);
         }
         return string;

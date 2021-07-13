@@ -40,14 +40,14 @@ import javax.xml.bind.annotation.XmlType;
 public enum THandleType {
 
     @XmlEnumValue("poosl_specification")
-    POOSL_SPECIFICATION("poosl_specification"), @XmlEnumValue("cluster_class")
-    CLUSTER_CLASS("cluster_class"), @XmlEnumValue("process_class")
-    PROCESS_CLASS("process_class"), @XmlEnumValue("data_class")
-    DATA_CLASS("data_class"), @XmlEnumValue("initial_method_call")
-    INITIAL_METHOD_CALL("initial_method_call"), @XmlEnumValue("process_method")
-    PROCESS_METHOD("process_method"), @XmlEnumValue("data_method")
-    DATA_METHOD("data_method"), @XmlEnumValue("expression")
-    EXPRESSION("expression");
+    POOSL_SPECIFICATION("poosl_specification"), @XmlEnumValue("cluster_class") //$NON-NLS-1$
+    CLUSTER_CLASS("cluster_class"), @XmlEnumValue("process_class") //$NON-NLS-1$
+    PROCESS_CLASS("process_class"), @XmlEnumValue("data_class") //$NON-NLS-1$
+    DATA_CLASS("data_class"), @XmlEnumValue("initial_method_call") //$NON-NLS-1$
+    INITIAL_METHOD_CALL("initial_method_call"), @XmlEnumValue("process_method") //$NON-NLS-1$
+    PROCESS_METHOD("process_method"), @XmlEnumValue("data_method") //$NON-NLS-1$
+    DATA_METHOD("data_method"), @XmlEnumValue("expression") //$NON-NLS-1$
+    EXPRESSION("expression"); //$NON-NLS-1$
 
     private final String value;
 

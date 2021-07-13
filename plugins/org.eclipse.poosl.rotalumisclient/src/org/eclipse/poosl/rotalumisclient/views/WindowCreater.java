@@ -37,7 +37,7 @@ import org.eclipse.ui.PartInitException;
  *
  */
 public final class WindowCreater {
-    private static final String POOSL_THREAD_WINDOW = "POOSL_THREAD_WINDOW";
+    private static final String POOSL_THREAD_WINDOW = "POOSL_THREAD_WINDOW"; //$NON-NLS-1$
 
     private WindowCreater() {
         throw new IllegalStateException("Utility class");
@@ -82,7 +82,7 @@ public final class WindowCreater {
         window = findWindow(petView, varView);
         if (window == null) {
             window = WindowCreater.createCombinedWindow(service, petView, varView, new WindowShape(450, 600, false));
-            window.setLabel(thread.getDebugTarget().getName() + " " + thread.getName());
+            window.setLabel(thread.getDebugTarget().getName() + " " + thread.getName()); //$NON-NLS-1$
         } else {
             service.bringToTop(window);
         }
@@ -220,10 +220,10 @@ public final class WindowCreater {
         MPartStack newTop = wrapElementForWindow(service, firstElement);
         MPartStack newBot = wrapElementForWindow(service, secondElement);
         if (newTop != null) {
-            newTop.setContainerData("5000");
+            newTop.setContainerData("5000"); //$NON-NLS-1$
         }
         if (newBot != null) {
-            newBot.setContainerData("5000");
+            newBot.setContainerData("5000"); //$NON-NLS-1$
         }
         sashcontainer.setHorizontal(horizontal);
         sashcontainer.getChildren().add(newTop);

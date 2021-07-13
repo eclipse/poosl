@@ -16,7 +16,7 @@ import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.sirius.viewpoint.description.AnnotationEntry;
 
 public class DiagramDebugNote {
-    private static final String EOL = "\n";
+    private static final String EOL = "\n"; //$NON-NLS-1$
 
     private static final String MESSAGE_DESCRIPTION = "* Message: ";
 
@@ -77,20 +77,20 @@ public class DiagramDebugNote {
     }
 
     private static String createNoteMessage(ExternDebugMessage rawMessage) {
-        String senderInfo = "";
-        String receiverInfo = "";
-        String messageNameInfo = "";
-        String parameterInfo = "";
-        String simTime = "";
+        String senderInfo = ""; //$NON-NLS-1$
+        String receiverInfo = ""; //$NON-NLS-1$
+        String messageNameInfo = ""; //$NON-NLS-1$
+        String parameterInfo = ""; //$NON-NLS-1$
+        String simTime = ""; //$NON-NLS-1$
 
         if (rawMessage != null) {
-            senderInfo = rawMessage.getSendProcess() + "." + rawMessage.getSendPort();
-            receiverInfo = rawMessage.getReceiveProcess() + "." + rawMessage.getReceivePort();
+            senderInfo = rawMessage.getSendProcess() + "." + rawMessage.getSendPort(); //$NON-NLS-1$
+            receiverInfo = rawMessage.getReceiveProcess() + "." + rawMessage.getReceivePort(); //$NON-NLS-1$
             messageNameInfo = rawMessage.getMessageName();
             simTime = rawMessage.getSimTime();
             StringBuilder paramBuilder = new StringBuilder();
             for (String key : rawMessage.getParameters().keySet()) {
-                paramBuilder.append("-- " + key + ": " + rawMessage.getParameters().get(key) + EOL);
+                paramBuilder.append("-- " + key + ": " + rawMessage.getParameters().get(key) + EOL); //$NON-NLS-1$ //$NON-NLS-2$
             }
             parameterInfo = paramBuilder.toString();
         }

@@ -12,16 +12,16 @@ import com.google.common.base.Predicate;
 
 public final class PooslDeclarationDescription {
     
-    private static final String STR_CLASS = "Class";
+    private static final String STR_CLASS = "Class"; //$NON-NLS-1$
 
-    private static final String STR_IS_FROM_DATA_CLASS = "IsFromDataClass";
+    private static final String STR_IS_FROM_DATA_CLASS = "IsFromDataClass"; //$NON-NLS-1$
 
-    private static final String STR_TYPE = "Type";
+    private static final String STR_TYPE = "Type"; //$NON-NLS-1$
 
-    private static final String STR_IS_PARAMETER = "IsParameter";
+    private static final String STR_IS_PARAMETER = "IsParameter"; //$NON-NLS-1$
 
     private PooslDeclarationDescription() {
-        throw new IllegalStateException("Utility class");
+        throw new IllegalStateException("Utility class"); 
     }
 
     // --- Set -------

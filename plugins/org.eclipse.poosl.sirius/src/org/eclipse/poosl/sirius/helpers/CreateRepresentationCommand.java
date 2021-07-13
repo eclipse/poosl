@@ -82,7 +82,7 @@ public class CreateRepresentationCommand extends RecordingCommand {
         descriptor = new DRepresentationQuery(representation).getRepresentationDescriptor();
 
         if (isDebugDiagram()) {
-            String documentation = launchID + "," + instance;
+            String documentation = launchID + "," + instance; //$NON-NLS-1$
             descriptor.setDocumentation(documentation);
         }
     }

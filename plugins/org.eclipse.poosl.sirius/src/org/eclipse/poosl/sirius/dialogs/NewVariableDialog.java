@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class NewVariableDialog extends TitleAreaDialog {
-    private static final String COMMA = ",";
+    private static final String COMMA = ","; //$NON-NLS-1$
 
     private static final String ERROR_MESSAGE_INSTANCE = "Cannot define %s. The name is empty or already in use.";
 

@@ -44,7 +44,7 @@ public class PooslDebugModelPresentation implements IDebugModelPresentation {
 
     public String getEditorId(IEditorInput input, Object element) {
         if (element instanceof IFile || element instanceof ILineBreakpoint) {
-            return "org.eclipse.poosl.xtext.Poosl";
+            return "org.eclipse.poosl.xtext.Poosl"; //$NON-NLS-1$
         }
         return null;
     }

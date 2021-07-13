@@ -9,7 +9,7 @@ public final class PooslCache {
     // http://stackoverflow.com/questions/8309909/how-do-i-attach-some-cached-information-to-an-eclipse-editor-or-resource
 
     private PooslCache() {
-        throw new IllegalStateException("Utility class");
+        throw new IllegalStateException("Utility class"); //$NON-NLS-1$
     }
 
     public static PooslCacheEntry get(final Resource resource) {

@@ -178,19 +178,19 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 public class Poosl2xml {
-    private static final String DOT = ".";
+    private static final String DOT = "."; //$NON-NLS-1$
 
-    private static final String OPTION_B = "b";
+    private static final String OPTION_B = "b"; //$NON-NLS-1$
 
-    private static final String OPTION_V = "v";
+    private static final String OPTION_V = "v"; //$NON-NLS-1$
 
-    private static final String FALSE = "FALSE";
+    private static final String FALSE = "FALSE"; //$NON-NLS-1$
 
-    private static final String TRUE = "TRUE";
+    private static final String TRUE = "TRUE"; //$NON-NLS-1$
 
     private static final String COULD_NOT_COMPLETE_XML_TRANSFORMATION = "Could not complete xml transformation.";
 
-    private static final String XSLT_URI = "platform:/plugin/org.eclipse.poosl.legacysupport/src/org/eclipse/poosl/legacysupport/poosl2xml/as_shesim_model.xslt";
+    private static final String XSLT_URI = "platform:/plugin/org.eclipse.poosl.legacysupport/src/org/eclipse/poosl/legacysupport/poosl2xml/as_shesim_model.xslt"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(Poosl2xml.class.getName());
 
@@ -210,10 +210,10 @@ public class Poosl2xml {
     private IResourceValidator validator;
 
     public static void main(String[] args) {
-        String cmdBasicClasses = "";
+        String cmdBasicClasses = ""; //$NON-NLS-1$
         Options options = new Options();
-        options.addOption(OPTION_V, "novalidation", false, "Setting this flag will skip the validation step in the transformation");
-        options.addOption(OPTION_B, "basicclasses", true, "Use this basic classes file instead of the default one");
+        options.addOption(OPTION_V, "novalidation", false, "Setting this flag will skip the validation step in the transformation"); //$NON-NLS-1$
+        options.addOption(OPTION_B, "basicclasses", true, "Use this basic classes file instead of the default one"); //$NON-NLS-1$
         CommandLineParser cmdParser = new BasicParser();
         CommandLine cmd = null;
         HelpFormatter formatter = new HelpFormatter();
@@ -257,7 +257,7 @@ public class Poosl2xml {
                     for (File pooslFile : fInput.listFiles(new FilenameFilter() {
                         @Override
                         public boolean accept(File dir, String name) {
-                            return name.toLowerCase().endsWith(".poosl");
+                            return name.toLowerCase().endsWith(".poosl"); //$NON-NLS-1$
                         }
                     })) {
                         LOGGER.info("Given input file: " + pooslFile.getAbsolutePath());
@@ -327,7 +327,7 @@ public class Poosl2xml {
         resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(), org.eclipse.poosl.PooslPackage.eINSTANCE);
         URI uri = URI.createFileURI(inputFile);
         Resource resource = resourceSet.getResource(uri, true);
-        String cmdBasicClasses = "";
+        String cmdBasicClasses = ""; //$NON-NLS-1$
         return run(resourceSet, resource, asSHESim, validate, cmdBasicClasses, monitor);
     }
 
@@ -354,7 +354,7 @@ public class Poosl2xml {
         LOGGER.info("Transforming model: " + poosl.eResource().getURI().toString());
         ResourceSet resourceSet = poosl.eResource().getResourceSet();
         Resource resource = poosl.eResource();
-        String cmdBasicClasses = "";
+        String cmdBasicClasses = ""; //$NON-NLS-1$
         return run(resourceSet, resource, asSHESim, validate, cmdBasicClasses, monitor);
     }
 
@@ -447,7 +447,7 @@ public class Poosl2xml {
         List<TDataClass> unorderedDataClasses = pooslSpec.getDataClasses().getDataClass();
         LinkedHashMap<String, TDataClass> orderedDataClasses = new LinkedHashMap<>();
         for (TDataClass dataClass : unorderedDataClasses) {
-            if (dataClass.getSuperClass() == null || dataClass.getName().equals("Object")) {
+            if (dataClass.getSuperClass() == null || dataClass.getName().equals("Object")) { //$NON-NLS-1$
                 orderedDataClasses.put(dataClass.getName(), dataClass);
             }
         }
@@ -498,7 +498,7 @@ public class Poosl2xml {
         Map<String, TInstanceType> instances = new LinkedHashMap<>();
         if (pooslSpec.getTopLevelSpecification() != null) {
             for (TInstance tInstance : pooslSpec.getTopLevelSpecification().getInstance()) {
-                String iName = "/" + tInstance.getName();
+                String iName = "/" + tInstance.getName(); //$NON-NLS-1$
                 instances.put(iName, tInstance.getType());
                 if (tInstance.getType().equals(TInstanceType.CLUSTER)) {
                     List<TClusterClass> clusters = pooslSpec.getClusterClasses().getClusterClass();
@@ -522,7 +522,7 @@ public class Poosl2xml {
             JAXBContext context = JAXBContext.newInstance(TPooslSpecification.class.getPackageName(), TPooslSpecification.class.getClassLoader());
             m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.FALSE);
-            m.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
+            m.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1"); //$NON-NLS-1$
         } catch (NullPointerException e) {
             LOGGER.log(Level.SEVERE, "Could not instantiate JAXB context.\n" + "This is most likely caused by an outdated version of Java.\n" + "Update to the latest version to solve this problem.",
                     e);
@@ -537,13 +537,13 @@ public class Poosl2xml {
         }
 
         String inputFile = originalURI.toFileString();
-        File workingDirectory = new File(inputFile.substring(0, inputFile.lastIndexOf(File.separator)) + File.separator + "simulator");
+        File workingDirectory = new File(inputFile.substring(0, inputFile.lastIndexOf(File.separator)) + File.separator + "simulator"); //$NON-NLS-1$
         if (!workingDirectory.exists()) {
             workingDirectory.mkdir();
         }
 
-        PrintWriter fileWriter = new PrintWriter(modelInfo.getXmlPath(), "ISO-8859-1");
-        m.marshal(new JAXBElement<TPooslSpecification>(new QName("uri:poosl", "poosl_specification"), TPooslSpecification.class, pooslSpec), fileWriter);
+        PrintWriter fileWriter = new PrintWriter(modelInfo.getXmlPath(), "ISO-8859-1"); //$NON-NLS-1$
+        m.marshal(new JAXBElement<TPooslSpecification>(new QName("uri:poosl", "poosl_specification"), TPooslSpecification.class, pooslSpec), fileWriter); //$NON-NLS-1$ //$NON-NLS-2$
         fileWriter.close();
         LOGGER.info("Generated xml file: " + modelInfo.getXmlPath());
         if (monitor != null) {
@@ -560,7 +560,7 @@ public class Poosl2xml {
                 Transformer transformer;
                 transformer = factory.newTransformer(xslt);
                 Source text = new StreamSource(new File(modelInfo.getXmlPath()));
-                transformer.transform(text, new StreamResult(new File(modelInfo.getXmlPath().replace(".xml", "_shesim.xml"))));
+                transformer.transform(text, new StreamResult(new File(modelInfo.getXmlPath().replace(".xml", "_shesim.xml")))); //$NON-NLS-1$ //$NON-NLS-2$
             } catch (TransformerException | IOException e) {
                 LOGGER.log(Level.SEVERE, COULD_NOT_COMPLETE_XML_TRANSFORMATION, e);
             }
@@ -575,7 +575,7 @@ public class Poosl2xml {
         if (cmdBasicClasses == null || cmdBasicClasses.isEmpty()) {
             return ImportingHelper.getBasicClassesURI();
         } else {
-            return URI.createURI("file:///" + cmdBasicClasses);
+            return URI.createURI("file:///" + cmdBasicClasses); //$NON-NLS-1$
         }
     }
 
@@ -584,7 +584,7 @@ public class Poosl2xml {
         TClusterClass cc = findCluster(clusters, clusterName);
         if (cc != null) {
             for (TInstance tInstance : cc.getInstance()) {
-                String iName = instanceName + "/" + tInstance.getName();
+                String iName = instanceName + "/" + tInstance.getName(); //$NON-NLS-1$
                 instances.put(iName, tInstance.getType());
                 for (TConnection tConnection : tInstance.getConnection()) {
                     String extern = instanceName + DOT + cc.getChannel().get(Integer.parseInt(tConnection.getChannel())).getOutputPort();
@@ -609,11 +609,11 @@ public class Poosl2xml {
     }
 
     private void validateResource(Resource nextResource) throws PooslValidationException {
-        String errorMessage = "";
+        String errorMessage = ""; //$NON-NLS-1$
         List<Issue> issues = validator.validate(nextResource, CheckMode.ALL, null);
         for (Issue issue : issues) {
             if (issue.getSeverity() == Severity.ERROR) {
-                errorMessage += issue.getMessage() + " on line " + issue.getLineNumber() + " in file " + nextResource.getURI().lastSegment() + "\n";
+                errorMessage += issue.getMessage() + " on line " + issue.getLineNumber() + " in file " + nextResource.getURI().lastSegment() + "\n"; //$NON-NLS-3$
             }
         }
         if (!errorMessage.isEmpty()) {
@@ -862,7 +862,7 @@ public class Poosl2xml {
         for (InstancePort instancePort : channel.getInstancePorts()) {
             if (instancePort.getInstance().equals(i)) {
                 TConnection connection = OBJ_FACT.createTConnection();
-                connection.setPort((instancePort.getPort() != null) ? instancePort.getPort().getPort() : "");
+                connection.setPort((instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""); //$NON-NLS-1$
                 connection.setChannel(String.valueOf(getChannelIndex(channel)));
                 translatedConnections.add(connection);
             }
@@ -984,7 +984,7 @@ public class Poosl2xml {
         } else if (ex instanceof AssignmentExpression) {
             TAssignment assignment = OBJ_FACT.createTAssignment();
             AssignmentExpression assignmentExpression = (AssignmentExpression) ex;
-            assignment.setVariableName((assignmentExpression.getVariable() != null) ? assignmentExpression.getVariable() : "");
+            assignment.setVariableName((assignmentExpression.getVariable() != null) ? assignmentExpression.getVariable() : ""); //$NON-NLS-1$
             translateExpression(assignmentExpression.getExpression(), assignment);
             expression.getSequenceOfExpressionsOrAssignmentOrDataMethodCall().add(OBJ_FACT.createTExpressionsAssignment(assignment));
         } else if (ex instanceof BinaryOperatorExpression) {
@@ -1190,7 +1190,7 @@ public class Poosl2xml {
     }
 
     private TVariableRef translateVariable(VariableExpression ex) {
-        String name = (ex.getVariable() != null) ? ex.getVariable().trim() : "";
+        String name = (ex.getVariable() != null) ? ex.getVariable().trim() : ""; //$NON-NLS-1$
         TVariableRef variableRef = OBJ_FACT.createTVariableRef();
         variableRef.setName(name);
         return variableRef;
@@ -1201,7 +1201,7 @@ public class Poosl2xml {
         int commentsFound = 0;
         for (ILeafNode node : iCompositeNode.getLeafNodes()) {
             EObject grammerElement = node.getGrammarElement();
-            if (grammerElement instanceof TerminalRule && "SL_COMMENT".equals(((TerminalRule) grammerElement).getName())) {
+            if (grammerElement instanceof TerminalRule && "SL_COMMENT".equals(((TerminalRule) grammerElement).getName())) { //$NON-NLS-1$
                 int startOffset = node.getOffset() - iCompositeNode.getTotalOffset() + commentsFound * 4;
                 int endOffset = node.getEndOffset() - iCompositeNode.getTotalOffset() + commentsFound * 4;
 
@@ -1214,8 +1214,8 @@ public class Poosl2xml {
                     }
                 }
 
-                bodyText.insert(startOffset, "/*");
-                bodyText.insert(endOffset + 2, "*/");
+                bodyText.insert(startOffset, "/*"); //$NON-NLS-1$
+                bodyText.insert(endOffset + 2, "*/"); //$NON-NLS-1$
                 commentsFound++;
             }
         }

@@ -37,7 +37,7 @@ public class PooslNewModelWithSystemWizard extends AbstractPooslModelWizard impl
         InputStream inputStream = null;
 
         try {
-            url = new URL("platform:/plugin/org.eclipse.poosl.pooslproject/templates/system.poosl");
+            url = new URL("platform:/plugin/org.eclipse.poosl.pooslproject/templates/system.poosl"); //$NON-NLS-1$
             inputStream = url.openConnection().getInputStream();
             file.setContents(inputStream, 0, null);
         } catch (IOException | CoreException e) {

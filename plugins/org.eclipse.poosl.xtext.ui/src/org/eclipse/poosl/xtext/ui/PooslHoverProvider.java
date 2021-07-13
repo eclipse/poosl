@@ -68,22 +68,22 @@ public class PooslHoverProvider extends DefaultEObjectHoverProvider {
         }
 
         String label = getLabel(o);
-        return objectType + ((label != null) ? " <b>" + label + "</b>" : "");
+        return objectType + ((label != null) ? " <b>" + label + "</b>" : ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     @Override
     protected String getDocumentation(EObject o) {
         if (o instanceof Annotation) {
             String annotation = ((Annotation) o).getName();
-            if (annotation.equalsIgnoreCase("test")) {
+            if (annotation.equalsIgnoreCase("test")) { //$NON-NLS-1$
                 return TEST_DOCUMENTATION + TEST_HELP_DOCUMENTATION;
-            } else if (annotation.equalsIgnoreCase("error")) {
+            } else if (annotation.equalsIgnoreCase("error")) { //$NON-NLS-1$
                 return ERROR_DOCUMENTATION + TEST_HELP_DOCUMENTATION;
-            } else if (annotation.equalsIgnoreCase("skip")) {
+            } else if (annotation.equalsIgnoreCase("skip")) { //$NON-NLS-1$
                 return SKIP_DOCUMENTATION + TEST_HELP_DOCUMENTATION;
-            } else if (annotation.equalsIgnoreCase("init")) {
+            } else if (annotation.equalsIgnoreCase("init")) { //$NON-NLS-1$
                 return INIT_DOCUMENTATION;
-            } else if (annotation.equalsIgnoreCase("suppresswarnings")) {
+            } else if (annotation.equalsIgnoreCase("suppresswarnings")) { //$NON-NLS-1$
                 return SUPPRESSWARNINGS_DOCUMENTATION;
             }
         }

@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.poosl.ClusterClass;
 
 public final class DiagramNameHelper {
-    public static final String COMMUNICATION_DIAGRAM_PREFIX = "<COMM>";
+    public static final String COMMUNICATION_DIAGRAM_PREFIX = "<COMM>"; //$NON-NLS-1$
 
     private static final String CLASS_DIAGRAM_LABEL = "Classes ({0})";
 
@@ -14,11 +14,11 @@ public final class DiagramNameHelper {
 
     private static final String CLUSTER_DIAGRAM_LABEL = "Cluster {0} ({1})";
 
-    private static final String INSTANCE_LABEL_BREAKOFF = "..";
+    private static final String INSTANCE_LABEL_BREAKOFF = ".."; //$NON-NLS-1$
 
-    private static final String INSTANCE_LABEL_SUFFIX = "]";
+    private static final String INSTANCE_LABEL_SUFFIX = "]"; //$NON-NLS-1$
 
-    private static final String INSTANCE_LABEL_PREFIX = " [";
+    private static final String INSTANCE_LABEL_PREFIX = " ["; //$NON-NLS-1$
 
     private DiagramNameHelper() {
         throw new IllegalStateException("Utility class");

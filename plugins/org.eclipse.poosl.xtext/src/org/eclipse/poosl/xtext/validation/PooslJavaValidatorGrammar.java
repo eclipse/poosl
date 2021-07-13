@@ -20,7 +20,7 @@ import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 
 public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
-    private static final String ANNOTATION_SEPARATOR = ", ";
+    private static final String ANNOTATION_SEPARATOR = ", "; //$NON-NLS-1$
 
     private static final String NATIVE_METHOD_EMPTY = "The body of a native data method should be empty";
 
@@ -49,7 +49,7 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
     private static final String DATA_BINARY_1_PARAMETER = "Data methods for binary operators should have exactly 1 parameter";
 
     private enum Annotations {
-        TEST("Test"), SKIP("Skip"), ERROR("Error"), INIT("Init"), SUPPRESSWARNINGS("SuppressWarnings");
+        TEST("Test"), SKIP("Skip"), ERROR("Error"), INIT("Init"), SUPPRESSWARNINGS("SuppressWarnings"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
         private final String text;
 

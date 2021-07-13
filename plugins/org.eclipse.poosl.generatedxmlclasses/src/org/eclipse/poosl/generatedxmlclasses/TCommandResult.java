@@ -37,11 +37,11 @@ import javax.xml.bind.annotation.XmlType;
 public enum TCommandResult {
 
     @XmlEnumValue("ok")
-    OK("ok"), @XmlEnumValue("no design loaded")
-    NO_DESIGN_LOADED("no design loaded"), @XmlEnumValue("breakpoint hit")
-    BREAKPOINT_HIT("breakpoint hit"), @XmlEnumValue("error")
-    ERROR("error"), @XmlEnumValue("unknown")
-    UNKNOWN("unknown");
+    OK("ok"), @XmlEnumValue("no design loaded") //$NON-NLS-1$
+    NO_DESIGN_LOADED("no design loaded"), @XmlEnumValue("breakpoint hit") //$NON-NLS-1$
+    BREAKPOINT_HIT("breakpoint hit"), @XmlEnumValue("error") //$NON-NLS-1$
+    ERROR("error"), @XmlEnumValue("unknown") //$NON-NLS-1$
+    UNKNOWN("unknown"); //$NON-NLS-1$
 
     private final String value;
 

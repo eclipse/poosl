@@ -40,6 +40,6 @@ public class PooslTreeLabelProvider implements ILabelProvider {
             instanceName = instanceName.substring(instanceName.lastIndexOf('/'), instanceName.length());
             return instanceName;
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 }

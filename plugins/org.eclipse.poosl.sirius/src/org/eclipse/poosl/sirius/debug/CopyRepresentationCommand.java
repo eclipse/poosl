@@ -59,7 +59,7 @@ public class CopyRepresentationCommand extends RecordingCommand {
             DRepresentation createdRepresentation = DialectManager.INSTANCE.copyRepresentation(descriptor, DiagramNameHelper.getCommunicationDiagramNameFromOriginal(descriptor.getName(), instance),
                     session, null);
             DRepresentationDescriptor createdDescriptor = new DRepresentationQuery(createdRepresentation).getRepresentationDescriptor();
-            String documentation = launch + "," + instance;
+            String documentation = launch + "," + instance; //$NON-NLS-1$
             createdDescriptor.setDocumentation(documentation);
             createdDescriptors.add(createdDescriptor);
         }

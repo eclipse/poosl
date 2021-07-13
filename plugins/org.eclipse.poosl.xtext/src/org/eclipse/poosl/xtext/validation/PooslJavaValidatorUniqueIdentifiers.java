@@ -457,7 +457,7 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
                 }
                 if (namesMap == null)
                     continue;
-                String portName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : "";
+                String portName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
                 if (!namesMap.contains(portName)) {
                     error(MessageFormat.format(NOT_DECLARED, Literals.PORT.getName(), portName), instancePort, Literals.INSTANCE_PORT__PORT, Diagnostic.LINKING_DIAGNOSTIC);
                 }
@@ -527,9 +527,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         Instance instance = instancePort.getInstance();
         if (instance != null) {
             String instanceName = instance.getName();
-            String portName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : "";
+            String portName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
             if (instanceName != null && portName != null) {
-                return instanceName + "." + portName;
+                return instanceName + "." + portName; //$NON-NLS-1$
             }
         }
         return null;
@@ -827,7 +827,7 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     }
 
     private String dataMethod2StringNameAndParameterCount(String name, DataMethod dMethod) {
-        return name + "|" + HelperFunctions.computeNumberOfVariables(dMethod.getParameters());
+        return name + "|" + HelperFunctions.computeNumberOfVariables(dMethod.getParameters()); //$NON-NLS-1$
     }
 
     // --- Annotations ---
@@ -858,7 +858,7 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkAssignmentExpression(AssignmentExpression assignExpr) {
         IEObjectDescription var = PooslReferenceHelper.getVariableDescription(assignExpr);
         if (var == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (assignExpr.getVariable() != null) ? assignExpr.getVariable() : ""), assignExpr,
+            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (assignExpr.getVariable() != null) ? assignExpr.getVariable() : ""), assignExpr, //$NON-NLS-1$
                     Literals.ASSIGNMENT_EXPRESSION__VARIABLE, Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
@@ -867,7 +867,7 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkVariableExpression(VariableExpression varExpr) {
         IEObjectDescription var = PooslReferenceHelper.getVariableDescription(varExpr);
         if (var == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (varExpr.getVariable() != null) ? varExpr.getVariable() : ""), varExpr, Literals.VARIABLE_EXPRESSION__VARIABLE,
+            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (varExpr.getVariable() != null) ? varExpr.getVariable() : ""), varExpr, Literals.VARIABLE_EXPRESSION__VARIABLE, //$NON-NLS-1$
                     Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
@@ -876,7 +876,7 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkOutputVariable(OutputVariable outVar) {
         IEObjectDescription var = PooslReferenceHelper.getVariableDescription(outVar);
         if (var == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (outVar.getVariable() != null) ? outVar.getVariable() : ""), outVar, Literals.OUTPUT_VARIABLE__VARIABLE,
+            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (outVar.getVariable() != null) ? outVar.getVariable() : ""), outVar, Literals.OUTPUT_VARIABLE__VARIABLE, //$NON-NLS-1$
                     Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
@@ -885,7 +885,7 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkInstanceParameter(InstanceParameter iParam) {
         IEObjectDescription var = PooslReferenceHelper.getVariableDescription(iParam);
         if (var == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (iParam.getParameter() != null) ? iParam.getParameter() : ""), iParam, Literals.INSTANCE_PARAMETER__PARAMETER,
+            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (iParam.getParameter() != null) ? iParam.getParameter() : ""), iParam, Literals.INSTANCE_PARAMETER__PARAMETER, //$NON-NLS-1$
                     Diagnostic.LINKING_DIAGNOSTIC);
         }
     }

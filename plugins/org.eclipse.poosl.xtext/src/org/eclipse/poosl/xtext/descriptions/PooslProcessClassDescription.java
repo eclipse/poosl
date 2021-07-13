@@ -25,19 +25,19 @@ import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public final class PooslProcessClassDescription {
-    private static final String STR_INITIAL_METHOD = "initialMethod";
+    private static final String STR_INITIAL_METHOD = "initialMethod"; //$NON-NLS-1$
 
-    private static final String STR_USED_PROCESS_METHODS = "UsedProcessMethods";
+    private static final String STR_USED_PROCESS_METHODS = "UsedProcessMethods"; //$NON-NLS-1$
 
-    private static final String STR_USED_PORTS = "UsedPorts";
+    private static final String STR_USED_PORTS = "UsedPorts"; //$NON-NLS-1$
 
-    private static final String STR_USED_RECEIVE_STATEMENTS = "UsedReceiveMessages";
+    private static final String STR_USED_RECEIVE_STATEMENTS = "UsedReceiveMessages"; //$NON-NLS-1$
 
-    private static final String STR_USED_SEND_STATEMENTS = "UsedSendMessages";
+    private static final String STR_USED_SEND_STATEMENTS = "UsedSendMessages"; //$NON-NLS-1$
 
-    private static final String PARSER_METHOD_SEPARATOR = ";";
+    private static final String PARSER_METHOD_SEPARATOR = ";"; //$NON-NLS-1$
 
-    private static final String PARSER_METHOD_OPENER = "{";
+    private static final String PARSER_METHOD_OPENER = "{"; //$NON-NLS-1$
 
     private PooslProcessClassDescription() {
         throw new IllegalStateException("Utility class");

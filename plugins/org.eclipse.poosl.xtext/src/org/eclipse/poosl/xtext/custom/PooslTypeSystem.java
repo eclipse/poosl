@@ -301,12 +301,12 @@ public class PooslTypeSystem {
                 if (dMethods.isEmpty()) {
                     error("No method '" + dMethodName + "' with  " + argumentTypes.size() + " parameters defined for any data class", expr, PooslIssueCodes.UNDECLARED_DATA_METHOD_NAMED);
                 } else {
-                    String strResult = "";
+                    String strResult = ""; //$NON-NLS-1$
                     if (!argumentTypes.isEmpty()) {
                         StringBuilder buf = new StringBuilder();
                         for (String dClass : argumentTypes) {
-                            String name = (dClass == null) ? "" : dClass;
-                            buf.append(", ").append(name);
+                            String name = (dClass == null) ? "" : dClass; //$NON-NLS-1$
+                            buf.append(", ").append(name); //$NON-NLS-1$
                         }
                         strResult = buf.toString().substring(2);
                     }

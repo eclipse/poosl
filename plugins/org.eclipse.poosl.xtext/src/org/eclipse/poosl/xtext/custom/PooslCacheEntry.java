@@ -44,7 +44,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class PooslCacheEntry {
-    private static final String ID_SEPARATOR = "|";
+    private static final String ID_SEPARATOR = "|"; //$NON-NLS-1$
 
     private final Resource resource;
 

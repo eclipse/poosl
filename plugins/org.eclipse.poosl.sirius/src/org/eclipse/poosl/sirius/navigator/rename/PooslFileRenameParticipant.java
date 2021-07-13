@@ -71,7 +71,7 @@ public class PooslFileRenameParticipant extends RenameParticipant {
             @Override
             public boolean visit(IResource resource) {
 
-                if (resource.getType() == IResource.FILE && "poosl".equalsIgnoreCase(resource.getFileExtension())) {
+                if (resource.getType() == IResource.FILE && "poosl".equalsIgnoreCase(resource.getFileExtension())) { //$NON-NLS-1$
                     files.add((IFile) resource);
                 }
                 return true;

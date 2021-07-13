@@ -251,7 +251,7 @@ public final class TextualEditorHelper {
             String platformString = eUri.toPlatformString(true);
             IFile file = (IFile) ResourcesPlugin.getWorkspace().getRoot().findMember(platformString);
 
-            openedEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), "org.eclipse.poosl.xtext.Poosl");
+            openedEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), "org.eclipse.poosl.xtext.Poosl"); //$NON-NLS-1$
 
         } else {
             Display.getDefault().asyncExec(new Runnable() {

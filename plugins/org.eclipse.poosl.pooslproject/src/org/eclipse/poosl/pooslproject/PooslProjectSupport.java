@@ -22,7 +22,7 @@ public final class PooslProjectSupport {
     /**
      * The xtext project nature.
      */
-    public static final String NATURE_ID = "org.eclipse.xtext.ui.shared.xtextNature";
+    public static final String NATURE_ID = "org.eclipse.xtext.ui.shared.xtextNature"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(PooslProjectSupport.class.getName());
 
@@ -96,9 +96,9 @@ public final class PooslProjectSupport {
      * @throws CoreException
      */
     private static void addProjectStructure(IProject newProject) throws CoreException {
-        IFolder modelsFolder = newProject.getFolder("models");
+        IFolder modelsFolder = newProject.getFolder("models"); //$NON-NLS-1$
         createFolder(modelsFolder);
-        IFile modelFile = newProject.getFile("models/model.poosl");
+        IFile modelFile = newProject.getFile("models/model.poosl"); //$NON-NLS-1$
         createFile(modelFile);
     }
 
@@ -106,7 +106,7 @@ public final class PooslProjectSupport {
         URL url;
         InputStream inputStream = null;
         try {
-            url = new URL("platform:/plugin/org.eclipse.poosl.pooslproject/templates/" + file.getName());
+            url = new URL("platform:/plugin/org.eclipse.poosl.pooslproject/templates/" + file.getName()); //$NON-NLS-1$
             inputStream = url.openConnection().getInputStream();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);

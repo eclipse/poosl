@@ -79,7 +79,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         }
                         String returnType = HelperFunctions.CLASS_NAME_OBJECT;
                         // CHECKSTYLE:OFF code gen
-                        String method = "\n\t" + dataMethodCall.getName() + "(arg : " + varType + ") : " + returnType + "\n" + "\t\treturn self";
+                        String method = "\n\t" + dataMethodCall.getName() + "(arg : " + varType + ") : " + returnType + "\n" + "\t\treturn self"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
                         // CHECKSTYLE:ON
                         EObject targetType = dataDescr.getEObjectOrProxy();
                         if (targetType.eIsProxy()) {
@@ -145,7 +145,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
 
                         String returnType = HelperFunctions.CLASS_NAME_OBJECT;
                         // CHECKSTYLE:OFF code gen
-                        String method = "\n\t" + dataMethodCall.getName().getLiteral() + " : " + returnType + "\n\t\treturn self";
+                        String method = "\n\t" + dataMethodCall.getName().getLiteral() + " : " + returnType + "\n\t\treturn self"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         // CHECKSTYLE:ON
                         EObject object = targetDescr.getEObjectOrProxy();
                         if (object.eIsProxy()) {
@@ -184,7 +184,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         String vars = createArgumentString(dataMethodCall.getArguments());
                         String returnType = HelperFunctions.CLASS_NAME_OBJECT;
                         // CHECKSTYLE:OFF code gen
-                        String method = "\n\t" + dataMethodCall.getName() + "(" + vars + ") : " + returnType + "\n\t\treturn self";
+                        String method = "\n\t" + dataMethodCall.getName() + "(" + vars + ") : " + returnType + "\n\t\treturn self"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                         // CHECKSTYLE:ON
                         EObject object = targetDescr.getEObjectOrProxy();
                         if (object.eIsProxy()) {
@@ -241,9 +241,9 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                 String printStringMethod = null;
                 String nonReturnObjectMethod = null;
                 for (Entry<String, IEObjectDescription> entry : conversionMethods.entrySet()) {
-                    if ("printString".equals(entry.getKey())) {
+                    if ("printString".equals(entry.getKey())) { //$NON-NLS-1$
                         printStringMethod = entry.getKey();
-                    } else if (("as" + toClass).equals(entry.getKey())) {
+                    } else if (("as" + toClass).equals(entry.getKey())) { //$NON-NLS-1$
                         asMethod = entry.getKey();
                     } else {
                         String className = PooslDataMethodDescription.getClassName(entry.getValue());
@@ -276,18 +276,18 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         ICompositeNode node = NodeModelUtils.getNode(lastExpr);
                         List<TextChange> changes = new ArrayList<>();
                         if (lastExpr instanceof BinaryOperatorExpression || lastExpr instanceof AssignmentExpression) {
-                            changes.add(new TextChange(lastExpr.eResource(), node.getOffset(), 0, "("));
-                            changes.add(new TextChange(lastExpr.eResource(), node.getOffset() + node.getLength(), 0, ") " + dMethodName));
+                            changes.add(new TextChange(lastExpr.eResource(), node.getOffset(), 0, "(")); //$NON-NLS-1$
+                            changes.add(new TextChange(lastExpr.eResource(), node.getOffset() + node.getLength(), 0, ") " + dMethodName)); //$NON-NLS-1$
                             return changes;
                         } else {
-                            changes.add(new TextChange(lastExpr.eResource(), node.getTotalEndOffset(), 0, " " + dMethodName));
+                            changes.add(new TextChange(lastExpr.eResource(), node.getTotalEndOffset(), 0, " " + dMethodName)); //$NON-NLS-1$
                         }
                         return changes;
                     }
                 }
             }
         }
-        showWarning("No method could be found to convert '" + fromClass + "' to '" + toClass + "'.");
+        showWarning("No method could be found to convert '" + fromClass + "' to '" + toClass + "'."); //$NON-NLS-2$ //$NON-NLS-3$
         return null;
     }
 
@@ -360,7 +360,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         new ISemanticModification() {
                             @Override
                             public void apply(EObject element, IModificationContext context) {
-                                String dataClass = "\n\ndata class " + missingDeclarationName + " extends Object" + "\nvariables" + "\nmethods";
+                                String dataClass = "\n\ndata class " + missingDeclarationName + " extends Object" + "\nvariables" + "\nmethods"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                                 if (!applyTextChange(context.getXtextDocument(), element.eResource(), element, context.getXtextDocument().getLength(), 0, dataClass)) {
                                     showWarning("Could not create Data Class '" + missingDeclarationName + "'.");
                                 }
@@ -375,7 +375,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         new ISemanticModification() {
                             @Override
                             public void apply(EObject element, IModificationContext context) throws Exception {
-                                String clusterClass = "\n\ncluster class " + missingDeclarationName + "()\nports" + "\ninstances" + "\n\tsomeInstance: someClass()" + "\nchannels\n";
+                                String clusterClass = "\n\ncluster class " + missingDeclarationName + "()\nports" + "\ninstances" + "\n\tsomeInstance: someClass()" + "\nchannels\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
                                 if (!applyTextChange(context.getXtextDocument(), element.eResource(), element, context.getXtextDocument().getLength(), 0, clusterClass)) {
                                     showWarning("Could not create Cluster Class '" + missingDeclarationName + "'.");
                                 }
@@ -390,8 +390,8 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                         new ISemanticModification() {
                             @Override
                             public void apply(EObject element, IModificationContext context) {
-                                String processClass = "\n\nprocess class " + missingDeclarationName + "\nports" + "\nmessages\nvariables\ninit\n\tsomeMethod()()\nmethods"
-                                        + "\n\tsomeMethod()()\n\t\tskip";
+                                String processClass = "\n\nprocess class " + missingDeclarationName + "\nports" + "\nmessages\nvariables\ninit\n\tsomeMethod()()\nmethods" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                        + "\n\tsomeMethod()()\n\t\tskip"; //$NON-NLS-1$
                                 if (!applyTextChange(context.getXtextDocument(), element.eResource(), element, context.getXtextDocument().getLength(), 0, processClass)) {
                                     showWarning("Could not create Process Class '" + missingDeclarationName + "'.");
                                 }
@@ -409,8 +409,8 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                                 ProcessClass pClass = HelperFunctions.getContainingProcessClass(element);
                                 if (pClass != null) {
                                     // CHECKSTYLE:OFF code gen
-                                    String input = "";
-                                    String output = "";
+                                    String input = ""; //$NON-NLS-1$
+                                    String output = ""; //$NON-NLS-1$
 
                                     if (element instanceof ProcessMethodCall) {
                                         ProcessMethodCall processMethodCall = (ProcessMethodCall) element;
@@ -420,19 +420,19 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
 
                                         for (int j = 0; j < processMethodCall.getOutputVariables().size(); j++) {
                                             if (j != 0) {
-                                                outputBuilder.append(" , ");
+                                                outputBuilder.append(" , "); //$NON-NLS-1$
                                             }
                                             OutputVariable outputVariable = processMethodCall.getOutputVariables().get(j);
                                             String varType = PooslVariableTypeHelper.getVariableType(outputVariable, outputVariable.getVariable());
                                             if (varType == null) {
                                                 varType = HelperFunctions.CLASS_NAME_OBJECT;
                                             }
-                                            outputBuilder.append("outputVar" + j + " : " + varType);
+                                            outputBuilder.append("outputVar" + j + " : " + varType); //$NON-NLS-1$ //$NON-NLS-2$
                                         }
                                         output = outputBuilder.toString();
                                     }
 
-                                    String method = "\n\t" + missingDeclarationName + "(" + input + ")(" + output + ") | | \n\t\tskip";
+                                    String method = "\n\t" + missingDeclarationName + "(" + input + ")(" + output + ") | | \n\t\tskip"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                                     INode lastNode = getLastMethodNode(pClass);
                                     // CHECKSTYLE:ON
                                     if (lastNode == null || !applyTextChange(context.getXtextDocument(), element.eResource(), pClass, lastNode.getTotalEndOffset(), 0, method)) {
@@ -459,7 +459,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                                 INode lastNode = getLastPortNode(iClass);
 
                                 if (lastNode != null) {
-                                    applyTextChange(context.getXtextDocument(), element.eResource(), iClass, lastNode.getTotalEndOffset(), 0, "\n\t" + missingDeclarationName);
+                                    applyTextChange(context.getXtextDocument(), element.eResource(), iClass, lastNode.getTotalEndOffset(), 0, "\n\t" + missingDeclarationName); //$NON-NLS-1$
                                 } else {
                                     showWarning("Could not create the new port '" + missingDeclarationName + "'.");
                                 }
@@ -483,7 +483,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                                     InstantiableClass iClass = (InstantiableClass) container;
                                     INode lastNode = getLastPortNode(iClass);
                                     if (lastNode != null) {
-                                        applyTextChange(context.getXtextDocument(), element.eResource(), iClass, lastNode.getTotalEndOffset(), 0, "\n\t" + missingDeclarationName);
+                                        applyTextChange(context.getXtextDocument(), element.eResource(), iClass, lastNode.getTotalEndOffset(), 0, "\n\t" + missingDeclarationName); //$NON-NLS-1$
                                         return;
                                     }
                                 }
@@ -502,7 +502,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
 
                                 ProcessClass pClass = HelperFunctions.getContainingProcessClass(element);
                                 if (pClass != null) {
-                                    StringBuilder decl = new StringBuilder(missingDeclarationName + " : " + HelperFunctions.CLASS_NAME_OBJECT);
+                                    StringBuilder decl = new StringBuilder(missingDeclarationName + " : " + HelperFunctions.CLASS_NAME_OBJECT); //$NON-NLS-1$
                                     INode lastNode = getLastInstanceParamNode(pClass, decl);
                                     if (lastNode != null && applyTextChange(context.getXtextDocument(), element.eResource(), pClass, lastNode.getTotalEndOffset(), 0, decl.toString())) {
                                         return;
@@ -526,7 +526,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                                 }
 
                                 INode lastNode = null;
-                                String decl = "\n\t" + missingDeclarationName + " : " + HelperFunctions.CLASS_NAME_OBJECT;
+                                String decl = "\n\t" + missingDeclarationName + " : " + HelperFunctions.CLASS_NAME_OBJECT; //$NON-NLS-1$ //$NON-NLS-2$
                                 if (container instanceof ProcessClass) {
                                     lastNode = getLastVariableNode((ProcessClass) container);
                                 } else if (container instanceof DataClass) {
@@ -553,7 +553,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                                     container = container.eContainer();
                                 }
 
-                                StringBuilder decl = new StringBuilder(" " + missingDeclarationName + " : " + HelperFunctions.CLASS_NAME_OBJECT);
+                                StringBuilder decl = new StringBuilder(" " + missingDeclarationName + " : " + HelperFunctions.CLASS_NAME_OBJECT); //$NON-NLS-1$ //$NON-NLS-2$
                                 INode lastNode = null;
                                 if (container instanceof ProcessMethod) {
                                     lastNode = getLastLocalVarNode(container, decl, Literals.PROCESS_METHOD__LOCAL_VARIABLES, Literals.PROCESS_METHOD__BODY);
@@ -587,7 +587,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                                             varType = HelperFunctions.CLASS_NAME_OBJECT;
                                         }
 
-                                        StringBuilder dec = new StringBuilder(missingDeclarationName + " : " + varType);
+                                        StringBuilder dec = new StringBuilder(missingDeclarationName + " : " + varType); //$NON-NLS-1$
                                         INode lastNode = getLastInstanceParamNode(iClass, dec);
 
                                         if (lastNode != null && applyTextChange(context.getXtextDocument(), element.eResource(), iClass, lastNode.getTotalEndOffset(), 0, dec.toString())) {
@@ -605,7 +605,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
     private INode getLastLocalVarNode(EObject object, StringBuilder builder, EReference refLocal, EReference refBody) {
         List<INode> nodes = NodeModelUtils.findNodesForFeature(object, refLocal);
         if (!nodes.isEmpty()) {
-            builder.insert(0, ",");
+            builder.insert(0, ","); //$NON-NLS-1$
             return nodes.get(nodes.size() - 1);
         }
 
@@ -620,12 +620,12 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
                 break;
 
             if (!iLeafNode.isHidden()) {
-                if (iLeafNode.getText().equals("|"))
+                if (iLeafNode.getText().equals("|")) //$NON-NLS-1$
                     return iLeafNode;
                 lastNode = iLeafNode;
             }
         }
-        builder.insert(0, " |").append(" |");
+        builder.insert(0, " |").append(" |"); //$NON-NLS-1$ //$NON-NLS-2$
         return lastNode;
     }
 
@@ -644,7 +644,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
             return nodes.get(nodes.size() - 1);
 
         for (ILeafNode iLeafNode : NodeModelUtils.findActualNodeFor(object).getLeafNodes()) {
-            if (!iLeafNode.isHidden() && iLeafNode.getText().equals("variables"))
+            if (!iLeafNode.isHidden() && iLeafNode.getText().equals("variables")) //$NON-NLS-1$
                 return iLeafNode;
 
         }
@@ -655,7 +655,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
 
         List<INode> nodes = NodeModelUtils.findNodesForFeature(iClass, Literals.INSTANTIABLE_CLASS__PARAMETERS);
         if (!nodes.isEmpty()) {
-            declaration.insert(0, " , ");
+            declaration.insert(0, " , "); //$NON-NLS-1$
             return nodes.get(nodes.size() - 1);
         } else {
             List<INode> nameNodes = NodeModelUtils.findNodesForFeature(iClass, Literals.INSTANTIABLE_CLASS__NAME);
@@ -667,11 +667,11 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
             while ((lastNode instanceof HiddenLeafNode) && lastNode.hasNextSibling()) {
                 lastNode = lastNode.getNextSibling();
             }
-            if (lastNode.getText().equals("(")) {
+            if (lastNode.getText().equals("(")) { //$NON-NLS-1$
                 return lastNode;
             } else {
-                declaration.insert(0, "(");
-                declaration.append(")");
+                declaration.insert(0, "("); //$NON-NLS-1$
+                declaration.append(")"); //$NON-NLS-1$
                 return nameNode;
             }
         }
@@ -691,7 +691,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
         if (lastDataMethod == null) {
             ICompositeNode s = NodeModelUtils.findActualNodeFor(targetType);
             for (ILeafNode iLeafNode : s.getLeafNodes()) {
-                if (!iLeafNode.isHidden() && iLeafNode.getText().equals("methods")) {
+                if (!iLeafNode.isHidden() && iLeafNode.getText().equals("methods")) { //$NON-NLS-1$
                     return iLeafNode;
                 }
             }
@@ -706,7 +706,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
         if (lastDataMethod == null) {
             ICompositeNode s = NodeModelUtils.findActualNodeFor(pClass);
             for (ILeafNode iLeafNode : s.getLeafNodes()) {
-                if (!iLeafNode.isHidden() && iLeafNode.getText().equals("methods")) {
+                if (!iLeafNode.isHidden() && iLeafNode.getText().equals("methods")) { //$NON-NLS-1$
                     return iLeafNode;
                 }
             }
@@ -719,13 +719,13 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
         StringBuilder vars = new StringBuilder();
         for (int i = 0; i < arguments.size(); i++) {
             if (i != 0) {
-                vars.append(" , ");
+                vars.append(" , "); //$NON-NLS-1$
             }
             String varType = pooslTypeSystem.getAndCheckExpressionType(arguments.get(i));
             if (varType == null) {
                 varType = HelperFunctions.CLASS_NAME_OBJECT;
             }
-            vars.append("arg" + i + " : " + varType);
+            vars.append("arg" + i + " : " + varType); //$NON-NLS-1$ //$NON-NLS-2$
         }
         return vars.toString();
     }
@@ -737,7 +737,7 @@ public class PooslQuickfixProviderUnresolved extends PooslQuickfixProviderUnused
 
         ICompositeNode s = NodeModelUtils.findActualNodeFor(iClass);
         for (ILeafNode iLeafNode : s.getLeafNodes()) {
-            if (!iLeafNode.isHidden() && iLeafNode.getText().equals("ports")) {
+            if (!iLeafNode.isHidden() && iLeafNode.getText().equals("ports")) { //$NON-NLS-1$
                 return iLeafNode;
             }
         }

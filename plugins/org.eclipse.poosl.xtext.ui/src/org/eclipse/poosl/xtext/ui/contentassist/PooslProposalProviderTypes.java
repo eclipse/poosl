@@ -62,7 +62,7 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
 
     public PooslProposalProviderTypes() {
         super();
-        proposalImage = ImageDescriptor.createFromURL(getClass().getResource("/icons/poosl_proposal.png")).createImage();
+        proposalImage = ImageDescriptor.createFromURL(getClass().getResource("/icons/poosl_proposal.png")).createImage(); //$NON-NLS-1$
     }
 
     // =============----------- Variable References -----------=============
@@ -341,7 +341,7 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
                 .getAllElements();
         for (IEObjectDescription dMethod : listUnaryMethods) {
             String methodName = HelperFunctions.getName(dMethod);
-            acceptor.accept(createDescriptionProposal(methodName + "nil", dMethod, context));
+            acceptor.accept(createDescriptionProposal(methodName + "nil", dMethod, context)); //$NON-NLS-1$
         }
     }
 
@@ -410,37 +410,37 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
     }
 
     public static String createDefaultParameterList(int length) {
-        String body = "";
+        String body = ""; //$NON-NLS-1$
         if (length > 0) {
-            body = "nil";
+            body = "nil"; //$NON-NLS-1$
             for (int i = 1; i < length; i++) {
-                body += ", nil";
+                body += ", nil"; //$NON-NLS-1$
             }
         }
-        return "(" + body + ")";
+        return "(" + body + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private static String createDefaultVariableList(int length) {
-        String body = "";
+        String body = ""; //$NON-NLS-1$
         if (length > 0) {
-            body = "var1";
+            body = "var1"; //$NON-NLS-1$
             for (int i = 1; i < length; i++) {
-                body += ", var" + (i + 1);
+                body += ", var" + (i + 1); //$NON-NLS-1$
             }
         }
-        return "(" + body + ")";
+        return "(" + body + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private static String createDefaultInstanceParameterList(List<Declaration> declarations) {
         List<Variable> variables = HelperFunctions.declarationsToVariables(declarations);
-        String body = "";
+        String body = ""; //$NON-NLS-1$
         for (Variable variable : variables) {
             if (variable != variables.get(0)) {
-                body += ", ";
+                body += ", "; //$NON-NLS-1$
             }
-            body += variable.getName() + " := nil";
+            body += variable.getName() + " := nil"; //$NON-NLS-1$
         }
-        return "(" + body + ")";
+        return "(" + body + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private class PooslProposalAccepterForProcessMethod implements ICompletionProposalAcceptor {

@@ -51,9 +51,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
 
 public class StackTraceView extends ViewPart {
-    private static final String SPACE = " ";
+    private static final String SPACE = " "; //$NON-NLS-1$
 
-    private static final String EOL = "\r\n";
+    private static final String EOL = "\r\n"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(StackTraceView.class.getName());
 
@@ -166,7 +166,7 @@ public class StackTraceView extends ViewPart {
         listViewer.setLabelProvider(new StackTraceLabelProvider());
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_stacktrace");
+            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_stacktrace"); //$NON-NLS-1$
         }
         org.eclipse.swt.widgets.List list = listViewer.getList();
         list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -220,7 +220,7 @@ public class StackTraceView extends ViewPart {
             modelMapping.getSourceMapping(trace.getStmtHandle(), new PooslSourceMappingListener(true) {
                 @Override
                 public void requestedSourceMapping(PooslSourceMapping mapping) {
-                    txtErrorMessage.setText(trace.getError() + "\n\'" + mapping.getSourceText() + "\'\n\"" + mapping.getFilePath() + ":" + mapping.getLineNumber() + "\"");
+                    txtErrorMessage.setText(trace.getError() + "\n\'" + mapping.getSourceText() + "\'\n\"" + mapping.getFilePath() + ":" + mapping.getLineNumber() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 }
             });
         }
@@ -275,8 +275,8 @@ public class StackTraceView extends ViewPart {
     private void clear() {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                txtErrorMessage.setText("");
-                lblProcessName.setText("");
+                txtErrorMessage.setText(""); //$NON-NLS-1$
+                lblProcessName.setText(""); //$NON-NLS-1$
                 listViewer.setInput(null);
             }
         });
@@ -340,7 +340,7 @@ public class StackTraceView extends ViewPart {
     }
 
     private String createCopyString() {
-        String info = "";
+        String info = ""; //$NON-NLS-1$
         info += lblTitleErrorMessage.getText() + SPACE;
         info += txtErrorMessage.getText() + EOL;
         info += lblTitleProcessName.getText() + SPACE;

@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 public enum TMessageType {
 
     @XmlEnumValue("read")
-    READ("read"), @XmlEnumValue("write")
-    WRITE("write");
+    READ("read"), @XmlEnumValue("write") //$NON-NLS-1$
+    WRITE("write"); //$NON-NLS-1$
 
     private final String value;
 

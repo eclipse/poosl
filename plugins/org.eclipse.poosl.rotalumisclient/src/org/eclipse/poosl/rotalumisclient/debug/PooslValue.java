@@ -36,7 +36,7 @@ public class PooslValue extends PooslDebugElement implements IValue {
         if (HelperFunctions.PRIMITIVE_DATA_CLASSES.contains(typeName)) {
             return var.getLiteral();
         } else {
-            return var.getLiteral() + " (id=" + var.getObject() + ")";
+            return var.getLiteral() + " (id=" + var.getObject() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -81,7 +81,7 @@ public class PooslValue extends PooslDebugElement implements IValue {
                 return literal;
             }
         }
-        return "null";
+        return "null"; //$NON-NLS-1$
     }
 
     public BigInteger getHandle() {

@@ -35,7 +35,7 @@ public class PooslViewButtonHandler implements IHandler {
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (event.getCommand().getId().equals(PooslConstants.COMMAND_DIAGRAM_VIEW)) {
-            String action = event.getParameter("org.eclipse.poosl.rotalumisclient.views.diagramviewaction");
+            String action = event.getParameter("org.eclipse.poosl.rotalumisclient.views.diagramviewaction"); //$NON-NLS-1$
             if (action.equals(PooslConstants.COMMAND_DIAGRAM_VIEW_CLEAR_VIEW)) {
                 DebugEvent debugEvent = new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.CLEAR_COMM_EVENTS);
                 if (plugin != null) {

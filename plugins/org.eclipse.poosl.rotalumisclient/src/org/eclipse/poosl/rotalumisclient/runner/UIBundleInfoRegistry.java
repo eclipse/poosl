@@ -59,8 +59,8 @@ public class UIBundleInfoRegistry implements IBundleInfo.Registry {
 
         @Override
         public String toString() {
-            String type = Platform.isFragment(bundle) ? "fragment" : "bundle";
-            return type + " '" + getSymbolicName() + "' locationURI:" + getRootURI();
+            String type = Platform.isFragment(bundle) ? "fragment" : "bundle"; //$NON-NLS-1$ //$NON-NLS-2$
+            return type + " '" + getSymbolicName() + "' locationURI:" + getRootURI(); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -101,12 +101,12 @@ public class UIBundleInfoRegistry implements IBundleInfo.Registry {
 
     private URI getBundleLocationURI(Bundle bundle) {
         try {
-            URI uri = URI.createURI(FileLocator.resolve(bundle.getEntry("/")).toString());
+            URI uri = URI.createURI(FileLocator.resolve(bundle.getEntry("/")).toString()); //$NON-NLS-1$
             if (uri.isArchive())
                 return uri;
             File current = new File(uri.toFileString());
-            if (new File(current, "META-INF").isDirectory()) {
-                return URI.createFileURI(current.toString()).appendSegment("");
+            if (new File(current, "META-INF").isDirectory()) { //$NON-NLS-1$
+                return URI.createFileURI(current.toString()).appendSegment(""); //$NON-NLS-1$
             } else {
                 return uri;
             }
@@ -117,7 +117,7 @@ public class UIBundleInfoRegistry implements IBundleInfo.Registry {
 
     private URI getClassURI(Class<?> clazz) {
         try {
-            URL resource = clazz.getClassLoader().getResource("/" + clazz.getName().replace('.', '/') + ".class");
+            URL resource = clazz.getClassLoader().getResource("/" + clazz.getName().replace('.', '/') + ".class"); //$NON-NLS-1$ //$NON-NLS-2$
             URL url = FileLocator.resolve(resource);
             return URI.createURI(url.toString());
         } catch (IOException e) {

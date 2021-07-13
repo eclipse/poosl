@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import com.google.common.collect.Sets;
 
 public final class ClasspathUtil {
-    private static final String BUNDLE_SYMBOLIC_NAME = "Bundle-SymbolicName";
+    private static final String BUNDLE_SYMBOLIC_NAME = "Bundle-SymbolicName"; //$NON-NLS-1$
 
     private static final Logger LOG = Logger.getLogger(ClasspathUtil.class.getName());
 
@@ -40,14 +40,14 @@ public final class ClasspathUtil {
             @SuppressWarnings("resource")
             URLClassLoader ucl = (URLClassLoader) classLoader;
             for (URL u : ucl.getURLs())
-                if (!u.getFile().endsWith(".jar")) {
+                if (!u.getFile().endsWith(".jar")) { //$NON-NLS-1$
                     try {
                         java.io.File f = new java.io.File(u.toURI());
                         if (f.isDirectory()) {
                             int levels = 5;
                             W: while (levels >= 0 && f != null) {
                                 for (String fileName : fileNames) {
-                                    java.io.File pl = new java.io.File(f + "/" + fileName);
+                                    java.io.File pl = new java.io.File(f + "/" + fileName); //$NON-NLS-1$
                                     if (pl.isFile()) {
                                         result.add(pl.toURI().toURL());
                                         break W;

@@ -74,7 +74,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public final class CreationHelper {
-    private static final String COMMA = ",";
+    private static final String COMMA = ","; //$NON-NLS-1$
 
     private static final String MESSAGE_TITLE_ADD_PORT = "Adding port";
 
@@ -267,7 +267,7 @@ public final class CreationHelper {
             InstantiableClass obj = PooslReferenceHelper.getInstantiableClassEObject(instance);
             if (obj != null) {
                 String type = (obj instanceof ClusterClass) ? "cluster class" : "process class";
-                boolean dialog = MessageDialog.openConfirm(Display.getDefault().getActiveShell(), MESSAGE_TITLE_ADD_PORT, MESSAGE_ADD_PORT + type + " " + obj.getName());
+                boolean dialog = MessageDialog.openConfirm(Display.getDefault().getActiveShell(), MESSAGE_TITLE_ADD_PORT, MESSAGE_ADD_PORT + type + " " + obj.getName()); //$NON-NLS-1$
                 if (dialog) {
                     addPort(obj);
                     saveChanges(obj);
@@ -277,7 +277,7 @@ public final class CreationHelper {
     }
 
     public static void createVariable(EObject container) {
-        NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), container.eResource(), getExistingVariablesFromClass(container), "variable");
+        NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), container.eResource(), getExistingVariablesFromClass(container), "variable"); //$NON-NLS-1$
         if (variableDialog.open() == Window.OK) {
             String name = variableDialog.getName();
             String selectedClass = variableDialog.getSelectedClass();
@@ -306,7 +306,7 @@ public final class CreationHelper {
 
     public static void createParameter(final InstantiableClass container) {
         Resource resource = container.eResource();
-        final NewVariableDialog parameterDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesFromClass(container), "parameter");
+        final NewVariableDialog parameterDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesFromClass(container), "parameter"); //$NON-NLS-1$
 
         if (parameterDialog.open() == Window.OK) {
             String name = parameterDialog.getName();
@@ -640,7 +640,7 @@ public final class CreationHelper {
         if (isEditAllowed(variable)) {
             Resource resource = variable.eResource();
             Declaration declaration = (Declaration) variable.eContainer();
-            NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesWithoutDeclaration(declaration), "variable");
+            NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesWithoutDeclaration(declaration), "variable"); //$NON-NLS-1$
             variableDialog.setVariable(declaration);
 
             if (variableDialog.open() == Window.OK) {
@@ -695,7 +695,7 @@ public final class CreationHelper {
             Resource resource = variable.eResource();
             Declaration declaration = (Declaration) variable.eContainer();
 
-            NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesWithoutDeclaration(declaration), "parameter");
+            NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesWithoutDeclaration(declaration), "parameter"); //$NON-NLS-1$
             StringBuilder varname = new StringBuilder();
             for (int i = 0; i < declaration.getVariables().size(); i++) {
                 varname = (i > 0) ? varname.append(COMMA) : varname;
@@ -955,7 +955,7 @@ public final class CreationHelper {
                     for (Channel channel : cClass.getChannels()) {
                         for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); ) {
                             InstancePort instancePort = iterator.next();
-                            String iPort = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : "";
+                            String iPort = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
                             if (iPort.equals(port.getName())) {
                                 iterator.remove();
                             }
@@ -1080,7 +1080,7 @@ public final class CreationHelper {
             message = (((ClusterClass) referer).getName() == null) ? USED_BY_SYSTEM : String.format(USED_BY_CLUSTERCLASS, ((ClusterClass) referer).getName());
         }
 
-        return USED_BY_MESSAGE + message + " (" + resource.getURI().toString() + ")";
+        return USED_BY_MESSAGE + message + " (" + resource.getURI().toString() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static List<Variable> getAllUsedVariables(ProcessMethod pMethod) {

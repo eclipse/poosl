@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 public enum TInstanceType {
 
     @XmlEnumValue("process")
-    PROCESS("process"), @XmlEnumValue("cluster")
-    CLUSTER("cluster");
+    PROCESS("process"), @XmlEnumValue("cluster") //$NON-NLS-1$
+    CLUSTER("cluster"); //$NON-NLS-1$
 
     private final String value;
 

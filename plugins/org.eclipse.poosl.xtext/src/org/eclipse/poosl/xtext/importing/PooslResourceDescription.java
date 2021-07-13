@@ -70,7 +70,7 @@ public class PooslResourceDescription extends DefaultResourceDescription {
         Poosl poosl = ImportingHelper.toPoosl(getResource());
         if (poosl != null) {
             // compute exported imports
-            exportedEObjects.add(EObjectDescription.create("", poosl, PooslDescription.createUserData(poosl)));
+            exportedEObjects.add(EObjectDescription.create("", poosl, PooslDescription.createUserData(poosl))); //$NON-NLS-1$
 
             computeExportedDataClasses(exportedEObjects, poosl);
             computeExportedProcessClasses(exportedEObjects, poosl);

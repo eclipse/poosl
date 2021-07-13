@@ -24,12 +24,12 @@ public class DotClasspath {
     private class Handler extends DefaultHandler {
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-            if ("classpathentry".equals(qName)) {
-                String kind = attributes.getValue("kind");
-                String path = attributes.getValue("path");
-                if ("src".equals(kind))
+            if ("classpathentry".equals(qName)) { //$NON-NLS-1$
+                String kind = attributes.getValue("kind"); //$NON-NLS-1$
+                String path = attributes.getValue("path"); //$NON-NLS-1$
+                if ("src".equals(kind)) //$NON-NLS-1$
                     sources.add(path);
-                else if ("output".equals(kind))
+                else if ("output".equals(kind)) //$NON-NLS-1$
                     output = path;
             }
         }

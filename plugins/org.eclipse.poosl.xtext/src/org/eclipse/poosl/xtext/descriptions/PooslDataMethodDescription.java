@@ -20,15 +20,15 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 public final class PooslDataMethodDescription {
-    private static final String STR_CLASS = "Class";
+    private static final String STR_CLASS = "Class"; //$NON-NLS-1$
 
-    private static final String STR_PARAMETERS = "Parameters";
+    private static final String STR_PARAMETERS = "Parameters"; //$NON-NLS-1$
 
-    private static final String STR_RETURNTYPE = "ReturnType";
+    private static final String STR_RETURNTYPE = "ReturnType"; //$NON-NLS-1$
 
-    private static final String STR_IS_INIT = "isInit";
+    private static final String STR_IS_INIT = "isInit"; //$NON-NLS-1$
 
-    private static final String ANNOTATION = "init";
+    private static final String ANNOTATION = "init"; //$NON-NLS-1$
 
     private PooslDataMethodDescription() {
         throw new IllegalStateException("Utility class");

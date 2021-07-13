@@ -206,7 +206,7 @@ public final class PooslDebugHelper {
         IDebugModelPresentation presentation = ((DelegatingModelPresentation) DebugUIPlugin.getModelPresentation()).getPresentation(PooslConstants.DEBUG_MODEL_ID);
         IEditorInput editor = presentation.getEditorInput(sourceElement);
         ITextEditor textEditor = (ITextEditor) window.getActivePage().openEditor(editor, presentation.getEditorId(editor, sourceElement), false);
-        InstructionPointerAnnotation annotation = new InstructionPointerAnnotation(stackframe, "org.eclipse.debug.ui.currentIP", "POOSL Instruction pointer", null);
+        InstructionPointerAnnotation annotation = new InstructionPointerAnnotation(stackframe, "org.eclipse.debug.ui.currentIP", "POOSL Instruction pointer", null); //$NON-NLS-1$
         InstructionPointerManager pointerManager = InstructionPointerManager.getDefault();
         if (pointerManager != null) {
             pointerManager.removeAnnotations(textEditor);

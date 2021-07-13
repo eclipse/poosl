@@ -28,7 +28,7 @@ public class PooslVariableDetailPane implements IDetailPane {
     @Override
     public void init(IWorkbenchPartSite partSite) {
         if (detailPaneLabel != null) {
-            detailPaneLabel.setText("");
+            detailPaneLabel.setText(""); //$NON-NLS-1$
         }
     }
 
@@ -48,7 +48,7 @@ public class PooslVariableDetailPane implements IDetailPane {
         if (workbench != null) {
             IWorkbenchHelpSystem helpSystem = workbench.getHelpSystem();
             if (helpSystem != null) {
-                helpSystem.setHelp(detailPaneLabel, "org.eclipse.poosl.help.help_variables");
+                helpSystem.setHelp(detailPaneLabel, "org.eclipse.poosl.help.help_variables"); //$NON-NLS-1$
             }
         }
 
@@ -63,7 +63,7 @@ public class PooslVariableDetailPane implements IDetailPane {
     @Override
     public void display(IStructuredSelection selection) {
         if (selection == null || selection.isEmpty()) {
-            detailPaneLabel.setText("");
+            detailPaneLabel.setText(""); //$NON-NLS-1$
         } else {
             if (selection.getFirstElement() instanceof PooslVariable) {
                 PooslVariable var = (PooslVariable) selection.getFirstElement();

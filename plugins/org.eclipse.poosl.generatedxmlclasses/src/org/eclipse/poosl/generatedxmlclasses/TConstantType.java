@@ -38,12 +38,12 @@ import javax.xml.bind.annotation.XmlType;
 public enum TConstantType {
 
     @XmlEnumValue("string")
-    STRING("string"), @XmlEnumValue("character")
-    CHARACTER("character"), @XmlEnumValue("integer")
-    INTEGER("integer"), @XmlEnumValue("real")
-    REAL("real"), @XmlEnumValue("boolean")
-    BOOLEAN("boolean"), @XmlEnumValue("unknown")
-    UNKNOWN("unknown");
+    STRING("string"), @XmlEnumValue("character") //$NON-NLS-1$
+    CHARACTER("character"), @XmlEnumValue("integer") //$NON-NLS-1$
+    INTEGER("integer"), @XmlEnumValue("real") //$NON-NLS-1$
+    REAL("real"), @XmlEnumValue("boolean") //$NON-NLS-1$
+    BOOLEAN("boolean"), @XmlEnumValue("unknown") //$NON-NLS-1$
+    UNKNOWN("unknown"); //$NON-NLS-1$
 
     private final String value;
 

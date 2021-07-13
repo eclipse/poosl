@@ -117,7 +117,7 @@ public class PooslDrawMessage {
 
         if (!isAdapterPath(sending)) {
             try {
-                String processAndPort = process + "." + port;
+                String processAndPort = process + "." + port; //$NON-NLS-1$
                 for (int i = 0; i < main; i++) {
                     String externProcessAndPort = instancePortMap.get(processAndPort);
                     if (externProcessAndPort == null) {
@@ -125,11 +125,11 @@ public class PooslDrawMessage {
                         return path;
                     }
 
-                    String[] externInfo = externProcessAndPort.split("\\.");
+                    String[] externInfo = externProcessAndPort.split("\\."); //$NON-NLS-1$
                     String externProcess = externInfo[0];
                     String externPort = externInfo[1];
 
-                    String[] receiverInfo = processAndPort.split("\\.");
+                    String[] receiverInfo = processAndPort.split("\\."); //$NON-NLS-1$
                     String receiverInfoProcess = receiverInfo[0];
                     String receiverInfoPort = receiverInfo[1];
 

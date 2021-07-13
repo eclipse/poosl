@@ -46,7 +46,7 @@ public class StackTraceVariableView extends VariablesView {
 
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_stacktrace_variables");
+            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_stacktrace_variables"); //$NON-NLS-1$
         }
     }
 

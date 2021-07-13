@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class JavaSocketClient extends Thread {
-    static final String HOST_NAME = "127.0.0.1";
+    static final String HOST_NAME = "127.0.0.1"; //$NON-NLS-1$
 
     static final int PORT_NUMBER = 9090;
 

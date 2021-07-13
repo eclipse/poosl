@@ -124,9 +124,9 @@ public final class ConnectedPortsHelper {
         public String toString() {
             StringBuilder builder = new StringBuilder();
             for (InstanceAndPort ancestor : ancestorChain) {
-                builder.append(ancestor.localInstanceName + "/");
+                builder.append(ancestor.localInstanceName + "/"); //$NON-NLS-1$
             }
-            builder.append(localInstanceName + "[" + instantiableClassName + "]" + "." + portName);
+            builder.append(localInstanceName + "[" + instantiableClassName + "]" + "." + portName); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             return builder.toString();
         }
 

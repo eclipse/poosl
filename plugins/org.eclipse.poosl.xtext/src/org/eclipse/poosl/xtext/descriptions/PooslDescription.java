@@ -18,13 +18,13 @@ import org.eclipse.xtext.util.Pair;
 import org.eclipse.xtext.util.Tuples;
 
 public final class PooslDescription {
-    private static final String IMPORT_SEPARATOR = ",";
+    private static final String IMPORT_SEPARATOR = ","; //$NON-NLS-1$
 
-    private static final String STR_IMPORTS = "imports";
+    private static final String STR_IMPORTS = "imports"; //$NON-NLS-1$
 
-    private static final String STR_IMPORTLIBS = "importlibs";
+    private static final String STR_IMPORTLIBS = "importlibs"; //$NON-NLS-1$
 
-    private static final String STR_IMPORTLIBSRAW = "importlibsraw";
+    private static final String STR_IMPORTLIBSRAW = "importlibsraw"; //$NON-NLS-1$
 
     private PooslDescription() {
         throw new IllegalStateException("Utility class");
@@ -44,7 +44,7 @@ public final class PooslDescription {
                 String importString = ImportingHelper.importToString(pImport);
                 if (importString != null) {
                     URI resolved = ImportingHelper.resolveImportUri(poosl.eResource().getURI(), URI.createURI(importString));
-                    String resolvedString = (resolved == null) ? "" : resolved.toString();
+                    String resolvedString = (resolved == null) ? "" : resolved.toString(); //$NON-NLS-1$
                     addImportSeperator(importBuilder);
                     importBuilder.append(resolvedString);
                 }
@@ -60,7 +60,7 @@ public final class PooslDescription {
                 String importString = ImportingHelper.importToString(pImport);
                 if (importString != null) {
                     URI resolved = ImportingHelper.resolveImportLibUri(poosl.eResource(), URI.createURI(importString));
-                    String resolvedString = (resolved == null) ? "" : resolved.toString();
+                    String resolvedString = (resolved == null) ? "" : resolved.toString(); //$NON-NLS-1$
                     addImportSeperator(importlibBuilder);
                     addImportSeperator(importlibRawBuilder);
                     importlibBuilder.append(resolvedString);

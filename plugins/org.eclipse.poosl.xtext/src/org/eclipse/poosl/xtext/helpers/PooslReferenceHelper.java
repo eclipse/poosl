@@ -99,7 +99,7 @@ public final class PooslReferenceHelper {
         Instance instance = iPort.getInstance();
         String classDef = instance.getClassDefinition();
         if (classDef != null) {
-            return PooslCache.get(resource).getInstantiableClassPorts(classDef).get((iPort.getPort() != null) ? iPort.getPort().getPort() : "");
+            return PooslCache.get(resource).getInstantiableClassPorts(classDef).get((iPort.getPort() != null) ? iPort.getPort().getPort() : ""); //$NON-NLS-1$
         }
         return null;
     }
@@ -120,7 +120,7 @@ public final class PooslReferenceHelper {
                 } else {
                     for (Port localPort : pClass.getPorts()) {
                         if (localPort.getName().equals(portName))
-                            return EObjectDescription.create(portName, localPort, PooslPortDescription.createUserData(""));
+                            return EObjectDescription.create(portName, localPort, PooslPortDescription.createUserData("")); //$NON-NLS-1$
                     }
                     String superClass = pClass.getSuperClass();
                     if (superClass != null) {

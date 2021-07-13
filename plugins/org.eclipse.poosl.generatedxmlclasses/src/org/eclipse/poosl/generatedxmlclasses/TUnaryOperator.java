@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 public enum TUnaryOperator {
 
     @XmlEnumValue("-")
-    MINUS("-"), @XmlEnumValue("!")
-    NEGATION("!");
+    MINUS("-"), @XmlEnumValue("!") //$NON-NLS-1$
+    NEGATION("!"); //$NON-NLS-1$
 
     private final String value;
 

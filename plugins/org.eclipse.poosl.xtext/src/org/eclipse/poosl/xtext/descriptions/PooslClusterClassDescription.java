@@ -18,7 +18,7 @@ import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public final class PooslClusterClassDescription {
-    private static final String SEMICOLON = ";";
+    private static final String SEMICOLON = ";"; //$NON-NLS-1$
 
     private static final String STR_CHANNELS = "Channels";
 
@@ -43,7 +43,7 @@ public final class PooslClusterClassDescription {
             String iName = instance.getName();
             String iClass = instance.getClassDefinition();
             if (iName != null && iClass != null) {
-                instances.append(iName + ":" + iClass + SEMICOLON);
+                instances.append(iName + ":" + iClass + SEMICOLON); //$NON-NLS-1$
             }
         }
         userData.put(STR_INSTANCES, instances.toString());
@@ -69,7 +69,7 @@ public final class PooslClusterClassDescription {
         String[] instanceDescriptions = instancesString.split(SEMICOLON);
         for (String instanceDescription : instanceDescriptions) {
             if (!instanceDescription.isEmpty()) {
-                String[] instClass = instanceDescription.split(":");
+                String[] instClass = instanceDescription.split(":"); //$NON-NLS-1$
                 if (instClass.length == 2) {
                     allInstances.put(instClass[0], instClass[1]);
                 } else {

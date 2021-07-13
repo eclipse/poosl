@@ -69,7 +69,7 @@ public class PooslModelWizard extends Wizard implements INewWizard {
      * 
      * @generated
      */
-    public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays.asList(PooslEditorPlugin.INSTANCE.getString("_UI_PooslEditorFilenameExtensions").split("\\s*,\\s*")));
+    public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays.asList(PooslEditorPlugin.INSTANCE.getString("_UI_PooslEditorFilenameExtensions").split("\\s*,\\s*"))); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * A formatted list of supported file extensions, suitable for display. <!-- begin-user-doc --> <!-- end-user-doc
@@ -77,7 +77,7 @@ public class PooslModelWizard extends Wizard implements INewWizard {
      * 
      * @generated
      */
-    public static final String FORMATTED_FILE_EXTENSIONS = PooslEditorPlugin.INSTANCE.getString("_UI_PooslEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+    public static final String FORMATTED_FILE_EXTENSIONS = PooslEditorPlugin.INSTANCE.getString("_UI_PooslEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     /**
      * This caches an instance of the model package. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -138,8 +138,8 @@ public class PooslModelWizard extends Wizard implements INewWizard {
     public void init(IWorkbench workbench, IStructuredSelection selection) {
         this.workbench = workbench;
         this.selection = selection;
-        setWindowTitle(PooslEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-        setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(PooslEditorPlugin.INSTANCE.getImage("full/wizban/NewPoosl")));
+        setWindowTitle(PooslEditorPlugin.INSTANCE.getString("_UI_Wizard_label")); //$NON-NLS-1$
+        setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(PooslEditorPlugin.INSTANCE.getImage("full/wizban/NewPoosl"))); //$NON-NLS-1$
     }
 
     /**
@@ -246,7 +246,7 @@ public class PooslModelWizard extends Wizard implements INewWizard {
             try {
                 page.openEditor(new FileEditorInput(modelFile), workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
             } catch (PartInitException exception) {
-                MessageDialog.openError(workbenchWindow.getShell(), PooslEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+                MessageDialog.openError(workbenchWindow.getShell(), PooslEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage()); //$NON-NLS-1$
                 return false;
             }
 
@@ -282,7 +282,7 @@ public class PooslModelWizard extends Wizard implements INewWizard {
             if (super.validatePage()) {
                 String extension = new Path(getFileName()).getFileExtension();
                 if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
-                    String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
+                    String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension"; //$NON-NLS-1$ //$NON-NLS-2$
                     setErrorMessage(PooslEditorPlugin.INSTANCE.getString(key, new Object[] { FORMATTED_FILE_EXTENSIONS }));
                     return false;
                 }
@@ -357,7 +357,7 @@ public class PooslModelWizard extends Wizard implements INewWizard {
 
             Label containerLabel = new Label(composite, SWT.LEFT);
             {
-                containerLabel.setText(PooslEditorPlugin.INSTANCE.getString("_UI_ModelObject"));
+                containerLabel.setText(PooslEditorPlugin.INSTANCE.getString("_UI_ModelObject")); //$NON-NLS-1$
 
                 GridData data = new GridData();
                 data.horizontalAlignment = GridData.FILL;
@@ -383,7 +383,7 @@ public class PooslModelWizard extends Wizard implements INewWizard {
 
             Label encodingLabel = new Label(composite, SWT.LEFT);
             {
-                encodingLabel.setText(PooslEditorPlugin.INSTANCE.getString("_UI_XMLEncoding"));
+                encodingLabel.setText(PooslEditorPlugin.INSTANCE.getString("_UI_XMLEncoding")); //$NON-NLS-1$
 
                 GridData data = new GridData();
                 data.horizontalAlignment = GridData.FILL;
@@ -479,7 +479,7 @@ public class PooslModelWizard extends Wizard implements INewWizard {
          */
         protected String getLabel(String typeName) {
             try {
-                return PooslEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type");
+                return PooslEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type"); //$NON-NLS-1$ //$NON-NLS-2$
             } catch (MissingResourceException mre) {
                 PooslEditorPlugin.INSTANCE.log(mre);
             }
@@ -494,7 +494,7 @@ public class PooslModelWizard extends Wizard implements INewWizard {
         protected Collection<String> getEncodings() {
             if (encodings == null) {
                 encodings = new ArrayList<String>();
-                for (StringTokenizer stringTokenizer = new StringTokenizer(PooslEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();) {
+                for (StringTokenizer stringTokenizer = new StringTokenizer(PooslEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();) { //$NON-NLS-1$
                     encodings.add(stringTokenizer.nextToken());
                 }
             }
@@ -511,10 +511,10 @@ public class PooslModelWizard extends Wizard implements INewWizard {
     public void addPages() {
         // Create a page, set the title, and the initial model file name.
         //
-        newFileCreationPage = new PooslModelWizardNewFileCreationPage("Whatever", selection);
-        newFileCreationPage.setTitle(PooslEditorPlugin.INSTANCE.getString("_UI_PooslModelWizard_label"));
-        newFileCreationPage.setDescription(PooslEditorPlugin.INSTANCE.getString("_UI_PooslModelWizard_description"));
-        newFileCreationPage.setFileName(PooslEditorPlugin.INSTANCE.getString("_UI_PooslEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
+        newFileCreationPage = new PooslModelWizardNewFileCreationPage("Whatever", selection); //$NON-NLS-1$
+        newFileCreationPage.setTitle(PooslEditorPlugin.INSTANCE.getString("_UI_PooslModelWizard_label")); //$NON-NLS-1$
+        newFileCreationPage.setDescription(PooslEditorPlugin.INSTANCE.getString("_UI_PooslModelWizard_description")); //$NON-NLS-1$
+        newFileCreationPage.setFileName(PooslEditorPlugin.INSTANCE.getString("_UI_PooslEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0)); //$NON-NLS-1$ //$NON-NLS-2$
         addPage(newFileCreationPage);
 
         // Try and get the resource selection to determine a current directory for the file dialog.
@@ -540,19 +540,19 @@ public class PooslModelWizard extends Wizard implements INewWizard {
 
                     // Make up a unique new name here.
                     //
-                    String defaultModelBaseFilename = PooslEditorPlugin.INSTANCE.getString("_UI_PooslEditorFilenameDefaultBase");
+                    String defaultModelBaseFilename = PooslEditorPlugin.INSTANCE.getString("_UI_PooslEditorFilenameDefaultBase"); //$NON-NLS-1$
                     String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
-                    String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
+                    String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension; //$NON-NLS-1$
                     for (int i = 1; ((IContainer) selectedResource).findMember(modelFilename) != null; ++i) {
-                        modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension;
+                        modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension; //$NON-NLS-1$
                     }
                     newFileCreationPage.setFileName(modelFilename);
                 }
             }
         }
-        initialObjectCreationPage = new PooslModelWizardInitialObjectCreationPage("Whatever2");
-        initialObjectCreationPage.setTitle(PooslEditorPlugin.INSTANCE.getString("_UI_PooslModelWizard_label"));
-        initialObjectCreationPage.setDescription(PooslEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+        initialObjectCreationPage = new PooslModelWizardInitialObjectCreationPage("Whatever2"); //$NON-NLS-1$
+        initialObjectCreationPage.setTitle(PooslEditorPlugin.INSTANCE.getString("_UI_PooslModelWizard_label")); //$NON-NLS-1$
+        initialObjectCreationPage.setDescription(PooslEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description")); //$NON-NLS-1$
         addPage(initialObjectCreationPage);
     }
 

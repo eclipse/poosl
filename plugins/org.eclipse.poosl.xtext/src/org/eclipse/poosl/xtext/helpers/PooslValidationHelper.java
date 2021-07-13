@@ -10,9 +10,9 @@ public final class PooslValidationHelper {
     // DO_CHECK can be enabled for debugging purposes
     private static final boolean DO_CHECK = false;
 
-    private static final String DESCRIPTION_SIMPLE_WARNING = "Description validation failed";
+    private static final String DESCRIPTION_SIMPLE_WARNING = "Description validation failed"; //$NON-NLS-1$
 
-    private static final String DESCRIPTION_VALIDATION_WARNING = DESCRIPTION_SIMPLE_WARNING + ", description of {0} was not of the class {1}";
+    private static final String DESCRIPTION_VALIDATION_WARNING = DESCRIPTION_SIMPLE_WARNING + ", description of {0} was not of the class {1}"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(PooslValidationHelper.class.getName());
 
@@ -43,7 +43,7 @@ public final class PooslValidationHelper {
     private static String classesToString(EClass[] classes) {
         StringBuilder builder = new StringBuilder();
         for (EClass eClass : classes) {
-            builder.append(eClass.getName() + " ");
+            builder.append(eClass.getName() + " "); //$NON-NLS-1$
         }
         return builder.toString();
     }

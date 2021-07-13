@@ -11,7 +11,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import com.google.common.base.Predicate;
 
 public final class PooslPortDescription {
-    private static final String STR_CLASS = "Class";
+    private static final String STR_CLASS = "Class"; //$NON-NLS-1$
 
     private PooslPortDescription() {
         throw new IllegalStateException("Utility class");
