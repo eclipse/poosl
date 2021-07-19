@@ -24,9 +24,9 @@
 			  <!-- Following plugin have no source -->
 	
 			  	<excludes>
-			  	
   					<plugin id="org.eclipse.poosl.help"/>
   					<plugin id="jakarta.xml.bind-api"/>
+  					<feature id="nl.tue.rotalumis.sdk" />
 				</excludes>
 
 			  </configuration>
