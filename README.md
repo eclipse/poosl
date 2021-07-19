@@ -1,7 +1,7 @@
 # Brief introduction to the POOSL project
 
-[Build](https://github.com/ObeoNetwork/POOSL/actions/workflows/maven.yml)
-![Github action status](https://github.com/ObeoNetwork/POOSL/actions/Java%20CI/badge.svg "Last run")
+
+[![Github action status](https://github.com/ObeoNetwork/POOSL/actions/Java%20CI/badge.svg)](https://github.com/ObeoNetwork/POOSL/actions/workflows/maven.yml)
 
 
 _TODO: update content according OBEO fittings_ 
