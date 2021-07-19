@@ -1,5 +1,8 @@
 # Brief introduction to the POOSL project
 
+
+_TODO: update content according OBEO fittings_ 
+
 ## Introduction
 
 Here you will find a introduction how to setup, build and run tests.
@@ -8,8 +11,8 @@ Here you will find a introduction how to setup, build and run tests.
 
 We assume the following tools/frameworks are available
 
-- jdk8:
-- maven:
+- jdk 11
+- maven 3.5+
 - rcptt ide: is the IDE for RCPTT development 
 - rcptt runner 2.5.0: is the command line tool for RCPTT 
 - ${POOSL_SRC} stands for the poosl source location on your host
@@ -38,9 +41,9 @@ All the needed tests and scripts are available at __${POOSL_SRC}\RCPTT__.
 
 ### Preconditions
 
-- jdk8 is availabe
+- jdk 11 is available
 - Only if running the scripts (not via maven)
-    - rcpt test runner is available at __C:\opt\rcptt\rcptt.runner-2.5.0__
+    - rcptt test runner is available at __C:\opt\rcptt\rcptt.runner-2.5.0__
 - eclipse runtime is available at __C:\opt\eclipse\eclipse-2019-12\eclipse__ and setup properly
 
 
@@ -54,8 +57,8 @@ To run the tests in a _Jenkins_ environment or as command line you will find the
 1. Build the plugins as descript above.
 1. We can assume the build plugin artifacts are located in __${MY_FOLDER}/poosl/org.eclipse.poosl.update/target/repository__, which is the case after you do the build.
 1. Run one of the 
-    * scripts: ```{MY_FOLDER}/poosl/RCPTT/runnerScripts/*.cmd```
-    * maven: ```mvn clean package -f __${MY_FOLDER}/poosl/RCPTT/runnerScripts/pom-*.xml```
+    * scripts: ``{MY_FOLDER}/poosl/RCPTT/runnerScripts/*.cmd``
+    * maven: ``mvn clean package -f __${MY_FOLDER}/poosl/RCPTT/runnerScripts/pom-*.xml``
 1. Check the results
     * scripts results in __${MY_FOLDER}/result__
     * maven results in __${MY_FOLDER}/rcptt-target__

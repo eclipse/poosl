@@ -5,7 +5,6 @@
   <parent>
      <groupId>org.eclipse.poosl</groupId>
      <artifactId>parent</artifactId>
-     <!-- You should change this and the MANIFEST.MF to your versioning scheme -->
      <version>4.2.2-SNAPSHOT</version>
      <relativePath>../../parent</relativePath>
   </parent>
@@ -13,5 +12,45 @@
   <artifactId>org.eclipse.poosl.update</artifactId>
   <packaging>eclipse-repository</packaging>
   <name>POOSL P2 update-site</name>
+
+  <properties>
+  	<help.res.path>plugins/org.eclipse.poosl.help/html</help.res.path>
+<!-- 
+Repository default path for archive is defined by in:
+https://github.com/eclipse/tycho/blob/tycho-2.3.0/tycho-p2/tycho-p2-repository-plugin/src/main/java/org/eclipse/tycho/plugins/p2/repository/AbstractRepositoryMojo.java
+-->
+
+  	<repo.outputDirectory>${project.build.directory}/repository</repo.outputDirectory>
+  </properties>
+
+  <build>
+  	<resources>
+  		<resource><directory>site</directory></resource>
+  	</resources>
+  	<plugins>
+  		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-resources-plugin</artifactId>
+  			<executions>
+  				<execution>
+  					<id>include-online-help</id>
+  					<goals><goal>copy-resources</goal></goals>
+  					<phase>prepare-package</phase>
+  					<configuration>
+						<resources>
+							<resource>
+								<directory>../../${help.res.path}</directory>
+							</resource>
+						</resources>
+  						<outputDirectory>${repo.outputDirectory}/help</outputDirectory>
+  					</configuration>
+  				</execution>
+  			</executions>
+  			<configuration>
+  				<outputDirectory>${repo.outputDirectory}</outputDirectory>
+  			</configuration>
+		</plugin>
+  	</plugins>
+  </build>
 
 </project> 
