@@ -21,7 +21,7 @@ Workflow {
     component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
         genModel = "platform:/resource/org.eclipse.poosl.model/model/poosl.genmodel"
         srcPath = "platform:/resource/org.eclipse.poosl.model/src"
-		generateEdit = false
+		generateEdit = false // TODO: Suspicious ! Activate or comment why.
         generateEditor = true
     }
     

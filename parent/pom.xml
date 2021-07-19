@@ -19,7 +19,7 @@
 		<xtend.version>2.25.0</xtend.version>
 		<!-- Xtend plugin does not take source version from TPD  -->
 		<maven.compiler.source>11</maven.compiler.source>
-		<project.build.sourceEncoding>windows-1252</project.build.sourceEncoding> <!-- TODO turn into UTF-8 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- TODO turn into UTF-8 -->
 
 		<!-- supported: warning|error|ignore -->
 		<git.dirty>error</git.dirty>
