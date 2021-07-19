@@ -144,6 +144,10 @@
 			<requirement name="org.eclipse.wst.web_ui.feature.feature.group" />
 			<requirement name="org.eclipse.wst.xml_ui.feature.feature.group" />
 			<requirement name="org.eclipse.pde.api.tools.ee.feature.feature.group" />
+			
+	<!-- YAML: used by github -->
+			<repository url="https://de-jcup.github.io/update-site-eclipse-yaml-editor/update-site" />
+			<requirement name="de.jcup.yamleditor.feature.group" />
 			      
 		</setupTask>
 		

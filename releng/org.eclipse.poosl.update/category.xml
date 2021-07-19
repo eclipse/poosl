@@ -6,6 +6,8 @@
    <feature id="org.eclipse.poosl.legacysupport.feature">
       <category name="org.eclipse.poosl"/>
    </feature>
+   <!-- no category, this feature must not be selected directly -->
+   <feature id="org.eclipse.poosl.dependencies.feature"/>
    <category-def name="org.eclipse.poosl" label="Poosl"/>
    
    <!-- 
