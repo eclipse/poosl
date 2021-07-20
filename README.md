@@ -3,36 +3,44 @@
 
 # Brief introduction to the POOSL project
 
+## How to get
 
+Update site and help are accessible on <a 
+href="https://obeonetwork.github.io/POOSL" >gh-pages site</a>.
 
-_TODO: update content according OBEO fittings_ 
+Products are available in github release. __TBD__
 
-## Introduction
+## How to build
 
 Here you will find a introduction how to setup, build and run tests.
 
-## Preconditions
+### Preconditions
 
 We assume the following tools/frameworks are available
 
-- jdk 11
-- maven 3.5+
+- JDK 11 (JDK 16 or above is not supported for now)
+- Maven 3.5+
 - rcptt ide: is the IDE for RCPTT development 
 - rcptt runner 2.5.0: is the command line tool for RCPTT 
 - ${POOSL_SRC} stands for the poosl source location on your host
 
-## Build
+### Command
 To build the poosl project via maven you have to go run the following commands.
 
 ```
-cd ${POOSL_SRC}/org.eclipse.poosl.parent
+cd ${POOSL_SRC}
 mvn clean verify
 ```
 
-Executing this command will build the plugins, features and updatesite.
-The artifacts are available at __${POOSL_SRC}/org.eclipse.poosl.update.target__
+Executing this command will build the plugins, features, updatesite and products.
 
-## RCPTT Tests
+### Locations
+Update site is available at __${POOSL_SRC}/releng/org.eclipse.poosl.update/target/repository__
+Product are available at __${POOSL_SRC}/releng/org.eclipse.poosl.product/target/products__
+
+
+
+## RCPTT Tests __Currently under refactoring__
 
 We have different ways of running the tests
 

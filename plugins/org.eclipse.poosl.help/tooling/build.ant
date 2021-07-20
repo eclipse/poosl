@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     19 juil. 2021 21:55:21                                                        
+
+     project     Generation of index with Table of Content
+     description For testing purpose only or unitary execution. 
+				 Use xlts in Maven directly to automated.
+                   
+     Obeo                                                                
+     ====================================================================== -->
+<project name="HelpGenerator" default="index-gen" basedir="..">
+
+    <target name="index-gen">
+    	<xslt style="tooling/toc.xls" 
+	    		in="help/poosl_help_toc.xml"
+	    		out="html/index.html"
+	    		force="true" >
+    		<!-- 
+    		By default, HTML generation has an historical bug:
+    		META tag is not closed.
+    		 -->
+    		<outputproperty name="method" value="xml"/>
+
+    		<outputproperty name="indent" value="yes"/>
+    	</xslt>
+    </target>
+
+</project>

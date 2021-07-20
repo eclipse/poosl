@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<xsl:stylesheet version="1.0" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+>
+
+<xsl:template match="/toc">
+  <html lang="en" style="height:100%">
+  	<head>
+  	<!-- Meta here ? -->
+  	    <META http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>POOSL Help</title>
+	</head>
+	<body style="height:90%"> 
+	<!-- when height is 100%, browsers have scrollbar issues.  -->
+	  <h1>POOSL Help</h1>
+
+	    <div style="float:left;width:25%;height:100%;overflow:auto;white-space:nowrap" >
+		  <ul>
+		  <xsl:apply-templates />
+		  </ul>
+		</div>
+		<div style="height:100%">
+		  <iframe name="content" 
+			 	src="creating_models/creating_models.html" 
+			 	style="border:none;height:100%;width:75%"
+			 	title="content" /> 
+		</div>
+
+	</body>
+  </html>
+</xsl:template>
+
+
+<xsl:template match="topic">
+
+  <li><xsl:choose>
+    <xsl:when test="string-length(@href)>0">
+    <a target="content"><xsl:attribute 
+  name="href"><!-- remove 'html/' segment --><xsl:value-of select="substring(@href, 6)"/></xsl:attribute
+  ><xsl:value-of select="@label" /></a>
+    </xsl:when>
+    <xsl:otherwise><xsl:value-of select="@label" /></xsl:otherwise>
+  </xsl:choose>
+  <xsl:if test="count(child::topic) > 0" ><ul>
+  	<xsl:apply-templates />
+  </ul></xsl:if>
+  </li>
+</xsl:template>
+
+</xsl:stylesheet> 
