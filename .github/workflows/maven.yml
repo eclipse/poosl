@@ -24,7 +24,7 @@ jobs:
       - name: Build with Maven 
         run: mvn --batch-mode --update-snapshots verify
       - name: Deploy 🚀
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
