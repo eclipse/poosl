@@ -3,7 +3,7 @@
 
 # Brief introduction to the POOSL project
 
-## How to get
+## How to get the product
 
 Update site and help are accessible on <a 
 href="https://obeonetwork.github.io/POOSL" >gh-pages site</a>.
@@ -40,7 +40,7 @@ Product are available at __${POOSL_SRC}/releng/org.eclipse.poosl.product/target/
 
 
 
-## RCPTT Tests __Currently under refactoring__
+## Automatic Tests via RCPTT (__Currently under refactoring__)
 
 We have different ways of running the tests
 

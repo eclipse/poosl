@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.rcptt.launching.configuration">
+    <intAttribute key="aut-ecl-port" value="5378"/>
+    <intAttribute key="aut-tesla-port" value="7926"/>
+    <stringAttribute key="bad_container_name" value="\org.eclipse.poosl.rcptt.shared\launch"/>
+    <stringAttribute key="target-configuration" value="Launch Runtime POOSL"/>
+</launchConfiguration>
