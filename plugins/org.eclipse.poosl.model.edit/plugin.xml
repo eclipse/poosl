@@ -7,6 +7,19 @@
 <plugin>
 
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated NOT poosl -->
+      <factory
+            uri="http://poosl.eclipse.org/poosl/3.0.0"
+            class="org.eclipse.poosl.provider.PooslItemProviderAdapterFactoryCustom"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated poosl -->
       <factory
             uri="http://poosl.eclipse.org/poosl/3.0.0"

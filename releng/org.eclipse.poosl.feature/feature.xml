@@ -170,13 +170,6 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.poosl.xtext.util"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.poosl.help"
          download-size="0"
          install-size="0"

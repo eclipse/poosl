@@ -4,11 +4,17 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
+/**
+ * Wrapping of poosl.genmodel generation.
+ * MWE2 provides gap-generation pattern.
+ */
 Workflow {
 	
-	bean = StandaloneSetup {
-		scanClassPath = true 
-		platformUri = ".."
+	bean = org.eclipse.poosl.xtext.LocalStandaloneSetup {
+		scanClassPath = true
+		// This folder will be scan to find '.project' files and '*.jar'
+		// It is a little bit brutal.
+		platformUri = "../../plugins"
 		uriMap = {
 			from = "platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore"
 			to = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore"
@@ -22,10 +28,12 @@ Workflow {
     
     component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
         genModel = "platform:/resource/org.eclipse.poosl.model/model/poosl.genmodel"
-        srcPath = "platform:/resource/org.eclipse.poosl.model/src"
+		srcPath = "platform:/resource/org.eclipse.poosl.model/src-gen"
 		
 		generateEdit = true
+		// Explicit extra srcPath to detect Custom classes.
 		srcPath = "platform:/resource/org.eclipse.poosl.model.edit/src"
+		srcPath = "platform:/resource/org.eclipse.poosl.model.edit/src-gen"
 		
         generateEditor = true
     }

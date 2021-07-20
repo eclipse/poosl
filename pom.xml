@@ -29,7 +29,6 @@
 		<module>plugins/org.eclipse.poosl.xtext</module>
 		<module>plugins/org.eclipse.poosl.xtext.ide</module>
 		<module>plugins/org.eclipse.poosl.xtext.ui</module>
-		<module>plugins/org.eclipse.poosl.xtext.util</module>
 		<module>plugins/org.eclipse.poosl.generatedxmlclasses</module>
 		<module>plugins/org.eclipse.poosl.pooslproject</module>
 		<module>plugins/org.eclipse.poosl.rotalumisclient</module>

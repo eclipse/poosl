@@ -11,16 +11,18 @@ Require-Bundle: org.eclipse.xtext,
   org.eclipse.emf.codegen.ecore,
   org.eclipse.emf.mwe.utils,
   org.eclipse.emf.mwe2.launch,
- org.eclipse.xtext.util,
- org.eclipse.emf.ecore,
- org.eclipse.emf.common,
- org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
- org.eclipse.xtext.common.types,
- org.eclipse.poosl.model,
- org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
- org.eclipse.core.runtime;bundle-version="3.10.0",
- org.eclipse.ui.workbench,
- org.eclipse.xtext.builder
+  org.eclipse.xtext.util,
+  org.eclipse.emf.ecore,
+  org.eclipse.emf.common,
+  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
+  org.eclipse.xtext.common.types,
+  org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+  org.eclipse.core.runtime;bundle-version="3.10.0",
+  org.eclipse.ui.workbench,
+  org.eclipse.xtext.builder,
+  org.eclipse.poosl.model,
+  org.eclipse.poosl.model.edit,
+  org.eclipse.poosl.model.editor
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.eclipse.poosl.xtext.util
 Import-Package: org.apache.log4j;version="1.2.15"

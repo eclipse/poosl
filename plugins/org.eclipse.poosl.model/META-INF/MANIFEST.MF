@@ -12,11 +12,5 @@ Export-Package: org.eclipse.poosl,
  org.eclipse.poosl.impl,
  org.eclipse.poosl.util
 Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.core.runtime,
- org.eclipse.emf.mwe2.launch;resolution:=optional,
- org.eclipse.emf.mwe2.lib;resolution:=optional,
- org.eclipse.xtext.xbase;resolution:=optional,
- org.eclipse.emf.codegen.ecore;resolution:=optional
+ org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
-Import-Package: org.apache.commons.logging,
- org.apache.log4j
