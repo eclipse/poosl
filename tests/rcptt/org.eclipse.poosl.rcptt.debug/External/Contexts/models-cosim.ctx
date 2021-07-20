@@ -5,8 +5,8 @@ Element-Name: models-cosim
 Element-Type: context
 Element-Version: 2.0
 Id: _0f97UCMJEemTAfKT-AIu5w
-Runtime-Version: 2.4.0.201808022310
-Save-Time: 1/28/19 3:34 PM
+Runtime-Version: 2.5.1.M3
+Save-Time: 7/20/21, 10:42 AM
 
 ------=_contents/nl.esi.poosl.examples/models-cosim/SocketExample/socket_example.poosl-631c4516-ae9c-35dc-aed4-62d9e2639d2f
 Content-Type: q7/binary
@@ -221,15 +221,6 @@ iuXlKqksSLVFFuPlKsgvKonPK81NSi2ytTQwM+Dl4uUCAFBLBwiPqdreLwAAADcAAABQSwECFAAUAAgI
 CAAAACEAj6na3i8AAAA3AAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAA
 AAEAAQA/AAAAbgAAAAAA
 ------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini-b5c3698b-e48a-322a-be7c-c61ebecaccdf--
-------=_contents/nl.esi.poosl.examples/.settings/nl.esi.poosl.xtext.Poosl.prefs-30f7a8f5-8ec7-3e45-9517-226658bcf6e2
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.examples/.settings/nl.esi.poosl.xtext.Poosl.prefs
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB1zMEJgFAMBNG7YCtB
-C/jFaFxhISQhQev3IB69Do+BGrMhWThRcEXLjWqGj3WeMqJN6GrXgWW4CZryVuNeWxH9sZ/HA1BLBwhn
-lrR/RAAAAGMAAABQSwECFAAUAAgICAAAACEAZ5a0f0QAAABjAAAACAAJAAAAAAAAAAAAAAAAAAAALmNv
-bnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAgwAAAAAA
-------=_contents/nl.esi.poosl.examples/.settings/nl.esi.poosl.xtext.Poosl.prefs-30f7a8f5-8ec7-3e45-9517-226658bcf6e2--
 ------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
 Content-Type: q7/binary
 Entry-Name: .q7.content
@@ -239,11 +230,11 @@ XhuQJrYqBaGOSTAhTaJovKHg3BSDY1v2Dcn+/W7z0TWhDS1vtnXOvecc2ze+qHIdvYEPypoZO+HHLAIj
 barMcsYKzCbf2MX5l6PY+iUHqZULwL10iFxixUvrX4NLJEz/dKu5NQgVRlWupuu6p6u61MmEKZ3P2DOi
 mwpRliW3+ZJTcfFwe91BPui1pneYFb3GCcKJNY5FJskJndsUdJhIG1TOIpXO2ONx9v3sfn57cwX54jL7
 tZhcXhdfS0ZGoyiWKwcG6w1tnbcvIDG01YzmEBR31gZaVUnuNATWggmeKdq3WN5yKdMKZIHJk6ZT9AUw
-scGwOqWgOk4AREp/o+agak9BtQqb/67XzkMWxnuJttmu7r2segJ6sJ8kZ27d303IQGUH4cqoUU27mbXD
-w7kLW7OxGs99WxrvjN5Z+Qp41VzziNtQ4x7b93C45wF/X+c9rXRlhU7Q+r7OQafEy2f1Bly68aeyM6AD
-Q/uhAnr1VCCkw/x6pLlW9OlGpTeQPcMZcGXD3etitjh87xE8TbdRuQ3kc3JDw/2s3C3/fHASi26uNUNP
-/J96sTh02BPpH1BLBwgLmyR3uwEAAEkGAABQSwECFAAUAAgICAAAACEAC5skd7sBAABJBgAACAAJAAAA
-AAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAA+gEAAAAA
+scGwOqWgOk4AREp/o+ag6mY8jYxqlTj/Xa+dhyyMNxRtx10SeoH1VPRgP0nT3Lq/m5CB1A7ClVGjmnYz
+a4eHcxe2ZmM1Hv62NN4ZvbPyFfCquesRt6HGPbaP4nDPA/6+znta6coKnaD1fZ2DTomXz+oNuHTjT2Vn
+QAeG9kMF9OqpQEiH+fVIc63o541KbyB7hjPgyoa718VscfjeI3gacaNyG8jn5IaG+1m5W/754CQW3XBr
+Jp/4P/picejEJ9I/UEsHCOnQVS+9AQAATgYAAFBLAQIUABQACAgIAAAAIQDp0FUvvQEAAE4GAAAIAAkA
+AAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAD8AQAAAAA=
 ------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
 ------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl-8fcd4c1b-47fe-33fe-8ebd-c3041d36545f
 Content-Type: q7/binary
@@ -298,3 +289,12 @@ H/vYVTssNNZ35zsh3KBcbIKqwySvTSFeHg0VsnGGzmmIT5y1bmH9Hs8Z3RcLB/I7LkydfvQt2+KDP/7C
 kvwFUEsHCDdu41lYAwAADgsAAFBLAQIUABQACAgIAAAAIQA3buNZWAMAAA4LAAAIAAkAAAAAAAAAAAAA
 AAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAACXAwAAAAA=
 ------=_contents/nl.esi.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl-168253d6-3283-35cf-a540-671e6ab382b5--
+------=_contents/nl.esi.poosl.examples/.settings/org.eclipse.poosl.xtext.Poosl.prefs-41549df5-5d3b-34b0-9fe4-ba382f6d55b9
+Content-Type: q7/binary
+Entry-Name: contents/nl.esi.poosl.examples/.settings/org.eclipse.poosl.xtext.Poosl.prefs
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB1zMEJgFAMBNG7YCtB
+C/jFaFxhISQhQev3IB69Do+BGrMhWThRcEXLjWqGj3WeMqJN6GrXgWW4CZryVuNeWxH9sZ/HA1BLBwhn
+lrR/RAAAAGMAAABQSwECFAAUAAgICAAAACEAZ5a0f0QAAABjAAAACAAJAAAAAAAAAAAAAAAAAAAALmNv
+bnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAgwAAAAAA
+------=_contents/nl.esi.poosl.examples/.settings/org.eclipse.poosl.xtext.Poosl.prefs-41549df5-5d3b-34b0-9fe4-ba382f6d55b9--

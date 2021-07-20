@@ -3,7 +3,7 @@
 	<name>org.eclipse.poosl.rcptt.run</name>
 	<comment></comment>
 	<projects>
-		<project>org.eclipse.poosl.rcptt</project>
+		<project>org.eclipse.poosl.rcptt.shared</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
