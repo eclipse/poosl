@@ -5,6 +5,7 @@ import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
 Workflow {
+	
 	bean = StandaloneSetup {
 		scanClassPath = true 
 		platformUri = ".."
@@ -18,10 +19,11 @@ Workflow {
 		}
 		registerGenModelFile = "platform:/resource/org.eclipse.poosl.model/model/poosl.genmodel"
 	}
+    
     component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
         genModel = "platform:/resource/org.eclipse.poosl.model/model/poosl.genmodel"
         srcPath = "platform:/resource/org.eclipse.poosl.model/src"
-		generateEdit = false // TODO: Suspicious ! Activate or comment why.
+		generateEdit = true // TODO: Suspicious ! Activate or comment why.
         generateEditor = true
     }
     
