@@ -9,9 +9,9 @@ import org.eclipse.xtext.ui.generator.*
 import java.util.*
 
 var projectName = "org.eclipse.poosl.xtext"
-var fileExtensions = "poosl"
-var rootPath = ".."
-var testRootPath = "../../tests"
+
+// var rootPath = ".."
+// var testRootPath = "../../tests"
 
 /* 
  * OBEO: TODO move out of business plugin
@@ -19,6 +19,10 @@ var testRootPath = "../../tests"
  * It is a generation descriptor.
  * It should be in 'org.eclipse.poosl.xtext.util'
  * and the module should be in 'tools' named 'org.eclipse.poosl.xtext.tool'.
+ */
+/**
+ * Generation of org.eclipse.poosl.xtext.** plugin.
+ * Requires GenerateModels.mwe2 to be perform as it uses org.eclipse.poosl.model/model/poosl.genmodel.
  */
 Workflow {
 	component = XtextGenerator {
@@ -31,14 +35,15 @@ Workflow {
 			project = StandardProjectConfig {
 
 				baseName = projectName
-				rootPath = rootPath
+				rootPath = "../../plugins"
 				runtimeTest = {
 					enabled = true
 					// By default, generation uses parent rootPath
-					root = "${testRootPath}/${projectName}.tests"
+					root = "../../tests/${projectName}.tests"
 				}
 				eclipsePlugin = {
 					enabled = true
+					// root = "../../tests/${projectName}.tests"
 				}
 				createEclipseMetaData = true
 			}
@@ -51,10 +56,11 @@ Workflow {
 		}
 		language = XtextGeneratorLanguage {
 			name = "${projectName}.Poosl"
-			fileExtensions = fileExtensions
+			fileExtensions = "poosl"
 			referencedResource = "platform:/resource/org.eclipse.poosl.model/model/poosl.genmodel"
 
-			grammarUri = "platform:/resource/${projectName}/src/org/eclipse/poosl/xtext/Poosl.xtext"// Java API to access grammar elements (required by several other fragments)
+			// Java API to access grammar elements (required by several other fragments)
+			grammarUri = "platform:/resource/${projectName}/src/org/eclipse/poosl/xtext/Poosl.xtext" 
 
 			fragment = grammarAccess.GrammarAccessFragment2 auto-inject {}
 
