@@ -8,6 +8,20 @@ with requirements
 
 environment JavaSE-11
 
+// Following dependencies are already required by runtime or tests
+// But they are also required for tools.
+
+//location eclipse_core "https://download.eclipse.org/releases/2020-09/" {	
+//	org.junit
+//	org.eclipse.jdt.feature.group // already dragged by runtime
+//	org.eclipse.pde.feature.group
+//	org.eclipse.xtext.sdk.feature.group
+//	org.eclipse.emf.mwe2.launcher.feature.group
+//	org.eclipse.xpand.feature.group
+//	org.eclipse.xtend.feature.group
+//}
+
+
 location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-09/" {
 	
 	// Includes Odesign edit, Sirius interpreter view and Odesign reload 
@@ -16,6 +30,8 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020
 	org.eclipse.sirius.specifier.properties.feature.feature.group
 	org.eclipse.sirius.diagram.elk.sdk.feature.feature.group	
 }
+
+
 
 //location modit "http://update.obeo.fr/livraisonsClients/Huawei/modit_v0.6_p2/" {
 //	org.mypsycho.emf.modit_feature.feature.group

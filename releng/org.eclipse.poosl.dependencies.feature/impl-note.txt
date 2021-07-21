@@ -1,0 +1,15 @@
+Notes on dependencies:
+
+* egit dependencies to jgit are not transitive. There is jgit global feature (pgm is not complete).
+
+* org.eclipse.eef plugin is only available through SDK feature.
+
+* org.eclipse.acceleo feature 
+ - is available on Eclipse release but not Sirius/update.
+ - includes 
+   + doc (useless)
+   + ide.ui requiring 'pde'; This is really annoying.
+ => no feature found for runtime with only query, model, parser.
+
+* org.eclipse.sirius.diagram.ui is available through org.eclipse.sirius.runtime.ide.ui.
+  Doesn't '.sirius.runtime.ide.ui' contain to many elements ?

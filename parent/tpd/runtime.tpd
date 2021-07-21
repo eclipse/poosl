@@ -22,21 +22,23 @@ location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 	javax.activation
 	
 	org.eclipse.xtext.redist.feature.group
-	
+	org.eclipse.jdt.feature.group // required by xtext.redist for type indexing.
+	    
     org.eclipse.emf.feature.group
+    // This drags org.eclipse.emf.codegen and then JDT.
     org.eclipse.emf.transaction.feature.group
+	org.eclipse.emf.query.feature.group
+	org.eclipse.emf.validation.feature.group
+    
     
     org.eclipse.acceleo.feature.group
     org.eclipse.acceleo.query.feature.group
     org.eclipse.ocl.feature.group
     // (Required by %.acceleo.common)
     
-    // For product:  
     
 	// no need to declare SDK as 'source' properties if equivalent (only no examples)
 	// maybe epp.package is enough ?
-	org.eclipse.emf.query.feature.group
-	org.eclipse.emf.validation.feature.group
 	org.eclipse.gef.feature.group
 	
     org.eclipse.egit.feature.group // egit is required in runtime as:
@@ -45,32 +47,6 @@ location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
     // - team detect egit but cannot deal with it.
     org.eclipse.platform.ide
     org.eclipse.equinox.executable.feature.group // implicit dependency of product.
-    
-    /*
-	org.eclipse.core.runtime.feature.feature.group
-	// +-> equinox.app
-	org.eclipse.equinox.core.feature.feature.group
-	org.eclipse.equinox.executable.feature.group	
-	
-	
-
-	org.eclipse.emf.feature.group
-	org.eclipse.emf.transaction.feature.group
-	// +-> emf, emf.edit, emf.edit.ui
-     */
-    
-    // TODO move to test following when MWE2 moved to tool:
-    org.eclipse.jdt.feature.group // required by MWE2 used in a final plugin.
-    // (Used in Xtext)
-	org.eclipse.emf.mwe2.launcher.feature.group
-	// +-> org.eclipse.emf.mwe2.launcher
-	
-	// Required by xtext.generator:
-	org.eclipse.xpand.feature.group
-	org.eclipse.xtend.feature.group
-	org.eclipse.xtend.ui.feature.group // required by xtend but not included.
-	org.eclipse.emf.mwe.core.feature.feature.group // required by xtend
-	org.eclipse.emf.mwe.ui.feature.feature.group
 
 }
 

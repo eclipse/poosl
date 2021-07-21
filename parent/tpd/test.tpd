@@ -22,7 +22,7 @@ location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 
 	org.junit
 	
-	org.eclipse.jdt.feature.group
+	org.eclipse.jdt.feature.group // already dragged by runtime
 	// +-> org.eclipse.jdt.junit
 	
 	org.eclipse.pde.feature.group
