@@ -23,5 +23,6 @@ Require-Bundle: org.eclipse.equinox.registry,
  org.eclipse.core.resources,
  org.eclipse.ui.ide,
  org.eclipse.poosl.generatedxmlclasses,
- jakarta.xml.bind-api
+ jakarta.xml.bind-api,
+ org.apache.commons.cli
 Automatic-Module-Name: org.eclipse.poosl.legacysupport
