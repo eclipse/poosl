@@ -13,10 +13,15 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle.
  */
 public class Activator extends AbstractUIPlugin {
-    // The plug-in ID
+    
+    /** The plug-in ID. */
     public static final String PLUGIN_ID = "org.eclipse.poosl.sirius"; //$NON-NLS-1$
 
+    /** Message updater. */
     public static final GraphicalDebugUpdater MESSAGEUPDATER = getUpdaterInstance();
+    
+    /** Path to Design file. */
+    public static final String DESIGN_PATH = PLUGIN_ID + "/description/poosl.odesign"; //$NON-NLS-1$
 
     // The shared instance
     private static Activator plugin;
@@ -47,7 +52,7 @@ public class Activator extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
         viewpoints = new HashSet<>();
-        viewpoints.addAll(ViewpointRegistry.getInstance().registerFromPlugin(PLUGIN_ID + "/description/poosl.odesign")); //$NON-NLS-1$
+        viewpoints.addAll(ViewpointRegistry.getInstance().registerFromPlugin(DESIGN_PATH));
     }
 
     /*
