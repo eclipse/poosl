@@ -32,3 +32,12 @@ jobs:
           branch: gh-pages
           folder: releng/org.eclipse.poosl.update/target/repository
           target-folder: nightly
+
+                    
+# To deploy product on tag, use following action:
+# 
+# https://github.com/marketplace/actions/upload-files-to-a-github-release
+# Activation condition:
+### if: ${{ startsWith(github.ref, 'refs/tags/') }}
+
+# Question: how to generate body based on release content
