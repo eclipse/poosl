@@ -1,9 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.eclipse.poosl.xtext.tooling
+Automatic-Module-Name: org.eclipse.poosl.xtext.tooling
+Bundle-Version: 4.2.2.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
-Bundle-Version: 4.2.2.qualifier
-Bundle-SymbolicName: org.eclipse.poosl.xtext.tooling
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
   org.apache.commons.logging;visibility:=reexport,
@@ -23,6 +25,4 @@ Require-Bundle: org.eclipse.xtext,
   org.eclipse.poosl.model,
   org.eclipse.poosl.model.edit,
   org.eclipse.poosl.model.editor
-Bundle-RequiredExecutionEnvironment: JavaSE-11
-Automatic-Module-Name: org.eclipse.poosl.xtext.util
 Import-Package: org.apache.log4j;version="1.2.15"
