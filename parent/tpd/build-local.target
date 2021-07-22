@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Poosl SDK" sequenceNumber="1626885765">
+<target name="Poosl Build" sequenceNumber="1626854346">
   <locations>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.platform.sdk" version="4.17.0.I20200902-1800"/>
       <repository id="eclipse_update" location="http://download.eclipse.org/eclipse/updates/4.17"/>
     </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.persistence.moxy.feature.group" version="2.7.7.v20200504-69f2c2b80d"/>
       <repository id="eclipselink" location="https://download.eclipse.org/rt/eclipselink/updates/"/>
     </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.elk.algorithms.feature.feature.group" version="0.0.0"/>
       <repository id="ELK" location="https://download.eclipse.org/elk/updates/releases/0.7.0/"/>
     </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.201912021457"/>
-      <repository id="rotalumis" location="http://www.es.ele.tue.nl/rotalumis/repository/release/"/>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.3.0"/>
+      <repository id="rotalumis" location="file:/C:/dev/projects.ws/poosl/nl.tue.rotalumis.p2-fix/"/>
     </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.junit" version="4.13.0.v20200204-1500"/>
       <unit id="org.eclipse.jdt.feature.group" version="3.18.500.v20200902-1800"/>
       <unit id="org.eclipse.pde.feature.group" version="3.14.500.v20200902-1800"/>
@@ -44,19 +44,7 @@
       <unit id="org.eclipse.equinox.executable.feature.group" version="3.8.900.v20200819-0940"/>
       <repository id="eclipse_core" location="https://download.eclipse.org/releases/2020-09/"/>
     </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.xpect.sdk.feature.group" version="0.2.0.201706301756"/>
-      <repository id="xpect-tests" location="http://www.xpect-tests.org/updatesite/nightly/local"/>
-    </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.jdt.junit.runners.feature.feature.group" version="0.1.0.201411181552"/>
-      <repository id="jdt-runner" location="http://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite/"/>
-    </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.sirius.specifier.ide.ui.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.specifier.ide.ui.aql.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.specifier.properties.feature.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.diagram.elk.sdk.feature.feature.group" version="6.4.0.202011190936"/>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.sirius.tests.support.feature.group" version="6.4.0.202011190936"/>
       <unit id="org.eclipse.sirius.runtime.feature.group" version="6.4.0.202011190936"/>
       <unit id="org.eclipse.sirius.runtime.aql.feature.group" version="6.4.0.202011190936"/>
@@ -71,10 +59,13 @@
       <unit id="org.eclipse.sirius.diagram.elk.feature.feature.group" version="6.4.0.202011190936"/>
       <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-09/"/>
     </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.mypsycho.emf.modit_feature.feature.group" version="0.7.0.v20210721-1449"/>
-      <unit id="org.mypsycho.emf.modit.sirius_feature.feature.group" version="0.7.0.v20210721-1449"/>
-      <repository id="modit" location="https://mypsycho.github.io/ModIt/releases/v0.7/"/>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.xpect.sdk.feature.group" version="0.2.0.201706301756"/>
+      <repository id="xpect-tests" location="http://www.xpect-tests.org/updatesite/nightly/local"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.jdt.junit.runners.feature.feature.group" version="0.1.0.201411181552"/>
+      <repository id="jdt-runner" location="http://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite/"/>
     </location>
   </locations>
   <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>

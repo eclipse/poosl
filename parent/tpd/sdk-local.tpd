@@ -1,0 +1,16 @@
+target "Poosl SDK (local)" 
+
+//
+// Target platform for development
+// 
+
+// It includes source of dependencies and plugins to launch a client runtime
+
+with requirements, source
+// Source is transitive to all included elements.
+
+environment JavaSE-11
+
+include "build-local.tpd"
+
+include "dev.tpd" 

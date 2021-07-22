@@ -32,9 +32,8 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020
 }
 
 
-
-//location modit "http://update.obeo.fr/livraisonsClients/Huawei/modit_v0.6_p2/" {
-//	org.mypsycho.emf.modit_feature.feature.group
-//	org.mypsycho.emf.modit.sirius_feature.feature.group
-//}
+location modit "https://mypsycho.github.io/ModIt/releases/v0.7/" {
+	org.mypsycho.emf.modit_feature.feature.group
+	org.mypsycho.emf.modit.sirius_feature.feature.group
+}
 
