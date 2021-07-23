@@ -8,10 +8,11 @@ with requirements
 
 environment JavaSE-11
 
+
+location eclipse_core "https://download.eclipse.org/releases/2020-03/" {	
 // Following dependencies are already required by runtime or tests
 // But they are also required for tools.
 
-//location eclipse_core "https://download.eclipse.org/releases/2020-09/" {	
 //	org.junit
 //	org.eclipse.jdt.feature.group // already dragged by runtime
 //	org.eclipse.pde.feature.group
@@ -19,10 +20,25 @@ environment JavaSE-11
 //	org.eclipse.emf.mwe2.launcher.feature.group
 //	org.eclipse.xpand.feature.group
 //	org.eclipse.xtend.feature.group
-//}
+	
+	org.eclipse.rcptt.core.feature.group
+	org.eclipse.rcptt.ecl.core.feature.group
+	// org.eclipse.rcptt.launching.feature.group // not for target
+	org.eclipse.rcptt.module.nebula.feature.group
+	org.eclipse.rcptt.platform.feature.group 
+	// Includes:
+	//  +-> updates,launching,watson  features 
+	
+	org.eclipse.rcptt.updates.feature.group
+	// Include
+	//  org.eclipse.rcptt.external.dependencies feature
+	
+	org.eclipse.rcptt.watson.feature.group
+	
+}
 
 
-location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-09/" {
+location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-03/" {
 	
 	// Includes Odesign edit, Sirius interpreter view and Odesign reload 
 	org.eclipse.sirius.specifier.ide.ui.feature.group

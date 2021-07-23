@@ -94,8 +94,8 @@
 		</setupTask>
 		<setupTask xsi:type="setup.p2:P2Task" id="eclipse" label="Eclipse basic">
 			
-			<repository url="http://download.eclipse.org/releases/2020-09" />
-			<repository url="http://download.eclipse.org/technology/epp/packages/2020-09" />
+			<repository url="http://download.eclipse.org/releases/2020-03" />
+			<repository url="http://download.eclipse.org/technology/epp/packages/2020-03" />
 
 			<requirement name="epp.package.modeling" versionRange="[4.6.0,5.0.0)" />
 			<requirement name="org.eclipse.platform.feature.group" versionRange="[4.6.0,5.0.0)" />
@@ -151,9 +151,15 @@
 			      
 		</setupTask>
 		
+		<!-- Devstyle (provide Darkest theme) -->
+		<setupTask xsi:type="setup.p2:P2Task" id="ui" label="IDE themes">
+			<repository url="http://www.genuitec.com/updates/devstyle/ci/" />
+			<requirement name="com.genuitec.eclipse.theming.core.feature.feature.group" />
+		</setupTask>
+		
 				
 		<setupTask xsi:type="setup.p2:P2Task" id="ui" label="UI designer">
-			<repository url="http://download.eclipse.org/releases/2020-09" />
+			<repository url="http://download.eclipse.org/releases/2020-03" />
 			
       		<!-- javafx -->
 			<repository url="http://download.eclipse.org/efxclipse/updates-released/3.6.0/site/" />
@@ -175,12 +181,11 @@
 			<requirement name="org.eclipse.wb.swt.feature.feature.group" />
 			<requirement name="org.eclipse.wb.xwt.feature.feature.group" />
 			
-			
 		</setupTask>
 		
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="langs" label="Language">
-			<repository url="http://download.eclipse.org/releases/2020-09" />
+			<repository url="http://download.eclipse.org/releases/2020-03" />
 		
 			 <!-- Java language -->
 			<requirement name="org.eclipse.xtend.sdk.feature.group" />
@@ -200,15 +205,17 @@
 			<requirement name="org.eclipse.equinox.weaving.sdk.feature.group" />
 			<requirement name="org.jetbrains.kotlin.feature.feature.group" />
 		 	-->
-		 
-			<!-- Devstyle (Darkest theme) -->
-			<repository url="http://www.genuitec.com/updates/devstyle/ci/" />
-			<requirement name="com.genuitec.eclipse.theming.core.feature.feature.group" />
 		
 		</setupTask>
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="quality" label="Quality tool">
-			<repository url="http://download.eclipse.org/releases/2020-09" />
+		<!-- 
+		/!\
+		Warning RCPTT of Eclipse 2020-06 is broken 
+		https://bugs.eclipse.org/bugs/show_bug.cgi?id=575002
+		-->
+		
+			<repository url="http://download.eclipse.org/releases/2020-03" />
 			<requirement name="org.eclipse.eclemma.feature.feature.group" /> <!-- from eclipse dist -->
 			<requirement name="org.eclipse.rcptt.platform.feature.group" />
 			
@@ -244,7 +251,7 @@
 		</setupTask>
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="modeling" label="Eclipse Modeling">
-			<repository url="http://download.eclipse.org/releases/2020-09" />
+			<repository url="http://download.eclipse.org/releases/2020-03" />
 			<requirement name="org.eclipse.emf.sdk.feature.group" />
 			<requirement name="org.eclipse.emf.query.sdk.feature.group" />
 			<requirement name="org.eclipse.emf.transaction.sdk.feature.group" />
@@ -257,7 +264,7 @@
 			<requirement name="org.eclipse.emf.ecore.xcore.sdk.feature.group" />
 			
 			<!-- We do not reference Sirius from Eclipse release as source in not available -->
-			<repository url="https://download.eclipse.org/sirius/updates/releases/6.4.2/2020-09" />
+			<repository url="https://download.eclipse.org/sirius/updates/releases/6.4.2/2020-03" />
 			<requirement name="org.eclipse.sirius.specifier.ide.ui.source.feature.group" />
 			<requirement name="org.eclipse.acceleo.ui.interpreter.feature.group" />
 			<requirement name="org.eclipse.eef.ext.widgets.reference.feature.source.feature.group" />
@@ -265,8 +272,9 @@
 			<requirement name="org.eclipse.sirius.runtime.ide.xtext.source.feature.group" />
 			
 		</setupTask>
+		
 		<setupTask xsi:type="setup.p2:P2Task" id="modeling-extras" label="Eclipse Modeling extra">
-			<repository url="http://download.eclipse.org/releases/2020-09" />
+			<repository url="http://download.eclipse.org/releases/2020-03" />
 
 			<requirement name="org.eclipse.xtext.sdk.feature.group" />
 			<requirement name="org.eclipse.ocl.all.sdk.feature.group" />
@@ -281,38 +289,14 @@ https://www.eclipse.org/modeling/mdt/downloads/
 			
 			<repository url="http://www.xpect-tests.org/updatesite/nightly/" />
 			<requirement name="org.xpect.sdk.feature.group" />
-			
-			
-			
+
 			<!-- Tools for ELK debugging -->
 			<repository url="https://download.eclipse.org/elk/updates/releases/0.7.0/" />
 			<requirement name="org.eclipse.elk.sdk.feature.feature.group" />
 			
 		</setupTask>
     
-    
-    <!-- I prefer text compare
-    <setupTask
-        xsi:type="setup.p2:P2Task"
-        id="modeling"
-        label="Eclipse Modeling compare">
-        
-      <repository
-          url="http://download.eclipse.org/releases/2020-09"/>
-      <repository
-          url="http://download.eclipse.org/technology/epp/packages/2020-09"/>
 
-      <requirement
-          name="org.eclipse.emf.compare.diagram.sirius.source.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.compare.egit.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.compare.ide.ui.source.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.compare.source.feature.group"/>
-
-    </setupTask>
-     -->
 
 	</version>
 	<description><![CDATA[

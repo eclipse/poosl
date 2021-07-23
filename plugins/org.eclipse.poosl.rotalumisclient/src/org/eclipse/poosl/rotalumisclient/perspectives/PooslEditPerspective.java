@@ -50,20 +50,24 @@ public class PooslEditPerspective implements IPerspectiveFactory {
     }
 
     private void addPerspectiveShortcuts() {
-        factory.addPerspectiveShortcut(PooslConstants.ID_POOSL_DEBUG_PERSPECTIVE);
+        // XXX: Circular dependency !
+        // This must be declared in perspective extension
+        factory.addPerspectiveShortcut(PooslConstants.ID_POOSL_DEBUG_PERSPECTIVE); 
     }
 
     private void addNewWizardShortcuts() {
+        // XXX: Circular dependency !
+        // This must be declared in perspective extension
         factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.projectwizard"); // NON-NLS-1 //$NON-NLS-1$
         factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewizard"); // NON-NLS-1 //$NON-NLS-1$
         factory.addNewWizardShortcut("org.eclipse.poosl.pooslproject.filewithsystemwizard"); // NON-NLS-1 //$NON-NLS-1$
     }
 
     private void addViewShortcuts() {
-        factory.addShowViewShortcut(PooslConstants.ID_POOSL_DEBUGVIEW);
-        factory.addShowViewShortcut(PooslConstants.ID_POOSL_PETVIEW);
-        factory.addShowViewShortcut(PooslConstants.ID_POOSL_VARIABLESVIEW);
-        factory.addShowViewShortcut(PooslConstants.ID_POOSL_SEQUENCEDIAGRAMVIEW);
+        factory.addShowViewShortcut(PooslConstants.ID_POOSL_DEBUGVIEW); // from rotalumisclient
+        factory.addShowViewShortcut(PooslConstants.ID_POOSL_PETVIEW); // from rotalumisclient
+        factory.addShowViewShortcut(PooslConstants.ID_POOSL_VARIABLESVIEW); // from rotalumisclient
+        factory.addShowViewShortcut(PooslConstants.ID_POOSL_SEQUENCEDIAGRAMVIEW); // from rotalumisclient
         factory.addShowViewShortcut(IPageLayout.ID_PROBLEM_VIEW);
         factory.addShowViewShortcut(IPageLayout.ID_OUTLINE);
     }

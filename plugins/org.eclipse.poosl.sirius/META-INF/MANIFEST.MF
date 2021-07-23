@@ -41,7 +41,7 @@ Require-Bundle: org.eclipse.core.resources,
  org.eclipse.emf.ecore,
  org.eclipse.core.filesystem,
  org.eclipse.poosl.xtext.ui,
- javax.annotation;bundle-version="1.3.5"
+ javax.annotation
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.apache.commons.lang,

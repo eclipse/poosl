@@ -1,4 +1,4 @@
-target "Poosl Build  (local)" 
+target "Poosl Build (local)" 
 
 // all classpath to compile and run tests
 
@@ -8,8 +8,7 @@ environment JavaSE-11
 
 // Do not modify, do not include sources (useless)
 
-location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
-	// org.eclipse.equinox.sdk.feature.group  // TODO This to broad !!
+location eclipse_core "https://download.eclipse.org/releases/2020-03/" {
 	
 	 org.eclipse.platform.feature.group
 	// +-> org.eclipse.ui.ide.application (default of sure-fire)
@@ -27,18 +26,16 @@ location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
     org.eclipse.emf.transaction.feature.group
 	org.eclipse.emf.query.feature.group
 	org.eclipse.emf.validation.feature.group
-    
+
+	// no need to declare SDK as 'source' properties if equivalent (only no examples)
+	// maybe epp.package is enough ?
+	org.eclipse.gef.feature.group
     
     org.eclipse.acceleo.feature.group
     org.eclipse.acceleo.query.feature.group
     org.eclipse.ocl.feature.group
     // (Required by %.acceleo.common)
-    
-    
-	// no need to declare SDK as 'source' properties if equivalent (only no examples)
-	// maybe epp.package is enough ?
-	org.eclipse.gef.feature.group
-	
+
     org.eclipse.egit.feature.group // egit is required in runtime as:
     // - test projects are committed,
     // - eclipse.platform includes team,
@@ -48,9 +45,11 @@ location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 
 }
 
-location eclipse_update "http://download.eclipse.org/eclipse/updates/4.17" {
+
+location eclipse_update "http://download.eclipse.org/eclipse/updates/4.15" {
 	org.eclipse.platform.sdk // required ??
 }
+
 
 location eclipselink "https://download.eclipse.org/rt/eclipselink/updates/" {
    org.eclipse.persistence.moxy.feature.group // 2.7.7 ??
@@ -58,19 +57,20 @@ location eclipselink "https://download.eclipse.org/rt/eclipselink/updates/" {
    // +-> jakarta.xml.bind-api
 }
 
-//// was 
-//location sirius "http://download.eclipse.org/sirius/updates/releases/6.3.4/2020-09/" {
-//	org.eclipse.sirius.runtime.ide.eef.feature.group OK
-//	org.eclipse.sirius.runtime.ide.ui.feature.group OK
-//	org.eclipse.sirius.runtime.ide.xtext.feature.group 
-//	org.eclipse.sirius.specifier.ide.ui.feature.group OK
-//	org.eclipse.sirius.runtime.acceleo.feature.group
-//}
+location gmf_runtime "http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/" {
+	org.eclipse.gmf.feature.group [1.13.0,1.14.0)
+	// Requires by EEF, not available in eclipse 2020-03
+}
+
+location gmf_notation "http://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/" {
+   org.eclipse.gmf.runtime.notation.feature.group 1.10
+   // Requires by sirius runtime, not available in eclipse 2020-03
+}
 
 
 // Those feature could be find in eclipse release 
 // but eclipse release does not contain sources required in SDK
-location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-09/" {
+location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-03/" {
 	
 	org.eclipse.sirius.runtime.feature.group
 	org.eclipse.sirius.runtime.aql.feature.group
@@ -93,7 +93,6 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.4.0/2020
 	org.eclipse.sirius.interpreter.feature.feature.group
 	
 	org.eclipse.sirius.diagram.elk.feature.feature.group
-
 }
 
 
@@ -106,8 +105,9 @@ location ELK "https://download.eclipse.org/elk/updates/releases/0.7.0/" {
     // org.eclipse.elk.graphviz.feature.feature.group
 }
 
+
 // Feature to run simulations.
-location rotalumis "file:/C:/dev/projects.ws/poosl/nl.tue.rotalumis.p2-fix/" { // ou integration ?
+location rotalumis "file:/C:/dev/etc/mirrors.p2/rotalumis/" { // ou integration ?
 	nl.tue.rotalumis.sdk.feature.group
 }
 
