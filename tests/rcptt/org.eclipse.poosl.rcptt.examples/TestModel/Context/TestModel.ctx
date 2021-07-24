@@ -5,21 +5,21 @@ Element-Name: TestModel
 Element-Type: context
 Element-Version: 2.0
 Id: _fdA5gHM0EeWNsvS2ZqaobA
-Runtime-Version: 2.0.1.201508250612
-Save-Time: 3/1/16 12:51 PM
+Runtime-Version: 2.5.1.M3
+Save-Time: 7/24/21, 9:53 AM
 
-------=_contents/nl.esi.poosl.testmodels/benchmark/07. dataLoop10000000simplecall/dataLoop10000000simplecall.poosl-d2cc1960-865f-3f89-a066-edabba1281eb
+------=_contents/org.eclipse.poosl.testmodels/benchmark/08. dataLoop10000000complexcall/dataLoop10000000complexcall.poosl-342520d2-2807-3f35-963a-852c599f451d
 Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/07. dataLoop10000000simplecall/dataLoop10000000simplecall.poosl
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/08. dataLoop10000000complexcall/dataLoop10000000complexcall.poosl
 
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAClj0FOw0AMRdfxKf6y
-VRFttglZZMkxzMRKLCUz0YxLgyh3x6giHAAvbMv6tt8/n5GiYM0pSCmQTcLVNI5gDGyMOaUVN7UJ9eUR
-UJPMpimWJ2iEcJj+Zi6D6SIFW9NtpxrF2GSRaM9Ev1/CzJ57HI60pmyFKvKNwqMUonfOym+zt9XW4DWa
-jJJJoxpVfizb4eh7i9iUhkL7BHfoLsedUH1q011ax6hbqm6TzgJ92V0MyfWdnur2AfrPgjR8EVH5KO7W
-aZ0rhh8PfYPeecPEMcrs/r4BUEsHCATleNDTAAAAcgEAAFBLAQIUABQACAgIAAAAIQAE5XjQ0wAAAHIB
-AAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAASAQAAAAA=
-
-------=_contents/nl.esi.poosl.testmodels/benchmark/07. dataLoop10000000simplecall/dataLoop10000000simplecall.poosl-d2cc1960-865f-3f89-a066-edabba1281eb--
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC1kD1uwzAMRmfzFN8Y
+o0F+VqcZ4q1Tz6DIrK3CoQKJqV00vXvpGEl7gWoSRPHxe1yvEYVxTtFzzuCR/UWDtHBonDr0MZ4xBO2w
+3cwHQTk5DVHyEkHAzne/b/YNGk6cMVb70epBkdUpn1h0iaHjxFaq4aSZq4n1kmQambl/WxHd5vreWZza
+AilLk/F6fGev9OFScMeeMxV0Yu1ik2miVKipmEk3DBHdlWbSAYuSzjHp3Jmzaw3ylzdOjIlFhQVOuiit
+4z7j8YIrQoUXUW454UoovkK13+zMVnhY1OWOiqELPSM8PzbWRGvah6ft7rGU/7shNt+mnz+zLd2ELLr4
+SfBQ4WBKvnMi3Jv8D1BLBwhI8RkDCgEAAPwBAABQSwECFAAUAAgICAAAACEASPEZAwoBAAD8AQAACAAJ
+AAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAASQEAAAAA
+------=_contents/org.eclipse.poosl.testmodels/benchmark/08. dataLoop10000000complexcall/dataLoop10000000complexcall.poosl-342520d2-2807-3f35-963a-852c599f451d--
 ------=_contents/nl.esi.poosl.examples/models-complex/TeenageHomework/TeenageHomework.poosl-100600c4-5090-3dd3-8253-afc27c570f53
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-complex/TeenageHomework/TeenageHomework.poosl
@@ -83,9 +83,20 @@ fCakhjOeYDWMoqHISSXT2oHBOHWU3xfIs39QSwcID2aSim8DAACZCAAAUEsBAhQAFAAICAgAAAAhAA9m
 kopvAwAAmQgAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAA
 AK4DAAAAAA==
 ------=_contents/nl.esi.poosl.examples/libraries/SocketProcess.poosl-c7f759cf-3641-3e00-9226-41f06ce2cfa8--
-------=_contents/nl.esi.poosl.testmodels/test_api.poosl-d8c327a4-7250-3978-ab02-4c9ab30a271f
+------=_contents/org.eclipse.poosl.testmodels/benchmark/05. dataLoop10000000/dataLoop10000000.poosl-935d542a-98b6-3ce8-a4b3-b1d8968f3b6b
 Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/test_api.poosl
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/05. dataLoop10000000/dataLoop10000000.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAA9jkFuwkAMRdfxKf4S
+VKnANi2LLDmGO7ESS5NxNDbQqvTuHYTACy+evv3+bgcrgrVaEnfIt6RzaJnAGDkY2WzFVWPGYf8YaEjl
+UCv+TvQ8TJnbHrDZ0mo1nDpaGudJnOjCVfkry51q0aDOg2tsti29SMw2Or0IbtAepxIyScWN0P1qf9x/
+UHedNQv089VktBY96tsBNv4Rkf94yNIU7VlJd93QY2iSNHMpkluVf1BLBwhOi37yrQAAAPAAAABQSwEC
+FAAUAAgICAAAACEATot+8q0AAADwAAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQ
+SwUGAAAAAAEAAQA/AAAA7AAAAAAA
+------=_contents/org.eclipse.poosl.testmodels/benchmark/05. dataLoop10000000/dataLoop10000000.poosl-935d542a-98b6-3ce8-a4b3-b1d8968f3b6b--
+------=_contents/org.eclipse.poosl.testmodels/test_api.poosl-e663919f-f384-3ca8-bc5b-7b622a2f4173
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/test_api.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9nG1v2zgSgD+nQP/D
 2B/OdmM7fk3aXl+QTZNtgFt0se2hC2wOB9qmG10VyZXkJD3kx98MSckSTVJUWtwWGyfSzMOZITkkJZpH
@@ -157,101 +168,7 @@ soskvumKg73U0T48FIX+tX+y178g/RpsVF9ki1ieKFbYR9NDiT+4C7Jr+Mt4zFgFopkVJ6roWsWKszpG
 e5rxG2pmaUbHuZFvepNF10ytWMgVd+U1OhMu4iFS/gdQSwcIPBWtBqUPAACEUwAAUEsBAhQAFAAICAgA
 AAAhADwVrQalDwAAhFMAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAAB
 AAEAPwAAAOQPAAAAAA==
-------=_contents/nl.esi.poosl.testmodels/test_api.poosl-d8c327a4-7250-3978-ab02-4c9ab30a271f--
-------=_contents/nl.esi.poosl.testmodels/.project-a24d5df8-3529-36b8-bd1a-9a76bce4672f
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/.project
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACFkL0OAiEQhGtNfIfL
-9YJ2Fngmaixt1Ac4YXNi+AvLmXt8AVFzNnZ8w+zOANsMWlUP8CitWddLsqgrMNwKabp1fTkf5qt608ym
-zHl7Bx72gNxLF6I7qhNmWg2NUQRQEmctKhIAg7YCFDKab5ONW63BhIbR9ympZSdmoCO69lKJkwOeqOAu
-jrZGZKUkW98R4Eo6BDIEGALpJcFb60G8eJsGwX+rxMnWd33qgIXpWGD0N60o7zoxOvQeivsF/5scsy8V
-yf689rvo8/zxBz8BUEsHCADMPyfNAAAAnwEAAFBLAQIUABQACAgIAAAAIQAAzD8nzQAAAJ8BAAAIAAkA
-AAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAAMAQAAAAA=
-------=_contents/nl.esi.poosl.testmodels/.project-a24d5df8-3529-36b8-bd1a-9a76bce4672f--
-------=_contents/nl.esi.poosl.testmodels/benchmark/08. dataLoop10000000complexcall/dataLoop10000000complexcall.poosl-85fcb61d-5990-3165-9af3-0d16c62cc89e
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/08. dataLoop10000000complexcall/dataLoop10000000complexcall.poosl
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC1kD1uwzAMRmfzFN8Y
-o0F+VqcZ4q1Tz6DIrK3CoQKJqV00vXvpGEl7gWoSRPHxe1yvEYVxTtFzzuCR/UWDtHBonDr0MZ4xBO2w
-3cwHQTk5DVHyEkHAzne/b/YNGk6cMVb70epBkdUpn1h0iaHjxFaq4aSZq4n1kmQambl/WxHd5vreWZza
-AilLk/F6fGev9OFScMeeMxV0Yu1ik2miVKipmEk3DBHdlWbSAYuSzjHp3Jmzaw3ylzdOjIlFhQVOuiit
-4z7j8YIrQoUXUW454UoovkK13+zMVnhY1OWOiqELPSM8PzbWRGvah6ft7rGU/7shNt+mnz+zLd2ELLr4
-SfBQ4WBKvnMi3Jv8D1BLBwhI8RkDCgEAAPwBAABQSwECFAAUAAgICAAAACEASPEZAwoBAAD8AQAACAAJ
-AAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAASQEAAAAA
-------=_contents/nl.esi.poosl.testmodels/benchmark/08. dataLoop10000000complexcall/dataLoop10000000complexcall.poosl-85fcb61d-5990-3165-9af3-0d16c62cc89e--
-------=_contents/nl.esi.poosl.testmodels/benchmark/04. trainWithData100000/trainWithData100000.poosl-033bbbc6-3bf9-3fa6-83bf-aafb51eecc8b
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/04. trainWithData100000/trainWithData100000.poosl
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAClV01vnEAMPYdfMb0l
-apTswAwfm0Olqpeeu/eKsDRB3YWIYStVbf97h48Am+e1D8mJ9djPz882Q+7vld5s1K7Nq/rxVO8PpVPN
-j8U2/VJd7n66W9U1T2X3XLbqpWx/NO2xqp9UtvF/qmiOx1NdFXlXNbV7UFWtyrx4Prer3KmvdVc+eYTK
-qbYsyupXuVd5vVdV55Q7FUXpXDOcvuTOlfu7IHhpm96qioO3qC89LXV9E7w0beeCq6oOjv40fyqHH5+6
-5mdZX09ZboJfeVvlj4f+MKjqqguuXJe33fWNRzj6Wpq9C2aL+lttXwn+XaFVN29Z7LweZyRuVXPqOCa3
-wZX3+PA+eqravup3zu9hjV591L1hQXpD/ltzaotyRf+c+ntprhG0T14cTq7zjCfl3vTP4/nIuuixd8l2
-ULbH2NnVc7p6DpfnYRa240gMZ9HKz6ye49WzXp5HIbaTIN5SPOd1XR48lT87e+fLuFW7+M7z/ad6k77r
-Gz1696eT2Q7mnVmZkik4XYKjyWQWUzIGxqvAcPKKFq9w9NIrr3T0GgqfHCmZPw8bfUns3uN7vNmOvoM2
-gykNwaQNmEINphi9sgyxED4hTAifYkJENxHGWTBF6JWAxaI0EZoMBmo0ZcghjjFwQ6Qk8NErIxqEGQmZ
-UdQIoRKUyxBMESvFGon+oCnDOIO9jtArRCxikNCkieFC4UOiHGIEET5BrxCbYXBIUoIXMUooIJKPMGGI
-UJYYJGw1xmms0KIpJTYDxSLyESuMpgzFCon2oHyEyMRMon6WkBSxEmRqMDAjXi1IVRNVI1VLLAZiRcQa
-EOtD7A/Ra6JsJGEJeGLTifcIipMQ64kmg/ApcUthjZZYYgy0mDFeBc6fE0HgfvvL+Qj373hDLzfn+HtG
-m47nNPTxfFfSx/Pg0scRfzy/Geljnvh8/dPH89v6QjTPm08d82XFPPg8vBeI86JonprQD14ULajCHxu+
-roQnnvKDlvKqZHxhlgc3PLWErzvl69Z87lhgzoMbnlombK8wasKg8uD8eyUWVBHaLTATOiIsCU9N84VF
-PPNYWBJ+Gua76kLdfGFWiBYKEyaRZ57wssz/R13oN0/N8tFGuGaEN49wkfCi8sxiIZhPHfOqZHzukH/p
-aWFY+BeP5nNHQj+FHeLBE+GjYyNUxh/zW5AKt7MgizDHfGEJTzwR1puP5nfE8mUbPrURiPOqpLwqqfBN
-w9fFB1s+tRGIC+srfC/x7YK6lv8X/gNQSwcIaaxKwagDAACYFwAAUEsBAhQAFAAICAgAAAAhAGmsSsGo
-AwAAmBcAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAOcD
-AAAAAA==
-------=_contents/nl.esi.poosl.testmodels/benchmark/04. trainWithData100000/trainWithData100000.poosl-033bbbc6-3bf9-3fa6-83bf-aafb51eecc8b--
-------=_contents/nl.esi.poosl.testmodels/libraries/SocketProcess.poosl-6a68dda1-e606-3282-9958-dd03f659e9d7
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/libraries/SocketProcess.poosl
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB9VU1vEzEQPWel/Q/D
-LUFpA+JWVCFUQESUUpEiDoiDd3fStfDake1NFNQfz4zt/WpDL5usZ/zm+fnN7GoF72/XsEfrpNHw5vwV
-nMHGlH/Qw601JToH17Kwwh4p8LEpsKqwgs3ReWwcrLU2e+Fpq4PiCHc33/Isz1YvE0SHIB0IKI3eo5ao
-S4RdCpRK0HNrLBSykhZLhhIKlNR4VghHpVwkU5qmabUsQzEo0B8QNaE6qe8VgkNLZwChq2GtVFTMn+cZ
-vIS1B9F609D2Uih1BG8lOvAG0HlRKOnqSFFHDgGJopbCxiK9HkEZ50cpAXiVZ9OzTA4+z7MZiXFHOK0G
-X+NjXXQiCY2pcEmn8CFrL1SLXJ5ftGgQzDb8r5kCrScW9Pf8WfQky3/QtVTn4Qizz4R7w3UuYEPK6Ptl
-ZL6eEIS53EKfSpeqjWeQxTLg7oz1YPR/ia4nfJ6CTYFoM92Kp0smSHaI1OQBopYYuUT9lpJvWjKmJfJr
-7fEe7YJuhZZdkr+WwYIMbTTdPcfegvS82LLHGN6hrhidL56MiHLPbw0JKe7JKYZ5M0L046h4nnVJsdz3
-sJlQ0/IzW190ufOo+iLJ/jXtJA0KDMyeAXm3oXgHkGd7YSUZumPzQ1do1ZHPosn8e4RKeJHM6mvhuRf3
-skI3Qh+7PBZKI+EiWSzPpJb0nK3pZ76YL1gEX5vKdb6RXgol/ybYSY8kyGHrrIe/BI2HeXxbvOXITlj4
-grh7r4g7p4cLuor8wrsVO06MhT9q11pMJ+PKbDUFlcHoVo+WPCQ8tQO1B4HTPGgV1TjU5LSDINqkVLTb
-rvWwtaZ5KvuEEBenGuIIrwPjJ8HErJ8zBN6NlZOSL8mlNCOjPyvpUgSrVH10eIb/lcST7sMo9zeHxh12
-yQ3GBTVHOsVFWeLOf6JTzodGWlB8tlp134FNaFrehcrheHeqdmfmXZklTGAGkKvQtLx5K4NMjq7lqh/q
-8WpJmfHNBhNH9UaZ9Kk4G30rqJ8f9cZkjDsa29zVLun5VMwJhamgV72a4P7IXeAtCp5ObMvvKKrekT+t
-TIcgP8JB+hoe3dNkOgyD5bTDeuyHa/oU9mP5YcyvFo6DvyGmXHZSW9rLS4HudMzwcuyrrsDAjMfIQCt9
-fCakhjOeYDWMoqHISSXT2oHBOHWU3xfIs39QSwcID2aSim8DAACZCAAAUEsBAhQAFAAICAgAAAAhAA9m
-kopvAwAAmQgAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAA
-AK4DAAAAAA==
-------=_contents/nl.esi.poosl.testmodels/libraries/SocketProcess.poosl-6a68dda1-e606-3282-9958-dd03f659e9d7--
-------=_contents/nl.esi.poosl.testmodels/double_socket_example.poosl-231ff192-49ac-35b6-98eb-7e4d0f09a8bf
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/double_socket_example.poosl
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADFVlFv2zgMfo4B/wfG
-T06XJt3jWgx7KIZbgNtQXAbcs+IwsTBZ8klK1922/36kJCd22vQ63HULgiCmRH7UR/Kz5nP4WEsHeCea
-ViGssTHaeSs8OqjNZ2itqdA5eqqEhso0zU7LipbhVgpy82i1UOBM9Qk9rWuNlZcUY5Zn8zksPDRmjcqB
-gGslUXsQek0PS7S3aMHXwg+iNgQmtgTH4QnxNAIBBIjz//PDMWXTGuuhUHJlhZXo5suAfROpmLXGOFU8
-F/r8DN6mYlSRsFQCOJtn3d9KCfqNhJaTjPN1eTYi31BN+voawWj1BXjtCqRn487hGjbGgkO9lnobamGx
-QnnLT3vuTSwNJtJnDD26oUBZtyWC/RFcKWYyP+SYR8833d5y6S2BTaYxxPvk6Q2sMOR1Gn28pOXOP89u
-qThipfbJ0GFMA1vUSO1Lh+SDpic+nY3rck2cyY1E61J6vACXyf+3zj2TWvpstKDfckIcN+hrs05YbJVC
-yb8xMj2oS0y4cySHhPAaNH4uj2AmV7xh4fkJ034CuEFL6TdUQqTahSMYDWYT0A7zwkbC9qYyKp2mFwq+
-wYJPttAet2inQNTRYyQQvjEwdXBKBWko71EUcgupl+EMacMZvLwIn9nFBIRL8ct4Fgr59g6rHUVM1IT0
-eOlQxOIdKmXGsADRwHvpKGko4AXn21J2PhX56r95DZruUTMlfV1j9SmkbNG1pGDIC3ITWBu/hgh+GpYM
-xbjgAJodR1oqQGuNLYs/reEGTGHHRWgKEsWAcFT80Ub+BGlxUX4P0pIfaUvUZ87oJ4hL0oj8V8lL/hR9
-+R311tfdDLYWN/Iuvr9CsEgoIziCIh5i+x9mqQMKjjHYfjTzoDZ5XzV+TG/yoeD0QXh6Hx4cR/GeVX5C
-e/cLKXW787CxpCH3KkBphNVOoKad95B4+wOxjljeR1zsi3IIdzJQT0GBLZ1upkOlpP7aofP3BSak8ZDy
-9BaCYNKVq4qdFObo0DZQep66wcXMIfUa3YmS8KRWmYT0egfnykdOD5Ve94y7VQxQ9tvlxcsp9GKc99cm
-NEf3xJ6HJvWFJTb9QD6Ptfsx+ST1fFjwn+Q06OFn08+Ppj1XxD7dR79QTg24FiuqUxoGevFHO82z80JX
-nXiku6+juh4UZDA4acfl/lYXHZfH194gsex/PbgdDqIkp0sYXFzLd8b5D6LBoAjKVELVZCmmwIR/2DUr
-4piWXl28uvhX9OXgBZLQo/EJ6PRufAw1aekJsjocRti/papaUI7KZaOviZkZx59Cn5Fggu85b4quaVM/
-8f2mfwBQSwcI4Pn5M9IDAAAcDQAAUEsBAhQAFAAICAgAAAAhAOD5+TPSAwAAHA0AAAgACQAAAAAAAAAA
-AAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAABEEAAAAAA==
-------=_contents/nl.esi.poosl.testmodels/double_socket_example.poosl-231ff192-49ac-35b6-98eb-7e4d0f09a8bf--
+------=_contents/org.eclipse.poosl.testmodels/test_api.poosl-e663919f-f384-3ca8-bc5b-7b622a2f4173--
 ------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/system.poosl-89967929-4287-341a-bc9d-36c5e54698be
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-complex/MPSoC/system.poosl
@@ -273,9 +190,9 @@ sFBUbUC7NJMkT2m8ILrYFqNR2A0GJIo3w4nXbwyGJEbThxG1+Z/vZeFwfPCLie1BAwwWxhxrk7QiT9W1
 uAgAAFBLAQIUABQACAgIAAAAIQC9Y1rXDQMAALgIAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVU
 BQABAAAAAFBLBQYAAAAAAQABAD8AAABMAwAAAAA=
 ------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/system.poosl-89967929-4287-341a-bc9d-36c5e54698be--
-------=_contents/nl.esi.poosl.testmodels/benchmark/02. assignment100000000/assign10000000.poosl-c7665afe-6732-3695-a5c0-f6aa4778932a
+------=_contents/org.eclipse.poosl.testmodels/benchmark/02. assignment100000000/assign10000000.poosl-831b09a3-d00c-3f16-93a1-ec73e81c0399
 Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/02. assignment100000000/assign10000000.poosl
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/02. assignment100000000/assign10000000.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtlk1OwzAQhdf1KbwE
 CbV1/l3EoktOUZnUaiulKYoNKrfHgSrfACt2FSKL6Hk88+bNeGJlsdBmudTPw6n1Ifhwp71r99qfffsS
@@ -287,7 +204,7 @@ AkhlOa5WNAREVtE6pApOwhtxeqIs6m7ImosmCllUBazhskTl6Gqw1sCCvBVkVrSTvJmYJWgFATBHTSVO
 Ca5aDDm0Rpy+sIo2iXkX3aXKCpiJD0J8RzjUVJGLUwOKesSkiIZAkJEh3Ro4o6GBoroU3+5d3/su/bW8
 A1BLBwgQdcNzsgEAACwJAABQSwECFAAUAAgICAAAACEAEHXDc7IBAAAsCQAACAAJAAAAAAAAAAAAAAAA
 AAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAA8QEAAAAA
-------=_contents/nl.esi.poosl.testmodels/benchmark/02. assignment100000000/assign10000000.poosl-c7665afe-6732-3695-a5c0-f6aa4778932a--
+------=_contents/org.eclipse.poosl.testmodels/benchmark/02. assignment100000000/assign10000000.poosl-831b09a3-d00c-3f16-93a1-ec73e81c0399--
 ------=_contents/nl.esi.poosl.examples/models-complex/PARProtocol/par.poosl-994706b2-75c3-3d50-8dc8-9957f3f9a1fd
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-complex/PARProtocol/par.poosl
@@ -399,65 +316,30 @@ LeMT8fvcfMcn8BRdT+4u8QTfhv8BUEsHCNmqzbjCBQAALhcAAFBLAQIUABQACAgIAAAAIQDZqs24wgUA
 AC4XAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAABBgAA
 AAA=
 ------=_contents/nl.esi.poosl.examples/models-complex/Wireless/wireless.poosl-5d478550-1476-3cc2-8cf4-87d46efeda80--
-------=_contents/nl.esi.poosl.testmodels/Super_PrintString_Chars/libraries/extended_json.poosl-813a8fbc-288f-33f7-af87-39ae5cc63803
+------=_contents/org.eclipse.poosl.testmodels/double_socket_example.poosl-021dd589-dd50-3b33-939c-04869d8a7496
 Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/Super_PrintString_Chars/libraries/extended_json.poosl
+Entry-Name: contents/org.eclipse.poosl.testmodels/double_socket_example.poosl
 
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtW21v2zgS/uwA+Q+s
-PlysjZM0u+3dwWkLZPsC9Lqpi2T37kPTAxSbbpjKkk+S22Y3/e835PBVImXZcbrB4RbB1hbJmeG88Zmh
-zGbzvKhItL9/gH9Zuk9Ltj/P8xI+fU1m85SWBym7KJKCwaeyKhbjalHQEudE21vbWwc/kJOEZWSSVAkZ
-p0lZkmlekH+cjd7iM7OK/HCwvWXNe/m1otmETvjc7a3PwCS5AI7kdUVnQzK6uKLjakDe5SyraDEkr+Gf
-j7TY3prR6jKflMD7gJzgZ8ETiO0tSlqUUq5TCmyzklSXFOXJBUmSlOTdaHT2S00+IV5SIl+iBNje6hWC
-jhBLUn6eZ59pUZUkEYT3xvlsnlQMpPdTrnI5U4nAWY2RSH+kWMXA1NVJj03JiDx4SjKW8m1k8AifsXI0
-/fV6TvvRWVWw7GMUi3EYGcJs+qXPCeBQTDSnmEzZkYfGcVEk114SYqQDhZNk7l0Pz2urYTGSAAp9tbmY
-/IV/MfR+zvOUJhnQzPKqMSpdITB6SpNUDnFJa6NGMYHletst47hdMarMUtJ0SmhR5EU/epcUCXgpLYRf
-or+S80jq4Twi+RTdgZWcCDjH5yRlE9tFohgV1YN/uOdxpY6OjDdydtIbgVtJfb6I2+T+Xve9OV/SPxsS
-5SINz7PYEDl7QA7j5aEVEEJwhU+V/K5YG1bgD2KjlrvjA3sZTUtKomyRppHwpUYSeM2z1oxmFbDPs8ZO
-B2RUsI8s0+mkvnVy82v+icL488ukuJFuekakl97wz57Y055A/G4A9tZeICQCH9BpcrYoK3JBwYCano4Q
-zjmKNkA6y7M9OptX13UmMr8K/xKq4Q8Fq/ITm//rklX0bJ6MQYexlEmtePIUxCvZ71THgFAdp3RGkqov
-58UqX+DoU7JT7egV2rchV1IxEXctyD7RrHbJT00dvM4wai4wVwgSZAJKGVd0AgLwA4GrR7rOOehxF0jv
-kghU9OWSgXNyhTVDROumJ61vNgOrD2PuojvFjnQHZ/BHHFx4B3/CQbrj8ZXvsRnL1EaoR3xIhJVtoqnH
-RNMEZrXZ6NHybQka389ISZuR0jYjld7BRytY8E626jXhY68JM48JIYmtGWTwf3BInni/n/X8UdTFemmb
-ge5uK8sDrK/Ns4vy6+97+F0+SMoxY6/hUPpKnpFHfxMgpDHyhDz+e2wQSM8c1m8XswtaQMr2ekbk84wa
-ZtRnvpPF7R3i2YzfvWzet7CRuHIDXP5o4SLQ5+o8pow0/2CA865DPeVUEgBtxqE0Rg6fww4MnKu9mCJJ
-TXintlWnEsJ+DgAakLevhkSCcY6G3r7Sh7XcAzwB32xggphM8uWQwLg/qYXDeVV/UNQfTOsPMhX13jg8
-RPCIO8DkPGUcXueTpkLtIAprCmcYbCk1p0rXGtQckBd0zGZJ2tDq3WBMlO4OkWYbgyDetACkBfQtix3K
-iag9y4ZHSn8OGEEh+KMoOiJhd3O8ba/mOrs7sV1fW/NQPMkECrgxkFWJWLmFTP9+r9OxfDeh0/2g6LCT
-oxUiRwfOJiqCfSuJW0Y2RUG72OHD91AuX1X3rZLfF/33wAJ4XjXzKa15+EvLw1tV1WrO5Wqphw4O8JEH
-yrAePUT7D+kepAjcpzskBhTCaomyngcc7DpC1AlHcVeiQQI4IBCCpLWGq7Ur9d44m/S2Hn51O3mSEyvl
-WafVriCZnFDlBqEoa+m1vHEXXshHl4CwDOdqEDYtcg7sSsZ7QYTjL3mo2C0lAGQEHq0L06Tla2050SV7
-4euJszEXRnTU6w1xCVkJFSCjJPDZ7ouv3wlf2q/mXE2Tmn/rv1CCAky329UnQyJg9VCLe8PEIzBYkVQ5
-wJw39HpA/smrLIWFJMg5zfPKPvWFDceAggoDDvonFhA6abSYl6Gg9oYrF9dgFKQoOXNfA3ZyE/wRGv9B
-n4EQL/JMByxsj09m5BO9VomXPwv3mE0S4hsUC61N4vc2xIfhZ2+Y80NX5Z9q7nwuHJrvFTyXrq4XJYBg
-a9Kf3HfodgGGYyc/CN0IN0B1ibpbKQyfuzcbuMN/zxfVsSA3ELxsyG24ceU51W0fKbpGiGKhYd+QMH5w
-VF4ABMeViurVty28WKdlXHWDuDrW9SgqjiSTz0k2pv6ypf06oHSvA7xR3qVdLrXXu7Hj3N6ELoS8JWSj
-4aywx/9ubdmKqUTtZckvGljfLOCyBqKwQtX1rmYzpIf/8RNEJwDj4UjO2rNIN7Ie06CvDTA29wfbG+60
-KlMBDg2qdBbpsqOGzLjalToQrR33tBSwaccZOAi0FWg24es3d7HlXvKRyAxKV05FoMFZGOs3U0fjWq+R
-I1a/4CM3pwIevMRrObATnzRaVGpCV2yg1olS/48IHpHeKf8iVmYAmsyhfcqDSDzHiNBrJRQ+FUeuJW6s
-Qf0wis0sbBXb81R2ORUcNRv05hqXaGAqF5RULOKCi7xAdJOuvvBbpG5aR3AYFGxCBRocDoXDcqhGs5K/
-WeAYg6WsukZDKL82zSgHj1lpfAVk9saBLW+WgBYHoL1iBSSXuR+mCWmXgREjRwesRTpgFUPQh0XWgCL3
-BYmEgYhTO60KQ/ylTm/5DXyH5nRLwZTw/XtLJaEZXSyJb+uVSy+hXPptlXIJOZuCCb/bVdLxkMgrjqEl
-K6+UdDPYaRarLvCxFWDHnjd0blf+oBQ6tjKiyFo10OERki4oP/RACIEsTGpl/ETEp3UYdswPQ9bo7gUh
-PlsN4CM9b1j5hkxY+UbtsPKNLwH4TNovDO9bN4drG+BelEmIB26L7o1LdoX00kXx7bv/w/mNwvkPt4Pz
-9r1mN/SLnihjGG8RuZD8at0DgPWEgbgL9UBo+4r0fmHkD382Rsa4WQcY26eBDxU7iPd9JF3PWPMZvyzT
-fofJm3+0ErWZLH2pDjXFBJG2mzCXcwMqFpGlMNdNYqhpBzU0Fn/wQF2h0uFwdxnQhZDcDR21Qpf6+4AY
-ZW/qrIVDNZ9juxAO213rHnTJOStNKqhOKJ0/z+fXxBOr1tmrjubQGcxJ1mIZCMAZJM/keMkJA+tDVkBD
-dTCFtGgI+gzI1V2YwEY7wL67Fa60Dbi2XNRztZr28cUbof6rldRu5ZWG3jm9NO2gd5zYd/Cko3xUtg+O
-mUMACKxQ4fzJUMwRW+OwZnXTuimDwUKXOCGrdAkGCQJDeN9jHxO4T8nDptPXPPoy+cyrY7zcgo+YnkGs
-r3S8qGijuLYL6D5zbh+C79XfqopvRJ8hbgvyhL/sJ8R4ZjSwOdZFkn2k/Dbk/eGA35YYJdfuTD7YcrWH
-SsfC5f4Fi1u2+JoBHYuWVQIGM2qHiJGpl4UKk+bpsa4bB8plFGA1D+YO7AnW1TnwzhVwyejHhMdz+yml
-gD2LtRjPyJW2OB5TVyAaU7BPkLkyb3nYRr/qVIY3oVyb1cvFhW6SLLG7msqdLw0Zv47mNucMrYlFybZi
-WkstWdIVZDmjoPbJhoURLnr7HNvKfb00m/qD53ZayPKsGUUiRHaB4R5UTM/qBY3DfDHjdDXzMsh9xrJF
-CeQ2og1ZEtRej5ZhnsY6ExyaRtwVh6FpA/9DNJuaro4/j4hJBN4S4M7budim8vZz1U+8ZENXXUB+l46u
-5G1aulbxrlLhWR286SvSjby/2966lfIE70Xs3+vJQuwsXrFnaDcsOjYNVSvjHnUInZfkHlpAyXlH7sfH
-f7Vau3ZD6fzc7ihZXS7eF/R2utpepwwJrRpSnjcnI6ejZVs04jh+2/+qoyt2bdl5eNlOeNlOaFV0EAUX
-HQRZXbQIeBHF+BLCi5zib2JLSmc8Hr/kxSeyv78fIDptITpdl2jWQjQL7q9oWVUEV1Utq6rgqkVzlUwo
-v2VsnE8ooeU4mcOqkv5nQbMxxf0v5vxH/3RSe7PR+/Jj/XVHrsm3lE54JrlgFc9MQo+gT0kXZGKlkdiz
-p9o7qCoKPL+3UX/b7kto4UBpdH5XE2G78epasA8dauE0WsPuD7A9mTfcG7ZawfXepeoIn/MfPLAaKvB2
-fVV3Afu89WRhd2PPz1WuUC7nLozC6yKzrj5s0XD03uXuy+GCPDaAUf4LUEsHCMWEHs7vCwAA/UIAAFBL
-AQIUABQACAgIAAAAIQDFhB7O7wsAAP1CAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAA
-AFBLBQYAAAAAAQABAD8AAAAuDAAAAAA=
-------=_contents/nl.esi.poosl.testmodels/Super_PrintString_Chars/libraries/extended_json.poosl-813a8fbc-288f-33f7-af87-39ae5cc63803--
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADFVlFv2zgMfo4B/wfG
+T06XJt3jWgx7KIZbgNtQXAbcs+IwsTBZ8klK1922/36kJCd22vQ63HULgiCmRH7UR/Kz5nP4WEsHeCea
+ViGssTHaeSs8OqjNZ2itqdA5eqqEhso0zU7LipbhVgpy82i1UOBM9Qk9rWuNlZcUY5Zn8zksPDRmjcqB
+gGslUXsQek0PS7S3aMHXwg+iNgQmtgTH4QnxNAIBBIjz//PDMWXTGuuhUHJlhZXo5suAfROpmLXGOFU8
+F/r8DN6mYlSRsFQCOJtn3d9KCfqNhJaTjPN1eTYi31BN+voawWj1BXjtCqRn487hGjbGgkO9lnobamGx
+QnnLT3vuTSwNJtJnDD26oUBZtyWC/RFcKWYyP+SYR8833d5y6S2BTaYxxPvk6Q2sMOR1Gn28pOXOP89u
+qThipfbJ0GFMA1vUSO1Lh+SDpic+nY3rck2cyY1E61J6vACXyf+3zj2TWvpstKDfckIcN+hrs05YbJVC
+yb8xMj2oS0y4cySHhPAaNH4uj2AmV7xh4fkJ034CuEFL6TdUQqTahSMYDWYT0A7zwkbC9qYyKp2mFwq+
+wYJPttAet2inQNTRYyQQvjEwdXBKBWko71EUcgupl+EMacMZvLwIn9nFBIRL8ct4Fgr59g6rHUVM1IT0
+eOlQxOIdKmXGsADRwHvpKGko4AXn21J2PhX56r95DZruUTMlfV1j9SmkbNG1pGDIC3ITWBu/hgh+GpYM
+xbjgAJodR1oqQGuNLYs/reEGTGHHRWgKEsWAcFT80Ub+BGlxUX4P0pIfaUvUZ87oJ4hL0oj8V8lL/hR9
++R311tfdDLYWN/Iuvr9CsEgoIziCIh5i+x9mqQMKjjHYfjTzoDZ5XzV+TG/yoeD0QXh6Hx4cR/GeVX5C
+e/cLKXW787CxpCH3KkBphNVOoKad95B4+wOxjljeR1zsi3IIdzJQT0GBLZ1upkOlpP7aofP3BSak8ZDy
+9BaCYNKVq4qdFObo0DZQep66wcXMIfUa3YmS8KRWmYT0egfnykdOD5Ve94y7VQxQ9tvlxcsp9GKc99cm
+NEf3xJ6HJvWFJTb9QD6Ptfsx+ST1fFjwn+Q06OFn08+Ppj1XxD7dR79QTg24FiuqUxoGevFHO82z80JX
+nXiku6+juh4UZDA4acfl/lYXHZfH194gsex/PbgdDqIkp0sYXFzLd8b5D6LBoAjKVELVZCmmwIR/2DUr
+4piWXl28uvhX9OXgBZLQo/EJ6PRufAw1aekJsjocRti/papaUI7KZaOviZkZx59Cn5Fggu85b4quaVM/
+8f2mfwBQSwcI4Pn5M9IDAAAcDQAAUEsBAhQAFAAICAgAAAAhAOD5+TPSAwAAHA0AAAgACQAAAAAAAAAA
+AAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAABEEAAAAAA==
+------=_contents/org.eclipse.poosl.testmodels/double_socket_example.poosl-021dd589-dd50-3b33-939c-04869d8a7496--
 ------=_contents/nl.esi.poosl.examples/libraries/trace.poosl-8b30d7c3-54de-3067-91e7-bb0bcb802466
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/libraries/trace.poosl
@@ -654,28 +536,6 @@ bM9v3rxB8Hd2hj7xqZh4LyyOHoA0rLakbkRJgKMlrBi7XHzbt/uc1JJkcECmhI/e5mSBwUlQRigFxhkK
 YzFvg4sAA2SykC+nSX39BVBLBwhU689+yQgAAJ03AABQSwECFAAUAAgICAAAACEAVOvPfskIAACdNwAA
 CAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAACAkAAAAA
 ------=_contents/nl.esi.poosl.examples/models-complex/TraceExample/TraceExample.poosl-7ad8c7d0-85d1-3db8-b136-2a6de6393184--
-------=_contents/nl.esi.poosl.testmodels/benchmark/03. train100000/train100000.poosl-7d42bcd7-cf94-315a-a706-19ecb1162f07
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/03. train100000/train100000.poosl
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAClV01v2zAMPVe/wrul
-QJDGlizL7WHAsH+w3AfXdVujiR3YzoBh2H+f/AHb7WNIoOuhUB5F6vGRopK7uyDc74NDk5XV46V6OhZt
-UD8v2PQp6LL2rd0GXf1SdK9FE5yL5rluTmX1EqR7/xfk9el0qco868q6andKnZs6L9o2yI+Z/3/w/sHm
-Vp3rpmvVTVltg/rSqZPfkb0UA/K1q9+KanO7VTfe9GX6pH5lTZk9Hvs9qqzKTt20XdZ0m1tvO3ky9VOr
-FmSO87CK8rD2+UDsR31p8mJF7T2t/2Ayu3488nsv7DsxSB0+m7lS+fHSdr5Ik/QfjvOxvFeV93HH7O8n
-FfooB3M/FGtYu9U6XtZDAvdjHoMtXO3Tq3W0WiertZ3X+WtWVcXRU/lzMDsv2TY4xDvP92/QQ+EERQuk
-d33zeMRbJsiNULJAYz6Tc7g4uxEamC9oMvrbVUgzQnoFxVM4OzlSMn8brtAVsYcdP3Uv5KzcAIUImRQg
-5wCyuMvirjDEWAQUAZQAEmH0WAOkkVaI0VMia4MckIRBRyLpPULIFGVI8TyNfpYQy6JaBETQwhNT3OUQ
-ipBEjMprIiGi+qg8kk8IDkgBa5Fg8BghQxAldhG3gNCU6MA9btMYzBA1I7oEEaTqsG9iDBVhN6eEhAhp
-ZGoxPEa3SMsQhcVqhESKuCvBE/HAFIkm2EoRITPGigiZiaFBkCAuMTEiiIYj+hkVNBjeYckMoQRRRRQ1
-xlgp0RHErCTmLm4iXhbifmKKGoWIcVdIDBei2AQJ4nqu2M9fJ5Rqf/vH+QTv7/hCL+qNn+dok3l+rmjz
-fGeveCes2fDemveeb8AVailrnkcxbZ5fGdps+eCWVy0REuPNVqgYb9Z8Ypr3jvjEHF+SeehfMfPUYr5b
-DH+2ESrGax7x3ZIK9ebzdry3Fpjz1Ob38oqowiXimRtetVCoGM88Fi6wMHqExHgzf7TjiVvhaD5rPnYo
-3BHhfgrzmO+VRAjOdzGvCU/M8VMpFtLisxLmBp+04S9IxJfLCHnxivJHL1/zr7Q4f3YivDLCQBQmHn+/
-Uj7xlD9bC8OYz4uvl/B4Ck3OSypYeU0sT1zz3k64+EK5BDMfPBTOFr6I8d4p7+141SzvHQmJCY8IX5JY
-GKfCMyG0AwRffi/8A1BLBwhEfWKTYgMAAAkXAABQSwECFAAUAAgICAAAACEARH1ik2IDAAAJFwAACAAJ
-AAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAoQMAAAAA
-------=_contents/nl.esi.poosl.testmodels/benchmark/03. train100000/train100000.poosl-7d42bcd7-cf94-315a-a706-19ecb1162f07--
 ------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/platform.poosl-7ad2cf4c-073c-3fb3-bdb7-9f0feacfa70c
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-complex/MPSoC/platform.poosl
@@ -775,33 +635,6 @@ wxT5sxE4IBEodVghkFpf9+2vr/HXKQpTJHITodiL8U9zngseS2rssE6Q5LftB9peW22h4C80mRUa6um8
 AACUcwAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAehUA
 AAAA
 ------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/platform.poosl-7ad2cf4c-073c-3fb3-bdb7-9f0feacfa70c--
-------=_contents/nl.esi.poosl.testmodels/Super_PrintString_Chars/test.poosl-7658f610-6be7-3ef2-bf3c-317b802474ae
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/Super_PrintString_Chars/test.poosl
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9V21v2zYQ/hwD/g83
-fam0OfFbnCYp8qELWiAbugDNMNiN2oGWzzE7mRRIKi8L+p/7D7ajXhxJthUlyGYYNl+OvHvuHh6PfBlJ
-ZcDZ2+vSV4R7qPleJKWm1i1bRiHqbsiniilOra9ainTWabd4tvRhGm8NihnO/izJtVszZhgEIdMaLiIM
-OAvbrWtawqa0PZzKWBhUx3BGf1eo2q0lmoWc6XYrSKegMLej0MRK5KvarUhxYS4M/V6RXNogMT7PReAE
-BA/BLHC1Co5PoAcYaiyO5M2foA9z/mZNFxRUVWCdC4QUvYa3SrG7AsACHh1HqAIWhu7ZClIHzo/hfPoV
-A+MRANqJFGsM5/Alis1b456RhFewxs5V1P9+I1fqP7DoMeW/duCPok5aXtFpJTbpjJQMkBRmalEbGiMW
-JHq0ZldW40Nox51Jxwrlyog0ghv4GAvXc72CbauRsQ2EwBv3Z3blAZvNXGfsVBuTvPHJsUZaDXbZpBgg
-irpDe9xfDuBH8J2x73zuwGU/6UyKnU/U+ebQNhO7xxg4RZoZqUjDNRMB1ik4y2WlAFIGRqaq7HZEwB+S
-hQnxLANRKalcJxmkBSEn0gxfw5zxEGcEiTi3Yz/dbuJZDVwsUHFjrQCjEGEuUxLq1AI5t1pzI2x8Vu4j
-FniQxpL81gHrswKScRUJyd9fJrZ3Mgd9aw5iv/8cELl2QpFwtmD9BZq64NcBoaX3RRxPgTGqgWFPwBew
-x0cnCIQUu6R6yQ2/xjy5oSnDSJOdl26V7vaBiZiF5BVNk4aTbsI/Bja3CQZvMYiNRWIWXFM3UnSqrJBe
-yDicQXYce0UHBMU01xzsUQ3YSJLWKQ+5ubPmaT6j9Dafk8FkeDkNlgLwBuq7T3IAatzugeFmDwxIx8u6
-etjUoaPByzh0K7OHzZk82n8ZW3bWPpvcqsGkFjFTGp1JOiV0ZGIKZEGLXp0R55Xv375//8qhxHm6YJRy
-dcaUssbHIhjrx+Po/ONA0bkndqS5Q+tOSyCVIvOEvRjJvsSD8JDcEmTkWcXEFUJ/cAi7MBiN4IabBZxd
-nMPh4ehotw8oAjmza0o55JeL898okzOl0XWGuLtfSX8nMNzr0XBjKAfD5lCM/IhJqMGakVqhtpvnO74/
-9/2p7xvfV77f7fq+8JNP3Ovtj+hirBrv0IIpiSuSJdF3zUNyUHdzVnAEUlyjSlhhc7dO8zIEFBkWEJcq
-lJz3/h9Kfl+j5Pfm+F/XXbr/KSWTAtcjFJr/je4wrzP6nYyK+cCgQxd+jHl3SFVIMdJeXnOt8ejS8rxj
-13YspbaR6fMamybNvXew0Xuncjmlabru5RKTtJbe9tvo/y578aTmpzQz7tgrXXtrMHO5yfPtP6yLflqr
-ZHVWqULJ3iZbCsW+U46YM6ABsmDVHzo2xv19HJWC19ALRaTVmCeuaAh9c+iq0DcVaNU6kx5bKx73PXh4
-IfUzR9RVmokv3USs+ak96j3b+PXY0bvtqUYndX4m+JQS/6iuomjkdP0XT//vtMFlyz5i7JsgfUUeJ7/2
-AUg5WQh6mbd2/gVQSwcICtrrjIwEAACbEAAAUEsBAhQAFAAICAgAAAAhAAra64yMBAAAmxAAAAgACQAA
-AAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAMsEAAAAAA==
-------=_contents/nl.esi.poosl.testmodels/Super_PrintString_Chars/test.poosl-7658f610-6be7-3ef2-bf3c-317b802474ae--
 ------=_contents/nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl-0ec4182e-6a6e-329d-8af7-24ea73d345e3
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl
@@ -817,6 +650,17 @@ xDJ9kFa1J9VKqy8P3/9dZ/F40t6WwfAA6bq3Yr/2iO6G8dxULq3lh4YRry3NmJv0fAcaTy28iw9QSwcI
 b1NnQK0BAADMBAAAUEsBAhQAFAAICAgAAAAhAG9TZ0CtAQAAzAQAAAgACQAAAAAAAAAAAAAAAAAAAC5j
 b250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAOwBAAAAAA==
 ------=_contents/nl.esi.poosl.examples/models-basic/HelloWorld/hello_world.poosl-0ec4182e-6a6e-329d-8af7-24ea73d345e3--
+------=_contents/org.eclipse.poosl.testmodels/benchmark/09. processLoop10000000/processLoop10000000.poosl-b247d138-c7f4-3f43-bf63-9aad2e7057f4
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/09. processLoop10000000/processLoop10000000.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAA9jkEOgkAMRdf0FF1C
+TAS2qAuWHmMcGmgyTMm0iiYc3iFGuuji5eX/X9cokXBJ4kkV6U3+aRxHdAcLIguubBO2ze+QjZIzlqhn
+gL/ng8u/x7KCRZIpFDBn7kZSgJdL7B6BdsqRDQo1l6yssj2TTTIoHAQ35A7v0WikhBtgwd2tuUCxThwI
++XoMGSSbNz61KAMA6EeN5lyQo6Lfy/oO+1zhJxcjhTzkC1BLBwidYyyUpwAAAPEAAABQSwECFAAUAAgI
+CAAAACEAnWMslKcAAADxAAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAA
+AAEAAQA/AAAA5gAAAAAA
+------=_contents/org.eclipse.poosl.testmodels/benchmark/09. processLoop10000000/processLoop10000000.poosl-b247d138-c7f4-3f43-bf63-9aad2e7057f4--
 ------=_contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/Bus/bus.poosl-da90bbf9-276d-3c2b-81ad-33dc42ea07f8
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-complex/SoCInterconnects/Bus/bus.poosl
@@ -907,9 +751,33 @@ K9oWtaHn1MzqKKtg0XZsHm0rSVkM7wQabGApytKyLdLa2Qr/NcMhkCUMrImymv79J6CRwrNs+AFQSwcI
 CO8um/kAAAC6AgAAUEsBAhQAFAAICAgAAAAhAAjvLpv5AAAAugIAAAgACQAAAAAAAAAAAAAAAAAAAC5j
 b250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAADgBAAAAAA==
 ------=_contents/nl.esi.poosl.examples/models-complex/MPSoC/simulator/ARM.txt-a13ab13b-c4a2-33a7-9a5d-87fded099627--
-------=_contents/nl.esi.poosl.testmodels/libraries/GenericTest.poosl-49dcc8aa-23d8-3139-a057-7ff9d3b28594
+------=_contents/org.eclipse.poosl.testmodels/benchmark/04. trainWithData100000/trainWithData100000.poosl-f43034bf-98f7-3dba-a513-5735cb3398e6
 Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/libraries/GenericTest.poosl
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/04. trainWithData100000/trainWithData100000.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAClV01vnEAMPYdfMb0l
+apTswAwfm0Olqpeeu/eKsDRB3YWIYStVbf97h48Am+e1D8mJ9djPz882Q+7vld5s1K7Nq/rxVO8PpVPN
+j8U2/VJd7n66W9U1T2X3XLbqpWx/NO2xqp9UtvF/qmiOx1NdFXlXNbV7UFWtyrx4Prer3KmvdVc+eYTK
+qbYsyupXuVd5vVdV55Q7FUXpXDOcvuTOlfu7IHhpm96qioO3qC89LXV9E7w0beeCq6oOjv40fyqHH5+6
+5mdZX09ZboJfeVvlj4f+MKjqqguuXJe33fWNRzj6Wpq9C2aL+lttXwn+XaFVN29Z7LweZyRuVXPqOCa3
+wZX3+PA+eqravup3zu9hjV591L1hQXpD/ltzaotyRf+c+ntprhG0T14cTq7zjCfl3vTP4/nIuuixd8l2
+ULbH2NnVc7p6DpfnYRa240gMZ9HKz6ye49WzXp5HIbaTIN5SPOd1XR48lT87e+fLuFW7+M7z/ad6k77r
+Gz1696eT2Q7mnVmZkik4XYKjyWQWUzIGxqvAcPKKFq9w9NIrr3T0GgqfHCmZPw8bfUns3uN7vNmOvoM2
+gykNwaQNmEINphi9sgyxED4hTAifYkJENxHGWTBF6JWAxaI0EZoMBmo0ZcghjjFwQ6Qk8NErIxqEGQmZ
+UdQIoRKUyxBMESvFGon+oCnDOIO9jtArRCxikNCkieFC4UOiHGIEET5BrxCbYXBIUoIXMUooIJKPMGGI
+UJYYJGw1xmms0KIpJTYDxSLyESuMpgzFCon2oHyEyMRMon6WkBSxEmRqMDAjXi1IVRNVI1VLLAZiRcQa
+EOtD7A/Ra6JsJGEJeGLTifcIipMQ64kmg/ApcUthjZZYYgy0mDFeBc6fE0HgfvvL+Qj373hDLzfn+HtG
+m47nNPTxfFfSx/Pg0scRfzy/Geljnvh8/dPH89v6QjTPm08d82XFPPg8vBeI86JonprQD14ULajCHxu+
+roQnnvKDlvKqZHxhlgc3PLWErzvl69Z87lhgzoMbnlombK8wasKg8uD8eyUWVBHaLTATOiIsCU9N84VF
+PPNYWBJ+Gua76kLdfGFWiBYKEyaRZ57wssz/R13oN0/N8tFGuGaEN49wkfCi8sxiIZhPHfOqZHzukH/p
+aWFY+BeP5nNHQj+FHeLBE+GjYyNUxh/zW5AKt7MgizDHfGEJTzwR1puP5nfE8mUbPrURiPOqpLwqqfBN
+w9fFB1s+tRGIC+srfC/x7YK6lv8X/gNQSwcIaaxKwagDAACYFwAAUEsBAhQAFAAICAgAAAAhAGmsSsGo
+AwAAmBcAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAOcD
+AAAAAA==
+------=_contents/org.eclipse.poosl.testmodels/benchmark/04. trainWithData100000/trainWithData100000.poosl-f43034bf-98f7-3dba-a513-5735cb3398e6--
+------=_contents/org.eclipse.poosl.testmodels/libraries/GenericTest.poosl-c8635c6d-ded1-3dad-8eec-ec3cdfccf598
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/libraries/GenericTest.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAClUrFOwzAQnRsp/3Bk
 agRTx1ZdQAEhITGAYHbiS2vkOsV3CQz9eOykMWlpKlXIg+3zu/fu3dkIVg2CFCyg0III7ipDlcZ3qxgt
@@ -919,7 +787,7 @@ xSsShwEejHVkji4XLWeftdA0bYSusS/4xvFs3Y7yN7JBIrHC4G4+1PUlqhJaErhahnTgNRr/ODD5t2d7
 auc4gbeujsRdOratU+NOswVkoTKPCUIDWOoFS3Xqn3SW751h7B3fVq5Pwlxi8BJTY8X8AFBLBwisYkjr
 MQEAAIoDAABQSwECFAAUAAgICAAAACEArGJI6zEBAACKAwAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRl
 bnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAcAEAAAAA
-------=_contents/nl.esi.poosl.testmodels/libraries/GenericTest.poosl-49dcc8aa-23d8-3139-a057-7ff9d3b28594--
+------=_contents/org.eclipse.poosl.testmodels/libraries/GenericTest.poosl-c8635c6d-ded1-3dad-8eec-ec3cdfccf598--
 ------=_contents/nl.esi.poosl.examples/libraries/structures.poosl-4cca1378-935b-38bd-a748-5b506da30b25
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/libraries/structures.poosl
@@ -1099,6 +967,39 @@ OwnNwQTx42M55qE47sJy0a7qOO//AVBLBwjp0y9H+ycAAMIKAQBQSwECFAAUAAgICAAAACEA6dMvR/sn
 AADCCgEACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAOigA
 AAAA
 ------=_contents/nl.esi.poosl.examples/libraries/structures.poosl-4cca1378-935b-38bd-a748-5b506da30b25--
+------=_contents/org.eclipse.poosl.testmodels/.project-bec79ac6-2b4f-3247-925c-d82ddc2db7f4
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACFkL0OAiEQhGtNfIfL
+9YJ2Fngmaixt1Ac4YXNi+AvLmXt8AVFzNnZ8w+zOANsMWlUP8CitWddLsqgrMNwKabp1fTkf5qt608ym
+zHl7Bx72gNxLF6I7qhNmWg2NUQRQEmctKhIAg7YCFDKab5ONW63BhIbR9ympZSdmoCO69lKJkwOeqOAu
+jrZGZKUkW98R4Eo6BDIEGALpJcFb60G8eJsGwX+rxMnWd33qgIXpWGD0N60o7zoxOvQeivsF/5scsy8V
+yf689rvo8/zxBz8BUEsHCADMPyfNAAAAnwEAAFBLAQIUABQACAgIAAAAIQAAzD8nzQAAAJ8BAAAIAAkA
+AAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAAMAQAAAAA=
+------=_contents/org.eclipse.poosl.testmodels/.project-bec79ac6-2b4f-3247-925c-d82ddc2db7f4--
+------=_contents/org.eclipse.poosl.testmodels/benchmark/03. train100000/train100000.poosl-e1ee205b-3f0b-3863-a04c-43790f22af7a
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/03. train100000/train100000.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAClV01v2zAMPVe/wrul
+QJDGlizL7WHAsH+w3AfXdVujiR3YzoBh2H+f/AHb7WNIoOuhUB5F6vGRopK7uyDc74NDk5XV46V6OhZt
+UD8v2PQp6LL2rd0GXf1SdK9FE5yL5rluTmX1EqR7/xfk9el0qco868q6andKnZs6L9o2yI+Z/3/w/sHm
+Vp3rpmvVTVltg/rSqZPfkb0UA/K1q9+KanO7VTfe9GX6pH5lTZk9Hvs9qqzKTt20XdZ0m1tvO3ky9VOr
+FmSO87CK8rD2+UDsR31p8mJF7T2t/2Ayu3488nsv7DsxSB0+m7lS+fHSdr5Ik/QfjvOxvFeV93HH7O8n
+FfooB3M/FGtYu9U6XtZDAvdjHoMtXO3Tq3W0WiertZ3X+WtWVcXRU/lzMDsv2TY4xDvP92/QQ+EERQuk
+d33zeMRbJsiNULJAYz6Tc7g4uxEamC9oMvrbVUgzQnoFxVM4OzlSMn8brtAVsYcdP3Uv5KzcAIUImRQg
+5wCyuMvirjDEWAQUAZQAEmH0WAOkkVaI0VMia4MckIRBRyLpPULIFGVI8TyNfpYQy6JaBETQwhNT3OUQ
+ipBEjMprIiGi+qg8kk8IDkgBa5Fg8BghQxAldhG3gNCU6MA9btMYzBA1I7oEEaTqsG9iDBVhN6eEhAhp
+ZGoxPEa3SMsQhcVqhESKuCvBE/HAFIkm2EoRITPGigiZiaFBkCAuMTEiiIYj+hkVNBjeYckMoQRRRRQ1
+xlgp0RHErCTmLm4iXhbifmKKGoWIcVdIDBei2AQJ4nqu2M9fJ5Rqf/vH+QTv7/hCL+qNn+dok3l+rmjz
+fGeveCes2fDemveeb8AVailrnkcxbZ5fGdps+eCWVy0REuPNVqgYb9Z8Ypr3jvjEHF+SeehfMfPUYr5b
+DH+2ESrGax7x3ZIK9ebzdry3Fpjz1Ob38oqowiXimRtetVCoGM88Fi6wMHqExHgzf7TjiVvhaD5rPnYo
+3BHhfgrzmO+VRAjOdzGvCU/M8VMpFtLisxLmBp+04S9IxJfLCHnxivJHL1/zr7Q4f3YivDLCQBQmHn+/
+Uj7xlD9bC8OYz4uvl/B4Ck3OSypYeU0sT1zz3k64+EK5BDMfPBTOFr6I8d4p7+141SzvHQmJCY8IX5JY
+GKfCMyG0AwRffi/8A1BLBwhEfWKTYgMAAAkXAABQSwECFAAUAAgICAAAACEARH1ik2IDAAAJFwAACAAJ
+AAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAoQMAAAAA
+------=_contents/org.eclipse.poosl.testmodels/benchmark/03. train100000/train100000.poosl-e1ee205b-3f0b-3863-a04c-43790f22af7a--
 ------=_contents/nl.esi.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl-6c5dfdac-f5f8-342c-a472-60c24ae7d707
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl
@@ -1326,17 +1227,6 @@ q/27wH+LBNA/BbbMAr0G0DEVXP0FUEsHCLcmfFEKCQAAYjMAAFBLAQIUABQACAgIAAAAIQC3JnxRCgkA
 AGIzAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAABJCQAA
 AAA=
 ------=_contents/nl.esi.poosl.examples/libraries/json.poosl-6f191ac9-ed3b-33f5-9d57-9a4c509f2229--
-------=_contents/nl.esi.poosl.testmodels/benchmark/06. dataLoop10000000assign/dataLoop10000000assign.poosl-6c1e30be-4dc1-3b04-a51a-0163f957dbff
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/06. dataLoop10000000assign/dataLoop10000000assign.poosl
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVj8FOw0AMRM/rr5hj
-KxBtrik55MhnLBsrsZTsRmtDgyj/jitEOOPDyLLGnufTCSUz1loSq4I3Tm8meUTEEC1iLmXFVWxCc/4p
-iHGNJiXrIySDY5r+Zm6DycKKre0aqEXjhbM9Ef1mpDm69jgcaS3VlAK5X+PISvQeq8TX2duwtXjJxiNX
-kixGwY9VOxx9b2GbyqC0T3CD7HbcCOFT2u58oXCdZGbI844/FLd28tBc7oT/EpThi4j0Q/0ph/L4nO6o
-fYvesdIUc+bZ3/gGUEsHCGmEWSPNAAAAVwEAAFBLAQIUABQACAgIAAAAIQBphFkjzQAAAFcBAAAIAAkA
-AAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAAMAQAAAAA=
-------=_contents/nl.esi.poosl.testmodels/benchmark/06. dataLoop10000000assign/dataLoop10000000assign.poosl-6c1e30be-4dc1-3b04-a51a-0163f957dbff--
 ------=_contents/nl.esi.poosl.examples/.project-b0bbfdc4-5c42-303f-9024-4b908c7de8c2
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/.project
@@ -1452,17 +1342,6 @@ fdZQYx7p9/4qOzXTfbf8CuNf4u/+P1BLBwi/L3hnswYAAFEYAABQSwECFAAUAAgICAAAACEAvy94Z7MG
 AABRGAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAA8gYA
 AAAA
 ------=_contents/nl.esi.poosl.examples/models-basic/Lottery/Lottery.poosl-8562ab17-0543-3eb3-a6bf-7c7ff852f287--
-------=_contents/nl.esi.poosl.testmodels/benchmark/09. processLoop10000000/processLoop10000000.poosl-132950ab-e382-318c-9513-5408c9047379
-Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/09. processLoop10000000/processLoop10000000.poosl
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAA9jkEOgkAMRdf0FF1C
-TAS2qAuWHmMcGmgyTMm0iiYc3iFGuuji5eX/X9cokXBJ4kkV6U3+aRxHdAcLIguubBO2ze+QjZIzlqhn
-gL/ng8u/x7KCRZIpFDBn7kZSgJdL7B6BdsqRDQo1l6yssj2TTTIoHAQ35A7v0WikhBtgwd2tuUCxThwI
-+XoMGSSbNz61KAMA6EeN5lyQo6Lfy/oO+1zhJxcjhTzkC1BLBwidYyyUpwAAAPEAAABQSwECFAAUAAgI
-CAAAACEAnWMslKcAAADxAAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAA
-AAEAAQA/AAAA5gAAAAAA
-------=_contents/nl.esi.poosl.testmodels/benchmark/09. processLoop10000000/processLoop10000000.poosl-132950ab-e382-318c-9513-5408c9047379--
 ------=_contents/nl.esi.poosl.examples/models-basic/FIFOBuffer/Assignment.pdf-28ce808c-e452-3b1a-832c-b8d0b33abcc4
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-basic/FIFOBuffer/Assignment.pdf
@@ -2152,6 +2031,41 @@ r0eSn9jj4new09vsW6xJ/c4kq+Nhhv69UtWCfFQum/yVMrNg/DkMMxKW4O+cD0XTdGjoeH/oH1BLBwj2
 ViDvyAMAAIcMAABQSwECFAAUAAgICAAAACEA9lYg78gDAACHDAAACAAJAAAAAAAAAAAAAAAAAAAALmNv
 bnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAABwQAAAAA
 ------=_contents/nl.esi.poosl.examples/models-basic/SocketExample/socket_example.poosl-986c59c1-3997-3256-b5e6-bcf56e5b32eb--
+------=_contents/org.eclipse.poosl.testmodels/libraries/SocketProcess.poosl-161bfe32-ccac-3227-b3f7-3a6a540db206
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/libraries/SocketProcess.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAB9VU1vEzEQPWel/Q/D
+LUFpA+JWVCFUQESUUpEiDoiDd3fStfDake1NFNQfz4zt/WpDL5usZ/zm+fnN7GoF72/XsEfrpNHw5vwV
+nMHGlH/Qw601JToH17Kwwh4p8LEpsKqwgs3ReWwcrLU2e+Fpq4PiCHc33/Isz1YvE0SHIB0IKI3eo5ao
+S4RdCpRK0HNrLBSykhZLhhIKlNR4VghHpVwkU5qmabUsQzEo0B8QNaE6qe8VgkNLZwChq2GtVFTMn+cZ
+vIS1B9F609D2Uih1BG8lOvAG0HlRKOnqSFFHDgGJopbCxiK9HkEZ50cpAXiVZ9OzTA4+z7MZiXFHOK0G
+X+NjXXQiCY2pcEmn8CFrL1SLXJ5ftGgQzDb8r5kCrScW9Pf8WfQky3/QtVTn4Qizz4R7w3UuYEPK6Ptl
+ZL6eEIS53EKfSpeqjWeQxTLg7oz1YPR/ia4nfJ6CTYFoM92Kp0smSHaI1OQBopYYuUT9lpJvWjKmJfJr
+7fEe7YJuhZZdkr+WwYIMbTTdPcfegvS82LLHGN6hrhidL56MiHLPbw0JKe7JKYZ5M0L046h4nnVJsdz3
+sJlQ0/IzW190ufOo+iLJ/jXtJA0KDMyeAXm3oXgHkGd7YSUZumPzQ1do1ZHPosn8e4RKeJHM6mvhuRf3
+skI3Qh+7PBZKI+EiWSzPpJb0nK3pZ76YL1gEX5vKdb6RXgol/ybYSY8kyGHrrIe/BI2HeXxbvOXITlj4
+grh7r4g7p4cLuor8wrsVO06MhT9q11pMJ+PKbDUFlcHoVo+WPCQ8tQO1B4HTPGgV1TjU5LSDINqkVLTb
+rvWwtaZ5KvuEEBenGuIIrwPjJ8HErJ8zBN6NlZOSL8mlNCOjPyvpUgSrVH10eIb/lcST7sMo9zeHxh12
+yQ3GBTVHOsVFWeLOf6JTzodGWlB8tlp134FNaFrehcrheHeqdmfmXZklTGAGkKvQtLx5K4NMjq7lqh/q
+8WpJmfHNBhNH9UaZ9Kk4G30rqJ8f9cZkjDsa29zVLun5VMwJhamgV72a4P7IXeAtCp5ObMvvKKrekT+t
+TIcgP8JB+hoe3dNkOgyD5bTDeuyHa/oU9mP5YcyvFo6DvyGmXHZSW9rLS4HudMzwcuyrrsDAjMfIQCt9
+fCakhjOeYDWMoqHISSXT2oHBOHWU3xfIs39QSwcID2aSim8DAACZCAAAUEsBAhQAFAAICAgAAAAhAA9m
+kopvAwAAmQgAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAA
+AK4DAAAAAA==
+------=_contents/org.eclipse.poosl.testmodels/libraries/SocketProcess.poosl-161bfe32-ccac-3227-b3f7-3a6a540db206--
+------=_contents/org.eclipse.poosl.testmodels/benchmark/07. dataLoop10000000simplecall/dataLoop10000000simplecall.poosl-bfc2f670-7859-33a4-9961-5f8d629a6b0c
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/07. dataLoop10000000simplecall/dataLoop10000000simplecall.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAClj0FOw0AMRdfxKf6y
+VRFttglZZMkxzMRKLCUz0YxLgyh3x6giHAAvbMv6tt8/n5GiYM0pSCmQTcLVNI5gDGyMOaUVN7UJ9eUR
+UJPMpimWJ2iEcJj+Zi6D6SIFW9NtpxrF2GSRaM9Ev1/CzJ57HI60pmyFKvKNwqMUonfOym+zt9XW4DWa
+jJJJoxpVfizb4eh7i9iUhkL7BHfoLsedUH1q011ax6hbqm6TzgJ92V0MyfWdnur2AfrPgjR8EVH5KO7W
+aZ0rhh8PfYPeecPEMcrs/r4BUEsHCATleNDTAAAAcgEAAFBLAQIUABQACAgIAAAAIQAE5XjQ0wAAAHIB
+AAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAASAQAAAAA=
+
+------=_contents/org.eclipse.poosl.testmodels/benchmark/07. dataLoop10000000simplecall/dataLoop10000000simplecall.poosl-bfc2f670-7859-33a4-9961-5f8d629a6b0c--
 ------=_contents/nl.esi.poosl.examples/libraries/distributions.poosl-6d83d9a1-6c27-3fa6-8456-f097b328f2ad
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/libraries/distributions.poosl
@@ -2236,6 +2150,65 @@ alQaZC/HgUwnspn2n/EfdCZS0QmKD1TW+kOm219J/fMmdlZl3/8BUEsHCM9vpBHIEQAAHF0AAFBLAQIU
 ABQACAgIAAAAIQDPb6QRyBEAABxdAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBL
 BQYAAAAAAQABAD8AAAAHEgAAAAA=
 ------=_contents/nl.esi.poosl.examples/libraries/distributions.poosl-6d83d9a1-6c27-3fa6-8456-f097b328f2ad--
+------=_contents/org.eclipse.poosl.testmodels/Super_PrintString_Chars/libraries/extended_json.poosl-9ba79c78-b5e1-349e-8f6a-1cac0c5b4de5
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/Super_PrintString_Chars/libraries/extended_json.poosl
+
+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
+AFBLBQYAAAAAAQABAD8AAAAuDAAAAAA=
+------=_contents/org.eclipse.poosl.testmodels/Super_PrintString_Chars/libraries/extended_json.poosl-9ba79c78-b5e1-349e-8f6a-1cac0c5b4de5--
 ------=_contents/nl.esi.poosl.examples/models-basic/FIFOBuffer/buffer.poosl-4aaa2c85-9fee-3838-86f4-2ebfbe138800
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-basic/FIFOBuffer/buffer.poosl
@@ -2296,6 +2269,33 @@ ZZz1hrvPOqLcJPeS0Kx7H/m0bfDVPxD/03FPRk+P02wllCKhSJOf0A824RqMuy9yz6i/0t9QSwcICBQf
 DcYDAADPDQAAUEsBAhQAFAAICAgAAAAhAAgUHw3GAwAAzw0AAAgACQAAAAAAAAAAAAAAAAAAAC5jb250
 ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAAUEAAAAAA==
 ------=_contents/nl.esi.poosl.examples/models-basic/VendingMachine/VendingMachine.poosl-a7f72559-605f-3542-8be1-33df46a5ba1b--
+------=_contents/org.eclipse.poosl.testmodels/Super_PrintString_Chars/test.poosl-5214a63c-7893-3430-88df-504d73f5061e
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/Super_PrintString_Chars/test.poosl
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9V21v2zYQ/hwD/g83
+fam0OfFbnCYp8qELWiAbugDNMNiN2oGWzzE7mRRIKi8L+p/7D7ajXhxJthUlyGYYNl+OvHvuHh6PfBlJ
+ZcDZ2+vSV4R7qPleJKWm1i1bRiHqbsiniilOra9ainTWabd4tvRhGm8NihnO/izJtVszZhgEIdMaLiIM
+OAvbrWtawqa0PZzKWBhUx3BGf1eo2q0lmoWc6XYrSKegMLej0MRK5KvarUhxYS4M/V6RXNogMT7PReAE
+BA/BLHC1Co5PoAcYaiyO5M2foA9z/mZNFxRUVWCdC4QUvYa3SrG7AsACHh1HqAIWhu7ZClIHzo/hfPoV
+A+MRANqJFGsM5/Alis1b456RhFewxs5V1P9+I1fqP7DoMeW/duCPok5aXtFpJTbpjJQMkBRmalEbGiMW
+JHq0ZldW40Nox51Jxwrlyog0ghv4GAvXc72CbauRsQ2EwBv3Z3blAZvNXGfsVBuTvPHJsUZaDXbZpBgg
+irpDe9xfDuBH8J2x73zuwGU/6UyKnU/U+ebQNhO7xxg4RZoZqUjDNRMB1ik4y2WlAFIGRqaq7HZEwB+S
+hQnxLANRKalcJxmkBSEn0gxfw5zxEGcEiTi3Yz/dbuJZDVwsUHFjrQCjEGEuUxLq1AI5t1pzI2x8Vu4j
+FniQxpL81gHrswKScRUJyd9fJrZ3Mgd9aw5iv/8cELl2QpFwtmD9BZq64NcBoaX3RRxPgTGqgWFPwBew
+x0cnCIQUu6R6yQ2/xjy5oSnDSJOdl26V7vaBiZiF5BVNk4aTbsI/Bja3CQZvMYiNRWIWXFM3UnSqrJBe
+yDicQXYce0UHBMU01xzsUQ3YSJLWKQ+5ubPmaT6j9Dafk8FkeDkNlgLwBuq7T3IAatzugeFmDwxIx8u6
+etjUoaPByzh0K7OHzZk82n8ZW3bWPpvcqsGkFjFTGp1JOiV0ZGIKZEGLXp0R55Xv375//8qhxHm6YJRy
+dcaUssbHIhjrx+Po/ONA0bkndqS5Q+tOSyCVIvOEvRjJvsSD8JDcEmTkWcXEFUJ/cAi7MBiN4IabBZxd
+nMPh4ehotw8oAjmza0o55JeL898okzOl0XWGuLtfSX8nMNzr0XBjKAfD5lCM/IhJqMGakVqhtpvnO74/
+9/2p7xvfV77f7fq+8JNP3Ovtj+hirBrv0IIpiSuSJdF3zUNyUHdzVnAEUlyjSlhhc7dO8zIEFBkWEJcq
+lJz3/h9Kfl+j5Pfm+F/XXbr/KSWTAtcjFJr/je4wrzP6nYyK+cCgQxd+jHl3SFVIMdJeXnOt8ejS8rxj
+13YspbaR6fMamybNvXew0Xuncjmlabru5RKTtJbe9tvo/y578aTmpzQz7tgrXXtrMHO5yfPtP6yLflqr
+ZHVWqULJ3iZbCsW+U46YM6ABsmDVHzo2xv19HJWC19ALRaTVmCeuaAh9c+iq0DcVaNU6kx5bKx73PXh4
+IfUzR9RVmokv3USs+ak96j3b+PXY0bvtqUYndX4m+JQS/6iuomjkdP0XT//vtMFlyz5i7JsgfUUeJ7/2
+AUg5WQh6mbd2/gVQSwcICtrrjIwEAACbEAAAUEsBAhQAFAAICAgAAAAhAAra64yMBAAAmxAAAAgACQAA
+AAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAMsEAAAAAA==
+------=_contents/org.eclipse.poosl.testmodels/Super_PrintString_Chars/test.poosl-5214a63c-7893-3430-88df-504d73f5061e--
 ------=_contents/nl.esi.poosl.examples/models-basic/Jobshop/jobshop.poosl-5cde5be5-f0ed-3cc2-affe-ffb1a276b723
 Content-Type: q7/binary
 Entry-Name: contents/nl.esi.poosl.examples/models-basic/Jobshop/jobshop.poosl
@@ -2321,20 +2321,44 @@ RaqX5/RZEJ8v6Bn+Ddg0WQ9ztf+eDfXRTUDtAKJHdiIDHax5wS8HAeEHPP4/UEsHCL9nxDT6AwAAixAA
 AFBLAQIUABQACAgIAAAAIQC/Z8Q0+gMAAIsQAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQAB
 AAAAAFBLBQYAAAAAAQABAD8AAAA5BAAAAAA=
 ------=_contents/nl.esi.poosl.examples/models-basic/Jobshop/jobshop.poosl-5cde5be5-f0ed-3cc2-affe-ffb1a276b723--
-------=_contents/nl.esi.poosl.testmodels/benchmark/05. dataLoop10000000/dataLoop10000000.poosl-5bbc3902-0d2b-3d3a-9968-26c188fafa50
+------=_contents/org.eclipse.poosl.testmodels/benchmark/06. dataLoop10000000assign/dataLoop10000000assign.poosl-b818238d-369c-33ff-a752-a906829eaf39
 Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/05. dataLoop10000000/dataLoop10000000.poosl
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/06. dataLoop10000000assign/dataLoop10000000assign.poosl
 
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAA9jkFuwkAMRdfxKf4S
-VKnANi2LLDmGO7ESS5NxNDbQqvTuHYTACy+evv3+bgcrgrVaEnfIt6RzaJnAGDkY2WzFVWPGYf8YaEjl
-UCv+TvQ8TJnbHrDZ0mo1nDpaGudJnOjCVfkry51q0aDOg2tsti29SMw2Or0IbtAepxIyScWN0P1qf9x/
-UHedNQv089VktBY96tsBNv4Rkf94yNIU7VlJd93QY2iSNHMpkluVf1BLBwhOi37yrQAAAPAAAABQSwEC
-FAAUAAgICAAAACEATot+8q0AAADwAAAACAAJAAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQ
-SwUGAAAAAAEAAQA/AAAA7AAAAAAA
-------=_contents/nl.esi.poosl.testmodels/benchmark/05. dataLoop10000000/dataLoop10000000.poosl-5bbc3902-0d2b-3d3a-9968-26c188fafa50--
-------=_contents/nl.esi.poosl.testmodels/benchmark/01. skip10000000/skip10000000.poosl-200b61ea-bcca-3898-9a00-2f1bb595fc0b
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVj8FOw0AMRM/rr5hj
+KxBtrik55MhnLBsrsZTsRmtDgyj/jitEOOPDyLLGnufTCSUz1loSq4I3Tm8meUTEEC1iLmXFVWxCc/4p
+iHGNJiXrIySDY5r+Zm6DycKKre0aqEXjhbM9Ef1mpDm69jgcaS3VlAK5X+PISvQeq8TX2duwtXjJxiNX
+kixGwY9VOxx9b2GbyqC0T3CD7HbcCOFT2u58oXCdZGbI844/FLd28tBc7oT/EpThi4j0Q/0ph/L4nO6o
+fYvesdIUc+bZ3/gGUEsHCGmEWSPNAAAAVwEAAFBLAQIUABQACAgIAAAAIQBphFkjzQAAAFcBAAAIAAkA
+AAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAAMAQAAAAA=
+------=_contents/org.eclipse.poosl.testmodels/benchmark/06. dataLoop10000000assign/dataLoop10000000assign.poosl-b818238d-369c-33ff-a752-a906829eaf39--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
 Content-Type: q7/binary
-Entry-Name: contents/nl.esi.poosl.testmodels/benchmark/01. skip10000000/skip10000000.poosl
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC1WF1zozYUfe9M/wPD
++4KTdtvdjNMdr5s06SxbT+xpOn1hhLg2SkBSJRF7/30vBqeAExk7qp8Mc849R1/36jL+tCly7wmUZoJf
++mfByPeAU5Eyvrr0S7N898H/9Mv3342FWgVAcyY1BIpKYwJqNsFaqEctCYWL+92/qeAGNsbbFOziOe55
+FReVuL7A95d+Zoy8CMP1eh2IYhVg8PCv6HYHOaD1TN9hKvoWFyIufMb5HicFohegTSRSyH2PpZd+vEwn
+71c30egK7r/qp/n53/8QkUx8HKXnjWlln5vtAz5KJR6AGt2E4nkAmgVSCI3/NqSQOWi/ASN8yfC5wQYN
+Fyd0A7Q0JMnxrVEl+GGLIfIUZ6nh5CxRRLF2zF7UuaCPYGZKUNC6NmIV6NFTpo1iSWlwWU6gP2jBj2dJ
+UEuhCsIpHE9GvyU1pYIT7BpFBkmOw2YZXluXoto++l1CNKPdpenArm+v//hcLpeg2qCeqYnWbMUL3GSB
+TJcHhtPjJtvgwyZib0x7dm8gzwUe3Dy12M0qULyuUK50fxeJzoS0iD7UCFeCX4QxoL5ZBBuEK0E8n2lJ
+QWEy1GVh3Q6ygca0wbryMKcZpGWOidyiPlNwVUjDnoadzB57wQoQpXHmGJdcot8pUUZbTHdwzsS3ifWq
+zukWcb3FxU3yd6X+J/Cq5EaEZozb5LvAE+WH5jsqqjFuLBlvsojma2ZoZpuxLcDVTF0znVkP1JJp3PnO
+jlE0m4upRY5ImTNKqoJ6yhGSOTFVcTyFq79pA8OZnWFpVpQoLXoz2a9Vd1FgNvYrzAu06HY2P4W3UCyC
+lJFB3BfXbsB6EqXvxJN1CxWIURXGWT2Y3GFJMIKK3FYKiLvkL6a3eJFVWFR4dX+1qOIhL47Yux2Zz6W2
+7p+kHJafXx7T/tqBzqx6BQLeIDhgYhcAnKzgRhRQNRqWee0hXa3sorrTHi5TbZgr6XumABVsm2ndQBwV
+pnG4a8BeacjarWLdlRns9ury9ba+rN00iRIx8dGVv9uLoK+YSDaI1z3LJTZQ8UwxbubYvPFVPM0wQb3a
+IlZKA3ulw81nLzZ29ngBgTQe3gkef/tIgNMMc/Cj5eIxOgs8/cjk2aj+2e4fLZirozA6Dzzy3Mjtottc
+1GjnPn4IPOxyWRPYot9CORP/sRG/Zyb7lRgyzEQX7czM+8BLMeoXIYZsij7UmY2f9m3US3+EmZrgzNLP
++5bw+oc5jJLcdh95neTM2od9a03TcaS3FsuZuY+BJ+sPbQM31Qvo/ytHHv5S+BtwUIwuhleDN3xmPFC4
+x+F/31XH4bHfkpH0L1BLBwghN+g62gMAAKgWAABQSwECFAAUAAgICAAAACEAITfoOtoDAACoFgAACAAJ
+AAAAAAAAAAAAAAAAAAAALmNvbnRlbnRVVAUAAQAAAABQSwUGAAAAAAEAAQA/AAAAGQQAAAAA
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
+------=_contents/org.eclipse.poosl.testmodels/benchmark/01. skip10000000/skip10000000.poosl-1101f3a5-989b-3a60-99e3-4f18b9e46052
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.poosl.testmodels/benchmark/01. skip10000000/skip10000000.poosl
 
 UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADtlstuwjAQRdf4K7wE
 qSo4dl5lxZcgN1gQNQSE06r9+zoqypmy66qoKgs0dubeOXgmFsulNquVPl9OTYgxxAcdfHPQ4T00r0Pb
@@ -2346,28 +2370,4 @@ qSo4dl5lxZcgN1gQNQSE06r9+zoqypmy66qoKgs0dubeOXgmFsulNquVPl9OTYgxxAcdfHPQ4T00r0Pb
 bgFuKY4ZmRODJRxgFP0XIyYOTLyJ5DrBKI5JdEe0R3SawhkyK24DcK9Rc/B9H7r0X+UTUEsHCK97V5So
 AQAAIgkAAFBLAQIUABQACAgIAAAAIQCve1eUqAEAACIJAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVu
 dFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAADnAQAAAAA=
-------=_contents/nl.esi.poosl.testmodels/benchmark/01. skip10000000/skip10000000.poosl-200b61ea-bcca-3898-9a00-2f1bb595fc0b--
-------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
-Content-Type: q7/binary
-Entry-Name: .q7.content
-
-UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC1WF1v2zYUfS/Q/yDo
-vZKT9SMNnBWulywZqs6IjWXYi0BR1xYTiWRJKnb//a4sObPkhJYdzk+WcM49h1/38mr4ZVXk3iMozQS/
-8E+Cge8BpyJlfHHhl2b+7sz/8uvbN0OhFgHQnEkNgaLSmICaVbAU6kFLQuH8bvNvLLiBlfFWBTt/inta
-xUUlrs/x/YWfGSPPw3C5XAaiWAQYPPw7utlA9mg90TeYir7GhYgLn3C+x0mB6BloE4kUct9j6YUfz9PR
-h8V1NLiEu+/6cXr6zw8ikpGPo/S8Ia3sc7N+wEepxD1Qo5tQPA9As0AKofHfihQyB+03YITPGT432KDh
-4oSugJaGJDm+NaoEP9xiiDzFWWo4OUsUUWw7ZifqVNAHMBMlKGhdG7EKdOgp00axpDS4LEfQ77Xgh7Mk
-qLlQBeEUDiej35KaUsERdo0ivSSHYbMML61LUW0f/S4hmtH20rRgVzdXf34t53NQ26COqZHWbMEL3GSB
-TOd7htPhJuvg/SZiZ0w7dq8hzwUe3Dy12M0qULysUK50/xCJzoS0iN7XCFeC34QxoH5aBBuEK0E8n2lJ
-QWEy1GVh3Q6ygca0wbryMKUZpGWOidyiPlFwWUjDHvudzA57xgoQpXHmGJdcot8xUUZbTLdwzsTXifWy
-zukWcb3GxU3yd6X+F/Cq5EaEZozb5NvAI+X75jsqqjGuLBlvNIumS2ZoZpuxNcDVTF0xnVkP1Jxp3PnO
-jlE0mYqxRY5ImTNKqoJ6zBGSOTFVcTyGq39qA/2ZrWFpVpQoLToz2a1Vt1FgVvYrzDO06GYyPYY3UyyC
-lJFe3GfXrsd6EqVvxaN1CxWIURXGWT0Y3WJJMIKK3FYKiLvkL8Y3eJFVWFR4dX+1qOIhLw7Yuy2Zr6W2
-7p+k7Jefnx/T7tqBzqx6BQJeIdhjYmcAnCzgWhRQNRqWee0gXa3srLrT7i9T2zBX0ndMASrYNtOygTgq
-TMNw04D1acgMNnp15XpdS7bdL4kSMfHBRb/dhqCvmEjWi9c+xiX2TvFEMW6m2LfxRTzOMDe92B1WSj3b
-pP19Zyc2NvV494A07t8EHn7xSIDTDNPvg+XOMTgJPP3A5Mmg/tmuHlswV6dgcBp45KmH20S3uajRzn38
-EnjY4LImsEV/C+VM/H0jfsdM9hsxpJ+JNtqZmQ+Bl2LUb0L02RRdqDMbH3dt1Et/gJma4MzSp11LePPD
-HEZJbruKvExyZu1s11rTbxzobYvlzNznwJP1N7aem+oZ9P+VI/d/JPwdOChGZ/2rwSu+MO6p2cPwv0+q
-w/DQz8hI+hdQSwcIFoMhpNUDAACjFgAAUEsBAhQAFAAICAgAAAAhABaDIaTVAwAAoxYAAAgACQAAAAAA
-AAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAABQEAAAAAA==
-------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
+------=_contents/org.eclipse.poosl.testmodels/benchmark/01. skip10000000/skip10000000.poosl-1101f3a5-989b-3a60-99e3-4f18b9e46052--
