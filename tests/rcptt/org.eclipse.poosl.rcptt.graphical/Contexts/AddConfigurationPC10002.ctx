@@ -20,7 +20,7 @@ with [get-window "Debug Configurations"] {
     }
     get-group "Model:" | get-button Browse | click
     with [get-window "Select poosl model"] {
-       get-tree | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl"
+       get-tree | select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl"
         get-button OK | click
     }
     get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text 10002

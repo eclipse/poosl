@@ -19,7 +19,7 @@ with [get-window "Debug Configurations"] {
         set-text ShoppingCarts10002
     }
     
-    set-dialog-result File [concat "platform:/resource/" "org.eclipse.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"] 
+    set-dialog-result File [concat "platform:/resource/" "poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"] 
     get-window "Debug Configurations" | get-group "Model:" | get-button Browse | click     
     
     get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text 10002

@@ -25,7 +25,7 @@ Content-Type: text/breakpoints
 Entry-Name: debug.breakpoints
 
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.rcptt.ctx.debug:BreakpointResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.rcptt.ctx.debug="http://eclipse.org/rcptt/ctx/debug" xmlns:org.eclipse.rcptt.ecl.core="http://www.eclipse.org/ecl/core.ecore" path="/org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl">
+<org.eclipse.rcptt.ctx.debug:BreakpointResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.rcptt.ctx.debug="http://eclipse.org/rcptt/ctx/debug" xmlns:org.eclipse.rcptt.ecl.core="http://www.eclipse.org/ecl/core.ecore" path="/poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl">
   <breakpoints registered="true" persisted="true" type="org.eclipse.poosl.rotalumisclient.pooslLineBreakpointMarker">
     <attributes xsi:type="org.eclipse.rcptt.ctx.debug:PrimitiveValue" name="org.eclipse.debug.core.enabled">
       <value xsi:type="org.eclipse.rcptt.ecl.core:EclBoolean" value="true"/>

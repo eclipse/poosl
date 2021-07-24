@@ -95,7 +95,7 @@ proc "add-examples-source" {
         get-table | select Project
         get-button OK | click
         with [get-window "Selection Needed"] {
-            get-table | get-item "org.eclipse.poosl.examples" | check
+            get-table | get-item "poosl.examples" | check
             get-button OK | click
         }
     }

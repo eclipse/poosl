@@ -19,6 +19,6 @@ with [get-window "Filters and Customization"] {
     get-button OK | click
 }
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/representations.aird/POOSL viewpoint/Cluster diagram/Cluster ProducerConsumer \\(producer_consumer.poosl\\)" 
+    | select "poosl.examples/representations.aird/POOSL viewpoint/Cluster diagram/Cluster ProducerConsumer \\(producer_consumer.poosl\\)" 
     | double-click
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

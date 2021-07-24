@@ -13,6 +13,6 @@ Content-Type: text/ecl
 Entry-Name: .ecl.context
 
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    | select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
     | get-menu "Debug As/.* POOSL Simulation" | click
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

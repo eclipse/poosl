@@ -12,6 +12,6 @@ Save-Time: 1/12/17 2:14 PM
 Content-Type: text/ecl
 Entry-Name: .ecl.context
 
-launch-debug -name ProducerConsumer10002 -file "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
+launch-debug -name ProducerConsumer10002 -file "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--
