@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Poosl SDK (local)" sequenceNumber="1627073874">
+<target name="Poosl SDK" sequenceNumber="1627073874">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.platform.sdk" version="4.15.0.I20200305-0155"/>
@@ -53,6 +53,8 @@
       <unit id="org.eclipse.platform.feature.group" version="4.15.0.v20200305-0155"/>
       <unit id="javax.activation" version="1.1.0.v201211130549"/>
       <unit id="org.eclipse.xtext.redist.feature.group" version="2.21.0.v20200302-1509"/>
+      <unit id="org.antlr.runtime" version="3.2.0.v201101311130"/>
+      <unit id="org.apache.commons.cli" version="1.2.0.v201404270220"/>
       <unit id="org.eclipse.emf.feature.group" version="2.21.0.v20200205-0529"/>
       <unit id="org.eclipse.emf.transaction.feature.group" version="1.12.0.201805140824"/>
       <unit id="org.eclipse.emf.query.feature.group" version="1.12.0.201805030653"/>

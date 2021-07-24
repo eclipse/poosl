@@ -93,10 +93,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.jgit.ssh.jsch"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.gmf.runtime.notation"
          version="0.0.0"/>
 

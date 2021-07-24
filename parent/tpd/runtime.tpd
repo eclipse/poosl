@@ -18,9 +18,12 @@ location eclipse_core "https://download.eclipse.org/releases/2020-03/" {
 	// +-> org.eclipse.rcp.feature.group
 	// +-> org.eclipse.e4.core.tools.feature.feature.group
 	
+	
 	javax.activation
 	
-	org.eclipse.xtext.redist.feature.group
+	org.eclipse.xtext.redist.feature.group 
+	org.antlr.runtime [3.2.0,3.2.1) // xtext 2.21 requires a strict version
+	org.apache.commons.cli
 	org.eclipse.jdt.feature.group // required by xtext.redist for type indexing.
 	    
     org.eclipse.emf.feature.group
