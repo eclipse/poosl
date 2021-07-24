@@ -1,0 +1,25 @@
+importlib "model.poosl"
+
+
+cluster class someClusterClass()
+ports
+	somePort
+instances
+	importCluster : clusterClass()
+	importProcess : processClass()
+channels
+	{somePort, importCluster.somePort, importProcess.somePort }
+	
+process class someProcessClass()
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | s : dataClass|
+		s someMethod()
+		

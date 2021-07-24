@@ -1,0 +1,96 @@
+/* This example demonstrates a use of the abort statement.
+ * It models a processor that aborts a critical computation when it takes too much time.
+ *
+ */
+// -----------------------------------------------------------------------------
+//
+/* Data class that specifies a task with a certain execution time. */
+data class TaskSpecification
+variables
+	executionTime : Integer
+methods
+	setExecutionTime(time : Integer) : TaskSpecification
+		executionTime := time;
+		return self
+
+	getExecutionTime : Integer
+		return executionTime
+
+	printString: String
+		return self^ printString + "(execution time: " + executionTime printString + ")"
+
+	computeResult : Object
+		return 42
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that models a client that requests for the execution of tasks */
+process class Client
+ports
+	Scheduler
+messages
+	Scheduler!ExecuteTask(TaskSpecification)
+	Scheduler?TaskCompleted(Object)
+	Scheduler?TaskAborted
+variables
+	randomGenerator : RandomGenerator
+init
+	Initialise()()
+methods
+	/* Initializes the process class. */
+	Initialise()()
+		randomGenerator := new(RandomGenerator) randomiseSeed;
+		Wait()()
+
+	/* Wait some time in between tasks. */
+	Wait()()
+		delay (randomGenerator randomInt(100));
+		RequestTaks()()
+
+	/* Request a task execution. */
+	RequestTaks()() | task : TaskSpecification, result : Object |
+		task := new(TaskSpecification) setExecutionTime(randomGenerator randomInt(100));
+		Scheduler!ExecuteTask(task);
+		sel
+			Scheduler?TaskCompleted(result)
+		or
+			Scheduler?TaskAborted
+		les;
+		Wait()()
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that models a scheduler that executes computations. */
+process class Processor(Deadline : Integer)
+ports
+	Port
+messages
+	Port?ExecuteTask(TaskSpecification)
+	Port!TaskCompleted(Object)
+	Port!TaskAborted
+variables
+
+init
+	PerformTimeCriticalComputations()()
+methods
+	/* Perform time-critical computation. */
+	PerformTimeCriticalComputations()() | task : TaskSpecification, result : Object |
+		Port?ExecuteTask(task);
+		abort
+			result := task computeResult;
+			delay task getExecutionTime;
+			Port!TaskCompleted(result)
+		with (
+			delay Deadline;
+			Port!TaskAborted
+		);
+		PerformTimeCriticalComputations()()
+		
+// -----------------------------------------------------------------------------
+//
+system
+instances
+	processor : Processor(Deadline := 50)
+	client : Client()
+channels
+	{ processor.Port, client.Scheduler }

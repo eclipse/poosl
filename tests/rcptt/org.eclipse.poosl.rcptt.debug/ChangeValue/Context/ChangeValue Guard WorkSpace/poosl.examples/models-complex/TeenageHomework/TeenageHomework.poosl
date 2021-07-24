@@ -1,0 +1,164 @@
+/* This example demonstrates the abort and interrupt constructs.
+ * It models a teenager that has to make homework given various distractions.
+ *
+ * Observe the effect of changing the values for RespondToSocialMedia and RespondToParents in the system definition.
+ *
+ */
+// -----------------------------------------------------------------------------
+//
+/* Process class that models parents that regularly check the homework progress. */
+process class Parents(
+		CheckingInterval : Integer)
+ports
+	/* Port for communication between Teenager and Parents. */
+	Progress
+messages
+	/* Check whether the homework has been finished. */
+	Progress!AreYouReady
+	/* Any typical teenage response. */
+	Progress?DoNotDisturbMe
+	/* Report that the homework has been finished. */
+	Progress?Done(Real)
+variables
+
+init
+	Initialise()()
+methods
+	/* Initializes the process class. */
+	Initialise()() | finished : Real |
+		abort
+			CheckProgress()()
+		with Progress?Done(finished)
+
+	/* Regularly check the homework progress. */
+	CheckProgress()() | |
+		delay CheckingInterval;
+		Progress!AreYouReady;
+		Progress?DoNotDisturbMe;
+		CheckProgress()()
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that models a smartphone that regularly announces new messages from a social network.
+ * It also handles any user votes (like or dislike).
+ */
+process class SmartPhone
+ports
+	/* Port for communication between Teenager and SmartPhone. */
+	SocialMedia
+messages
+	/* Announce new message on social media. */
+	SocialMedia!Message
+	/* Positive vote for a message. */
+	SocialMedia?Like
+	/* Negative vote for a message. */
+	SocialMedia?Dislike
+variables
+	/* Random generator for generating random identifiers. */
+	rand : RandomGenerator
+init
+	/* Initializes the process class. */
+	Initialise()()
+methods
+	/* Initializes the process class. */
+	Initialise()()
+		rand := new(RandomGenerator) randomiseSeed;
+		par
+			GenerateMessages()()
+		and
+			ProcessVotes()()
+		rap
+
+	/* Regularly announce a new message on social media. */
+	GenerateMessages()()
+		delay rand random * 50.0;
+		SocialMedia!Message;
+		GenerateMessages()()
+
+	/* Process any positive or negative votes. */
+	ProcessVotes()()
+		sel
+			SocialMedia?Like
+		or
+			SocialMedia?Dislike
+		les;
+		ProcessVotes()()
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that models a teenager that makes homework.
+ * Distractions are provided by both the parents and the smartphone.
+ */
+process class Teenager(
+		TimeToDoHomework : Integer,
+		TimeToReadOneMessage : Integer,
+		TimeToRefocusOnHomework : Integer,
+		RespondToSocialMedia : Boolean,
+		RespondToParents : Boolean)
+ports
+	/* Port for communication between Teenager and Parents. */
+	Progress
+	/* Port for communication between Teenager and SmartPhone. */
+	SocialMedia
+messages
+	/* Check whether the homework has been finished. */
+	Progress?AreYouReady
+	/* Any typical teenage response. */
+	Progress!DoNotDisturbMe
+	/* Report that the homework has been finished. */
+	Progress!Done(Real)
+	/* Announce new message on social media. */
+	SocialMedia?Message
+	/* Positive vote for a message. */
+	SocialMedia!Like
+	/* Negative vote for a message. */
+	SocialMedia!Dislike
+variables
+
+init
+	Initialise()()
+methods
+	/* Initializes the process class. */
+	Initialise()()
+		interrupt
+			DoHomework()()
+		with (
+			sel
+				InteractWithSocialMedia()()
+			or
+				InteractWithParents()()
+			les;
+			delay TimeToRefocusOnHomework
+		);
+		Progress!Done(currentTime)
+
+	/* The main task: doing homework. */
+	DoHomework()()
+		delay TimeToDoHomework
+
+	/* Read a new message on social media. And vote! */
+	InteractWithSocialMedia()()
+		[RespondToSocialMedia] SocialMedia?Message;
+		delay TimeToReadOneMessage;
+		sel
+			SocialMedia!Like
+		or
+			SocialMedia!Dislike
+		les
+
+	/* Keep your parents away. */
+	InteractWithParents()()
+		[RespondToParents] Progress?AreYouReady;
+		Progress!DoNotDisturbMe
+
+// -----------------------------------------------------------------------------
+//
+system
+instances
+	smartPhone : SmartPhone()
+	parent : Parents(CheckingInterval := 250)
+	teenager : Teenager(TimeToDoHomework := 1000, TimeToReadOneMessage := 30, TimeToRefocusOnHomework := 5,
+		RespondToSocialMedia := false, RespondToParents := true)
+channels
+	{ smartPhone.SocialMedia, teenager.SocialMedia }
+	{ parent.Progress, teenager.Progress }

@@ -1,0 +1,280 @@
+/* (simplified) MAC protocol for wireless communication
+ * 
+ */
+//
+data class ChannelInfo extends Object
+variables
+	source, target : Integer,
+	waiting : Boolean
+methods
+	clearWaiting : ChannelInfo
+		waiting := false;
+		return self
+
+	isFree : Boolean
+		return (source = nil) & (target = nil)
+
+	isWaiting : Boolean
+		return waiting = true
+
+	setSource(s : Integer) : ChannelInfo
+		source := s;
+		return self
+
+	setTarget(t : Integer) : ChannelInfo
+		target := t;
+		return self
+
+	setWaiting : ChannelInfo
+		waiting := true;
+		return self
+
+	source : Integer
+		return source
+
+	target : Integer
+		return target
+
+	printString : String
+		return "(" concat(source printString) concat(", ") concat(target printString) concat(", ") concat(waiting
+			printString) concat(")")
+
+data class ChannelInfoTable extends Array
+variables
+	freeSlot, maxSlot : Integer
+methods
+	chansWaiting(target : Integer) : Boolean | i : Integer, found : Boolean, ci : ChannelInfo |
+		i := 1;
+		found := false;
+		while (i < maxSlot) & (found not) do
+			ci := self at(i);
+			if (ci target = target) & (ci isWaiting) then
+				found := true
+			fi;
+			i := i + 1
+		od;
+		return found
+
+	emptySlot : Integer
+		/* returns 0 if there is no empty slot, return the index of an empty slot otherwise */
+		if freeSlot > self size then
+			return 0
+		else
+			return freeSlot
+		fi
+
+	enter(source, target : Integer) : Integer | i : Integer |
+		i := freeSlot;
+		self at(i) setSource(source) setTarget(target) setWaiting;
+		freeSlot := self nextFreeSlot;
+		if freeSlot > maxSlot then
+			maxSlot := freeSlot
+		fi;
+		return i
+
+	init : ChannelInfoTable | i : Integer |
+		freeSlot := 1;
+		maxSlot := 1;
+		i := 1;
+		while i <= self size do
+			self putAt(i, new(ChannelInfo));
+			i := i + 1
+		od;
+		return self
+
+	nextFreeSlot : Integer | i : Integer, found : Boolean |
+		i := freeSlot + 1;
+		found := false;
+		while (i < maxSlot) & (found not) do
+			if self at(i) isFree then
+				found := true
+			else
+				i := i + 1
+			fi
+		od;
+		return i
+
+	relReceiver(c : Integer) : ChannelInfoTable | ci : ChannelInfo |
+		ci := self at(c) setTarget(nil);
+		if ci isFree then
+			/* swap free slot to the end */
+			if c < freeSlot then
+				freeSlot := c
+			fi;
+			if c = maxSlot - 1 then
+				maxSlot := maxSlot - 1
+			fi
+		fi;
+		return self
+
+	relSender(c : Integer) : ChannelInfoTable | ci : ChannelInfo |
+		ci := self at(c) setSource(nil);
+		if ci isFree then
+			/* swap free slot to the end */
+			if c < freeSlot then
+				freeSlot := c
+			fi;
+			if c = maxSlot - 1 then
+				maxSlot := maxSlot - 1
+			fi
+		fi;
+		return self
+
+	selectChan(target : Integer) : Integer | i, ch : Integer, ci : ChannelInfo |
+		i := 1;
+		ch := nil;
+		while (i < maxSlot) & (ch = nil) do
+			ci := self at(i);
+			if (ci target = target) & (ci isWaiting) then
+				ch := i;
+				ci clearWaiting
+			fi;
+			i := i + 1
+		od;
+		return ch
+
+	slotFree : Boolean
+		return freeSlot <= self size
+
+process class BaseStation(NACH : Integer)
+ports
+	mb
+messages
+	mb?anymsg(Integer),
+	mb!nokrec(Integer),
+	mb!noksend(Integer),
+	mb!okrec(Integer, Integer),
+	mb!oksend(Integer, Integer),
+	mb?relrec(Integer, Integer),
+	mb?relsend(Integer, Integer),
+	mb?send(Integer, Integer)
+variables
+	channelInfoTable : ChannelInfoTable
+init
+	init()()
+methods
+	init()()
+		channelInfoTable := new(ChannelInfoTable) resize(NACH) init;
+		loop()()
+
+	loop()() | source, target, c : Integer |
+		sel
+			mb?send(source, target);
+			Send(source, target)()
+		or
+			mb?anymsg(target);
+			AnyMsg(target)()
+		or
+			mb?relsend(source, c);
+			RelSend(c)()
+		or
+			mb?relrec(target, c);
+			RelRec(c)()
+		les;
+		loop()()
+
+	RelRec(c : Integer)()
+		channelInfoTable relReceiver(c)
+
+	RelSend(c : Integer)()
+		channelInfoTable relSender(c)
+
+	Send(source, target : Integer)() | c : Integer |
+		if channelInfoTable slotFree then
+			c := channelInfoTable enter(source, target);
+			mb!oksend(source, c)
+		else
+			mb!noksend(source)
+		fi
+
+	AnyMsg(target : Integer)() | c : Integer |
+		if channelInfoTable chansWaiting(target) then
+			c := channelInfoTable selectChan(target);
+			mb!okrec(target, c)
+		else
+			mb!nokrec(target)
+		fi
+
+process class MobileStationReceiver(Id : Integer)
+ports
+	bs,
+	ch
+messages
+	bs!anymsg(Integer),
+	bs?okrec(Integer, Integer),
+	bs?nokrec(Integer),
+	bs!relrec(Integer, Integer),
+	ch?msg(Integer, Integer)
+variables
+
+init
+	loop()()
+methods
+	loop()() | c, anId : Integer |
+		bs!anymsg(Id);
+		sel
+			bs?okrec(anId, c | anId = Id);
+			OkRec(c)()
+		or
+			bs?nokrec(anId | anId = Id);
+			NOkRec()()
+		les
+
+	NOkRec()()
+		loop()()
+
+	OkRec(c : Integer)() | ac, msg : Integer |
+		ch?msg(ac, msg | ac = c);
+		bs!relrec(Id, c);
+		loop()()
+
+process class MobileStationSender(Id : Integer)
+ports
+	bs,
+	ch
+messages
+	bs!send(Integer, Integer),
+	bs?oksend(Integer, Integer),
+	bs?noksend(Integer),
+	bs!relsend(Integer, Integer),
+	ch!msg(Integer, Integer)
+variables
+	msg : Integer
+init
+	init()()
+methods
+	init()()
+		msg := 0;
+		loop()()
+
+	loop()() | c, anId : Integer |
+		bs!send(Id, Id + 3);
+		sel
+			bs?oksend(anId, c | anId = Id);
+			OkSend(c)()
+		or
+			bs?noksend(anId | anId = Id);
+			NOkSend()()
+		les
+
+	NOkSend()()
+		loop()()
+
+	OkSend(c : Integer)()
+		ch!msg(c, msg);
+		msg := msg + 1;
+		bs!relsend(Id, c);
+		loop()()
+
+system
+instances
+	baseStation : BaseStation(NACH := 2)
+	sender1 : MobileStationSender(Id := 1)
+	sender2 : MobileStationSender(Id := 2)
+	sender3 : MobileStationSender(Id := 3)
+	receiver4 : MobileStationReceiver(Id := 4)
+	receiver5 : MobileStationReceiver(Id := 5)
+	receiver6 : MobileStationReceiver(Id := 6)
+channels
+	{ sender1.bs, sender2.bs, sender3.bs, receiver4.bs, receiver5.bs, receiver6.bs, baseStation.mb }
+	{ sender1.ch, sender2.ch, sender3.ch, receiver4.ch, receiver5.ch, receiver6.ch }

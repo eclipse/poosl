@@ -1,0 +1,31 @@
+cluster class clusterClass()
+ports
+	somePort
+instances
+	someInstance : processClass()
+	someInstance2 : processClass()
+channels
+	{somePort, someInstance.somePort, someInstance2.somePort}	
+
+process class processClass()
+ports
+	somePort
+messages
+	somePort!someMessage(Object, Object)
+variables
+	someVar : Object
+init
+	otherMethod()()
+methods
+	otherMethod()() | |
+		somePort!someMessage(someVar, someVar)
+
+
+
+data class dataClass extends Object
+variables
+	someVar : Object
+methods
+	someMethod() : Object | |
+		return someVar
+	

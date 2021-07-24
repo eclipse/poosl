@@ -1,0 +1,160 @@
+/* Fischer's mutual exclusion protocol
+ *
+ * Suggestion: explore what happens when removing the first "//" at the line:	"// delay 1;			// Be quick or else..."
+ *
+ */
+process class CriticalSection
+ports
+	proc
+messages
+	proc?enter,
+	proc?leave
+variables
+
+init
+	empty()()
+methods
+	empty()() // No process is in the critical section
+		sel
+			proc?enter; // A process has just entered the critical section
+			full()()
+		or
+			proc?leave; // A process wants to leave the critical section, but there is no process in the critical section, produce an error
+			IAmEmpty()() // Call a method that doesn't exist
+		les
+
+	IAmEmpty()() | x : Object |
+		x := nil error("I am empty!")
+
+	full()() // There is a process in the critical section
+		sel
+			proc?leave; // The process leaves the critical section
+			empty()()
+		or
+			proc?enter; // Another process enters the critical section, this should never happen!
+			IAmFull()() // Produce an error by calling a method that doesn't exist
+		les
+
+	IAmFull()() | x : Object |
+		x := nil error("I am full!")
+
+process class Mutex
+ports
+	proc
+messages
+	proc?IWantTo(Integer),
+	proc?IDontWantTo(Integer),
+	proc?CanIGo(Integer),
+	proc!yes,
+	proc!no,
+	proc?DoesHeWantTo(Integer),
+	proc?IAmGoing(Integer)
+variables
+	b : Array, // b(i) is true if process i wants to enter its critical section
+	k : Integer // k is the number of the process that is trying to enter its critical section
+init
+	init()()
+methods
+	init()()
+		k := 0;
+		b := new(Array) resize(2) putAll(false);
+		loop()()
+
+	loop()() | pid : Integer |
+		sel
+			proc?IWantTo(pid) {b putAt(pid + 1, true)}
+		or
+			proc?IDontWantTo(pid) {b putAt(pid + 1, false)}
+		or
+			proc?CanIGo(pid);
+			if k = pid then
+				proc!yes
+			else
+				proc!no
+			fi
+		or
+			proc?DoesHeWantTo(pid);
+			if b at(pid + 1) then
+				proc!yes
+			else
+				proc!no
+			fi
+		or
+			proc?IAmGoing(pid) {k := pid}
+		// A process marks itself as the next process to enter the critical section
+		// This should only be sent if the other process is not entering the critical section
+		les;
+		loop()()
+
+process class MutexProcess(Id : Integer)
+ports
+	mtx,
+	crsc
+messages
+	mtx!IWantTo(Integer),
+	mtx!CanIGo(Integer),
+	mtx?yes,
+	mtx?no,
+	mtx!IAmGoing(Integer),
+	mtx!DoesHeWantTo(Integer),
+	mtx!IDontWantTo(Integer),
+	crsc!enter,
+	crsc!leave
+variables
+	rand : RandomGenerator
+init
+	init()()
+methods
+	init()()
+		rand := new(RandomGenerator);
+		C0()()
+
+	C0()()
+		mtx!IWantTo(Id); // Tell the mutex I would like to enter the critical section now
+		delay 1;
+		C1()()
+
+	C1()()
+		mtx!CanIGo(Id); // Ask the mutex if I can enter the critical section
+		sel
+			mtx?no;
+			delay 1;
+			C2()()
+		or
+			mtx?yes;
+			CriticalSection()();
+			mtx!IDontWantTo(Id);
+			RemainderOfProgram()();
+			C0()()
+		les
+
+	C2()()
+		mtx!DoesHeWantTo(1 - Id);
+		sel
+			mtx?yes;
+			delay 1;
+			C2()()
+		or
+			mtx?no; // The other one does not want to enter, so I am going to.
+			// delay 1;			// Be quick or else...
+			mtx!IAmGoing(Id);
+			C1()()
+		les
+
+	CriticalSection()()
+		crsc!enter;
+		delay rand random * 3.0;
+		crsc!leave
+
+	RemainderOfProgram()()
+		delay rand random * 10.0
+
+system
+instances
+	process0 : MutexProcess(Id := 0)
+	process1 : MutexProcess(Id := 1)
+	criticalSection : CriticalSection()
+	mutex : Mutex()
+channels
+	{ process0.mtx, process1.mtx, mutex.proc }
+	{ process0.crsc, process1.crsc, criticalSection.proc }

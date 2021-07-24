@@ -1,0 +1,103 @@
+importlib "distributions.poosl"
+importlib "performance.poosl"
+importlib "structures.poosl"
+
+data class Packet extends Object
+variables
+	EntranceTime : Real,
+	Destination : Integer,
+	Number : Integer,
+	Source : Integer
+methods
+	setSource(s : Integer) : Packet
+		Source := s;
+		return self
+
+	setDestination(d : Integer) : Packet
+		Destination := d;
+		return self
+
+	getEntranceTime : Real
+		return EntranceTime
+
+	setNumber(n : Integer) : Packet
+		Number := n;
+		return self
+
+	setEntranceTime(t : Real) : Packet
+		EntranceTime := t;
+		return self
+
+	printString : String
+		return Number printString + ":" + Source printString + "->" + Destination printString
+
+	getDestination : Integer
+		return Destination
+
+	getNumber : Integer
+		return Number
+
+	getSource : Integer
+		return Source
+
+data class NIMonitors extends Object
+variables
+	NumberOfCollectedLatencyRewards : Integer,
+	NumberOfCollectedSendRateRewards : Integer,
+	Latency : LongRunSampleAverage,
+	SendRate : LongRunTimeAverage
+methods
+	accurate() : Boolean
+		return Latency accurate & SendRate accurate
+
+	log : NIMonitors
+		SendRate log;
+		Latency log;
+		return self
+
+	rewardLatency(l : Real) : NIMonitors
+		Latency rewardBM(l);
+		NumberOfCollectedLatencyRewards := NumberOfCollectedLatencyRewards + 1;
+		if NumberOfCollectedLatencyRewards modulo(1000) = 0 then
+			Latency log
+		fi;
+		return self
+
+	rewardSendRate(r, t : Real) : NIMonitors
+		SendRate rewardBM(r, t);
+		NumberOfCollectedSendRateRewards := NumberOfCollectedSendRateRewards + 1;
+		if NumberOfCollectedSendRateRewards modulo(1000) = 0 then
+			SendRate log
+		fi;
+		return self
+
+	@Init
+	init(MyID : Integer) : NIMonitors
+		NumberOfCollectedLatencyRewards := 0;
+		NumberOfCollectedSendRateRewards := 0;
+		Latency := new(LongRunSampleAverage) withParameters(0.95, 0.95) setBatchSize(1000) logTo("Latency" + MyID
+			printString);
+		SendRate := new(LongRunTimeAverage) withParameters(0.95, 0.90) setBatchSize(1000) logTo("SendRate" + MyID
+			printString);
+		return self
+
+	printString : String | PrintOut : String |
+		PrintOut := "Statistics for the actual Send Rate at the sending part of the Network Interface:" cr + SendRate
+			printStatistics cr cr;
+		PrintOut := PrintOut + "Statistics for packet Latency at the receiving side of the Network Interface:" cr +
+			Latency printStatistics;
+		return PrintOut
+
+data class AccuracyStatus extends Array
+variables
+
+methods
+	check() : Boolean | i : Integer, AllAccurate : Boolean |
+		AllAccurate := true;
+		i := 1;
+		while AllAccurate & (i <= self size) do
+			AllAccurate := AllAccurate & self at(i);
+			i := i + 1
+		od;
+		return AllAccurate
+		

@@ -1,0 +1,13 @@
+
+process class someClass()
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip

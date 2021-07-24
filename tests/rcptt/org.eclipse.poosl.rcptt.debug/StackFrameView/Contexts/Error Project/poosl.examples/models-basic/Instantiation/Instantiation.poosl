@@ -1,0 +1,27 @@
+process class someClass(b : String)
+ports
+   
+messages
+   
+variables
+   
+init
+    someMethod()()
+methods
+    someMethod()() | a,c : Object |
+        skip
+
+
+data class someDataClass extends Object
+variables
+//	v: Object
+methods
+	ohoh(p: Integer): Object
+		nil error("fout") 
+
+
+
+system
+instances  
+    someInstance: someClass(b := new(someDataClass) ohoh(4))
+channels 

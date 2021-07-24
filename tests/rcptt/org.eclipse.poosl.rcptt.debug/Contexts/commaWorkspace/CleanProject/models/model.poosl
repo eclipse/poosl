@@ -1,0 +1,26 @@
+system
+instances
+	s : someClass()
+channels
+	
+	
+
+process class someClass()
+ports
+	p,
+messages
+	p!p(),
+variables
+	var : Integer,
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+	
+	
+	
+data class someClass extends Object
+variables
+	var : Integer,	
+methods

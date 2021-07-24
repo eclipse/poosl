@@ -1,0 +1,190 @@
+/* This example demonstrates how processes can compete for messages on shared channels.
+ * It is based on Milner's jobshop, where two jobbers compete for job requests and tools.
+ * 
+ */
+// -----------------------------------------------------------------------------
+// 
+/* Process class that generates three types of job requests: easy, normal, hard. */
+process class Customers
+ports
+	/* This is the only port; it is used sending job requests. */
+	out
+messages
+	/* Request for an easy job. */
+	out!easy,
+	/* Request for a normal job. */
+	out!normal,
+	/* Request for a hard job. */
+	out!hard
+variables
+
+init
+	GenerateJobs()()
+methods
+	/* Generates job requests. */
+	GenerateJobs()()
+		sel
+			out!easy
+		or
+			out!normal
+		or
+			out!hard
+		les;
+		GenerateJobs()()
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that receives and performs jobs. */
+process class Jobber
+ports
+	/* Port for receiving job requests. */
+	in,
+	/* Port for acquiring and releasing a Hammer. */
+	h,
+	/* Port for acquiring and releasing a Mallet. */
+	m,
+	/* Port for reporting finished jobs. */
+	out
+messages
+	/* Request for an easy job. */
+	in?easy,
+	/* Request for a normal job. */
+	in?normal,
+	/* Request for a hard job. */
+	in?hard,
+	/* Acquire a Hammer. */
+	h!get,
+	/* Release a Hammer. */
+	h!put,
+	/* Acquire a Mallet. */
+	m!get,
+	/* Release a Mallet. */
+	m!put,
+	/* Report a finished easy job. */
+	out!easy,
+	/* Report a finished normal job. */
+	out!normal,
+	/* Report a finished hard job. */
+	out!hard
+variables
+
+init
+	JobberAgent()()
+methods
+	/* Process jobs */
+	JobberAgent()()
+		sel
+			in?easy;
+			// easy jobs don't require tools
+			out!easy;
+			JobberAgent()()
+		or
+			in?normal;
+			// normal jobs require either a Hammer or a Mallet
+			sel
+				UseHammerNormal()()
+			or
+				UseMalletNormal()()
+			les
+		or
+			in?hard;
+			// hard jobs require a Hammer
+			UseHammerHard()()
+		les
+
+	/* Process a requested normal job using a Mallet. */
+	UseMalletNormal()()
+		m!get;
+		m!put;
+		out!normal;
+		JobberAgent()()
+
+	/* Process a requested normal job using a Hammer. */
+	UseHammerNormal()()
+		h!get;
+		h!put;
+		out!normal;
+		JobberAgent()()
+
+	/* Process a requested hard job using a Hammer. */
+	UseHammerHard()()
+		h!get;
+		h!put;
+		out!hard;
+		JobberAgent()()
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that ensures that a tool can only be used once at the same time. */
+process class Tool
+ports
+	/* This is the only port; it is used for tool requests. */
+	t
+messages
+	/* Acquire the tool. */
+	t?get,
+	/* Release the tool. */
+	t?put
+variables
+
+init
+	Agent()()
+methods
+	/* Process tool requests. */
+	Agent()()
+		t?get;
+		t?put;
+		Agent()()
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that collects finished jobs. */
+process class CollectJobs
+ports
+	/* This is the only port; it is used for collecting finished jobs. */
+	out
+messages
+	/* Receive a finished easy job. */
+	out?easy,
+	/* Receive a finished normal job. */
+	out?normal,
+	/* Receive a finished hard job. */
+	out?hard
+variables
+
+init
+	CollectJobs()()
+methods
+	/* Collect finished jobs. */
+	CollectJobs()()
+		sel
+			out?easy
+		or
+			out?normal
+		or
+			out?hard
+		les;
+		CollectJobs()()
+
+// -----------------------------------------------------------------------------
+//
+/* Top-level system specification */
+system
+instances
+	/* Customers that request jobs. */
+	customers : Customers()
+	/* Collect finished jobs. */
+	collectJobs : CollectJobs()
+	/* First jobber that competes for job requests and tools. */
+	jobber1 : Jobber()
+	/* Second jobber that competes for job requests and tools. */
+	jobber2 : Jobber()
+	/* Hammer that can only be used by one jobber at the same time. */
+	hammer : Tool()
+	/* Mallet that can only be used by one jobber at the same time. */
+	mallet : Tool()
+channels
+	{ customers.out, jobber1.in, jobber2.in }
+	{ jobber1.h, jobber2.h, hammer.t }
+	{ jobber1.m, jobber2.m, mallet.t }
+	{ jobber1.out, jobber2.out, collectJobs.out }

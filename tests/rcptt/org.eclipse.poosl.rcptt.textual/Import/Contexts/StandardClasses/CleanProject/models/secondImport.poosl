@@ -1,0 +1,13 @@
+
+process class secondImportProcess()
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip

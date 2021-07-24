@@ -1,0 +1,6 @@
+
+data class someClass extends Object
+variables
+	
+methods
+	

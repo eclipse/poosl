@@ -1,0 +1,31 @@
+native data class ConsoleWriter extends Object
+variables
+methods
+	native write(s : String) : Object
+	native writeError(s : String) : Object
+	writeLine(s : String) : Object
+		self write(s lf) ;
+		return self
+	writeIndentedLine(s : String) : Object |s2 : String|
+		s2 := "";
+		self write(s2 tab + s lf) ;
+		return self 
+	writeIndentedErrorLine(s : String) : Object |s2 : String|
+		s2 := "";
+		self writeError(s2 tab + s lf) ;
+		return self
+
+
+data class GenericTest extends ConsoleWriter
+variables
+methods
+	assertEquals(value: Object, expected: Object, message: String): GenericTest
+		if value != expected then
+			self writeIndentedErrorLine(message + " Value: " + value printString + " Expected: " + expected printString)
+		fi ;
+		return self
+	assertFalse(value: Boolean, message: String): GenericTest
+		if value then
+			self writeIndentedErrorLine(message)
+		fi ;
+		return self

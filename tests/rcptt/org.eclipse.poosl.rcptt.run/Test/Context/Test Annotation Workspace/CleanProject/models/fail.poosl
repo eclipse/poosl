@@ -1,0 +1,31 @@
+data class someClass extends Object
+variables
+  someVar : Object
+  someVar2 : Object
+methods
+
+	@Test	
+	someMethod1() : Object | |
+		return 1/0
+	
+	@Test	
+	someMethod2() : Object | |
+		someVar := "test1" ;
+		someVar2 := "test2";
+		return self assert(someVar == someVar2, "someVar == someVar2")
+		
+	@Test	
+	someMethod3() : Object | |
+		someVar := "test1" ;
+		someVar2 := "test2";
+		return self assert(someVar != someVar, "someVar != someVar")
+	
+	@Test	
+	someMethod4() : Object | |
+		return self assert(1 != 1 , "1 == 1")
+
+system
+instances
+
+channels
+			

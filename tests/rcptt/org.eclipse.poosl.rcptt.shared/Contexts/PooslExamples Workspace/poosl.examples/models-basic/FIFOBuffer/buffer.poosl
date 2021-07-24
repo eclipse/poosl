@@ -1,0 +1,229 @@
+/* This model adequately captures a FIFO buffer using the Queue class.
+ * The model servers as staring point for an exercise in one of the courses by TNO-ESI.
+ * The assignment can be found in the accompanying pdf file
+ *
+ */
+importlib "structures.poosl"
+importlib "distributions.poosl"
+
+/* Packet */
+//
+data class Packet extends Object
+variables
+	Destination : Integer,
+	EntranceTime : Real,
+	Identifier : Integer,
+	Size : Integer,
+	Source : Integer
+methods
+	getDestination : Integer
+		return Destination
+
+	getEntranceTime : Real
+		return EntranceTime
+
+	getSize : Integer
+		return Size
+
+	setDestination(D : Integer) : Packet
+		Destination := D;
+		return self
+
+	setEntranceTime(T : Real) : Packet
+		EntranceTime := T;
+		return self
+
+	setSize(S : Integer) : Packet
+		Size := S;
+		return self
+
+	setSource(ID : Integer) : Packet
+		Source := ID;
+		return self
+
+	withIdentity(I : Integer) : Packet
+		Identifier := I;
+		return self
+
+	printString : String
+		return "[" + Identifier printString + ", " + Source printString + ", " + Destination printString + "]"
+
+/* Source Classes */
+//
+data class SourceContainer extends Object
+variables
+	FixedSizePackets : Boolean,
+	MinimalPacketSize : Integer,
+	NumberOfGeneratedPackets : Integer,
+	PacketSizeDistribution : DiscreteUniform,
+	SourceID : Integer
+methods
+	init(FSP : Boolean, MinPS, MaxPS, ID : Integer) : SourceContainer
+		FixedSizePackets := FSP;
+		MinimalPacketSize := MinPS;
+		PacketSizeDistribution := new(DiscreteUniform) withParameters(MinPS, MaxPS);
+		SourceID := ID;
+		NumberOfGeneratedPackets := 0;
+		return self
+
+	generate : Packet | P : Packet |
+		NumberOfGeneratedPackets := NumberOfGeneratedPackets + 1;
+		P := new(Packet) withIdentity(NumberOfGeneratedPackets) setSource(SourceID);
+		if FixedSizePackets then
+			P setSize(MinimalPacketSize)
+		else
+			P setSize(PacketSizeDistribution sample)
+		fi;
+		return P
+
+	printString : String
+		return "Number of generated packets: " + NumberOfGeneratedPackets printString
+
+process class TrafficSource(FixedSizePackets : Boolean, Load : Real, MaximalPacketSize : Integer, MeanBurstSize : Real,
+	MinimalPacketSize : Integer, NumberOfDestinations : Integer, SourceID : Integer, TransmissionRate : Real)
+ports
+	Out
+messages
+	Out!Packet(Packet)
+variables
+	DestinationDistribution : DiscreteUniform,
+	IdleTimeDistribution : Exponential,
+	PacketGenerator : SourceContainer,
+	TransitionDistribution : Bernoulli
+init
+	Initialise()()
+methods
+	Initialise()() | TransitionProbability, Lambda : Real, AveragePacketSize : Real |
+		PacketGenerator := new(SourceContainer) init(FixedSizePackets, MinimalPacketSize, MaximalPacketSize, SourceID);
+		DestinationDistribution := new(DiscreteUniform) withParameters(1, NumberOfDestinations);
+		TransitionProbability := (MeanBurstSize - 1.0) / MeanBurstSize;
+		TransitionDistribution := new(Bernoulli) withParameter(TransitionProbability);
+		if FixedSizePackets then
+			AveragePacketSize := MinimalPacketSize asReal
+		else
+			AveragePacketSize := (MaximalPacketSize + MinimalPacketSize) asReal / 2.0
+		fi;
+		Lambda := (Load * (1.0 - TransitionProbability) * TransmissionRate) / (AveragePacketSize * (1.0 - Load));
+		IdleTimeDistribution := new(Exponential) withParameter(Lambda);
+		Idle()()
+
+	Idle()()
+		delay (IdleTimeDistribution sample);
+		Burst(DestinationDistribution sample)()
+
+	Burst(Destination : Integer)() | P : Packet |
+		P := PacketGenerator generate setEntranceTime(currentTime) setDestination(Destination);
+		Out!Packet(P);
+		delay P getSize asReal / TransmissionRate;
+		if TransitionDistribution yieldsSuccess then
+			Burst(Destination)()
+		else
+			Idle()()
+		fi
+
+/* Buffer Classes */
+//
+data class BufferContainer extends Object
+variables
+	BufferSize : Integer,
+	Occupation : Integer,
+	PacketBuffer : Queue
+methods
+	init(S : Integer) : BufferContainer
+		PacketBuffer := new(Queue);
+		BufferSize := S;
+		Occupation := 0;
+		return self
+
+	isNotEmpty : Boolean
+		return PacketBuffer isEmpty not
+
+	allocate : Boolean | NotFull : Boolean |
+		NotFull := Occupation + 1 < BufferSize;
+		if NotFull then
+			Occupation := Occupation + 1
+		fi;
+		return NotFull
+
+	store(P : Packet) : BufferContainer
+		PacketBuffer add(P);
+		return self
+
+	remove : Packet
+		Occupation := Occupation - 1;
+		return PacketBuffer remove
+
+	inspect : Packet
+		return PacketBuffer inspect
+
+	printString : String
+		return "Buffer Content: " + PacketBuffer printString cr + "Occupation: " + Occupation printString
+
+process class Buffer(BufferSize : Integer)
+ports
+	In,
+	Out
+messages
+	In?Packet(Packet),
+	Out!Packet(Packet)
+variables
+	PacketQueue : BufferContainer,
+	ReceiveRate : Real,
+	SendRate : Real
+init
+	Initialise()()
+methods
+	Initialise()()
+		ReceiveRate := 0.6 * (10.0 power(6.0));
+		/* Bytes per Second */
+		SendRate := 1.0 * (10.0 power(6.0));
+		/* Bytes per Second */
+		PacketQueue := new(BufferContainer) init(BufferSize);
+		par
+			HandleInput()()
+		and
+			HandleOutput()()
+		rap
+
+	HandleInput()() | P : Packet, NotFull : Boolean |
+		In?Packet(P) {NotFull := PacketQueue allocate};
+		delay 1.0 / ReceiveRate;
+		if NotFull then
+			PacketQueue store(P)
+		fi;
+		HandleInput()()
+
+	HandleOutput()() | P : Packet |
+		[PacketQueue isNotEmpty] P := PacketQueue inspect;
+		Out!Packet(P);
+		delay 1.0 / SendRate;
+		PacketQueue remove;
+		HandleOutput()()
+
+/* Sink Classes */
+//
+process class TrafficSink()
+ports
+	In
+messages
+	In?Packet(Packet)
+variables
+
+init
+	ReceivePacket()()
+methods
+	ReceivePacket()() | P : Packet |
+		In?Packet(P);
+		ReceivePacket()()
+
+/* System */
+//
+system
+instances
+	Source : TrafficSource(FixedSizePackets := false, Load := 0.85, MaximalPacketSize := 1500, MeanBurstSize := 10.0,
+		MinimalPacketSize := 40, NumberOfDestinations := 1, SourceID := 1, TransmissionRate := 2.0 * (10.0 power(6.0)))
+	Buffer : Buffer(BufferSize := 5000)
+	Sink : TrafficSink()
+channels
+	{ Source.Out, Buffer.In }
+	{ Buffer.Out, Sink.In }

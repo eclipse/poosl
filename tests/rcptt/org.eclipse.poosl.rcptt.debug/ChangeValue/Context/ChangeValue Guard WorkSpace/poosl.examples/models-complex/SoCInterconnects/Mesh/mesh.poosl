@@ -1,0 +1,575 @@
+import "../common.poosl"
+
+data class Flit extends Object
+variables
+	YCoordinate : Integer,
+	XCoordinate : Integer,
+	p : Packet
+methods
+	decrYCoordinate : Flit
+		YCoordinate := YCoordinate - 1;
+		return self
+
+	getXCoordinate : Integer
+		return XCoordinate
+
+	setPacket(q : Packet) : Flit
+		p := q;
+		return self
+
+	incrYCoordinate : Flit
+		YCoordinate := YCoordinate + 1;
+		return self
+
+	setDestination(d : XYCoords) : Flit
+		XCoordinate := d getX;
+		YCoordinate := d getY;
+		return self
+
+	getYCoordinate : Integer
+		return YCoordinate
+
+	decrXCoordinate : Flit
+		XCoordinate := XCoordinate - 1;
+		return self
+
+	getPacket : Packet
+		return p
+
+	printString : String
+		return "(" + XCoordinate printString + ", " + YCoordinate printString + ")"
+
+	incrXCoordinate : Flit
+		XCoordinate := XCoordinate + 1;
+		return self
+
+data class NodeMap extends Object
+variables
+	Coordinates : Array2D
+methods
+	printString : String
+		return Coordinates printString
+
+	@Init
+	init(NumberOfXNodes, NumberOfYNodes : Integer) : NodeMap | i, j : Integer |
+		Coordinates := new(Array2D) resize(NumberOfYNodes, NumberOfXNodes);
+		j := 1;
+		while j <= NumberOfYNodes do
+			i := 1;
+			while i <= NumberOfXNodes do
+				Coordinates putAt(j, i, new(XYCoords) init(i, j));
+				i := i + 1
+			od;
+			j := j + 1
+		od;
+		return self
+
+	getCoordinatesOf(NodeID : Integer) : XYCoords | ID, i, j : Integer, Coords : XYCoords |
+		ID := 1;
+		j := 1;
+		while j <= Coordinates rows do
+			i := 1;
+			while i <= Coordinates columns do
+				if ID = NodeID then
+					Coords := Coordinates at(j, i)
+				fi;
+				ID := ID + 1;
+				i := i + 1
+			od;
+			j := j + 1
+		od;
+		return Coords
+
+data class XYCoords extends Object
+variables
+	X : Integer,
+	Y : Integer
+methods
+	minus(C : XYCoords) : XYCoords
+		return new(XYCoords) init(X - (C getX), Y - (C getY))
+
+	printString : String
+		return "(" + Y printString + ", " + X printString + ")"
+
+	@Init
+	init(A, B : Integer) : XYCoords
+		X := A;
+		Y := B;
+		return self
+
+	getY : Integer
+		return Y
+
+	getX : Integer
+		return X
+
+/*aa */
+process class
+	NetworkInterface_Mesh(BufferCapacity : Integer, MyID : Integer, NumberOfXNodes : Integer, NumberOfYNodes : Integer)
+ports
+	Node,
+	In,
+	Out
+messages
+	Node!Packet(Packet),
+	Node?Packet(Packet),
+	In?Flit(Flit),
+	Out!Flit(Flit)
+variables
+	Buffer : Queue,
+	Locator : NodeMap
+init
+	Initialise()()
+methods
+	TransferRouter2Node()() | f : Flit |
+		// Transfers a flit from the router to the corresponding node as a packet
+		In?Flit(f);
+		Node!Packet(f getPacket);
+		TransferRouter2Node()()
+
+	ForwardToRouter()() | p : Packet, f : Flit |
+		// Forwards a packet in the buffer as a flit to the router using relative destination coordinates
+		[ Buffer isEmpty not ] p := Buffer inspect;
+		f := new(Flit) setPacket(p) setDestination(Locator getCoordinatesOf(p getDestination) minus(Locator
+			getCoordinatesOf(MyID)));
+		Out!Flit(f);
+		Buffer remove;
+		ForwardToRouter()()
+
+	ReceiveFromNode()() | p : Packet |
+		// Receives a packet from node and puts it into buffer as long as the buffer is not full
+		[ Buffer isFull not ] Node?Packet(p) {Buffer add(p setEntranceTime(currentTime))};
+		ReceiveFromNode()()
+
+	Initialise()()
+		Buffer := new(Queue) resize(BufferCapacity);
+		Locator := new(NodeMap) init(NumberOfXNodes, NumberOfYNodes);
+		par
+			ReceiveFromNode()()
+		and
+			ForwardToRouter()()
+		and
+			TransferRouter2Node()()
+		rap
+
+process class PositiveRouter(ProcessingTime : Real)
+ports
+	IYT,
+	In,
+	IXL,
+	OYB,
+	OXR,
+	Out
+messages
+	IYT?Flit(Flit),
+	In?Flit(Flit),
+	IXL?Flit(Flit),
+	OYB!Flit(Flit),
+	OXR!Flit(Flit),
+	Out!Flit(Flit)
+variables
+
+init
+	TransferFlit()()
+methods
+	TransferFlit()() | f : Flit |
+		// Receives and forwards a flit for the positive direction
+		sel
+			In?Flit(f)
+		or
+			IXL?Flit(f)
+		or
+			IYT?Flit(f)
+		les;
+		delay ProcessingTime;
+		if f getXCoordinate > 0 then
+			f decrXCoordinate;
+			OXR!Flit(f)
+		else if f getYCoordinate > 0 then
+			f decrYCoordinate;
+			OYB!Flit(f)
+		else
+			Out!Flit(f)
+		fi fi;
+		TransferFlit()()
+
+process class Fifo(Capacity : Integer, ProcessingTime : Real)
+ports
+	In,
+	Out
+messages
+	In?Flit(Flit),
+	Out!Flit(Flit)
+variables
+	Buffer : Queue
+init
+	Initialise()()
+methods
+	Initialise()()
+		Buffer := new(Queue) resize(Capacity);
+		par
+			HandleInput()()
+		and
+			HandleOutput()()
+		rap
+
+	HandleOutput()() | f : Flit |
+		[ Buffer isEmpty not ] f := Buffer inspect;
+		Out!Flit(f);
+		delay ProcessingTime;
+		Buffer remove;
+		HandleOutput()()
+
+	HandleInput()() | f : Flit |
+		[ Buffer isFull not ] In?Flit(f) {Buffer add(f)};
+		delay ProcessingTime;
+		HandleInput()()
+
+process class
+	Node_Mesh(AccuracyCheckInterval : Real, LinkCapacity : Real, Load : Real, MeanBurstSize : Real, MyID : Integer, NumberOfXNodes : Integer, NumberOfYNodes : Integer)
+ports
+	Monitor,
+	NI
+messages
+	Monitor!Accurate(Integer),
+	Monitor?StopSimulation,
+	NI!Packet(Packet),
+	NI?Packet(Packet)
+variables
+	ArrayOfDestinations : Array,
+	DestinationIndexDistribution : DiscreteUniform,
+	PacketNumber : Integer,
+	TransitionDistribution : Bernoulli,
+	IdleTimeDistribution : Exponential,
+	Monitors : NIMonitors
+init
+	Initialise()()
+methods
+	Initialise()() | P, Lambda : Real, ID, i : Integer |
+		// Initialize variables for packet generation
+		P := (MeanBurstSize - 1.0) / MeanBurstSize;
+		Lambda := Load * (1.0 - P) * LinkCapacity / (1.0 - Load);
+		TransitionDistribution := new(Bernoulli) withParameter(P);
+		IdleTimeDistribution := new(Exponential) withParameter(Lambda);
+		PacketNumber := 1;
+		ArrayOfDestinations := new(Array) resize((NumberOfXNodes * NumberOfYNodes) - 1);
+		// Need to ensure that no packets for this NI are generated
+		ID := 1;
+		i := 1;
+		while ID < (NumberOfXNodes * NumberOfYNodes) do
+			if i != MyID then
+				ArrayOfDestinations putAt(ID, i);
+				ID := ID + 1
+			fi;
+			i := i + 1
+		od;
+		DestinationIndexDistribution := new(DiscreteUniform) withParameters(1, (NumberOfXNodes * NumberOfYNodes) - 1);
+		// Ensures fair distribution over the allowed destinations
+		// Initialize performance monitors
+		Monitors := new(NIMonitors) init(MyID);
+		// Initialize actual behavior
+		abort
+			par
+				Idle()()
+			and
+				ReceivePacket()()
+			and
+				CheckAccuracy()() // Notify simulation controller about accuracy status of performance monitors
+			rap
+		with Monitor?StopSimulation {Monitors log}
+
+	CheckAccuracy()()
+		delay AccuracyCheckInterval;
+		if Monitors accurate then
+			Monitor!Accurate(MyID) // Notify simulation controller about accuracy status of performance monitors
+		else
+			CheckAccuracy()() // Otherwise check again
+		fi
+
+	ReceivePacket()() | p : Packet |
+		// Receives a packet destined for this network interface
+		NI?Packet(p) {Monitors rewardLatency(currentTime - p getEntranceTime)};
+		// Check on correctness of behavior
+		if p getDestination != MyID then
+			p error("Packet " + p printString + " arrived at wrong destination")
+		fi;
+		ReceivePacket()()
+
+	Burst(Destination : Integer)() | p : Packet |
+		// Generate and send one packet of a burst
+		p := new(Packet) setNumber(PacketNumber) setSource(MyID) setDestination(Destination);
+		if Destination = MyID then
+			p error("Destination equal to Source")
+		fi;
+		NI!Packet(p) {PacketNumber := PacketNumber + 1};
+		Monitors rewardSendRate(LinkCapacity, currentTime);
+		delay 1.0 / LinkCapacity;
+		Monitors rewardSendRate(0.0, currentTime);
+		// Decide whether another packet must be sent in this burst
+		if TransitionDistribution yieldsSuccess then
+			Burst(Destination)() // Send another packet
+		else
+			Idle()() // Insert an Idle period
+		fi
+
+	Idle()()
+		// Insert a period of no traffic
+		delay (IdleTimeDistribution sample);
+		// Now start the generation of traffic again
+		Burst(ArrayOfDestinations at(DestinationIndexDistribution sample))()
+
+process class NegativeRouter(ProcessingTime : Real)
+ports
+	Out,
+	OYT,
+	In,
+	OXL,
+	IYB,
+	IXR
+messages
+	Out!Flit(Flit),
+	OYT!Flit(Flit),
+	In?Flit(Flit),
+	OXL!Flit(Flit),
+	IYB?Flit(Flit),
+	IXR?Flit(Flit)
+variables
+
+init
+	TransferFlit()()
+methods
+	TransferFlit()() | f : Flit |
+		// Receives and forwards a flit for the negative direction
+		sel
+			In?Flit(f)
+		or
+			IXR?Flit(f)
+		or
+			IYB?Flit(f)
+		les;
+		delay ProcessingTime;
+		if f getXCoordinate < 0 then
+			f incrXCoordinate;
+			OXL!Flit(f)
+		else if f getYCoordinate < 0 then
+			f incrYCoordinate;
+			OYT!Flit(f)
+		else
+			Out!Flit(f)
+		fi fi;
+		TransferFlit()()
+
+process class
+	SimulationController_Mesh(AccuracyCheckInterval : Real, MaximumSimulatedTime : Real, NumberOfXNodes : Integer,  NumberOfYNodes : Integer)
+ports
+	Monitor
+messages
+	Monitor!StopSimulation,
+	Monitor?Accurate(Integer)
+variables
+	Status : AccuracyStatus
+init
+	Initialise()()
+methods
+	Initialise()()
+		Status := new(AccuracyStatus) resize(NumberOfXNodes * NumberOfYNodes) putAll(false);
+		interrupt
+			ReceiveStatusInformation()()
+		with CheckAccuracy()()
+
+	CheckAccuracy()() | i : Integer |
+		delay AccuracyCheckInterval;
+		if (Status check | (currentTime > MaximumSimulatedTime)) then
+			i := 1;
+			// Terminate behavior of all nodes when performance estimations are accurate
+			while i <= NumberOfXNodes + NumberOfYNodes + 1 do
+				Monitor!StopSimulation;
+				i := i + 1
+			od
+		fi
+
+	ReceiveStatusInformation()() | NI_ID : Integer |
+		Monitor?Accurate(NI_ID) {Status putAt(NI_ID, true)};
+		ReceiveStatusInformation()()
+
+cluster class Router_Mesh(FifoCapacity : Integer, FifoProcessingTime : Real, RouterProcessingTime : Real)
+ports
+	Out,
+	OYT,
+	IYT,
+	In,
+	OYB,
+	IXL,
+	OXL,
+	IYB,
+	OXR,
+	IXR
+instances
+	PositiveRouter : PositiveRouter(ProcessingTime := RouterProcessingTime)
+	NegativeRouter : NegativeRouter(ProcessingTime := RouterProcessingTime)
+	FiFo : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+channels
+	{ In, PositiveRouter.In }
+	{ PositiveRouter.Out, FiFo.In }
+	{ FiFo.Out, NegativeRouter.In }
+	{ Out, NegativeRouter.Out }
+	{ IXR, NegativeRouter.IXR }
+	{ IYB, NegativeRouter.IYB }
+	{ OXL, NegativeRouter.OXL }
+	{ OYT, NegativeRouter.OYT }
+	{ IXL, PositiveRouter.IXL }
+	{ IYT, PositiveRouter.IYT }
+	{ OXR, PositiveRouter.OXR }
+	{ OYB, PositiveRouter.OYB }
+
+cluster class Mesh2x2(FifoCapacity : Integer, FifoProcessingTime : Real, RouterProcessingTime : Real)
+ports
+	IYB3,
+	OYT1,
+	In1,
+	OXL3,
+	OXR2,
+	IXR2,
+	OYB4,
+	Out3,
+	IYT2,
+	In4,
+	Out4,
+	IXL1,
+	OXL1,
+	OYB3,
+	In2,
+	IXR4,
+	In3,
+	IYT1,
+	Out2,
+	IYB4,
+	Out1,
+	OYT2,
+	OXR4,
+	IXL3
+instances
+	F12 : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+	F13 : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+	F21 : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+	F24 : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+	F31 : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+	F34 : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+	F42 : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+	F43 : Fifo(Capacity := FifoCapacity, ProcessingTime := FifoProcessingTime)
+	R1 : Router_Mesh(FifoCapacity := FifoCapacity, FifoProcessingTime := FifoProcessingTime, RouterProcessingTime :=
+		RouterProcessingTime)
+	R2 : Router_Mesh(FifoCapacity := FifoCapacity, FifoProcessingTime := FifoProcessingTime, RouterProcessingTime :=
+		RouterProcessingTime)
+	R3 : Router_Mesh(FifoCapacity := FifoCapacity, FifoProcessingTime := FifoProcessingTime, RouterProcessingTime :=
+		RouterProcessingTime)
+	R4 : Router_Mesh(FifoCapacity := FifoCapacity, FifoProcessingTime := FifoProcessingTime, RouterProcessingTime :=
+		RouterProcessingTime)
+channels
+	{ In1, R1.In }
+	{ In2, R2.In }
+	{ In3, R3.In }
+	{ In4, R4.In }
+	{ Out1, R1.Out }
+	{ Out2, R2.Out }
+	{ Out3, R3.Out }
+	{ Out4, R4.Out }
+	{ IXL1, R1.IXL }
+	{ F12.Out, R2.IXL }
+	{ IXL3, R3.IXL }
+	{ F34.Out, R4.IXL }
+	{ F21.Out, R1.IXR }
+	{ IXR2, R2.IXR }
+	{ F43.Out, R3.IXR }
+	{ IXR4, R4.IXR }
+	{ OXL1, R1.OXL }
+	{ F21.In, R2.OXL }
+	{ OXL3, R3.OXL }
+	{ F43.In, R4.OXL }
+	{ F12.In, R1.OXR }
+	{ OXR2, R2.OXR }
+	{ F34.In, R3.OXR }
+	{ OXR4, R4.OXR }
+	{ F31.Out, R1.IYB }
+	{ F42.Out, R2.IYB }
+	{ IYB3, R3.IYB }
+	{ IYB4, R4.IYB }
+	{ IYT1, R1.IYT }
+	{ IYT2, R2.IYT }
+	{ F13.Out, R3.IYT }
+	{ F24.Out, R4.IYT }
+	{ F13.In, R1.OYB }
+	{ F24.In, R2.OYB }
+	{ OYB3, R3.OYB }
+	{ OYB4, R4.OYB }
+	{ OYT1, R1.OYT }
+	{ OYT2, R2.OYT }
+	{ F31.In, R3.OYT }
+	{ F42.In, R4.OYT }
+
+cluster class MeshBasedNetwork(FifoCapacity : Integer, FifoProcessingTime : Real, NIBufferCapacity : Integer,
+	NumberOfXNodes : Integer, NumberOfYNodes : Integer, RouterProcessingTime : Real)
+ports
+	Node4,
+	Node3,
+	Node1,
+	Node2
+instances
+	NI1 : NetworkInterface_Mesh(BufferCapacity := NIBufferCapacity, MyID := 1, NumberOfXNodes := NumberOfXNodes,
+		NumberOfYNodes := NumberOfYNodes)
+	NI2 : NetworkInterface_Mesh(BufferCapacity := NIBufferCapacity, MyID := 2, NumberOfXNodes := NumberOfXNodes,
+		NumberOfYNodes := NumberOfYNodes)
+	NI3 : NetworkInterface_Mesh(BufferCapacity := NIBufferCapacity, MyID := 3, NumberOfXNodes := NumberOfXNodes,
+		NumberOfYNodes := NumberOfYNodes)
+	NI4 : NetworkInterface_Mesh(BufferCapacity := NIBufferCapacity, MyID := 4, NumberOfXNodes := NumberOfXNodes,
+		NumberOfYNodes := NumberOfYNodes)
+	@SuppressWarnings("unconnected")
+	Mesh : Mesh2x2(FifoCapacity := FifoCapacity, FifoProcessingTime := FifoProcessingTime, RouterProcessingTime :=
+		RouterProcessingTime)
+channels
+	{ Node1, NI1.Node }
+	{ Node2, NI2.Node }
+	{ Node3, NI3.Node }
+	{ Node4, NI4.Node }
+	{ NI1.In, Mesh.Out1 }
+	{ NI2.In, Mesh.Out2 }
+	{ NI3.In, Mesh.Out3 }
+	{ NI4.In, Mesh.Out4 }
+	{ NI1.Out, Mesh.In1 }
+	{ NI2.Out, Mesh.In2 }
+	{ NI3.Out, Mesh.In3 }
+	{ NI4.Out, Mesh.In4 }
+
+cluster class SoC_Mesh(AccuracyCheckInterval : Real, FifoCapacity : Integer, FifoProcessingTime : Real,
+	LinkCapacity : Real, Load : Real, MeanBurstSize : Real, NIBufferCapacity : Integer, NumberOfXNodes : Integer,
+	NumberOfYNodes : Integer, RouterProcessingTime : Real)
+ports
+	Monitor
+instances
+	N1 : Node_Mesh(AccuracyCheckInterval := AccuracyCheckInterval, LinkCapacity := LinkCapacity, Load := Load,
+		MeanBurstSize := MeanBurstSize, MyID := 1, NumberOfXNodes := NumberOfXNodes, NumberOfYNodes := NumberOfYNodes)
+	N2 : Node_Mesh(AccuracyCheckInterval := AccuracyCheckInterval, LinkCapacity := LinkCapacity, Load := Load,
+		MeanBurstSize := MeanBurstSize, MyID := 2, NumberOfXNodes := NumberOfXNodes, NumberOfYNodes := NumberOfYNodes)
+	N3 : Node_Mesh(AccuracyCheckInterval := AccuracyCheckInterval, LinkCapacity := LinkCapacity, Load := Load,
+		MeanBurstSize := MeanBurstSize, MyID := 3, NumberOfXNodes := NumberOfXNodes, NumberOfYNodes := NumberOfYNodes)
+	N4 : Node_Mesh(AccuracyCheckInterval := AccuracyCheckInterval, LinkCapacity := LinkCapacity, Load := Load,
+		MeanBurstSize := MeanBurstSize, MyID := 4, NumberOfXNodes := NumberOfXNodes, NumberOfYNodes := NumberOfYNodes)
+	Network : MeshBasedNetwork(FifoCapacity := FifoCapacity, FifoProcessingTime := FifoProcessingTime, NIBufferCapacity
+		:= NIBufferCapacity, NumberOfXNodes := NumberOfXNodes, NumberOfYNodes := NumberOfYNodes, RouterProcessingTime :=
+		RouterProcessingTime)
+channels
+	{ Monitor, N1.Monitor, N2.Monitor, N3.Monitor, N4.Monitor }
+	{ N1.NI, Network.Node1 }
+	{ N2.NI, Network.Node2 }
+	{ N3.NI, Network.Node3 }
+	{ N4.NI, Network.Node4 }
+
+system
+instances
+	SimulationController : SimulationController_Mesh(AccuracyCheckInterval := 1.0, MaximumSimulatedTime := 1.0 * 10.0
+		power(6.0), NumberOfXNodes := 2, NumberOfYNodes := 2)
+	SoC_Mesh : SoC_Mesh(AccuracyCheckInterval := 1.0, FifoCapacity := 2, FifoProcessingTime := 0.001, LinkCapacity :=
+		150.0, Load := 0.5, MeanBurstSize := 5.0, NIBufferCapacity := 2, NumberOfXNodes := 2, NumberOfYNodes := 2,
+		RouterProcessingTime := 0.002)
+channels
+	{ SimulationController.Monitor, SoC_Mesh.Monitor }

@@ -1,0 +1,34 @@
+data class someClass extends Object
+variables
+
+methods
+	@Test
+	@Error("expected")
+	someMethod() : Object | |
+		return self error("expected")
+
+	@Test
+	@Error
+	@Skip
+	someMethod1() : Object | |
+		return 1 / 0
+		
+	@Test
+	someMethod2() : Object | |
+		return 1 / 0
+		
+	@Test	
+	someMethod3() : Object | |
+		return self assert(false, "assert false")
+		
+	@Test	
+	someMethod4() : Object | |
+		return self assert(true, "assert true")
+		
+		
+
+system
+instances
+
+channels
+			

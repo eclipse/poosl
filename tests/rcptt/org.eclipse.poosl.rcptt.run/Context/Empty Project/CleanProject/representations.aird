@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:poosl="http://poosl.esi.nl/poosl/3.0.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style" xmi:id="_uZlrwF59EeSKdO9yVvz2EQ" selectedViews="_wDQYQF59EeSKdO9yVvz2EQ" version="8.1.1">
+  <models xmi:type="poosl:Poosl" href="models/model.poosl#/"/>
+  <ownedViews xmi:type="viewpoint:DRepresentationContainer" xmi:id="_wDQYQF59EeSKdO9yVvz2EQ" initialized="true">
+    <ownedRepresentations xmi:type="diagram:DSemanticDiagram" xmi:id="_3jX6wF59EeSKdO9yVvz2EQ" name="new System diagram">
+      
+      <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']"/>
+      <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_3jX6zF59EeSKdO9yVvz2EQ"/>
+      <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer"/>
+      <target xmi:type="poosl:System" href="models/model.poosl#//@systemSpecification"/>
+    </ownedRepresentations>
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']"/>
+  </ownedViews>
+</viewpoint:DAnalysis>

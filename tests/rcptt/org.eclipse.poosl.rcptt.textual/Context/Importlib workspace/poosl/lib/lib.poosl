@@ -1,0 +1,18 @@
+data class someClass extends Object
+variables
+	
+methods
+	
+process class someClass()
+	ports
+		
+	messages
+		
+	variables
+		
+	init
+		someMethod()()
+	methods
+		someMethod()() | someVar : someClass |
+			someVar deepCopy()
+	

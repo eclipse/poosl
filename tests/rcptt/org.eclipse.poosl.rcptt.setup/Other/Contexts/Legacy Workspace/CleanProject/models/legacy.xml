@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8"?><poosl_specification xmlns="uri:poosl">
+    <data_classes>
+        <data_class name="Object" native="true">
+            <data_method name="deepCopy" native="true">
+                <return_type>Object</return_type>
+            </data_method>
+            <data_method name="error" native="true">
+                <return_type>Object</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="assert" native="true">
+                <return_type>Object</return_type>
+                <argument name="b" type="Boolean"/>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="marshal" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="printString" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="shallowCopy" native="true">
+                <return_type>Object</return_type>
+            </data_method>
+            <data_method name="isOfType" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="!=" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="o" type="Object"/>
+            </data_method>
+            <data_method name="!==" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="o" type="Object"/>
+            </data_method>
+            <data_method name="=" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="o" type="Object"/>
+            </data_method>
+            <data_method name="==" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="o" type="Object"/>
+            </data_method>
+        </data_class>
+        <data_class name="Packet" native="false">
+            <super_class>Object</super_class>
+            <instance_variable name="ID" type="Integer"/>
+            <data_method name="setIdentity" native="false">
+                <return_type>Packet</return_type>
+                <argument name="I" type="Integer"/>
+                <body_text>
+	/* Sets the ID value of the packet. */
+	setIdentity(I : Integer) : Packet
+		ID := I ;
+		return self.</body_text>
+                <body_expression>
+                    <sequence_of_expressions>
+                        <assignment variable_name="ID">
+                            <variable name="I"/>
+                        </assignment>
+                        <return>
+                            <self/>
+                        </return>
+                    </sequence_of_expressions>
+                </body_expression>
+            </data_method>
+            <data_method name="getIdentity" native="false">
+                <return_type>Integer</return_type>
+                <body_text>
+	/* Gets the ID value of the packet. */
+	getIdentity : Integer
+		return ID.</body_text>
+                <body_expression>
+                    <return>
+                        <variable name="ID"/>
+                    </return>
+                </body_expression>
+            </data_method>
+            <data_method name="printString" native="false">
+                <return_type>String</return_type>
+                <body_text>
+	/* Creates the String value that is shown by the debugging tools for instances of type Packet. */
+	printString : String
+		return("[" + ID printString + "]").</body_text>
+                <body_expression>
+                    <return>
+                        <sequence_of_expressions>
+                            <binary_operation operator="+">
+                                <left_operand>
+                                    <binary_operation operator="+">
+                                        <left_operand>
+                                            <constant type="string">"["</constant>
+                                        </left_operand>
+                                        <right_operand>
+                                            <data_method_call method_name="printString" super="false">
+                                                <receiver>
+                                                    <variable name="ID"/>
+                                                </receiver>
+                                            </data_method_call>
+                                        </right_operand>
+                                    </binary_operation>
+                                </left_operand>
+                                <right_operand>
+                                    <constant type="string">"]"</constant>
+                                </right_operand>
+                            </binary_operation>
+                        </sequence_of_expressions>
+                    </return>
+                </body_expression>
+            </data_method>
+        </data_class>
+        <data_class name="Array" native="true">
+            <super_class>Object</super_class>
+            <data_method name="deepCopy" native="true">
+                <return_type>Object</return_type>
+            </data_method>
+            <data_method name="shallowCopy" native="true">
+                <return_type>Object</return_type>
+            </data_method>
+            <data_method name="printString" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="at" native="true">
+                <return_type>Object</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="size" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="putAt" native="true">
+                <return_type>Array</return_type>
+                <argument name="i" type="Integer"/>
+                <argument name="o" type="Object"/>
+            </data_method>
+            <data_method name="putAll" native="true">
+                <return_type>Array</return_type>
+                <argument name="o" type="Object"/>
+            </data_method>
+            <data_method name="resize" native="true">
+                <return_type>Array</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="concat" native="true">
+                <return_type>Array</return_type>
+                <argument name="a" type="Array"/>
+            </data_method>
+            <data_method name="find" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+                <argument name="o" type="Object"/>
+            </data_method>
+            <data_method name="subArray" native="true">
+                <return_type>Array</return_type>
+                <argument name="i" type="Integer"/>
+                <argument name="l" type="Integer"/>
+            </data_method>
+            <data_method name="=" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="o" type="Object"/>
+            </data_method>
+            <data_method name="+" native="true">
+                <return_type>Array</return_type>
+                <argument name="a" type="Array"/>
+            </data_method>
+        </data_class>
+        <data_class name="String" native="true">
+            <super_class>Object</super_class>
+            <data_method name="deepCopy" native="true">
+                <return_type>Object</return_type>
+            </data_method>
+            <data_method name="shallowCopy" native="true">
+                <return_type>Object</return_type>
+            </data_method>
+            <data_method name="concat" native="true">
+                <return_type>String</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="cr" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="lf" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="tab" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="find" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="at" native="true">
+                <return_type>Char</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="size" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="putAt" native="true">
+                <return_type>String</return_type>
+                <argument name="i" type="Integer"/>
+                <argument name="c" type="Char"/>
+            </data_method>
+            <data_method name="subString" native="true">
+                <return_type>String</return_type>
+                <argument name="i" type="Integer"/>
+                <argument name="l" type="Integer"/>
+            </data_method>
+            <data_method name="unmarshal" native="true">
+                <return_type>Object</return_type>
+            </data_method>
+            <data_method name="splitOn" native="true">
+                <return_type>Array</return_type>
+                <argument name="c" type="Char"/>
+            </data_method>
+            <data_method name="splitOnWhiteSpace" native="true">
+                <return_type>Array</return_type>
+            </data_method>
+            <data_method name="splitOnString" native="true">
+                <return_type>Array</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="splitOnAny" native="true">
+                <return_type>Array</return_type>
+                <argument name="c" type="String"/>
+            </data_method>
+            <data_method name="trim" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="isBoolean" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="isChar" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="isReal" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="isInteger" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="toBoolean" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="toChar" native="true">
+                <return_type>Char</return_type>
+            </data_method>
+            <data_method name="toReal" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="toInteger" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="=" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="o" type="Object"/>
+            </data_method>
+            <data_method name="+" native="true">
+                <return_type>String</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+        </data_class>
+        <data_class name="Nil" native="true">
+            <super_class>Object</super_class>
+        </data_class>
+        <data_class name="Boolean" native="true">
+            <super_class>Object</super_class>
+            <data_method name="not" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="xor" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="b" type="Boolean"/>
+            </data_method>
+            <data_method name="&amp;" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="b" type="Boolean"/>
+            </data_method>
+            <data_method name="|" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="b" type="Boolean"/>
+            </data_method>
+            <data_method name="!" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+        </data_class>
+        <data_class name="Char" native="true">
+            <super_class>Object</super_class>
+            <data_method name="asciiIndex" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="asString" native="true">
+                <return_type>String</return_type>
+            </data_method>
+        </data_class>
+        <data_class name="Integer" native="true">
+            <super_class>Object</super_class>
+            <data_method name="abs" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="asAsciiChar" native="true">
+                <return_type>Char</return_type>
+            </data_method>
+            <data_method name="asReal" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="div" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="fac" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="modulo" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="monus" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="power" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="sqr" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="max" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="not" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="min" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="xor" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="-" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="*" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="/" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="&amp;" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="+" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="&lt;" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="&lt;=" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="&gt;" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="&gt;=" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="|" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="-" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+        </data_class>
+        <data_class name="Real" native="true">
+            <super_class>Object</super_class>
+            <data_method name="abs" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="acos" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="asin" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="asInteger" native="true">
+                <return_type>Integer</return_type>
+            </data_method>
+            <data_method name="atan" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="atan2" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="ceiling" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="cos" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="exp" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="floor" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="ln" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="log" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="monus" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="power" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="round" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="sin" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="sqr" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="sqrt" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="tan" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="max" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="min" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="-" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="*" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="/" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="+" native="true">
+                <return_type>Real</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="&lt;" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="&lt;=" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="&gt;" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="&gt;=" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="r" type="Real"/>
+            </data_method>
+            <data_method name="-" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+        </data_class>
+        <data_class name="RandomGenerator" native="true">
+            <super_class>Object</super_class>
+            <data_method name="random" native="true">
+                <return_type>Real</return_type>
+            </data_method>
+            <data_method name="randomInt" native="true">
+                <return_type>Integer</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="randomiseSeed" native="true">
+                <return_type>RandomGenerator</return_type>
+            </data_method>
+            <data_method name="seed" native="true">
+                <return_type>RandomGenerator</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+        </data_class>
+        <data_class name="FileIn" native="true">
+            <super_class>Object</super_class>
+            <data_method name="source" native="true">
+                <return_type>FileIn</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="open" native="true">
+                <return_type>FileIn</return_type>
+            </data_method>
+            <data_method name="atEndOfFile" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="close" native="true">
+                <return_type>FileIn</return_type>
+            </data_method>
+            <data_method name="read" native="true">
+                <return_type>String</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="readUntil" native="true">
+                <return_type>String</return_type>
+                <argument name="c" type="Char"/>
+            </data_method>
+            <data_method name="readWord" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="readLine" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="readString" native="true">
+                <return_type>String</return_type>
+            </data_method>
+        </data_class>
+        <data_class name="FileOut" native="true">
+            <super_class>Object</super_class>
+            <data_method name="destination" native="true">
+                <return_type>FileOut</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="open" native="true">
+                <return_type>FileOut</return_type>
+            </data_method>
+            <data_method name="append" native="true">
+                <return_type>FileOut</return_type>
+            </data_method>
+            <data_method name="flush" native="true">
+                <return_type>FileOut</return_type>
+            </data_method>
+            <data_method name="close" native="true">
+                <return_type>FileOut</return_type>
+            </data_method>
+            <data_method name="write" native="true">
+                <return_type>FileOut</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="writeLine" native="true">
+                <return_type>FileOut</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="writeString" native="true">
+                <return_type>FileOut</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+        </data_class>
+        <data_class name="Socket" native="true">
+            <super_class>Object</super_class>
+            <data_method name="acceptFrom" native="true">
+                <return_type>Socket</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="connectTo" native="true">
+                <return_type>Socket</return_type>
+                <argument name="s" type="String"/>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="isConnected" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="isDisconnected" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="close" native="true">
+                <return_type>Socket</return_type>
+            </data_method>
+            <data_method name="hasCharacters" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="read" native="true">
+                <return_type>String</return_type>
+                <argument name="i" type="Integer"/>
+            </data_method>
+            <data_method name="hasCharacter" native="true">
+                <return_type>Boolean</return_type>
+                <argument name="c" type="Char"/>
+            </data_method>
+            <data_method name="readUntil" native="true">
+                <return_type>String</return_type>
+                <argument name="c" type="Char"/>
+            </data_method>
+            <data_method name="hasWord" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="readWord" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="hasLine" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="readLine" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="hasString" native="true">
+                <return_type>Boolean</return_type>
+            </data_method>
+            <data_method name="readString" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="write" native="true">
+                <return_type>Socket</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="writeLine" native="true">
+                <return_type>Socket</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="writeString" native="true">
+                <return_type>Socket</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+        </data_class>
+        <data_class name="Observer" native="true">
+            <super_class>Object</super_class>
+            <data_method name="identifyWith" native="true">
+                <return_type>Observer</return_type>
+                <argument name="s" type="String"/>
+            </data_method>
+            <data_method name="identity" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="result" native="true">
+                <return_type>String</return_type>
+            </data_method>
+            <data_method name="register" native="true">
+                <return_type>Observer</return_type>
+            </data_method>
+            <data_method name="deregister" native="true">
+                <return_type>Observer</return_type>
+            </data_method>
+            <data_method name="complete" native="true">
+                <return_type>Observer</return_type>
+            </data_method>
+            <data_method name="halt" native="true">
+                <return_type>Observer</return_type>
+            </data_method>
+        </data_class>
+    </data_classes>
+    <process_classes>
+        <process_class name="Producer">
+            <interface>
+                <port name="Out">
+                    <message type="write" name="Message">
+                        <argument type="Packet"/>
+                    </message>
+                </port>
+            </interface>
+            <instantiation_parameter name="IdleTime" type="Integer"/>
+            <instance_variable name="ID" type="Integer"/>
+            <initial_method_call>
+                <method_call_text>
+	Initialise()()</method_call_text>
+                <process_method_call method_name="Initialise" stmt_handle="11"/>
+            </initial_method_call>
+            <process_method name="Initialise">
+                <body_text>
+	/* Initializes the process class. */
+	Initialise()()
+		ID := 1 ;
+		SendPacket()().</body_text>
+                <body_statement>
+                    <sequence_of_statements stmt_handle="1">
+                        <expression stmt_handle="2">
+                            <assignment variable_name="ID">
+                                <constant type="integer">1</constant>
+                            </assignment>
+                        </expression>
+                        <process_method_call method_name="SendPacket" stmt_handle="3"/>
+                    </sequence_of_statements>
+                </body_statement>
+            </process_method>
+            <process_method name="SendPacket">
+                <local_variable name="p" type="Packet"/>
+                <body_text>
+	/* Send a message */
+	SendPacket()() | p : Packet |
+		p := new(Packet) setIdentity(ID) ;
+		Out!Message(p) { ID := ID + 1 } ;
+		Idle()().</body_text>
+                <body_statement>
+                    <sequence_of_statements stmt_handle="4">
+                        <expression stmt_handle="5">
+                            <assignment variable_name="p">
+                                <data_method_call method_name="setIdentity" super="false">
+                                    <receiver>
+                                        <new data_class="Packet"/>
+                                    </receiver>
+                                    <argument>
+                                        <variable name="ID"/>
+                                    </argument>
+                                </data_method_call>
+                            </assignment>
+                        </expression>
+                        <message_send message_name="Message" stmt_handle="6">
+                            <argument>
+                                <variable name="p"/>
+                            </argument>
+                            <atomic_expression>
+                                <assignment variable_name="ID">
+                                    <binary_operation operator="+">
+                                        <left_operand>
+                                            <variable name="ID"/>
+                                        </left_operand>
+                                        <right_operand>
+                                            <constant type="integer">1</constant>
+                                        </right_operand>
+                                    </binary_operation>
+                                </assignment>
+                            </atomic_expression>
+                            <port>Out</port>
+                        </message_send>
+                        <process_method_call method_name="Idle" stmt_handle="7"/>
+                    </sequence_of_statements>
+                </body_statement>
+            </process_method>
+            <process_method name="Idle">
+                <body_text>
+	/* Wait a while before sending the next message */
+	Idle()()
+		delay(IdleTime) ;
+		SendPacket()().</body_text>
+                <body_statement>
+                    <sequence_of_statements stmt_handle="8">
+                        <delay stmt_handle="9">
+                            <sequence_of_expressions>
+                                <variable name="IdleTime"/>
+                            </sequence_of_expressions>
+                        </delay>
+                        <process_method_call method_name="SendPacket" stmt_handle="10"/>
+                    </sequence_of_statements>
+                </body_statement>
+            </process_method>
+        </process_class>
+        <process_class name="Bus">
+            <interface>
+                <port name="Out">
+                    <message type="write" name="Message">
+                        <argument type="Packet"/>
+                    </message>
+                </port>
+                <port name="In">
+                    <message type="read" name="Message">
+                        <argument type="Packet"/>
+                    </message>
+                </port>
+            </interface>
+            <instance_variable name="p" type="Packet"/>
+            <initial_method_call>
+                <method_call_text>
+	Transfer()()</method_call_text>
+                <process_method_call method_name="Transfer" stmt_handle="16"/>
+            </initial_method_call>
+            <process_method name="Transfer">
+                <body_text>
+	/* Transfer messages */
+	Transfer()()
+		In?Message(p) ;
+		Out!Message(p) ;
+		Transfer()().</body_text>
+                <body_statement>
+                    <sequence_of_statements stmt_handle="12">
+                        <message_receive message_name="Message" stmt_handle="13">
+                            <variable>p</variable>
+                            <port>In</port>
+                        </message_receive>
+                        <message_send message_name="Message" stmt_handle="14">
+                            <argument>
+                                <variable name="p"/>
+                            </argument>
+                            <port>Out</port>
+                        </message_send>
+                        <process_method_call method_name="Transfer" stmt_handle="15"/>
+                    </sequence_of_statements>
+                </body_statement>
+            </process_method>
+        </process_class>
+        <process_class name="Consumer">
+            <interface>
+                <port name="In">
+                    <message type="read" name="Message">
+                        <argument type="Packet"/>
+                    </message>
+                </port>
+            </interface>
+            <instance_variable name="ID" type="Integer"/>
+            <initial_method_call>
+                <method_call_text>
+	ReceivePacket()()</method_call_text>
+                <process_method_call method_name="ReceivePacket" stmt_handle="20"/>
+            </initial_method_call>
+            <process_method name="ReceivePacket">
+                <local_variable name="p" type="Packet"/>
+                <body_text>
+	/* Receive messages */
+	ReceivePacket()() | p : Packet |
+		In?Message(p) { ID := p getIdentity } ;
+		ReceivePacket()().</body_text>
+                <body_statement>
+                    <sequence_of_statements stmt_handle="17">
+                        <message_receive message_name="Message" stmt_handle="18">
+                            <variable>p</variable>
+                            <atomic_expression>
+                                <assignment variable_name="ID">
+                                    <data_method_call method_name="getIdentity" super="false">
+                                        <receiver>
+                                            <variable name="p"/>
+                                        </receiver>
+                                    </data_method_call>
+                                </assignment>
+                            </atomic_expression>
+                            <port>In</port>
+                        </message_receive>
+                        <process_method_call method_name="ReceivePacket" stmt_handle="19"/>
+                    </sequence_of_statements>
+                </body_statement>
+            </process_method>
+        </process_class>
+    </process_classes>
+    <cluster_classes>
+        <po:cluster_class xmlns:po="uri:poosl" name="ProducerConsumer">
+<po:interface>
+<po:port name="In">
+<po:annotation>
+<po:graphics>
+<po:location x="0" y="0"/>
+<po:name_location x="0" y="0"/>
+</po:graphics>
+</po:annotation>
+</po:port>
+<po:port name="Out">
+<po:annotation>
+<po:graphics>
+<po:location x="0" y="0"/>
+<po:name_location x="0" y="0"/>
+</po:graphics>
+</po:annotation>
+</po:port>
+</po:interface>
+<instantiation_parameter name="IdleTime" type="Integer"/>
+<po:channel name="0" output_port="In">
+<po:annotation>
+<po:graphics>
+<po:node x="5" y="5"/>
+<po:segment>
+<po:node number="1"/>
+<po:instance_port instance_name="Consumer" port_name="In"/>
+</po:segment>
+<po:segment>
+<po:node number="1"/>
+<po:cluster_port port_name="In"/>
+</po:segment>
+<po:name_location x="100" y="100"/>
+<po:message_location x="200" y="200" width="50"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:channel>
+<po:channel name="1" output_port="Out">
+<po:annotation>
+<po:graphics>
+<po:node x="5" y="5"/>
+<po:segment>
+<po:node number="1"/>
+<po:instance_port instance_name="Producer" port_name="Out"/>
+</po:segment>
+<po:segment>
+<po:node number="1"/>
+<po:cluster_port port_name="Out"/>
+</po:segment>
+<po:name_location x="100" y="100"/>
+<po:message_location x="200" y="200" width="50"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:channel>
+<po:instance type="process" class="Producer" name="Producer">
+<instantiation_expression parameter_name="IdleTime">
+                    <body_text> IdleTime</body_text>
+                    <body_expression>
+                        <variable name="IdleTime"/>
+                    </body_expression>
+                </instantiation_expression>
+<po:connection port="Out" channel="1">
+<po:annotation>
+<po:graphics>
+<po:location x="0" y="0"/>
+<po:name_location x="5" y="0"/>
+</po:graphics>
+</po:annotation>
+</po:connection>
+<po:annotation>
+<po:graphics>
+<po:box left="0" top="0" right="100" bottom="100"/>
+<po:name_location x="0" y="0"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:instance>
+<po:instance type="process" class="Consumer" name="Consumer">
+<po:connection port="In" channel="0">
+<po:annotation>
+<po:graphics>
+<po:location x="0" y="0"/>
+<po:name_location x="5" y="0"/>
+</po:graphics>
+</po:annotation>
+</po:connection>
+<po:annotation>
+<po:graphics>
+<po:box left="0" top="0" right="100" bottom="100"/>
+<po:name_location x="0" y="0"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:instance>
+<po:annotation>
+<po:graphics>
+<po:box left="0" top="0" right="100" bottom="100"/>
+<po:name_location x="0" y="0"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:cluster_class>
+    </cluster_classes>
+    <top_level_specification>
+        <po:instance xmlns:po="uri:poosl" type="cluster" class="ProducerConsumer" name="ProducerConsumer">
+<instantiation_expression parameter_name="IdleTime">
+                <body_text> 2</body_text>
+                <body_expression>
+                    <constant type="integer">2</constant>
+                </body_expression>
+            </instantiation_expression>
+<po:connection port="Out" channel="0">
+<po:annotation>
+<po:graphics>
+<po:location x="0" y="0"/>
+<po:name_location x="0" y="0"/>
+</po:graphics>
+</po:annotation>
+</po:connection>
+<po:connection port="In" channel="1">
+<po:annotation>
+<po:graphics>
+<po:location x="0" y="0"/>
+<po:name_location x="0" y="0"/>
+</po:graphics>
+</po:annotation>
+</po:connection>
+<po:annotation>
+<po:graphics>
+<po:box left="0" top="0" right="100" bottom="100"/>
+<po:name_location x="0" y="0"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:instance>
+        <po:instance xmlns:po="uri:poosl" type="process" class="Bus" name="Bus">
+<po:connection port="In" channel="0">
+<po:annotation>
+<po:graphics>
+<po:location x="0" y="0"/>
+<po:name_location x="0" y="0"/>
+</po:graphics>
+</po:annotation>
+</po:connection>
+<po:connection port="Out" channel="1">
+<po:annotation>
+<po:graphics>
+<po:location x="0" y="0"/>
+<po:name_location x="0" y="0"/>
+</po:graphics>
+</po:annotation>
+</po:connection>
+<po:annotation>
+<po:graphics>
+<po:box left="0" top="0" right="100" bottom="100"/>
+<po:name_location x="0" y="0"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:instance>
+        <po:channel xmlns:po="uri:poosl" name="0">
+<po:annotation>
+<po:graphics>
+<po:node x="5" y="5"/>
+<po:segment>
+<po:node number="1"/>
+<po:instance_port instance_name="ProducerConsumer" port_name="Out"/>
+</po:segment>
+<po:segment>
+<po:node number="1"/>
+<po:instance_port instance_name="Bus" port_name="In"/>
+</po:segment>
+<po:name_location x="100" y="100"/>
+<po:message_location x="200" y="200" width="50"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:channel>
+        <po:channel xmlns:po="uri:poosl" name="1">
+<po:annotation>
+<po:graphics>
+<po:node x="5" y="5"/>
+<po:segment>
+<po:node number="1"/>
+<po:instance_port instance_name="ProducerConsumer" port_name="In"/>
+</po:segment>
+<po:segment>
+<po:node number="1"/>
+<po:instance_port instance_name="Bus" port_name="Out"/>
+</po:segment>
+<po:name_location x="100" y="100"/>
+<po:message_location x="200" y="200" width="50"/>
+<po:scenario name="normal"/>
+</po:graphics>
+</po:annotation>
+</po:channel>
+    </top_level_specification>
+</poosl_specification>

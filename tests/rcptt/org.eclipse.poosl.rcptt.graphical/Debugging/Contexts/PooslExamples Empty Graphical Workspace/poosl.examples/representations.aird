@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xmi:id="_YPoP0MUEEeWkgPYzh9bAvA" version="10.0.0.201505222000">
+  <semanticResources>libraries/SocketProcess.poosl</semanticResources>
+  <semanticResources>libraries/distributions.poosl</semanticResources>
+  <semanticResources>libraries/json.poosl</semanticResources>
+  <semanticResources>libraries/structures.poosl</semanticResources>
+  <semanticResources>libraries/performance.poosl</semanticResources>
+  <semanticResources>models-basic/HelloWorld/hello_world.poosl</semanticResources>
+  <semanticResources>models-basic/Jobshop/jobshop.poosl</semanticResources>
+  <semanticResources>models-basic/Lottery/Lottery.poosl</semanticResources>
+  <semanticResources>models-basic/ProducerConsumer/producer_consumer.poosl</semanticResources>
+  <semanticResources>models-basic/Scheduling/PreEmptive.poosl</semanticResources>
+  <semanticResources>models-basic/Scheduling/Timeout.poosl</semanticResources>
+  <semanticResources>models-basic/ShoppingCarts/ShoppingCarts.poosl</semanticResources>
+  <semanticResources>models-basic/SocketExample/socket_example.poosl</semanticResources>
+  <semanticResources>models-basic/VendingMachine/VendingMachine.poosl</semanticResources>
+  <semanticResources>models-complex/ATMSwitch/switch.poosl</semanticResources>
+  <semanticResources>models-complex/Fisher/fischer.poosl</semanticResources>
+  <semanticResources>models-complex/MPSoC/application.poosl</semanticResources>
+  <semanticResources>models-complex/MPSoC/platform.poosl</semanticResources>
+  <semanticResources>models-complex/MPSoC/system.poosl</semanticResources>
+  <semanticResources>models-complex/MarsRover/marsrover.poosl</semanticResources>
+  <semanticResources>models-complex/PARProtocol/par.poosl</semanticResources>
+  <semanticResources>models-complex/SoCInterconnects/Bus/bus.poosl</semanticResources>
+  <semanticResources>models-complex/SoCInterconnects/common.poosl</semanticResources>
+  <semanticResources>models-complex/SoCInterconnects/Mesh/mesh.poosl</semanticResources>
+  <semanticResources>models-complex/TeenageHomework/TeenageHomework.poosl</semanticResources>
+  <semanticResources>models-complex/Wireless/wireless.poosl</semanticResources>
+</viewpoint:DAnalysis>

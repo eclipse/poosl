@@ -1,0 +1,29 @@
+
+cluster class clusterClass()
+ports
+	
+instances
+	
+channels
+
+process class processClass()
+ports
+
+messages
+	
+variables
+	
+init
+	otherMethod()()
+methods
+	otherMethod()() | |
+		skip
+
+
+
+data class dataClass extends Object
+variables
+
+methods
+
+	

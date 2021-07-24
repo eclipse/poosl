@@ -1,0 +1,29 @@
+cluster class parentClusterClass()
+ports
+	
+instances
+	
+channels
+
+process class parentProcesClass()
+ports
+q	
+messages
+	q!q
+
+variables
+	parentVar : String
+init
+	parentMethod()()
+methods
+	parentMethod()() | |
+		parentVar;
+		q!q
+		
+		
+data class parentDataClass extends Object
+variables
+	parentVar : String
+methods
+	parentMethod() : Object | |
+		return parentVar

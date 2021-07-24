@@ -1,0 +1,22 @@
+// one process executing a process loop with 10000000 iterations.
+
+process class A ()
+ports
+	
+messages
+
+variables
+	
+init
+	start()()
+methods
+start()() | i: Integer |
+ 	i:=0;
+	while i<10000000 do i:=i+1 od
+
+
+system
+instances
+	A: A()
+channels
+

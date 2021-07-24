@@ -1,0 +1,280 @@
+// 100 Trainbundles of 100 Trains of 10 tasks, together performing 90000 communications.
+
+process class Task ()
+ports
+	in, out
+messages
+	in?token(),
+	out!token()
+variables
+	
+init
+	start()()
+methods
+start()()
+	in?token;
+	out!token;
+	start()()
+
+process class Source ()
+ports
+	out
+messages
+	out!token()
+variables
+	
+init
+	start()()
+methods
+start()()
+	out!token
+
+process class Drain ()
+ports
+	in
+messages
+	in?token()
+variables
+	
+init
+	start()()
+methods
+start()()
+	in?token
+
+cluster class Train ()
+ports
+	
+instances
+	Source: Source()
+	T4: Task()
+	T8: Task()
+	T5: Task()
+	Drain: Drain()
+	T1: Task()
+	T3: Task()
+	T2: Task()
+	T7: Task()
+	T6: Task()
+channels
+	{T4.out, T5.in } 
+	{T1.out, T2.in } 
+	{T3.in, T2.out } 
+	{T8.in, T7.out } 
+	{Source.out, T1.in } 
+	{T8.out, Drain.in } 
+	{T7.in, T6.out } 
+	{T4.in, T3.out } 
+	{T5.out, T6.in } 
+
+cluster class TrainBundle ()
+ports
+	
+instances
+	Train_35: Train()
+	Train_15: Train()
+	Train_49: Train()
+	Train_88: Train()
+	Train_69: Train()
+	Train_68: Train()
+	Train_11: Train()
+	Train_81: Train()
+	Train_82: Train()
+	Train_7: Train()
+	Train_28: Train()
+	Train_53: Train()
+	Train_39: Train()
+	Train_12: Train()
+	Train_95: Train()
+	Train_44: Train()
+	Train_77: Train()
+	Train_45: Train()
+	Train_8: Train()
+	Train_10: Train()
+	Train_13: Train()
+	Train_1: Train()
+	Train_97: Train()
+	Train_33: Train()
+	Train_62: Train()
+	Train_76: Train()
+	Train_26: Train()
+	Train_20: Train()
+	Train_17: Train()
+	Train_90: Train()
+	Train_80: Train()
+	Train_22: Train()
+	Train_59: Train()
+	Train_37: Train()
+	Train_31: Train()
+	Train_84: Train()
+	Train_6: Train()
+	Train_70: Train()
+	Train_2: Train()
+	Train_58: Train()
+	Train_74: Train()
+	Train_54: Train()
+	Train_47: Train()
+	Train_34: Train()
+	Train_48: Train()
+	Train_60: Train()
+	Train_19: Train()
+	Train_100: Train()
+	Train_38: Train()
+	Train_46: Train()
+	Train_21: Train()
+	Train_9: Train()
+	Train_94: Train()
+	Train_83: Train()
+	Train_51: Train()
+	Train_25: Train()
+	Train_98: Train()
+	Train_78: Train()
+	Train_36: Train()
+	Train_61: Train()
+	Train_5: Train()
+	Train_63: Train()
+	Train_40: Train()
+	Train_27: Train()
+	Train_14: Train()
+	Train_87: Train()
+	Train_75: Train()
+	Train_3: Train()
+	Train_91: Train()
+	Train_72: Train()
+	Train_29: Train()
+	Train_93: Train()
+	Train_23: Train()
+	Train_57: Train()
+	Train_43: Train()
+	Train_92: Train()
+	Train_73: Train()
+	Train_18: Train()
+	Train_64: Train()
+	Train_50: Train()
+	Train_42: Train()
+	Train_86: Train()
+	Train_41: Train()
+	Train_71: Train()
+	Train_55: Train()
+	Train_56: Train()
+	Train_96: Train()
+	Train_65: Train()
+	Train_85: Train()
+	Train_4: Train()
+	Train_89: Train()
+	Train_67: Train()
+	Train_32: Train()
+	Train_30: Train()
+	Train_52: Train()
+	Train_16: Train()
+	Train_79: Train()
+	Train_99: Train()
+	Train_66: Train()
+	Train_24: Train()
+channels
+
+
+system
+instances
+	TrainBundle_56: TrainBundle()
+	TrainBundle_12: TrainBundle()
+	TrainBundle_25: TrainBundle()
+	TrainBundle_17: TrainBundle()
+	TrainBundle_45: TrainBundle()
+	TrainBundle_37: TrainBundle()
+	TrainBundle_93: TrainBundle()
+	TrainBundle_29: TrainBundle()
+	TrainBundle_74: TrainBundle()
+	TrainBundle_80: TrainBundle()
+	TrainBundle_69: TrainBundle()
+	TrainBundle_62: TrainBundle()
+	TrainBundle_77: TrainBundle()
+	TrainBundle_97: TrainBundle()
+	TrainBundle_66: TrainBundle()
+	TrainBundle_16: TrainBundle()
+	TrainBundle_30: TrainBundle()
+	TrainBundle_36: TrainBundle()
+	TrainBundle_22: TrainBundle()
+	TrainBundle_83: TrainBundle()
+	TrainBundle_51: TrainBundle()
+	TrainBundle_50: TrainBundle()
+	TrainBundle_55: TrainBundle()
+	TrainBundle_43: TrainBundle()
+	TrainBundle_49: TrainBundle()
+	TrainBundle_67: TrainBundle()
+	TrainBundle_24: TrainBundle()
+	TrainBundle_92: TrainBundle()
+	TrainBundle_71: TrainBundle()
+	TrainBundle_82: TrainBundle()
+	TrainBundle_39: TrainBundle()
+	TrainBundle_64: TrainBundle()
+	TrainBundle_78: TrainBundle()
+	TrainBundle_53: TrainBundle()
+	TrainBundle_21: TrainBundle()
+	TrainBundle_47: TrainBundle()
+	TrainBundle_15: TrainBundle()
+	TrainBundle_44: TrainBundle()
+	TrainBundle_59: TrainBundle()
+	TrainBundle_75: TrainBundle()
+	TrainBundle_13: TrainBundle()
+	TrainBundle_23: TrainBundle()
+	TrainBundle_9: TrainBundle()
+	TrainBundle_84: TrainBundle()
+	TrainBundle_63: TrainBundle()
+	TrainBundle_2: TrainBundle()
+	TrainBundle_54: TrainBundle()
+	TrainBundle_10: TrainBundle()
+	TrainBundle_52: TrainBundle()
+	TrainBundle_87: TrainBundle()
+	TrainBundle_48: TrainBundle()
+	TrainBundle_72: TrainBundle()
+	TrainBundle_8: TrainBundle()
+	TrainBundle_3: TrainBundle()
+	TrainBundle_27: TrainBundle()
+	TrainBundle_86: TrainBundle()
+	TrainBundle_57: TrainBundle()
+	TrainBundle_4: TrainBundle()
+	TrainBundle_73: TrainBundle()
+	TrainBundle_42: TrainBundle()
+	TrainBundle_41: TrainBundle()
+	TrainBundle_20: TrainBundle()
+	TrainBundle_46: TrainBundle()
+	TrainBundle_5: TrainBundle()
+	TrainBundle_31: TrainBundle()
+	TrainBundle_100: TrainBundle()
+	TrainBundle_96: TrainBundle()
+	TrainBundle_76: TrainBundle()
+	TrainBundle_14: TrainBundle()
+	TrainBundle_91: TrainBundle()
+	TrainBundle_89: TrainBundle()
+	TrainBundle_95: TrainBundle()
+	TrainBundle_94: TrainBundle()
+	TrainBundle_32: TrainBundle()
+	TrainBundle_7: TrainBundle()
+	TrainBundle_1: TrainBundle()
+	TrainBundle_40: TrainBundle()
+	TrainBundle_33: TrainBundle()
+	TrainBundle_26: TrainBundle()
+	TrainBundle_6: TrainBundle()
+	TrainBundle_65: TrainBundle()
+	TrainBundle_61: TrainBundle()
+	TrainBundle_35: TrainBundle()
+	TrainBundle_88: TrainBundle()
+	TrainBundle_79: TrainBundle()
+	TrainBundle_99: TrainBundle()
+	TrainBundle_98: TrainBundle()
+	TrainBundle_18: TrainBundle()
+	TrainBundle_70: TrainBundle()
+	TrainBundle_68: TrainBundle()
+	TrainBundle_90: TrainBundle()
+	TrainBundle_81: TrainBundle()
+	TrainBundle_60: TrainBundle()
+	TrainBundle_28: TrainBundle()
+	TrainBundle_19: TrainBundle()
+	TrainBundle_85: TrainBundle()
+	TrainBundle_58: TrainBundle()
+	TrainBundle_34: TrainBundle()
+	TrainBundle_11: TrainBundle()
+	TrainBundle_38: TrainBundle()
+channels
+

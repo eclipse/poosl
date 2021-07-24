@@ -1,0 +1,38 @@
+// -----------------------------------------------------------------------------
+//
+/* Example process that reads a line and immediately writes it */
+process class ReaderWriter()
+ports
+	read,
+	write
+messages
+	read?readLine(String)
+	write!writeLine(String)
+variables
+
+init
+	init()()
+methods
+	init()() | |
+		copyLine()()
+
+	copyLine()() | line : String |
+		read?readLine(line);
+		write!writeLine(line);
+		copyLine()()
+
+
+// -----------------------------------------------------------------------------
+//
+/* Top-level system specification */
+system
+ports
+	/* Defined in FileCopy.ini as port of type FileIn. */
+	fileReader
+	/* Defined in FileCopy.ini as port of type FileOut. */
+	fileWriter
+instances
+	readerWriter : ReaderWriter()
+channels
+	{ fileReader, readerWriter.read }
+	{ fileWriter, readerWriter.write }

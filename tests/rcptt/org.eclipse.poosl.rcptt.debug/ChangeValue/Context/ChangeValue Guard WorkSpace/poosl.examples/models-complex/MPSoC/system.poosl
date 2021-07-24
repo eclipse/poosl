@@ -1,0 +1,60 @@
+import "application.poosl"
+import "platform.poosl"
+
+/* Process Classes */
+process class SimulationController(AccuracyCheckInterval : Real, MaximumSimulationTime : Real)
+ports
+	Monitor
+messages
+	Monitor!ApplicationStatus(),
+	Monitor!PlatformStatus(),
+	Monitor!StopSimulation(),
+	Monitor?ApplicationAccuracyStatus(Boolean),
+	Monitor?Iterate(Boolean),
+	Monitor?PlatformAccuracyStatus(Boolean)
+variables
+	Status : Array
+init
+	Initialise()()
+methods
+	CheckAccuracyStatus()() | Accurate : Boolean |
+		delay (AccuracyCheckInterval);
+		Monitor!ApplicationStatus;
+		Monitor?ApplicationAccuracyStatus(Accurate) {Status putAt(1, Accurate)};
+		Monitor!PlatformStatus;
+		Monitor?PlatformAccuracyStatus(Accurate) {Status putAt(2, Accurate)};
+		if (Status at(1) & Status at(2)) not then
+			CheckAccuracyStatus()()
+		fi
+
+	Initialise()() | Iterate : Boolean |
+		Monitor?Iterate(Iterate);
+		Status := new(Array) resize(2);
+		if Iterate then
+			abort
+				CheckAccuracyStatus()()
+			with delay (MaximumSimulationTime)
+		else
+			delay (MaximumSimulationTime)
+		fi;
+		abort
+			while true do
+				Monitor!StopSimulation
+			od
+		with delay (1.0e-12)
+
+/* System Specification */
+system
+instances
+	Application : Application(DesiredLatency := 1.0 / 500.0, DesiredThroughput := 800.0, Iterate := true, MapTask1To :=
+		"Node1", MapTask2To := "Node4", MapTask3To := "Node2", MapTask4To := "Node3", MapTask5To := "Node4", MapTask6To
+		:= "Node1", MapTask7To := "Node2", PriorityTask1 := 1, PriorityTask2 := 2, PriorityTask3 := 3, PriorityTask4 :=
+		4, PriorityTask5 := 5, PriorityTask6 := 6, PriorityTask7 := 7)
+	MPSoC : Platform(NoC_BandwidthPerConnection := 200000000.0, NoC_ConnectionSetUpLatency := 0.00002,
+		Node_InternalBandwidth := 400000000.0, Node_InternalConnectionSetUpLatency := 0.00001, PowerPerCommunicatedByte
+		:= 0.0000005, PowerPerStoredByte := 0.000001)
+	SimulationController : SimulationController(AccuracyCheckInterval := 0.003, MaximumSimulationTime := 50.0)
+channels
+	{ Application.Tasks, MPSoC.ComputationResources }
+	{ Application.Buffers, MPSoC.CommunicationResources }
+	{ Application.SimulationController, MPSoC.SimulationController, SimulationController.Monitor }  

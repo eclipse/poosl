@@ -1,0 +1,165 @@
+// 100 processes, each executing 100.000 skip statements and 1001 method calls.
+
+process class A ()
+ports
+	
+messages
+
+variables
+	
+init
+	start100000()()
+methods
+start100000()()
+	start10000()();
+	start10000()();
+	start10000()();
+	start10000()();
+	start10000()();
+	start10000()();
+	start10000()();
+	start10000()();
+	start10000()();
+	start10000()()
+
+start10000()()
+	start1000()();
+	start1000()();
+	start1000()();
+	start1000()();
+	start1000()();
+	start1000()();
+	start1000()();
+	start1000()();
+	start1000()();
+	start1000()()
+
+start1000()()
+	start100()();
+	start100()();
+	start100()();
+	start100()();
+	start100()();
+	start100()();
+	start100()();
+	start100()();
+	start100()();
+	start100()()
+
+start100()()
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip;
+	skip;skip;skip;skip;skip;skip;skip;skip;skip;skip
+
+
+system
+instances
+	A_92: A()
+	A_15: A()
+	A_99: A()
+	A_56: A()
+	A_68: A()
+	A_80: A()
+	A_32: A()
+	A_44: A()
+	A_8: A()
+	A_97: A()
+	A_20: A()
+	A_61: A()
+	A_73: A()
+	A_85: A()
+	A_37: A()
+	A_49: A()
+	A_90: A()
+	A_13: A()
+	A_25: A()
+	A_66: A()
+	A_78: A()
+	A_42: A()
+	A_54: A()
+	A_6: A()
+	A_95: A()
+	A_18: A()
+	A_30: A()
+	A_71: A()
+	A_83: A()
+	A_35: A()
+	A_47: A()
+	A_59: A()
+	A_11: A()
+	A_23: A()
+	A_76: A()
+	A_88: A()
+	A_40: A()
+	A_52: A()
+	A_64: A()
+	A_16: A()
+	A_100: A()
+	A_28: A()
+	A_69: A()
+	A_81: A()
+	A_4: A()
+	A_93: A()
+	A_45: A()
+	A_57: A()
+	A_21: A()
+	A_33: A()
+	A_74: A()
+	A_86: A()
+	A_9: A()
+	A_98: A()
+	A_50: A()
+	A_2: A()
+	A_62: A()
+	A_14: A()
+	A_26: A()
+	A_38: A()
+	A_79: A()
+	A_3: A()
+	A_91: A()
+	A_55: A()
+	A_67: A()
+	A_19: A()
+	A_31: A()
+	A_43: A()
+	A_84: A()
+	A_7: A()
+	A_96: A()
+	A_48: A()
+	A_60: A()
+	A_72: A()
+	A_24: A()
+	A_36: A()
+	A_89: A()
+	A_12: A()
+	A_53: A()
+	A_65: A()
+	A_77: A()
+	A_29: A()
+	A_41: A()
+	A_82: A()
+	A_5: A()
+	A_94: A()
+	A_17: A()
+	A_58: A()
+	A_70: A()
+	A_34: A()
+	A_46: A()
+	A_87: A()
+	A_10: A()
+	A_22: A()
+	A_63: A()
+	A_75: A()
+	A_27: A()
+	A_39: A()
+	A_51: A()
+	A_1: A()
+channels
+

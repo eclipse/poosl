@@ -1,0 +1,178 @@
+/* ATM Switch
+ *
+ */
+importlib "structures.poosl"
+importlib "distributions.poosl"
+
+data class Cell extends Object
+variables
+	entryTime, exitTime : Real,
+	route : Queue
+methods
+	destinationPort : Integer
+		return route inspect
+
+	nextDestinationPort : Cell
+		route remove;
+		return self
+
+	setArbitraryRoute : Cell | rand : RandomGenerator |
+		rand := new(RandomGenerator) randomiseSeed;
+		route := new(Queue) resize(2);
+		if rand random > 0.5 then
+			route add(1)
+		else
+			route add(2)
+		fi;
+		if rand random > 0.5 then
+			route add(1)
+		else
+			route add(2)
+		fi;
+		return self
+
+	setEntryTime(t : Real) : Cell
+		entryTime := t;
+		return self
+
+	setExitTime(t : Real) : Cell
+		exitTime := t;
+		return self
+
+process class Source(trafficDistribution : Exponential)
+ports
+	o
+messages
+	o!cell(Cell)
+variables
+
+init
+	transmit()()
+methods
+	transmit()() | cell : Cell |
+		cell := new(Cell) setArbitraryRoute setEntryTime(currentTime);
+		o!cell(cell);
+		delay trafficDistribution sample;
+		transmit()()
+
+process class Destination
+ports
+	i
+messages
+	i?cell(Cell)
+variables
+
+init
+	receive()()
+methods
+	receive()() | cell : Cell |
+		i?cell(cell);
+		receive()()
+
+process class Switch(bufferSize : Integer, cellTime : Real)
+ports
+	i1,
+	i2,
+	o1,
+	o2
+messages
+	i1?cell(Cell),
+	i2?cell(Cell),
+	o1!cell(Cell),
+	o2!cell(Cell)
+variables
+	outputBufferArray : Array
+init
+	startUp()()
+methods
+	startUp()()
+		outputBufferArray := new(Array) resize(2);
+		outputBufferArray putAt(1, new(Queue) resize(bufferSize));
+		outputBufferArray putAt(2, new(Queue) resize(bufferSize));
+		par
+			handleInput1()()
+		and
+			handleInput2()()
+		and
+			handleOutput1()()
+		and
+			handleOutput2()()
+		rap
+
+	handleInput1()() | cell : Cell |
+		i1?cell(cell | outputBufferArray at(cell destinationPort) isFull not) {
+			outputBufferArray at(cell destinationPort) add(cell);
+			cell nextDestinationPort
+		};
+		delay cellTime;
+		handleInput1()()
+
+	handleInput2()() | cell : Cell |
+		i2?cell(cell | outputBufferArray at(cell destinationPort) isFull not) {
+			outputBufferArray at(cell destinationPort) add(cell);
+			cell nextDestinationPort
+		};
+		delay cellTime;
+		handleInput2()()
+
+	handleOutput1()()
+		[ outputBufferArray at(1) isEmpty not ] o1!cell(outputBufferArray at(1) inspect) {outputBufferArray at(1)
+			remove};
+		delay cellTime;
+		handleOutput1()()
+
+	handleOutput2()()
+		[ outputBufferArray at(2) isEmpty not ] o2!cell(outputBufferArray at(2) inspect) {outputBufferArray at(2)
+			remove};
+		delay cellTime;
+		handleOutput2()()
+
+cluster class MultistageSwitch
+ports
+	i1,
+	i2,
+	i3,
+	i4,
+	o1,
+	o2,
+	o3,
+	o4
+instances
+	x1 : Switch(bufferSize := 10, cellTime := 20.0)
+	x2 : Switch(bufferSize := 10, cellTime := 20.0)
+	x3 : Switch(bufferSize := 10, cellTime := 20.0)
+	x4 : Switch(bufferSize := 10, cellTime := 20.0)
+channels
+	{ i1, x1.i1 }
+	{ i2, x1.i2 }
+	{ i3, x2.i1 }
+	{ i4, x2.i2 }
+	{ x1.o1, x3.i1 }
+	{ x1.o2, x4.i1 }
+	{ x2.o1, x3.i2 }
+	{ x2.o2, x4.i2 }
+	{ x3.o1, o1 }
+	{ x3.o2, o2 }
+	{ x4.o1, o3 }
+	{ x4.o2, o4 }
+
+system
+instances
+	x : MultistageSwitch()
+	source1 : Source(trafficDistribution := new(Exponential) withParameter(3.0))
+	source2 : Source(trafficDistribution := new(Exponential) withParameter(3.0))
+	source3 : Source(trafficDistribution := new(Exponential) withParameter(3.0))
+	source4 : Source(trafficDistribution := new(Exponential) withParameter(3.0))
+	destination1 : Destination()
+	destination2 : Destination()
+	destination3 : Destination()
+	destination4 : Destination()
+channels
+	{ x.i1, source1.o }
+	{ x.i2, source2.o }
+	{ x.i3, source3.o }
+	{ x.i4, source4.o }
+	{ x.o1, destination1.i }
+	{ x.o2, destination2.i }
+	{ x.o3, destination3.i }
+	{ x.o4, destination4.i }

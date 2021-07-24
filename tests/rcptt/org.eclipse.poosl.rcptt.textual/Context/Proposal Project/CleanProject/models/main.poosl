@@ -1,0 +1,45 @@
+import "parent.poosl"
+
+system
+instances
+	si: mainClusterClass()
+	si2: mainClusterClass()
+channels
+{ si.p, si2.q }
+{ si.q, si2.p }
+
+cluster class mainClusterClass() 
+ports
+	p
+	q
+instances
+	sp : mainProcesClass()
+	sp2 : mainProcesClass()
+channels	
+	{p, sp.p, sp2.q}
+	{q, sp.q, sp2.p}
+
+process class mainProcesClass() extends parentProcesClass
+ports
+	p	
+messages
+	p?q
+variables	
+	mainVar : String
+init
+	mainMethod()()
+methods
+	mainMethod()() | |
+		p?q;
+		localMethod(mainVar)(mainVar)
+	localMethod(iVar : Object)(oVar : Object) | localVar : String|	
+	    iVar + oVar + localVar
+
+data class mainDataClass extends parentDataClass
+variables
+	mainVar : String
+methods
+	mainMethod() : Object | localVar : String |
+		return mainVar + localVar
+
+

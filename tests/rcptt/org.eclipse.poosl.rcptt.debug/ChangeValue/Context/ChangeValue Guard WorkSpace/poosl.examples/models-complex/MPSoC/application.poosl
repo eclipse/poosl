@@ -1,0 +1,1201 @@
+importlib "structures.poosl"
+importlib "distributions.poosl"
+importlib "performance.poosl"
+
+/* Data Classes */
+data class DataBufferMonitor extends Object
+variables
+	ReservedLocations : Integer,
+	PreviousTime : Real,
+	AverageOccupation : LongRunTimeAverage,
+	BufferSize : Integer,
+	Name : String,
+	TraceFile : FileOut,
+	Trace : Boolean,
+	AvailableTokens : Integer,
+	Monitor : Boolean,
+	MaximumOccupation : Integer,
+	TokenSize : Integer,
+	VarianceOccupation : LongRunTimeVariance
+methods
+	remove(NumberOfTokens : Integer, CurrentTime : Real) : DataBufferMonitor | Occupation : Integer |
+		Occupation := ReservedLocations + AvailableTokens;
+		if Trace & (CurrentTime > PreviousTime) then
+			TraceFile write("At time: " + PreviousTime printString + " Occupation: " + (Occupation * TokenSize)
+				printString cr)
+		fi;
+		AvailableTokens := AvailableTokens - NumberOfTokens;
+		Occupation := Occupation - NumberOfTokens;
+		if Monitor then
+			AverageOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime);
+			VarianceOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime)
+		fi;
+		PreviousTime := CurrentTime;
+		return self
+
+	room(NumberOfTokens : Integer) : Boolean
+		if BufferSize > 0 then
+			return (ReservedLocations + AvailableTokens + NumberOfTokens) <= BufferSize
+		else
+			return true
+		fi
+
+	@Init
+	init(N : String, BS, IT, TS : Integer, M : Boolean, T : Boolean) : DataBufferMonitor
+		Name := N;
+		BufferSize := BS;
+		TokenSize := TS;
+		AvailableTokens := 0;
+		ReservedLocations := 0;
+		PreviousTime := 0.0;
+		Monitor := M;
+		if Monitor then
+			MaximumOccupation := 0;
+			AverageOccupation := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+			VarianceOccupation := new(LongRunTimeVariance) withParameters(0.95, 0.95)
+		fi;
+		Trace := T;
+		if Trace then
+			TraceFile := new(FileOut) destination("Channel_" + Name + ".trace") open;
+			TraceFile write("Traced Buffer Occupancy for Channel: " + Name cr cr)
+		fi;
+		self reserve(IT, 0.0);
+		self write(IT);
+		return self
+
+	reserve(NumberOfTokens : Integer, CurrentTime : Real) : DataBufferMonitor | Occupation : Integer |
+		Occupation := ReservedLocations + AvailableTokens;
+		if Trace & (CurrentTime > PreviousTime) then
+			TraceFile write("At time: " + PreviousTime printString + " Occupation: " + (Occupation * TokenSize)
+				printString cr)
+		fi;
+		ReservedLocations := ReservedLocations + NumberOfTokens;
+		Occupation := Occupation + NumberOfTokens;
+		if Monitor then
+			if (Occupation * TokenSize) > MaximumOccupation then
+				MaximumOccupation := Occupation * TokenSize
+			fi;
+			AverageOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime);
+			VarianceOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime)
+		fi;
+		PreviousTime := CurrentTime;
+		return self
+
+	write(NumberOfTokens : Integer) : DataBufferMonitor
+		ReservedLocations := ReservedLocations - NumberOfTokens;
+		AvailableTokens := AvailableTokens + NumberOfTokens;
+		return self
+
+	available(NumberOfTokens : Integer) : Boolean
+		return AvailableTokens >= NumberOfTokens
+
+	getResults : String | Result : String |
+		Result := "-------------------------------" cr + "Statistics for Channel: " + Name cr cr;
+		Result concat("Observed Maximum Buffer Occupancy: " + MaximumOccupation printString cr cr);
+		Result concat("Average Buffer Occupancy:" cr + AverageOccupation logStatistics cr cr);
+		Result concat("Variance in Buffer Occupancy:" cr + VarianceOccupation logStatistics cr cr);
+		return Result
+
+	accurate : Boolean
+		return AverageOccupation accurate
+
+data class ControlBufferMonitor extends Object
+variables
+	ReservedLocations : Integer,
+	PreviousTime : Real,
+	AverageOccupation : LongRunTimeAverage,
+	BufferSize : Integer,
+	Name : String,
+	TraceFile : FileOut,
+	Buffer : Queue,
+	AvailableTokens : Integer,
+	Monitor : Boolean,
+	MaximumOccupation : Integer,
+	Trace : Boolean,
+	TokenSize : Integer,
+	VarianceOccupation : LongRunTimeVariance
+methods
+	remove(CurrentTime : Real) : Integer | Occupation : Integer |
+		Occupation := ReservedLocations + AvailableTokens;
+		if Trace & (CurrentTime > PreviousTime) then
+			TraceFile writeString("At time: " + PreviousTime printString + " Occupation: " + (Occupation * TokenSize)
+				printString cr)
+		fi;
+		AvailableTokens := AvailableTokens - 1;
+		Occupation := Occupation - 1;
+		if Monitor then
+			AverageOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime);
+			VarianceOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime)
+		fi;
+		PreviousTime := CurrentTime;
+		return Buffer remove
+
+	room(NumberOfTokens : Integer) : Boolean
+		if BufferSize > 0 then
+			return (ReservedLocations + AvailableTokens + NumberOfTokens) <= BufferSize
+		else
+			return true
+		fi
+
+	@Init
+	init(N : String, BS : Integer, NIT, CIT : Queue, TS : Integer, M : Boolean, T : Boolean) : ControlBufferMonitor
+		Name := N;
+		BufferSize := BS;
+		TokenSize := TS;
+		AvailableTokens := 0;
+		ReservedLocations := 0;
+		PreviousTime := 0.0;
+		Monitor := M;
+		if Monitor then
+			MaximumOccupation := 0;
+			AverageOccupation := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+			VarianceOccupation := new(LongRunTimeVariance) withParameters(0.95, 0.95)
+		fi;
+		Trace := T;
+		if Trace then
+			TraceFile := new(FileOut) destination("Channel_" + Name + ".trace") open;
+			TraceFile write("Traced Buffer Occupancy for Channel: " + Name cr cr)
+		fi;
+		Buffer := new(Queue);
+		while NIT isEmpty not do
+			self reserve(NIT inspect, 0.0);
+			self write(NIT inspect, CIT inspect);
+			NIT remove;
+			CIT remove
+		od;
+		return self
+
+	reserve(NumberOfTokens : Integer, CurrentTime : Real) : ControlBufferMonitor | Occupation : Integer |
+		Occupation := ReservedLocations + AvailableTokens;
+		if Trace & (CurrentTime > PreviousTime) then
+			TraceFile write("At time: " + PreviousTime printString + " Occupation: " + (Occupation * TokenSize)
+				printString cr)
+		fi;
+		ReservedLocations := ReservedLocations + NumberOfTokens;
+		Occupation := Occupation + NumberOfTokens;
+		if Monitor then
+			if (Occupation * TokenSize) > MaximumOccupation then
+				MaximumOccupation := Occupation * TokenSize
+			fi;
+			AverageOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime);
+			VarianceOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime)
+		fi;
+		PreviousTime := CurrentTime;
+		return self
+
+	write(NumberOfTokens : Integer, Scenario : String) : ControlBufferMonitor | Counter : Integer |
+		ReservedLocations := ReservedLocations - NumberOfTokens;
+		AvailableTokens := AvailableTokens + NumberOfTokens;
+		Counter := NumberOfTokens;
+		while (Counter > 0) do
+			Buffer add(Scenario);
+			Counter := Counter - 1
+		od;
+		return self
+
+	available : Boolean
+		return AvailableTokens >= 1
+
+	getResults : String | Result : String |
+		Result := "-------------------------------" cr + "Statistics for Channel: " + Name cr cr;
+		Result concat("Observed Maximum Buffer Occupancy: " + MaximumOccupation printString cr cr);
+		Result concat("Average Buffer Occupancy:" cr + AverageOccupation logStatistics cr cr);
+		Result concat("Variance in Buffer Occupancy:" cr + VarianceOccupation logStatistics cr cr);
+		return Result
+
+	inspect : String
+		return Buffer inspect
+
+	accurate : Boolean
+		return AverageOccupation accurate
+
+data class MarkovChain extends Object
+variables
+	NumberOfStates : Integer,
+	Random : Uniform,
+	Transitions : Array,
+	StateSpace : Array,
+	CurrentState : String
+methods
+	@Init
+	init : MarkovChain
+		NumberOfStates := 0;
+		StateSpace := new(Array);
+		Transitions := new(Array);
+		Random := new(Uniform) withParameters(0.0, 1.0);
+		return self
+
+	addTransition(State : String, NextState : String, LowerBound : Real, UpperBound : Real) : MarkovChain | i,
+			StateNumber : Integer, T, A : Array |
+		i := 1;
+		while i <= StateSpace size do
+			if StateSpace at(i) = State then
+				StateNumber := i
+			fi;
+			i := i + 1
+		od;
+		T := Transitions at(StateNumber);
+		A := new(Array) resize(3);
+		A putAt(1, NextState) putAt(2, LowerBound) putAt(3, UpperBound);
+		T resize(T size + 1);
+		T putAt(T size, A);
+		return self
+
+	setInitialState(State : String) : MarkovChain
+		CurrentState := State;
+		return self
+
+	getNextScenario : String | NextState : String, i, StateNumber : Integer, T : Array, Sample : Real |
+		i := 1;
+		while i <= StateSpace size do
+			if StateSpace at(i) = CurrentState then
+				StateNumber := i
+			fi;
+			i := i + 1
+		od;
+		T := Transitions at(StateNumber);
+		Sample := Random sample;
+		i := 1;
+		while i <= T size do
+			if ((Sample > T at(i) at(2)) & (Sample <= T at(i) at(3))) then
+				NextState := T at(i) at(1)
+			fi;
+			i := i + 1
+		od;
+		CurrentState := NextState;
+		return NextState
+
+	addState(State : String) : MarkovChain
+		NumberOfStates := NumberOfStates + 1;
+		StateSpace resize(NumberOfStates);
+		StateSpace putAt(NumberOfStates, State);
+		Transitions resize(NumberOfStates);
+		Transitions putAt(NumberOfStates, new(Array));
+		return self
+
+data class ApplicationStatus extends Object
+variables
+	NextDeadline : Real,
+	DesiredThroughput : Real,
+	NumberOfFirings : Integer,
+	NumberOfDeadlineMisses : Integer,
+	TimeOfLastFiring : Real,
+	Throughput : LongRunRateAverage
+methods
+	fired(CurrentTime : Real) : ApplicationStatus
+		NumberOfFirings := NumberOfFirings + 1;
+		Throughput rewardBM(1.0, CurrentTime);
+		if CurrentTime > NextDeadline then
+			NumberOfDeadlineMisses := NumberOfDeadlineMisses + 1
+		fi;
+		NextDeadline := NextDeadline + 1.0 / DesiredThroughput;
+		TimeOfLastFiring := CurrentTime;
+		return self
+
+	@Init
+	init(DL, DT : Real) : ApplicationStatus
+		NumberOfFirings := 0;
+		NumberOfDeadlineMisses := 0;
+		NextDeadline := DL;
+		DesiredThroughput := DT;
+		TimeOfLastFiring := 0.0;
+		Throughput := new(LongRunRateAverage) withParameters(0.95, 0.95) setBatchSize(1000);
+		return self
+
+	printString : String
+		if NumberOfFirings > 0 then
+			if NumberOfFirings = 1 then
+				return "Throughput Results: " cr + Throughput logStatistics cr cr + (100.0 * (NumberOfDeadlineMisses
+					asReal / NumberOfFirings asReal)) printString + "% Deadline Misses" cr cr + "Latency: " +
+					TimeOfLastFiring printString
+			else
+				return "Throughput Results: " cr + Throughput printString cr cr + (100.0 * (NumberOfDeadlineMisses
+					asReal / NumberOfFirings asReal)) printString + "% Deadline Misses"
+			fi
+		else
+			return "Waiting for first frame"
+		fi
+
+	log : ApplicationStatus | LogFile : FileOut |
+		LogFile := new(FileOut) destination("Application.log") open;
+		if NumberOfFirings = 1 then
+			LogFile write("Throughput Results: " cr + Throughput logStatistics cr cr + (100.0 * (NumberOfDeadlineMisses
+				asReal / NumberOfFirings asReal)) printString + "% Deadline Misses" cr cr + "Latency: " +
+				TimeOfLastFiring printString)
+		else
+			LogFile write("Throughput Results: " cr + Throughput logStatistics cr cr + (100.0 * (NumberOfDeadlineMisses
+				asReal / NumberOfFirings asReal)) printString + "% Deadline Misses")
+		fi;
+		LogFile close;
+		return self
+
+	accurate : Boolean
+		return Throughput accurate
+
+/* Process Classes */
+process class DataBuffer(Name : String, NumberOfInitialTokens : Integer, TokenSize : Integer)
+ports
+	Out,
+	Communication,
+	In
+messages
+	Communication!InitialiseTokens(String, Integer, Integer),
+	Communication!ReleaseRoom(String, Integer, Integer),
+	Communication!ReserveRoom(String, String, Integer, Integer),
+	Communication!Transfer(String, String, Integer),
+	Communication!Use(String),
+	Communication?TransferCompleted(String, Integer),
+	Communication?TransferInitiated(String),
+	In!ReservationSuccessful(),
+	In?MappedTo(String),
+	In?ReserveRoom(Integer),
+	In?WriteTokens(),
+	Out!TokensAvailable(),
+	Out?InspectTokenAvailability(Integer),
+	Out?MappedTo(String),
+	Out?ReleaseRoom()
+variables
+	Status : DataBufferMonitor,
+	TransferID : Integer,
+	MapTo : String
+init
+	Initialise()()
+methods
+	HandleInput()() | NumberOfTokens, ID : Integer, Connection : String |
+		In?ReserveRoom(NumberOfTokens | Status room(NumberOfTokens));
+		Communication!ReserveRoom(Name, MapTo, NumberOfTokens, TokenSize);
+		Communication?TransferInitiated(Connection | Connection = Name) {Status reserve(NumberOfTokens, currentTime)};
+		In!ReservationSuccessful;
+		In?WriteTokens {TransferID := TransferID + 1};
+		par
+			Communication!Transfer(Name, MapTo, TransferID);
+			Communication?TransferCompleted(Connection, ID |(Connection = Name) & (ID = TransferID)) {Status
+				write(NumberOfTokens)}
+		and
+			HandleInput()()
+		rap
+
+	HandleOutput()() | NumberOfTokens : Integer |
+		Out?InspectTokenAvailability(NumberOfTokens | Status available(NumberOfTokens));
+		Out!TokensAvailable;
+		Out?ReleaseRoom;
+		Communication!ReleaseRoom(MapTo, NumberOfTokens, TokenSize) {Status remove(NumberOfTokens, currentTime)};
+		HandleOutput()()
+
+	Initialise()()
+		TransferID := 0;
+		Status := new(DataBufferMonitor) init(Name, -1, NumberOfInitialTokens, TokenSize, false, false);
+		DetermineMapping()();
+		NotifyPlatformAboutMapping()();
+		if NumberOfInitialTokens > 0 then
+			Communication!InitialiseTokens(MapTo, NumberOfInitialTokens, TokenSize)
+		fi;
+		par
+			HandleInput()()
+		and
+			HandleOutput()()
+		rap
+
+	DetermineMapping()() | InputTask, OutputTask : String |
+		In?MappedTo(InputTask);
+		Out?MappedTo(OutputTask);
+		if InputTask = OutputTask then
+			MapTo := InputTask
+		else
+			MapTo := "NoC"
+		fi
+
+	NotifyPlatformAboutMapping()()
+		Communication!Use(MapTo)
+
+process class ControlBuffer(Name : String, TokenSize : Integer)
+ports
+	Out,
+	Communication,
+	In
+messages
+	Communication!ReleaseRoom(String, Integer, Integer),
+	Communication!ReserveRoom(String, String, Integer, Integer),
+	Communication!Transfer(String, String, Integer),
+	Communication!Use(String),
+	Communication?TransferCompleted(String, Integer),
+	Communication?TransferInitiated(String),
+	In!ReservationSuccessful(),
+	In?MappedTo(String),
+	In?ReserveRoom(Integer),
+	In?WriteTokens(String),
+	Out!TokenAvailable(String),
+	Out?InspectTokenAvailability(),
+	Out?MappedTo(String),
+	Out?ReleaseRoom()
+variables
+	TransferID : Integer,
+	MapTo : String,
+	Status : ControlBufferMonitor
+init
+	Initialise()()
+methods
+	HandleInput()() | NumberOfTokens, ID : Integer, Scenario, Connection : String |
+		In?ReserveRoom(NumberOfTokens | Status room(NumberOfTokens));
+		Communication!ReserveRoom(Name, MapTo, NumberOfTokens, TokenSize);
+		Communication?TransferInitiated(Connection | Connection = Name) {Status reserve(NumberOfTokens, currentTime)};
+		In!ReservationSuccessful;
+		In?WriteTokens(Scenario) {TransferID := TransferID + 1};
+		par
+			Communication!Transfer(Name, MapTo, TransferID);
+			Communication?TransferCompleted(Connection, ID |(Connection = Name) & (ID = TransferID)) {Status
+				write(NumberOfTokens, Scenario)}
+		and
+			HandleInput()()
+		rap
+
+	HandleOutput()()
+		[ Status available ] Out?InspectTokenAvailability;
+		Out!TokenAvailable(Status inspect);
+		Out?ReleaseRoom;
+		Communication!ReleaseRoom(MapTo, 1, 1) {Status remove(currentTime)};
+		HandleOutput()()
+
+	Initialise()()
+		TransferID := 0;
+		Status := new(ControlBufferMonitor) init(Name, -1, new(Queue), new(Queue), TokenSize, false, false);
+		DetermineMapping()();
+		NotifyPlatformAboutMapping()();
+		par
+			HandleInput()()
+		and
+			HandleOutput()()
+		rap
+
+	DetermineMapping()() | InputTask, OutputTask : String |
+		In?MappedTo(InputTask);
+		Out?MappedTo(OutputTask);
+		if InputTask = OutputTask then
+			MapTo := InputTask
+		else
+			MapTo := "NoC"
+		fi
+
+	NotifyPlatformAboutMapping()()
+		Communication!Use(MapTo)
+
+process class Task(MapTo : String, Name : String, Priority : Integer)
+ports
+	Computation,
+	Control
+messages
+	Computation!Execute(String, String, Integer, String),
+	Computation!Use(String),
+	Computation?ExecutionCompleted(String),
+	Control!InspectTokenAvailability(),
+	Control!ReleaseRoom(),
+	Control?TokenAvailable(String)
+variables
+
+init
+	Initialise()()
+methods
+	Initialise()()
+		NotifyBuffersAboutMapping()();
+		NotifyPlatformAboutMapping()();
+		Fire()()
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		skip
+
+	@SuppressWarnings("unused")
+	ReserveSpaceForWrites(Scenario : String)()
+		skip
+
+	NotifyPlatformAboutMapping()()
+		Computation!Use(MapTo)
+
+	NotifyBuffersAboutMapping()()
+		skip
+
+	@SuppressWarnings("unused")
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		skip
+
+	Fire()() | Scenario : String |
+		Control!InspectTokenAvailability;
+		Control?TokenAvailable(Scenario);
+		CheckTokenAvailabilityForReads(Scenario)();
+		ReserveSpaceForWrites(Scenario)();
+		Execute(Scenario)();
+		ReleaseSpaceForReads(Scenario)();
+		PerformWrites(Scenario)();
+		Control!ReleaseRoom;
+		Fire()()
+
+	@SuppressWarnings("unused")
+	PerformWrites(Scenario : String)()
+		skip
+
+	Execute(Scenario : String)() | N : String |
+		Computation!Execute(Name, Scenario, Priority, MapTo);
+		Computation?ExecutionCompleted(N | N = Name)
+
+process class Task1(Iterate : Boolean, MapTo : String, Name : String, Priority : Integer)
+ports
+	In,
+	C_T4,
+	C_T5,
+	C_T7,
+	D_T2,
+	C_T2,
+	D_T3,
+	Computation,
+	C_T3,
+	C_T6,
+	Monitor,
+	D_T4
+messages
+	Computation!Execute(String, String, Integer, String),
+	Computation!Use(String),
+	Computation?ExecutionCompleted(String),
+	C_T2!MappedTo(String),
+	C_T2!ReserveRoom(Integer),
+	C_T2!WriteTokens(String),
+	C_T2?ReservationSuccessful(),
+	C_T3!MappedTo(String),
+	C_T3!ReserveRoom(Integer),
+	C_T3!WriteTokens(String),
+	C_T3?ReservationSuccessful(),
+	C_T4!MappedTo(String),
+	C_T4!ReserveRoom(Integer),
+	C_T4!WriteTokens(String),
+	C_T4?ReservationSuccessful(),
+	C_T5!MappedTo(String),
+	C_T5!ReserveRoom(Integer),
+	C_T5!WriteTokens(String),
+	C_T5?ReservationSuccessful(),
+	C_T6!MappedTo(String),
+	C_T6!ReserveRoom(Integer),
+	C_T6!WriteTokens(String),
+	C_T6?ReservationSuccessful(),
+	C_T7!MappedTo(String),
+	C_T7!ReserveRoom(Integer),
+	C_T7!WriteTokens(String),
+	C_T7?ReservationSuccessful(),
+	D_T2!MappedTo(String),
+	D_T2!ReserveRoom(Integer),
+	D_T2!WriteTokens(),
+	D_T2?ReservationSuccessful(),
+	D_T3!MappedTo(String),
+	D_T3!ReserveRoom(Integer),
+	D_T3!WriteTokens(),
+	D_T3?ReservationSuccessful(),
+	D_T4!MappedTo(String),
+	D_T4!ReserveRoom(Integer),
+	D_T4!WriteTokens(),
+	D_T4?ReservationSuccessful(),
+	In!InspectTokenAvailability(Integer),
+	In!MappedTo(String),
+	In!ReleaseRoom(),
+	In?TokensAvailable(),
+	Monitor?StopSimulation()
+variables
+	MarkovChain : MarkovChain
+init
+	Initialise()()
+methods
+	Initialise()()
+		NotifyBuffersAboutMapping()();
+		NotifyPlatformAboutMapping()();
+		{
+			MarkovChain := new(MarkovChain) init;
+			MarkovChain addState("S1");
+			MarkovChain addTransition("S1", "S1", 0.0, 1.0 / 2.0);
+			MarkovChain addTransition("S1", "S2", 1.0 / 2.0, 1.0);
+			MarkovChain addState("S2");
+			MarkovChain addTransition("S2", "S2", 0.0, 2.0 / 3.0);
+			MarkovChain addTransition("S2", "S1", 2.0 / 3.0, 1.0);
+			MarkovChain setInitialState("S1")
+		};
+		abort
+			Fire()()
+		with Monitor?StopSimulation
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		In!ReleaseRoom
+
+	ReserveSpaceForWrites(Scenario : String)()
+		D_T2!ReserveRoom(2048);
+		D_T2?ReservationSuccessful;
+		D_T3!ReserveRoom(1024);
+		D_T3?ReservationSuccessful;
+		if Scenario = "S1" then
+			D_T4!ReserveRoom(2048);
+			D_T4?ReservationSuccessful
+		fi;
+		C_T2!ReserveRoom(1);
+		C_T2?ReservationSuccessful;
+		C_T3!ReserveRoom(1);
+		C_T3?ReservationSuccessful;
+		C_T4!ReserveRoom(1);
+		C_T4?ReservationSuccessful;
+		C_T5!ReserveRoom(1);
+		C_T5?ReservationSuccessful;
+		C_T6!ReserveRoom(1);
+		C_T6?ReservationSuccessful;
+		C_T7!ReserveRoom(1);
+		C_T7?ReservationSuccessful
+
+	NotifyPlatformAboutMapping()()
+		Computation!Use(MapTo)
+
+	NotifyBuffersAboutMapping()()
+		par
+			In!MappedTo(MapTo)
+		and
+			D_T2!MappedTo(MapTo)
+		and
+			D_T3!MappedTo(MapTo)
+		and
+			D_T4!MappedTo(MapTo)
+		and
+			C_T2!MappedTo(MapTo)
+		and
+			C_T3!MappedTo(MapTo)
+		and
+			C_T4!MappedTo(MapTo)
+		and
+			C_T5!MappedTo(MapTo)
+		and
+			C_T6!MappedTo(MapTo)
+		and
+			C_T7!MappedTo(MapTo)
+		rap
+
+	Fire()() | Scenario : String |
+		if Iterate then
+			Scenario := MarkovChain getNextScenario
+		else
+			Scenario := "S1"
+		fi;
+		CheckTokenAvailabilityForReads(Scenario)();
+		ReserveSpaceForWrites(Scenario)();
+		Execute(Scenario)();
+		ReleaseSpaceForReads(Scenario)();
+		PerformWrites(Scenario)();
+		if Iterate then
+			Fire()()
+		fi
+
+	@SuppressWarnings("unused")
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		In!InspectTokenAvailability(1);
+		In?TokensAvailable
+
+	PerformWrites(Scenario : String)()
+		D_T2!WriteTokens;
+		D_T3!WriteTokens;
+		if Scenario = "S1" then
+			D_T4!WriteTokens
+		fi;
+		C_T2!WriteTokens(Scenario);
+		C_T3!WriteTokens(Scenario);
+		C_T4!WriteTokens(Scenario);
+		C_T5!WriteTokens(Scenario);
+		C_T6!WriteTokens(Scenario);
+		C_T7!WriteTokens(Scenario)
+
+	Execute(Scenario : String)() | N : String |
+		Computation!Execute(Name, Scenario, Priority, MapTo);
+		Computation?ExecutionCompleted(N | N = Name)
+
+process class Task2 extends Task
+ports
+	Out2,
+	Out1,
+	In
+messages
+	Control!MappedTo(String),
+	In!InspectTokenAvailability(Integer),
+	In!MappedTo(String),
+	In!ReleaseRoom(),
+	In?TokensAvailable(),
+	Out1!MappedTo(String),
+	Out1!ReserveRoom(Integer),
+	Out1!WriteTokens(),
+	Out1?ReservationSuccessful(),
+	Out2!MappedTo(String),
+	Out2!ReserveRoom(Integer),
+	Out2!WriteTokens(),
+	Out2?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	PerformWrites(Scenario : String)()
+		Out1!WriteTokens;
+		if Scenario = "S1" then
+			Out2!WriteTokens
+		fi
+
+	NotifyBuffersAboutMapping()()
+		par
+			In!MappedTo(MapTo)
+		and
+			Out1!MappedTo(MapTo)
+		and
+			Out2!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		In!ReleaseRoom
+
+	@SuppressWarnings("unused")
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		In!InspectTokenAvailability(2048);
+		In?TokensAvailable
+
+	ReserveSpaceForWrites(Scenario : String)()
+		if Scenario = "S1" then
+			Out1!ReserveRoom(1024);
+			Out1?ReservationSuccessful;
+			Out2!ReserveRoom(4096);
+			Out2?ReservationSuccessful
+		fi;
+		if Scenario = "S2" then
+			Out1!ReserveRoom(2048);
+			Out1?ReservationSuccessful
+		fi
+
+process class Task3 extends Task
+ports
+	Out2,
+	Out1,
+	In
+messages
+	Control!MappedTo(String),
+	In!InspectTokenAvailability(Integer),
+	In!MappedTo(String),
+	In!ReleaseRoom(),
+	In?TokensAvailable(),
+	Out1!MappedTo(String),
+	Out1!ReserveRoom(Integer),
+	Out1!WriteTokens(),
+	Out1?ReservationSuccessful(),
+	Out2!MappedTo(String),
+	Out2!ReserveRoom(Integer),
+	Out2!WriteTokens(),
+	Out2?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	PerformWrites(Scenario : String)()
+		Out1!WriteTokens;
+		if Scenario = "S2" then
+			Out2!WriteTokens
+		fi
+
+	NotifyBuffersAboutMapping()()
+		par
+			In!MappedTo(MapTo)
+		and
+			Out1!MappedTo(MapTo)
+		and
+			Out2!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		In!ReleaseRoom
+
+	@SuppressWarnings("unused")
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		In!InspectTokenAvailability(1024);
+		In?TokensAvailable
+
+	ReserveSpaceForWrites(Scenario : String)()
+		Out1!ReserveRoom(2048);
+		Out1?ReservationSuccessful;
+		if Scenario = "S2" then
+			Out2!ReserveRoom(4096);
+			Out2?ReservationSuccessful
+		fi
+
+process class Task4 extends Task
+ports
+	Out,
+	In
+messages
+	Control!MappedTo(String),
+	In!InspectTokenAvailability(Integer),
+	In!MappedTo(String),
+	In!ReleaseRoom(),
+	In?TokensAvailable(),
+	Out!MappedTo(String),
+	Out!ReserveRoom(Integer),
+	Out!WriteTokens(),
+	Out?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	ReleaseSpaceForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In!ReleaseRoom
+		fi
+
+	ReserveSpaceForWrites(Scenario : String)()
+		if Scenario = "S1" then
+			Out!ReserveRoom(4096);
+			Out?ReservationSuccessful
+		fi
+
+	NotifyBuffersAboutMapping()()
+		par
+			In!MappedTo(MapTo)
+		and
+			Out!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In!InspectTokenAvailability(2048);
+			In?TokensAvailable
+		fi
+
+	PerformWrites(Scenario : String)()
+		if Scenario = "S1" then
+			Out!WriteTokens
+		fi
+
+	Execute(Scenario : String)() | N : String |
+		if Scenario = "S1" then
+			Computation!Execute(Name, Scenario, Priority, MapTo);
+			Computation?ExecutionCompleted(N | N = Name)
+		fi
+
+process class Task5 extends Task
+ports
+	In2,
+	In1,
+	Out
+messages
+	Control!MappedTo(String),
+	In1!InspectTokenAvailability(Integer),
+	In1!MappedTo(String),
+	In1!ReleaseRoom(),
+	In1?TokensAvailable(),
+	In2!InspectTokenAvailability(Integer),
+	In2!MappedTo(String),
+	In2!ReleaseRoom(),
+	In2?TokensAvailable(),
+	Out!MappedTo(String),
+	Out!ReserveRoom(Integer),
+	Out!WriteTokens(),
+	Out?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	@SuppressWarnings("unused")
+	PerformWrites(Scenario : String)()
+		Out!WriteTokens
+
+	NotifyBuffersAboutMapping()()
+		par
+			In1!MappedTo(MapTo)
+		and
+			In2!MappedTo(MapTo)
+		and
+			Out!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	ReleaseSpaceForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In1!ReleaseRoom
+		fi;
+		In2!ReleaseRoom
+
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In1!InspectTokenAvailability(4096);
+			In1?TokensAvailable
+		fi;
+		In2!InspectTokenAvailability(2048);
+		In2?TokensAvailable
+
+	@SuppressWarnings("unused")
+	ReserveSpaceForWrites(Scenario : String)()
+		Out!ReserveRoom(3072);
+		Out?ReservationSuccessful
+
+process class Task6 extends Task
+ports
+	In2,
+	In1,
+	Out
+messages
+	Control!MappedTo(String),
+	In1!InspectTokenAvailability(Integer),
+	In1!MappedTo(String),
+	In1!ReleaseRoom(),
+	In1?TokensAvailable(),
+	In2!InspectTokenAvailability(Integer),
+	In2!MappedTo(String),
+	In2!ReleaseRoom(),
+	In2?TokensAvailable(),
+	Out!MappedTo(String),
+	Out!ReserveRoom(Integer),
+	Out!WriteTokens(),
+	Out?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	@SuppressWarnings("unused")
+	PerformWrites(Scenario : String)()
+		Out!WriteTokens
+
+	NotifyBuffersAboutMapping()()
+		par
+			In1!MappedTo(MapTo)
+		and
+			In2!MappedTo(MapTo)
+		and
+			Out!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	ReleaseSpaceForReads(Scenario : String)()
+		if Scenario = "S2" then
+			In1!ReleaseRoom
+		fi;
+		if Scenario = "S1" then
+			In2!ReleaseRoom
+		fi
+
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		if Scenario = "S2" then
+			In1!InspectTokenAvailability(4096);
+			In1?TokensAvailable
+		fi;
+		if Scenario = "S1" then
+			In2!InspectTokenAvailability(4096);
+			In2?TokensAvailable
+		fi
+
+	@SuppressWarnings("unused")
+	ReserveSpaceForWrites(Scenario : String)()
+		Out!ReserveRoom(1024);
+		Out?ReservationSuccessful
+
+process class Task7(DesiredLatency : Real, DesiredThroughput : Real, Iterate : Boolean) extends Task
+ports
+	In3,
+	Monitor,
+	In1,
+	Out,
+	In2
+messages
+	Control!MappedTo(String),
+	In1!InspectTokenAvailability(Integer),
+	In1!MappedTo(String),
+	In1!ReleaseRoom(),
+	In1?TokensAvailable(),
+	In2!InspectTokenAvailability(Integer),
+	In2!MappedTo(String),
+	In2!ReleaseRoom(),
+	In2?TokensAvailable(),
+	In3!InspectTokenAvailability(Integer),
+	In3!MappedTo(String),
+	In3!ReleaseRoom(),
+	In3?TokensAvailable(),
+	Monitor!ApplicationAccuracyStatus(Boolean),
+	Monitor!Iterate(Boolean),
+	Monitor?ApplicationStatus(),
+	Monitor?StopSimulation(),
+	Out!MappedTo(String),
+	Out!ReserveRoom(Integer),
+	Out!WriteTokens(),
+	Out?ReservationSuccessful()
+variables
+	Status : ApplicationStatus
+init
+	Initialise()()
+methods
+	Initialise()()
+		NotifyBuffersAboutMapping()();
+		NotifyPlatformAboutMapping()();
+		Status := new(ApplicationStatus) init(DesiredLatency, DesiredThroughput);
+		Monitor!Iterate(Iterate);
+		abort
+			par
+				Fire()()
+			and
+				CheckAccuracyStatus()()
+			rap
+		with Monitor?StopSimulation {Status log}
+
+	CheckAccuracyStatus()()
+		Monitor?ApplicationStatus;
+		Monitor!ApplicationAccuracyStatus(Status accurate);
+		CheckAccuracyStatus()()
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		In1!ReleaseRoom;
+		In2!ReleaseRoom;
+		In3!ReleaseRoom
+
+	@SuppressWarnings("unused")
+	ReserveSpaceForWrites(Scenario : String)()
+		Out!ReserveRoom(1);
+		Out?ReservationSuccessful
+
+	Fire()() | Scenario : String |
+		Control!InspectTokenAvailability;
+		Control?TokenAvailable(Scenario);
+		CheckTokenAvailabilityForReads(Scenario)();
+		ReserveSpaceForWrites(Scenario)();
+		Execute(Scenario)();
+		ReleaseSpaceForReads(Scenario)();
+		PerformWrites(Scenario)();
+		Control!ReleaseRoom;
+		Status fired(currentTime);
+		Fire()()
+
+	NotifyBuffersAboutMapping()()
+		par
+			In1!MappedTo(MapTo)
+		and
+			In2!MappedTo(MapTo)
+		and
+			In3!MappedTo(MapTo)
+		and
+			Out!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In1!InspectTokenAvailability(1024)
+		fi;
+		if Scenario = "S2" then
+			In1!InspectTokenAvailability(2048)
+		fi;
+		In1?TokensAvailable;
+		In2!InspectTokenAvailability(3072);
+		In2?TokensAvailable;
+		In3!InspectTokenAvailability(1024);
+		In3?TokensAvailable
+
+	@SuppressWarnings("unused")
+	PerformWrites(Scenario : String)()
+		Out!WriteTokens
+
+/* Cluster Classes */
+cluster class Application(
+		DesiredLatency : Real,
+		DesiredThroughput : Real,
+		Iterate : Boolean,
+		MapTask1To : String,
+		MapTask2To : String,
+		MapTask3To : String,
+		MapTask4To : String,
+		MapTask5To : String,
+		MapTask6To : String,
+		MapTask7To : String,
+		PriorityTask1 : Integer,
+		PriorityTask2 : Integer,
+		PriorityTask3 : Integer,
+		PriorityTask4 : Integer,
+		PriorityTask5 : Integer,
+		PriorityTask6 : Integer,
+		PriorityTask7 : Integer)
+ports
+	Tasks,
+	Buffers,
+	SimulationController
+instances
+	Task1 : Task1(Iterate := Iterate, MapTo := MapTask1To, Name := "Task1", Priority := PriorityTask1)
+	Task2 : Task2(MapTo := MapTask2To, Name := "Task2", Priority := PriorityTask2)
+	Task3 : Task3(MapTo := MapTask3To, Name := "Task3", Priority := PriorityTask3)
+	Task4 : Task4(MapTo := MapTask4To, Name := "Task4", Priority := PriorityTask4)
+	Task5 : Task5(MapTo := MapTask5To, Name := "Task5", Priority := PriorityTask5)
+	Task6 : Task6(MapTo := MapTask6To, Name := "Task6", Priority := PriorityTask6)
+	Task7 : Task7(DesiredLatency := DesiredLatency, DesiredThroughput := DesiredThroughput, Iterate := Iterate, MapTo :=
+		MapTask7To, Name := "Task7", Priority := PriorityTask7)
+	F1 : DataBuffer(Name := "F1", NumberOfInitialTokens := 0, TokenSize := 1)
+	F2 : ControlBuffer(Name := "F2", TokenSize := 1)
+	F3 : DataBuffer(Name := "F3", NumberOfInitialTokens := 0, TokenSize := 1)
+	F4 : ControlBuffer(Name := "F4", TokenSize := 1)
+	F5 : DataBuffer(Name := "F5", NumberOfInitialTokens := 0, TokenSize := 1)
+	F6 : ControlBuffer(Name := "F6", TokenSize := 1)
+	F7 : ControlBuffer(Name := "F7", TokenSize := 1)
+	F8 : DataBuffer(Name := "F8", NumberOfInitialTokens := 0, TokenSize := 1)
+	F9 : DataBuffer(Name := "F9", NumberOfInitialTokens := 0, TokenSize := 1)
+	F10 : DataBuffer(Name := "F10", NumberOfInitialTokens := 0, TokenSize := 1)
+	F11 : DataBuffer(Name := "F11", NumberOfInitialTokens := 0, TokenSize := 1)
+	F12 : DataBuffer(Name := "F12", NumberOfInitialTokens := 0, TokenSize := 1)
+	F13 : ControlBuffer(Name := "F13", TokenSize := 1)
+	F14 : DataBuffer(Name := "F14", NumberOfInitialTokens := 0, TokenSize := 1)
+	F15 : DataBuffer(Name := "F15", NumberOfInitialTokens := 0, TokenSize := 1)
+	F16 : ControlBuffer(Name := "F16", TokenSize := 1)
+	F17 : DataBuffer(Name := "F17", NumberOfInitialTokens := 4, TokenSize := 1)
+channels
+	{ SimulationController, Task1.Monitor, Task7.Monitor }
+	{ Tasks, Task1.Computation, Task2.Computation, Task3.Computation, Task4.Computation, Task5.Computation,
+		Task6.Computation, Task7.Computation }
+	{ Buffers, F1.Communication, F2.Communication, F3.Communication, F4.Communication, F5.Communication,
+		F6.Communication, F7.Communication, F8.Communication, F9.Communication, F10.Communication, F11.Communication,
+		F12.Communication, F13.Communication, F14.Communication, F15.Communication, F16.Communication,
+		F17.Communication }
+	{ F1.In, Task1.D_T2 }
+	{ F1.Out, Task2.In }
+	{ Task1.C_T2, F2.In }
+	{ F2.Out, Task2.Control }
+	{ Task3.Out1, F10.In }
+	{ F3.Out, Task3.In }
+	{ Task3.Out2, F11.In }
+	{ F4.Out, Task3.Control }
+	{ Task2.Out1, F8.In }
+	{ Task2.Out2, F9.In }
+	{ Task1.C_T3, F4.In }
+	{ Task1.C_T6, F13.In }
+	{ F17.Out, Task1.In }
+	{ Task1.C_T5, F7.In }
+	{ Task1.D_T4, F5.In }
+	{ Task1.C_T4, F6.In }
+	{ Task1.C_T7, F16.In }
+	{ Task1.D_T3, F3.In }
+	{ F5.Out, Task4.In }
+	{ F6.Out, Task4.Control }
+	{ F8.Out, Task7.In1 }
+	{ F7.Out, Task5.Control }
+	{ F12.Out, Task6.In2 }
+	{ F11.Out, Task6.In1 }
+	{ Task6.Out, F15.In }
+	{ F13.Out, Task6.Control }
+	{ F9.Out, Task5.In1 }
+	{ F10.Out, Task5.In2 }
+	{ Task5.Out, F14.In }
+	{ Task4.Out, F12.In }
+	{ F15.Out, Task7.In3 }
+	{ F14.Out, Task7.In2 }
+	{ F16.Out, Task7.Control }
+	{ Task7.Out, F17.In }

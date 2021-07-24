@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:poosl="http://poosl.esi.nl/poosl/3.0.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
+  <viewpoint:DAnalysis xmi:id="_wgKPMB52EeWC7tRqy9wQWQ" selectedViews="_whDnEB52EeWC7tRqy9wQWQ" version="12.1.0.201708031200">
+    <semanticResources>platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign</semanticResources>
+    <semanticResources>environment:/viewpoint</semanticResources>
+    <semanticResources>platform:/plugin/nl.esi.poosl.model/model/poosl.ecore</semanticResources>
+    <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
+    <semanticResources>models-basic/ProducerConsumer/producer_consumer.poosl</semanticResources>
+    <semanticResources>bundleresource://28.fwk1257526338/nl/esi/poosl/xtext/BasicClasses.poosl</semanticResources>
+    <semanticResources>bundleresource://888.fwk1465146431/nl/esi/poosl/xtext/BasicClasses.poosl</semanticResources>
+    <ownedViews xmi:type="viewpoint:DView" xmi:id="_whDnEB52EeWC7tRqy9wQWQ">
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']"/>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" xmi:id="_s8Q90L_3EeixP-gV4whKRw" name="System (producer_consumer.poosl)" repPath="#_s8JCAL_3EeixP-gV4whKRw">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']"/>
+      </ownedRepresentationDescriptors>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" xmi:id="_udQ2r7_3EeixP-gV4whKRw" name="System (producer_consumer.poosl)" repPath="#_ucI1IL_3EeixP-gV4whKRw">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']"/>
+        <target xmi:type="poosl:ClusterClass" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2"/>
+      </ownedRepresentationDescriptors>
+    </ownedViews>
+  </viewpoint:DAnalysis>
+  <diagram:DSemanticDiagram xmi:id="_yBffEB52EeWC7tRqy9wQWQ" name="System (producer_consumer.poosl)" uid="_s8JCAL_3EeixP-gV4whKRw">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_yBffER52EeWC7tRqy9wQWQ" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" xmi:id="_yBffEh52EeWC7tRqy9wQWQ"/>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_yBffNh52EeWC7tRqy9wQWQ" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="_yBffNx52EeWC7tRqy9wQWQ" type="Sirius" element="_yBffEB52EeWC7tRqy9wQWQ" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_yBffOR52EeWC7tRqy9wQWQ" type="2002" element="_yBffEx52EeWC7tRqy9wQWQ">
+          <children xmi:type="notation:Node" xmi:id="_yBgGIB52EeWC7tRqy9wQWQ" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_yBgGIR52EeWC7tRqy9wQWQ" type="7001">
+            <children xmi:type="notation:Node" xmi:id="_yBgtMB52EeWC7tRqy9wQWQ" type="3007" element="_yBffFR52EeWC7tRqy9wQWQ">
+              <children xmi:type="notation:Node" xmi:id="_yBgtMx52EeWC7tRqy9wQWQ" type="5003">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_yBgtNB52EeWC7tRqy9wQWQ" x="-1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBh7Uh52EeWC7tRqy9wQWQ" type="3003" element="_yBffFh52EeWC7tRqy9wQWQ">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBh7Ux52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBh7VB52EeWC7tRqy9wQWQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_yBgtMR52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBgtMh52EeWC7tRqy9wQWQ" x="160" y="318" width="10" height="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_yBgtNR52EeWC7tRqy9wQWQ" type="3007" element="_yBffFx52EeWC7tRqy9wQWQ">
+              <children xmi:type="notation:Node" xmi:id="_yBhUQB52EeWC7tRqy9wQWQ" type="5003">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_yBhUQR52EeWC7tRqy9wQWQ" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBh7VR52EeWC7tRqy9wQWQ" type="3001" element="_yBffGB52EeWC7tRqy9wQWQ">
+                <children xmi:type="notation:Node" xmi:id="_yBh7WB52EeWC7tRqy9wQWQ" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_yBh7WR52EeWC7tRqy9wQWQ" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_yBjJcx52EeWC7tRqy9wQWQ" type="3003" element="_yBffGR52EeWC7tRqy9wQWQ">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_yBjJdB52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBjJdR52EeWC7tRqy9wQWQ"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBh7Vh52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBh7Vx52EeWC7tRqy9wQWQ" y="-12" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBiiYB52EeWC7tRqy9wQWQ" type="3001" element="_yBffGh52EeWC7tRqy9wQWQ">
+                <children xmi:type="notation:Node" xmi:id="_yBiiYx52EeWC7tRqy9wQWQ" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_yBiiZB52EeWC7tRqy9wQWQ" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_yBjwgB52EeWC7tRqy9wQWQ" type="3003" element="_yBffGx52EeWC7tRqy9wQWQ">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_yBjwgR52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBjwgh52EeWC7tRqy9wQWQ"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBiiYR52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBiiYh52EeWC7tRqy9wQWQ" x="8" y="92" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBjJcB52EeWC7tRqy9wQWQ" type="3003" element="_yBffHB52EeWC7tRqy9wQWQ">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBjJcR52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBjJch52EeWC7tRqy9wQWQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_yBgtNh52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBgtNx52EeWC7tRqy9wQWQ" x="90" y="30" width="150" height="100"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_yBhUQh52EeWC7tRqy9wQWQ" type="3007" element="_yBffHR52EeWC7tRqy9wQWQ">
+              <children xmi:type="notation:Node" xmi:id="_yBhURR52EeWC7tRqy9wQWQ" type="5003">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_yBhURh52EeWC7tRqy9wQWQ" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBkXkB52EeWC7tRqy9wQWQ" type="3001" element="_yBffHh52EeWC7tRqy9wQWQ">
+                <children xmi:type="notation:Node" xmi:id="_yBkXkx52EeWC7tRqy9wQWQ" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_yBkXlB52EeWC7tRqy9wQWQ" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_yBllsB52EeWC7tRqy9wQWQ" type="3003" element="_yBffHx52EeWC7tRqy9wQWQ">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_yBllsR52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBllsh52EeWC7tRqy9wQWQ"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBkXkR52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBkXkh52EeWC7tRqy9wQWQ" x="8" y="92" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBkXlR52EeWC7tRqy9wQWQ" type="3001" element="_yBffIB52EeWC7tRqy9wQWQ">
+                <children xmi:type="notation:Node" xmi:id="_yBkXmB52EeWC7tRqy9wQWQ" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_yBkXmR52EeWC7tRqy9wQWQ" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_yBmMwB52EeWC7tRqy9wQWQ" type="3003" element="_yBffIR52EeWC7tRqy9wQWQ">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_yBmMwR52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBmMwh52EeWC7tRqy9wQWQ"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBkXlh52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBkXlx52EeWC7tRqy9wQWQ" x="41" y="-12" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBk-oB52EeWC7tRqy9wQWQ" type="3003" element="_yBffIh52EeWC7tRqy9wQWQ">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBk-oR52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBk-oh52EeWC7tRqy9wQWQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_yBhUQx52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBhURB52EeWC7tRqy9wQWQ" x="211" y="160" width="150" height="100"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_yBhURx52EeWC7tRqy9wQWQ" type="3007" element="_yBffIx52EeWC7tRqy9wQWQ">
+              <children xmi:type="notation:Node" xmi:id="_yBh7UB52EeWC7tRqy9wQWQ" type="5003">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_yBh7UR52EeWC7tRqy9wQWQ" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBmMwx52EeWC7tRqy9wQWQ" type="3001" element="_yBffJB52EeWC7tRqy9wQWQ">
+                <children xmi:type="notation:Node" xmi:id="_yBmz0B52EeWC7tRqy9wQWQ" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_yBmz0R52EeWC7tRqy9wQWQ" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_yBna4x52EeWC7tRqy9wQWQ" type="3003" element="_yBffJR52EeWC7tRqy9wQWQ">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_yBna5B52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBna5R52EeWC7tRqy9wQWQ"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBmMxB52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBmMxR52EeWC7tRqy9wQWQ" x="8" y="72" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBmz0h52EeWC7tRqy9wQWQ" type="3001" element="_yBffJh52EeWC7tRqy9wQWQ">
+                <children xmi:type="notation:Node" xmi:id="_yBmz1R52EeWC7tRqy9wQWQ" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_yBmz1h52EeWC7tRqy9wQWQ" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_yBna5h52EeWC7tRqy9wQWQ" type="3003" element="_yBffJx52EeWC7tRqy9wQWQ">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_yBna5x52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBna6B52EeWC7tRqy9wQWQ"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBmz0x52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBmz1B52EeWC7tRqy9wQWQ" x="8" y="-12" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_yBna4B52EeWC7tRqy9wQWQ" type="3003" element="_yBffKB52EeWC7tRqy9wQWQ">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_yBna4R52EeWC7tRqy9wQWQ" fontName="Segoe UI"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBna4h52EeWC7tRqy9wQWQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_yBhUSB52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBhUSR52EeWC7tRqy9wQWQ" x="31" y="160" width="120" height="80"/>
+            </children>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_yBgGIh52EeWC7tRqy9wQWQ"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_yBgGIx52EeWC7tRqy9wQWQ"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_yBffOh52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8" bold="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBffOx52EeWC7tRqy9wQWQ"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="_yBffOB52EeWC7tRqy9wQWQ"/>
+        <edges xmi:type="notation:Edge" xmi:id="_yBoB8B52EeWC7tRqy9wQWQ" type="4001" element="_yBffKR52EeWC7tRqy9wQWQ" source="_yBgtMB52EeWC7tRqy9wQWQ" target="_yBmMwx52EeWC7tRqy9wQWQ">
+          <children xmi:type="notation:Node" xmi:id="_yBopAB52EeWC7tRqy9wQWQ" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBopAR52EeWC7tRqy9wQWQ" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yBopAh52EeWC7tRqy9wQWQ" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBopAx52EeWC7tRqy9wQWQ" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yBopBB52EeWC7tRqy9wQWQ" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBopBR52EeWC7tRqy9wQWQ" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_yBoB8R52EeWC7tRqy9wQWQ" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_yBoB8h52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yBoB8x52EeWC7tRqy9wQWQ" points="[-5, 0, 101, 81]$[-106, 0, 0, 81]$[-106, -71, 0, 10]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yBpQEB52EeWC7tRqy9wQWQ" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yBpQER52EeWC7tRqy9wQWQ" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_yBpQEh52EeWC7tRqy9wQWQ" type="4001" element="_yBffLB52EeWC7tRqy9wQWQ" source="_yBgtMB52EeWC7tRqy9wQWQ" target="_yBiiYB52EeWC7tRqy9wQWQ">
+          <children xmi:type="notation:Node" xmi:id="_yBpQFh52EeWC7tRqy9wQWQ" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBpQFx52EeWC7tRqy9wQWQ" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yBpQGB52EeWC7tRqy9wQWQ" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBpQGR52EeWC7tRqy9wQWQ" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yBpQGh52EeWC7tRqy9wQWQ" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBpQGx52EeWC7tRqy9wQWQ" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_yBpQEx52EeWC7tRqy9wQWQ" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_yBpQFB52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yBpQFR52EeWC7tRqy9wQWQ" points="[0, -5, 47, 186]$[0, -93, 47, 98]$[-47, -93, 0, 98]$[-47, -181, 0, 10]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yBp3IB52EeWC7tRqy9wQWQ" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yBp3IR52EeWC7tRqy9wQWQ" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_yBp3Ih52EeWC7tRqy9wQWQ" type="4001" element="_yBffLx52EeWC7tRqy9wQWQ" source="_yBgtMB52EeWC7tRqy9wQWQ" target="_yBkXkB52EeWC7tRqy9wQWQ">
+          <children xmi:type="notation:Node" xmi:id="_yBp3Jh52EeWC7tRqy9wQWQ" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBp3Jx52EeWC7tRqy9wQWQ" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yBp3KB52EeWC7tRqy9wQWQ" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBp3KR52EeWC7tRqy9wQWQ" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yBp3Kh52EeWC7tRqy9wQWQ" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBp3Kx52EeWC7tRqy9wQWQ" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_yBp3Ix52EeWC7tRqy9wQWQ" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_yBp3JB52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yBp3JR52EeWC7tRqy9wQWQ" points="[0, -5, -74, 56]$[0, -28, -74, 33]$[74, -28, 0, 33]$[74, -51, 0, 10]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yBqeMB52EeWC7tRqy9wQWQ" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yBqeMR52EeWC7tRqy9wQWQ" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_yBqeMh52EeWC7tRqy9wQWQ" type="4001" element="_yBffMh52EeWC7tRqy9wQWQ" source="_yBmz0h52EeWC7tRqy9wQWQ" target="_yBh7VR52EeWC7tRqy9wQWQ">
+          <children xmi:type="notation:Node" xmi:id="_yBqeNh52EeWC7tRqy9wQWQ" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBqeNx52EeWC7tRqy9wQWQ" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yBqeOB52EeWC7tRqy9wQWQ" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBqeOR52EeWC7tRqy9wQWQ" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_yBqeOh52EeWC7tRqy9wQWQ" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yBqeOx52EeWC7tRqy9wQWQ" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_yBqeMx52EeWC7tRqy9wQWQ" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_yBqeNB52EeWC7tRqy9wQWQ" fontName="Segoe UI" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yBqeNR52EeWC7tRqy9wQWQ" points="[0, -10, -51, 120]$[0, -65, -51, 65]$[51, -65, 0, 65]$[51, -120, 0, 10]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yBqePB52EeWC7tRqy9wQWQ" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yBqePR52EeWC7tRqy9wQWQ" id="(0.5,0.5)"/>
+        </edges>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_yBffEx52EeWC7tRqy9wQWQ" name="System">
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_yBffFB52EeWC7tRqy9wQWQ" iconPath="/nl.esi.poosl.sirius/icons/system_icon.png" labelAlignment="LEFT" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']"/>
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_yBffFR52EeWC7tRqy9wQWQ" outgoingEdges="_yBffKR52EeWC7tRqy9wQWQ _yBffLB52EeWC7tRqy9wQWQ _yBffLx52EeWC7tRqy9wQWQ" width="1" height="1" resizeKind="NSEW">
+        <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
+        <semanticElements xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffFh52EeWC7tRqy9wQWQ" showIcon="false" width="1" height="1" color="0,0,0">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='ChannelSystem']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='ChannelSystem']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_yBffFx52EeWC7tRqy9wQWQ" name="ProducerConsumer : ProducerConsumer" width="15" height="10" resizeKind="NSEW">
+        <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.0"/>
+        <semanticElements xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.0"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffGB52EeWC7tRqy9wQWQ" name="Out" incomingEdges="_yBffMh52EeWC7tRqy9wQWQ" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.1"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffGR52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffGh52EeWC7tRqy9wQWQ" name="In" incomingEdges="_yBffLB52EeWC7tRqy9wQWQ" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.1"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffGx52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffHB52EeWC7tRqy9wQWQ" iconPath="/nl.esi.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@conditionnalStyles.0/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_yBffHR52EeWC7tRqy9wQWQ" name="Second : ProducerConsumer" width="15" height="10" resizeKind="NSEW">
+        <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.1"/>
+        <semanticElements xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.1"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffHh52EeWC7tRqy9wQWQ" name="In" incomingEdges="_yBffLx52EeWC7tRqy9wQWQ" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.2"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.2"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffHx52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffIB52EeWC7tRqy9wQWQ" name="Out" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:Port" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.0/@ports.1"/>
+          <semanticElements xmi:type="poosl:Port" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.0/@ports.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffIR52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffIh52EeWC7tRqy9wQWQ" iconPath="/nl.esi.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@conditionnalStyles.0/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_yBffIx52EeWC7tRqy9wQWQ" name="Bus : Bus" width="12" height="8" resizeKind="NSEW">
+        <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.2"/>
+        <semanticElements xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.2"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffJB52EeWC7tRqy9wQWQ" name="Out" incomingEdges="_yBffKR52EeWC7tRqy9wQWQ" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.0"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffJR52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffJh52EeWC7tRqy9wQWQ" name="In" outgoingEdges="_yBffMh52EeWC7tRqy9wQWQ" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.0"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffJx52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffKB52EeWC7tRqy9wQWQ" iconPath="/nl.esi.poosl.sirius/icons/process_icon.png" labelPosition="node" width="12" height="8" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
+      </ownedDiagramElements>
+      <target xmi:type="poosl:System" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification"/>
+      <semanticElements xmi:type="poosl:System" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_yBffKR52EeWC7tRqy9wQWQ" sourceNode="_yBffFR52EeWC7tRqy9wQWQ" targetNode="_yBffJB52EeWC7tRqy9wQWQ">
+      <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_yBffKh52EeWC7tRqy9wQWQ" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_yBffKx52EeWC7tRqy9wQWQ" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_yBffLB52EeWC7tRqy9wQWQ" sourceNode="_yBffFR52EeWC7tRqy9wQWQ" targetNode="_yBffGh52EeWC7tRqy9wQWQ">
+      <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_yBffLR52EeWC7tRqy9wQWQ" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_yBffLh52EeWC7tRqy9wQWQ" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_yBffLx52EeWC7tRqy9wQWQ" sourceNode="_yBffFR52EeWC7tRqy9wQWQ" targetNode="_yBffHh52EeWC7tRqy9wQWQ">
+      <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_yBffMB52EeWC7tRqy9wQWQ" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_yBffMR52EeWC7tRqy9wQWQ" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_yBffMh52EeWC7tRqy9wQWQ" sourceNode="_yBffJh52EeWC7tRqy9wQWQ" targetNode="_yBffGB52EeWC7tRqy9wQWQ">
+      <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.0"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_yBffMx52EeWC7tRqy9wQWQ" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortSystem']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_yBffNB52EeWC7tRqy9wQWQ"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortSystem']"/>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_yBffNR52EeWC7tRqy9wQWQ"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer"/>
+    <target xmi:type="poosl:System" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification"/>
+  </diagram:DSemanticDiagram>
+  <diagram:DSemanticDiagram xmi:id="_udQ2gL_3EeixP-gV4whKRw" name="System (producer_consumer.poosl)" uid="_ucI1IL_3EeixP-gV4whKRw">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_udQ2gb_3EeixP-gV4whKRw" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" xmi:id="_udQ2gr_3EeixP-gV4whKRw"/>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_udVH8L_3EeixP-gV4whKRw" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="_udVH8b_3EeixP-gV4whKRw" type="Sirius" element="_udQ2gL_3EeixP-gV4whKRw" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_udVH87_3EeixP-gV4whKRw" type="2002" element="_udQ2hL_3EeixP-gV4whKRw">
+          <children xmi:type="notation:Node" xmi:id="_udVH9r_3EeixP-gV4whKRw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_udVH97_3EeixP-gV4whKRw" type="7001">
+            <children xmi:type="notation:Node" xmi:id="_udVH-r_3EeixP-gV4whKRw" type="3007" element="_udQ2hr_3EeixP-gV4whKRw">
+              <children xmi:type="notation:Node" xmi:id="_udVH_b_3EeixP-gV4whKRw" type="5003">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_udVH_r_3EeixP-gV4whKRw" x="-1"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udVvD7_3EeixP-gV4whKRw" type="3003" element="_udQ2h7_3EeixP-gV4whKRw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udVvEL_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udVvEb_3EeixP-gV4whKRw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_udVH-7_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udVH_L_3EeixP-gV4whKRw" x="60" y="274" width="10" height="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_udVvAL_3EeixP-gV4whKRw" type="3007" element="_udQ2iL_3EeixP-gV4whKRw">
+              <children xmi:type="notation:Node" xmi:id="_udVvA7_3EeixP-gV4whKRw" type="5003">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_udVvBL_3EeixP-gV4whKRw" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udVvEr_3EeixP-gV4whKRw" type="3001" element="_udQ2ib_3EeixP-gV4whKRw">
+                <children xmi:type="notation:Node" xmi:id="_udVvFb_3EeixP-gV4whKRw" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_udVvFr_3EeixP-gV4whKRw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_udWWFb_3EeixP-gV4whKRw" type="3003" element="_udQ2ir_3EeixP-gV4whKRw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWFr_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWF7_3EeixP-gV4whKRw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udVvE7_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udVvFL_3EeixP-gV4whKRw" x="45" y="-12" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udVvF7_3EeixP-gV4whKRw" type="3001" element="_udQ2i7_3EeixP-gV4whKRw">
+                <children xmi:type="notation:Node" xmi:id="_udWWEL_3EeixP-gV4whKRw" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_udWWEb_3EeixP-gV4whKRw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_udWWGL_3EeixP-gV4whKRw" type="3003" element="_udQ2jL_3EeixP-gV4whKRw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWGb_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWGr_3EeixP-gV4whKRw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udVvGL_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udVvGb_3EeixP-gV4whKRw" y="-12" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udWWEr_3EeixP-gV4whKRw" type="3003" element="_udQ2jb_3EeixP-gV4whKRw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWE7_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWFL_3EeixP-gV4whKRw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_udVvAb_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udVvAr_3EeixP-gV4whKRw" x="400" y="344" width="150" height="100"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_udVvBb_3EeixP-gV4whKRw" type="3007" element="_udQ2jr_3EeixP-gV4whKRw">
+              <children xmi:type="notation:Node" xmi:id="_udVvCL_3EeixP-gV4whKRw" type="5003">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_udVvCb_3EeixP-gV4whKRw" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udWWG7_3EeixP-gV4whKRw" type="3001" element="_udQ2j7_3EeixP-gV4whKRw">
+                <children xmi:type="notation:Node" xmi:id="_udWWHr_3EeixP-gV4whKRw" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_udWWH7_3EeixP-gV4whKRw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_udWWKL_3EeixP-gV4whKRw" type="3003" element="_udQ2kL_3EeixP-gV4whKRw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWKb_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWKr_3EeixP-gV4whKRw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWHL_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWHb_3EeixP-gV4whKRw" x="10" y="92" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udWWIL_3EeixP-gV4whKRw" type="3001" element="_udQ2kb_3EeixP-gV4whKRw">
+                <children xmi:type="notation:Node" xmi:id="_udWWI7_3EeixP-gV4whKRw" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_udWWJL_3EeixP-gV4whKRw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_udWWK7_3EeixP-gV4whKRw" type="3003" element="_udQ2kr_3EeixP-gV4whKRw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWLL_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWLb_3EeixP-gV4whKRw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWIb_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWIr_3EeixP-gV4whKRw" x="40" y="-12" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udWWJb_3EeixP-gV4whKRw" type="3003" element="_udQ2k7_3EeixP-gV4whKRw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWJr_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWJ7_3EeixP-gV4whKRw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_udVvBr_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udVvB7_3EeixP-gV4whKRw" x="130" y="59" width="150" height="100"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_udVvCr_3EeixP-gV4whKRw" type="3007" element="_udQ2lL_3EeixP-gV4whKRw">
+              <children xmi:type="notation:Node" xmi:id="_udVvDb_3EeixP-gV4whKRw" type="5003">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_udVvDr_3EeixP-gV4whKRw" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udWWLr_3EeixP-gV4whKRw" type="3001" element="_udQ2lb_3EeixP-gV4whKRw">
+                <children xmi:type="notation:Node" xmi:id="_udWWMb_3EeixP-gV4whKRw" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_udWWMr_3EeixP-gV4whKRw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_udW9Jb_3EeixP-gV4whKRw" type="3003" element="_udQ2lr_3EeixP-gV4whKRw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_udW9Jr_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9J7_3EeixP-gV4whKRw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWL7_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWML_3EeixP-gV4whKRw" y="-12" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udWWM7_3EeixP-gV4whKRw" type="3001" element="_udQ2l7_3EeixP-gV4whKRw">
+                <children xmi:type="notation:Node" xmi:id="_udW9IL_3EeixP-gV4whKRw" type="5001">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_udW9Ib_3EeixP-gV4whKRw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_udW9KL_3EeixP-gV4whKRw" type="3003" element="_udQ2mL_3EeixP-gV4whKRw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_udW9Kb_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9Kr_3EeixP-gV4whKRw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udWWNL_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udWWNb_3EeixP-gV4whKRw" x="142" y="10" width="40" height="20"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_udW9Ir_3EeixP-gV4whKRw" type="3003" element="_udQ2mb_3EeixP-gV4whKRw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_udW9I7_3EeixP-gV4whKRw" fontName="Segoe UI"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9JL_3EeixP-gV4whKRw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_udVvC7_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udVvDL_3EeixP-gV4whKRw" x="130" y="219" width="150" height="100"/>
+            </children>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_udVH-L_3EeixP-gV4whKRw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_udVH-b_3EeixP-gV4whKRw"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_udVH9L_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8" bold="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udVH9b_3EeixP-gV4whKRw"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="_udVH8r_3EeixP-gV4whKRw"/>
+        <edges xmi:type="notation:Edge" xmi:id="_udW9K7_3EeixP-gV4whKRw" type="4001" element="_udQ2mr_3EeixP-gV4whKRw" source="_udVH-r_3EeixP-gV4whKRw" target="_udWWLr_3EeixP-gV4whKRw">
+          <children xmi:type="notation:Node" xmi:id="_udW9L7_3EeixP-gV4whKRw" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9ML_3EeixP-gV4whKRw" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_udW9Mb_3EeixP-gV4whKRw" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9Mr_3EeixP-gV4whKRw" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_udW9M7_3EeixP-gV4whKRw" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9NL_3EeixP-gV4whKRw" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_udW9LL_3EeixP-gV4whKRw" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_udW9Lb_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_udW9Lr_3EeixP-gV4whKRw" points="[5, 0, -80, 62]$[85, 0, 0, 62]$[85, -52, 0, 10]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_udW9Nb_3EeixP-gV4whKRw" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_udW9Nr_3EeixP-gV4whKRw" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_udW9N7_3EeixP-gV4whKRw" type="4001" element="_udQ2n7_3EeixP-gV4whKRw" source="_udVH-r_3EeixP-gV4whKRw" target="_udVvF7_3EeixP-gV4whKRw">
+          <children xmi:type="notation:Node" xmi:id="_udW9O7_3EeixP-gV4whKRw" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9PL_3EeixP-gV4whKRw" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_udW9Pb_3EeixP-gV4whKRw" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9Pr_3EeixP-gV4whKRw" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_udW9P7_3EeixP-gV4whKRw" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9QL_3EeixP-gV4whKRw" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_udW9OL_3EeixP-gV4whKRw" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_udW9Ob_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_udW9Or_3EeixP-gV4whKRw" points="[0, 5, -355, -58]$[0, 115, -355, 52]$[95, 115, -260, 52]$[95, 63, -260, 0]$[335, 63, -20, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_udW9Qb_3EeixP-gV4whKRw" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_udW9Qr_3EeixP-gV4whKRw" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_udW9Q7_3EeixP-gV4whKRw" type="4001" element="_udQ2pL_3EeixP-gV4whKRw" source="_udVH-r_3EeixP-gV4whKRw" target="_udWWG7_3EeixP-gV4whKRw">
+          <children xmi:type="notation:Node" xmi:id="_udW9R7_3EeixP-gV4whKRw" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9SL_3EeixP-gV4whKRw" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_udW9Sb_3EeixP-gV4whKRw" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9Sr_3EeixP-gV4whKRw" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_udW9S7_3EeixP-gV4whKRw" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udW9TL_3EeixP-gV4whKRw" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_udW9RL_3EeixP-gV4whKRw" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_udW9Rb_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_udW9Rr_3EeixP-gV4whKRw" points="[0, -5, -95, 113]$[0, -57, -95, 61]$[95, -57, 0, 61]$[95, -108, 0, 10]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_udW9Tb_3EeixP-gV4whKRw" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_udW9Tr_3EeixP-gV4whKRw" id="(0.5,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_udXkML_3EeixP-gV4whKRw" type="4001" element="_udQ2qb_3EeixP-gV4whKRw" source="_udWWM7_3EeixP-gV4whKRw" target="_udVvEr_3EeixP-gV4whKRw">
+          <children xmi:type="notation:Node" xmi:id="_udXkNL_3EeixP-gV4whKRw" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udXkNb_3EeixP-gV4whKRw" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_udXkNr_3EeixP-gV4whKRw" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udXkN7_3EeixP-gV4whKRw" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_udXkOL_3EeixP-gV4whKRw" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_udXkOb_3EeixP-gV4whKRw" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_udXkMb_3EeixP-gV4whKRw" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_udXkMr_3EeixP-gV4whKRw" fontName="Segoe UI" fontHeight="8"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_udXkM7_3EeixP-gV4whKRw" points="[0, 10, -173, -93]$[0, 51, -173, -52]$[173, 51, 0, -52]$[173, 93, 0, -10]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_udXkOr_3EeixP-gV4whKRw" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_udXkO7_3EeixP-gV4whKRw" id="(0.5,0.5)"/>
+        </edges>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_udQ2hL_3EeixP-gV4whKRw" name="System" width="20" height="20">
+      <target xmi:type="poosl:ClusterClass" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2"/>
+      <semanticElements xmi:type="poosl:ClusterClass" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2"/>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_udQ2hb_3EeixP-gV4whKRw" iconPath="/nl.esi.poosl.sirius/icons/system_icon.png" labelAlignment="LEFT" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@conditionnalStyles.1/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']"/>
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_udQ2hr_3EeixP-gV4whKRw" outgoingEdges="_udQ2mr_3EeixP-gV4whKRw _udQ2n7_3EeixP-gV4whKRw _udQ2pL_3EeixP-gV4whKRw" width="1" height="1">
+        <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
+        <semanticElements xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2h7_3EeixP-gV4whKRw" showIcon="false" width="1" height="1" color="0,0,0">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ChannelCluster']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ChannelCluster']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_udQ2iL_3EeixP-gV4whKRw" name="ProducerConsumer : ProducerConsumer" width="15" height="10" resizeKind="NSEW">
+        <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.0"/>
+        <semanticElements xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.0"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2ib_3EeixP-gV4whKRw" name="Out" incomingEdges="_udQ2qb_3EeixP-gV4whKRw" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.1"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2ir_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2i7_3EeixP-gV4whKRw" name="In" incomingEdges="_udQ2n7_3EeixP-gV4whKRw" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.1"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2jL_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2jb_3EeixP-gV4whKRw" iconPath="/nl.esi.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@conditionnalStyles.0/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_udQ2jr_3EeixP-gV4whKRw" name="Second : ProducerConsumer" width="15" height="10" resizeKind="NSEW">
+        <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.1"/>
+        <semanticElements xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.1"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2j7_3EeixP-gV4whKRw" name="In" incomingEdges="_udQ2pL_3EeixP-gV4whKRw" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.2"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.2"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2kL_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2kb_3EeixP-gV4whKRw" name="Out" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:Port" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.0/@ports.1"/>
+          <semanticElements xmi:type="poosl:Port" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.0/@ports.1"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2kr_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2k7_3EeixP-gV4whKRw" iconPath="/nl.esi.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@conditionnalStyles.0/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_udQ2lL_3EeixP-gV4whKRw" name="Bus : Bus" width="15" height="10" resizeKind="NSEW">
+        <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.2"/>
+        <semanticElements xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.2"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2lb_3EeixP-gV4whKRw" name="Out" incomingEdges="_udQ2mr_3EeixP-gV4whKRw" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.0"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2lr_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+        </ownedBorderedNodes>
+        <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2l7_3EeixP-gV4whKRw" name="In" outgoingEdges="_udQ2qb_3EeixP-gV4whKRw" width="4" height="2" resizeKind="NSEW">
+          <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.0"/>
+          <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.0"/>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2mL_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+        </ownedBorderedNodes>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2mb_3EeixP-gV4whKRw" iconPath="/nl.esi.poosl.sirius/icons/process_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
+      </ownedDiagramElements>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_udQ2mr_3EeixP-gV4whKRw" sourceNode="_udQ2hr_3EeixP-gV4whKRw" targetNode="_udQ2lb_3EeixP-gV4whKRw">
+      <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_udQ2m7_3EeixP-gV4whKRw" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
+        <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_udQ2nL_3EeixP-gV4whKRw" showIcon="false"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_udQ2nb_3EeixP-gV4whKRw" showIcon="false"/>
+        <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_udQ2nr_3EeixP-gV4whKRw" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_udQ2n7_3EeixP-gV4whKRw" sourceNode="_udQ2hr_3EeixP-gV4whKRw" targetNode="_udQ2i7_3EeixP-gV4whKRw">
+      <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_udQ2oL_3EeixP-gV4whKRw" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
+        <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_udQ2ob_3EeixP-gV4whKRw" showIcon="false"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_udQ2or_3EeixP-gV4whKRw" showIcon="false"/>
+        <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_udQ2o7_3EeixP-gV4whKRw" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_udQ2pL_3EeixP-gV4whKRw" sourceNode="_udQ2hr_3EeixP-gV4whKRw" targetNode="_udQ2j7_3EeixP-gV4whKRw">
+      <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_udQ2pb_3EeixP-gV4whKRw" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
+        <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_udQ2pr_3EeixP-gV4whKRw" showIcon="false"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_udQ2p7_3EeixP-gV4whKRw" showIcon="false"/>
+        <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_udQ2qL_3EeixP-gV4whKRw" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_udQ2qb_3EeixP-gV4whKRw" sourceNode="_udQ2l7_3EeixP-gV4whKRw" targetNode="_udQ2ib_3EeixP-gV4whKRw">
+      <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.0"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_udQ2qr_3EeixP-gV4whKRw" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortCluster']/@style"/>
+        <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_udQ2q7_3EeixP-gV4whKRw" showIcon="false"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_udQ2rL_3EeixP-gV4whKRw" showIcon="false"/>
+        <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_udQ2rb_3EeixP-gV4whKRw" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortCluster']"/>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_udQ2rr_3EeixP-gV4whKRw"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer"/>
+    <target xmi:type="poosl:ClusterClass" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2"/>
+  </diagram:DSemanticDiagram>
+</xmi:XMI>

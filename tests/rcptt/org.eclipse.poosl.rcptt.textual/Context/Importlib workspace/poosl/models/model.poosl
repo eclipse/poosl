@@ -1,0 +1,7 @@
+import "../../import/models/model.poosl"
+
+system
+instances
+	someInstance : someClass()
+channels
+	

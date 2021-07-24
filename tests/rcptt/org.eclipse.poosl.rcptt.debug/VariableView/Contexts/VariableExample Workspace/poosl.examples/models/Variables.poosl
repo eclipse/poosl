@@ -1,0 +1,30 @@
+process class parentProcess(parentInt : Integer)
+ports
+messages
+variables
+	parentVar : Object
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+process class someProcessClass(childInt : Integer) extends parentProcess
+ports
+messages
+variables	
+	childVar : Object
+init
+	initialize()()
+methods
+	initialize()()
+		someMethod(nil)(childVar)
+	someMethod(methodIn : Integer)(MethodOut: Object) | methodInt : Integer |
+		methodInt := childInt + methodIn  ;
+		MethodOut := methodInt
+
+
+system
+instances
+	someInstance :someProcessClass(childInt := 2, parentInt := 3)
+channels

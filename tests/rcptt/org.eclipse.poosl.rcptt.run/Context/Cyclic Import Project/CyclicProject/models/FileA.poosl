@@ -1,0 +1,39 @@
+import "FileB.poosl"
+
+
+system
+instances
+	clusterInstance:clusterClass() 
+	processInstance: processClass()
+channels
+	
+
+process class processClass()
+ports
+	
+messages
+	
+variables
+	
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		new(dataClass)
+
+
+cluster class clusterClass()
+ports
+	
+instances
+	
+channels
+	
+	
+
+data class dataClass extends Object
+variables
+	
+methods
+		
+	

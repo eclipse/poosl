@@ -1,0 +1,16 @@
+data class packet extends Object
+variables
+	/* Identity stored inside a Packet. */
+	ID : Integer
+methods
+	/* Sets the ID value of the packet. */
+	setIdentity(I : Integer) : packet
+
+		ID := I ;
+		return self
+	/* Gets the ID value of the packet. */
+	getIdentity : Integer
+		return ID
+	/* Creates the String value that is shown by the debugging tools for instances of type Packet. */
+	printString : String
+			return("[" + ID printString + "]")

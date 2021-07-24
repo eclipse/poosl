@@ -1,0 +1,55 @@
+process class parentProcess(parentInt : Integer)
+ports
+messages
+variables
+	parentVar : Object
+init
+	someMethod()()
+methods
+	someMethod()() | |
+		skip
+
+process class someProcessClass(
+		childInt : Integer,
+		customData : CustomData,
+		c : Char,
+		s : String,
+		r : Real,
+		b : Boolean,		
+		i : Integer) extends parentProcess
+ports
+messages
+variables
+	childVar : Object,
+	custData : CustomData,
+	a : Array
+
+init
+	initialize()()
+methods
+	initialize()()
+		someMethod(nil)(childVar)
+
+	someMethod(methodIn : Integer)(methodOut: Object) | methodInt : Integer |
+		methodInt := childInt + methodIn;
+		methodOut := methodInt;
+		a := new(Array);
+		a resize(2);
+		a putAt(1, custData);
+		a putAt(2, nil)
+		
+
+
+system
+instances
+	someInstance :someProcessClass(childInt := 2, parentInt := 3, customData := new(CustomData),  c := 'c', i := 2, r :=  2.2,s := "String", b := true)
+channels
+
+
+data class CustomData extends Object
+variables
+	ID : Integer
+methods
+	setID(id : Integer) : Object | |
+		ID = id;
+		return nil
