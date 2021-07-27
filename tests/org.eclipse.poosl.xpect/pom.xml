@@ -11,6 +11,15 @@
 	<packaging>eclipse-plugin</packaging>
 	<name>POOSL Xpect tests</name>
 
+	<!-- 
+	TODO
+	Need rework:
+	packaging : eclipse-test-plugin
+	No specifique TP
+	MUST use tycho surefire (precondition of org.xpect.xtext.lib.tests.ValidationTest importing XtextWorkspaceSetup)
+	
+	 -->
+
 	<properties>
 		<memory-settings>-Xmx1G</memory-settings>
 		<target-platform>eclipse_4_4_2-xtext_2_9_2</target-platform>

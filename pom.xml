@@ -42,8 +42,7 @@
 	
 	<!-- 
 
-	
-	org.eclipse.poosl.generatedxmlclasses OK
+org.eclipse.poosl.generatedxmlclasses OK
 org.eclipse.poosl.help OK
 org.eclipse.poosl.legacysupport OK
 org.eclipse.poosl.libraries - ->  Only poosl files ??
@@ -60,7 +59,6 @@ org.eclipse.poosl.xtext
 org.eclipse.poosl.xtext.ide
 org.eclipse.poosl.xtext.ui
 org.eclipse.poosl.xtext.util
-	
 	
 	 -->
 	<profiles>
@@ -79,7 +77,10 @@ org.eclipse.poosl.xtext.util
 			</activation>
 			<modules>
 				<module>tests/org.eclipse.poosl.xtext.tests</module>
+				<!-- Xpect tests need complete rework
+				Maybe it was made in XPect 1.0
 				<module>tests/org.eclipse.poosl.xpect</module>
+				 -->
 			</modules>
 		</profile>
 		

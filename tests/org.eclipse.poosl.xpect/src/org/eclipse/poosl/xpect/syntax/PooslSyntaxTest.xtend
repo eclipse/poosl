@@ -13,8 +13,7 @@ import org.xpect.xtext.lib.setup.XtextWorkspaceSetup
 import org.xpect.xtext.lib.util.EObjectFormatter
 
 @RunWith(typeof(XpectRunner)) 
-@XpectImport(#[typeof(XtextStandaloneSetup), typeof(XtextWorkspaceSetup)])
-
+@XpectImport(typeof(XtextStandaloneSetup), typeof(XtextWorkspaceSetup))
 class PooslSyntaxTest {
 
 	@Xpect

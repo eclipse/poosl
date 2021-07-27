@@ -4,9 +4,10 @@
 package org.eclipse.poosl.xpect;
 
 import org.xpect.XpectImport;
+import org.xpect.expectation.ILinesExpectation;
 
 @XpectImport(PooslLinesExpectationImpl.class)
-public interface IPooslLinesExpectation {
+public interface IPooslLinesExpectation extends ILinesExpectation {
     void assertEquals(Iterable<?> string);
 
     void assertEquals(String message, Iterable<?> string);

@@ -1,4 +1,4 @@
-package org.eclipse.poosl.xpect.validation.misc;
+package org.eclipse.poosl.xpect.validation.unit;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,7 @@ import org.eclipse.poosl.xpect.IPooslLinesExpectation;
 import org.eclipse.poosl.xpect.validation.ImportingTestBase;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.validation.Issue;
+import org.junit.BeforeClass;
 import org.junit.ComparisonFailure;
 import org.junit.runner.RunWith;
 import org.xpect.expectation.ILinesExpectation;
@@ -23,7 +24,7 @@ import org.xpect.xtext.lib.util.NextLine;
 import com.google.common.collect.Multimap;
 
 @RunWith(XpectRunner.class)
-public class PooslValidationMiscTest extends ImportingTestBase {
+public class PooslValidationUnitTest extends ImportingTestBase {
 
     /*
      * When beside errors also other issues are present this command ignores the other issues and only checks the errors
