@@ -17,6 +17,7 @@
 		<!-- was: 1.7.0 : issue with unexpected a.jre.javase[16.0.0,16.0.0] dependency -->
 		<tycho.version>2.3.0</tycho.version>
 		<xtend.version>2.25.0</xtend.version>
+
 		<!-- Xtend plugin does not take source version from TPD  -->
 		<maven.compiler.source>11</maven.compiler.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- TODO turn into UTF-8 -->
@@ -51,35 +52,64 @@
 					<skip>false</skip>
 				</configuration>
 			</plugin>
-			
-							    
-				    <plugin>
+		    <plugin>
 <!-- 
 See https://wiki.eclipse.org/Tycho/Reference_Card#Source_Features
 for p2-metadata in feature
  -->
-				      <groupId>org.eclipse.tycho</groupId>
-				      <artifactId>tycho-p2-plugin</artifactId>
-				      <executions>
-				        <execution>
-				          <id>attach-p2-metadata</id>
-				          <phase>package</phase>
-				          <goals>
-				            <goal>p2-metadata</goal>
-				          </goals>
-				        </execution>
-				      </executions>
-				    </plugin>
+		      <groupId>org.eclipse.tycho</groupId>
+		      <artifactId>tycho-p2-plugin</artifactId>
+		      <executions>
+		        <execution>
+		          <id>attach-p2-metadata</id>
+		          <phase>package</phase>
+		          <goals>
+		            <goal>p2-metadata</goal>
+		          </goals>
+		        </execution>
+		      </executions>
+		    </plugin>
 			
 		</plugins>
 		
 		<pluginManagement>
 			<plugins>
+				<!-- Classic plugins -->
 			    <plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jarsigner-plugin</artifactId>
 					<version>1.3.2</version>
 				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.2.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.6.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				
+				<!-- Tycho plugins -->
+				
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-maven-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>target-platform-configuration</artifactId>
@@ -144,34 +174,10 @@ for p2-metadata in feature
 						</environments>
 					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.2.0</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.7</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-clean-plugin</artifactId>
-					<version>2.6.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>3.0.0</version>
-				</plugin>
+
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>tycho-p2-repository-plugin</artifactId>
-					<version>${tycho.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.eclipse.tycho</groupId>
-					<artifactId>tycho-maven-plugin</artifactId>
 					<version>${tycho.version}</version>
 				</plugin>
 
@@ -278,7 +284,8 @@ for p2-metadata in feature
 			</activation>
 			<build>
 				<plugins>
-				<!-- Obeo:
+				<!-- 
+				Obeo:
 					NO KEY STORE available
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -407,6 +414,106 @@ for p2-metadata in feature
 						</executions>
 					</plugin>
 				</plugins>
+				
+			</build>
+		</profile>
+
+		<profile>
+			<id>RCPTT-nature</id>
+			<activation>
+				<file>
+					<exists>rcptt.properties</exists>
+				</file>
+			</activation>
+			
+			<properties>
+				<rcptt.version>2.5.1-M3</rcptt.version>
+				
+				<!-- RCPTT Suite is identified by its name, not its filename -->
+				<rcptt.suite.name>_suite.name:undefined_</rcptt.suite.name>
+				
+				<product.name>org.eclipse.poosl.product</product.name>
+				<product.archive>poosl</product.archive>
+				
+				<!-- rcptt tests should be in: tests/rcptt/<project_name> -->
+				<rcptt.root.path>../../..</rcptt.root.path>
+				<product.build.path>${rcptt.root.path}/releng/${product.name}/target/products</product.build.path>
+				
+				<!-- 
+				Unfortunately, tycho properties are not available for OSGI.
+				RCPTT can only deal with archive classifier (not path).
+				Archive of products are always zip in tycho (any platform).
+				 -->
+				<rcptt.build.target>${product.archive}-[platform].zip</rcptt.build.target>
+				<rcptt.aut.path>${product.build.path}/${rcptt.build.target}</rcptt.aut.path>
+				
+				<!-- Run every RCPTT for the time being -->
+				<rcptt.failure.ignore>true</rcptt.failure.ignore>
+			</properties>
+			
+			<!-- 
+			Note : 
+			Reference doc: https://www.eclipse.org/rcptt/documentation/userguide/maven/
+			
+			Warning :
+			Chapter on 'Extra projects' is deprecated.
+			Only chapter on 'Dependent projects' is applicable.
+			
+			Src:
+			https://eclipse.googlesource.com/rcptt/org.eclipse.rcptt/+/refs/heads/master/
+			-->
+			
+			<pluginRepositories>
+				<pluginRepository> <!-- RCPTT is not in Maven Central -->
+					<id>rcptt-releases</id>
+					<name>RCPTT Maven repository</name>
+					<url>https://repo.eclipse.org/content/repositories/rcptt-releases/</url>
+				</pluginRepository>
+			</pluginRepositories>
+			
+			<build>
+			
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.rcptt</groupId>
+						<artifactId>rcptt-maven-plugin</artifactId>
+						<extensions>true</extensions>
+						<configuration>
+							<runner>
+								<version>${rcptt.version}</version>
+								<vmArgs>
+									<vmArg>-Xms512m</vmArg>
+									<vmArg>-Xmx1024m</vmArg>
+									<vmArg>-XX:MaxMetaspaceSize=128m</vmArg>
+								</vmArgs>
+							</runner>
+		
+							<aut>
+								<explicit>${rcptt.aut.path}</explicit>
+							</aut>
+							
+							<testOptions>
+								<testExecTimeout>240</testExecTimeout>
+							</testOptions>
+							
+							<suites>
+								<suite>${rcptt.suite.name}</suite>
+							</suites>
+							
+							<testFailureIgnore>${rcptt.failure.ignore}</testFailureIgnore>
+						</configuration>
+					</plugin>
+				</plugins>
+			
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.eclipse.rcptt</groupId>
+							<artifactId>rcptt-maven-plugin</artifactId>
+							<version>${rcptt.version}</version>
+						</plugin>
+					</plugins>
+				</pluginManagement>
 				
 			</build>
 		</profile>

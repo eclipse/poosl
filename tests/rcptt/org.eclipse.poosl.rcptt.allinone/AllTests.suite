@@ -18,8 +18,8 @@ Runs all tests. Contains all main test suite of each project.
 Content-Type: text/testcase
 Entry-Name: testcase-items
 
-_3swvUONbEeSZttsAewanYQ	// kind: 'suite' name: 'Setup' path: '../org.eclipse.poosl.rcptt.setup/Setup.suite'
-_xNdwoONbEeSZttsAewanYQ	// kind: 'suite' name: 'Editing' path: '../org.eclipse.poosl.rcptt.textual/Editing.suite'
+_3swvUONbEeSZttsAewanYQ	// kind: 'suite' name: 'Setup' path: '../org.eclipse.poosl.rcptt.setup/rcptt.suite'
+_xNdwoONbEeSZttsAewanYQ	// kind: 'suite' name: 'Editing' path: '../org.eclipse.poosl.rcptt.textual/rcptt.suite'
 _uPiOoONVEeSZttsAewanYQ	// kind: 'suite' name: 'Debug' path: '../org.eclipse.poosl.rcptt.debug/Debug.suite'
 _1Pn-gONbEeSZttsAewanYQ	// kind: 'suite' name: 'Graphical' path: '../org.eclipse.poosl.rcptt.graphical/Graphical.suite'
 _giZLAOf8EeS02qlAIvBOkg	// kind: 'suite' name: 'Run' path: '../org.eclipse.poosl.rcptt.run/Run.suite'

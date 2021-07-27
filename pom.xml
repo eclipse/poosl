@@ -68,7 +68,7 @@ org.eclipse.poosl.xtext.util
 			By default, tests are executed.
 			use -Dmaven.test.skip=true to disable.
 			-->
-			<id>tests-modules</id>
+			<id>tests</id>
 			<activation>
 				<property>
 					<name>maven.test.skip</name>
@@ -89,7 +89,7 @@ org.eclipse.poosl.xtext.util
 			By default, tests are executed.
 			use -Dmaven.test.skip=true to disable.
 			-->
-			<id>releng-modules</id>
+			<id>releng</id>
 			<activation>
 				<property>
 					<name>tycho.releng.skip</name>
@@ -110,7 +110,7 @@ org.eclipse.poosl.xtext.util
 			By default, integration tests are skip. IN PROGRESS
 			use -P integration-tests-modules to enable.
 			-->
-			<id>integration-tests-modules</id>
+			<id>integration-tests</id>
 			<activation>
 			    <!-- 
 			    Maven (at least 3.5) doesn't support multi activation.
@@ -120,7 +120,20 @@ org.eclipse.poosl.xtext.util
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
-				<module>plugins/rcptt/?</module>
+				
+				<module>tests/rcptt/org.eclipse.poosl.rcptt.debug</module>
+				<module>tests/rcptt/org.eclipse.poosl.rcptt.examples</module>
+				<module>tests/rcptt/org.eclipse.poosl.rcptt.graphical</module>
+				<module>tests/rcptt/org.eclipse.poosl.rcptt.run</module>
+				<module>tests/rcptt/org.eclipse.poosl.rcptt.setup</module>
+				<module>tests/rcptt/org.eclipse.poosl.rcptt.shared</module>
+				<module>tests/rcptt/org.eclipse.poosl.rcptt.textual</module>
+
+				<!-- 
+				org.eclipse.poosl.rcptt.allinone: only a test suite of other tests.
+				org.eclipse.poosl.rcptt.runnerScripts: Deprecated
+				 -->
+
 			</modules>
 		</profile>
 		
