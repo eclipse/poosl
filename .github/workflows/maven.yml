@@ -24,7 +24,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Build with Maven 
-        run: mvn --batch-mode --update-snapshots verify
+        run: mvn --batch-mode --update-snapshots verify -P integration-tests
       - name: Deploy 🚀
         if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@4.1.4
