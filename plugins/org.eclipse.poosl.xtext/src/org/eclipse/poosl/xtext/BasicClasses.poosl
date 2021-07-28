@@ -1,8 +1,9 @@
 // API version 3.0
 
 // IMPORTANT NOTE:
-// After making any changes, please regenerate the documentation
-// and copy this to   org.eclipse.poosl.help\html\language\BasicClasses.html
+// After making any changes, please regenerate the documentation using 'Generate Documentation'
+// (See org.eclipse.poosl.transformations plugin)
+// and copy this to org.eclipse.poosl.help\html\language\BasicClasses.html
 
 /* This permanent, native class extends Object. It represents an indexed list of (arbitrary typed) objects. Creating a new Array yields an indexed list of size 0 (empty Array). Valid indices for non-empty Arrays range from 1 to the size of the Array. */
 native data class Array extends Object
