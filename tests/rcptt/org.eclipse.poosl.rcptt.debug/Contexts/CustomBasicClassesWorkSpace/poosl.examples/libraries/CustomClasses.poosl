@@ -434,7 +434,7 @@ methods
 native data class FileIn extends Object
 variables
 methods
-	/* Specifies the file to read information from. s is a file name (possibly with an absolute or relative path reference – where the syntactic symbols / and \ for path references can be used interchangeably independent of OS). It returns the receiver. */
+	/* Specifies the file to read information from. s is a file name (possibly with an absolute or relative path reference - where the syntactic symbols / and \ for path references can be used interchangeably independent of OS). It returns the receiver. */
 	native source(s : String) : FileIn
 
 	/* Locks the referred file for read access. It assumes that method source has previously been called to identify the concrete file to refer to. Otherwise, an error is generated. It returns the receiver. */
@@ -466,7 +466,7 @@ methods
 native data class FileOut extends Object
 variables
 methods
-	/* Specifies the file to be referred to for writing information to. s is a file name (possibly with an absolute or relative path reference – where the syntactic symbols / and \ for path references can be used interchangeably independent of OS). In case a file with destination indicated by s already exists, that particular file is emptied. It returns the receiver. */
+	/* Specifies the file to be referred to for writing information to. s is a file name (possibly with an absolute or relative path reference - where the syntactic symbols / and \ for path references can be used interchangeably independent of OS). In case a file with destination indicated by s already exists, that particular file is emptied. It returns the receiver. */
 	native destination(s : String) : FileOut
 
 	/* (Re-)opens the referred file for write access. Performing such write accesses will result in first clearing all existing information in the file (if any). It assumes that method destination has previously been called to identify the concrete file to refer to. Otherwise, an error is generated. It returns the receiver. */	
@@ -554,10 +554,10 @@ methods
 native data class Observer extends Object
 variables
 methods
-	/* Sets the Observer’s human-readable identity to s. */
+	/* Sets the Observer's human-readable identity to s. */
 	native identifyWith(s : String) : Observer
 	
-	/* Returns the Observer’s identity. */
+	/* Returns the Observer's identity. */
 	native identity : String
 	
 	/* This method returns a String representation of the results for the monitored property. Tools typically use it to communicate observer state to external tools. By default, the result of method printString is returned. Method result can be overridden in subclasses to return specific information on the monitored properties. */

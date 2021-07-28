@@ -86,7 +86,7 @@ methods
 		methods
 		/* Receive messages */
 			ReceivePacket()() | p : packet |
-				IDz := " élèveë" ;
+				IDz := " Ã©lÃ¨veÃ«" ;
 				In?Message(p) { ID := p getIdentity } ;
 				ReceivePacket()()
 
