@@ -1,4 +1,16 @@
-/* XPECT_SETUP org.eclipse.poosl.xpect.validation.unused.PooslValidationUnusedTest END_SETUP */
+/* XPECT_SETUP org.eclipse.poosl.xpect.validation.unused.PooslValidationUnusedTest 
+   
+Workspace {
+  
+  Project "myProject" {} // this file goes into 1rst project
+  
+  Project "imports" {
+  	org.eclipse.poosl.xpect.description.Scan {
+  		from = "../imports"
+        extension = "poosl"
+    }
+  }
+} END_SETUP */
 
 // Process Method defined in parent should still give warning when its overridden and used in a child class
 
@@ -11,11 +23,11 @@ variables
 init    
 	someMethod()()
 methods
-//  XPECT warnings --> "Method is not used" at "unused"
+    //  XPECT warnings --> "Method is not used" at "unused"
 	unused()()
 		unreachable()()
 		
-		// XPECT warnings --> "Method is not used" at "unreachable"
+	// XPECT warnings --> "Method is not used" at "unreachable"
 	unreachable()()  
 		skip
 
@@ -50,14 +62,13 @@ methods
 		overRiddenMethod ("")(get) 
 	overRiddenMethod(input : String)(output : String) | local : String | 
 		output := input + local
+	
 	// XPECT warnings --> "Method is not used" at "overRiddenMethod2" 	 
 	overRiddenMethod2()()
 		skip
 	
-	
-	//--- imported
-	
-	process class parentImportProcessClass()
+//--- imported
+process class parentImportProcessClass()
 ports	
 messages	
 variables	

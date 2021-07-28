@@ -1,4 +1,19 @@
-/* XPECT_SETUP org.eclipse.poosl.xpect.validation.unique.PooslValidationUniqueTest END_SETUP */
+/* XPECT_SETUP org.eclipse.poosl.xpect.validation.unique.PooslValidationUniqueTest
+
+Workspace {
+  
+  Project "myProject" {} // this file goes into 1rst project
+  
+  Project "imports" {
+  	org.eclipse.poosl.xpect.description.Scan {
+  		from = "../imports"
+        extension = "poosl"
+    }
+  }
+}
+   
+END_SETUP
+ */
 
 import "../imports/import.poosl"
 import "../imports/import3.poosl"

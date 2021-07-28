@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.poosl.xpect.IPooslLinesExpectation;
-import org.eclipse.poosl.xpect.validation.ImportingTestBase;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.validation.Issue;
 import org.junit.ComparisonFailure;
@@ -23,7 +21,7 @@ import org.xpect.xtext.lib.util.NextLine;
 import com.google.common.collect.Multimap;
 
 @RunWith(XpectRunner.class)
-public class PooslValidationMiscTest extends ImportingTestBase {
+public class PooslValidationMiscTest extends ValidationTest {
 
     /*
      * When beside errors also other issues are present this command ignores the other issues and only checks the errors
@@ -52,16 +50,6 @@ public class PooslValidationMiscTest extends ImportingTestBase {
         if (issues.size() == 0) {
             throw new ComparisonFailure("A warning was expected but none was found.", issues.toString(), "!"); //$NON-NLS-1$ //$NON-NLS-2$
         }
-    }
-
-    /*
-     * Is used when a warning is expected but the message has no set format
-     */
-    @Xpect
-    @ConsumedIssues({ Severity.INFO, Severity.ERROR, Severity.WARNING })
-    public void warningsMultipleLine(IPooslLinesExpectation expectation, @IssuesByLine Multimap<IRegion, Issue> line2issue, @NextLine IRegion line, ValidationTestConfig cfg) {
-        List<String> issues = getActualIssues(line2issue, line, cfg, Severity.WARNING);
-        expectation.assertEquals(issues);
     }
 
 }

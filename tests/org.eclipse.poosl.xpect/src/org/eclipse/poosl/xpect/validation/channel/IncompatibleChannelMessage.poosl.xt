@@ -58,7 +58,7 @@ instances
 	outInstance: OutIntegerProcess() 
 	inInstance: InStringProcess() 
 channels  
-	// warnSendReceiveMismatch, different error when message signature name is the same . warningsMultipleLine
+// warnSendReceiveMismatch, different error when message signature name is the same.
 /* XPECT warnings ---
  "On this internal channel, the parameters of message 'inInstance[InStringProcess].In?same(String)' are not a supertype of the parameters of the following corresponding messages: outInstance[OutIntegerProcess].Out!same(Integer)" at "{outInstance.Out,  inInstance.In}"
  "On this internal channel, the parameters of message 'outInstance[OutIntegerProcess].Out!same(Integer)' are not a subtype of the parameters of the following corresponding messages: inInstance[InStringProcess].In?same(String)" at "{outInstance.Out,  inInstance.In}"

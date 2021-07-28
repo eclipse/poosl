@@ -1,4 +1,19 @@
-/* XPECT_SETUP org.eclipse.poosl.xpect.validation.misc.PooslValidationMiscTest END_SETUP */
+/* XPECT_SETUP org.eclipse.poosl.xpect.validation.misc.PooslValidationMiscTest 
+   
+Workspace {
+  
+  Project "myProject" {} // this file goes into 1rst project
+  
+  Project "imports" {
+  	org.eclipse.poosl.xpect.description.Scan {
+  		from = "../imports"
+        extension = "poosl"
+    }
+  }
+}
+   
+END_SETUP
+ */
 
 import "../imports/ImportInstanceParameter.poosl" 
 	

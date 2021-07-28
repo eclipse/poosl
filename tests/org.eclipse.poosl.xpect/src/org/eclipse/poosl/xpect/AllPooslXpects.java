@@ -17,23 +17,24 @@ import org.junit.runners.Suite.SuiteClasses;
  * This suite can be used in Eclipse to launch all verifications.
  * </p>
  * <p>
- * This test suite is ignored by Maven as it ends with 'Tests' instead of 'Test' or 'TestSuite'.
+ * This test suite is ignored by Maven as it ends with 'Xpects' instead of 'Test' or 'Tests'.
  * </p>
  * 
  * @author nperansin
  */
 @SuiteClasses({
-        // Disabled scoping and linking test, no longer uses default xtext reference
-        // PooslLinkingTest.class,
-        // PooslScopingTest.class,
-        PooslValidationMiscTest.class,
-        PooslValidationUnusedTest.class, 
-        PooslValidationUniqueTest.class, 
-        PooslValidationTypeCheckTest.class, 
-        PooslValidationChannelTest.class, 
-        PooslValidationImportingTest.class,
-        PooslValidationSuppressTest.class })
+    // Disabled scoping and linking test, no longer uses default xtext reference
+    // PooslLinkingTest.class,
+    // PooslScopingTest.class,
+    PooslValidationChannelTest.class, 
+    PooslValidationImportingTest.class,
+    PooslValidationMiscTest.class,
+    PooslValidationSuppressTest.class,
+    PooslValidationTypeCheckTest.class,
+    PooslValidationUniqueTest.class, 
+    PooslValidationUnusedTest.class
+})
 
 @RunWith(Suite.class)
-public class AllPooslXpectTests {
+public class AllPooslXpects {
 }

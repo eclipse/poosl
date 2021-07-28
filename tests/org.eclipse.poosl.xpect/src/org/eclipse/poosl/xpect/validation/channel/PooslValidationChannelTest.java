@@ -20,8 +20,18 @@ import com.google.common.collect.Multimap;
 
 @RunWith(XpectRunner.class)
 public class PooslValidationChannelTest extends ValidationTest {
-    /*
-     * Is used when a warning is expected but the message has no set format
+
+    /**
+     * Tests a warning exist is expected but the message has no set format.
+     * 
+     * @param expectation
+     *            used to log failure
+     * @param line2issue
+     *            issues associated to line
+     * @param line
+     *            tested
+     * @param cfg
+     *            of the test
      */
     @Xpect
     @ConsumedIssues(Severity.WARNING)
