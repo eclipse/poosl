@@ -28,6 +28,9 @@ jobs:
           # RCPTT takes too long, limit to tags
           # MVN_IT_PROFILE: ${{ startsWith(github.ref, 'refs/tags/') && '-P integration-tests' || '' }}
           MVN_IT_PROFILE:
+          GITHUB_REF_OUPUT: ${{ github.ref }}
+          GITHUB_IN_TAG: ${{ startsWith(github.ref, 'refs/tags/') }}
+          GITHUB_TAG:
         run: xvfb-run mvn --batch-mode verify $MVN_IT_PROFILE
       
       - name: RCPTT logs
@@ -47,7 +50,8 @@ jobs:
         
       - name: Get the tag version
         id: get_version
-        run: echo ::set-output name=TAG_VERSION::${GITHUB_REF/refs\/tags\//}
+        run: |
+           echo ::set-output name=TAG_VERSION::${GITHUB_REF/refs\/tags\//}
   
       - name: Deploy Release 🚀
         if: ${{ startsWith(github.ref, 'refs/tags/') && (github.repository_owne == 'ObeoNetwork') }}
@@ -55,7 +59,7 @@ jobs:
         with:
           branch: gh-pages
           folder: releng/org.eclipse.poosl.update/target/repository
-          target-folder: release/${{ steps.get_version.outputs.VERSION }}
+          target-folder: release/${{ steps.get_version.outputs.TAG_VERSION }}
         
         
         # TODO: 
