@@ -1,0 +1,8 @@
+# This file is a mirror of 'Prefer Textual.ctx'
+# If a refactoring requires an update, use it re-import preferences.
+/instance/org.eclipse.poosl.sirius/PrefGraphicalEditor=PrefGETextual
+/instance/org.eclipse.poosl.sirius/PrefProjectExplorerDontAsk=true
+/instance/org.eclipse.poosl.sirius/PrefProjectExplorerDiagram=PrefPETextual
+/instance/org.eclipse.poosl.sirius/PrefProjectExplorerNoDiagram=PrefPETextual
+/instance/org.eclipse.poosl.xtext.ui/dontaskperspective=true
+/instance/org.eclipse.poosl.xtext.ui/openeditperspective=true

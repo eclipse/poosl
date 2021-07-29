@@ -1,0 +1,7 @@
+# This file is a mirror of '*.ctx'
+# If a refactoring requires an update, use it re-import preferences.
+/instance/org.eclipse.poosl.sirius/PrefGraphicalEditor=PrefGEClassDiagram
+/instance/org.eclipse.poosl.sirius/PrefProjecetExplorerDontAsk=true
+/instance/org.eclipse.poosl.sirius/PrefProjectExplorerDiagram=PrefPEGraphical
+/instance/org.eclipse.poosl.sirius/PrefProjectExplorerNoDiagram=PrefPEClassDiagram
+

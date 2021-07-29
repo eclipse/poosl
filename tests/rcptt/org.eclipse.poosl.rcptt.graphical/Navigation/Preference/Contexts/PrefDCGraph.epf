@@ -1,0 +1,5 @@
+/instance/org.eclipse.poosl.sirius/PrefGraphicalEditor=PrefGEClassDiagram
+/instance/org.eclipse.poosl.sirius/PrefProjectExplorerDontAsk=true
+/instance/org.eclipse.poosl.sirius/PrefProjectExplorerDiagram=PrefPETextual
+/instance/org.eclipse.poosl.sirius/PrefProjectExplorerNoDiagram=PrefPETextual
+/instance/org.eclipse.poosl.xtext.ui/usedefaultbasicclass=defaultbasicclasses

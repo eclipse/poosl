@@ -21,7 +21,7 @@ public final class IPreferenceConstants {
 
     public static final String PREFERENCE_GRAPHICAL_EDITOR = "PrefGraphicalEditor"; //$NON-NLS-1$
 
-    public static final String PREFERENCE_PROJECT_EXPLORER_DONT_ASK = "PrefProjecetExplorerDontAsk"; //$NON-NLS-1$
+    public static final String PREFERENCE_PROJECT_EXPLORER_DONT_ASK = "PrefProjectExplorerDontAsk"; //$NON-NLS-1$
 
     private IPreferenceConstants() {
         throw new IllegalStateException("Utility class");

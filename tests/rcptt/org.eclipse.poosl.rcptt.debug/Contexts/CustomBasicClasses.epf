@@ -1,0 +1,2 @@
+/instance/org.eclipse.poosl.xtext.ui/custombasicclasspath=platform\:/resource/poosl.examples/libraries/CustomClasses.poosl
+/instance/org.eclipse.poosl.xtext.ui/usedefaultbasicclass=custombasicclasses
