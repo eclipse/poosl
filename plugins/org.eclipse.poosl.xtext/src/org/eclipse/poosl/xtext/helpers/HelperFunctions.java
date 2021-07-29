@@ -55,7 +55,7 @@ import com.google.common.collect.Lists;
 public final class HelperFunctions {
 
     // === Special data classes =======
-    
+
     public static final String CLASS_NAME_OBJECT = "Object"; //$NON-NLS-1$
 
     public static final String CLASS_NAME_ARRAY = "Array"; //$NON-NLS-1$
@@ -88,25 +88,26 @@ public final class HelperFunctions {
     public static final String CLASS_NAME_OBSERVER = "Observer"; //$NON-NLS-1$
 
     public static final List<String> PRIMITIVE_DATA_CLASSES = Collections
-    .unmodifiableList(Arrays.asList(CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL));
+            .unmodifiableList(Arrays.asList(CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL));
 
     public static final List<String> PERMANENT_DATA_CLASSES = Collections.unmodifiableList(
-    Arrays.asList(CLASS_NAME_OBJECT, CLASS_NAME_ARRAY, CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL, CLASS_NAME_STRING));
+            Arrays.asList(CLASS_NAME_OBJECT, CLASS_NAME_ARRAY, CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL, CLASS_NAME_STRING));
 
     public static final List<String> DEFAULT_DATA_CLASSES = Collections
-    .unmodifiableList(Arrays.asList(CLASS_NAME_OBJECT, CLASS_NAME_ARRAY, CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL,
-            CLASS_NAME_STRING, CLASS_NAME_FILEIN, CLASS_NAME_FILEOUT, CLASS_NAME_RANDOMGENERATOR, CLASS_NAME_SOCKET, CLASS_NAME_CONSOLE, CLASS_NAME_OBSERVER));
+            .unmodifiableList(Arrays.asList(CLASS_NAME_OBJECT, CLASS_NAME_ARRAY, CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL,
+                    CLASS_NAME_STRING, CLASS_NAME_FILEIN, CLASS_NAME_FILEOUT, CLASS_NAME_RANDOMGENERATOR, CLASS_NAME_SOCKET, CLASS_NAME_CONSOLE, CLASS_NAME_OBSERVER));
 
     // === GetName =======
-    
+
     private static final Function<IEObjectDescription, String> GET_NAME = new Function<IEObjectDescription, String>() {
+        @Override
         public String apply(IEObjectDescription descr) {
             return getName(descr);
         }
     };
 
     // === IGlobalScopeProvider =======
-    
+
     private static PooslImportUriGlobalScopeProvider globalScopeProvider;
 
     private HelperFunctions() {
@@ -121,6 +122,7 @@ public final class HelperFunctions {
     // http://koehnlein.blogspot.nl/2012/11/xtext-tip-how-do-i-get-guice-injector.html
     private static PooslImportUriGlobalScopeProvider getGlobalScopeProvider(Resource resource) {
         if (globalScopeProvider == null) {
+            // FIXME This static cache is dangerous
             globalScopeProvider = (PooslImportUriGlobalScopeProvider) IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(resource.getURI()).get(IGlobalScopeProvider.class);
         }
         return globalScopeProvider;
@@ -135,8 +137,6 @@ public final class HelperFunctions {
     }
 
     // === Special data classes =======
-
-    
 
     // === GetName =======
 
@@ -300,7 +300,7 @@ public final class HelperFunctions {
         Set<URI> localURIs = new HashSet<>();
         String uri = resource.getURI().toString();
         HelperFunctions.getLocalUsedURIs(localURIs, ImportingHelper.toPoosl(resource));
-        for (Iterator<URI> iterator = localURIs.iterator(); iterator.hasNext(); ) {
+        for (Iterator<URI> iterator = localURIs.iterator(); iterator.hasNext(); /**/) {
             if (!iterator.next().toString().startsWith(uri)) {
                 iterator.remove();
             }

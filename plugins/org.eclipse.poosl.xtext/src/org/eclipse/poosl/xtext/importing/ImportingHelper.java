@@ -147,6 +147,8 @@ public final class ImportingHelper {
                     return null;
                 }
                 ResourceSet resourceSet = base.getResourceSet();
+                // FIXME Suspicious when a resource is headless ?
+                // Investigate and always fix the context.
                 if (resourceSet == null) {
                     resourceSet = new ResourceSetImpl();
                 }
@@ -214,6 +216,7 @@ public final class ImportingHelper {
         List<Resource> dependencies = new ArrayList<>();
         try {
             Resource basicResource = resolveImport(resource, getBasicClassesURI(), false);
+            // FIXME Duplicated statement : dependencies.add(basicResource)
             if (basicResource != null) {
                 dependencies.add(basicResource);
             }
