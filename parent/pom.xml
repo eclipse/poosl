@@ -24,6 +24,13 @@
 
 		<!-- supported: warning|error|ignore -->
 		<git.dirty>error</git.dirty>
+		
+		<!-- 
+        This is the default pattern: 
+        Tycho does not provide a shortcut to launch 1 test.
+        To force a specific test also set -DfailIfNoTests=false
+        -->
+		<tycho.tests.patterns>**/Test*.java,**/*Test.java,**/*Tests.java,**/*TestCase.java</tycho.tests.patterns>
 	</properties>
 	
 	<modules>
@@ -227,6 +234,10 @@ for p2-metadata in feature
 						-->
 							<file.encoding>${project.build.sourceEncoding}</file.encoding>
 						</systemProperties>
+						
+						<includes>
+                            <include>${tycho.tests.patterns}</include>
+                        </includes>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -470,6 +481,21 @@ for p2-metadata in feature
 					<url>https://repo.eclipse.org/content/repositories/rcptt-releases/</url>
 				</pluginRepository>
 			</pluginRepositories>
+			
+			<dependencies>
+				<!-- This circular dependency may lead to extract a specific pom parent -->
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>{org.eclipse.poosl.product}</artifactId>
+					<version>${project.version}</version>
+					<!-- 
+					As OSGI properties are not accessible
+					we cannot target proper classifier
+					 -->
+					<type>pom</type>
+				</dependency>
+			
+			</dependencies>
 			
 			<build>
 			
