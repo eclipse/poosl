@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-complex/MPSoC/platform.poosl" |  get-menu "Open Textual Editor" | click
+    | select "poosl.examples/models-complex/MPSoC/platform.poosl" |  get-menu "Open Textual Editor" | click
 
 
 get-tab-folder -index 2 | get-property activePage | equals "platform.poosl" | verify-true

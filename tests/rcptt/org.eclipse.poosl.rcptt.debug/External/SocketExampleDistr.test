@@ -14,8 +14,8 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug-external -name "server" -file "org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl" -port 10001 -ini "org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini"
-launch-debug-external -name "client" -file "org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl" -port 10002 -ini "org.eclipse.poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini"
+launch-debug-external -name "server" -file "poosl.examples/models-cosim/SocketExampleDistributed/Client/Client.poosl" -port 10001 -ini "poosl.examples/models-cosim/SocketExampleDistributed/Client/client.ini"
+launch-debug-external -name "client" -file "poosl.examples/models-cosim/SocketExampleDistributed/Server/Server.poosl" -port 10002 -ini "poosl.examples/models-cosim/SocketExampleDistributed/Server/server.ini"
 with [get-view Debug | get-tree] {
     select "Server.poosl \\[Simulated time: 0\\]/system/Server" | double-click
     select "Server.poosl \\[Simulated time: 0\\]/system/Server" | double-click

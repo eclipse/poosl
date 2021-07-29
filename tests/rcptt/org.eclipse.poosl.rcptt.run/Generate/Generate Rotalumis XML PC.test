@@ -15,17 +15,17 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    | select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
     | get-menu "Generate Legacy Rotalumis XML" | click
-get-view "Project Explorer" | get-tree | get-item "org.eclipse.poosl.examples/models-basic/ProducerConsumer" 
+get-view "Project Explorer" | get-tree | get-item "poosl.examples/models-basic/ProducerConsumer" 
     | get-property childCount | equals 2 | verify-true
 with [get-view "Project Explorer" | get-tree] {
-    get-item "org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator" | assert-non-empty
-    get-item "org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator" | get-property childCount | equals 1 
+    get-item "poosl.examples/models-basic/ProducerConsumer/simulator" | assert-non-empty
+    get-item "poosl.examples/models-basic/ProducerConsumer/simulator" | get-property childCount | equals 1 
         | verify-true
 }
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer.xml" | double-click
+    | select "poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer.xml" | double-click
 
 with [get-editor "producer_consumer.xml" | get-tree] {
     get-property "getItems().TreeItem[0].getText()" | equals xml | verify-true

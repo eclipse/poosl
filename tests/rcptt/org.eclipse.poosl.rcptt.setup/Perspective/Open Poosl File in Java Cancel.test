@@ -31,7 +31,7 @@ verify visible java perspective button
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Package Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+get-view "Package Explorer" | get-tree | select "poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
     | double-click
 get-window "Confirm Perspective Switch" | get-button Cancel | click
 with [get-button Java] {    
@@ -39,7 +39,7 @@ with [get-button Java] {
 }
 get-tab-folder -index 1 | get-property activePage | equals "hello_world.poosl" | verify-true
 get-editor "hello_world.poosl" | close
-get-view "Package Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+get-view "Package Explorer" | get-tree | select "poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
     | double-click
 with [get-window "Confirm Perspective Switch"] {
     get-button "Remember my decision" | check
@@ -50,7 +50,7 @@ with [get-button Java] {
 }
 get-tab-folder -index 1 | get-property activePage | equals "hello_world.poosl" | verify-true
 get-editor "hello_world.poosl" | close
-get-view "Package Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+get-view "Package Explorer" | get-tree | select "poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
     | double-click
 with [get-button Java] {
     

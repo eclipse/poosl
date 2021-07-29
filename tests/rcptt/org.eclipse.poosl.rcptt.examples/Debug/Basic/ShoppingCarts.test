@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-file-poosl-debug "org.eclipse.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
+file-poosl-debug "poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
 select-root-click-record
 click-resume
 

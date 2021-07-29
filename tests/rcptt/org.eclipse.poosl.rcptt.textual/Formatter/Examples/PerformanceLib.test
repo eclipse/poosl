@@ -15,6 +15,6 @@ Verifications: _VJujILbpEea5NIYftQAZ6Q
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/libraries/performance.poosl" | double-click
+get-view "Project Explorer" | get-tree | select "poosl.examples/libraries/performance.poosl" | double-click
 get-editor "performance.poosl" | get-editbox | get-menu "Source/Format" | click
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

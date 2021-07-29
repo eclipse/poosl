@@ -15,7 +15,7 @@ Verifications: _Ri8xoOUGEeSZacs1KESTcQ
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug -name ProducerConsumer10002 -file "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
+launch-debug -name ProducerConsumer10002 -file "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
 get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/Bus"
 
 get-view "Execution Tree" | get-tree | select "\\/system\\/Bus/Transfer\\(\\)\\(\\)"

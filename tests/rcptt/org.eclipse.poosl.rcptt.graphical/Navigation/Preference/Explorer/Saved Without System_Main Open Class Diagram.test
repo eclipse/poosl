@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/libraries/SocketProcess.poosl" | double-click
+get-view "Project Explorer" | get-tree | select "poosl.examples/libraries/SocketProcess.poosl" | double-click
 get-editor "Classes (SocketProcess.poosl)" | get-diagram -index 1 | get-edit-part -name "Classes (SocketProcess.poosl)" 
     | mouse-move 394 0 -height 444 -width 598
 get-tab-folder -index 2 | get-property activePage | contains "Classes (SocketProcess.poosl)" | verify-true

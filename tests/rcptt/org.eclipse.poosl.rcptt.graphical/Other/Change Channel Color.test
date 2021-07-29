@@ -21,7 +21,7 @@ with [get-window "Filters and Customization"] {
     get-button OK | click
 }
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/representations.aird/POOSL viewpoint/Cluster diagram/System \\(producer_consumer.poosl\\)" 
+    | select "poosl.examples/representations.aird/POOSL viewpoint/Cluster diagram/System \\(producer_consumer.poosl\\)" 
     | double-click
 
 with [get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 

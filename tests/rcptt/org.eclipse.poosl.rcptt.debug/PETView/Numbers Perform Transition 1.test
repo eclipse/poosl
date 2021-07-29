@@ -15,7 +15,7 @@ Verifications: _Ri8xoOUGEeSZacs1KESTcQ
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug -name ProducerConsumer10002 -file "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer" +
+launch-debug -name ProducerConsumer10002 -file "poosl.examples/models-basic/ProducerConsumer/producer_consumer" +
 	".poosl" -port 10002
 
 with [get-view Debug | get-tree] {

@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {
-	select "org.eclipse.poosl.examples/models-complex/PARProtocol/par.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
+	select "poosl.examples/models-complex/PARProtocol/par.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
 }
 
 wait 50

@@ -15,7 +15,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug -name Switch10004 -port 10004 -file "org.eclipse.poosl.examples/models-complex/ATMSwitch/switch.poosl"
+launch-debug -name Switch10004 -port 10004 -file "poosl.examples/models-complex/ATMSwitch/switch.poosl"
 
 with [get-view Debug | get-tree] {
 	expand-all

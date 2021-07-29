@@ -15,6 +15,6 @@ Verifications: _C8ldQLbpEea5NIYftQAZ6Q
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" | double-click
+get-view "Project Explorer" | get-tree | select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" | double-click
 get-editor "producer_consumer.poosl" | get-editbox | get-menu "Source/Format" | click
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

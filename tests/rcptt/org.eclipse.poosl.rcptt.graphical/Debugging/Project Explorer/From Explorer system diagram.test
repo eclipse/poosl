@@ -16,7 +16,7 @@ Entry-Name: .content
 
 get-menu "Window/Perspective/Open Perspective/POOSL Edit" | click
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    | select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
     | get-menu "Open Composite Structure Diagram" | click
 get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
     -name "System (producer_consumer.poosl)" | mouse-move 624 509 -height 530 -width 1042

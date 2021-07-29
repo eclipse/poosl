@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" | double-click
+    | select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" | double-click
     
     
 get-editor  "producer_consumer.poosl" 

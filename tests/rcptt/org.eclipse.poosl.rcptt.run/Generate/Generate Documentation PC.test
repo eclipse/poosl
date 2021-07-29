@@ -15,16 +15,16 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {    
-    select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
         | get-menu "Generate Documentation" | click
 }
 with [get-view "Project Explorer" | get-tree] {
-    get-item "org.eclipse.poosl.examples/models-basic/ProducerConsumer" | get-property childCount | equals 2 | verify-true
-    get-item "org.eclipse.poosl.examples/models-basic/ProducerConsumer/documentation" | get-property caption 
+    get-item "poosl.examples/models-basic/ProducerConsumer" | get-property childCount | equals 2 | verify-true
+    get-item "poosl.examples/models-basic/ProducerConsumer/documentation" | get-property caption 
         | equals documentation | verify-true
 }
-get-view "Project Explorer" | get-tree | get-item "org.eclipse.poosl.examples/models-basic/ProducerConsumer/documentation" 
+get-view "Project Explorer" | get-tree | get-item "poosl.examples/models-basic/ProducerConsumer/documentation" 
     | get-property childCount | equals 1 | verify-true
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/documentation/producer_consumer.html" | double-click
+    | select "poosl.examples/models-basic/ProducerConsumer/documentation/producer_consumer.html" | double-click
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

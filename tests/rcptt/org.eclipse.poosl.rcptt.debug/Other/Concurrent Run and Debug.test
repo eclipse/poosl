@@ -15,9 +15,9 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {
-    select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
         | get-menu "Run As/.* POOSL Simulation" | click
-    select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
         | get-menu "Debug As/.* POOSL Simulation" | click
 }
 verify-error {get-window "Could not start simulation"}

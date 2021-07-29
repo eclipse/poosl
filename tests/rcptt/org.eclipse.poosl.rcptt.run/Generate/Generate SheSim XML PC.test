@@ -15,16 +15,16 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    | select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
     | get-menu "Generate Legacy SHESim XML" | click
 
 with [get-view "Project Explorer" | get-tree] {
-    get-item "org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator" | assert-non-empty
-    get-item "org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer_shesim.xml" 
+    get-item "poosl.examples/models-basic/ProducerConsumer/simulator" | assert-non-empty
+    get-item "poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer_shesim.xml" 
         | assert-non-empty
 }
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer_shesim.xml" | double-click
+    | select "poosl.examples/models-basic/ProducerConsumer/simulator/producer_consumer_shesim.xml" | double-click
 get-editor "producer_consumer_shesim.xml" | get-tab-folder | get-tab-item Design | click
 with [get-editor "producer_consumer_shesim.xml" | get-tree] {
     get-item "poosl_specification" | assert-non-empty

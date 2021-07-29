@@ -15,7 +15,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug -name ProducerConsumer10002 -file "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
+launch-debug -name ProducerConsumer10002 -file "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
 sequence-diagram-resize
 with [get-view "Sequence Diagram" | get-canvas] {
 	get-items

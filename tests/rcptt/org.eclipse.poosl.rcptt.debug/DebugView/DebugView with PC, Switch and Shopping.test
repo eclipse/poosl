@@ -16,9 +16,9 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 
-add-launch-debug -name ShoppingCartsConf -port 10004 -file "org.eclipse.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
-add-launch-debug -name SwitchConf -port 10003 -file "org.eclipse.poosl.examples/models-complex/ATMSwitch/switch.poosl"
-add-launch-debug -name PCConf -port 10001 -file "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl"
+add-launch-debug -name ShoppingCartsConf -port 10004 -file "poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
+add-launch-debug -name SwitchConf -port 10003 -file "poosl.examples/models-complex/ATMSwitch/switch.poosl"
+add-launch-debug -name PCConf -port 10001 -file "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl"
 wait 50
 get-editor "switch.poosl" | editor-poosl-debug
 

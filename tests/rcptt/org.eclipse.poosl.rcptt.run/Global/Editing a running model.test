@@ -15,7 +15,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug -name ProducerConsumer10001 -file "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10001
+launch-debug -name ProducerConsumer10001 -file "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10001
 with [get-editor "producer_consumer.poosl" | get-text-viewer] {
     set-caret-pos 126 55
     key-type Enter

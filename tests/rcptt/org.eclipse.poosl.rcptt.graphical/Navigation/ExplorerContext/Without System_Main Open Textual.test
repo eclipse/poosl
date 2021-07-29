@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/libraries/SocketProcess.poosl" |  get-menu "Open Textual Editor" | click
+get-view "Project Explorer" | get-tree | select "poosl.examples/libraries/SocketProcess.poosl" |  get-menu "Open Textual Editor" | click
 
 
 get-tab-folder -index 2 | get-property activePage | equals "SocketProcess.poosl" | verify-true

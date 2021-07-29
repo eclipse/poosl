@@ -22,7 +22,7 @@ When able to perform a Time transition, the possible execution should be blue. A
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug -name ProducerConsumer10002 -file "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
+launch-debug -name ProducerConsumer10002 -file "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
 wait 100
 get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/Bus"
 get-view "Execution Tree" | get-tree | select "\\/system\\/Bus/Transfer\\(\\)\\(\\)" | get-menu "Perform transition for Transfer()()" 

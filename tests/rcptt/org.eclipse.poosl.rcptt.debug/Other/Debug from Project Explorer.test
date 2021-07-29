@@ -22,7 +22,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
+    | select "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" 
     | get-menu "Debug As/.* POOSL Simulation" | click
 
 get-button "POOSL Debug" | assert-non-empty

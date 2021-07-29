@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/libraries/SocketProcess.poosl" |  get-menu "Open Class Diagram" | click
+get-view "Project Explorer" | get-tree | select "poosl.examples/libraries/SocketProcess.poosl" |  get-menu "Open Class Diagram" | click
 
 
 

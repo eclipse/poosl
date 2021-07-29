@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {
-	select "org.eclipse.poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
+	select "poosl.examples/models-complex/SoCInterconnects/Mesh/mesh.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
 }
 
 // wait a maximum of 5 seconds

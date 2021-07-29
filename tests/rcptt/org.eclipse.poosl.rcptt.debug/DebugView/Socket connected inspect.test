@@ -16,7 +16,7 @@ Verifications: _1o0woPPNEeSSR_rCt07tDg
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug -name Socket10001 -port 10001 -file "org.eclipse.poosl.examples/models-basic/SocketExample/socket_example.poosl"
+launch-debug -name Socket10001 -port 10001 -file "poosl.examples/models-basic/SocketExample/socket_example.poosl"
 
 get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]"
 get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]/system/ServerSocket"

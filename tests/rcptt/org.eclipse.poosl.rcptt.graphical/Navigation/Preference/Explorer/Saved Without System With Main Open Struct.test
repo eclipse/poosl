@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 get-view "Project Explorer" | get-tree 
-    | select "org.eclipse.poosl.examples/models-complex/MPSoC/platform.poosl" | double-click
+    | select "poosl.examples/models-complex/MPSoC/platform.poosl" | double-click
 
 
 

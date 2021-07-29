@@ -34,7 +34,7 @@ verify visible edit perspective button
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Package Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+get-view "Package Explorer" | get-tree | select "poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
     | double-click
 get-window "Confirm Perspective Switch" | get-button OK | click
 with [get-button "POOSL Edit"] {
@@ -43,7 +43,7 @@ with [get-button "POOSL Edit"] {
 }
 //get-button Java | click
 //get-editor "hello_world.poosl" | close
-//get-view "Package Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+//get-view "Package Explorer" | get-tree | select "poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
 //    | double-click
 //with [get-window "Confirm Perspective Switch"] {
 //    get-button "Remember my decision" | check
@@ -54,7 +54,7 @@ with [get-button "POOSL Edit"] {
 //}
 //get-button Java | click
 //get-editor "hello_world.poosl" | close
-//get-view "Package Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+//get-view "Package Explorer" | get-tree | select "poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
 //    | double-click
 //with [get-button "POOSL Edit"] {
 //   

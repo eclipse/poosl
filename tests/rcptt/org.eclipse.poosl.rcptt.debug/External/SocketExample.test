@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-file-poosl-debug "org.eclipse.poosl.examples/models-cosim/SocketExample/socket_example.poosl"
+file-poosl-debug "poosl.examples/models-cosim/SocketExample/socket_example.poosl"
 get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]/adapters"
 get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]/adapters/socketServer"
 get-view Debug | get-tree | select "socket_example.poosl \\[Simulated time: 0\\]/adapters/socketClient"

@@ -21,8 +21,8 @@ When adding a second model the expanded state of the first should stay the same.
 Content-Type: text/ecl
 Entry-Name: .content
 
-//launch-debug ShoppingCarts10003 -port 10003 -file "org.eclipse.poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
-launch-debug Switch10004 -port 10004 -file "org.eclipse.poosl.examples/models-complex/ATMSwitch/switch.poosl"
+//launch-debug ShoppingCarts10003 -port 10003 -file "poosl.examples/models-basic/ShoppingCarts/ShoppingCarts.poosl"
+launch-debug Switch10004 -port 10004 -file "poosl.examples/models-complex/ATMSwitch/switch.poosl"
 with [get-view Debug | get-tree] {
 	expand-all
 }

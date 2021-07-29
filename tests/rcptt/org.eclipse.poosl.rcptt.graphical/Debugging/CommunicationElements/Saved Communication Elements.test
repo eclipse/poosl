@@ -109,7 +109,7 @@ with [get-tab-folder] {
 	double-click
 	get-tab-item "Cluster ProducerConsumer (producer_consumer.poosl)" | click
 }
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consume" +
+get-view "Project Explorer" | get-tree | select "poosl.examples/models-basic/ProducerConsumer/producer_consume" +
 	"r.poosl" | get-menu "Debug As/.* POOSL Simulation" | click
 get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part -name "Cluster" +
 	" ProducerConsumer (producer_consumer.poosl)" | mouse-move 645 255 -height 444 -width 678

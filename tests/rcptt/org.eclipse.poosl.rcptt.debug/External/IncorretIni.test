@@ -15,8 +15,8 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {
-    select "org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.ini" 
-        | select "org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.ini" | get-menu -path "Open With/Text Editor" 
+    select "poosl.examples/models-cosim/FileCopy/FileCopy.ini" 
+        | select "poosl.examples/models-cosim/FileCopy/FileCopy.ini" | get-menu -path "Open With/Text Editor" 
         | click
 }
 with [get-editor "FileCopy.ini" | get-text-viewer] {
@@ -26,7 +26,7 @@ with [get-editor "FileCopy.ini" | get-text-viewer] {
     key-type "M1+s"
 }
 
-file-poosl-debug "org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.poosl"    
+file-poosl-debug "poosl.examples/models-cosim/FileCopy/FileCopy.poosl"    
 
 get-view Console | get-text-viewer | get-property text | equals "[WARNING] External port 'fileWriter' that is declared in the model is not specified in the external port configuration file." | verify-true
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

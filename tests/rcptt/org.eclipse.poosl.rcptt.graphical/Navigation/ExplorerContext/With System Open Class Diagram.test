@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consume" +
+get-view "Project Explorer" | get-tree | select "poosl.examples/models-basic/ProducerConsumer/producer_consume" +
 	"r.poosl" | get-menu "Open Class Diagram" | click
 
 get-editor "Classes (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part -name "Classes (producer_consum" +

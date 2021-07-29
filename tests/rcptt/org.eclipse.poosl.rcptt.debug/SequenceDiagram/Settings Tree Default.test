@@ -15,7 +15,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-launch-debug -name ProducerConsumer10002 -file "org.eclipse.poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
+launch-debug -name ProducerConsumer10002 -file "poosl.examples/models-basic/ProducerConsumer/producer_consumer.poosl" -port 10002
 sequence-diagram-resize
 get-view "Sequence Diagram" | get-button "Open Settings" | click
 get-window "Sequence diagram settings" | get-tree | select "\\/system/\\/ProducerConsumer"

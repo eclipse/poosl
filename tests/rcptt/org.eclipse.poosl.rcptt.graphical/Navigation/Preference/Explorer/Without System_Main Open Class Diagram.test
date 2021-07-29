@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/libraries/SocketProcess.poosl" | double-click
+get-view "Project Explorer" | get-tree | select "poosl.examples/libraries/SocketProcess.poosl" | double-click
 
 
 with [get-window "Choose Editor"] {
@@ -29,7 +29,7 @@ get-editor "Classes (SocketProcess.poosl)" | get-diagram -index 1 | get-edit-par
     | mouse-move 488 3 -height 444 -width 598
 get-tab-folder -index 2 | get-property activePage | contains "Classes (SocketProcess.poosl)" | verify-true
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/libraries/SocketProcess.poosl" | double-click
+get-view "Project Explorer" | get-tree | select "poosl.examples/libraries/SocketProcess.poosl" | double-click
 verify-error {get-window "Choose Editor"}
 concat "FIXME test '" [get-test-case-name] "': skip 'get-preferences-menu | click' until it works again" | log -severity warning
 /*

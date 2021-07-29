@@ -23,7 +23,7 @@ Open Debug perspective and verify openend poosl file.
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
+get-view "Project Explorer" | get-tree | select "poosl.examples/models-basic/HelloWorld/hello_world.poosl" 
     | double-click
 get-tab-folder -index 2 | get-property activePage | equals "hello_world.poosl" | verify-true
 get-menu "Window/Perspective/Open Perspective/Other..." | click

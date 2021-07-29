@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-file-poosl-debug "org.eclipse.poosl.examples/models-cosim/FileCopy/FileCopy.poosl"    
+file-poosl-debug "poosl.examples/models-cosim/FileCopy/FileCopy.poosl"    
 
 get-view Debug | get-tree | select "FileCopy.poosl \\[Simulated time: 0\\]/adapters"
 with [get-view Debug | get-tree] {
