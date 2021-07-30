@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:poosl="http://poosl.esi.nl/poosl/3.0.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
   <viewpoint:DAnalysis xmi:id="_wgKPMB52EeWC7tRqy9wQWQ" selectedViews="_whDnEB52EeWC7tRqy9wQWQ" version="12.1.0.201708031200">
-    <semanticResources>platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign</semanticResources>
+    <semanticResources>platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign</semanticResources>
     <semanticResources>environment:/viewpoint</semanticResources>
     <semanticResources>platform:/plugin/nl.esi.poosl.model/model/poosl.ecore</semanticResources>
     <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
@@ -9,12 +9,12 @@
     <semanticResources>bundleresource://28.fwk1257526338/nl/esi/poosl/xtext/BasicClasses.poosl</semanticResources>
     <semanticResources>bundleresource://888.fwk1465146431/nl/esi/poosl/xtext/BasicClasses.poosl</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" xmi:id="_whDnEB52EeWC7tRqy9wQWQ">
-      <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']"/>
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" xmi:id="_s8Q90L_3EeixP-gV4whKRw" name="System (producer_consumer.poosl)" repPath="#_s8JCAL_3EeixP-gV4whKRw">
-        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']"/>
+        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']"/>
       </ownedRepresentationDescriptors>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" xmi:id="_udQ2r7_3EeixP-gV4whKRw" name="System (producer_consumer.poosl)" repPath="#_ucI1IL_3EeixP-gV4whKRw">
-        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']"/>
+        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']"/>
         <target xmi:type="poosl:ClusterClass" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2"/>
       </ownedRepresentationDescriptors>
     </ownedViews>
@@ -212,18 +212,18 @@
       </data>
     </ownedAnnotationEntries>
     <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_yBffEx52EeWC7tRqy9wQWQ" name="System">
-      <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_yBffFB52EeWC7tRqy9wQWQ" iconPath="/nl.esi.poosl.sirius/icons/system_icon.png" labelAlignment="LEFT" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_yBffFB52EeWC7tRqy9wQWQ" iconPath="/org.eclipse.poosl.sirius/icons/system_icon.png" labelAlignment="LEFT" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
         <labelFormat>bold</labelFormat>
-        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@style"/>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@style"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']"/>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']"/>
       <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_yBffFR52EeWC7tRqy9wQWQ" outgoingEdges="_yBffKR52EeWC7tRqy9wQWQ _yBffLB52EeWC7tRqy9wQWQ _yBffLx52EeWC7tRqy9wQWQ" width="1" height="1" resizeKind="NSEW">
         <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
         <semanticElements xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
         <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffFh52EeWC7tRqy9wQWQ" showIcon="false" width="1" height="1" color="0,0,0">
-          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='ChannelSystem']/@style"/>
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='ChannelSystem']/@style"/>
         </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='ChannelSystem']"/>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='ChannelSystem']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_yBffFx52EeWC7tRqy9wQWQ" name="ProducerConsumer : ProducerConsumer" width="15" height="10" resizeKind="NSEW">
         <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.0"/>
@@ -232,22 +232,22 @@
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.1"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.1"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffGR52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
         </ownedBorderedNodes>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffGh52EeWC7tRqy9wQWQ" name="In" incomingEdges="_yBffLB52EeWC7tRqy9wQWQ" width="4" height="2" resizeKind="NSEW">
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.1"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.1"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffGx52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
         </ownedBorderedNodes>
-        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffHB52EeWC7tRqy9wQWQ" iconPath="/nl.esi.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
-          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@conditionnalStyles.0/@style"/>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffHB52EeWC7tRqy9wQWQ" iconPath="/org.eclipse.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@conditionnalStyles.0/@style"/>
         </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_yBffHR52EeWC7tRqy9wQWQ" name="Second : ProducerConsumer" width="15" height="10" resizeKind="NSEW">
         <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.1"/>
@@ -256,22 +256,22 @@
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.2"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.2"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffHx52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
         </ownedBorderedNodes>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffIB52EeWC7tRqy9wQWQ" name="Out" width="4" height="2" resizeKind="NSEW">
           <target xmi:type="poosl:Port" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.0/@ports.1"/>
           <semanticElements xmi:type="poosl:Port" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.0/@ports.1"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffIR52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
         </ownedBorderedNodes>
-        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffIh52EeWC7tRqy9wQWQ" iconPath="/nl.esi.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
-          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@conditionnalStyles.0/@style"/>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffIh52EeWC7tRqy9wQWQ" iconPath="/org.eclipse.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@conditionnalStyles.0/@style"/>
         </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_yBffIx52EeWC7tRqy9wQWQ" name="Bus : Bus" width="12" height="8" resizeKind="NSEW">
         <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@instances.2"/>
@@ -280,22 +280,22 @@
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.0"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1/@instancePorts.0"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffJR52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
         </ownedBorderedNodes>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_yBffJh52EeWC7tRqy9wQWQ" name="In" outgoingEdges="_yBffMh52EeWC7tRqy9wQWQ" width="4" height="2" resizeKind="NSEW">
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.0"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.0"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffJx52EeWC7tRqy9wQWQ" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@borderedNodeMappings[name='PortsSystem']"/>
         </ownedBorderedNodes>
-        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffKB52EeWC7tRqy9wQWQ" iconPath="/nl.esi.poosl.sirius/icons/process_icon.png" labelPosition="node" width="12" height="8" color="255,255,255">
-          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@style"/>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_yBffKB52EeWC7tRqy9wQWQ" iconPath="/org.eclipse.poosl.sirius/icons/process_icon.png" labelPosition="node" width="12" height="8" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']/@style"/>
         </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@containerMappings[name='System']/@subNodeMappings[name='InstanceSystem']"/>
       </ownedDiagramElements>
       <target xmi:type="poosl:System" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification"/>
       <semanticElements xmi:type="poosl:System" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification"/>
@@ -303,38 +303,38 @@
     <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_yBffKR52EeWC7tRqy9wQWQ" sourceNode="_yBffFR52EeWC7tRqy9wQWQ" targetNode="_yBffJB52EeWC7tRqy9wQWQ">
       <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_yBffKh52EeWC7tRqy9wQWQ" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_yBffKx52EeWC7tRqy9wQWQ" showIcon="false"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_yBffLB52EeWC7tRqy9wQWQ" sourceNode="_yBffFR52EeWC7tRqy9wQWQ" targetNode="_yBffGh52EeWC7tRqy9wQWQ">
       <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_yBffLR52EeWC7tRqy9wQWQ" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_yBffLh52EeWC7tRqy9wQWQ" showIcon="false"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_yBffLx52EeWC7tRqy9wQWQ" sourceNode="_yBffFR52EeWC7tRqy9wQWQ" targetNode="_yBffHh52EeWC7tRqy9wQWQ">
       <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.1"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_yBffMB52EeWC7tRqy9wQWQ" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']/@style"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_yBffMR52EeWC7tRqy9wQWQ" showIcon="false"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortSystem']"/>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_yBffMh52EeWC7tRqy9wQWQ" sourceNode="_yBffJh52EeWC7tRqy9wQWQ" targetNode="_yBffGB52EeWC7tRqy9wQWQ">
       <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification/@channels.0/@instancePorts.0"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_yBffMx52EeWC7tRqy9wQWQ" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortSystem']/@style"/>
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortSystem']/@style"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_yBffNB52EeWC7tRqy9wQWQ"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortSystem']"/>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortSystem']"/>
     </ownedDiagramElements>
-    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']"/>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']"/>
     <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_yBffNR52EeWC7tRqy9wQWQ"/>
-    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='System%20diagram']/@defaultLayer"/>
     <target xmi:type="poosl:System" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@systemSpecification"/>
   </diagram:DSemanticDiagram>
   <diagram:DSemanticDiagram xmi:id="_udQ2gL_3EeixP-gV4whKRw" name="System (producer_consumer.poosl)" uid="_ucI1IL_3EeixP-gV4whKRw">
@@ -532,18 +532,18 @@
     <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_udQ2hL_3EeixP-gV4whKRw" name="System" width="20" height="20">
       <target xmi:type="poosl:ClusterClass" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2"/>
       <semanticElements xmi:type="poosl:ClusterClass" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2"/>
-      <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_udQ2hb_3EeixP-gV4whKRw" iconPath="/nl.esi.poosl.sirius/icons/system_icon.png" labelAlignment="LEFT" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_udQ2hb_3EeixP-gV4whKRw" iconPath="/org.eclipse.poosl.sirius/icons/system_icon.png" labelAlignment="LEFT" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
         <labelFormat>bold</labelFormat>
-        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@conditionnalStyles.1/@style"/>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@conditionnalStyles.1/@style"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']"/>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']"/>
       <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_udQ2hr_3EeixP-gV4whKRw" outgoingEdges="_udQ2mr_3EeixP-gV4whKRw _udQ2n7_3EeixP-gV4whKRw _udQ2pL_3EeixP-gV4whKRw" width="1" height="1">
         <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
         <semanticElements xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
         <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2h7_3EeixP-gV4whKRw" showIcon="false" width="1" height="1" color="0,0,0">
-          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ChannelCluster']/@style"/>
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ChannelCluster']/@style"/>
         </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ChannelCluster']"/>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ChannelCluster']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_udQ2iL_3EeixP-gV4whKRw" name="ProducerConsumer : ProducerConsumer" width="15" height="10" resizeKind="NSEW">
         <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.0"/>
@@ -552,22 +552,22 @@
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.1"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.1"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2ir_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
         </ownedBorderedNodes>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2i7_3EeixP-gV4whKRw" name="In" incomingEdges="_udQ2n7_3EeixP-gV4whKRw" width="4" height="2" resizeKind="NSEW">
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.1"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.1"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2jL_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
         </ownedBorderedNodes>
-        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2jb_3EeixP-gV4whKRw" iconPath="/nl.esi.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
-          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@conditionnalStyles.0/@style"/>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2jb_3EeixP-gV4whKRw" iconPath="/org.eclipse.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@conditionnalStyles.0/@style"/>
         </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_udQ2jr_3EeixP-gV4whKRw" name="Second : ProducerConsumer" width="15" height="10" resizeKind="NSEW">
         <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.1"/>
@@ -576,22 +576,22 @@
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.2"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.2"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2kL_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
         </ownedBorderedNodes>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2kb_3EeixP-gV4whKRw" name="Out" width="4" height="2" resizeKind="NSEW">
           <target xmi:type="poosl:Port" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.0/@ports.1"/>
           <semanticElements xmi:type="poosl:Port" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.0/@ports.1"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2kr_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
         </ownedBorderedNodes>
-        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2k7_3EeixP-gV4whKRw" iconPath="/nl.esi.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
-          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@conditionnalStyles.0/@style"/>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2k7_3EeixP-gV4whKRw" iconPath="/org.eclipse.poosl.sirius/icons/cluster_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@conditionnalStyles.0/@style"/>
         </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_udQ2lL_3EeixP-gV4whKRw" name="Bus : Bus" width="15" height="10" resizeKind="NSEW">
         <target xmi:type="poosl:Instance" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@instances.2"/>
@@ -600,67 +600,67 @@
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.0"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1/@instancePorts.0"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2lr_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
         </ownedBorderedNodes>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_udQ2l7_3EeixP-gV4whKRw" name="In" outgoingEdges="_udQ2qb_3EeixP-gV4whKRw" width="4" height="2" resizeKind="NSEW">
           <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.0"/>
           <semanticElements xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.0"/>
           <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2mL_3EeixP-gV4whKRw" showIcon="false" labelPosition="node" width="4" height="2" color="194,239,255">
-            <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']/@style"/>
           </ownedStyle>
-          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@borderedNodeMappings[name='PortsCluster']"/>
         </ownedBorderedNodes>
-        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2mb_3EeixP-gV4whKRw" iconPath="/nl.esi.poosl.sirius/icons/process_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
-          <description xmi:type="style:SquareDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@style"/>
+        <ownedStyle xmi:type="diagram:Square" xmi:id="_udQ2mb_3EeixP-gV4whKRw" iconPath="/org.eclipse.poosl.sirius/icons/process_icon.png" labelPosition="node" width="15" height="10" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']/@style"/>
         </ownedStyle>
-        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='InstanceCluster']"/>
       </ownedDiagramElements>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_udQ2mr_3EeixP-gV4whKRw" sourceNode="_udQ2hr_3EeixP-gV4whKRw" targetNode="_udQ2lb_3EeixP-gV4whKRw">
       <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_udQ2m7_3EeixP-gV4whKRw" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
         <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_udQ2nL_3EeixP-gV4whKRw" showIcon="false"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_udQ2nb_3EeixP-gV4whKRw" showIcon="false"/>
         <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_udQ2nr_3EeixP-gV4whKRw" showIcon="false"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_udQ2n7_3EeixP-gV4whKRw" sourceNode="_udQ2hr_3EeixP-gV4whKRw" targetNode="_udQ2i7_3EeixP-gV4whKRw">
       <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_udQ2oL_3EeixP-gV4whKRw" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
         <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_udQ2ob_3EeixP-gV4whKRw" showIcon="false"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_udQ2or_3EeixP-gV4whKRw" showIcon="false"/>
         <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_udQ2o7_3EeixP-gV4whKRw" showIcon="false"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_udQ2pL_3EeixP-gV4whKRw" sourceNode="_udQ2hr_3EeixP-gV4whKRw" targetNode="_udQ2j7_3EeixP-gV4whKRw">
       <target xmi:type="poosl:Channel" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.1"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_udQ2pb_3EeixP-gV4whKRw" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']/@style"/>
         <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_udQ2pr_3EeixP-gV4whKRw" showIcon="false"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_udQ2p7_3EeixP-gV4whKRw" showIcon="false"/>
         <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_udQ2qL_3EeixP-gV4whKRw" showIcon="false"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='ChannelToPortCluster']"/>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_udQ2qb_3EeixP-gV4whKRw" sourceNode="_udQ2l7_3EeixP-gV4whKRw" targetNode="_udQ2ib_3EeixP-gV4whKRw">
       <target xmi:type="poosl:InstancePort" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2/@channels.0/@instancePorts.0"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_udQ2qr_3EeixP-gV4whKRw" targetArrow="NoDecoration" size="2" routingStyle="manhattan" centered="Both" strokeColor="0,0,0">
-        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortCluster']/@style"/>
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortCluster']/@style"/>
         <beginLabelStyle xmi:type="diagram:BeginLabelStyle" xmi:id="_udQ2q7_3EeixP-gV4whKRw" showIcon="false"/>
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_udQ2rL_3EeixP-gV4whKRw" showIcon="false"/>
         <endLabelStyle xmi:type="diagram:EndLabelStyle" xmi:id="_udQ2rb_3EeixP-gV4whKRw" showIcon="false"/>
       </ownedStyle>
-      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortCluster']"/>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@edgeMappings[name='PortToPortCluster']"/>
     </ownedDiagramElements>
-    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']"/>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']"/>
     <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_udQ2rr_3EeixP-gV4whKRw"/>
-    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/nl.esi.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/org.eclipse.poosl.sirius/description/poosl.odesign#//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer"/>
     <target xmi:type="poosl:ClusterClass" href="models-basic/ProducerConsumer/producer_consumer.poosl#//@clusterClasses.2"/>
   </diagram:DSemanticDiagram>
 </xmi:XMI>
