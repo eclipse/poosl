@@ -8,11 +8,11 @@
     xsi:schemaLocation="
     http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore
     "
-	
 	name="poosl_dev"
 	label="Eclipse Development Profile for Poosl"
 >
-<!-- product name is used in the installation path -->
+
+	<!-- product name is used in the installation path -->
 
 	<annotation source="http://www.eclipse.org/oomph/setup/BrandingInfo">
 		<detail key="folderName"><value>eclipse</value></detail>
@@ -29,16 +29,11 @@
 	<setupTask xsi:type="setup:EclipseIniTask" option="-Xmx" value="4096m" vm="true" />
 	<setupTask xsi:type="setup:InstallationTask" id="installation" />
 	<setupTask xsi:type="setup:CompoundTask" name="preferences">
-		<setupTask xsi:type="setup:PreferenceTask"
-			key="/instance/org.eclipse.ui.editors/lineNumberRuler" value="true" />
-		<setupTask xsi:type="setup:PreferenceTask"
-			key="/instance/org.eclipse.core.resources/refresh.enabled" value="true" />
-		<setupTask xsi:type="setup:PreferenceTask"
-			key="/instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.typefilter.enabled" value="java.awt.*;" />
-		<setupTask xsi:type="setup:PreferenceTask"
-			key="/instance/org.eclipse.core.resources/encoding" value="UTF-8" />
-		<setupTask xsi:type="setup:PreferenceTask"
-			key="/instance/org.eclipse.pde.ui/Preferences.MainPage.addToJavaSearch" value="true" />
+		<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.ui.editors/lineNumberRuler" value="true" />
+		<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.core.resources/refresh.enabled" value="true" />
+		<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.typefilter.enabled" value="java.awt.*;" />
+		<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.core.resources/encoding" value="UTF-8" />
+		<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.pde.ui/Preferences.MainPage.addToJavaSearch" value="true" />
 	</setupTask>
 	<setupTask xsi:type="setup:ResourceCreationTask" excludedTriggers="STARTUP MANUAL"
 		filter="(osgi.os=linux)"
@@ -75,23 +70,14 @@
 				</detail>
 			</annotation>
 			<setupTask xsi:type="setup:CompoundTask" name="org.eclipse.pde.ds.annotations">
-				<setupTask xsi:type="setup:PreferenceTask"
-					key="/instance/org.eclipse.pde.ds.annotations/enabled" 
-					value="true" />
-				<setupTask xsi:type="setup:PreferenceTask"
-					key="/instance/org.eclipse.pde.ds.annotations/generateBundleActivationPolicyLazy" 
-					value="true" />
-				<setupTask xsi:type="setup:PreferenceTask"
-					key="/instance/org.eclipse.pde.ds.annotations/path" 
-					value="OSGI-INF" />
-				<setupTask xsi:type="setup:PreferenceTask"
-					key="/instance/org.eclipse.pde.ds.annotations/validationErrorLevel" 
-					value="error" />
-				<setupTask xsi:type="setup:PreferenceTask"
-					key="/instance/org.eclipse.pde.ds.annotations/validationErrorLevel.missingImplicitUnbindMethod"
-					value="error" />
+				<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.pde.ds.annotations/enabled" value="true" />
+				<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.pde.ds.annotations/generateBundleActivationPolicyLazy"  value="true" />
+				<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.pde.ds.annotations/path" value="OSGI-INF" />
+				<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.pde.ds.annotations/validationErrorLevel" value="error" />
+				<setupTask xsi:type="setup:PreferenceTask" key="/instance/org.eclipse.pde.ds.annotations/validationErrorLevel.missingImplicitUnbindMethod" value="error" />
 			</setupTask>
 		</setupTask>
+		
 		<setupTask xsi:type="setup.p2:P2Task" id="eclipse" label="Eclipse basic">
 			
 			<repository url="http://download.eclipse.org/releases/2020-03" />
@@ -106,22 +92,22 @@
 			<requirement name="org.eclipse.m2e.feature.feature.group" />
 			<requirement name="org.eclipse.oomph.setup.ui.ide.feature.group" />
 
-      <!-- Doc -->
+      	<!-- Doc -->
 			<repository url="https://de-jcup.github.io/update-site-eclipse-asciidoctor-editor/update-site/" />
 			<requirement name="de.jcup.asciidoctoreditor.feature.group" />
       
-      <!-- Image browser -->
+      	<!-- Image browser -->
 			<repository url="http://manu26.manufrog.com/~psnetnu/eclipse/updates/" />
 			<requirement name="nu.psnet.quickimage.feature.group" />
       
-      <!--  java dev -->
+      	<!--  java dev -->
 			<requirement name="org.eclipse.jdt.feature.group" />
 			<requirement name="org.eclipse.pde.feature.group" />
-			<!-- 
+<!-- 
 			<repository url="http://download.eclipse.org/rt/rap/tools/3.9" />
 			<requirement name="org.eclipse.rap.tools.feature.feature.group" />
  -->
-	  <!-- P2 Target platform editor -->
+	  	<!-- P2 Target platform editor -->
 			<requirement name="org.eclipse.epp.mpc.feature.group" /> <!-- no transivity ?? -->
 			<requirement name="org.eclipse.equinox.p2.discovery.feature.feature.group" />
 			<requirement name="org.eclipse.userstorage.feature.group" />
@@ -129,7 +115,7 @@
 			<repository url="http://download.eclipse.org/cbi/tpd/3.0.0-SNAPSHOT/" />
 			<requirement name="org.eclipse.cbi.targetplatform-feature.feature.group" />
 			
-	  <!-- Team work -->
+	  	<!-- Team work -->
 			<requirement name="org.eclipse.mylyn.bugzilla_feature.feature.group" />
 			<requirement name="org.eclipse.mylyn.context_feature.feature.group" />
 			<requirement name="org.eclipse.mylyn.ide_feature.feature.group" />
@@ -139,13 +125,13 @@
 			<requirement name="org.eclipse.mylyn_feature.feature.group" />
 			<requirement name="org.eclipse.egit.mylyn.feature.group" />
 
-      <!--  xml and web -->
+      	<!--  xml and web -->
 			<requirement name="org.eclipse.xsd.sdk.feature.group" />
 			<requirement name="org.eclipse.wst.web_ui.feature.feature.group" />
 			<requirement name="org.eclipse.wst.xml_ui.feature.feature.group" />
 			<requirement name="org.eclipse.pde.api.tools.ee.feature.feature.group" />
 			
-	<!-- YAML: used by github -->
+		<!-- YAML: used by github -->
 			<repository url="https://de-jcup.github.io/update-site-eclipse-yaml-editor/update-site" />
 			<requirement name="de.jcup.yamleditor.feature.group" />
 			      
@@ -156,7 +142,6 @@
 			<repository url="http://www.genuitec.com/updates/devstyle/ci/" />
 			<requirement name="com.genuitec.eclipse.theming.core.feature.feature.group" />
 		</setupTask>
-		
 				
 		<setupTask xsi:type="setup.p2:P2Task" id="ui" label="UI designer">
 			<repository url="http://download.eclipse.org/releases/2020-03" />
@@ -180,7 +165,6 @@
 			<requirement name="org.eclipse.wb.swing.feature.feature.group" />
 			<requirement name="org.eclipse.wb.swt.feature.feature.group" />
 			<requirement name="org.eclipse.wb.xwt.feature.feature.group" />
-			
 		</setupTask>
 		
 		
@@ -198,7 +182,6 @@
 			java.lang.NoClassDefFoundError: org/eclipse/jdt/internal/ui/javaeditor/CompilationUnitEditor
 				at org.jetbrains.kotlin.ui.commands.psiVisualization.PsiVisualization.setEnabled(PsiVisualization.java:54)
 				at org.eclipse.ui.internal.handlers.HandlerProxy.setEnabled(HandlerProxy.java:229)
-			 
 			 
 			<repository url="https://dl.bintray.com/jetbrains/kotlin/eclipse-plugin/0.8.9/" />
       
@@ -244,7 +227,6 @@
 			<requirement name="org.sf.feeling.decompiler.procyon.feature.group" />
 			
 			<!-- TODO SonarLint
-			
 			<repository url="https://eclipse-uc.sonarlint.org" />
 			-->
 			
@@ -270,7 +252,6 @@
 			<requirement name="org.eclipse.eef.ext.widgets.reference.feature.source.feature.group" />
 			<requirement name="org.eclipse.eef.sdk.feature.source.feature.group" />
 			<requirement name="org.eclipse.sirius.runtime.ide.xtext.source.feature.group" />
-			
 		</setupTask>
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="modeling-extras" label="Eclipse Modeling extra">
@@ -295,10 +276,8 @@ https://www.eclipse.org/modeling/mdt/downloads/
 			<requirement name="org.eclipse.elk.sdk.feature.feature.group" />
 			
 		</setupTask>
-    
-
-
 	</version>
+	
 	<description><![CDATA[
 	    Configuration for advanced Java developers.<br/>
 	    It includes:
