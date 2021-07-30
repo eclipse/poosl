@@ -451,15 +451,17 @@ for p2-metadata in feature
 				<product.build.path>${rcptt.root.path}/releng/${product.name}/target/products</product.build.path>
 				
 				<!-- 
-				Unfortunately, tycho properties are not available for OSGI.
-				RCPTT can only deal with archive classifier (not path).
-				Archive of products are always zip in tycho (any platform).
+				Unfortunately, Tycho properties for OSGI are not available in RCPTT extension.
+				Thus RCPTT can only deal with archive classifier (not path).
+				Reminder: Archive of products are all 'zip' for any platform.
+				[platform] tag is substituted by RCPTT execution plugin (hard-coded, not maven-based).
 				 -->
 				<rcptt.build.target>${product.archive}-[platform].zip</rcptt.build.target>
 				<rcptt.aut.path>${product.build.path}/${rcptt.build.target}</rcptt.aut.path>
 				
 				<!-- Run every RCPTT for the time being -->
 				<rcptt.failure.ignore>true</rcptt.failure.ignore>
+				<rcptt.exec.timeout>240</rcptt.exec.timeout>
 			</properties>
 			
 			<!-- 
@@ -486,7 +488,7 @@ for p2-metadata in feature
 				<!-- This circular dependency may lead to extract a specific pom parent -->
 				<dependency>
 					<groupId>${project.groupId}</groupId>
-					<artifactId>{org.eclipse.poosl.product}</artifactId>
+					<artifactId>${product.name}</artifactId>
 					<version>${project.version}</version>
 					<!-- 
 					As OSGI properties are not accessible
@@ -519,7 +521,7 @@ for p2-metadata in feature
 							</aut>
 							
 							<testOptions>
-								<testExecTimeout>240</testExecTimeout>
+								<testExecTimeout>${rcptt.exec.timeout}</testExecTimeout>
 							</testOptions>
 							
 							<suites>
