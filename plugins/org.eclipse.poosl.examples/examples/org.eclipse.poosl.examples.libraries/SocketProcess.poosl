@@ -1,0 +1,74 @@
+/* API version 3.0 - Socket Process Library - Embedded Systems Innovations by TNO
+ * 
+ * SocketProcess is a convenience process class for bidirectional line-based socket communication between a single server and a single client.
+ * It automatically tries to establish a connection and to restore any lost connection.
+ * 
+ */
+process class SocketProcess(
+		/* To run the SocketProcess in client mode, set the value to the name of the host to connect to. To run the SocketProcess in server mode, set the value to nil. */
+		HostName : String,
+		/* In client mode (if HostName is not nil), the port on the host to connect to. In server mode (if HostName is nil), the port to listen on for incoming clients. */
+		PortNumber : Integer)
+ports
+	/* This is the only port; it is used for sending and receiving messages over the socket. */
+	Port
+messages
+	/* Received message over the socket. */
+	Port!Received(String),
+	/* Message to be send over the socket. */
+	Port?Send(String)
+variables
+	/* Underlying native data class that provides the socket connection. */
+	Socket : Socket
+init
+	Init()()
+methods
+	/* Initializes the process class. */
+	Init()()
+		Socket := new(Socket);
+		par
+			KeepAlive()()
+		and
+			Connect()()
+		rap
+
+	/* Ensures that the model does not terminate, in particular when waiting for input from the socket. */
+	KeepAlive()()
+		delay 1;
+		KeepAlive()()
+
+	/* Establish or restore the socket connection, once it is disconnected. */
+	Connect()()
+		[Socket isDisconnected] if HostName = nil then
+			Socket acceptFrom(PortNumber) // Socket Server
+		else
+			Socket connectTo(HostName, PortNumber) // Socket Client
+		fi;
+		sel
+			Communicate()()
+		or
+			Connect()()
+		les
+
+	/* Communicate bi-directionally over the socket connection as long as it is connected. */
+	Communicate()()
+		[Socket isConnected] skip;
+		abort
+			par
+				Read()()
+			and
+				Write()()
+			rap
+		with Connect()()
+
+	/* Receive messages from the socket. */
+	Read()() | Line : String |
+		[Socket hasLine] Line := Socket readLine;
+		Port!Received(Line);
+		Read()()
+
+	/* Send messages to the socket. */
+	Write()() | Line : String |
+		Port?Send(Line);
+		[Socket isConnected] Socket writeLine(Line);
+		Write()()

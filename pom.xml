@@ -36,6 +36,7 @@
 		<module>plugins/org.eclipse.poosl.legacysupport</module>
 		<module>plugins/org.eclipse.poosl.help</module>
 		<module>plugins/org.eclipse.poosl.sirius</module>
+		<module>plugins/org.eclipse.poosl.examples</module>
 
 	</modules>
 	

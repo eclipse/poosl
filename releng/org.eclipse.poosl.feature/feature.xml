@@ -210,4 +210,10 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.poosl.examples"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>

@@ -1,0 +1,193 @@
+/* This example models customers that use shopping carts at a shopping mall.
+ * It demonstrates:
+ * - synchronous communication, i.e., both sender and receiver have to wait until
+ *   a communication partner is available, and communication takes place atomically;
+ * - various ways to model collections of things:
+ *   * multiple shopping carts (instances of a data class),
+ *   * multiple cart sheds (parameterized instances of a process class),
+ *   * multiple customers (parallel behavior inside a process class).
+ *
+ */
+importlib "structures.poosl"
+
+// -----------------------------------------------------------------------------
+//
+/* Data class for a shopping cart that stores an identity, and counts the number of times it has been used. */
+data class Cart
+variables
+	/* Initial location of the ShoppingCart. */
+	InitialShedID : Object
+	/* Identity stored inside a ShoppingCart. */
+	CartID : Object,
+	/* Usage counter stored inside a ShoppingCart. */
+	Counter : Integer
+methods
+	/* Sets the original location of the ShoppingCart. */
+	init(InitialShed : Object, Cart : Object) : Cart
+		InitialShedID := InitialShed;
+		CartID := Cart;
+		Counter := 0;
+		return self
+
+	/* Increases the usage counter of the ShoppingCart. */
+	incrementCounter : Integer
+		if Counter = nil then
+			Counter := 0
+		fi;
+		Counter := Counter + 1;
+		return Counter
+
+	/* Creates the String value that is shown by the debugging tools for instances of type ShoppingCart. */
+	printString : String
+		return self^ printString + "(" + InitialShedID printString + "," + CartID printString + ")[" + Counter
+			printString + "]"
+
+// -----------------------------------------------------------------------------
+//
+/* Data class that models a stack of carts. It isolates the data processing from process class CartShed. */
+data class CartStack
+variables
+	Carts : Stack
+methods
+	/* Initializes the stack for a given shed identifier and number of carts. */
+	init(ShedID, NumberOfCarts : Integer) : CartStack | i : Integer |
+		Carts := new(Stack);
+		i := 0;
+		while i < NumberOfCarts do
+			Carts push(new(Cart) init(ShedID, i));
+			i := i + 1
+		od;
+		return self
+
+	/* Returns true in case the Stack does not contain any elements. Otherwise, it returns false. */
+	isEmpty : Boolean
+		if Carts != nil then
+			return Carts isEmpty
+		else
+			return nil
+		fi
+
+	/* Returns true in case the size (capacity) of the Stack is bounded and equals its capacity. Otherwise, it returns false. */
+	isFull : Boolean
+		if Carts != nil then
+			return Carts isFull
+		else
+			return nil
+		fi
+
+	/* Returns the last element of the Stack if it is not empty. Otherwise, it returns nil. It does not modify the Stack. */
+	inspect : Cart
+		if Carts != nil then
+			return Carts inspect
+		else
+			return nil
+		fi
+
+	/* Returns the last element of the Stack and removes it in case the Stack is not empty. Otherwise, it returns nil. */
+	pop : Cart
+		if Carts != nil then
+			return Carts pop
+		else
+			return nil
+		fi
+
+	/* Adds shopping cart C after the last element of the Stack in case it is not full. */
+	push(C : Cart) : CartStack
+		if Carts != nil then
+			C incrementCounter;
+			Carts push(C)
+		fi;
+		return self
+
+	printString : String
+		return Carts printString
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that models a shed with a stack of shopping carts. */
+process class CartShed(
+		/* Identifier of the shed. */
+		ShedID : Integer,
+		/* Initial number of carts in the shed. */
+		InitialNumberOfCarts : Integer)
+ports
+	/* This is the only port for interaction with a customer. */
+	port
+messages
+	/* Get a shopping cart from the cart shed.
+	 * As communication is synchronous, no separate request and response messages are needed.
+	 */
+	port!GetCart(Cart),
+	/* Return a shopping cart to the cart shed. */
+	port?ReturnCart(Cart)
+variables
+	/* Stack of available shopping carts. */
+	Carts : CartStack
+init
+	Initialise()()
+methods
+	/* Initializes the process class. */
+	Initialise()()
+		Carts := new(CartStack) init(ShedID, InitialNumberOfCarts);
+		par
+			CollectCarts()()
+		and
+			ReleaseCarts()()
+		rap
+
+	/* Collect carts that are returned by customers. */
+	CollectCarts()() | C : Cart |
+		[!(Carts isFull)] port?ReturnCart(C) {Carts push(C)};
+		CollectCarts()()
+
+	/* Release carts to customers that want to get one. */
+	ReleaseCarts()()
+		[!(Carts isEmpty)] port!GetCart(Carts inspect) {Carts pop};
+		ReleaseCarts()()
+
+// -----------------------------------------------------------------------------
+//
+/* Process class that models a collection of customers. */
+process class Customers(
+		/* Number of customers. */
+		NumberOfCustomers : Integer)
+ports
+	/* This is the only port for interaction with a cart shed. */
+	port
+messages
+	/* Get a shopping cart from the cart shed.
+	 * As communication is synchronous, no separate request and response messages are needed.
+	 */
+	port?GetCart(Cart),
+	/* Return a shopping cart to the cart shed. */
+	port!ReturnCart(Cart)
+variables
+
+init
+	Initialise(NumberOfCustomers)()
+methods
+	/* Initializes the process class, for customers [1..CustomerID]. */
+	Initialise(CustomerID : Integer)()
+		par
+			if CustomerID > 1 then
+				Initialise(CustomerID - 1)()
+			fi
+		and
+			Act(CustomerID)()
+		rap
+
+	/* Behavior of an individual customer: repeatedly get a shopping cart and return it. */
+	Act(CustomerID : Integer)() | C : Cart |
+		port?GetCart(C);
+		port!ReturnCart(C);
+		Act(CustomerID)()
+
+// -----------------------------------------------------------------------------
+//
+system
+instances
+	customers : Customers(NumberOfCustomers := 5)
+	shed1 : CartShed(ShedID := 1, InitialNumberOfCarts := 2)
+	shed2 : CartShed(ShedID := 2, InitialNumberOfCarts := 2)
+channels
+	{ customers.port, shed1.port, shed2.port }

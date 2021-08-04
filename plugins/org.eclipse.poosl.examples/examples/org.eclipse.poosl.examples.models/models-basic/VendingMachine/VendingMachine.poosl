@@ -1,0 +1,170 @@
+/* This example demonstrates a way to model state machines.
+ * It models a customer that orders drinks from a vending machine.
+ *
+ */
+// -----------------------------------------------------------------------------
+//
+/* Process class that models a vending machine that can provide coffee, tea and water.
+ * Coffee and tea must be paid for, as the stock is limited.
+ */
+process class VendingMachine(
+		/* Amount of coffee in  stock. */
+		coffeeStock : Object,
+		/* Amount of tea in  stock. */
+		teaStock : Object)
+ports
+	/* This is the only port for interaction with a customer. */
+	port
+messages
+	/* Incoming coin */
+	port?Coin,
+	/* Key press on the return button. */
+	port?ReturnButton,
+	/* Key press on the coffee button. */
+	port?CoffeeButton,
+	/* Key press on the tea button. */
+	port?TeaButton,
+	/* Key press on the water button. */
+	port?WaterButton,
+	/* Outgoing coin */
+	port!Coin,
+	/* Cup of coffee. */
+	port!Coffee,
+	/* Cup of tea. */
+	port!Tea,
+	/* Cup of water. */
+	port!Water
+variables
+
+init
+	Idle()() // Initial state
+methods
+	/* Initial state; no coin inserted, so only water can be ordered. */
+	Idle()()
+		sel
+			port?WaterButton;
+			port!Water;
+			Idle()()
+		or
+			port?Coin;
+			Paid()()
+		les
+
+	/* Paid state; one coin inserted; coffee, tea and water can be ordered. */
+	Paid()()
+		sel
+			port?CoffeeButton;
+			if 0 < coffeeStock // Coffee can only be selected if in stock
+			then
+				coffeeStock := coffeeStock - 1;
+				port!Coffee;
+				Idle()()
+			else
+				Paid()()
+			fi
+		or
+			port?TeaButton;
+			if 0 < teaStock // Tea can only be selected if in stock
+			then
+				teaStock := teaStock - 1;
+				port!Tea;
+				Idle()()
+			else
+				Paid()()
+			fi
+		or
+			port?WaterButton;
+			port!Water;
+			Paid()()
+		or
+			port?ReturnButton;
+			port!Coin;
+			Idle()()
+		les
+
+// -----------------------------------------------------------------------------
+/* Process class that models a customer that repeatedly decides whether it wants to drink coffee, tea or water.
+ * It has a limited supply of coins to pay for the drinks.
+ */
+process class Customer(
+		/* Number of available coins. */
+		coins : Integer)
+ports
+	/* This is the only port for interaction with a vending machine. */
+	port
+messages
+	/* Outgoing coin */
+	port!Coin,
+	/* Key press on the return button. */
+	port!ReturnButton,
+	/* Key press on the coffee button. */
+	port!CoffeeButton,
+	/* Key press on the tea button. */
+	port!TeaButton,
+	/* Key press on the water button. */
+	port!WaterButton,
+	/* Incoming coin */
+	port?Coin
+	/* Cup of coffee. */
+	port?Coffee,
+	/* Cup of tea. */
+	port?Tea,
+	/* Cup of water. */
+	port?Water
+variables
+
+init
+	Idle()() // Initial state
+methods
+	/* Idle state; no coin inserted. */
+	Idle()()
+		sel
+			port!WaterButton;
+			port?Water;
+			Idle()()
+		or
+			[0 < coins] port!Coin;
+			coins := coins - 1;
+			Paid()()
+		les
+
+	/* Paid state: coin inserted.  */
+	Paid()()
+		sel
+			port!CoffeeButton;
+			sel
+				port?Coffee;
+				Idle()()
+			or
+				delay 1;
+				skip; // time-out
+				Paid()()
+			les
+		or
+			port!TeaButton;
+			sel
+				port?Tea;
+				Idle()()
+			or
+				delay 1;
+				skip; // time-out
+				Paid()()
+			les
+		or
+			port!ReturnButton;
+			port?Coin;
+			coins := coins + 1;
+			Idle()()
+		or
+			port!WaterButton;
+			port?Water;
+			Paid()()
+		les
+
+// -----------------------------------------------------------------------------
+system
+instances
+	customer : Customer(coins := 3)
+	vendingMachine : VendingMachine(coffeeStock := 1, teaStock := 1)
+channels
+	{ vendingMachine.port, customer.port }

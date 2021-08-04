@@ -1,0 +1,339 @@
+/* Positive Acknowledgement with Retransmission protocol
+ *
+ */
+importlib "distributions.poosl"
+
+data class Packet extends Object
+variables
+	value : Object
+methods
+	setValueTo(v : Object) : Packet
+		/* Set the value of the receiver to v */
+		value := v;
+		return self
+
+	value : Object
+		/* Return the value of the receiver */
+		return value
+
+	printString : String
+		return value printString
+
+data class Frame extends Object
+variables
+	ackNum, seqNum : Integer,
+	frameKind : String,
+	packet : Packet
+methods
+	ackNum : Integer
+		return ackNum
+
+	seqNum : Integer
+		return seqNum
+
+	frameKind : String
+		return frameKind
+
+	packet : Packet
+		return packet
+
+	setAckNumTo(i : Integer) : Frame
+		ackNum := i;
+		return self
+
+	setSeqNumTo(i : Integer) : Frame
+		seqNum := i;
+		return self
+
+	setFrameKindTo(s : String) : Frame
+		frameKind := s;
+		return self
+
+	setPacketTo(p : Packet) : Frame
+		packet := p;
+		return self
+
+	printString : String | result : String |
+		result := frameKind;
+		if packet != nil then
+			result := result concat(";") concat(packet printString)
+		fi;
+		if seqNum != nil then
+			result := result concat(";") concat(seqNum printString)
+		fi;
+		if ackNum != nil then
+			result := result concat(";") concat(ackNum printString)
+		fi;
+		return result
+
+process class DataLinkReceiver1(processTime : Real)
+ports
+	fromPL,
+	toNL
+messages
+	fromPL?frame(Frame),
+	toNL!packet(Packet)
+variables
+
+init
+	protocol1()()
+methods
+	protocol1()() | f : Frame |
+		fromPL?frame(f);
+		delay processTime;
+		toNL!packet(f packet);
+		protocol1()()
+
+process class DataLinkReceiver2(processTime : Real)
+ports
+	fromPL,
+	toNL,
+	toPL
+messages
+	fromPL?frame(Frame),
+	toNL!packet(Packet),
+	toPL!frame(Frame)
+variables
+
+init
+	protocol2()()
+methods
+	protocol2()() | f1, f2 : Frame |
+		fromPL?frame(f1);
+		delay processTime;
+		toNL!packet(f1 packet);
+		f2 := new(Frame) setFrameKindTo("A");
+		toPL!frame(f2);
+		protocol2()()
+
+process class DataLinkReceiver3(processTime : Real)
+ports
+	fromPL,
+	toNL,
+	toPL
+messages
+	fromPL?frame(Frame),
+	toNL!packet(Packet),
+	toPL!frame(Frame)
+variables
+
+init
+	receiveFrame(0)()
+methods
+	receiveFrame(frameExpected : Integer)() | f1, f2 : Frame |
+		fromPL?frame(f1);
+		if f1 seqNum = frameExpected then
+			delay processTime;
+			toNL!packet(f1 packet);
+			frameExpected := 1 - frameExpected
+		fi;
+		f2 := new(Frame) setAckNumTo(1 - frameExpected) setFrameKindTo("A");
+		toPL!frame(f2);
+		receiveFrame(frameExpected)()
+
+process class DataLinkSender1(processTime : Real)
+ports
+	fromNL,
+	toPL
+messages
+	fromNL?packet(Packet),
+	toPL!frame(Frame)
+variables
+
+init
+	protocol1()()
+methods
+	protocol1()() | p : Packet, f : Frame |
+		fromNL?packet(p);
+		f := new(Frame) setPacketTo(p) setFrameKindTo("D");
+		delay processTime;
+		toPL!frame(f);
+		protocol1()()
+
+process class DataLinkSender2(processTime : Real)
+ports
+	fromNL,
+	fromPL,
+	toPL
+messages
+	fromNL?packet(Packet),
+	toPL!frame(Frame),
+	fromPL?frame(Frame)
+variables
+
+init
+	protocol2()()
+methods
+	protocol2()() | p : Packet, f1, f2 : Frame |
+		fromNL?packet(p);
+		f1 := new(Frame) setPacketTo(p) setFrameKindTo("D");
+		delay processTime;
+		toPL!frame(f1);
+		fromPL?frame(f2);
+		protocol2()()
+
+process class DataLinkSender3(processTime : Real)
+ports
+	fromNL,
+	fromPL,
+	fromTimer,
+	toPL,
+	toTimer
+messages
+	fromNL?packet(Packet),
+	fromPL?frame(Frame),
+	fromTimer?timeout,
+	toPL!frame(Frame),
+	toTimer!setTimer,
+	toTimer!stopTimer
+variables
+
+init
+	acceptPacket(0)()
+methods
+	acceptPacket(nextFrameToSend : Integer)() | p : Packet |
+		fromNL?packet(p);
+		transmitFrame(nextFrameToSend, p)()
+
+	transmitFrame(nextFrameToSend : Integer, p : Packet)() | f1, f2 : Frame |
+		f1 := new(Frame) setPacketTo(p) setFrameKindTo("D") setSeqNumTo(nextFrameToSend);
+		delay processTime;
+		toPL!frame(f1);
+		toTimer!setTimer;
+		sel
+			fromTimer?timeout;
+			transmitFrame(nextFrameToSend, p)()
+		or
+			fromPL?frame(f2);
+			toTimer!stopTimer;
+			if f2 ackNum = nextFrameToSend then
+				nextFrameToSend := 1 - nextFrameToSend;
+				acceptPacket(nextFrameToSend)()
+			else
+				transmitFrame(nextFrameToSend, p)()
+			fi
+		les
+
+process class NetworkLayer()
+ports
+	fromDL,
+	toDL
+messages
+	fromDL?packet(Packet),
+	toDL!packet(Packet)
+variables
+	counter : Integer
+init
+	init()()
+methods
+	init()()
+		counter := 1;
+		start()()
+
+	start()() | p : Packet |
+		sel
+			toDL!packet(new(Packet) setValueTo(counter)) {counter := counter + 1}
+		or
+			fromDL?packet(p)
+		les;
+		start()()
+
+process class SimplexChannel(capacity : Integer, errorProbability : Real, transmissionDistribution : Normal)
+ports
+	in,
+	out
+messages
+	in?frame(Frame),
+	out!frame(Frame)
+variables
+	amountOfFrames : Integer,
+	randomGen : RandomGenerator
+init
+	initialize()()
+methods
+	initialize()()
+		amountOfFrames := 0;
+		randomGen := new(RandomGenerator);
+		transferFrames()()
+
+	transferFrames()() | f : Frame, errorP : Real |
+		in?frame(f) {amountOfFrames := amountOfFrames + 1};
+		if capacity >= amountOfFrames then
+			errorP := errorProbability
+		else
+			errorP := 1.0 - (1.0 - errorProbability) / (2 power(amountOfFrames - capacity) asReal)
+		fi;
+		par
+			delay transmissionDistribution sample;
+			if randomGen random >= errorP then
+				abort
+					out!frame(f)
+				with delay 0
+			fi;
+			amountOfFrames := amountOfFrames - 1
+		and
+			transferFrames()()
+		rap
+
+process class Timer(timeoutTime : Real)
+ports
+	in,
+	out
+messages
+	in?setTimer,
+	in?stopTimer,
+	out!timeout
+variables
+
+init
+	timerOff()()
+methods
+	timerOff()()
+		in?setTimer;
+		timerOn()()
+
+	timerOn()()
+		sel
+			delay timeoutTime;
+			out!timeout
+		or
+			in?stopTimer
+		les;
+		timerOff()()
+
+cluster class PhysicalLayer
+ports
+	fromDL1,
+	fromDL2,
+	toDL1,
+	toDL2
+instances
+	acknowledgementChannel : SimplexChannel(capacity := 4, errorProbability := 0.0, transmissionDistribution :=
+		new(Normal) withParameters(100.0, 0.0))
+	transmissionChannel : SimplexChannel(capacity := 4, errorProbability := 0.5, transmissionDistribution := new(Normal)
+		withParameters(100.0, 0.0))
+channels
+	{ fromDL1, transmissionChannel.in }
+	{ fromDL2, acknowledgementChannel.in }
+	{ toDL1, acknowledgementChannel.out }
+	{ toDL2, transmissionChannel.out }
+
+system
+instances
+	dataLinkSender3 : DataLinkSender3(processTime := 25.0)
+	dataLinkReceiver3 : DataLinkReceiver3(processTime := 30.0)
+	@SuppressWarnings("unconnected")
+	networkLayer1 : NetworkLayer()
+	@SuppressWarnings("unconnected")
+	networkLayer2 : NetworkLayer()
+	physicalLayer : PhysicalLayer()
+	timer : Timer(timeoutTime := 240.0)
+channels
+	{ dataLinkReceiver3.toNL, networkLayer2.fromDL }
+	{ dataLinkReceiver3.toPL, physicalLayer.fromDL2 }
+	{ dataLinkReceiver3.fromPL, physicalLayer.toDL2 }
+	{ dataLinkSender3.fromNL, networkLayer1.toDL }
+	{ dataLinkSender3.fromPL, physicalLayer.toDL1 }
+	{ dataLinkSender3.toPL, physicalLayer.fromDL1 }
+	{ dataLinkSender3.toTimer, timer.in }
+	{ dataLinkSender3.fromTimer, timer.out }
