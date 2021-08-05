@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<project name="ContentCopier" default="copyContent" basedir="..">
+
+	<target name="copyContent">
+		<delete dir="content"/>
+		<copy todir="content/org.eclipse.poosl.examples" > 
+    		<fileset dir="../../docs/samples/org.eclipse.poosl.examples"/>  
+		</copy>
+		<copy todir="content/org.eclipse.poosl.libraries" > 
+    		<fileset dir="../org.eclipse.poosl.libraries"/>  
+		</copy>
+	</target>
+
+</project>

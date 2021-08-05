@@ -71,6 +71,7 @@ methods
 		fi;
 		return self
 
+	@Init
 	init(MyID : Integer) : NIMonitors
 		NumberOfCollectedLatencyRewards := 0;
 		NumberOfCollectedSendRateRewards := 0;

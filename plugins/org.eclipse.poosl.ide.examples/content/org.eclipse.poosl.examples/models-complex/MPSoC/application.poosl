@@ -40,6 +40,7 @@ methods
 			return true
 		fi
 
+	@Init
 	init(N : String, BS, IT, TS : Integer, M : Boolean, T : Boolean) : DataBufferMonitor
 		Name := N;
 		BufferSize := BS;
@@ -136,6 +137,7 @@ methods
 			return true
 		fi
 
+	@Init
 	init(N : String, BS : Integer, NIT, CIT : Queue, TS : Integer, M : Boolean, T : Boolean) : ControlBufferMonitor
 		Name := N;
 		BufferSize := BS;
@@ -215,6 +217,7 @@ variables
 	StateSpace : Array,
 	CurrentState : String
 methods
+	@Init
 	init : MarkovChain
 		NumberOfStates := 0;
 		StateSpace := new(Array);
@@ -289,6 +292,7 @@ methods
 		TimeOfLastFiring := CurrentTime;
 		return self
 
+	@Init
 	init(DL, DT : Real) : ApplicationStatus
 		NumberOfFirings := 0;
 		NumberOfDeadlineMisses := 0;

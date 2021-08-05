@@ -9,7 +9,7 @@
 		<version>4.2.2-SNAPSHOT</version>
 		<relativePath>../../parent</relativePath>
 	</parent>
-	<artifactId>org.eclipse.poosl.examples</artifactId>
+	<artifactId>org.eclipse.poosl.ide.examples</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<name>POOSL Embedded Examples</name>
 

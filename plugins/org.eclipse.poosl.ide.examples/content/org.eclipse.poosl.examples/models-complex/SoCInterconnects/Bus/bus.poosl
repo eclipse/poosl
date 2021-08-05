@@ -17,6 +17,7 @@ methods
 		od;
 		return RequestAvailable
 
+	@Init
 	init(n : Integer) : BusRequests
 		Requests := new(Array) resize(n) putAll(false);
 		return self

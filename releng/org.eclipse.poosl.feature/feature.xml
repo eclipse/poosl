@@ -211,7 +211,7 @@ the Department of Electrical Engineering of Eindhoven University of Technology.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.poosl.examples"
+         id="org.eclipse.poosl.ide.examples"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

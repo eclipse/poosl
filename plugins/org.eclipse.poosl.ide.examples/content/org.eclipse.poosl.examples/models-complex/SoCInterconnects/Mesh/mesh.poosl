@@ -50,6 +50,7 @@ methods
 	printString : String
 		return Coordinates printString
 
+	@Init
 	init(NumberOfXNodes, NumberOfYNodes : Integer) : NodeMap | i, j : Integer |
 		Coordinates := new(Array2D) resize(NumberOfYNodes, NumberOfXNodes);
 		j := 1;
@@ -90,6 +91,7 @@ methods
 	printString : String
 		return "(" + Y printString + ", " + X printString + ")"
 
+	@Init
 	init(A, B : Integer) : XYCoords
 		X := A;
 		Y := B;

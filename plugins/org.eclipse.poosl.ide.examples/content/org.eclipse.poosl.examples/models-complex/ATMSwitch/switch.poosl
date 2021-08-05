@@ -1,121 +1,33 @@
 /* ATM Switch
  *
  */
+importlib "structures.poosl"
 importlib "distributions.poosl"
-
-data class FIFOLink extends Object
-variables
-	element : Object,
-	nextLink : FIFOLink,
-	previousLink : FIFOLink
-methods
-	element : Object
-		return element
-
-	nextLink : FIFOLink
-		return nextLink
-
-	previousLink : FIFOLink
-		return previousLink
-
-	setElement(anObject : Object) : FIFOLink
-		element := anObject;
-		return self
-
-	setNextLink(aLink : FIFOLink) : FIFOLink
-		nextLink := aLink;
-		return self
-
-	setPreviousLink(aLink : FIFOLink) : FIFOLink
-		previousLink := aLink;
-		return self
-
-data class BoundedFIFOBuffer extends Object
-variables
-	fifoDepth, size : Integer,
-	firstLink, lastLink : FIFOLink
-methods
-	depth : Integer
-		return fifoDepth
-
-	firstElement : Object
-		if fifoDepth = 0 then
-			return nil
-		else
-			return lastLink element
-		fi
-
-	isEmpty : Boolean
-		return fifoDepth = 0
-
-	isFull : Boolean
-		return fifoDepth = size
-
-	isNotEmpty : Boolean
-		return fifoDepth > 0
-
-	isNotFull : Boolean
-		return fifoDepth < size
-
-	put(anElement : Object) : BoundedFIFOBuffer | aLink : FIFOLink |
-		if fifoDepth = 0 then
-			firstLink := new(FIFOLink) setElement(anElement);
-			lastLink := firstLink
-		else
-			aLink := new(FIFOLink) setElement(anElement) setNextLink(firstLink);
-			firstLink setPreviousLink(aLink);
-			firstLink := aLink
-		fi;
-		fifoDepth := fifoDepth + 1;
-		return self
-
-	removeFirstElement : Object | aLink : FIFOLink |
-		if fifoDepth = 0 then
-			return nil
-		else
-			aLink := lastLink;
-			if fifoDepth > 1 then
-				lastLink := lastLink previousLink;
-				lastLink setNextLink(nil)
-			else
-				firstLink := nil;
-				lastLink := nil
-			fi;
-			fifoDepth := fifoDepth - 1;
-			return aLink element
-		fi
-
-	size(s : Integer) : BoundedFIFOBuffer
-		fifoDepth := 0;
-		size := s;
-		firstLink := nil;
-		lastLink := nil;
-		return self
 
 data class Cell extends Object
 variables
 	entryTime, exitTime : Real,
-	route : BoundedFIFOBuffer
+	route : Queue
 methods
 	destinationPort : Integer
-		return route firstElement
+		return route inspect
 
 	nextDestinationPort : Cell
-		route removeFirstElement;
+		route remove;
 		return self
 
 	setArbitraryRoute : Cell | rand : RandomGenerator |
 		rand := new(RandomGenerator) randomiseSeed;
-		route := new(BoundedFIFOBuffer) size(2);
+		route := new(Queue) resize(2);
 		if rand random > 0.5 then
-			route put(1)
+			route add(1)
 		else
-			route put(2)
+			route add(2)
 		fi;
 		if rand random > 0.5 then
-			route put(1)
+			route add(1)
 		else
-			route put(2)
+			route add(2)
 		fi;
 		return self
 
@@ -175,8 +87,8 @@ init
 methods
 	startUp()()
 		outputBufferArray := new(Array) resize(2);
-		outputBufferArray putAt(1, new(BoundedFIFOBuffer) size(bufferSize));
-		outputBufferArray putAt(2, new(BoundedFIFOBuffer) size(bufferSize));
+		outputBufferArray putAt(1, new(Queue) resize(bufferSize));
+		outputBufferArray putAt(2, new(Queue) resize(bufferSize));
 		par
 			handleInput1()()
 		and
@@ -188,30 +100,30 @@ methods
 		rap
 
 	handleInput1()() | cell : Cell |
-		i1?cell(cell | outputBufferArray at(cell destinationPort) isNotFull) {
-			outputBufferArray at(cell destinationPort) put(cell);
+		i1?cell(cell | outputBufferArray at(cell destinationPort) isFull not) {
+			outputBufferArray at(cell destinationPort) add(cell);
 			cell nextDestinationPort
 		};
 		delay cellTime;
 		handleInput1()()
 
 	handleInput2()() | cell : Cell |
-		i2?cell(cell | outputBufferArray at(cell destinationPort) isNotFull) {
-			outputBufferArray at(cell destinationPort) put(cell);
+		i2?cell(cell | outputBufferArray at(cell destinationPort) isFull not) {
+			outputBufferArray at(cell destinationPort) add(cell);
 			cell nextDestinationPort
 		};
 		delay cellTime;
 		handleInput2()()
 
 	handleOutput1()()
-		[ outputBufferArray at(1) isNotEmpty ] o1!cell(outputBufferArray at(1) firstElement) {outputBufferArray at(1)
-			removeFirstElement};
+		[ outputBufferArray at(1) isEmpty not ] o1!cell(outputBufferArray at(1) inspect) {outputBufferArray at(1)
+			remove};
 		delay cellTime;
 		handleOutput1()()
 
 	handleOutput2()()
-		[ outputBufferArray at(2) isNotEmpty ] o2!cell(outputBufferArray at(2) firstElement) {outputBufferArray at(2)
-			removeFirstElement};
+		[ outputBufferArray at(2) isEmpty not ] o2!cell(outputBufferArray at(2) inspect) {outputBufferArray at(2)
+			remove};
 		delay cellTime;
 		handleOutput2()()
 

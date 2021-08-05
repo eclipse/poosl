@@ -14,6 +14,7 @@ methods
 	getRemainingExecutionTime : Real
 		return RemainingExecutionTime
 
+	@Init
 	init(N, S : String, P : Integer) : ScheduledTask
 		Name := N;
 		Scenario := S;
@@ -39,77 +40,70 @@ methods
 
 data class SchedulerStatus extends Object
 variables
-	NumberOfTasks : Integer,
-	TaskList : StructureElement,
+	TaskList : Sequence,
 	Policy : String
 methods
+	@Init
 	init(T : String) : SchedulerStatus
 		Policy := T;
-		NumberOfTasks := 0;
-		TaskList := new(StructureElement);
-		TaskList setNext(TaskList) setPrevious(TaskList);
+		TaskList := new(Sequence);
 		return self
 
-	registerTask(Task, Scenario : String, Priority : Integer) : ScheduledTask | NewTask : ScheduledTask, NE,
-			E : StructureElement, Found : Boolean |
+	registerTask(Task, Scenario : String, Priority : Integer) : ScheduledTask | NewTask : ScheduledTask,
+			It : SequenceIterator, Found : Boolean |
 		NewTask := new(ScheduledTask) init(Task, Scenario, Priority);
-		NE := new(StructureElement) setElement(NewTask);
 		if Policy = "FCFS" then
-			E := TaskList
+			TaskList prepend(NewTask)
 		else if Policy = "PB" then
-			E := TaskList next;
 			Found := false;
-			while (E != TaskList) & (Found not) do
-				if E element getPriority < Priority then
-					E := E next
+			It := TaskList iterator;
+			while It isDone not & !Found do
+				if It element getPriority < Priority then
+					It advance
 				else
+					It addBefore(NewTask);
 					Found := true
 				fi
 			od;
-			E := E previous
+			if !Found then
+				TaskList append(NewTask)
+			fi
 		else
-			self error("Unkown Scheduling Policy")
+			self error("Unknown Scheduling Policy")
 		fi fi;
-		NE setNext(E next) setPrevious(E);
-		E setNext(NE);
-		NE next setPrevious(NE);
-		NumberOfTasks := NumberOfTasks + 1;
 		return NewTask
 
 	nextTaskToSchedule : ScheduledTask
-		return TaskList previous element
+		return TaskList last
 
-	printString : String | PrintOut : String, E : StructureElement |
+	printString : String | PrintOut : String, It : SequenceIterator |
 		PrintOut := "Operating System with Policy: " + Policy printString cr cr + "List of Waiting Tasks:" cr;
 		PrintOut := PrintOut + "( ";
-		E := TaskList previous;
-		while E != TaskList do
-			PrintOut := PrintOut + E element printString;
-			if E previous != TaskList then
+		It := TaskList iterator;
+		while It isDone not do
+			PrintOut := PrintOut + It element printString;
+			if It element != TaskList last then
 				PrintOut := PrintOut + ", "
 			fi;
-			E := E previous
+			It advance
 		od;
 		PrintOut := PrintOut + " )";
 		return PrintOut
 
-	removeTask(OldTask : ScheduledTask) : Integer | E : Element |
-		E := TaskList previous;
-		while E element getName != OldTask getName do
-			E := E previous
-		od;
-		E next setPrevious(E previous);
-		E previous setNext(E next);
-		NumberOfTasks := NumberOfTasks - 1;
-		return NumberOfTasks
+	removeTask(OldTask : ScheduledTask) : Integer | i : Integer |
+		i := TaskList find(1, OldTask);
+		TaskList removeAt(i);
+		return TaskList size
 
-	updateTask(OldTask : ScheduledTask) : SchedulerStatus | E : Element |
-		E := TaskList previous;
-		while E != TaskList do
-			if E element getName = OldTask getName then
-				E setElement(OldTask)
+	updateTask(Task : ScheduledTask) : SchedulerStatus | It : SequenceIterator, i : Integer |
+		It := TaskList iterator;
+		i := 1;
+		while It isDone not do
+			if It element getName = Task getName then
+				TaskList putAt(i, Task)
 			fi;
-			E := E previous
+			It advance;
+			i := i + 1
 		od;
 		return self
 
@@ -130,6 +124,7 @@ methods
 		Utilisation rewardBM(1.0, CurrentTime);
 		return self
 
+	@Init
 	init(Type : String) : ProcessorStatus | File : FileIn, i : Integer, Task : String, CalibrationData : Map |
 		if (Type != "MIPS") & (Type != "ARM") & (Type != "TriMedia") then
 			self error("Unknown Processor Type")
@@ -222,6 +217,7 @@ variables
 	MaximumOccupation : Integer,
 	AverageOccupation : LongRunTimeAverage
 methods
+	@Init
 	init : MemoryStatus
 		Occupation := 0;
 		MaximumOccupation := 0;
@@ -259,6 +255,7 @@ variables
 	AchievedMaximumNumberOfConcurrentConnections : Integer,
 	ActiveConnections : Set
 methods
+	@Init
 	init : CommunicationStatus
 		ActiveConnections := new(Set);
 		NumberOfConcurrentConnections := 0;
@@ -340,6 +337,7 @@ methods
 		AveragePower rewardBM(Power, CurrentTime);
 		return self
 
+	@Init
 	init : BatteryStatus
 		Power := 0.0;
 		PeakPower := 0.0;
@@ -388,6 +386,7 @@ methods
 		Accuracies putAt(ID, Accurate);
 		return self
 
+	@Init
 	init : PlatformStatus
 		Accuracies := new(Array);
 		Monitors := new(Array);

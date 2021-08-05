@@ -3,15 +3,15 @@
 <plugin>   
 	<extension point="org.eclipse.ui.newWizards">
       <category
-            id="org.eclipse.poosl.examples.category"
+            id="org.eclipse.poosl.ide.examples.category"
             name="%categoryName"
             parentCategory="org.eclipse.ui.Examples">
       </category>
       <wizard
-            category="org.eclipse.ui.Examples/org.eclipse.poosl.examples.category"
+            category="org.eclipse.ui.Examples/org.eclipse.poosl.ide.examples.category"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
             icon="icons/poosl_project.gif"
-            id="org.eclipse.poosl.examples.POOSLExamplesWizard"
+            id="org.eclipse.poosl.ide.examples.POOSLExamplesWizard"
             name="%wizardName"
             project="true">
          <description>%wizardDescription</description>
@@ -21,16 +21,16 @@
    
    <extension point="org.eclipse.emf.common.ui.examples">
       <example
-            id="org.eclipse.poosl.examples"
-            wizardID="org.eclipse.poosl.examples.POOSLExamplesWizard">
+            id="org.eclipse.poosl.ide.examples"
+            wizardID="org.eclipse.poosl.ide.examples.POOSLExamplesWizard">
          <projectDescriptor
-               name="org.eclipse.poosl.examples.models"
-               contentURI="examples/org.eclipse.poosl.examples.models/"
-               description="%org.eclipse.poosl.examples.models.description"/>
+               name="org.eclipse.poosl.examples"
+               contentURI="content/org.eclipse.poosl.examples/"
+               description="%org.eclipse.poosl.examples.description"/>
          <projectDescriptor
-               contentURI="examples/org.eclipse.poosl.examples.libraries/"
-               description="%org.eclipse.poosl.examples.libraries.description"
-               name="org.eclipse.poosl.examples.libraries">
+               contentURI="content/org.eclipse.poosl.libraries/"
+               description="%org.eclipse.poosl.libraries.description"
+               name="org.eclipse.poosl.libraries">
          </projectDescriptor>
       </example>
     </extension>
