@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-file-poosl-debug "org.eclipse.poosl.testmodels/test_api.poosl"
+file-poosl-debug "poosl.testmodels/test_api.poosl"
 select-root-click-record
 get-menu "Run/Resume" | click
 try -times 10 -delay 500 -command {

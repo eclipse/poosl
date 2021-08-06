@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {
-	select "org.eclipse.poosl.testmodels/benchmark/01. skip10000000/skip10000000.poosl" | get-menu "Run As/ *. POOSL Simul" +
+	select "poosl.testmodels/benchmark/01. skip10000000/skip10000000.poosl" | get-menu "Run As/ *. POOSL Simul" +
 		"ation" | click
 }
 try -times 10 -delay 500 -command {

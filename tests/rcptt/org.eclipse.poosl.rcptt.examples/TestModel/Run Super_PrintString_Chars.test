@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {
-	select "org.eclipse.poosl.testmodels/Super_PrintString_Chars/test.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
+	select "poosl.testmodels/Super_PrintString_Chars/test.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
 }
 with [get-view Console | get-text-viewer] {
 	set-caret-pos 20 15

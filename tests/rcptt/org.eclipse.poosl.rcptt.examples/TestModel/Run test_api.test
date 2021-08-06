@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {
-	select "org.eclipse.poosl.testmodels/test_api.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
+	select "poosl.testmodels/test_api.poosl" | get-menu "Run As/ *. POOSL Simulation" | click
 }
 
 try -times 10 -delay 500 -command {

@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Project Explorer" | get-tree] {
-	select "org.eclipse.poosl.testmodels/benchmark/09. processLoop10000000/processLoop10000000.poosl" | get-menu "Run As/ " +
+	select "poosl.testmodels/benchmark/09. processLoop10000000/processLoop10000000.poosl" | get-menu "Run As/ " +
 		"*. POOSL Simulation" | click
 }
 try -times 10 -delay 500 -command {

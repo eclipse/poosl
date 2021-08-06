@@ -14,7 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-file-poosl-debug "org.eclipse.poosl.testmodels/Super_PrintString_Chars/test.poosl"
+file-poosl-debug "poosl.testmodels/Super_PrintString_Chars/test.poosl"
 select-root-click-record
 get-menu "Run/Resume" | click
 get-view Console | get-text-viewer | get-property text | equals "[INFO   ] Model stopped: No more transition possible and all external ports terminated." | verify-true
