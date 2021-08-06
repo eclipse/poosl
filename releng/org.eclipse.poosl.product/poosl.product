@@ -48,7 +48,6 @@
    <features>
       <feature id="org.eclipse.poosl.dependencies.feature" installMode="root"/>
       <feature id="org.eclipse.poosl.feature" installMode="root"/>
-      <feature id="org.eclipse.poosl.legacysupport.feature" installMode="root"/>
    </features>
 
    <configurations>

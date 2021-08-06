@@ -3,17 +3,6 @@
    <feature id="org.eclipse.poosl.feature">
       <category name="org.eclipse.poosl"/>
    </feature>
-   <feature id="org.eclipse.poosl.legacysupport.feature">
-      <category name="org.eclipse.poosl"/>
-   </feature>
-   <!-- no category, this feature must not be selected directly -->
    <feature id="org.eclipse.poosl.dependencies.feature"/>
    <category-def name="org.eclipse.poosl" label="Poosl"/>
-   
-   <!-- 
-   This fails on dependencies resolution
-   don't know why :
-   http://codeandme.blogspot.com/2015/10/tycho-12-build-source-features.html?_sm_au_=iVVZ26V1WWnsZ26R
-   <feature id="org.eclipse.poosl.feature.source" />
-    -->
 </site>

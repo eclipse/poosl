@@ -18,7 +18,7 @@
         point="org.eclipse.ui.menus">
      <menuContribution
            allPopups="false"
-           locationURI="popup:#TextEditorContext?after=generatexml">
+           locationURI="popup:#TextEditorContext">
         <separator
               name="org.eclipse.poosl.sirius.beforegraph"
               visible="true">
