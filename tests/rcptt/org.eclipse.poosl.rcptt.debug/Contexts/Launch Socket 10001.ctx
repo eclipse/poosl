@@ -5,8 +5,8 @@ Element-Name: Launch Socket 10001
 Element-Type: context
 Element-Version: 2.0
 Id: _MoQJQEALEeW7HIRWCkxkzg
-Runtime-Version: 2.0.0.201506242315
-Save-Time: 8/11/15 1:42 PM
+Runtime-Version: 2.5.1.M3
+Save-Time: 8/12/21, 9:26 AM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -20,7 +20,7 @@ with [get-window "Debug Configurations"] {
     }
     get-group "Model:" | get-button Browse | click
     with [get-window "Select poosl model"] {
-        get-tree | select "poosl.examples/models-basic/SocketExample/socket_example.poosl"
+        get-tree | select "poosl.examples/models-cosim/SocketExample/socket_example.poosl"
         get-button OK | click
     }
     get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text 10001

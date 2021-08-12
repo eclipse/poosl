@@ -1,4 +1,4 @@
-import "../../../nl.esi.poosl.examples/libraries/structures.poosl"
+import "../../../poosl.examples/libraries/structures.poosl"
 
 /* Main data class for JSON data structures */
 data class ExtendedJSON

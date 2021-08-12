@@ -13,7 +13,7 @@
     <semanticResources>models-basic/Scheduling/PreEmptive.poosl</semanticResources>
     <semanticResources>models-basic/Scheduling/Timeout.poosl</semanticResources>
     <semanticResources>models-basic/ShoppingCarts/ShoppingCarts.poosl</semanticResources>
-    <semanticResources>models-basic/SocketExample/socket_example.poosl</semanticResources>
+    <semanticResources>models-cosim/SocketExample/socket_example.poosl</semanticResources>
     <semanticResources>models-basic/VendingMachine/VendingMachine.poosl</semanticResources>
     <semanticResources>models-complex/ATMSwitch/switch.poosl</semanticResources>
     <semanticResources>models-complex/Fisher/fischer.poosl</semanticResources>

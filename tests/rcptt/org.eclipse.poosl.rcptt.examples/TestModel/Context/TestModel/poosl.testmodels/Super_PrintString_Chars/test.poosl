@@ -1,4 +1,4 @@
-import "../../nl.esi.poosl.examples/libraries/json.poosl"
+import "../../poosl.examples/libraries/json.poosl"
 import "libraries/extended_json.poosl"
 
 data class Special
