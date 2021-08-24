@@ -1,7 +1,10 @@
 This document contains all the changes to the xsd's of rotalumis for use with java's xjc class generation tool.
-There is also 1 important change made in rotalumis. Because xjc generates namespace aware classes all xml documents must refer to that used namespace.
-Rotalumis did not reply to messages with a namespace so the namespace uri:poosl has been added to all response xmls.
-In the future it would be better to split the namespace of poosl and rotalumis!
+
+There is also 1 important change made in rotalumis. 
+
+Because xjc generates namespace aware classes, all xml documents must refer to that used namespace.
+Rotalumis did not reply to messages with a namespace, so the namespace uri:poosl has been added to all response xmls.
+In the future, it would be better to split the namespace of poosl and rotalumis!
 
 Rotalumis API request changes to XSD:
 	
