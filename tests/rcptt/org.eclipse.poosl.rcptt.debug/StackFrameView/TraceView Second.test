@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _qySEIOonEeae3IXU5RCKiQ
 Runtime-Version: 2.5.1.M3
-Save-Time: 7/24/21, 12:29 PM
+Save-Time: 8/25/21, 6:34 PM
 Tags: StrackTrace Error
 Testcase-Type: ecl
 
@@ -25,11 +25,15 @@ with [get-view StackTrace] {
     get-label "/system/ProducerConsumer/Producer" | assert-non-empty
     with [get-list] {
         get-property "getItems().length" | equals 3 | verify-true
-        get-property "getItems().String[0]" | equals "1 Array::+(a) <native>" | verify-true
-
-        get-property "getItems().String[1]" | equals "2 Packet::createError() (producer_consumer.poosl:26)" 
+        get-property "getItems().String[0]" 
+        	| equals "1 Array::+(a) <native>" 
+        	| verify-true
+        get-property "getItems().String[1]" 
+        	| equals "2 Packet::createError() (producer_consumer.poosl:26)" 
             | verify-true
-        get-property "getItems().String[2]" | equals "3 Producer::<process method> (producer_consumer.poosl:59)" | verify-true
+        get-property "getItems().String[2]" 
+        	| equals "3 Producer::<process method> (producer_consumer.poosl:59)" 
+        	| verify-true
     }
 }
 with [get-view StackTrace | get-list] {
