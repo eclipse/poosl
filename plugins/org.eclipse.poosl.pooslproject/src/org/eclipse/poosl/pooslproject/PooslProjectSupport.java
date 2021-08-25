@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +17,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 
 public final class PooslProjectSupport {
 
@@ -74,6 +76,7 @@ public final class PooslProjectSupport {
             if (!newProject.isOpen()) {
                 newProject.open(null);
             }
+            newProject.setDefaultCharset(StandardCharsets.ISO_8859_1.name(), new NullProgressMonitor());
         }
 
         return newProject;
