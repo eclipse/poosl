@@ -3,12 +3,25 @@
 
 # Brief introduction to the POOSL project
 
-## How to get the product
+The Parallel Object-Oriented Specification Language (POOSL) is a very expressive language to model 
+concurrent hardware/software systems. POOSL has a small set of powerful primitives and it has an 
+unambiguous formal semantics in terms of mathematical axioms and rules. POOSL models can be 
+simulated with the Rotalumis simulator. 
+
+This project provides an Eclipse-based tool for editing and debugging POOSL models.
+
+## How to install
+
+<a 
+href="https://raw.githubusercontent.com/ObeoNetwork/POOSL/main/docs/User/InstallationManual.pdf"
+>Installation guide</a> helps you to install Eclipse and POOSL features.
+
+
+## How to downlaod Eclipse Features
 
 Update site and help are accessible on <a 
 href="https://obeonetwork.github.io/POOSL" >gh-pages site</a>.
 
-Products are available in github release. __TBD__
 
 ## How to build
 
