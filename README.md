@@ -11,10 +11,8 @@ simulated with the Rotalumis simulator.
 This project provides an Eclipse-based tool for editing and debugging POOSL models.
 
 ## How to install
-
-<a 
-href="https://raw.githubusercontent.com/ObeoNetwork/POOSL/main/docs/User/InstallationManual.pdf"
->Installation guide</a> helps you to install Eclipse and POOSL features.
+[Installation guide](https://raw.githubusercontent.com/ObeoNetwork/POOSL/main/docs/User/InstallationManual.pdf) 
+helps you to install Eclipse and POOSL features.
 
 
 ## How to downlaod Eclipse Features
