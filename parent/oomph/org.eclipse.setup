@@ -206,10 +206,10 @@
 			<repository url="http://eclipse.pitest.org/release" />
 			<requirement name="org.pitest.pitclipse.feature.feature.group" />
  -->
- 			
+ 			<!-- 
  			<repository url="http://findbugs.cs.umd.edu/eclipse" />
  			<requirement name="edu.umd.cs.findbugs.plugin.eclipse.feature.group" />
- 			
+ 			 -->
 			<repository url="https://checkstyle.org/eclipse-cs-update-site" />
 			<requirement name="net.sf.eclipsecs.feature.group" />
 		
