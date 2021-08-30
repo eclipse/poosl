@@ -74,9 +74,11 @@ jobs:
         # TODO: 
         #   Add some release body (based on milestone ??)
         #   Put release body on Release product and update site #
-  
+
+      # Product is for testing purpose only
+      # We can have it when using a special tags
       - name: Release Products 🖱️
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/rc_') }}
         uses: svenstaro/upload-release-action@v2
         with:
           file_glob: true
