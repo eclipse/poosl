@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.poosl.dependencies.feature"
       label="%featureName"
-      version="4.2.2.qualifier"
+      version="0.1.0.qualifier"
       provider-name="%providerName">
 
    <description>
