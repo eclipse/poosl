@@ -1,5 +1,6 @@
 [![gh-actions status](https://github.com/ObeoNetwork/POOSL/workflows/Java%20CI/badge.svg)](https://github.com/ObeoNetwork/POOSL/actions/workflows/maven.yml)
 
+This is a temporary repository to prepare POOSL IDE to go to the Eclipse Foundation. Do not refer to this repository as it will soon disappear.
 
 # Brief introduction to the POOSL project
 
