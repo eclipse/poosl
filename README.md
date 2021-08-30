@@ -15,7 +15,7 @@ This project provides an Eclipse-based tool for editing and debugging POOSL mode
 helps you to install Eclipse and POOSL features.
 
 
-## How to downlaod Eclipse Features
+## How to download Eclipse Features
 
 Update site and help are accessible on <a 
 href="https://obeonetwork.github.io/POOSL" >gh-pages site</a>.
