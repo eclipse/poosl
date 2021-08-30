@@ -459,7 +459,7 @@ for p2-metadata in feature
 				<rcptt.build.target>${product.archive}-[platform].zip</rcptt.build.target>
 				<rcptt.aut.path>${product.build.path}/${rcptt.build.target}</rcptt.aut.path>
 				
-				<!-- Run every RCPTT for the time being -->
+				<!-- Run every RCPTT for the time being: This requires 'no failure' -->
 				<rcptt.failure.ignore>true</rcptt.failure.ignore>
 				<rcptt.exec.timeout>240</rcptt.exec.timeout>
 			</properties>
@@ -511,13 +511,22 @@ for p2-metadata in feature
 								<version>${rcptt.version}</version>
 								<vmArgs>
 									<vmArg>-Xms512m</vmArg>
-									<vmArg>-Xmx1024m</vmArg>
-									<vmArg>-XX:MaxMetaspaceSize=128m</vmArg>
+									<vmArg>-Xmx3072m</vmArg>
 								</vmArgs>
 							</runner>
 		
 							<aut>
 								<explicit>${rcptt.aut.path}</explicit>
+								
+								<injections>
+        							<injection>
+        							<!-- RCPTT requires nebula but fails to inject it -->
+        								<site>http://download.eclipse.org/nebula/releases/2.5.0/</site>
+        								<features>
+        									<feature>org.eclipse.nebula.feature.feature.group</feature>
+        								</features>
+       								</injection>
+  								</injections>
 							</aut>
 							
 							<testOptions>
