@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.extension;
 
 import java.util.ArrayList;
@@ -10,6 +23,12 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
+/**
+ * The ExtensionHelper.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public final class ExtensionHelper {
     private static final String POOSL_DEUBUG_ATTRIBUTE = "class"; //$NON-NLS-1$
 

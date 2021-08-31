@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.descriptions;
 
 import java.util.Collections;
@@ -24,6 +37,12 @@ import org.eclipse.poosl.xtext.helpers.PooslProcessMethodParser;
 import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
+/**
+ * The PooslProcessClassDescription.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public final class PooslProcessClassDescription {
     private static final String STR_INITIAL_METHOD = "initialMethod"; //$NON-NLS-1$
 

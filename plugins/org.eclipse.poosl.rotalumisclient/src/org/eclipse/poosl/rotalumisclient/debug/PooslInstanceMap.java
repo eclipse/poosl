@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.debug;
 
 import java.util.Collections;
@@ -13,6 +26,12 @@ import org.eclipse.poosl.generatedxmlclasses.TInspectPort;
 import org.eclipse.poosl.generatedxmlclasses.TInspectType;
 import org.eclipse.poosl.generatedxmlclasses.TInstanceType;
 
+/**
+ * The PooslInstanceMap.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public class PooslInstanceMap {
     private static final String INSTANCE_PORT_SEPERATOR = "."; //$NON-NLS-1$
 

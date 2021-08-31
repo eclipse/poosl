@@ -1,8 +1,20 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -26,12 +38,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface Poosl extends EObject {
     /**
      * Returns the value of the '<em><b>Imports</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.Import}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Imports</em>' containment reference list isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.Import}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Imports</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getPoosl_Imports()
@@ -42,12 +49,7 @@ public interface Poosl extends EObject {
 
     /**
      * Returns the value of the '<em><b>Data Classes</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.DataClass}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Data Classes</em>' containment reference list isn't clear, there really should be more
-     * of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.DataClass}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Data Classes</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getPoosl_DataClasses()
@@ -58,12 +60,7 @@ public interface Poosl extends EObject {
 
     /**
      * Returns the value of the '<em><b>Process Classes</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.ProcessClass}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Process Classes</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.ProcessClass}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Process Classes</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getPoosl_ProcessClasses()
@@ -74,12 +71,7 @@ public interface Poosl extends EObject {
 
     /**
      * Returns the value of the '<em><b>Cluster Classes</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.ClusterClass}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Cluster Classes</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.ClusterClass}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Cluster Classes</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getPoosl_ClusterClasses()
@@ -90,12 +82,7 @@ public interface Poosl extends EObject {
 
     /**
      * Returns the value of the '<em><b>Import Libs</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.Import}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Import Libs</em>' containment reference list isn't clear, there really should be more
-     * of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.Import}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Import Libs</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getPoosl_ImportLibs()

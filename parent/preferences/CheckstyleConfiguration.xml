@@ -23,7 +23,7 @@
       <property name="checkHtml" value="false"/>
     </module>
     <module name="JavadocType">
-      <property name="severity" value="info"/>
+      <property name="severity" value="error"/>
       <property name="authorFormat" value="[a-z]+"/>
       <property name="allowUnknownTags" value="true"/>
       <metadata name="com.atlassw.tools.eclipse.checkstyle.lastEnabledSeverity" value="error"/>

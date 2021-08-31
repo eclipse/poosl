@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -21,12 +32,7 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Channel extends Annotable {
     /**
-     * Returns the value of the '<em><b>External Port</b></em>' reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>External Port</em>' reference isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>External Port</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>External Port</em>' reference.
      * @see #setExternalPort(Port)
@@ -49,12 +55,7 @@ public interface Channel extends Annotable {
 
     /**
      * Returns the value of the '<em><b>Instance Ports</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.InstancePort}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Instance Ports</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.InstancePort}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Instance Ports</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getChannel_InstancePorts()

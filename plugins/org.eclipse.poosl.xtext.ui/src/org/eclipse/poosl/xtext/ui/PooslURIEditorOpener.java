@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.ui;
 
 import org.apache.log4j.Logger;
@@ -16,6 +29,12 @@ import org.eclipse.ui.ide.IDE;
 import org.eclipse.xtext.ui.editor.LanguageSpecificURIEditorOpener;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 
+/**
+ * The PooslURIEditorOpener.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public class PooslURIEditorOpener extends LanguageSpecificURIEditorOpener {
     private static final Logger LOGGER = Logger.getLogger(PooslURIEditorOpener.class);
 

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.sirius.preferences;
 
 import org.eclipse.jface.preference.PreferencePage;
@@ -18,6 +31,12 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * The EditorPreferencePage.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public class EditorPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
     private static final String TEXT_LABEL_DONT_ASK = "Don't ask which editor to use every time a POOSL file or model is opened.";
 

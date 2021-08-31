@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -22,12 +33,8 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface InstanceParameter extends EObject {
     /**
-     * Returns the value of the '<em><b>Expression</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Expression</em>' containment reference isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Expression</b></em>' containment reference. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @return the value of the '<em>Expression</em>' containment reference.
      * @see #setExpression(Expression)
@@ -49,12 +56,7 @@ public interface InstanceParameter extends EObject {
     void setExpression(Expression value);
 
     /**
-     * Returns the value of the '<em><b>Parameter</b></em>' attribute. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameter</em>' attribute isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Parameter</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Parameter</em>' attribute.
      * @see #setParameter(String)

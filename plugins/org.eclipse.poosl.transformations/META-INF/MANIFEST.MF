@@ -23,3 +23,4 @@ Bundle-Vendor: %providerName
 Import-Package: org.eclipse.jface.text,
  org.eclipse.poosl.generatedxmlclasses
 Automatic-Module-Name: org.eclipse.poosl.transformations
+Bundle-Localization: plugin

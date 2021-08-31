@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.eclipse.poosl.help;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Require-Bundle: org.eclipse.help
 Bundle-Vendor: %providerName
+Bundle-Localization: plugin

@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -24,12 +35,7 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface DataMethod extends Annotable {
     /**
-     * Returns the value of the '<em><b>Native</b></em>' attribute. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Native</em>' attribute isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Native</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Native</em>' attribute.
      * @see #setNative(boolean)
@@ -52,12 +58,7 @@ public interface DataMethod extends Annotable {
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear, there really should be more
-     * of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Parameters</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getDataMethod_Parameters()
@@ -68,12 +69,7 @@ public interface DataMethod extends Annotable {
 
     /**
      * Returns the value of the '<em><b>Local Variables</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Local Variables</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Local Variables</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getDataMethod_LocalVariables()
@@ -83,12 +79,8 @@ public interface DataMethod extends Annotable {
     EList<Declaration> getLocalVariables();
 
     /**
-     * Returns the value of the '<em><b>Body</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Body</em>' containment reference isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Body</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+     * -->
      * 
      * @return the value of the '<em>Body</em>' containment reference.
      * @see #setBody(Expression)
@@ -110,12 +102,7 @@ public interface DataMethod extends Annotable {
     void setBody(Expression value);
 
     /**
-     * Returns the value of the '<em><b>Return Type</b></em>' attribute. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Return Type</em>' attribute isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Return Type</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Return Type</em>' attribute.
      * @see #setReturnType(String)

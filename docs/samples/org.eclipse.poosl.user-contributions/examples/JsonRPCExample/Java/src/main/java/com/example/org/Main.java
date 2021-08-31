@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package com.example.org;
 
 import com.googlecode.jsonrpc4j.JsonRpcServer;
@@ -9,11 +22,11 @@ import java.net.ServerSocket;
 import java.net.UnknownHostException;
 
 /**
- * This class exposes a JSON-RPC 2.0 server via TCP connection. The default
- * port is 9089.
+ * This class exposes a JSON-RPC 2.0 server via TCP connection. The default port is 9089.
  *
- * It will expose all public method in `com.example.org.Service`, that have
- * JSON compatible arguments.
+ * It will expose all public method in `com.example.org.Service`, that have JSON compatible arguments.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  */
 public class Main {
     public static void main(String[] args) {

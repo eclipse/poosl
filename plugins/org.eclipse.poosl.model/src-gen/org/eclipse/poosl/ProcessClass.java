@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -26,12 +37,7 @@ import org.eclipse.emf.common.util.EList;
 public interface ProcessClass extends InstantiableClass {
     /**
      * Returns the value of the '<em><b>Receive Messages</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.MessageSignature}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Receive Messages</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.MessageSignature}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Receive Messages</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessClass_ReceiveMessages()
@@ -42,12 +48,7 @@ public interface ProcessClass extends InstantiableClass {
 
     /**
      * Returns the value of the '<em><b>Send Messages</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.MessageSignature}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Send Messages</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.MessageSignature}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Send Messages</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessClass_SendMessages()
@@ -58,12 +59,7 @@ public interface ProcessClass extends InstantiableClass {
 
     /**
      * Returns the value of the '<em><b>Instance Variables</b></em>' containment reference list. The list contents are
-     * of type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Instance Variables</em>' containment reference list isn't clear, there really should
-     * be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * of type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Instance Variables</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessClass_InstanceVariables()
@@ -74,12 +70,7 @@ public interface ProcessClass extends InstantiableClass {
 
     /**
      * Returns the value of the '<em><b>Methods</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.ProcessMethod}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Methods</em>' containment reference list isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.ProcessMethod}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Methods</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessClass_Methods()
@@ -90,10 +81,6 @@ public interface ProcessClass extends InstantiableClass {
 
     /**
      * Returns the value of the '<em><b>Initial Method Call</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initial Method Call</em>' containment reference isn't clear, there really should be
-     * more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Initial Method Call</em>' containment reference.
@@ -116,12 +103,7 @@ public interface ProcessClass extends InstantiableClass {
     void setInitialMethodCall(ProcessMethodCall value);
 
     /**
-     * Returns the value of the '<em><b>Super Class</b></em>' attribute. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Super Class</em>' attribute isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Super Class</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Super Class</em>' attribute.
      * @see #setSuperClass(String)

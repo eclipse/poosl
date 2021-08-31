@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -24,12 +35,7 @@ import org.eclipse.emf.common.util.EList;
 public interface ProcessMethodCall extends Statement {
     /**
      * Returns the value of the '<em><b>Input Arguments</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.Expression}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Input Arguments</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.Expression}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Input Arguments</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessMethodCall_InputArguments()
@@ -40,12 +46,7 @@ public interface ProcessMethodCall extends Statement {
 
     /**
      * Returns the value of the '<em><b>Output Variables</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.OutputVariable}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Output Variables</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.OutputVariable}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Output Variables</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessMethodCall_OutputVariables()
@@ -55,12 +56,7 @@ public interface ProcessMethodCall extends Statement {
     EList<OutputVariable> getOutputVariables();
 
     /**
-     * Returns the value of the '<em><b>Method</b></em>' attribute. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Method</em>' attribute isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Method</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Method</em>' attribute.
      * @see #setMethod(String)

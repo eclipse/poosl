@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.views;
 
 import org.eclipse.debug.core.DebugException;
@@ -33,7 +46,7 @@ import org.eclipse.ui.PartInitException;
  * {@link PooslPETView} and {@link PooslVariablesView} to show information on a specific thread determined by the views
  * second ID.
  * 
- * @author staalk
+ * @author Koen Staal
  *
  */
 public final class WindowCreater {
@@ -267,7 +280,7 @@ public final class WindowCreater {
     /**
      * Struct to pass window settings
      * 
-     * @author staalk
+     * @author Koen Staal
      *
      */
     private static class WindowShape {

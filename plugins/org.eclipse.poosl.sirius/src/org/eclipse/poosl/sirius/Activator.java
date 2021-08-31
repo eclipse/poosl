@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.sirius;
 
 import java.util.HashSet;
@@ -11,15 +24,17 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  */
 public class Activator extends AbstractUIPlugin {
-    
+
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "org.eclipse.poosl.sirius"; //$NON-NLS-1$
 
     /** Message updater. */
     public static final GraphicalDebugUpdater MESSAGEUPDATER = getUpdaterInstance();
-    
+
     /** Path to Design file. */
     public static final String DESIGN_PATH = PLUGIN_ID + "/description/poosl.odesign"; //$NON-NLS-1$
 

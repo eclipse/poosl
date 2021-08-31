@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.views.debugview;
 
 import java.util.ArrayList;
@@ -25,7 +38,7 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslThread;
  * Creates parent {@link PooslDebugView.TreeItem} of the clusterclasses based on the thread names. The treeitems are
  * created when new launches are added or removed.
  * 
- * @author staalk
+ * @author Koen Staal
  *
  */
 public class PooslDebugContentProvider implements ITreeContentProvider {

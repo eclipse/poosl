@@ -33,3 +33,5 @@ Export-Package: org.eclipse.poosl.xtext,
  org.eclipse.poosl.xtext.services,
  org.eclipse.poosl.xtext.validation
 Automatic-Module-Name: org.eclipse.poosl.xtext
+Bundle-Localization: plugin
+

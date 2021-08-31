@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xpect;
 
 import org.eclipse.poosl.xpect.validation.channel.PooslValidationChannelTest;
@@ -20,7 +33,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * This test suite is ignored by Maven as it ends with 'Xpects' instead of 'Test' or 'Tests'.
  * </p>
  * 
- * @author nperansin
+ * @author <a href="nicolas.peransin@obeo.fr">Nicolas PERANSIN</a>
  */
 @SuiteClasses({
     // Disabled scoping and linking test, no longer uses default xtext reference

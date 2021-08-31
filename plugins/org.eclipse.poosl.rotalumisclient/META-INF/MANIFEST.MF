@@ -58,3 +58,4 @@ Bundle-Activator: org.eclipse.poosl.rotalumisclient.Activator
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.poosl.rotalumisclient
 Bundle-ClassPath: .
+Bundle-Localization: plugin

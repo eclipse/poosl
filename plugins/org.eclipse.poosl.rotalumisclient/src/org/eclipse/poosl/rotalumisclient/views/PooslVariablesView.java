@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.views;
 
 import java.util.logging.Level;
@@ -32,6 +45,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * The PooslVariablesView.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 @SuppressWarnings("restriction")
 // This warning is here because of the reuse of certain internal debugging
 // classes of eclipse
@@ -84,6 +103,7 @@ public class PooslVariablesView extends VariablesView {
 
         private void setUIViewerInput(final Object source) {
             Display.getDefault().asyncExec(new Runnable() {
+                @Override
                 public void run() {
                     setViewerInput(source);
                 }
@@ -92,6 +112,7 @@ public class PooslVariablesView extends VariablesView {
 
         private void clearUIViewerInput() {
             Display.getDefault().asyncExec(new Runnable() {
+                @Override
                 public void run() {
                     clearViewerInput();
                 }

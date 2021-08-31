@@ -14,3 +14,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.poosl.xtext.ide.contentassist.antlr,
  org.eclipse.poosl.xtext.ide.contentassist.antlr.internal
 Automatic-Module-Name: org.eclipse.poosl.xtext.ide
+Bundle-Localization: plugin

@@ -3,9 +3,10 @@
  */
 package org.eclipse.poosl.xtext.ide;
 
-
 /**
  * Use this class to register ide components.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  */
 public class PooslIdeModule extends AbstractPooslIdeModule {
     // bla

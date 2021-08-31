@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2021 TNO/ESI
+  This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License 2.0
+  which accompanies this distribution, and is available at
+  https://www.eclipse.org/legal/epl-2.0/
+  SPDX-License-Identifier: EPL-2.0
+  Contributors:
+     Obeo - initial API and implementation
+-->
 <contexts>
    <context id="help_editor" title="About Poosl Editor">
       <description>The POOSL editor provides you with POOSL specific text editing support. This includes syntax highlighting, hovers, navigation, validation and content assist (&lt;CTRL&gt;+&lt;SPACE&gt;). Press F2 or use the context menu to switch between the textual and graphical editors.</description>

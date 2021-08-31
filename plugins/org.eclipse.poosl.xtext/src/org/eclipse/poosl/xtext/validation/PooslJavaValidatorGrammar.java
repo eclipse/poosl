@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI.
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.validation;
 
 import org.eclipse.emf.ecore.EObject;
@@ -19,6 +32,12 @@ import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 
+/**
+ * The PooslJavaValidatorGrammar.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
     private static final String ANNOTATION_SEPARATOR = ", "; //$NON-NLS-1$
 
@@ -153,8 +172,9 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
         Annotations eAnnotation = getEnumAnnotation(annotation);
 
         if (eAnnotation == null) {
-            warning("Annotation is not recognized. (Supported annotation are " + Annotations.SUPPRESSWARNINGS + ANNOTATION_SEPARATOR + Annotations.INIT + ANNOTATION_SEPARATOR + Annotations.TEST + ANNOTATION_SEPARATOR + Annotations.ERROR + " and "
-                    + Annotations.SKIP + ")", annotation, PooslPackage.Literals.ANNOTATION__NAME, PooslIssueCodes.UNKNOWN_ANNOTATION, WarningType.ANNOTATION);
+            warning("Annotation is not recognized. (Supported annotation are " + Annotations.SUPPRESSWARNINGS + ANNOTATION_SEPARATOR + Annotations.INIT + ANNOTATION_SEPARATOR + Annotations.TEST
+                    + ANNOTATION_SEPARATOR + Annotations.ERROR + " and " + Annotations.SKIP + ")", annotation, PooslPackage.Literals.ANNOTATION__NAME, PooslIssueCodes.UNKNOWN_ANNOTATION,
+                    WarningType.ANNOTATION);
         } else {
             switch (eAnnotation) {
             case SUPPRESSWARNINGS:

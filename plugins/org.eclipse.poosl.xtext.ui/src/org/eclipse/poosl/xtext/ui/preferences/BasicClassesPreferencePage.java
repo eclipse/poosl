@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.ui.preferences;
 
 import java.io.File;
@@ -39,6 +52,12 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
+/**
+ * The BasicClassesPreferencePage.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public class BasicClassesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
     private static final String HELP_ID = "org.eclipse.poosl.help.help_preferences_basic_classes"; //$NON-NLS-1$
 
@@ -84,7 +103,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
      * {@link IPreferenceStore #addPropertyChangeListener(IPropertyChangeListener)}
      */
     IPropertyChangeListener changeListener = new IPropertyChangeListener() {
-    
+
         @Override
         public void propertyChange(PropertyChangeEvent event) {
             if (event.getProperty() == GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH || event.getProperty() == GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS) {
@@ -101,7 +120,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
      * Selection listener when browsing for the custom basic classes file. It has its build in validator and filter.
      */
     SelectionListener basicPathListener = new SelectionListener() {
-    
+
         @Override
         public void widgetSelected(SelectionEvent e) {
             ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(composite.getShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
@@ -133,7 +152,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
                 basicClassesControl.setEnabled(true);
             }
         }
-    
+
         @Override
         public void widgetDefaultSelected(SelectionEvent e) {
             widgetSelected(e);

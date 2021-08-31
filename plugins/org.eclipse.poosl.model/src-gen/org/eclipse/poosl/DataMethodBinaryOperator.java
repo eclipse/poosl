@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -20,11 +31,7 @@ package org.eclipse.poosl;
 public interface DataMethodBinaryOperator extends DataMethod {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute. The literals are from the enumeration
-     * {@link org.eclipse.poosl.OperatorBinary}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.OperatorBinary}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Name</em>' attribute.
      * @see org.eclipse.poosl.OperatorBinary

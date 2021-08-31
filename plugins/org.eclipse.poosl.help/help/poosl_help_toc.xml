@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2021 TNO/ESI
+  This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License 2.0
+  which accompanies this distribution, and is available at
+  https://www.eclipse.org/legal/epl-2.0/
+  SPDX-License-Identifier: EPL-2.0
+  Contributors:
+     Obeo - initial API and implementation
+-->
 <toc label="Poosl">
    <topic href="html/creating_models/creating_models.html" label="Model">
       <topic href="html/creating_models/creating_models.html" label="Create Projects and Models">

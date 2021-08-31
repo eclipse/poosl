@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -26,12 +37,8 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ReceiveStatement extends Statement {
     /**
-     * Returns the value of the '<em><b>Port Descriptor</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Port Descriptor</em>' containment reference isn't clear, there really should be more
-     * of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Port Descriptor</b></em>' containment reference. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @return the value of the '<em>Port Descriptor</em>' containment reference.
      * @see #setPortDescriptor(PortDescriptor)
@@ -53,11 +60,7 @@ public interface ReceiveStatement extends Statement {
     void setPortDescriptor(PortDescriptor value);
 
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -80,12 +83,7 @@ public interface ReceiveStatement extends Statement {
 
     /**
      * Returns the value of the '<em><b>Variables</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.OutputVariable}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Variables</em>' containment reference list isn't clear, there really should be more of
-     * a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.OutputVariable}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Variables</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getReceiveStatement_Variables()
@@ -96,10 +94,6 @@ public interface ReceiveStatement extends Statement {
 
     /**
      * Returns the value of the '<em><b>Reception Condition</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Reception Condition</em>' containment reference isn't clear, there really should be
-     * more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Reception Condition</em>' containment reference.
@@ -123,12 +117,7 @@ public interface ReceiveStatement extends Statement {
 
     /**
      * Returns the value of the '<em><b>Post Communication Expression</b></em>' containment reference. <!--
-     * begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Post Communication Expression</em>' containment reference isn't clear, there really
-     * should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Post Communication Expression</em>' containment reference.
      * @see #setPostCommunicationExpression(Expression)

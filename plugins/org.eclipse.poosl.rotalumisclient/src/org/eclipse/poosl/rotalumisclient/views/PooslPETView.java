@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.views;
 
 import java.math.BigInteger;
@@ -65,6 +78,12 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+/**
+ * The PooslPETView.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 @SuppressWarnings("restriction")
 public class PooslPETView extends ViewPart implements SelectionListener, KeyListener {
     private static final Logger LOGGER = Logger.getLogger(PooslPETView.class.getName());
@@ -565,6 +584,7 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
             PooslDebugTarget target = (PooslDebugTarget) debugContext.getDebugTarget();
             if (target.getPooslSourceMap().containsSourceMapping(stmtHandle)) {
                 target.getPooslSourceMap().getSourceMapping(stmtHandle, new PooslSourceMappingListener(true) {
+                    @Override
                     public void requestedSourceMapping(final PooslSourceMapping mapping) {
                         try {
                             PooslDebugHelper.setDebugInstructionPointer(debugContext.getStackFrame(), mapping, getDebugTarget(), getSite().getWorkbenchWindow());

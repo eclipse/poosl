@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.sirius.dialogs;
 
 import java.util.ArrayList;
@@ -36,6 +49,12 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * The NewMethodDialog.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 abstract class NewMethodDialog extends TitleAreaDialog {
     private static final int MINWIDTH = 60;
 
@@ -445,6 +464,12 @@ abstract class NewMethodDialog extends TitleAreaDialog {
         return new ArrayList<>(inputVariables.values());
     }
 
+    /**
+     * The TextDeclaration.
+     * 
+     * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+     *
+     */
     public class TextDeclaration {
         private static final String COMMA = ","; //$NON-NLS-1$
 

@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -144,12 +155,7 @@ public enum OperatorBinary implements Enumerator {
     AT_MOST(13, "atMost", "<="); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
-     * The '<em><b>Add</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Add</b></em>' literal object isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Add</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #ADD
      * @model name="add" literal="+"
@@ -159,12 +165,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int ADD_VALUE = 0;
 
     /**
-     * The '<em><b>Subtract</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Subtract</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Subtract</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #SUBTRACT
      * @model name="subtract" literal="-"
@@ -174,12 +175,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int SUBTRACT_VALUE = 1;
 
     /**
-     * The '<em><b>Multiply</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Multiply</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Multiply</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #MULTIPLY
      * @model name="multiply" literal="*"
@@ -189,12 +185,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int MULTIPLY_VALUE = 2;
 
     /**
-     * The '<em><b>Divide</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Divide</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Divide</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #DIVIDE
      * @model name="divide" literal="/"
@@ -204,12 +195,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int DIVIDE_VALUE = 3;
 
     /**
-     * The '<em><b>Equal</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Equal</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Equal</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #EQUAL
      * @model name="equal" literal="="
@@ -219,12 +205,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int EQUAL_VALUE = 4;
 
     /**
-     * The '<em><b>Unequal</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Unequal</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Unequal</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #UNEQUAL
      * @model name="unequal" literal="!="
@@ -234,12 +215,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int UNEQUAL_VALUE = 5;
 
     /**
-     * The '<em><b>Identical</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Identical</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Identical</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #IDENTICAL
      * @model name="identical" literal="=="
@@ -249,12 +225,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int IDENTICAL_VALUE = 6;
 
     /**
-     * The '<em><b>Not Identical</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Not Identical</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Not Identical</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #NOT_IDENTICAL
      * @model name="notIdentical" literal="!=="
@@ -264,12 +235,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int NOT_IDENTICAL_VALUE = 7;
 
     /**
-     * The '<em><b>And</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>And</b></em>' literal object isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>And</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #AND
      * @model name="and" literal="&amp;"
@@ -279,12 +245,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int AND_VALUE = 8;
 
     /**
-     * The '<em><b>Or</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Or</b></em>' literal object isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Or</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #OR
      * @model name="or" literal="|"
@@ -294,12 +255,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int OR_VALUE = 9;
 
     /**
-     * The '<em><b>Less Than</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Less Than</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Less Than</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #LESS_THAN
      * @model name="lessThan" literal="&lt;"
@@ -309,12 +265,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int LESS_THAN_VALUE = 10;
 
     /**
-     * The '<em><b>Greater Than</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Greater Than</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Greater Than</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #GREATER_THAN
      * @model name="greaterThan" literal="&gt;"
@@ -324,12 +275,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int GREATER_THAN_VALUE = 11;
 
     /**
-     * The '<em><b>At Least</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>At Least</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>At Least</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #AT_LEAST
      * @model name="atLeast" literal="&gt;="
@@ -339,12 +285,7 @@ public enum OperatorBinary implements Enumerator {
     public static final int AT_LEAST_VALUE = 12;
 
     /**
-     * The '<em><b>At Most</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>At Most</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>At Most</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #AT_MOST
      * @model name="atMost" literal="&lt;="

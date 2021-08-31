@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.custom;
 
 import java.util.ArrayList;
@@ -43,6 +56,12 @@ import org.eclipse.xtext.util.Pair;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+/**
+ * The PooslCacheEntry.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public class PooslCacheEntry {
     private static final String ID_SEPARATOR = "|"; //$NON-NLS-1$
 

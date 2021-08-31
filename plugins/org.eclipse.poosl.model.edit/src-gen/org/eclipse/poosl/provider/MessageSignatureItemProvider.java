@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl.provider;
 
@@ -7,7 +18,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -18,6 +31,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import org.eclipse.poosl.MessageSignature;
 import org.eclipse.poosl.PooslPackage;
 
@@ -56,18 +70,6 @@ public class MessageSignatureItemProvider extends ItemProviderAdapter
     }
 
     /**
-     * This adds a property descriptor for the Port feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    protected void addPortPropertyDescriptor(Object object) {
-        itemPropertyDescriptors
-                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_MessageSignature_port_feature"), //$NON-NLS-1$
-                        getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_port_feature", "_UI_MessageSignature_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        PooslPackage.Literals.MESSAGE_SIGNATURE__PORT, true, false, true, null, null, null));
-    }
-
-    /**
      * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -89,6 +91,18 @@ public class MessageSignatureItemProvider extends ItemProviderAdapter
                 .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_MessageSignature_parameters_feature"), //$NON-NLS-1$
                         getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_parameters_feature", "_UI_MessageSignature_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         PooslPackage.Literals.MESSAGE_SIGNATURE__PARAMETERS, true, false, true, null, null, null));
+    }
+
+    /**
+     * This adds a property descriptor for the Port feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    protected void addPortPropertyDescriptor(Object object) {
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_MessageSignature_port_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_MessageSignature_port_feature", "_UI_MessageSignature_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.MESSAGE_SIGNATURE__PORT, true, false, true, null, null, null));
     }
 
     /**

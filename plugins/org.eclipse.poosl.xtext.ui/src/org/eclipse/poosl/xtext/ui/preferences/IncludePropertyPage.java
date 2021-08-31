@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.ui.preferences;
 
 import java.io.IOException;
@@ -60,6 +73,12 @@ import com.google.common.collect.MapDifference.ValueDifference;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
+/**
+ * The IncludePropertyPage.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public class IncludePropertyPage extends PreferencePage implements IWorkbenchPropertyPage {
     private static final String PAGE_RECOMMENDATION = "For include paths within the workspace, use the \"Add\" button to ensure that change propagation works.\n"
             + "For include paths outside the workspace, use the \"Add External\" button although change propagation will not work.\n" + "See Help (F1) for more information.";

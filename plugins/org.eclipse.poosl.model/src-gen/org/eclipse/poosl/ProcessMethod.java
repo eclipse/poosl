@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -24,11 +35,7 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ProcessMethod extends Annotable {
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -51,12 +58,7 @@ public interface ProcessMethod extends Annotable {
 
     /**
      * Returns the value of the '<em><b>Input Parameters</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Input Parameters</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Input Parameters</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessMethod_InputParameters()
@@ -67,12 +69,7 @@ public interface ProcessMethod extends Annotable {
 
     /**
      * Returns the value of the '<em><b>Output Parameters</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Output Parameters</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Output Parameters</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessMethod_OutputParameters()
@@ -83,12 +80,7 @@ public interface ProcessMethod extends Annotable {
 
     /**
      * Returns the value of the '<em><b>Local Variables</b></em>' containment reference list. The list contents are of
-     * type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Local Variables</em>' containment reference list isn't clear, there really should be
-     * more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * type {@link org.eclipse.poosl.Declaration}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Local Variables</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getProcessMethod_LocalVariables()
@@ -98,12 +90,8 @@ public interface ProcessMethod extends Annotable {
     EList<Declaration> getLocalVariables();
 
     /**
-     * Returns the value of the '<em><b>Body</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Body</em>' containment reference isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Body</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+     * -->
      * 
      * @return the value of the '<em>Body</em>' containment reference.
      * @see #setBody(Statement)

@@ -1,8 +1,20 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -24,11 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface MessageSignature extends EObject {
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
@@ -51,12 +59,7 @@ public interface MessageSignature extends EObject {
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.MessageParameter}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear, there really should be more
-     * of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.MessageParameter}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Parameters</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getMessageSignature_Parameters()
@@ -66,12 +69,8 @@ public interface MessageSignature extends EObject {
     EList<MessageParameter> getParameters();
 
     /**
-     * Returns the value of the '<em><b>Port</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Port</em>' containment reference isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Port</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+     * -->
      * 
      * @return the value of the '<em>Port</em>' containment reference.
      * @see #setPort(PortReference)

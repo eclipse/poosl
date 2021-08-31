@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.runner;
 
 import java.io.File;
@@ -17,6 +30,12 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 
+/**
+ * The IBundleInfo.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public interface IBundleInfo {
 
     class BundleInfo implements IBundleInfo {
@@ -38,22 +57,27 @@ public interface IBundleInfo {
             return info;
         }
 
+        @Override
         public List<URI> find(Context context) {
             return getInfo().find(context);
         }
 
+        @Override
         public URI find(Context context, String fileName) {
             return getInfo().find(context, fileName);
         }
 
+        @Override
         public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
             return getInfo().find(context, path, matcher, fileExtensions);
         }
 
+        @Override
         public URI getRootURI() {
             return getInfo().getLocation();
         }
 
+        @Override
         public String getSymbolicName() {
             return symbolicName;
         }
@@ -75,14 +99,17 @@ public interface IBundleInfo {
             super();
         }
 
+        @Override
         public Collection<String> getAllBundleNames() {
             return delegate.getAllBundleNames();
         }
 
+        @Override
         public IBundleInfo getBundle(Class<?> clazz) {
             return delegate.getBundle(clazz);
         }
 
+        @Override
         public IBundleInfo getBundle(String symbolicName) {
             return delegate.getBundle(symbolicName);
         }
@@ -95,6 +122,7 @@ public interface IBundleInfo {
             this.delegate = delegate;
         }
 
+        @Override
         public IBundleInfo getBundle(URI uri) {
             return delegate.getBundle(uri);
         }
@@ -142,10 +170,12 @@ public interface IBundleInfo {
             return new BundleInfo(name, location);
         }
 
+        @Override
         public Collection<String> getAllBundleNames() {
             return symbolicNameToBundle.keySet();
         }
 
+        @Override
         public IBundleInfo getBundle(Class<?> clazz) {
             URI bundleURI = getBundleURI(clazz);
             IBundleInfo info = locationToBundle.get(bundleURI);
@@ -156,6 +186,7 @@ public interface IBundleInfo {
             return info;
         }
 
+        @Override
         public IBundleInfo getBundle(String symbolicName) {
             return symbolicNameToBundle.get(symbolicName);
         }
@@ -194,6 +225,7 @@ public interface IBundleInfo {
             return Joiner.on("\n").join(symbolicNameToBundle.values()); //$NON-NLS-1$
         }
 
+        @Override
         public IBundleInfo getBundle(URI uri) {
             return createBundleInfo(null, uri);
         }

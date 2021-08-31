@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext;
 
 import javax.inject.Inject;
@@ -10,14 +23,11 @@ import org.eclipse.xtext.xtext.generator.model.project.IXtextProjectConfig;
 /**
  * Generator module with Poosl naming convention.
  * <p>
- * By default, generator uses name based on plugin name.
- * <br>
- * Poosl project forces the name to 'PooslActivator'.
- * </br>
+ * By default, generator uses name based on plugin name. <br>
+ * Poosl project forces the name to 'PooslActivator'. </br>
  * </p>
  * 
- * 
- * @author Obeo
+ * @author <a href="nicolas.peransin@obeo.fr">Nicolas PERANSIN</a>
  */
 @SuppressWarnings("restriction")
 public class PooslGeneratorModule extends DefaultGeneratorModule {
@@ -30,7 +40,6 @@ public class PooslGeneratorModule extends DefaultGeneratorModule {
 
         @Inject
         IXtextProjectConfig projectConfig;
-
 
         @Override
         public TypeReference getEclipsePluginActivator() {

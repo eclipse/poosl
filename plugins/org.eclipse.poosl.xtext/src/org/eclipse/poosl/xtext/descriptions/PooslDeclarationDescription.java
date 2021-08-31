@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI.
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.descriptions;
 
 import java.util.HashMap;
@@ -10,8 +23,14 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.common.base.Predicate;
 
+/**
+ * The PooslDeclarationDescription.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public final class PooslDeclarationDescription {
-    
+
     private static final String STR_CLASS = "Class"; //$NON-NLS-1$
 
     private static final String STR_IS_FROM_DATA_CLASS = "IsFromDataClass"; //$NON-NLS-1$
@@ -21,7 +40,7 @@ public final class PooslDeclarationDescription {
     private static final String STR_IS_PARAMETER = "IsParameter"; //$NON-NLS-1$
 
     private PooslDeclarationDescription() {
-        throw new IllegalStateException("Utility class"); 
+        throw new IllegalStateException("Utility class");
     }
 
     // --- Set -------

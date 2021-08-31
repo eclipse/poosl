@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.ui.outline;
 
 import org.eclipse.emf.edit.EMFEditPlugin;
@@ -21,6 +34,12 @@ import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 
+/**
+ * The PooslOutlineTreeProvider.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 // CHECKSTYLE:OFF Naming inherited from XText generation
 public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
     private static final String LABEL_DATA_CLASSES = "Data classes"; //$NON-NLS-1$
@@ -198,6 +217,7 @@ public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
         return true;
     }
 
+    @Override
     protected Image _image(Object modelElement) {
         // Do not rely on the default implementation, as this accesses
         // org.eclipse.poosl.model.edit in a way that causes memory leaks

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.validation;
 
 import java.text.MessageFormat;
@@ -61,6 +74,12 @@ import org.eclipse.xtext.validation.CheckType;
 
 import com.google.common.collect.Iterables;
 
+/**
+ * The PooslJavaValidatorMisc.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 public class PooslJavaValidatorMisc extends PooslJavaValidatorUnusedElements {
     private static final String INVALID_IMPORTLIB_LOCATION_INCL_INFO = " The Poosl include paths can be changed using Project -> Properties -> Poosl.";
 

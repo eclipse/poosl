@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.views.debugview;
 
 import java.util.Arrays;
@@ -15,7 +28,7 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
  * The {@link PooslDebugTreeItem} are items shown in the tree of the {@link PooslDebugView}. The tree items represent
  * either a cluster or a process of the Poosl model.
  * 
- * @author staalk
+ * @author Koen Staal
  *
  */
 public class PooslDebugTreeItem extends PooslDebugElement implements IThread {

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.debug;
 
 import java.math.BigInteger;
@@ -14,6 +27,12 @@ import org.eclipse.debug.internal.ui.viewers.model.provisional.IPresentationCont
 import org.eclipse.poosl.generatedxmlclasses.TInspectType;
 import org.eclipse.poosl.generatedxmlclasses.TVariable;
 
+/**
+ * The PooslVariable.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 @SuppressWarnings("restriction")
 public class PooslVariable extends PooslDebugElement implements IVariable {
     private static final Logger LOGGER = Logger.getLogger(PooslVariable.class.getName());

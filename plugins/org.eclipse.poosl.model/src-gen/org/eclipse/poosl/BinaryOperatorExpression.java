@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -21,12 +32,8 @@ package org.eclipse.poosl;
  */
 public interface BinaryOperatorExpression extends Expression {
     /**
-     * Returns the value of the '<em><b>Left Operand</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Left Operand</em>' containment reference isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Left Operand</b></em>' containment reference. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @return the value of the '<em>Left Operand</em>' containment reference.
      * @see #setLeftOperand(Expression)
@@ -49,11 +56,7 @@ public interface BinaryOperatorExpression extends Expression {
 
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute. The literals are from the enumeration
-     * {@link org.eclipse.poosl.OperatorBinary}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.OperatorBinary}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Name</em>' attribute.
      * @see org.eclipse.poosl.OperatorBinary
@@ -77,12 +80,8 @@ public interface BinaryOperatorExpression extends Expression {
     void setName(OperatorBinary value);
 
     /**
-     * Returns the value of the '<em><b>Right Operand</b></em>' containment reference. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Right Operand</em>' containment reference isn't clear, there really should be more of
-     * a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * Returns the value of the '<em><b>Right Operand</b></em>' containment reference. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @return the value of the '<em>Right Operand</em>' containment reference.
      * @see #setRightOperand(Expression)

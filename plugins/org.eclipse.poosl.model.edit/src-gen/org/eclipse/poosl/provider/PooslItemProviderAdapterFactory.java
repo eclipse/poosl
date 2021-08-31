@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl.provider;
 
@@ -8,6 +19,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -19,6 +31,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+
 import org.eclipse.poosl.util.PooslAdapterFactory;
 
 /**
@@ -1303,29 +1316,6 @@ public class PooslItemProviderAdapterFactory extends PooslAdapterFactory impleme
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link org.eclipse.poosl.SelStatement} instances. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    protected SelStatementItemProvider selStatementItemProvider;
-
-    /**
-     * This creates an adapter for a {@link org.eclipse.poosl.SelStatement}. <!-- begin-user-doc --> <!-- end-user-doc
-     * -->
-     * 
-     * @generated
-     */
-    @Override
-    public Adapter createSelStatementAdapter() {
-        if (selStatementItemProvider == null) {
-            selStatementItemProvider = new SelStatementItemProvider(this);
-        }
-
-        return selStatementItemProvider;
-    }
-
-    /**
      * This keeps track of the one adapter used for all {@link org.eclipse.poosl.SendStatement} instances. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -1346,6 +1336,29 @@ public class PooslItemProviderAdapterFactory extends PooslAdapterFactory impleme
         }
 
         return sendStatementItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link org.eclipse.poosl.SelStatement} instances. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    protected SelStatementItemProvider selStatementItemProvider;
+
+    /**
+     * This creates an adapter for a {@link org.eclipse.poosl.SelStatement}. <!-- begin-user-doc --> <!-- end-user-doc
+     * -->
+     * 
+     * @generated
+     */
+    @Override
+    public Adapter createSelStatementAdapter() {
+        if (selStatementItemProvider == null) {
+            selStatementItemProvider = new SelStatementItemProvider(this);
+        }
+
+        return selStatementItemProvider;
     }
 
     /**

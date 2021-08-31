@@ -33,3 +33,4 @@ Export-Package: org.eclipse.poosl.xtext.ui.contentassist,
  org.eclipse.poosl.xtext.ui
 Bundle-Activator: org.eclipse.poosl.xtext.ui.internal.PooslActivator
 Automatic-Module-Name: org.eclipse.poosl.xtext.ui
+Bundle-Localization: plugin

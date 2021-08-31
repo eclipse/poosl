@@ -6,6 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Export-Package: org.eclipse.poosl.generatedxmlclasses
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: %providerName
+Bundle-Localization: plugin
 Automatic-Module-Name: org.eclipse.poosl.generatedxmlclasses
 Require-Bundle: jakarta.xml.bind-api;bundle-version="2.3.2",
  org.eclipse.persistence.moxy;bundle-version="2.7.7",

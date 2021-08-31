@@ -48,3 +48,4 @@ Import-Package: org.apache.commons.lang,
  org.eclipse.debug.ui.contexts
 Automatic-Module-Name: org.eclipse.poosl.sirius
 Bundle-Vendor: %providerName
+Bundle-Localization: plugin

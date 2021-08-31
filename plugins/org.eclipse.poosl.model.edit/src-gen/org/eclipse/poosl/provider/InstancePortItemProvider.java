@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl.provider;
 
@@ -7,7 +18,10 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -15,6 +29,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+
+import org.eclipse.poosl.PooslPackage;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.poosl.InstancePort} object. <!-- begin-user-doc --> <!--
@@ -52,44 +68,24 @@ public class InstancePortItemProvider extends ItemProviderAdapter
     /**
      * This adds a property descriptor for the Instance feature. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated NOT
+     * @generated
      */
     protected void addInstancePropertyDescriptor(Object object) {
-        // itemPropertyDescriptors.add
-        // (createItemPropertyDescriptor
-        // (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        // getResourceLocator(),
-        // getString("_UI_InstancePort_instance_feature"),
-        // getString("_UI_PropertyDescriptor_description", "_UI_InstancePort_instance_feature",
-        // "_UI_InstancePort_type"),
-        // PooslPackage.Literals.INSTANCE_PORT__INSTANCE,
-        // true,
-        // false,
-        // true,
-        // null,
-        // null,
-        // null));
+        itemPropertyDescriptors
+                .add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_InstancePort_instance_feature"), //$NON-NLS-1$
+                        getString("_UI_PropertyDescriptor_description", "_UI_InstancePort_instance_feature", "_UI_InstancePort_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        PooslPackage.Literals.INSTANCE_PORT__INSTANCE, true, false, true, null, null, null));
     }
 
     /**
      * This adds a property descriptor for the Port feature. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated NOT
+     * @generated
      */
     protected void addPortPropertyDescriptor(Object object) {
-        // itemPropertyDescriptors.add
-        // (createItemPropertyDescriptor
-        // (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        // getResourceLocator(),
-        // getString("_UI_InstancePort_port_feature"),
-        // getString("_UI_PropertyDescriptor_description", "_UI_InstancePort_port_feature", "_UI_InstancePort_type"),
-        // PooslPackage.Literals.INSTANCE_PORT__PORT,
-        // true,
-        // false,
-        // true,
-        // null,
-        // null,
-        // null));
+        itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(), getString("_UI_InstancePort_port_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", "_UI_InstancePort_port_feature", "_UI_InstancePort_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                PooslPackage.Literals.INSTANCE_PORT__PORT, true, false, true, null, null, null));
     }
 
     /**

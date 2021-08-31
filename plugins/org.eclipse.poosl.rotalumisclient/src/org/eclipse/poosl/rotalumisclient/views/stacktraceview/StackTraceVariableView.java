@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.views.stacktraceview;
 
 import org.eclipse.debug.core.DebugEvent;
@@ -13,6 +26,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * The StackTraceVariableView.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 @SuppressWarnings("restriction")
 public class StackTraceVariableView extends VariablesView {
 
@@ -25,6 +44,7 @@ public class StackTraceVariableView extends VariablesView {
                     if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.STACKFRAME_INSPECT) {
                         final Object data = debugEvent.getData();
                         Display.getDefault().asyncExec(new Runnable() {
+                            @Override
                             public void run() {
                                 viewer.setInput(data);
                             }

@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -36,12 +47,7 @@ public enum OperatorUnary implements Enumerator {
     NOT(1, "not", "!"); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
-     * The '<em><b>Minus</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Minus</b></em>' literal object isn't clear, there really should be more of a
-     * description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Minus</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #MINUS
      * @model name="minus" literal="-"
@@ -51,12 +57,7 @@ public enum OperatorUnary implements Enumerator {
     public static final int MINUS_VALUE = 0;
 
     /**
-     * The '<em><b>Not</b></em>' literal value. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>Not</b></em>' literal object isn't clear, there really should be more of a description
-     * here...
-     * </p>
-     * <!-- end-user-doc -->
+     * The '<em><b>Not</b></em>' literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see #NOT
      * @model name="not" literal="!"

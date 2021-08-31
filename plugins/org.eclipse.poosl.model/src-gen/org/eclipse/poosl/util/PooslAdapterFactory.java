@@ -1,80 +1,26 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.poosl.AbortStatement;
-import org.eclipse.poosl.Annotable;
-import org.eclipse.poosl.Annotation;
-import org.eclipse.poosl.AssignmentExpression;
-import org.eclipse.poosl.BinaryOperatorExpression;
-import org.eclipse.poosl.BooleanConstant;
-import org.eclipse.poosl.Channel;
-import org.eclipse.poosl.CharacterConstant;
-import org.eclipse.poosl.ClusterClass;
-import org.eclipse.poosl.CurrentTimeExpression;
-import org.eclipse.poosl.DataClass;
-import org.eclipse.poosl.DataMethod;
-import org.eclipse.poosl.DataMethodBinaryOperator;
-import org.eclipse.poosl.DataMethodCallExpression;
-import org.eclipse.poosl.DataMethodNamed;
-import org.eclipse.poosl.DataMethodUnaryOperator;
-import org.eclipse.poosl.Declaration;
-import org.eclipse.poosl.DelayStatement;
-import org.eclipse.poosl.EnvironmentConstant;
-import org.eclipse.poosl.Expression;
-import org.eclipse.poosl.ExpressionSequence;
-import org.eclipse.poosl.ExpressionSequenceRoundBracket;
-import org.eclipse.poosl.ExpressionStatement;
-import org.eclipse.poosl.FloatConstant;
-import org.eclipse.poosl.GuardedStatement;
-import org.eclipse.poosl.IfExpression;
-import org.eclipse.poosl.IfStatement;
-import org.eclipse.poosl.Import;
-import org.eclipse.poosl.Instance;
-import org.eclipse.poosl.InstanceParameter;
-import org.eclipse.poosl.InstancePort;
-import org.eclipse.poosl.InstantiableClass;
-import org.eclipse.poosl.IntegerConstant;
-import org.eclipse.poosl.InterruptStatement;
-import org.eclipse.poosl.MessageParameter;
-import org.eclipse.poosl.MessageSignature;
-import org.eclipse.poosl.NewExpression;
-import org.eclipse.poosl.NilConstant;
-import org.eclipse.poosl.OutputVariable;
-import org.eclipse.poosl.ParStatement;
-import org.eclipse.poosl.Poosl;
-import org.eclipse.poosl.PooslPackage;
-import org.eclipse.poosl.Port;
-import org.eclipse.poosl.PortDescriptor;
-import org.eclipse.poosl.PortExpression;
-import org.eclipse.poosl.PortReference;
-import org.eclipse.poosl.ProcessClass;
-import org.eclipse.poosl.ProcessMethod;
-import org.eclipse.poosl.ProcessMethodCall;
-import org.eclipse.poosl.RealConstant;
-import org.eclipse.poosl.ReceiveStatement;
-import org.eclipse.poosl.ReturnExpression;
-import org.eclipse.poosl.SelStatement;
-import org.eclipse.poosl.SelfExpression;
-import org.eclipse.poosl.SendStatement;
-import org.eclipse.poosl.SkipStatement;
-import org.eclipse.poosl.Statement;
-import org.eclipse.poosl.StatementSequence;
-import org.eclipse.poosl.StatementSequenceRoundBracket;
-import org.eclipse.poosl.StringConstant;
-import org.eclipse.poosl.SwitchExpression;
-import org.eclipse.poosl.SwitchExpressionCase;
-import org.eclipse.poosl.SwitchStatement;
-import org.eclipse.poosl.SwitchStatementCase;
-import org.eclipse.poosl.UnaryOperatorExpression;
-import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.VariableExpression;
-import org.eclipse.poosl.WhileExpression;
-import org.eclipse.poosl.WhileStatement;
+
+import org.eclipse.poosl.*;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>

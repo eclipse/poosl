@@ -1,4 +1,15 @@
 /**
+ * Copyright (c) 2021 TNO/ESI
+ *  This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License 2.0
+ *  which accompanies this distribution, and is available at
+ *  https://www.eclipse.org/legal/epl-2.0/
+ * 
+ *  SPDX-License-Identifier: EPL-2.0
+ * 
+ *  Contributors:
+ *     TNO/ESI - initial API and implementation
+ *     Obeo - refactoring
  */
 package org.eclipse.poosl;
 
@@ -22,12 +33,7 @@ import org.eclipse.emf.common.util.EList;
 public interface ClusterClass extends InstantiableClass {
     /**
      * Returns the value of the '<em><b>Channels</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.Channel}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Channels</em>' containment reference list isn't clear, there really should be more of
-     * a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.Channel}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Channels</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getClusterClass_Channels()
@@ -38,12 +44,7 @@ public interface ClusterClass extends InstantiableClass {
 
     /**
      * Returns the value of the '<em><b>Instances</b></em>' containment reference list. The list contents are of type
-     * {@link org.eclipse.poosl.Instance}. <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Instances</em>' containment reference list isn't clear, there really should be more of
-     * a description here...
-     * </p>
-     * <!-- end-user-doc -->
+     * {@link org.eclipse.poosl.Instance}. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @return the value of the '<em>Instances</em>' containment reference list.
      * @see org.eclipse.poosl.PooslPackage#getClusterClass_Instances()

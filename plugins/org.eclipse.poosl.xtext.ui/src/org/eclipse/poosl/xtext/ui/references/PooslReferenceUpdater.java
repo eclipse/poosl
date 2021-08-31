@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
 package org.eclipse.poosl.xtext.ui.references;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -46,6 +59,12 @@ import org.eclipse.xtext.ui.refactoring.impl.DefaultReferenceUpdater;
 import org.eclipse.xtext.ui.refactoring.impl.StatusWrapper;
 import org.eclipse.xtext.util.ITextRegion;
 
+/**
+ * The PooslReferenceUpdater.
+ * 
+ * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ *
+ */
 @SuppressWarnings("restriction")
 public class PooslReferenceUpdater extends DefaultReferenceUpdater {
 
@@ -78,7 +97,7 @@ public class PooslReferenceUpdater extends DefaultReferenceUpdater {
 
             } else if (referringElement instanceof PortReference) {
                 String newReferenceText = ((Port) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getPortNames((PortReference) referringElement, EcoreUtil2.getURI(newTargetElement));
+                Iterable<String> usedNames = PooslReferenceHelper.getPortNames(referringElement, EcoreUtil2.getURI(newTargetElement));
                 createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.PORT_REFERENCE__PORT, newReferenceText, usedNames);
 
                 // --- Class References -------
