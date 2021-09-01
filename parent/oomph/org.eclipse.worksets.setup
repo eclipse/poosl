@@ -17,6 +17,12 @@
       <operand
           xsi:type="predicates:LocationPredicate"
           pattern=".*\/plugins\/.*"/>
+      <operand
+          xsi:type="predicates:NotPredicate">
+        <operand
+            xsi:type="predicates:NamePredicate"
+            pattern="fr\.obeo\.poosl.*"/>
+      </operand>
     </predicate>
   </workingSet>
   <workingSet
@@ -30,6 +36,12 @@
       <operand
           xsi:type="predicates:LocationPredicate"
           pattern=".*\/tests\/.*"/>
+      <operand
+          xsi:type="predicates:NotPredicate">
+        <operand
+            xsi:type="predicates:NamePredicate"
+            pattern="fr\.obeo\.poosl.*"/>
+      </operand>
     </predicate>
   </workingSet>
   <workingSet
@@ -51,6 +63,31 @@
         <operand
             xsi:type="predicates:LocationPredicate"
             pattern=".*\/docs"/>
+      </operand>
+      <operand
+          xsi:type="predicates:NotPredicate">
+        <operand
+            xsi:type="predicates:NamePredicate"
+            pattern="fr\.obeo\.poosl.*"/>
+      </operand>
+    </predicate>
+  </workingSet>
+  <workingSet
+      name="Poosl tooling"
+      id="org.eclipse.poosl-test">
+    <predicate
+        xsi:type="predicates:AndPredicate">
+      <operand
+          xsi:type="predicates:NamePredicate"
+          pattern=".*\.poosl.*"/>
+      <operand
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*\/tooling\/.*"/>
+      <operand
+          xsi:type="predicates:NotPredicate">
+        <operand
+            xsi:type="predicates:NamePredicate"
+            pattern="fr\.obeo\.poosl.*"/>
       </operand>
     </predicate>
   </workingSet>
