@@ -125,7 +125,7 @@ location ELK "https://download.eclipse.org/elk/updates/releases/0.7.0/" {
 
 
 // Feature to run simulations.
-location rotalumis "http://www.es.ele.tue.nl/rotalumis/repository/release/" { // ou integration ?
+location rotalumis "http://www.es.ele.tue.nl/rotalumis/repository/integration/" {
 	nl.tue.rotalumis.sdk.feature.group
 }
 
