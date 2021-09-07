@@ -6,7 +6,10 @@
          <meta.schema plugin="org.eclipse.poosl.rotalumisclient" id="org.eclipse.poosl.rotalumisclient.debuginformer" name="DebugInformer"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point is used to hook on debugging session.
+It allows to plug in external tools that will be triggered on debug events.
+
+
       </documentation>
    </annotation>
 
@@ -98,5 +101,23 @@
       </documentation>
    </annotation>
 
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         Copyright (c) 2021 TNO/ESI
+ This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License 2.0
+ which accompanies this distribution, and is available at
+ https://www.eclipse.org/legal/epl-2.0/
+
+ SPDX-License-Identifier: EPL-2.0
+
+ Contributors:
+    TNO/ESI - initial API and implementation
+    Obeo - refactoring
+      </documentation>
+   </annotation>
 
 </schema>
