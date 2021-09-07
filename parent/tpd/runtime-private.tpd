@@ -1,0 +1,16 @@
+target "Poosl runtime: private part" 
+
+//
+// This target platform list dependencies to build project components.
+//
+
+with requirements
+// do not include source for this target
+// it should be used only by compiler
+
+// Feature to run simulations.
+location rotalumis "http://www.es.ele.tue.nl/rotalumis/repository/integration/" {
+	// MacOS exe in 'release' is broken.
+	nl.tue.rotalumis.sdk.feature.group
+}
+
