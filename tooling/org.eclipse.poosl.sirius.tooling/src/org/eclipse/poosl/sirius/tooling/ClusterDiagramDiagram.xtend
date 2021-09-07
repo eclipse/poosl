@@ -22,6 +22,7 @@ import org.eclipse.sirius.diagram.ResizeKind
 import org.eclipse.sirius.diagram.description.CompositeLayout
 import org.eclipse.sirius.diagram.description.ContainerMapping
 import org.eclipse.sirius.diagram.description.DiagramDescription
+import org.eclipse.sirius.diagram.description.DiagramElementMapping
 import org.eclipse.sirius.diagram.description.EdgeMapping
 import org.eclipse.sirius.diagram.description.Layer
 import org.eclipse.sirius.diagram.description.LayoutDirection
@@ -53,14 +54,12 @@ import org.eclipse.sirius.viewpoint.description.tool.ElementDeleteVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementSelectVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementViewVariable
-import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaAction
-import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaActionParameter
-import org.eclipse.sirius.viewpoint.description.tool.InitEdgeCreationOperation
-import org.eclipse.sirius.viewpoint.description.tool.InitialOperation
 import org.eclipse.sirius.viewpoint.description.tool.NameVariable
 import org.eclipse.sirius.viewpoint.description.tool.OperationAction
 import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
 import org.eclipse.sirius.viewpoint.description.tool.ToolDescription
+
+import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
 
 class ClusterDiagramDiagram extends PooslDiagram {
 
@@ -72,7 +71,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 		super.initContent(it)
 
 		name = "Cluster diagram" // force name as label
-		titleExpression = "[thisEObject.name/]"
+		titleExpression = "aql:self.name"
 
 		enablePopupBars = true
 			
@@ -102,7 +101,9 @@ class ClusterDiagramDiagram extends PooslDiagram {
 	
 	override initContent(Layer it) {
 		containerMappings += ContainerMapping.createAs(Ns.node, "ClusterClass") [
-			semanticCandidatesExpression = "service:getCluster()"
+			
+			semanticCandidatesExpression = '''self.getCleanedCacheSelf()'''.trimAql
+			// Why is Xtext cache cleared on refresh ?
 			synchronizationLock = true
 			domainClass = ClusterClass
 			pasteDescriptions += PasteDescription.ref(ReusedDiagramDiagram, Ns.operation, "Copy Instance")
@@ -112,17 +113,18 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			// Customization should be used.
 			val defaultClusterStyle = [FlatContainerStyleDescription it | 
 				labelSize = 8 // Built-in value; probably too small.
-				labelExpression = "[thisEObject.getDiagramName()/]"
+				labelExpression = "aql:self.getDiagramName()"
 				labelFormat += FontFormat.BOLD_LITERAL				
 				labelAlignment = LabelAlignment.LEFT
 				roundedCorner = true
 				widthComputationExpression = "20"
 				heightComputationExpression = "20"
 				foregroundColor = SystemColor.extraRef("color:white")
-				labelBorderStyle = LabelBorderStyleDescription.extraRef("labelBorder:labelBorderStyleWithBeveledCorner")
+				labelBorderStyle = LabelBorderStyleDescription
+						.extraRef("labelBorder:labelBorderStyleWithBeveledCorner")
 			]
 			
-			styleIf(FlatContainerStyleDescription, "service:isClusterDiagram") [
+			style = FlatContainerStyleDescription.createStyle[
 				defaultClusterStyle.apply(it)
 				iconPath = "/org.eclipse.poosl.sirius/icons/cluster_icon.png"				
 			]
@@ -133,13 +135,13 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			]
 			
 			borderedNodeMappings += NodeMapping.createAs(Ns.node, "ExternalPort") [
-				semanticCandidatesExpression = "[thisEObject.ports/]"
+				semanticCandidatesExpression = "aql:self.ports"
 				synchronizationLock = true
 				domainClass = Port
 				deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Extern Port")
 				style = SquareDescription.createStyle [
 					borderSizeComputationExpression = "0"
-					labelExpression = null // XXX default value is a real issue here
+					// labelExpression = null // XXX default value is a real issue here
 					showIcon = false
 					sizeComputationExpression = "4"
 					labelPosition = LabelPosition.NODE_LITERAL
@@ -150,28 +152,30 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				]
 			]
 			subNodeMappings += NodeMapping.createAs(Ns.node, "ChannelCluster") [
-				semanticCandidatesExpression = "[thisEObject.getChannels()/]"
-				synchronizationLock = true
 				domainClass = Channel
+				semanticCandidatesExpression = "feature:channels"
+				preconditionExpression = "aql:not self.isSimpleChannel()"
+				synchronizationLock = true
 				style = SquareDescription.createStyle [
+					// No resizable by default
 					borderSizeComputationExpression = "0"
 					showIcon = false
-					labelExpression = ""
+					labelExpression = "" // no name for channel
 					sizeComputationExpression = "1"
 					width = 1
 					height = 1
 					color = SystemColor.extraRef("color:black")
 				]
 			]
-			subNodeMappings += NodeMapping.createAs(Ns.node, "InstanceCluster") [
+			subNodeMappings += NodeMapping.createAs(Ns.node, "ClusterInstance") [
 				semanticCandidatesExpression = "feature:instances"
 				synchronizationLock = true
 				domainClass = Instance
 				navigationDescriptions += DiagramNavigationDescription.localRef(Ns.operation, "NavigateInstance")
 				deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete instance")
 
-				val defaultStyle = [SquareDescription it | 
-					labelExpression = "[thisEObject.getInstanceName()/]"
+				val defaultInstanceStyle = [SquareDescription it | 
+					labelExpression = "aql:self.getInstanceName()"
 					sizeComputationExpression = "8"
 					labelPosition = LabelPosition.NODE_LITERAL
 					resizeKind = ResizeKind.NSEW_LITERAL
@@ -181,26 +185,25 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				]
 
 				style = SquareDescription.createStyle [
-					defaultStyle.apply(it)
+					defaultInstanceStyle.apply(it)
 					iconPath = "/org.eclipse.poosl.sirius/icons/process_icon.png"
 				]
 				
-				// TODO
-				// Only iconPath is different, change to customProperty
+				// XXX improve:Only iconPath is different, change to customProperty
 				styleIf(SquareDescription, "service:isClusterClass") [
-					defaultStyle.apply(it)
+					defaultInstanceStyle.apply(it)
 					iconPath = "/org.eclipse.poosl.sirius/icons/cluster_icon.png"
 				]
 				
-				borderedNodeMappings += NodeMapping.createAs(Ns.node, "PortsCluster") [
-					semanticCandidatesExpression = "[thisEObject.getClassDefinitionPorts()/]"
+				borderedNodeMappings += NodeMapping.createAs(Ns.node, "InstancePort") [
+					semanticCandidatesExpression = "aql:self.getDeclaredInstancePorts()"
 					synchronizationLock = true
 					domainClass = "EObject" // InstancePort + Port
 					deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Port From Instance")
 					style = SquareDescription.createStyle [
 						sizeComputationExpression="3" // default value; probably to large
 						showIcon = false
-						labelExpression = "[thisEObject.getPortName()/]"
+						labelExpression = "aql:self.getPortName()"
 						labelPosition = LabelPosition.NODE_LITERAL
 						resizeKind = ResizeKind.NSEW_LITERAL
 						width = 4
@@ -210,55 +213,78 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				]
 			]
 		]
+		// SimpleChannel, ChannelEnd
 		
-		edgeMappings += EdgeMapping.createAs(Ns.edge, "ChannelToPortCluster") [
-			synchronizationLock = true
-			targetFinderExpression = "[thisEObject.instancePorts/]"
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Connection")
-			sourceMapping += NodeMapping.localRef(Ns.node, "ChannelCluster")
-			targetMapping += NodeMapping.localRef(Ns.node, "PortsCluster")
-			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
-			style = []
-		]
-		edgeMappings += EdgeMapping.createAs(Ns.edge, "ChannelToExternalCluster") [
-			synchronizationLock = true
-			targetFinderExpression = "[externalPort/]"
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Connection")
-			sourceMapping += NodeMapping.localRef(Ns.node, "ChannelCluster")
-			targetMapping += NodeMapping.localRef(Ns.node, "ExternalPort")
-			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
-			style = []
-		]
-		edgeMappings += EdgeMapping.createAs(Ns.edge, "PortToPortCluster") [
-			targetFinderExpression = "[thisEObject.getSingleConnectedPort()/]"
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Connection")
-			sourceMapping += NodeMapping.localRef(Ns.node, "PortsCluster")
-			targetMapping += NodeMapping.localRef(Ns.node, "ExternalPort")
-			targetMapping += NodeMapping.localRef(Ns.node, "PortsCluster")
-			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
-			style = []
-		]
-		edgeMappings += EdgeMapping.createAs(Ns.edge, "FakeExtPortToChannelCluster") [
-			synchronizationLock = true
-			targetFinderExpression = "[thisEObject.getCreationChannel()/]"
+		// simple channels
+		edgeMappings += EdgeMapping.createAs(Ns.edge, "SimpleChannel") [
+			useDomainElement = true
+			domainClass = Channel
+			semanticCandidatesExpression = '''self.channels->select(it | it.isSimpleChannel())'''.trimAql
+			
+			// same port may appears on several instances,
+			// precondition drives  { port.view, target.view } contraint
+			preconditionExpression = '''
+				self.isInstanceSimpleConnected(sourceView, targetView)
+				'''.trimAql // view.target
+			
+			// Delete: delete channel
+			deletionDescription = DeleteElementDescription.ref(ReusedDiagramDiagram, Ns.del, "Delete Poosl Element")
+			
+			sourceMapping += NodeMapping.localRef(Ns.node, "InstancePort")
 			sourceMapping += NodeMapping.localRef(Ns.node, "ExternalPort")
-			targetMapping += NodeMapping.localRef(Ns.node, "ChannelCluster")
+			sourceFinderExpression = "aql:self.getSimpleChannelEnd(false)"
+
+			targetMapping += NodeMapping.localRef(Ns.node, "InstancePort")
+			targetFinderExpression = "aql:self.getSimpleChannelEnd(true)"
+
+			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
 			style = []
 		]
-		edgeMappings += EdgeMapping.createAs(Ns.edge, "FakeExtPortToPortCluster") [
+
+		edgeMappings += EdgeMapping.createAs(Ns.edge, "ChannelToEnd") [
 			synchronizationLock = true
-			targetFinderExpression = "[thisEObject.getCreationChannel()/]"
-			sourceMapping += NodeMapping.localRef(Ns.node, "ExternalPort")
-			targetMapping += NodeMapping.localRef(Ns.node, "PortsCluster")
+	
+			// TODO test
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Connection End")
+			
+			sourceMapping += NodeMapping.localRef(Ns.node, "ChannelCluster")
+			// sourceMapping += EdgeMapping.localRef(Ns.edge, "SimpleChannel") // This is a trick for creation
+			
+			targetMapping += NodeMapping.localRef(Ns.node, "InstancePort")
+			targetMapping += NodeMapping.localRef(Ns.node, "ExternalPort")
+			targetFinderExpression = '''self.getChannelEnds()'''.trimAql
+			// same port may appears on several instances,
+			// precondition drives  { port.view, target.view } contraint
+			preconditionExpression = '''
+				source.isInstanceConnected(targetView)
+				'''.trimAql // view.target
+
+			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
 			style = []
 		]
-		edgeMappings += EdgeMapping.createAs(Ns.edge, "FakeInstancePortToChannelCluster") [
-			synchronizationLock = true
-			targetFinderExpression = "[thisEObject.getCreationChannel()/]"
-			sourceMapping += NodeMapping.localRef(Ns.node, "PortsCluster")
-			targetMapping += NodeMapping.localRef(Ns.node, "ChannelCluster")
-			style = []
+		
+		// A trick to transform a SimpleChannel into a ChannelCluster when 
+		val virtualEdgeFactory = [ String id, DiagramElementMapping src, DiagramElementMapping tgt |
+			edgeMappings += EdgeMapping.createAs(Ns.edge, id) [
+				synchronizationLock = true
+				sourceMapping += src
+				
+				targetFinderExpression = "aql:null" // never actual applicable
+				targetMapping += tgt
+				
+				style = []
+			]
 		]
+		
+		virtualEdgeFactory.apply("ChannelClusterCreationByChannel",
+			EdgeMapping.localRef(Ns.edge, "SimpleChannel"),
+			NodeMapping.localRef(Ns.node, "InstancePort")
+		)
+		virtualEdgeFactory.apply("ChannelClusterCreationByEnd",
+			NodeMapping.localRef(Ns.node, "InstancePort"),
+			EdgeMapping.localRef(Ns.edge, "SimpleChannel")
+		)
+		
 		
 		toolSections += createNavigationTools()
 		toolSections += createNodesTools()
@@ -273,37 +299,14 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				name = "Delete instance"
 				precondition = "true"
 				forceRefresh = true
-				element = ElementDeleteVariable.create [
-					name = "element"
-				]
-				elementView = ElementDeleteVariable.create [
-					name = "elementView"
-				]
-				containerView = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "deleteinstance"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "element"
-							value = "[element/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[elementView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "containerView"
-							value = "[containerView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "deleteinstance"
-						]
-					]
-				]
+				element = ElementDeleteVariable.named("element")
+				elementView = ElementDeleteVariable.named("elementView")
+				containerView = ContainerViewVariable.named("containerView")
+				operation = "deleteinstance".callJavaAction("deleteinstance",
+					"element" -> "[element/]",
+					"view" -> "[elementView/]",
+					"containerView" -> "[containerView/]"
+				)
 			]
 			ownedTools += ToolDescription.create [
 				name = "Create Instance"
@@ -311,167 +314,49 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				precondition = "service:canCreateInstance()"
 				forceRefresh = true
 				iconPath = "org.eclipse.poosl.sirius/icons/instance.png"
-				element = ElementVariable.create [
-					name = "element"
-				]
-				elementView = ElementViewVariable.create [
-					name = "elementView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "createprocessclass"
-						forceRefresh = true
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "createprocessclass"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[elementView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "element"
-							value = "[element/]"
-						]
-					]
-				]
+				element = ElementVariable.named("element")
+				elementView = ElementViewVariable.named("elementView")
+				operation = "createprocessclass".callJavaAction("createprocessclass",
+					"element" -> "[element/]",
+					"view" -> "[elementView/]"
+				)
 			]
 			ownedTools += ToolDescription.create [
 				name = "Create Port"
 				label = "Port"
 				precondition = "service:canCreatePort()"
 				forceRefresh = true
-				element = ElementVariable.create [
-					name = "element"
-				]
-				elementView = ElementViewVariable.create [
-					name = "elementView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "createprocessclass"
-						forceRefresh = true
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "createport"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[elementView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "element"
-							value = "[element/]"
-						]
-					]
-				]
+				element = ElementVariable.named("element")
+				elementView = ElementViewVariable.named("elementView")
+				operation = "createprocessclass".callJavaAction("createport",
+					"element" -> "[element/]",
+					"view" -> "[elementView/]"
+				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Connection") [
-				precondition = "true"
-				forceRefresh = true
-				element = ElementDeleteVariable.create [
-					name = "element"
-				]
-				elementView = ElementDeleteVariable.create [
-					name = "elementView"
-				]
-				containerView = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "deleteconnection"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "element"
-							value = "[element/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[elementView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "containerView"
-							value = "[containerView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "deleteconnection"
-						]
-					]
-				]
-			]
+
 			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Port From Instance") [
 				precondition = "true"
 				forceRefresh = true
-				element = ElementDeleteVariable.create [
-					name = "element"
-				]
-				elementView = ElementDeleteVariable.create [
-					name = "elementView"
-				]
-				containerView = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "deleteconnection"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "element"
-							value = "[element/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[elementView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "containerView"
-							value = "[containerView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "deleteportfrominstance"
-						]
-					]
-				]
+				element = ElementDeleteVariable.named("element")
+				elementView = ElementDeleteVariable.named("elementView")
+				containerView = ContainerViewVariable.named("containerView")
+				operation = "deleteconnection".callJavaAction("deleteportfrominstance",
+					"element" -> "[element/]",
+					"view" -> "[elementView/]",
+					"containerView" -> "[containerView/]"
+				)
 			]
 			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Extern Port") [
 				precondition = "true"
 				forceRefresh = true
-				element = ElementDeleteVariable.create [
-					name = "element"
-				]
-				elementView = ElementDeleteVariable.create [
-					name = "elementView"
-				]
-				containerView = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "deleteinstance"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "element"
-							value = "[element/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[elementView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "containerView"
-							value = "[containerView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "deleteexternport"
-						]
-					]
-				]
+				element = ElementDeleteVariable.named("element")
+				elementView = ElementDeleteVariable.named("elementView")
+				containerView = ContainerViewVariable.named("containerView")
+				operation = "deleteconnection".callJavaAction("deleteexternport",
+					"element" -> "[element/]",
+					"view" -> "[elementView/]",
+					"containerView" -> "[containerView/]"
+				)
 			]
 		]
 	}
@@ -480,106 +365,66 @@ class ClusterDiagramDiagram extends PooslDiagram {
 		ToolSection.create [
 			name = "Navigation"
 			label = "Navigation"
-			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Channel Color")
+			ownedTools += OperationAction.createAs(Ns.operation, "Channel Color") [
+				precondition = "aql:self.showMenuChangeColor()"
+				forceRefresh = true
+				view = ContainerViewVariable.named("views")
+				operation = "Change HighLight Color".callJavaAction("changecolor", 
+					"view" -> "[views/]")
+			]
 			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Open Textual Editor")
 			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Open Class Diagram")
 			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "StructureDiagramFromStructure")
 			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Show/Hide Communication Elements")
 			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Open Instance in Textual Editor")
+			ownedTools += DoubleClickDescription.create [
+				name = "Open Textual Editor"
+				mappings += ContainerMapping.localRef(Ns.node, "ClusterClass")
+				element = ElementDoubleClickVariable.named("element")
+				elementView = ElementDoubleClickVariable.named("elementView")
+				operation = "double click instance".callJavaAction("opentextualeditor",
+					"element" -> "aql:element",
+					"elementView" -> "aql:elementView"
+				)
+			]
 			ownedTools += DiagramNavigationDescription.createAs(Ns.operation, "NavigateInstance") [
-				navigationNameExpression = "[\"Navigate to instance\"/]"
+				navigationNameExpression = "aql:'Navigate to instance'"
 				diagramDescription = DiagramDescription.ref("ClusterDiagramDiagram")
-				containerViewVariable = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				containerVariable = ElementSelectVariable.create [
-					name = "container"
-				]
-				representationNameVariable = NameVariable.create [
-					name = "diagramName"
-				]
+				containerViewVariable = ContainerViewVariable.named("containerView")
+				containerVariable = ElementSelectVariable.named("container")
+				representationNameVariable = NameVariable.named("diagramName")
 			]
 			ownedTools += DoubleClickDescription.create [
 				name = "Open Editor"
-				mappings += NodeMapping.localRef(Ns.node, "InstanceCluster")
-				element = ElementDoubleClickVariable.create [
-					name = "element"
-				]
-				elementView = ElementDoubleClickVariable.create [
-					name = "elementView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "double click instance"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "doubleclickopeneditor"
-						]
-					]
-				]
+				mappings += NodeMapping.localRef(Ns.node, "ClusterInstance")
+				element = ElementDoubleClickVariable.named("element")
+				elementView = ElementDoubleClickVariable.named("elementView")
+				operation = "double click instance".callJavaAction("doubleclickopeneditor",
+					"element" -> "aql:element",
+					"elementView" -> "aql:elementView"
+				)
 			]
 			ownedTools += DoubleClickDescription.create [
 				name = "Edge"
-				mappings += EdgeMapping.localRef(Ns.edge, "ChannelToExternalCluster")
-				mappings += EdgeMapping.localRef(Ns.edge, "ChannelToPortCluster")
-				mappings += EdgeMapping.localRef(Ns.edge, "PortToPortCluster")
-				element = ElementDoubleClickVariable.create [
-					name = "element"
-				]
-				elementView = ElementDoubleClickVariable.create [
-					name = "elementView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "PortOrInstance"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "doubleclickedge"
-						]
-					]
-				]
+				//mappings += EdgeMapping.localRef(Ns.edge, "ChannelToExternalCluster")
+				mappings += EdgeMapping.localRef(Ns.edge, "SimpleChannel")
+				mappings += EdgeMapping.localRef(Ns.edge, "ChannelToEnd")
+				element = ElementDoubleClickVariable.named("element")
+				elementView = ElementDoubleClickVariable.named("elementView")
+				operation = "PortOrInstance".callJavaAction("doubleclickedge",
+					"element" -> "aql:element",
+					"elementView" -> "aql:elementView"
+				)
 			]
 			ownedTools += DoubleClickDescription.create [
 				name = "Channel"
 				mappings += NodeMapping.localRef(Ns.node, "ChannelCluster")
-				element = ElementDoubleClickVariable.create [
-					name = "element"
-				]
-				elementView = ElementDoubleClickVariable.create [
-					name = "elementView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "PortOrInstance"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "doubleclickchannel"
-						]
-					]
-				]
-			]
-			ownedTools += DoubleClickDescription.create [
-				name = "Open Textual Editor"
-				mappings += ContainerMapping.localRef(Ns.node, "ClusterClass")
-				element = ElementDoubleClickVariable.create [
-					name = "element"
-				]
-				elementView = ElementDoubleClickVariable.create [
-					name = "elementView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "double click instance"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "opentextualeditor"
-						]
-					]
-				]
+				element = ElementDoubleClickVariable.named("element")
+				elementView = ElementDoubleClickVariable.named("elementView")
+				operation = "PortOrInstance".callJavaAction("doubleclickchannel",
+					"element" -> "aql:element",
+					"elementView" -> "aql:elementView"
+				)
 			]
 		]
 	}
@@ -590,99 +435,48 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			ownedTools += EdgeCreationDescription.create [
 				name = "Create Channel"
 				label = "Channel"
-				precondition = "[thisEObject.isPort()/]"
+				precondition = '''self.isClusterConnectableEnd()'''.trimAql
 				forceRefresh = true
-				connectionStartPrecondition = "[thisEObject.isPort()/]"
-				edgeMappings += EdgeMapping.localRef(Ns.edge, "PortToPortCluster")
-				edgeMappings += EdgeMapping.localRef(Ns.edge, "ChannelToExternalCluster")
-				edgeMappings += EdgeMapping.localRef(Ns.edge, "ChannelToPortCluster")
-				edgeMappings += EdgeMapping.localRef(Ns.edge, "FakeExtPortToChannelCluster")
-				edgeMappings += EdgeMapping.localRef(Ns.edge, "FakeExtPortToPortCluster")
-				sourceVariable = SourceEdgeCreationVariable.create [
-					name = "source"
-				]
-				targetVariable = TargetEdgeCreationVariable.create [
-					name = "target"
-				]
-				sourceViewVariable = SourceEdgeViewCreationVariable.create [
-					name = "sourceView"
-				]
-				targetViewVariable = TargetEdgeViewCreationVariable.create [
-					name = "targetView"
-				]
-				initialOperation = InitEdgeCreationOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "createconnection"
-						forceRefresh = true
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "createconnection"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "source"
-							value = "[source/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "target"
-							value = "[target/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "targetview"
-							value = "[targetView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "sourceview"
-							value = "[sourceView/]"
-						]
-					]
-				]
+				connectionStartPrecondition = '''self.isClusterConnectableEnd()'''.trimAql
+				
+				edgeMappings += EdgeMapping.localRef(Ns.edge, "ChannelToEnd")
+				edgeMappings += EdgeMapping.localRef(Ns.edge, "SimpleChannel")
+				edgeMappings += EdgeMapping.localRef(Ns.edge, "ChannelClusterCreationByChannel")
+				edgeMappings += EdgeMapping.localRef(Ns.edge, "ChannelClusterCreationByEnd")
+
+				sourceVariable = SourceEdgeCreationVariable.named("source")
+				targetVariable = TargetEdgeCreationVariable.named("target")
+				sourceViewVariable = SourceEdgeViewCreationVariable.named("sourceView")
+				targetViewVariable = TargetEdgeViewCreationVariable.named("targetView")
+				operation = '''source.createConnection(sourceView, targetView)'''.trimAql.toOperation
 			]
 			ownedTools += ReconnectEdgeDescription.createAs(Ns.reconnect, "Reconnect Channel") [
 				reconnectionKind = ReconnectionKind.RECONNECT_BOTH_LITERAL
-				source = SourceEdgeCreationVariable.create [
-					name = "source"
-				]
-				target = TargetEdgeCreationVariable.create [
-					name = "target"
-				]
-				sourceView = SourceEdgeViewCreationVariable.create [
-					name = "sourceView"
-				]
-				targetView = TargetEdgeViewCreationVariable.create [
-					name = "targetView"
-				]
-				element = ElementSelectVariable.create [
-					name = "element"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "createconnection"
-						forceRefresh = true
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "reconnectconnection"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "source"
-							value = "[source/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "target"
-							value = "[target/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "targetview"
-							value = "[targetView/]"
-						]
-					]
-				]
-				edgeView = ElementSelectVariable.create [
-					name = "edgeView"
-				]
+				
+				source = SourceEdgeCreationVariable.named("source")
+				target = TargetEdgeCreationVariable.named("target")
+				sourceView = SourceEdgeViewCreationVariable.named("sourceView")
+				targetView = TargetEdgeViewCreationVariable.named("targetView")
+				element = ElementSelectVariable.named("element")
+				edgeView = ElementSelectVariable.named("edgeView")
+				operation = '''
+					element.reconnectConnection(sourceView, targetView)
+					'''.trimAql.toOperation
+			]
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Connection End") [
+				precondition = "true"
+				forceRefresh = true
+				element = ElementDeleteVariable.named("element") // DEdge.source:Channel
+				elementView = ElementDeleteVariable.named("elementView") // DEdge
+				containerView = ContainerViewVariable.named("containerView")
+				operation = '''
+					element.deleteConnectionEnd(containerView,
+					  elementView.targetNode.target,
+					  elementView.targetNode.eContainer().target)
+					'''.trimAql.toOperation
 			]
 		]
 	}
+
 
 }

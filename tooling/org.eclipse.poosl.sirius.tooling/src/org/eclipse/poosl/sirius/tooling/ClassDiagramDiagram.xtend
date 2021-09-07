@@ -125,6 +125,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 			domainClass = ClusterClass
 			childrenPresentation = ContainerLayout.LIST
 			deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelSystem")
+
 			style = FlatContainerStyleDescription.create [
 				borderSizeComputationExpression = "1"
 				labelFormat += FontFormat.BOLD_LITERAL
@@ -714,85 +715,24 @@ class ClassDiagramDiagram extends PooslDiagram {
 				name = "DelProcess"
 				precondition = "true"
 				forceRefresh = true
-				element = ElementDeleteVariable.create [
-					name = "element"
-				]
-				elementView = ElementDeleteVariable.create [
-					name = "elementView"
-				]
-				containerView = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "deleteparameter"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "element"
-							value = "[element/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[elementView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "containerView"
-							value = "[containerView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "deleteprocess"
-						]
-					]
-				]
-			]
-			ownedTools += DeleteElementDescription.create [
-				name = "DelSystem do Nothing"
-				element = ElementDeleteVariable.create [
-					name = "element"
-				]
-				elementView = ElementDeleteVariable.create [
-					name = "elementView"
-				]
-				containerView = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				initialOperation = InitialOperation.create
+				element = ElementDeleteVariable.named("element")
+				elementView = ElementDeleteVariable.named("elementView")
+				containerView = ContainerViewVariable.named("containerView")
+				
+				operation = "deleteinstance".callJavaAction("deleteprocess",
+					"element" -> "[element/]",
+					"view" -> "[elementView/]",
+					"containerView" -> "[containerView/]"
+				)
 			]
 			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelSystem") [
-				precondition = "true"
+				precondition = "aql:false" // no delete
 				forceRefresh = true
-				element = ElementDeleteVariable.create [
-					name = "element"
-				]
-				elementView = ElementDeleteVariable.create [
-					name = "elementView"
-				]
-				containerView = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "deleteparameter"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "element"
-							value = "[element/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[elementView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "containerView"
-							value = "[containerView/]"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "deletesystem"
-						]
-					]
-				]
+				element = ElementDeleteVariable.named("element")
+				elementView = ElementDeleteVariable.named("elementView")
+				containerView = ContainerViewVariable.named("containerView")
+				
+				initialOperation = InitialOperation.create
 			]
 			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelContainment") [
 				precondition = "true"

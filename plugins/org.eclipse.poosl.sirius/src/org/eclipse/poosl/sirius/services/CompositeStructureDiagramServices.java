@@ -14,12 +14,11 @@
 package org.eclipse.poosl.sirius.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -30,30 +29,33 @@ import org.eclipse.poosl.DataClass;
 import org.eclipse.poosl.DataMethod;
 import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstancePort;
+import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.Port;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.impl.ChannelImpl;
 import org.eclipse.poosl.sirius.helpers.NameHelper;
 import org.eclipse.poosl.xtext.custom.PooslCache;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 import org.eclipse.poosl.xtext.helpers.PooslReferenceHelper;
+import org.eclipse.sirius.diagram.AbstractDNode;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 /**
- * This class is used by the poosl.odesign file to have more advanced queries on the model that are called by Acceleo3
+ * This class is used by the poosl.odesign file to have more advanced queries on the model that are called by ODesign
  * expressions.
- * 
- * According to sirius documentation this class needs to be stateless and have a constructor without any arguments.
+ * <p>
+ * According to sirius documentation, this class needs to be stateless and have a constructor without any arguments.
  * There is no guarantee that the same instance will be used when a function is called twice.
+ * </p>
  * 
  * @author Koen Staal
  */
-public class CompositeStructureDiagramServices extends AbstractServices {
+public class CompositeStructureDiagramServices {
 
-    public CompositeStructureDiagramServices() {
+    public static EObject getODesignDebugging(EObject value) {
+        return value;
     }
 
     /**
@@ -61,7 +63,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
      * provided instance.
      * 
      * @param instance
-     *            The instance to check the unique connected instanceports for.
+     *            The instance to check the unique connected instance ports for.
      * @return A list of InstancePorts to be added as a graphical element to the provided instance.
      */
     private List<InstancePort> getInstancePorts(Instance instance) {
@@ -71,7 +73,7 @@ public class CompositeStructureDiagramServices extends AbstractServices {
         if (instance.eContainer() instanceof ClusterClass) {
             allInstancePorts = getUniqueInstancePorts((ClusterClass) instance.eContainer());
         } else {
-            return null;
+            return Collections.emptyList();
         }
         // Add only the instanceports that belong to this instance
         List<InstancePort> instancePorts = new ArrayList<>();
@@ -84,26 +86,24 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * Will return a list of {@link EObject} ports and instanceports of the instance.
+     * Returns ports the instance.
      * 
      * @param instance
      *            The ports of this instance will be returned
      * @return list of {@link EObject} with all ports of the instance
      */
-    public List<EObject> getClassDefinitionPorts(Instance instance) {
+    public List<EObject> getDeclaredInstancePorts(Instance instance) {
+        List<EObject> result = new ArrayList<>();
+        List<Port> declaredPorts = getDeclaredPorts(instance);
+        result.addAll(getDeclaredPorts(instance));
 
-        List<EObject> allports = new ArrayList<>();
-        List<InstancePort> instancePorts = getInstancePorts(instance);
-
-        for (InstancePort instancePort : instancePorts) {
-            if (instancePort.eContainer() != null) {
-                allports.add(instancePort);
+        for (InstancePort instancePort : getInstancePorts(instance)) {
+            String portName = instancePort.getPort().getPort();
+            if (!declaredPorts.stream().anyMatch(it -> portName.equals(it.getName()))) {
+                result.add(instancePort);
             }
         }
-        for (Port port : getUnconnectedPorts(instance, instancePorts)) {
-            allports.add(port);
-        }
-        return allports;
+        return result;
     }
 
     /**
@@ -113,12 +113,19 @@ public class CompositeStructureDiagramServices extends AbstractServices {
      *            Is an {@link InstancePort} or a {@link Port}
      * @return the name of the port
      */
-    public String getPortName(EObject object) {
-        if (object instanceof InstancePort) {
-            return ((InstancePort) object).getPort().getPort();
-        } else {
-            return ((Port) object).getName();
-        }
+    public String getPortName(Port object) {
+        return object.getName();
+    }
+
+    /**
+     * Returns the name of the port.
+     * 
+     * @param object
+     *            Is an {@link InstancePort} or a {@link Port}
+     * @return the name of the port
+     */
+    public String getPortName(InstancePort object) {
+        return object.getPort().getPort();
     }
 
     /**
@@ -132,53 +139,58 @@ public class CompositeStructureDiagramServices extends AbstractServices {
         return instance.getName() + " : " + instance.getClassDefinition(); //$NON-NLS-1$
     }
 
-    /**
-     * This function is used by the bordered port node to determine all unconnected ports to the provided instance.
-     * 
-     * @param instance
-     *            The instance to check the unconnected ports for.
-     * @param instancePorts
-     * @return A list of Ports to be added as a graphical element to the provided instance.
-     */
-    private List<Port> getUnconnectedPorts(Instance instance, List<InstancePort> instancePorts) {
-        List<Port> unconnectedPorts = new ArrayList<>();
-        // Check if every port of the classdefinition is connected. If not then
-        // add it to the list
-        Set<String> connected = new HashSet<>();
-        for (InstancePort iPort : instancePorts) {
-            connected.add(iPort.getPort().getPort());
+    public boolean isInstanceConnected(Channel parent, AbstractDNode endView) {
+        EObject endContainer = ((AbstractDNode) endView.eContainer()).getTarget();
+
+        if (endContainer instanceof ClusterClass // <=> ExternalPort
+                || endView.getTarget() instanceof InstancePort // undeclared
+        ) {
+            return true;
         }
+        Port port = (Port) endView.getTarget();
+        Instance instance = (Instance) endContainer;
+
+        return parent.getInstancePorts().stream().anyMatch(it -> //
+        it.getInstance() == instance //
+                && it.getPort().getPort().equals(port.getName()));
+    }
+
+    public boolean isInstanceSimpleConnected(Channel parent, AbstractDNode sourceView, AbstractDNode targetView) {
+        return isInstanceSimpleSource(parent, sourceView.getTarget(), ((AbstractDNode) sourceView.eContainer()).getTarget())
+                && isInstanceSimpleTarget(parent, targetView.getTarget(), ((AbstractDNode) targetView.eContainer()).getTarget());
+    }
+
+    private static boolean isInstanceSimpleSource(Channel channel, EObject port, EObject portParent) {
+        if (channel.getExternalPort() != null) {
+            return channel.getExternalPort() == port && channel.eContainer() == portParent;
+        }
+        InstancePort expected = channel.getInstancePorts().get(0);
+        if (port instanceof InstancePort) {
+            return expected == port;
+        }
+        return expected.getInstance() == portParent && expected.getPort().getPort().equals(((Port) port).getName());
+    }
+
+    private static boolean isInstanceSimpleTarget(Channel channel, EObject port, EObject portParent) {
+        InstancePort expected = channel.getInstancePorts().get(channel.getExternalPort() != null ? 0 : 1);
+        if (port instanceof InstancePort) {
+            return expected == port;
+        }
+        return expected.getInstance() == portParent && expected.getPort().getPort().equals(((Port) port).getName());
+    }
+
+    public List<Port> getDeclaredPorts(Instance instance) {
+        List<Port> result = new ArrayList<>();
 
         Resource resource = instance.eResource();
         PooslCache.clear(resource);
         Map<String, IEObjectDescription> ports = PooslCache.get(resource).getInstantiableClassPorts(instance.getClassDefinition());
         for (Entry<String, IEObjectDescription> entry : ports.entrySet()) {
-            if (!connected.contains(entry.getKey())) {
-                EObject obj = entry.getValue().getEObjectOrProxy();
-                if (obj.eIsProxy())
-                    obj = EcoreUtil.resolve(obj, instance);
-                unconnectedPorts.add((Port) obj);
-            }
+            EObject obj = entry.getValue().getEObjectOrProxy();
+            result.add((Port) (obj.eIsProxy() ? EcoreUtil.resolve(obj, instance) : obj));
         }
 
-        return unconnectedPorts;
-    }
-
-    /**
-     * get Channels that have dont have 2 connections from a cluster used by "ChannelCluster" and "Channelsystem".
-     * 
-     * @param cluster
-     *            The ClusterClass
-     * @return Lists of channels
-     */
-    public List<Channel> getChannels(ClusterClass cluster) {
-        List<Channel> channels = new ArrayList<>();
-        for (Channel channel : cluster.getChannels()) {
-            if (getNumberOfChannelConnections(channel) != 2) {
-                channels.add(channel);
-            }
-        }
-        return channels;
+        return result;
     }
 
     /**
@@ -188,49 +200,80 @@ public class CompositeStructureDiagramServices extends AbstractServices {
      *            the Channel
      * @return number of connections
      */
-    public static int getNumberOfChannelConnections(Channel channel) {
-        if (channel.getExternalPort() != null) {
-            return getNumberOfInstanceports(channel) + 1;
-        } else {
-            return getNumberOfInstanceports(channel);
-        }
+    public static int getNumberOfChannelEnds(Channel channel) {
+        return getUniqueInstancePorts(new HashMap<>(), channel).size() //
+                + (channel.getExternalPort() != null ? 1 : 0);
     }
 
     /**
-     * Get number of unique instance ports.
+     * Evaluates if a channel is simple (2 ends) or a cluster.
      * 
-     * @param ch
-     * @return Number of unique instance points
+     * @param channel
+     *            to evaluate
+     * @return true if only 2 ends
      */
-    private static int getNumberOfInstanceports(Channel ch) {
-        Map<String, InstancePort> uniques = new HashMap<>();
-        getUniqueInstancePorts(uniques, ch);
-        return uniques.size();
+    public static boolean isSimpleChannel(Channel channel) {
+        int extSize = channel.getExternalPort() != null ? 1 : 0;
+        return channel.getInstancePorts().size() + extSize == 2;
     }
 
     /**
-     * Determines if a straight line from the given port to another port needs to be drawn.
+     * Gets the end of a channel assuming it have 2 ends exactly.
      * 
-     * @param p
-     *            (external)Port or instanceport
-     * @return
+     * @param parent
+     *            channel
+     * @param target
+     *            end
+     * @return Port or InstancePort
      */
-    public EObject getSingleConnectedPort(EObject p) {
-        ChannelImpl channel = (ChannelImpl) p.eContainer();
-        if (channel.getExternalPort() != null && channel.getInstancePorts().size() == 1) {
-            return channel.getExternalPort();
-        } else if (channel.getExternalPort() == null && channel.getInstancePorts().size() == 2) {
-            if (channel.getInstancePorts().get(0).equals(p)) {
-                return channel.getInstancePorts().get(1);
+    public EObject getSimpleChannelEnd(Channel parent, boolean target) {
+        boolean usingExternal = parent.getExternalPort() != null;
+        int index;
+        if (!target) { // source
+            if (usingExternal) {
+                return parent.getExternalPort();
             }
+            index = 0;
         } else {
-            return null;
+            index = usingExternal ? 0 : 1;
         }
-        return null;
+        InstancePort iPort = parent.getInstancePorts().get(index);
+
+        return getApplicablePort(iPort, getDeclaredPorts(iPort.getInstance()));
     }
 
-    public EObject getSingleConnectedPort(Port p) {
-        return null;
+    private EObject getApplicablePort(InstancePort iPort, List<Port> declaredPorts) {
+        Port declaredPort = findDeclaration(iPort, declaredPorts);
+        return declaredPort != null ? declaredPort : iPort;
+    }
+
+    private Port findDeclaration(InstancePort iPort, List<Port> declaredPorts) {
+        String portName = iPort.getPort().getPort();
+        return declaredPorts.stream() //
+                .filter(it -> portName.equals(it.getName())) //
+                .findFirst().orElse(null);
+    }
+
+    /**
+     * Gets the end of a channel assuming it have 2 ends exactly.
+     * 
+     * @param parent
+     *            channel
+     * @return Port or InstancePort list
+     */
+    public List<? extends EObject> getChannelEnds(Channel parent) {
+        List<EObject> result = new ArrayList<EObject>(parent.getInstancePorts().size() + 1);
+        if (parent.getExternalPort() != null) {
+            result.add(parent.getExternalPort());
+        }
+
+        Map<Instance, List<Port>> declaredPorts = new HashMap<>();
+        for (InstancePort iPort : parent.getInstancePorts()) {
+            result.add(getApplicablePort(iPort, // Port or InstancePort
+                    declaredPorts.computeIfAbsent(iPort.getInstance(), //
+                            instance -> getDeclaredPorts(iPort.getInstance()))));
+        }
+        return result;
     }
 
     /**
@@ -257,9 +300,10 @@ public class CompositeStructureDiagramServices extends AbstractServices {
         return instancePorts;
     }
 
-    public Object getCreationChannel(EObject object) {
-        return null;
-    }
+    // Used in fake mapping
+    // public Object getCreationChannel(EObject object) {
+    // return null;
+    // }
 
     /**
      * Private helper function to get all uniqueInstancePorts from the provided ClusterClass.
@@ -279,24 +323,31 @@ public class CompositeStructureDiagramServices extends AbstractServices {
     }
 
     /**
-     * puts all the instanceports in the given map.
+     * Puts all the instanceports in the given map.
      * 
-     * @param allUniqueInstancePorts
+     * @param accu
+     *            accumulator
      * @param ch
+     *            channel to get from
+     * @return accumulator
      */
-    private static void getUniqueInstancePorts(Map<String, InstancePort> allUniqueInstancePorts, Channel ch) {
+    private static Map<String, InstancePort> getUniqueInstancePorts(Map<String, InstancePort> accu, Channel ch) {
         for (InstancePort instancePort : ch.getInstancePorts()) {
-            if (instancePort != null && instancePort.getPort() != null && instancePort.getInstance() != null) {
-                allUniqueInstancePorts.put(instancePort.getInstance().getName() + "|" + instancePort.getPort().getPort(), instancePort); //$NON-NLS-1$
+            if (instancePort != null && instancePort.getPort() != null //
+                    && instancePort.getInstance() != null) {
+                accu.put(instancePort.getInstance().getName() //
+                        + "|" + instancePort.getPort().getPort(), instancePort); // $NON-NLS-1$
             }
         }
+        return accu;
     }
 
     /**
      * Returns true if the object should have the option to change the color in the menu.
      * 
      * @param object
-     * @return
+     *            to evaluate
+     * @return true if colored
      */
     public boolean showMenuChangeColor(EObject object) {
         return object instanceof Port || object instanceof InstancePort || object instanceof Channel;
@@ -306,18 +357,27 @@ public class CompositeStructureDiagramServices extends AbstractServices {
      * Returns true if the object should have the option to go to the textual editor.
      * 
      * @param object
-     * @return
+     *            to evaluate
+     * @return true if editable by text
      */
     public boolean showMenuOpenTextualEditor(EObject object) {
-        return !isBundleResource(object) && (object instanceof Instance || object instanceof ClusterClass || object instanceof ProcessClass || object instanceof DataClass || object instanceof Variable
-                || object instanceof ProcessMethod || object instanceof DataMethod || object instanceof org.eclipse.poosl.Poosl);
+        return !AbstractServices.isBundleResource(object) //
+                && (object instanceof Instance //
+                        || object instanceof ClusterClass //
+                        || object instanceof ProcessClass //
+                        || object instanceof DataClass //
+                        || object instanceof Variable //
+                        || object instanceof ProcessMethod //
+                        || object instanceof DataMethod //
+                        || object instanceof Poosl);
     }
 
     /**
      * Returns true if the object should have the option to go to the textual editor of the instance.
      * 
      * @param object
-     * @return
+     *            to evaluate
+     * @return true if have textual editor
      */
     public boolean showMenuOpenTextualEditorInstance(EObject object) {
         return object instanceof Instance;
@@ -327,36 +387,32 @@ public class CompositeStructureDiagramServices extends AbstractServices {
      * Returns true if the object should have the option to go to the graphical editor.
      * 
      * @param object
-     * @return
+     *            to evaluate
+     * @return true if have graphical editor
      */
     public boolean showMenuOpenGraphicalEditor(EObject object) {
-        if (object instanceof Instance) {
-            return HelperFunctions.isClusterInstance((Instance) object);
-        } else if (object instanceof ClusterClass) {
-            return true;
-        }
-        return false;
+        return showMenuInstanceOpenStructureDiagram(object) //
+                || object instanceof ClusterClass;
     }
 
     /**
      * Returns true if the object should have the option to go to the structure diagram from the structure diagram.
      * 
      * @param object
-     * @return
+     *            to evaluate
+     * @return true if with Structure diagram
      */
 
     public boolean showMenuInstanceOpenStructureDiagram(EObject object) {
-        if (object instanceof Instance) {
-            return HelperFunctions.isClusterInstance((Instance) object);
-        }
-        return false;
+        return object instanceof Instance && HelperFunctions.isClusterInstance((Instance) object);
     }
 
     /**
      * return true if the object has the option to have instances.
      * 
      * @param object
-     * @return
+     *            to evaluate
+     * @return true when allowed
      */
     public boolean canCreateInstance(EObject object) {
         return object instanceof ClusterClass;
@@ -366,33 +422,28 @@ public class CompositeStructureDiagramServices extends AbstractServices {
      * return true if the object has the option to have ports.
      * 
      * @param object
-     * @return
+     *            to evaluate
+     * @return true when allowed
      */
     public boolean canCreatePort(EObject object) {
         return object instanceof ClusterClass || object instanceof Instance;
     }
 
     /**
-     * this method is used to create channels, if a line can be drawn to the object to represent a channel it returns
-     * true.
+     * Evaluates when creating channels, if a line can be drawn to the object to represent a channel it returns true.
      * 
      * @param object
-     * @return
+     *            to evaluate
+     * @return true when connectable
      */
-    public boolean isPort(EObject object) {
-        if (object instanceof Port) {
-            return true;
-        } else {
-            if (object instanceof InstancePort) {
-                return true;
-            } else {
-                return object instanceof Channel;
-            }
-        }
+    public boolean isClusterConnectableEnd(EObject object) {
+        return object instanceof Port //
+                || object instanceof InstancePort //
+                || object instanceof Channel;
     }
 
     public static String getUniqueInstanceName(ClusterClass container, String original) {
-        return NameHelper.getUniqueInstanceName(COPYOF + original, container);
+        return NameHelper.getUniqueInstanceName(AbstractServices.COPYOF + original, container);
     }
 
     public boolean isClusterClass(Instance instance) {
@@ -400,28 +451,36 @@ public class CompositeStructureDiagramServices extends AbstractServices {
         return classDef.getEClass().equals(Literals.CLUSTER_CLASS);
     }
 
-    public EObject getSystem(EObject system) {
-        PooslCache.clear(system.eResource());
-        return system;
+    /**
+     * Clears the cache of provided element.
+     * 
+     * @param it
+     *            element to clean
+     * @return it
+     */
+    public EObject getCleanedCacheSelf(EObject it) {
+        PooslCache.clear(it.eResource());
+        return it;
     }
 
-    public EObject getCluster(EObject cluster) {
-        PooslCache.clear(cluster.eResource());
-        return cluster;
-    }
-
+    /**
+     * Returns name for diagram main container.
+     * 
+     * @param cClass
+     *            to get from
+     * @return name
+     */
     public String getDiagramName(ClusterClass cClass) {
-        if (cClass.getName() != null) {
-            return cClass.getName();
-        } else {
-            return "System";
-        }
+        return !isSystemDiagram(cClass) ? cClass.getName() : "System";
     }
 
-    public boolean isClusterDiagram(ClusterClass cClass) {
-        return cClass.getName() != null;
-    }
-
+    /**
+     * Evaluates a is class is System.
+     * 
+     * @param cClass
+     *            to evaluate
+     * @return true if system
+     */
     public boolean isSystemDiagram(ClusterClass cClass) {
         return cClass.getName() == null;
     }

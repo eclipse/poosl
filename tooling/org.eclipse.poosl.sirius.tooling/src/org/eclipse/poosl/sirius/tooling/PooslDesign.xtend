@@ -14,8 +14,10 @@
 package org.eclipse.poosl.sirius.tooling
 
 import org.eclipse.poosl.PooslPackage
+import org.eclipse.poosl.sirius.services.AbstractServices
 import org.eclipse.poosl.sirius.services.ClassDiagramServices
 import org.eclipse.poosl.sirius.services.CompositeStructureDiagramServices
+import org.eclipse.poosl.sirius.services.CompositeStructureEditServices
 import org.eclipse.poosl.xtext.GlobalConstants
 import org.eclipse.sirius.viewpoint.description.Group
 import org.eclipse.sirius.viewpoint.description.Viewpoint
@@ -34,7 +36,10 @@ class PooslDesign extends AbstractGroup {
 			name = "POOSL viewpoint"
 			modelFileExtension = GlobalConstants.FILE_EXTENSION
 			
-			use(CompositeStructureDiagramServices, ClassDiagramServices)
+			use(AbstractServices)
+			use(CompositeStructureDiagramServices)
+			use(CompositeStructureEditServices)
+			use(ClassDiagramServices)
 			
 			ownedRepresentations += #[
 				new ClusterDiagramDiagram(this),

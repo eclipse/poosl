@@ -19,9 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.poosl.Channel;
 import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.DataClass;
@@ -31,22 +29,17 @@ import org.eclipse.poosl.InstancePort;
 import org.eclipse.poosl.InstantiableClass;
 import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.Port;
-import org.eclipse.poosl.PortReference;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.Variable;
-import org.eclipse.poosl.impl.PooslFactoryImpl;
 import org.eclipse.poosl.sirius.helpers.ColorGraphHelper;
 import org.eclipse.poosl.sirius.helpers.CreationHelper;
 import org.eclipse.poosl.sirius.helpers.DiagramDebugNote;
 import org.eclipse.poosl.sirius.helpers.GraphicalEditorHelper;
 import org.eclipse.poosl.sirius.helpers.TextualEditorHelper;
 import org.eclipse.poosl.sirius.navigator.GraphicalPreferenceManager;
+import org.eclipse.poosl.sirius.services.AbstractServices;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
-import org.eclipse.sirius.business.api.session.Session;
-import org.eclipse.sirius.business.api.session.SessionListener;
-import org.eclipse.sirius.business.api.session.SessionManager;
-import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.sirius.diagram.DDiagramElement;
 import org.eclipse.sirius.diagram.DEdge;
 import org.eclipse.sirius.diagram.DNode;
@@ -55,10 +48,7 @@ import org.eclipse.sirius.diagram.DSemanticDiagram;
 import org.eclipse.sirius.diagram.EdgeStyle;
 import org.eclipse.sirius.diagram.EdgeTarget;
 import org.eclipse.sirius.tools.api.ui.IExternalJavaAction;
-import org.eclipse.sirius.ui.business.api.dialect.DialectEditor;
-import org.eclipse.sirius.ui.business.api.dialect.DialectUIManager;
 import org.eclipse.sirius.viewpoint.impl.DRepresentationElementImpl;
-import org.eclipse.ui.IEditorPart;
 
 /**
  * This class is used by the poosl.odesign file to have more advanced queries on the model that are called by Acceleo3
@@ -108,12 +98,6 @@ public class ExternalCalls implements IExternalJavaAction {
 
     private static final String ACTION_PALLET_DELETE_PORT = "deleteport"; //$NON-NLS-1$
 
-    private static final String ACTION_PALLET_CREATE_CONNECTION = "createconnection"; //$NON-NLS-1$
-
-    private static final String ACTION_PALLET_RECONNECT_CONNECTION = "reconnectconnection"; //$NON-NLS-1$
-
-    private static final String ACTION_DELETE_CONNECTION = "deleteconnection"; //$NON-NLS-1$
-
     private static final String ACTION_DELETE_METHOD = "deletemethod"; //$NON-NLS-1$
 
     private static final String ACTION_DELETE_PORT_FROM_INSTANCE = "deleteportfrominstance"; //$NON-NLS-1$
@@ -149,8 +133,6 @@ public class ExternalCalls implements IExternalJavaAction {
     private static final String ACTION_DELETE_DATA = "deletedata"; //$NON-NLS-1$
 
     private static final String ACTION_CREATE_SYSTEM = "createsystem"; //$NON-NLS-1$
-
-    private static final String ACTION_DELETE_SYSTEM = "deletesystem"; //$NON-NLS-1$
 
     private static final String ACTION_CREATE_CONTAINMENT = "createcontainment"; //$NON-NLS-1$
 
@@ -214,15 +196,6 @@ public class ExternalCalls implements IExternalJavaAction {
                 break;
             case ACTION_PALLET_DELETE_PORT:
                 deleteport(eobjects, parameters);
-                break;
-            case ACTION_PALLET_CREATE_CONNECTION:
-                createConnection(eobjects, parameters);
-                break;
-            case ACTION_PALLET_RECONNECT_CONNECTION:
-                reconnectConnection(eobjects, parameters);
-                break;
-            case ACTION_DELETE_CONNECTION:
-                deleteConnection(eobjects, parameters);
                 break;
             case ACTION_DELETE_EXTERN_PORT:
                 deleteExternPort(eobjects, parameters);
@@ -289,9 +262,6 @@ public class ExternalCalls implements IExternalJavaAction {
                 break;
             case ACTION_CREATE_SYSTEM:
                 createSystem(eobjects, parameters);
-                break;
-            case ACTION_DELETE_SYSTEM:
-                // TODO remove from gui
                 break;
             case ACTION_DELETE_CONTAINMENT:
                 deleteContainment(eobjects, parameters);
@@ -599,58 +569,6 @@ public class ExternalCalls implements IExternalJavaAction {
 
     }
 
-    private void createConnection(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-
-        Object sourcelement = parameters.get("sourceview"); //$NON-NLS-1$
-        Object source = parameters.get(PARAMETER_SOURCE);
-        EObject sourceobject = getModelElement(source, sourcelement);
-
-        Object targetelement = parameters.get("targetview"); //$NON-NLS-1$
-        Object target = parameters.get(PARAMETER_TARGET);
-        EObject targetobject = getModelElement(target, targetelement);
-
-        CreationHelper.createConnection(sourceobject, targetelement, targetobject);
-        doValidate(source, targetelement);
-
-    }
-
-    private void reconnectConnection(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
-        Object source = parameters.get(PARAMETER_SOURCE);
-        Object targetelement = parameters.get("targetview"); //$NON-NLS-1$
-        Object target = parameters.get(PARAMETER_TARGET);
-        EObject targetobject = getModelElement(target, targetelement);
-
-        CreationHelper.reconnectConnection(source, targetelement, targetobject);
-        doValidate(target, targetelement);
-    }
-
-    private EObject getModelElement(Object model, Object diagramelement) {
-        if (!(model instanceof Port)) {
-            return (model instanceof EObject) ? (EObject) model : null;
-        }
-
-        EObject sourceContainer = null;
-        if (diagramelement instanceof EObject) {
-            EObject containerElement = ((EObject) diagramelement).eContainer();
-            if (containerElement instanceof DRepresentationElementImpl) {
-                sourceContainer = ((DRepresentationElementImpl) containerElement).getTarget();
-            }
-        }
-
-        if (sourceContainer instanceof Instance) {
-            InstancePort newinstanceport = PooslFactoryImpl.init().createInstancePort();
-            PortReference port = PooslFactoryImpl.init().createPortReference();
-            String name = ((Port) model).getName();
-            port.setPort(name);
-            newinstanceport.setInstance((Instance) sourceContainer);
-            newinstanceport.setPort(port);
-            SessionManager.INSTANCE.getSession(sourceContainer).save(new NullProgressMonitor());
-            return newinstanceport;
-        } else {
-            return (model instanceof EObject) ? (EObject) model : null;
-        }
-    }
-
     private void createPort(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject object = (EObject) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.createNewPort(object);
@@ -670,15 +588,6 @@ public class ExternalCalls implements IExternalJavaAction {
         Instance instance = (Instance) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteInstance(instance);
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
-    }
-
-    private void deleteConnection(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
-        if (parameters.get(PARAMETER_VIEW) instanceof DEdge) {
-            DEdge connection = (DEdge) parameters.get(PARAMETER_VIEW);
-
-            CreationHelper.deleteChannelConnection(connection);
-            doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
-        }
     }
 
     private void createInstance(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
@@ -760,51 +669,7 @@ public class ExternalCalls implements IExternalJavaAction {
     }
 
     private void doValidate(Object element, Object view) {
-        DDiagram diagram = getDiagram(view);
-        final Session session = getSession(element, diagram);
-
-        if (session != null) {
-            final IEditorPart tempeditor = DialectUIManager.INSTANCE.openEditor(session, diagram, new NullProgressMonitor());
-            if (tempeditor instanceof DialectEditor) {
-                final DialectEditor dialectEditor = (DialectEditor) tempeditor;
-                session.addListener(new SessionListener() {
-                    @Override
-                    public void notify(int changeKind) {
-                        if (changeKind == SessionListener.SEMANTIC_CHANGE) {
-                            dialectEditor.validateRepresentation();
-
-                            session.removeListener(this);
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    private Session getSession(Object element, DDiagram diagram) {
-        if (diagram != null && element instanceof EObject) {
-            Resource resource = ((EObject) element).eResource();
-            Session session = SessionManager.INSTANCE.getSession((EObject) element);
-            session = (session == null && resource != null) ? SessionManager.INSTANCE.getSession(resource) : session;
-            if (session == null) {
-                Collection<Session> sessions = SessionManager.INSTANCE.getSessions();
-                if (sessions.size() == 1 && sessions.iterator().hasNext()) {
-                    session = sessions.iterator().next();
-                }
-            }
-            return session;
-        }
-        return null;
-    }
-
-    private DDiagram getDiagram(Object view) {
-        if (view instanceof DDiagramElement) {
-            DDiagramElement diagramelement = (DDiagramElement) view;
-            return diagramelement.getParentDiagram();
-        } else if (view instanceof DDiagram) {
-            return (DDiagram) view;
-        }
-        return null;
+        AbstractServices.validateRepresentation(element, view);
     }
 
     private void openEditor(EObject target, String documentation) {

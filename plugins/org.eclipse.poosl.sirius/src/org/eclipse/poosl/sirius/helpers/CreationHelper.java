@@ -45,6 +45,7 @@ import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.PooslFactory;
 import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.Port;
+import org.eclipse.poosl.PortReference;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.ProcessMethodCall;
@@ -69,8 +70,6 @@ import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManager;
 import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.sirius.diagram.DDiagramElement;
-import org.eclipse.sirius.diagram.DEdge;
-import org.eclipse.sirius.diagram.DNode;
 import org.eclipse.sirius.ui.business.api.dialect.DialectEditor;
 import org.eclipse.sirius.ui.business.api.dialect.DialectUIManager;
 import org.eclipse.swt.widgets.Display;
@@ -81,8 +80,6 @@ import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -161,70 +158,81 @@ public final class CreationHelper {
     }
 
     /**
-     * Create a channel with the two ports, if a channel already exists add the source port to the target port. If 2
+     * Creates a channel with the two ports, if a channel already exists add the source port to the target port. If 2
      * channels are selected the 2 channels are combined
      * 
      * @param sourceobject
-     * @param targetelement
+     *            to connect
+     * @param targetView
+     *            representation of target
      * @param targetobject
      */
-    public static void createConnection(EObject sourceobject, Object targetelement, EObject targetobject) {
+    public static void createConnection(EObject sourceobject, EObject targetView, EObject targetobject) {
         if (sourceobject instanceof Port) {
             // From externalport
-            Port sourceport = (Port) sourceobject;
-            Channel sourcechannel = findChannelForExternalPort(sourceport);
-            InstancePort targetport = null;
-            Channel targetchannel = null;
-            if (targetobject instanceof Channel) {
-                // exterport to channel
-                targetchannel = (Channel) targetobject;
-            } else if (targetobject instanceof InstancePort) {
-                // exterport to instanceport
-                targetport = (InstancePort) targetobject;
-                targetchannel = (Channel) targetport.eContainer();
-            } else if (targetobject instanceof Port) {
-                return;
-            }
-            combineChannels(sourceport, sourcechannel, targetport, targetchannel);
+            doCreateConnection((Port) sourceobject, targetView, targetobject);
         } else if (sourceobject instanceof InstancePort) {
             // From instanceport
-            InstancePort sourceport = (InstancePort) sourceobject;
-            Channel sourcechannel = (Channel) sourceport.eContainer();
-            if (targetobject instanceof Channel) {
-                // instanceport to channel
-                Channel targetchannel = (Channel) targetobject;
-                combineChannels(sourcechannel, targetchannel, sourceport, null);
-            } else if (targetobject instanceof InstancePort) {
-                // instanceport to instanceport
-                InstancePort targetport = (InstancePort) targetobject;
-                Channel targetchannel = (Channel) targetport.eContainer();
-                combineChannels(sourcechannel, targetchannel, sourceport, targetport);
-            } else if (targetobject instanceof Port) {
-                // instanceport to externport
-                Port targetport = (Port) targetobject;
-                Channel targetchannel = findChannelForExternalPort(targetport);
-                combineChannels(targetport, targetchannel, sourceport, sourcechannel);
-            }
+            doCreateConnection((InstancePort) sourceobject, targetView, targetobject);
         } else if (sourceobject instanceof Channel) {
             // From Channel
-            Channel sourcechannel = (Channel) sourceobject;
-            if (targetobject instanceof Channel) {
-                // channel to channel
-                Channel targetchannel = (Channel) targetobject;
-                combineChannels(sourcechannel, targetchannel, null, null);
-            } else if (targetobject instanceof InstancePort) {
-                // channel to instanceport
-                InstancePort targetport = (InstancePort) targetobject;
-                Channel targetchannel = (Channel) targetport.eContainer();
-                combineChannels(sourcechannel, targetchannel, null, targetport);
-            } else if (targetobject instanceof Port) {
-                // channel to externalport
-                Port targetport = (Port) targetobject;
-                Channel targetchannel = findChannelForExternalPort(targetport);
-                combineChannels(targetport, targetchannel, null, sourcechannel);
-            }
+            doCreateConnection((Channel) sourceobject, targetView, targetobject);
         }
-        CreationHelper.doValidate(targetobject, targetelement);
+        CreationHelper.doValidate(targetobject, targetView);
+    }
+
+    private static void doCreateConnection(Port sourceport, EObject targetView, EObject targetobject) {
+        Channel sourcechannel = findChannelForExternalPort(sourceport);
+        InstancePort targetport = null;
+        Channel targetchannel = null;
+        if (targetobject instanceof Channel) {
+            // exterport to channel
+            targetchannel = (Channel) targetobject;
+        } else if (targetobject instanceof InstancePort) {
+            // exterport to instanceport
+            targetport = (InstancePort) targetobject;
+            targetchannel = (Channel) targetport.eContainer();
+        } else if (targetobject instanceof Port) {
+            return;
+        }
+        combineChannels(sourceport, sourcechannel, targetport, targetchannel);
+    }
+
+    private static void doCreateConnection(InstancePort sourceport, EObject targetView, EObject targetobject) {
+        Channel sourcechannel = (Channel) sourceport.eContainer();
+        if (targetobject instanceof Channel) {
+            // instanceport to channel
+            Channel targetchannel = (Channel) targetobject;
+            combineChannels(sourcechannel, targetchannel, sourceport, null);
+        } else if (targetobject instanceof InstancePort) {
+            // instanceport to instanceport
+            InstancePort targetport = (InstancePort) targetobject;
+            Channel targetchannel = (Channel) targetport.eContainer();
+            combineChannels(sourcechannel, targetchannel, sourceport, targetport);
+        } else if (targetobject instanceof Port) {
+            // instanceport to externport
+            Port targetport = (Port) targetobject;
+            Channel targetchannel = findChannelForExternalPort(targetport);
+            combineChannels(targetport, targetchannel, sourceport, sourcechannel);
+        }
+    }
+
+    private static void doCreateConnection(Channel sourcechannel, EObject targetView, EObject targetobject) {
+        if (targetobject instanceof Channel) {
+            // channel to channel
+            Channel targetchannel = (Channel) targetobject;
+            combineChannels(sourcechannel, targetchannel, null, null);
+        } else if (targetobject instanceof InstancePort) {
+            // channel to instanceport
+            InstancePort targetport = (InstancePort) targetobject;
+            Channel targetchannel = (Channel) targetport.eContainer();
+            combineChannels(sourcechannel, targetchannel, null, targetport);
+        } else if (targetobject instanceof Port) {
+            // channel to externalport
+            Port targetport = (Port) targetobject;
+            Channel targetchannel = findChannelForExternalPort(targetport);
+            combineChannels(targetport, targetchannel, null, sourcechannel);
+        }
     }
 
     /**
@@ -232,48 +240,53 @@ public final class CreationHelper {
      * channel. This method uses {@link CreationHelper#createConnection(EObject, Object, EObject)} to add the new port
      * to the channel.
      * 
-     * @param source
+     * @param channel
+     *            to update
+     * @param view
+     *            element to refresh
+     * 
+     * @param old
      *            The port that will be removed from the channel
-     * @param targetelement
+     * @param oldContainer
      *            Diagram target element
-     * @param targetobject
+     * @param target
      *            The port that will added to the channel
+     * @param targetContainer
      */
-    public static void reconnectConnection(Object source, Object targetelement, EObject targetobject) {
-        Channel originalChannel = null;
+    public static void reconnectConnection(Channel channel, EObject view, //
+            EObject old, EObject oldContainer, EObject target, EObject targetContainer) {
 
         // Remove disconnected port from channel and remember this channel
-        if (source instanceof Port) {
-            Port port = (Port) source;
-            ClusterClass container = (ClusterClass) port.eContainer();
-            for (Channel channel : container.getChannels()) {
-                if (channel.getExternalPort() == source) {
-                    channel.setExternalPort(null);
-                    originalChannel = channel;
-                }
-            }
-        } else if (source instanceof InstancePort) {
-            InstancePort iPort = (InstancePort) source;
-            ClusterClass container = (ClusterClass) iPort.getInstance().eContainer();
-            for (Channel channel : container.getChannels()) {
-                boolean result = channel.getInstancePorts().remove(iPort);
-                if (result) {
-                    originalChannel = channel;
-                }
-            }
+        doDeleteChannelConnection(channel, old, oldContainer);
+
+        if (target instanceof InstancePort) {
+            channel.getInstancePorts().add((InstancePort) target);
+        } else if (targetContainer instanceof ClusterClass) {
+            channel.setExternalPort((Port) target);
+        } else {
+            channel.getInstancePorts().add(//
+                    createInstancePort((Instance) targetContainer, (Port) target));
         }
-        // Get an already connected port and create a connection between them
-        if (originalChannel != null) {
-            EObject channelSource = null;
-            if (!originalChannel.getInstancePorts().isEmpty()) {
-                channelSource = originalChannel.getInstancePorts().get(0);
-            } else if (originalChannel.getExternalPort() != null) {
-                channelSource = originalChannel.getExternalPort();
-            }
-            if (channelSource != null) {
-                CreationHelper.createConnection(channelSource, targetelement, targetobject);
-            }
-        }
+
+        CreationHelper.doValidate(target, view);
+    }
+
+    /**
+     * Creates InstancePort.
+     * 
+     * @param instance
+     *            of element
+     * @param port
+     *            of element
+     * @return new unattached InstancePort
+     */
+    public static InstancePort createInstancePort(Instance instance, Port port) {
+        InstancePort result = PooslFactoryImpl.init().createInstancePort();
+        result.setInstance(instance);
+        PortReference portRef = PooslFactoryImpl.init().createPortReference();
+        portRef.setPort(port.getName());
+        result.setPort(portRef);
+        return result;
     }
 
     public static void createNewPort(EObject object) {
@@ -426,9 +439,9 @@ public final class CreationHelper {
     public static void deleteInstance(Instance instance) {
         if (isEditAllowed(instance) && instance.eContainer() instanceof ClusterClass) {
             ClusterClass cluster = (ClusterClass) instance.eContainer();
-            for (Iterator<Channel> channelIt = cluster.getChannels().iterator(); channelIt.hasNext(); ) {
+            for (Iterator<Channel> channelIt = cluster.getChannels().iterator(); channelIt.hasNext(); /**/) {
                 Channel channel = channelIt.next();
-                for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); ) {
+                for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); /**/) {
                     InstancePort instanceport = iterator.next();
                     if (instanceport.getInstance() == instance) {
                         iterator.remove();
@@ -443,34 +456,23 @@ public final class CreationHelper {
         }
     }
 
-    public static void deleteChannelConnection(DEdge connection) {
-        if (connection.getTargetNode() instanceof DNode && connection.getSourceNode() instanceof DNode) {
-            DNode target = (DNode) connection.getTargetNode();
-            DNode source = (DNode) connection.getSourceNode();
+    public static void deleteChannelConnection(Channel channel, EObject port, EObject portParent) {
+        doDeleteChannelConnection(channel, port, portParent);
+        saveChanges(channel);
+    }
 
-            // connections from channel
-            if (source.getTarget() instanceof Channel) {
-                Channel channel = (Channel) source.getTarget();
-
-                if (target.getTarget() instanceof InstancePort) {
-                    InstancePort iport = (InstancePort) target.getTarget();
-                    channel.getInstancePorts().remove(iport);
-                } else if (target.getTarget() instanceof Port) {
-                    channel.setExternalPort(null);
-                }
-                saveChanges(channel);
-            }
-
-            // connections not from channel are a direct connections between
-            // two ports, delete channel
-            if (source.getTarget() instanceof InstancePort) {
-                InstancePort port = (InstancePort) source.getTarget();
-                Channel channel = (Channel) port.eContainer();
-                ClusterClass cluster = (ClusterClass) channel.eContainer();
-                cluster.getChannels().remove(channel);
-                saveChanges(cluster);
-            }
+    private static void doDeleteChannelConnection(Channel channel, EObject port, EObject portParent) {
+        if (port instanceof InstancePort) {
+            channel.getInstancePorts().remove(port);
+        } else if (portParent instanceof ClusterClass) {
+            channel.setExternalPort(null);
+        } else {
+            String portName = ((Port) port).getName();
+            channel.getInstancePorts().removeIf(it -> //
+            it.getPort().getPort().equals(portName) && it.getInstance() == portParent);
         }
+        saveChanges(channel);
+
     }
 
     public static boolean deleteInstanceVariable(Variable var) {
@@ -882,16 +884,14 @@ public final class CreationHelper {
         }
     }
 
-    private static boolean removeObsoleteChannel(EObject object) {
-        if (object instanceof Channel) {
-            Channel channel = (Channel) object;
-            if (CompositeStructureDiagramServices.getNumberOfChannelConnections(channel) < 3) {
-                if (channel.eContainer() != null) {
-                    ClusterClass cluster = (ClusterClass) channel.eContainer();
-                    cluster.getChannels().remove(channel);
-                }
-                return true;
+    private static boolean removeObsoleteChannel(Channel object) {
+        Channel channel = object;
+        if (CompositeStructureDiagramServices.getNumberOfChannelEnds(channel) < 3) {
+            if (channel.eContainer() != null) {
+                ClusterClass cluster = (ClusterClass) channel.eContainer();
+                cluster.getChannels().remove(channel);
             }
+            return true;
         }
         return false;
     }
@@ -916,14 +916,14 @@ public final class CreationHelper {
         return null;
     }
 
-    private static DialectEditor getDialectEditor(EObject targetobject, Object targetelement) {
+    private static DialectEditor getDialectEditor(EObject targetobject, EObject targetView) {
         DDiagram diagram = null;
         DialectEditor dialecteditor = null;
-        if (targetelement instanceof DDiagramElement) {
-            DDiagramElement diagramelement = (DDiagramElement) targetelement;
+        if (targetView instanceof DDiagramElement) {
+            DDiagramElement diagramelement = (DDiagramElement) targetView;
             diagram = diagramelement.getParentDiagram();
-        } else if (targetelement instanceof DDiagram) {
-            diagram = (DDiagram) targetelement;
+        } else if (targetView instanceof DDiagram) {
+            diagram = (DDiagram) targetView;
         }
 
         Session session = SessionManager.INSTANCE.getSession(targetobject);
@@ -947,56 +947,59 @@ public final class CreationHelper {
         }
     }
 
-    private static void doValidate(EObject targetobject, Object targetelement) {
+    private static void doValidate(EObject targetobject, EObject targetView) {
 
-        DialectEditor editor = getDialectEditor(targetobject, targetelement);
+        DialectEditor editor = getDialectEditor(targetobject, targetView);
         if (editor != null) {
             editor.validateRepresentation();
         }
     }
 
     public static void deletePort(Port port) {
-        if (isEditAllowed(port)) {
-            EObject holder = port.eContainer();
-            List<ClusterClass> classesusingport = new ArrayList<>();
-            EObject container = port.eContainer();
-            if (container instanceof ClusterClass) {
-                classesusingport.add((ClusterClass) container);
-            }
-
-            boolean allowed = true;
-            if (classesusingport.size() > 1) {
-                allowed = MessageDialog.openConfirm(Display.getDefault().getActiveShell(), MESSAGE_TITLE_DELETE_PORT, MESSAGE_DELETE_PORT);
-            }
-
-            if (allowed) {
-                for (ClusterClass cClass : classesusingport) {
-                    for (Channel channel : cClass.getChannels()) {
-                        for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); ) {
-                            InstancePort instancePort = iterator.next();
-                            String iPort = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
-                            if (iPort.equals(port.getName())) {
-                                iterator.remove();
-                            }
-                        }
-                    }
-                    // remove connection inside cluster to the port
-                    if (port.eContainer() instanceof ClusterClass) {
-                        ClusterClass cluster = (ClusterClass) port.eContainer();
-                        for (Channel channel : cluster.getChannels()) {
-                            if (channel.getExternalPort().getName().equals(port.getName())) {
-                                channel.setExternalPort(null);
-                            }
-                        }
-                    }
-                }
-                if (port.eContainer() instanceof InstantiableClass) {
-                    InstantiableClass instantiableClass = (InstantiableClass) port.eContainer();
-                    instantiableClass.getPorts().remove(port);
-                }
-            }
-            saveChanges(holder);
+        if (!isEditAllowed(port)) {
+            return;
         }
+
+        EObject holder = port.eContainer();
+        List<ClusterClass> classesusingport = new ArrayList<>();
+        EObject container = port.eContainer();
+        if (container instanceof ClusterClass) {
+            classesusingport.add((ClusterClass) container);
+        }
+
+        boolean allowed = true;
+        if (classesusingport.size() > 1) {
+            allowed = MessageDialog.openConfirm(Display.getDefault().getActiveShell(), MESSAGE_TITLE_DELETE_PORT, MESSAGE_DELETE_PORT);
+        }
+
+        if (allowed) {
+            for (ClusterClass cClass : classesusingport) {
+                for (Channel channel : cClass.getChannels()) {
+                    for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); /**/) {
+                        InstancePort instancePort = iterator.next();
+                        String iPort = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
+                        if (iPort.equals(port.getName())) {
+                            iterator.remove();
+                        }
+                    }
+                }
+                // remove connection inside cluster to the port
+                if (port.eContainer() instanceof ClusterClass) {
+                    ClusterClass cluster = (ClusterClass) port.eContainer();
+                    for (Channel channel : cluster.getChannels()) {
+                        if (channel.getExternalPort().getName().equals(port.getName())) {
+                            channel.setExternalPort(null);
+                        }
+                    }
+                }
+            }
+            if (port.eContainer() instanceof InstantiableClass) {
+                InstantiableClass instantiableClass = (InstantiableClass) port.eContainer();
+                instantiableClass.getPorts().remove(port);
+            }
+        }
+        saveChanges(holder);
+
     }
 
     private static void showDialogInUse(String message) {
@@ -1141,13 +1144,8 @@ public final class CreationHelper {
     }
 
     private static List<String> getVariableNames(Iterable<Variable> variables) {
-        Iterable<String> transformed = Iterables.transform(variables, new Function<Variable, String>() {
-            @Override
-            public String apply(Variable variable) {
-                return variable.getName();
-            }
-        });
-        Iterables.filter(transformed, Predicates.notNull());
+        Iterable<String> transformed = Iterables.transform(variables, it -> it.getName());
+        Iterables.filter(transformed, it -> it != null);
         return Lists.newArrayList(transformed);
     }
 }

@@ -16,11 +16,13 @@ package org.eclipse.poosl.sirius.tooling
 import org.eclipse.poosl.Poosl
 import org.eclipse.sirius.diagram.description.DiagramDescription
 import org.eclipse.sirius.diagram.description.Layer
+import org.eclipse.sirius.diagram.description.tool.DeleteElementDescription
 import org.eclipse.sirius.diagram.description.tool.ToolSection
 import org.eclipse.sirius.viewpoint.description.tool.ChangeContext
 import org.eclipse.sirius.viewpoint.description.tool.ContainerViewVariable
 import org.eclipse.sirius.viewpoint.description.tool.CreateInstance
 import org.eclipse.sirius.viewpoint.description.tool.DropContainerVariable
+import org.eclipse.sirius.viewpoint.description.tool.ElementDeleteVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementViewVariable
 import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaAction
@@ -29,6 +31,8 @@ import org.eclipse.sirius.viewpoint.description.tool.InitialOperation
 import org.eclipse.sirius.viewpoint.description.tool.OperationAction
 import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
 import org.eclipse.sirius.viewpoint.description.tool.SetValue
+
+import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
 
 class ReusedDiagramDiagram extends PooslDiagram {
 
@@ -45,33 +49,17 @@ class ReusedDiagramDiagram extends PooslDiagram {
 	override initContent(Layer it) {
 
 		toolSections += ToolSection.create [
-			ownedTools += OperationAction.createAs(Ns.operation, "Channel Color") [
-				precondition = "[thisEObject.showMenuChangeColor()/]"
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Poosl Element") [
+				precondition = "true"
 				forceRefresh = true
-				view = ContainerViewVariable.create [
-					name = "views"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "Change HighLight  Color"
-						forceRefresh = true
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "changecolor"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[views/]"
-						]
-					]
-				]
+				element = ElementDeleteVariable.named("element")
+				elementView = ElementDeleteVariable.named("elementView")
+				containerView = ContainerViewVariable.named("containerView")
+				operation = '''element.deletePooslObject(elementView)'''.trimAql.toOperation
 			]
 			ownedTools += OperationAction.createAs(Ns.operation, "Open Textual Editor") [
 				precondition = "[thisEObject.showMenuOpenTextualEditor()/]"
-				view = ContainerViewVariable.create [
-					name = "views"
-				]
+				view = ContainerViewVariable.named("views")
 				initialOperation = InitialOperation.create [
 					firstModelOperations = ExternalJavaAction.create [
 						name = "OpenTextualEditor"
@@ -89,9 +77,7 @@ class ReusedDiagramDiagram extends PooslDiagram {
 			]
 			ownedTools += OperationAction.createAs(Ns.operation, "Open Class Diagram") [
 				precondition = "true"
-				view = ContainerViewVariable.create [
-					name = "views"
-				]
+				view = ContainerViewVariable.named("views")
 				initialOperation = InitialOperation.create [
 					firstModelOperations = ExternalJavaAction.create [
 						name = "OpenClassDiagram"
@@ -157,9 +143,7 @@ class ReusedDiagramDiagram extends PooslDiagram {
 			ownedTools += OperationAction.createAs(Ns.operation, "Show/Hide Communication Elements") [
 				precondition = "true"
 				forceRefresh = true
-				view = ContainerViewVariable.create [
-					name = "views"
-				]
+				view = ContainerViewVariable.named("views")
 				initialOperation = InitialOperation.create [
 					firstModelOperations = ExternalJavaAction.create [
 						name = "OpenTextualEditor"
@@ -178,9 +162,7 @@ class ReusedDiagramDiagram extends PooslDiagram {
 			ownedTools += OperationAction.createAs(Ns.operation, "StructureDiagramFromStructure") [
 				label = "Open Composite Structure Diagram"
 				precondition = "[thisEObject.showMenuInstanceOpenStructureDiagram()/]"
-				view = ContainerViewVariable.create [
-					name = "views"
-				]
+				view = ContainerViewVariable.named("views")
 				initialOperation = InitialOperation.create [
 					firstModelOperations = ExternalJavaAction.create [
 						name = "OpenGraphicalEditor"
@@ -198,9 +180,7 @@ class ReusedDiagramDiagram extends PooslDiagram {
 			]
 			ownedTools += OperationAction.createAs(Ns.operation, "Open Instance in Textual Editor") [
 				precondition = "[thisEObject.showMenuOpenTextualEditorInstance()/]"
-				view = ContainerViewVariable.create [
-					name = "views"
-				]
+				view = ContainerViewVariable.named("views")
 				initialOperation = InitialOperation.create [
 					firstModelOperations = ExternalJavaAction.create [
 						name = "OpenTextualEditor"

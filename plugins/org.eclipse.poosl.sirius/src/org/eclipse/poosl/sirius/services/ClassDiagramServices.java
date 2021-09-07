@@ -52,11 +52,8 @@ import com.google.common.collect.Lists;
  * 
  * @author Koen Staal
  */
-
-public class ClassDiagramServices extends AbstractServices {
-
-    public ClassDiagramServices() {
-    }
+@SuppressWarnings("checkstyle:HideUtilityClassConstructor") // not applicable for ODesign Services
+public class ClassDiagramServices {
 
     public String getInstanceNameClassDiagram(Instance instance) {
         StringBuilder name = new StringBuilder();
@@ -234,7 +231,7 @@ public class ClassDiagramServices extends AbstractServices {
     }
 
     public boolean isMethod(EObject object) {
-        return (object instanceof ProcessMethod || object instanceof DataMethod) && !isBundleResource(object);
+        return (object instanceof ProcessMethod || object instanceof DataMethod) && !AbstractServices.isBundleResource(object);
     }
 
     public boolean isVariable(EObject object) {
@@ -299,14 +296,14 @@ public class ClassDiagramServices extends AbstractServices {
     }
 
     public static String getUniqueClusterName(EObject container, String original) {
-        return NameHelper.getUniqueClusterName(COPYOF + original, container);
+        return NameHelper.getUniqueClusterName(AbstractServices.COPYOF + original, container);
     }
 
     public static String getUniqueProcessName(EObject container, String original) {
-        return NameHelper.getUniqueProcessName(COPYOF + original, container);
+        return NameHelper.getUniqueProcessName(AbstractServices.COPYOF + original, container);
     }
 
     public static String getUniqueDataName(EObject container, String original) {
-        return NameHelper.getUniqueDataName(COPYOF + original, container);
+        return NameHelper.getUniqueDataName(AbstractServices.COPYOF + original, container);
     }
 }

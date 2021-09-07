@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.poosl.sirius.permissions;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -281,5 +282,11 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
 
     public void createdRepresentation(URI uri) {
         creatingURIs.remove(uri);
+    }
+
+    @Override
+    public List<EObject> getLockedObjects() {
+        // TODO Auto-generated method stub
+        return new ArrayList<>();
     }
 }

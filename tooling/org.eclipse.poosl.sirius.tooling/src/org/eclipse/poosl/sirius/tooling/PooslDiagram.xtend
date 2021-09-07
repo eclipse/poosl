@@ -16,7 +16,16 @@ package org.eclipse.poosl.sirius.tooling
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.sirius.diagram.description.style.EdgeStyleDescription
 import org.eclipse.sirius.diagram.description.style.SquareDescription
+import org.eclipse.sirius.diagram.description.tool.DeleteElementDescription
+import org.eclipse.sirius.diagram.description.tool.DoubleClickDescription
+import org.eclipse.sirius.viewpoint.description.AbstractVariable
 import org.eclipse.sirius.viewpoint.description.style.BasicLabelStyleDescription
+import org.eclipse.sirius.viewpoint.description.tool.AbstractToolDescription
+import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaAction
+import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaActionParameter
+import org.eclipse.sirius.viewpoint.description.tool.InitialOperation
+import org.eclipse.sirius.viewpoint.description.tool.ModelOperation
+import org.eclipse.sirius.viewpoint.description.tool.OperationAction
 import org.mypsycho.modit.emf.sirius.api.AbstractDiagram
 import org.mypsycho.modit.emf.sirius.api.AbstractGroup
 
@@ -47,6 +56,8 @@ abstract class PooslDiagram extends AbstractDiagram {
 	override initDefaultStyle(BasicLabelStyleDescription it) {
 		super.initDefaultStyle(it)
 		
+		labelExpression = "feature:name" // Ecore default value
+		
 		// Built-in value for square, probably improper
 		if (it instanceof SquareDescription) {
 			labelSize = 8
@@ -54,5 +65,41 @@ abstract class PooslDiagram extends AbstractDiagram {
 		}
 	}
 
+	def param(ExternalJavaAction it, String paramName, String paramValue) {
+		parameters += ExternalJavaActionParameter.create [
+			name = paramName
+			value = paramValue
+		]
+	}
+
+
+	def <R extends AbstractVariable> R named(Class<R> type, String varName) {
+		type.create [
+			name = varName
+		]
+	}
+
+    
+	// TODO: update AbstractDiagram
+	override setOperation(AbstractToolDescription it, ModelOperation value) {
+		switch(it) {
+			OperationAction: initialOperation = value.toTool
+			DeleteElementDescription: initialOperation = value.toTool
+			DoubleClickDescription: initialOperation = value.toTool
+			default: super.setOperation(it, value)
+		}	
+	}
 	
+		
+	def callJavaAction(String actionName, String actionCall, Pair<String, String>... params) {
+		ExternalJavaAction.create [
+			id = "externalcall"
+			name = actionName
+			forceRefresh = true
+			param("action", actionCall)			
+			params.forEach[ p |
+				param(p.key, p.value)
+			]
+		]
+	}
 }
