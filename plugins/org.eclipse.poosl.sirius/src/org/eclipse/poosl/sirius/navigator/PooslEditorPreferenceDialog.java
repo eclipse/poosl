@@ -17,23 +17,19 @@ import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.poosl.sirius.Activator;
 import org.eclipse.poosl.sirius.IPreferenceConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -42,7 +38,7 @@ import org.eclipse.swt.widgets.Shell;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
-public class PooslEditorPreferenceDialog extends Dialog {
+public class PooslEditorPreferenceDialog extends MessageDialog {
     public static final String CLASS_DIAGRAM = "Class Diagram";
 
     public static final String DIAGRAM_NAME_SYSTEM = " of System";
@@ -55,8 +51,6 @@ public class PooslEditorPreferenceDialog extends Dialog {
 
     private static final String GRAPHICAL_EDITOR = "Graphical Editor ({0})";
 
-    private static final Point MINIMUM_SIZE = new Point(500, 300);
-
     private static final String TITLE = "Choose Editor";
 
     private Button btnTextual;
@@ -68,8 +62,6 @@ public class PooslEditorPreferenceDialog extends Dialog {
     private OpenStrategy selection;
 
     private final String diagramDescription;
-
-    private final String dialogLabel;
 
     private Button btnClassDiagram;
 
@@ -84,43 +76,9 @@ public class PooslEditorPreferenceDialog extends Dialog {
      * @param isClassDiagramShown
      */
     public PooslEditorPreferenceDialog(Shell parentShell, String dialogLabel, String diagramDescription, boolean isClassDiagramShown) {
-        super(parentShell);
-        this.dialogLabel = dialogLabel;
+        super(parentShell, TITLE, null, dialogLabel, MessageDialog.QUESTION, new String[] { IDialogConstants.OK_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
         this.diagramDescription = diagramDescription;
         this.isClassDiagramShown = isClassDiagramShown;
-        parentShell.setText("Choose Editor");
-    }
-
-    @Override
-    protected void configureShell(Shell newShell) {
-        super.configureShell(newShell);
-        newShell.setText(TITLE);
-        newShell.setMinimumSize(MINIMUM_SIZE);
-    }
-
-    /**
-     * Create contents of the dialog.
-     * 
-     * @param parent
-     */
-    @Override
-    protected Control createDialogArea(Composite parent) {
-        Composite container = (Composite) super.createDialogArea(parent);
-        container.setLayout(new FormLayout());
-        GridData gdContainer = new GridData(SWT.FILL, SWT.FILL, true, true);
-        container.setLayoutData(gdContainer);
-
-        Label lblNewLabel = new Label(container, SWT.WRAP);
-        FormData fdLblNewLabel = new FormData();
-        fdLblNewLabel.right = new FormAttachment(100, -10);
-        fdLblNewLabel.top = new FormAttachment(0, 13);
-        fdLblNewLabel.left = new FormAttachment(0, 11);
-        lblNewLabel.setLayoutData(fdLblNewLabel);
-        lblNewLabel.setText(dialogLabel);
-        createButtons(container, lblNewLabel);
-        createButtonListeners();
-        loadPreferences();
-        return container;
     }
 
     private void createButtonListeners() {
@@ -150,84 +108,52 @@ public class PooslEditorPreferenceDialog extends Dialog {
         });
     }
 
+    private void createButtons(Composite parent) {
+        Composite container = new Composite(parent, SWT.NULL);
+        container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        container.setLayout(new GridLayout(1, false));
+
+        btnTextual = new Button(container, SWT.RADIO);
+        btnTextual.setText(TEXTUAL_EDITOR);
+
+        btnGraphical = new Button(container, SWT.RADIO | SWT.WRAP);
+        btnGraphical.setText(MessageFormat.format(GRAPHICAL_EDITOR, diagramDescription));
+
+        btnClassDiagram = new Button(container, SWT.RADIO | SWT.WRAP);
+        if (isClassDiagramShown) {
+            btnClassDiagram.setText(MessageFormat.format(GRAPHICAL_EDITOR, CLASS_DIAGRAM));
+        } else {
+            btnClassDiagram.setVisible(false);
+        }
+
+        btnRememberMyDecision = new Button(parent, SWT.CHECK);
+        btnRememberMyDecision.setText("Remember my decision");
+    }
+
+    @Override
+    protected Control createCustomArea(Composite parent) {
+        createButtons(parent);
+        createButtonListeners();
+        loadPreferences();
+        return super.createCustomArea(parent);
+    }
+
+    @Override
+    protected void buttonPressed(int buttonId) {
+        if (buttonId == OK) {
+            saveInput();
+        }
+        super.buttonPressed(buttonId);
+    }
+
     private void loadPreferences() {
         IPreferencesService preferencesService = Platform.getPreferencesService();
         String pref = preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER,
                 IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL, null);
-        boolean textual = pref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL);
-        btnTextual.setSelection(textual);
-        btnGraphical.setSelection(!textual);
-        btnGraphical.setSelection(false);
+        btnTextual.setSelection(pref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL));
+        btnGraphical.setSelection(pref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_GRAPHICAL));
+        btnClassDiagram.setSelection(pref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM));
 
-    }
-
-    private void createButtons(Composite container, Label lblNewLabel) {
-        btnTextual = new Button(container, SWT.RADIO);
-        FormData fdBtnTextual = new FormData();
-        fdBtnTextual.top = new FormAttachment(lblNewLabel, 6);
-        fdBtnTextual.left = new FormAttachment(lblNewLabel, 0, SWT.LEFT);
-        btnTextual.setLayoutData(fdBtnTextual);
-        btnTextual.setText(TEXTUAL_EDITOR);
-
-        btnGraphical = new Button(container, SWT.RADIO | SWT.WRAP);
-        FormData fdBtnGraphical = new FormData();
-        fdBtnGraphical.right = new FormAttachment(100, -10);
-        fdBtnGraphical.top = new FormAttachment(btnTextual, 6);
-        fdBtnGraphical.left = new FormAttachment(0, 11);
-        fdBtnGraphical.width = 100;
-
-        btnGraphical.setLayoutData(fdBtnGraphical);
-        btnGraphical.setText(MessageFormat.format(GRAPHICAL_EDITOR, diagramDescription));
-
-        btnRememberMyDecision = new Button(container, SWT.CHECK);
-        FormData fdBtnRememberMyDecision = new FormData();
-        fdBtnRememberMyDecision.left = new FormAttachment(lblNewLabel, 0, SWT.LEFT);
-        btnRememberMyDecision.setText("Remember my decision");
-
-        btnClassDiagram = new Button(container, SWT.RADIO | SWT.WRAP);
-        if (isClassDiagramShown) {
-            FormData fdBtnClassDiagram = new FormData();
-            fdBtnClassDiagram.right = new FormAttachment(100, -10);
-            fdBtnClassDiagram.top = new FormAttachment(btnGraphical, 6);
-            fdBtnClassDiagram.left = new FormAttachment(0, 11);
-            fdBtnClassDiagram.width = 100;
-
-            btnClassDiagram.setLayoutData(fdBtnClassDiagram);
-            btnClassDiagram.setText(MessageFormat.format(GRAPHICAL_EDITOR, CLASS_DIAGRAM));
-
-            fdBtnRememberMyDecision.top = new FormAttachment(btnClassDiagram, 18);
-        } else {
-            btnClassDiagram.setVisible(false);
-
-            fdBtnRememberMyDecision.top = new FormAttachment(btnGraphical, 18);
-        }
-
-        btnRememberMyDecision.setLayoutData(fdBtnRememberMyDecision);
-    }
-
-    /**
-     * Create contents of the button bar.
-     * 
-     * @param parent
-     */
-    @Override
-    protected void createButtonsForButtonBar(Composite parent) {
-        createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-    }
-
-    /**
-     * Return the initial size of the dialog.
-     */
-    @Override
-    protected Point getInitialSize() {
-        return MINIMUM_SIZE;
-    }
-
-    @Override
-    protected void okPressed() {
-        saveInput();
-        super.okPressed();
     }
 
     private void saveInput() {
