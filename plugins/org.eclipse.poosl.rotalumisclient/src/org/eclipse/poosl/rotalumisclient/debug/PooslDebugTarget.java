@@ -115,7 +115,7 @@ import com.google.common.collect.Iterables;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
-public class PooslDebugTarget extends PooslDebugElement implements IDebugTarget, IStepFilters, IPooslCreditReceiver {
+public final class PooslDebugTarget extends PooslDebugElement implements IDebugTarget, IStepFilters, IPooslCreditReceiver {
     private static final String COULD_NOT_LOG_RESPONSE = "Could not log response.";
 
     private static final Logger LOGGER = Logger.getLogger(PooslDebugTarget.class.getName());
