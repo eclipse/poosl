@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Poosl SDK" sequenceNumber="1630932905">
+<target name="Poosl SDK" sequenceNumber="1631180681">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.platform.sdk" version="4.15.0.I20200305-0155"/>
@@ -22,15 +22,11 @@
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.elk.algorithms.feature.feature.group" version="0.0.0"/>
-      <repository id="ELK" location="https://download.eclipse.org/elk/updates/releases/0.7.0/"/>
+      <repository id="ELK" location="https://download.eclipse.org/elk/updates/releases/0.7.1/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.202107081530"/>
       <repository id="rotalumis" location="http://www.es.ele.tue.nl/rotalumis/repository/integration/"/>
-    </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.license.feature.group" version="2.0.2.v20181016-2210"/>
-      <repository id="EPL" location="http://download.eclipse.org/cbi/updates/license"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.xpect.sdk.feature.group" version="0.2.0.201706301756"/>
@@ -73,23 +69,23 @@
       <repository id="eclipse_core" location="https://download.eclipse.org/releases/2020-03/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.sirius.specifier.ide.ui.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.specifier.ide.ui.aql.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.specifier.properties.feature.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.diagram.elk.sdk.feature.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.tests.support.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.runtime.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.runtime.aql.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.properties.feature.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.runtime.ide.ui.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.runtime.ide.eef.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.runtime.acceleo.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.runtime.ide.xtext.feature.group" version="6.4.0.202011190936"/>
+      <unit id="org.eclipse.sirius.specifier.ide.ui.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.specifier.ide.ui.aql.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.specifier.properties.feature.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.diagram.elk.sdk.feature.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.tests.support.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.runtime.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.runtime.aql.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.properties.feature.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.runtime.ide.ui.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.runtime.ide.eef.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.runtime.acceleo.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.runtime.ide.xtext.feature.group" version="6.5.1.202106111115"/>
       <unit id="org.eclipse.eef.sdk.feature.feature.group" version="2.1.5.202008270808"/>
       <unit id="org.eclipse.eef.ext.widgets.reference.feature.feature.group" version="2.1.5.202008270808"/>
-      <unit id="org.eclipse.sirius.interpreter.feature.feature.group" version="6.4.0.202011190936"/>
-      <unit id="org.eclipse.sirius.diagram.elk.feature.feature.group" version="6.4.0.202011190936"/>
-      <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/6.4.0/2020-03/"/>
+      <unit id="org.eclipse.sirius.interpreter.feature.feature.group" version="6.5.1.202106111115"/>
+      <unit id="org.eclipse.sirius.diagram.elk.feature.feature.group" version="6.5.1.202106111115"/>
+      <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-03/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.mypsycho.emf.modit_feature.feature.group" version="0.7.1.v20210723-1525"/>
