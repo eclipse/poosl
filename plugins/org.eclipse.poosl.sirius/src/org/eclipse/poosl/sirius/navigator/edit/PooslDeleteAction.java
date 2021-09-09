@@ -159,7 +159,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
 
     public static void getResources(IResource source, List<IResource> pooslFiles) {
 
-        if (source.getType() == IResource.FILE && source.getFileExtension().equals(IPreferenceConstants.POOSL_FILE_EXT)) {
+        if (source.getType() == IResource.FILE && IPreferenceConstants.POOSL_FILE_EXT.equals(source.getFileExtension())) {
             pooslFiles.add(source);
         }
 

@@ -104,7 +104,7 @@ public class NewMethodProcessDialog extends NewMethodDialog {
             if (declaration == null && !textDeclaration.getVariables().isEmpty()) {
                 declaration = CreationHelper.createDeclaration(textDeclaration.getVariables(), textDeclaration.getType());
                 outputVariables.put(textDeclaration, declaration);
-            } else {
+            } else if (declaration != null) {
                 CreationHelper.editDeclarationVariables(declaration, textDeclaration.getVariables());
             }
         }

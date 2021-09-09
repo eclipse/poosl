@@ -182,7 +182,7 @@ public final class GraphicalEditorHelper {
         activeProject.accept(new IResourceVisitor() {
             @Override
             public boolean visit(IResource resource) throws CoreException {
-                if (resource.getFileExtension() != null && resource.getFileExtension().equals(AIRD_FILE_EXTENSION)) {
+                if (AIRD_FILE_EXTENSION.equals(resource.getFileExtension())) {
                     airdlocation[0] = resource.getFullPath().toString();
                 }
                 return false;

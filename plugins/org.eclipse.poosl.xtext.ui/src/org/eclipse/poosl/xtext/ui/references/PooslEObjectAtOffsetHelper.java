@@ -254,7 +254,9 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
         Assignment assignment = GrammarUtil.containingAssignment(pNode.getGrammarElement());
         while (assignment == null && pNode != null) {
             pNode = pNode.getParent();
-            assignment = GrammarUtil.containingAssignment(pNode.getGrammarElement());
+            if (pNode != null) {
+                assignment = GrammarUtil.containingAssignment(pNode.getGrammarElement());
+            }
         }
         if (assignment != null && assignment.getFeature().equals(feature.getName())) {
             return pNode;

@@ -96,7 +96,7 @@ public final class PooslMessageSignatureDescription {
 
     public static List<String> getParameterTypes(IEObjectDescription descr) {
         if (!checkValidity(descr))
-            Collections.emptyList();
+            return Collections.emptyList();
 
         String stringDescription = descr.getUserData(STR_PARAMETERS);
         if (!stringDescription.isEmpty()) {

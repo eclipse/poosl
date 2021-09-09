@@ -466,40 +466,38 @@ public class PooslPETView extends ViewPart implements SelectionListener, KeyList
         possibleTransitionItems.clear();
         notPossibleTransitionItems.clear();
         possibleDelayTransitionIds.clear();
-        if (thread != null) {
-            List<TTransition> possibleTransitions = ((PooslDebugTarget) thread.getDebugTarget()).getPossibleTransitions();
-            for (TTransition transition : possibleTransitions) {
-                if (transition.getProcessStep() != null) {
-                    possibleTransitionIds.put(transition.getProcessStep().getNode(), transition.getProcessStep().getHandle());
-                } else if (transition.getCommunication() != null) {
-                    possibleTransitionIds.put(transition.getCommunication().getSender().getNode(), transition.getCommunication().getHandle());
-                    possibleTransitionIds.put(transition.getCommunication().getReceiver().getNode(), transition.getCommunication().getHandle());
-                } else if (transition.getDelay() != null) {
-                    possibleTransitionIds.put(transition.getDelay().getNode(), transition.getDelay().getHandle());
-                    possibleDelayTransitionIds.add(transition.getDelay().getNode());
-                } else {
-                    LOGGER.warning("possible transition not recognized: " + transition.toString());
+        List<TTransition> possibleTransitions = ((PooslDebugTarget) thread.getDebugTarget()).getPossibleTransitions();
+        for (TTransition transition : possibleTransitions) {
+            if (transition.getProcessStep() != null) {
+                possibleTransitionIds.put(transition.getProcessStep().getNode(), transition.getProcessStep().getHandle());
+            } else if (transition.getCommunication() != null) {
+                possibleTransitionIds.put(transition.getCommunication().getSender().getNode(), transition.getCommunication().getHandle());
+                possibleTransitionIds.put(transition.getCommunication().getReceiver().getNode(), transition.getCommunication().getHandle());
+            } else if (transition.getDelay() != null) {
+                possibleTransitionIds.put(transition.getDelay().getNode(), transition.getDelay().getHandle());
+                possibleDelayTransitionIds.add(transition.getDelay().getNode());
+            } else {
+                LOGGER.warning("possible transition not recognized: " + transition.toString());
+            }
+        }
+        parseTree(thread);
+        BigInteger breakpointNode = thread.getActiveBreakpointNode();
+        if (breakpointNode != null) {
+            for (TreeItem treeItem : possibleTransitionItems) {
+                TExecutiontreeBase executiontreeBaseItem = (TExecutiontreeBase) treeItem.getData();
+                if (executiontreeBaseItem.getHandle().equals(breakpointNode)) {
+                    tree.setSelection(treeItem);
+                    setDebugInstructionPointer(executiontreeBaseItem.getStmtHandle());
+                    updateVariables(executiontreeBaseItem);
                 }
             }
-            parseTree(thread);
-            BigInteger breakpointNode = thread.getActiveBreakpointNode();
-            if (breakpointNode != null) {
-                for (TreeItem treeItem : possibleTransitionItems) {
+            if (possibleTransitionItems.isEmpty()) {
+                for (TreeItem treeItem : notPossibleTransitionItems) {
                     TExecutiontreeBase executiontreeBaseItem = (TExecutiontreeBase) treeItem.getData();
                     if (executiontreeBaseItem.getHandle().equals(breakpointNode)) {
                         tree.setSelection(treeItem);
                         setDebugInstructionPointer(executiontreeBaseItem.getStmtHandle());
                         updateVariables(executiontreeBaseItem);
-                    }
-                }
-                if (possibleTransitionItems.isEmpty()) {
-                    for (TreeItem treeItem : notPossibleTransitionItems) {
-                        TExecutiontreeBase executiontreeBaseItem = (TExecutiontreeBase) treeItem.getData();
-                        if (executiontreeBaseItem.getHandle().equals(breakpointNode)) {
-                            tree.setSelection(treeItem);
-                            setDebugInstructionPointer(executiontreeBaseItem.getStmtHandle());
-                            updateVariables(executiontreeBaseItem);
-                        }
                     }
                 }
             }

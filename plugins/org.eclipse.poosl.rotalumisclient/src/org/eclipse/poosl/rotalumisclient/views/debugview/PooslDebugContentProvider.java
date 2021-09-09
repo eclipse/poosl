@@ -251,7 +251,7 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
         if (element instanceof IThread) {
             return ((IThread) element).getDebugTarget();
         } else if (element instanceof PooslDebugTreeItem) {
-            ((PooslDebugTreeItem) element).getParent();
+            return ((PooslDebugTreeItem) element).getParent();
         }
         return null;
     }

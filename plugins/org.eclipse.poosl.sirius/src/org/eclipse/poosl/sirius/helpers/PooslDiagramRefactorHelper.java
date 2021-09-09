@@ -167,7 +167,7 @@ public final class PooslDiagramRefactorHelper {
     }
 
     private static void copyResource(Session session, Session destSession, IResource source, IResource destination, IProgressMonitor monitor) {
-        if (source.getType() == IResource.FILE && source.getFileExtension().equals(IPreferenceConstants.POOSL_FILE_EXT)) {
+        if (source.getType() == IResource.FILE && IPreferenceConstants.POOSL_FILE_EXT.equals(source.getFileExtension())) {
             copyIResource(session, destSession, source, destination, monitor);
         }
 

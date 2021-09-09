@@ -112,7 +112,7 @@ public final class PooslProcessMethodDescription {
 
     public static List<PooslProcessMethodParser> getUnguardedCallDescriptions(IEObjectDescription descr) {
         if (!checkValidity(descr))
-            Collections.emptyList();
+            return Collections.emptyList();
 
         String stringDescriptions = descr.getUserData(STR_UNGUARDED_METHOD_CALLS);
         List<PooslProcessMethodParser> calls = new ArrayList<>();

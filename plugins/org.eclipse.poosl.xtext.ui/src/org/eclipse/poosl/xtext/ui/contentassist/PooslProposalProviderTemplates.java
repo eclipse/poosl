@@ -420,7 +420,9 @@ public class PooslProposalProviderTemplates extends PooslProposalProviderTermina
         EObject owner = node.getSemanticElement();
         while (node != null && !(node instanceof CompositeNodeWithSemanticElement)) {
             node = node.getParent();
-            owner = node.getSemanticElement();
+            if (node != null) {
+                owner = node.getSemanticElement();
+            }
         }
 
         if (owner instanceof Annotable) {
