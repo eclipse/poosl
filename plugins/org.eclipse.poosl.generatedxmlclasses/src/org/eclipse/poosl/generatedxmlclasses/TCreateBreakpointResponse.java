@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t_create_breakpoint_response", propOrder = { "name", "breakpointId", "result", "controlPoint", "stmtHandle", "position" })
+@XmlType(name = "t_create_breakpoint_response", propOrder = { "name", "breakpointId", "result", "stmtHandle", "position" })
 public class TCreateBreakpointResponse {
 
     @XmlElement(required = true)
@@ -57,10 +57,6 @@ public class TCreateBreakpointResponse {
 
     @XmlElement(required = true)
     protected TSourcePosition position;
-
-    // Not defined in XSD, set by Rotalumis EXE
-    @XmlElement(name = "control_point")
-    protected BigInteger controlPoint;
 
     /**
      * Gets the value of the name property.
@@ -160,27 +156,6 @@ public class TCreateBreakpointResponse {
      */
     public void setPosition(TSourcePosition value) {
         this.position = value;
-    }
-
-    /**
-     * Gets the value of the controlPoint property.
-     * 
-     * @return possible object is {@link BigInteger }
-     * 
-     */
-    public BigInteger getControlPoint() {
-        return controlPoint;
-    }
-
-    /**
-     * Sets the value of the controlPoint property.
-     * 
-     * @param value
-     *            allowed object is {@link BigInteger }
-     * 
-     */
-    public void setControlPoint(BigInteger value) {
-        this.controlPoint = value;
     }
 
 }
