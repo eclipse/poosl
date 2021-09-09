@@ -284,7 +284,6 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
         creatingURIs.remove(uri);
     }
 
-    @Override
     public List<EObject> getLockedObjects() {
         // TODO Auto-generated method stub
         return new ArrayList<>();
