@@ -10,9 +10,15 @@
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
+  <module name="SuppressWarningsFilter" />
   <module name="TreeWalker">
     <module name="SuppressionCommentFilter"/>
-    <module name="SuppressWarningsHolder"/>
+    <module name="SuppressionCommentFilter">
+	    <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
+	    <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
+	    <property name="checkFormat" value="$1"/>
+	</module>
+	<module name="SuppressWarningsHolder" /> <!-- use @SuppressWarnings -->
     <module name="JavadocMethod">
       <property name="severity" value="warning"/>
     </module>
@@ -223,7 +229,8 @@
     </module>
     <module name="ReturnCount">
       <property name="severity" value="warning"/>
-      <property name="maxForVoid" value="2"/>
+      <property name="max" value="7"/> <!-- Low value tempers with low complexity -->
+      <property name="maxForVoid" value="7"/>
       <property name="format" value="^insertionIndexFor$"/>
     </module>
     <module name="SimplifyBooleanExpression">
