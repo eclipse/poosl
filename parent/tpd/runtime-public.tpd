@@ -1,4 +1,17 @@
-target "Poosl runtime: open part" 
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
+ target "Poosl runtime: open part" 
 
 //
 // This target platform list dependencies to build project components.
@@ -110,3 +123,7 @@ location ELK "https://download.eclipse.org/elk/updates/releases/0.7.1/" {
     // org.eclipse.elk.graphviz.feature.feature.group
 }
 
+// EPL feature
+location EPL "http://download.eclipse.org/cbi/updates/license" {
+	org.eclipse.license.feature.group
+}
