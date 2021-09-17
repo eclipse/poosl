@@ -62,8 +62,7 @@ public class LaunchShortcut implements ILaunchShortcut {
         LOGGER.info("launching from selection: " + selection + " in mode: " + mode);
         IStructuredSelection sel = (IStructuredSelection) selection;
         for (Object file : sel.toArray()) {
-            IFile f = (IFile) file;
-            actualLaunch(f, mode);
+            actualLaunch((IFile) file, mode);
         }
     }
 
@@ -100,34 +99,34 @@ public class LaunchShortcut implements ILaunchShortcut {
     }
 
     private boolean isLaunchConfiguration(IFile file, ILaunchConfiguration iLaunchConfiguration) throws CoreException {
-        return iLaunchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, "").equals(file.getLocation().toOSString()); //$NON-NLS-1$
+        return iLaunchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, "") // $NON-NLS-1$
+                .equals(file.getFullPath().toPortableString());
     }
 
     private ILaunchConfigurationWorkingCopy createLaunchConfiguration(ILaunchManager mgr, ILaunchConfigurationType lct, IFile file, String name) throws CoreException {
 
-        ILaunchConfigurationWorkingCopy tempConfiguration = lct.newInstance(null, name);
-        tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, file.getLocation().toOSString());
+        ILaunchConfigurationWorkingCopy result = lct.newInstance(null, name);
 
         String externalConfigPath = findExternalConfigPath(file);
         if (externalConfigPath != null) {
-            tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, externalConfigPath);
+            result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, externalConfigPath);
         }
 
-        tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, file.getProject().getName());
-        tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, file.getFullPath().toOSString());
-        tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "10001"); //$NON-NLS-1$
-        tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_TEST_CONF, isTestConfiguration());
+        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, file.getProject().getName());
+        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, file.getFullPath().toPortableString());
+        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_TEST_CONF, isTestConfiguration());
 
-        String type = tempConfiguration.getType().getSourceLocatorId();
+        String type = result.getType().getSourceLocatorId();
         IPersistableSourceLocator locator = mgr.newSourceLocator(type);
         if (locator instanceof AbstractSourceLookupDirector) {
             AbstractSourceLookupDirector director = (AbstractSourceLookupDirector) locator;
             director.setSourceContainers(createSourceContainers(file.getProject()));
 
-            tempConfiguration.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_MEMENTO, director.getMemento());
-            tempConfiguration.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_ID, director.getId());
+            result.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_MEMENTO, director.getMemento());
+            result.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_ID, director.getId());
         }
-        return tempConfiguration;
+        return result;
     }
 
     private ISourceContainer[] createSourceContainers(IProject project) {

@@ -22,7 +22,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -76,7 +75,7 @@ public class PooslNewProjectWizard extends Wizard implements INewWizard {
             IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
             if (window != null) {
                 try {
-                    workbench.showPerspective(PooslConstants.ID_POOSL_EDIT_PERSPECTIVE, window);
+                    workbench.showPerspective(PooslProjectSupport.ID_POOSL_EDIT_PERSPECTIVE, window);
                 } catch (WorkbenchException e) {
                     LOGGER.log(Level.WARNING, "Could switch to poosl perspective.", e);
                 }

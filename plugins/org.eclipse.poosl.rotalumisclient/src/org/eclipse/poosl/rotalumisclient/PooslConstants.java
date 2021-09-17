@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient;
 
+import org.eclipse.poosl.pooslproject.PooslProjectSupport;
+
 /**
  * The PooslConstants.
  * 
@@ -47,8 +49,10 @@ public final class PooslConstants {
     public static final String ID_POOSL_STACKTRACEVARIABLEVIEW = "org.eclipse.poosl.views.stacktracevariableview"; //$NON-NLS-1$
 
     // Perspective ID statics
-    public static final String ID_POOSL_EDIT_PERSPECTIVE = "org.eclipse.poosl.normalperspective"; //$NON-NLS-1$
+    /** Perspective ID for edition. */
+    public static final String ID_POOSL_EDIT_PERSPECTIVE = PooslProjectSupport.ID_POOSL_EDIT_PERSPECTIVE;
 
+    /** Perspective ID for execution. */
     public static final String ID_POOSL_DEBUG_PERSPECTIVE = "org.eclipse.poosl.debugperspective"; //$NON-NLS-1$
 
     // Debug event statics
@@ -73,13 +77,16 @@ public final class PooslConstants {
     public static final int STACKFRAME_INSPECT = 0123;
 
     // Configuration statics
-    public static final String CONFIGURATION_ATTRIBUTE_MODEL_PATH = "modelpath"; //$NON-NLS-1$
+    // public static final String CONFIGURATION_ATTRIBUTE_MODEL_PATH = "modelpath"; //$NON-NLS-1$
 
     public static final String CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH = "externpath"; //$NON-NLS-1$
 
     public static final String CONFIGURATION_ATTRIBUTE_PROJECT = "projectname"; //$NON-NLS-1$
 
     public static final String CONFIGURATION_ATTRIBUTE_SERVER_IP = "127.0.0.1"; //$NON-NLS-1$
+
+    /** Attribute for no charset verification in configuration. */
+    public static final String CONFIGURATION_ATTRIBUTE_FORCE_CHARSET = "forcecharset"; //$NON-NLS-1$
 
     public static final String CONFIGURATION_ATTRIBUTE_SERVER_PORT = "serverport"; //$NON-NLS-1$
 

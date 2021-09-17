@@ -37,6 +37,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.DebugEvent;
@@ -374,7 +375,7 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
         this.includes = includes;
 
         // Set the name for this debugTarget to the name of the model
-        String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
+        String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
         this.name = modelPath.substring(modelPath.lastIndexOf(File.separator) + 1);
         // Get the projectName from the launchConfiguration
         projectName = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
@@ -401,8 +402,10 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
         compileJob.schedule();
 
         try {
-            String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
-            String rfcModelPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(modelPath));
+            String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
+            String filePath = ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(modelPath)).getLocation().toOSString();
+
+            String rfcModelPath = FileURIConverter.toConversion(FileURIConverter.removeFilePrefix(filePath));
             String rfcBasicPath = null;
             if (!ImportingHelper.useDefaultBasicclasses()) {
                 String basicString = ImportingHelper.getBasicAbsoluteString();

@@ -17,16 +17,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.bind.JAXBException;
-
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -48,7 +44,6 @@ import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.poosl.rotalumisclient.Client;
 import org.eclipse.poosl.rotalumisclient.Messages;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
@@ -58,18 +53,6 @@ import org.eclipse.poosl.rotalumisclient.logging.PooslLogger;
 import org.eclipse.poosl.rotalumisclient.runner.RotalumisRunner;
 import org.eclipse.poosl.xtext.importing.ImportingHelper;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.ListSelectionDialog;
-import org.eclipse.ui.dialogs.SelectionDialog;
-import org.eclipse.ui.model.WorkbenchPartLabelProvider;
-import org.eclipse.ui.progress.UIJob;
 
 /**
  * The LaunchDelegate.
@@ -108,148 +91,157 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
         monitor.beginTask("Starting simulation.", 3);
         monitor.setTaskName("Validating model.");
 
-        if (validateConfiguration(configuration)) {
-            try {
-                final String confProjectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
-                IProject project = getProject(confProjectName);
+        checkConfiguration(configuration);
+        try {
+            IProject project = getProject(configuration);
+            IFile model = getModel(configuration);
+            boolean forceCharset = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET, false);
 
-                if (checkForDirtyFiles(project)) {
-                    terminateLaunch(launch);
-                    return;
-                }
-                final String confModelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
-                final String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
-                final String confLaunchMode = launch.getLaunchMode();
-                final String confMaxStackSize = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
-                final String confRotalumisPath = RotalumisRunner.getRotalumis().getAbsolutePath();
-                final String confSeed = getSimulationSeed(configuration);
-                final boolean confIsQuiet = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
-                final String confServerPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
-                final String confServerIp = PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_IP;
-                final List<String> includes = getIncludePaths(project);
-                final boolean confTest = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_TEST_CONF, false);
-
-                if (confLaunchMode.equals(ILaunchManager.DEBUG_MODE) && !isServerPortAvailable(confServerPort, launch)) {
-                    return;
-                }
-
-                StringBuilder loggingBuilder = new StringBuilder();
-                loggingBuilder.append("Starting Simulation\n\tmode: ").append(confLaunchMode);
-                loggingBuilder.append("\n\tSimulator location: ").append(confRotalumisPath);
-                loggingBuilder.append("\n\tModel location: ").append(confModelPath);
-                loggingBuilder.append("\n\tSimulator seed: ").append(confSeed);
-                loggingBuilder.append("\n\tip & port: ").append(confServerIp + ":" + confServerPort);
-                loggingBuilder.append("\n\tMax Stack size: ").append(confMaxStackSize);
-                loggingBuilder.append("\n\tRun as Test: ").append(confTest);
-                loggingBuilder.append("\n\tExternal Config: ").append(externalConfigPath);
-                LOGGER.info(loggingBuilder.toString());
-
-                monitor.worked(2);
-                monitor.setTaskName("Starting Rotalumis");
-
-                // Determining Rotalumis command based on launchmode
-                // Creating command list to start Rotalumis process
-                List<String> commandList = new ArrayList<>();
-
-                commandList.add(confRotalumisPath);
-                if (mode.equals(ILaunchManager.RUN_MODE)) {
-                    if (confTest) {
-                        commandList.add(OPTION_DEBUG);
-                        commandList.add(OPTION_TEST);
-                    } else {
-                        commandList.add(OPTION_FILE_POOSL);
-                    }
-                    commandList.add(confModelPath);
-
-                    if (externalConfigPath != null && !externalConfigPath.isEmpty()) {
-                        commandList.add(OPTION_EXTERNAL_CONFIG);
-                        commandList.add(externalConfigPath);
-                    }
-                    if (!ImportingHelper.useDefaultBasicclasses()) {
-                        commandList.add(OPTION_BASIC_CLASSES);
-                        commandList.add(ImportingHelper.getBasicAbsoluteString());
-                    }
-                    for (String include : includes) {
-                        commandList.add(OPTION_INCLUDE_LIB);
-                        commandList.add(include);
-                    }
-                } else if (confLaunchMode.equals(ILaunchManager.DEBUG_MODE)) {
-                    commandList.add(OPTION_PORT);
-                    commandList.add(confServerPort);
-                    // debug basic classes will be set during compile request
-                }
-
-                commandList.add(OPTION_SEED);
-                commandList.add(confSeed);
-                commandList.add(OPTION_STACKSIZE);
-                commandList.add(confMaxStackSize);
-                if (confIsQuiet) {
-                    commandList.add(OPTION_QUIET);
-                }
-
-                String[] commandLine = commandList.toArray(new String[commandList.size()]);
-                LOGGER.info("Starting Rotalumis process: " + Arrays.toString(commandLine));
-
-                // Switching to working directory
-                File workingDirectory = createWorkingDirectory(confModelPath);
-
-                // Execute Rotalumis process
-                Process proc = DebugPlugin.exec(commandLine, workingDirectory);
-
-                // Create Iprocess based on Rotalumis process and add it to the
-                // current launch
-                IProcess process = DebugPlugin.newProcess(launch, proc, "[Seed: " + confSeed + "]");
-                LOGGER.finest("Platform default charset: " + System.getProperty(PooslConstants.PLATFORM_ENCODING));
-
-                if (confLaunchMode.equals(ILaunchManager.RUN_MODE)) {
-                    // When in run mode start a thread and wait for process
-                    // termination.
-                    Thread simulatorTerminationWatcher = new Thread(new SimulatorTerminationWatcher(null, proc, confProjectName));
-                    simulatorTerminationWatcher.setName("Simulator termination watcher");
-                    simulatorTerminationWatcher.start();
-                    monitor.done();
-                } else if (confLaunchMode.equals(ILaunchManager.DEBUG_MODE)) {
-                    // Create a client to connect to the running Rotalumis
-                    // process
-                    Client client = new Client(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_IP, Integer.valueOf(confServerPort));
-
-                    // Create a debugtarget to take responsibility of
-                    // debugging commands
-                    PooslDebugTarget pooslDebugTarget = new PooslDebugTarget(launch, process, client, proc, includes);
-                    monitor.setTaskName("Compiling Model and gathering debug information");
-                    pooslDebugTarget.start();
-                }
-                monitor.setTaskName("Starting simulation");
-                monitor.done();
-
-            } catch (JAXBException | IOException | InterruptedException e) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
-                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, e.getMessage() + (e.getCause() != null ? "\n\n" + e.getCause().getMessage() : ""), e); //$NON-NLS-1$ //$NON-NLS-2$
-                throw new CoreException(status);
+            if (model == null || !new ExecutableResourceVerification(model, forceCharset).isValid()) {
+                terminateLaunch(launch);
+                return;
             }
+
+            String confModelPath = model.getLocation().toOSString();
+
+            final String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
+            final String confLaunchMode = launch.getLaunchMode();
+            final String confMaxStackSize = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
+            final String confRotalumisPath = RotalumisRunner.getRotalumis().getAbsolutePath();
+            final String confSeed = getSimulationSeed(configuration);
+            final boolean confIsQuiet = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
+            final String confServerPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+            final String confServerIp = PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_IP;
+            final List<String> includes = getIncludePaths(project);
+            final boolean confTest = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_TEST_CONF, false);
+
+            if (confLaunchMode.equals(ILaunchManager.DEBUG_MODE) && !isServerPortAvailable(confServerPort, launch)) {
+                return;
+            }
+            StringBuilder loggingBuilder = new StringBuilder();
+            loggingBuilder.append("Starting Simulation\n\tmode: ").append(confLaunchMode); //$NON-NLS-1$
+            loggingBuilder.append("\n\tSimulator location: ").append(confRotalumisPath); //$NON-NLS-1$
+            loggingBuilder.append("\n\tModel location: ").append(model.getLocation().toOSString()); //$NON-NLS-1$
+            loggingBuilder.append("\n\tSimulator seed: ").append(confSeed); //$NON-NLS-1$
+            loggingBuilder.append("\n\tip & port: ").append(confServerIp + ":" + confServerPort); //$NON-NLS-1$ //$NON-NLS-2$
+            loggingBuilder.append("\n\tMax Stack size: ").append(confMaxStackSize); //$NON-NLS-1$
+            loggingBuilder.append("\n\tRun as Test: ").append(confTest); //$NON-NLS-1$
+            loggingBuilder.append("\n\tExternal Config: ").append(externalConfigPath); //$NON-NLS-1$
+            LOGGER.info(loggingBuilder.toString());
+
+            monitor.worked(2);
+            monitor.setTaskName("Starting Rotalumis");
+
+            // Determining Rotalumis command based on launchmode
+            // Creating command list to start Rotalumis process
+            List<String> args = new ArrayList<>();
+
+            args.add(confRotalumisPath);
+            if (mode.equals(ILaunchManager.RUN_MODE)) {
+                if (confTest) {
+                    args.add(OPTION_DEBUG);
+                    args.add(OPTION_TEST);
+                } else {
+                    args.add(OPTION_FILE_POOSL);
+                }
+                args.add(confModelPath);
+
+                if (externalConfigPath != null && !externalConfigPath.isEmpty()) {
+                    args.add(OPTION_EXTERNAL_CONFIG);
+                    args.add(externalConfigPath);
+                }
+                if (!ImportingHelper.useDefaultBasicclasses()) {
+                    args.add(OPTION_BASIC_CLASSES);
+                    args.add(ImportingHelper.getBasicAbsoluteString());
+                }
+                for (String include : includes) {
+                    args.add(OPTION_INCLUDE_LIB);
+                    args.add(include);
+                }
+            } else if (confLaunchMode.equals(ILaunchManager.DEBUG_MODE)) {
+                args.add(OPTION_PORT);
+                args.add(confServerPort);
+                // debug basic classes will be set during compile request
+            }
+
+            args.add(OPTION_SEED);
+            args.add(confSeed);
+            args.add(OPTION_STACKSIZE);
+            args.add(confMaxStackSize);
+            if (confIsQuiet) {
+                args.add(OPTION_QUIET);
+            }
+
+            LOGGER.info("Starting Rotalumis process: " + args);
+
+            // Switching to working directory
+            File workingDirectory = createWorkingDirectory(confModelPath);
+
+            // Execute Rotalumis process
+            Process proc = DebugPlugin.exec(args.toArray(new String[args.size()]), workingDirectory);
+
+            // Create Iprocess based on Rotalumis process and add it to the
+            // current launch
+            IProcess process = DebugPlugin.newProcess(launch, proc, "[Seed: " + confSeed + "]");
+            LOGGER.finest("Platform default charset: " + System.getProperty(PooslConstants.PLATFORM_ENCODING));
+
+            if (confLaunchMode.equals(ILaunchManager.RUN_MODE)) {
+                // When in run mode start a thread and wait for process
+                // termination.
+                Thread simulatorTerminationWatcher = new Thread(new SimulatorTerminationWatcher(null, proc, project.getName()));
+                simulatorTerminationWatcher.setName("Simulator termination watcher");
+                simulatorTerminationWatcher.start();
+            } else if (confLaunchMode.equals(ILaunchManager.DEBUG_MODE)) {
+                // Create a client to connect to the running Rotalumis
+                // process
+                Client client = new Client(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_IP, Integer.valueOf(confServerPort));
+                monitor.setTaskName("Starting simulation");
+
+                // Create a debugtarget to take responsibility of
+                // debugging commands
+                PooslDebugTarget pooslDebugTarget = new PooslDebugTarget(launch, process, client, proc, includes);
+                monitor.setTaskName("Compiling Model and gathering debug information");
+                pooslDebugTarget.start();
+            }
+            monitor.done();
+
+        } catch (IOException | InterruptedException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            String errorMessage = e.getMessage();
+            if (e.getCause() != null) {
+                errorMessage += "\n\n" + e.getCause().getMessage(); //$NON-NLS-1$
+            }
+            throw new CoreException(new Status(Status.ERROR, PooslConstants.PLUGIN_ID, errorMessage, e));
         }
+
     }
 
-    private IProject getProject(String projectName) {
-        if (projectName != null && !projectName.isEmpty()) {
-            return ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
-        }
-        return null;
+    private static IProject getProject(ILaunchConfiguration configuration) throws CoreException {
+        String projectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
+        return (projectName != null && !projectName.isEmpty()) ? ResourcesPlugin.getWorkspace().getRoot().getProject(projectName) : null;
     }
 
-    private String getSimulationSeed(ILaunchConfiguration configuration) throws CoreException {
+    private static IFile getModel(ILaunchConfiguration configuration) throws CoreException {
+        String filePath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
+        if (filePath == null || filePath.isEmpty()) {
+            return null;
+        }
+        return ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(filePath));
+    }
+
+    private static String getSimulationSeed(ILaunchConfiguration configuration) throws CoreException {
         final boolean isRandomSeed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
         String seed;
         if (isRandomSeed) {
             seed = Integer.toString(RANDOM.nextInt(Integer.MAX_VALUE));
         } else {
             String seedString = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
-            seed = (LaunchConfigurationPooslTab.isInteger(seedString)) ? seedString : "1"; //$NON-NLS-1$
+            seed = (LaunchConfigurationPooslTab.isInteger(seedString)) ? seedString : PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED;
         }
         return seed;
     }
 
-    private List<String> getIncludePaths(IProject project) {
+    private static List<String> getIncludePaths(IProject project) {
         List<String> includes = ImportingHelper.getIncludes(project);
         List<String> absolute = new ArrayList<>();
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -273,74 +265,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
         return absolute;
     }
 
-    private boolean checkForDirtyFiles(final IProject project) throws CoreException, InterruptedException {
-        final Map<IEditorPart, IWorkbenchPage> dirtyResources = new HashMap<>();
-        if (project != null) {
-
-            IWorkbench workbench = PlatformUI.getWorkbench();
-            if (workbench != null) {
-                for (IWorkbenchWindow workbenchWindow : workbench.getWorkbenchWindows()) {
-                    for (IWorkbenchPage workbenchPage : workbenchWindow.getPages()) {
-                        for (IEditorReference editorReference : workbenchPage.getEditorReferences()) {
-                            if (editorReference.isDirty()) {
-                                IEditorInput editorInput = editorReference.getEditorInput();
-                                if (editorInput instanceof IFileEditorInput) {
-                                    IFileEditorInput fileEditorInput = (IFileEditorInput) editorInput;
-                                    String filePath = fileEditorInput.getStorage().getFullPath().toString();
-                                    if (filePath.startsWith("/" + project.getName() + "/")) { //$NON-NLS-1$ //$NON-NLS-2$
-                                        dirtyResources.put(editorReference.getEditor(true), workbenchPage);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (!dirtyResources.isEmpty()) {
-            final IEditorPart[] dirtyEditorParts = new IEditorPart[dirtyResources.size()];
-            int i = 0;
-            for (IEditorPart editorPart : dirtyResources.keySet()) {
-                dirtyEditorParts[i] = editorPart;
-                i++;
-            }
-            UIJob uiJob = new UIJob("") { //$NON-NLS-1$
-
-                @Override
-                public IStatus runInUIThread(IProgressMonitor monitor) {
-                    ListSelectionDialog resourceSelectionDialog = new ListSelectionDialog(Display.getDefault().getActiveShell(), dirtyEditorParts, new ArrayContentProvider(),
-                            new WorkbenchPartLabelProvider(), "The following file(s) contain unsaved changes.\nSelect files to save.");
-                    resourceSelectionDialog.setInitialSelections((Object[]) dirtyEditorParts);
-                    int userInput = resourceSelectionDialog.open();
-                    if (userInput == SelectionDialog.OK) {
-                        Object[] result = resourceSelectionDialog.getResult();
-                        for (Object resultObject : result) {
-                            IEditorPart dirtyResourcePart = (IEditorPart) resultObject;
-                            dirtyResources.get(dirtyResourcePart).saveEditor(dirtyResourcePart, false);
-                        }
-                    } else if (userInput == SelectionDialog.CANCEL) {
-                        return new Status(IStatus.CANCEL, PooslConstants.PLUGIN_ID, ""); //$NON-NLS-1$
-                    }
-                    return new Status(IStatus.OK, PooslConstants.PLUGIN_ID, ""); //$NON-NLS-1$
-                }
-            };
-            uiJob.schedule();
-            try {
-                uiJob.join();
-            } catch (InterruptedException e1) {
-                LOGGER.log(Level.WARNING, "LaunchDelegate could not join UIJob for unsaved model dialog", e1);
-                throw e1;
-            }
-            IStatus result = uiJob.getResult();
-            if (result.getSeverity() == IStatus.CANCEL) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void terminateLaunch(ILaunch launch) throws DebugException {
+    private static void terminateLaunch(ILaunch launch) throws DebugException {
         launch.terminate();
         ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
         launchManager.removeLaunch(launch);
@@ -405,44 +330,44 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
         return workingDirectory;
     }
 
-    boolean validateConfiguration(ILaunchConfiguration configuration) throws CoreException {
-        if (configuration != null) {
-            String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
-            String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
-            if (!"".equals(modelPath)) { //$NON-NLS-1$
-                if (!modelPath.endsWith(".poosl")) { //$NON-NLS-1$
-                    IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The selected launch configuration does not contain a valid path to a poosl model.", null);
-                    LOGGER.log(Level.SEVERE, status.getMessage(), status);
-                    throw new CoreException(status);
-                }
-                File f = new File(modelPath);
-                if (!f.exists()) {
-                    IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The model in the selected launch configuration does not exist. "
-                            + "This error can occur after moving the associated model. "
-                            + "\n\nRight click in the project explorer or editor, select \"Run as -> Poosl model\" or \"Debug as -> Poosl model\" to automatically update and start the launch configuration. "
-                            + "\n\nFor more information on running or debugging models and editing the launch configuration open Help (F1) and go to \"Contents -> Poosl -> Simulate\"", null);
-                    throw new CoreException(status);
-                }
-            } else {
-                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The selected launch configuration does not contain a path to a model.", null);
-                LOGGER.log(Level.SEVERE, status.getMessage(), status);
-                throw new CoreException(status);
-            }
-            String errorMessage = null;
-            if (serverPort.isEmpty() || !LaunchConfigurationPooslTab.isInteger(serverPort)) {
-                errorMessage = "The selected launch configuration does not contain a valid server port.";
-            }
-            if (errorMessage != null && !errorMessage.isEmpty()) {
-                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, errorMessage, null);
-                LOGGER.log(Level.SEVERE, status.getMessage(), status);
-                throw new CoreException(status);
-            }
-        } else {
+    private void checkConfiguration(ILaunchConfiguration configuration) throws CoreException {
+        if (configuration == null) {
             IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The selected run configuration is not valid.", null);
             LOGGER.log(Level.SEVERE, status.getMessage(), status);
             throw new CoreException(status);
         }
+        String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
+        String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+        if (!"".equals(modelPath)) { //$NON-NLS-1$
+            if (!modelPath.endsWith(".poosl")) { //$NON-NLS-1$
+                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, //
+                        "The selected launch configuration does not contain a valid path to a poosl model.", null);
+                LOGGER.log(Level.SEVERE, status.getMessage(), status);
+                throw new CoreException(status);
+            }
 
-        return true;
+            File f = new File(modelPath);
+            if (!ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(modelPath)).exists()) {
+                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The model in the selected launch configuration does not exist. "
+                        + "This error can occur after moving the associated model. "
+                        + "\n\nRight click in the project explorer or editor, select \"Run as -> Poosl model\" or \"Debug as -> Poosl model\" to automatically update and start the launch configuration. "
+                        + "\n\nFor more information on running or debugging models and editing the launch configuration open Help (F1) and go to \"Contents -> Poosl -> Simulate\"", null);
+                throw new CoreException(status);
+            }
+        } else {
+            IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The selected launch configuration does not contain a path to a model.", null);
+            LOGGER.log(Level.SEVERE, status.getMessage(), status);
+            throw new CoreException(status);
+        }
+        String errorMessage = null;
+        if (serverPort.isEmpty() || !LaunchConfigurationPooslTab.isInteger(serverPort)) {
+            errorMessage = "The selected launch configuration does not contain a valid server port.";
+        }
+        if (errorMessage != null && !errorMessage.isEmpty()) {
+            IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, errorMessage, null);
+            LOGGER.log(Level.SEVERE, status.getMessage(), status);
+            throw new CoreException(status);
+        }
+
     }
 }

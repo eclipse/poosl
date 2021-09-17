@@ -17,22 +17,30 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.Scanner;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
-import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.poosl.pooslproject.PooslProjectSupport;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -47,6 +55,9 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
+import org.eclipse.ui.model.BaseWorkbenchContentProvider;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.osgi.framework.Bundle;
 
 /**
@@ -56,10 +67,11 @@ import org.osgi.framework.Bundle;
  *
  */
 public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab {
-    // UI text
-    private static final String GROUP_MODEL = "Model:";
 
-    private static final String GROUP_EXTERN = "External port configuration:";
+    // UI text
+    private static final String MODEL_ROLE = "Model";
+
+    private static final String EXTERN_ROLE = "External port configuration";
 
     private static final String GROUP_SIM = "Simulator settings:";
 
@@ -67,9 +79,11 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private static final String BTN_BROWSE = "Browse";
 
-    private static final String LABEL_SEED = "Seed for resolving non-determinism: ";
+    private static final String LABEL_SEED = "Seed for resolving non-determinism:";
 
-    private static final String LABEL_PORT = "Server port: ";
+    private static final String LABEL_PORT = "Server port:";
+
+    private static final String LABEL_FORCE_CHARSET = "Avoid charset verification (Assuming " + PooslProjectSupport.SUPPORTED_CHARSET.displayName() + " compatible)";
 
     private static final String LABEL_QUIET = "Quiet mode:";
 
@@ -79,24 +93,20 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     // File Dialog
     private static final String FILE_DIALOG_TITLE = "Select poosl model";
 
+    private static final String FILE_DIALOG_MESSAGE = "Select POOSL model to execute from the workspace:";
+
     private static final String EXTERN_CONFIG_DIALOG_TITLE = "Select the file with the extern port configuration:";
 
     private static final String FILE_NAME_FILTER = "*."; //$NON-NLS-1$
 
     // Validation
-    private static final String VALIDATION_FILE_EMPTY = "Model path cannot be empty";
+    private static final String VALIDATION_FILE_EMPTY = "{1} path cannot be empty";
 
-    private static final String VALIDATION_FILE_POOSL = "The model is not a .poosl file";
+    private static final String VALIDATION_FILE_EXTENSION = "The {1} is not a .{2} file";
 
-    private static final String VALIDATION_FILE_IS_DIR = "The path is a directory and not a .poosl file";
+    private static final String VALIDATION_FILE_IS_DIR = "The {1} path is a directory and not a .{2} file";
 
-    private static final String VALIDATION_FILE_NOT_EXIST = "The selected model does not exist";
-
-    private static final String VALIDATION_EXTERNAL_FILE_NOT_EXIST = "The selected external port configuration file does not exist";
-
-    private static final String VALIDATION_EXTERNAL_FILE_IS_DIR = "The selected external port configuration file is a directory and not a ." + PooslConstants.EXTERN_CONFIG_EXTENSION + " file";
-
-    private static final String VALIDATION_EXTERNAL_FILE_EXTENSION = "The selected external port configuration file is not a ." + PooslConstants.EXTERN_CONFIG_EXTENSION + " file";
+    private static final String VALIDATION_FILE_NOT_EXIST = "The selected {1} does not exist";
 
     private static final String VALIDATION_SEED_EMPTY = "Seed for resolving non-determinism cannot be empty";
 
@@ -117,6 +127,8 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private Text externPathTextControl;
 
+    private Button forceCharsetControl;
+
     private Text portTextControl;
 
     private Text seedTextControl;
@@ -132,51 +144,61 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private String relativePath = ""; //$NON-NLS-1$
 
-    private final ModifyListener fBasicModifyListener = new ModifyListener() {
-        @Override
-        public void modifyText(ModifyEvent evt) {
+    private void browseModel() {
+
+        ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+        dialog.addFilter(new ViewerFilter() {
+
+            @Override
+            public boolean select(Viewer viewer, Object parentElement, Object element) {
+                if (element instanceof IContainer) {
+                    return true;
+                }
+                if (!(element instanceof IFile)) {
+                    return false;
+                }
+                IFile file = (IFile) element;
+                return PooslConstants.POOSL_EXTENSION.equals(file.getFileExtension());
+            }
+        });
+
+        dialog.setTitle(FILE_DIALOG_TITLE);
+        dialog.setMessage(FILE_DIALOG_MESSAGE);
+        dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
+        dialog.setAllowMultiple(false);
+
+        if (dialog.open() == Dialog.OK && dialog.getFirstResult() instanceof IFile) { // ignore container selection
+            IFile selection = (IFile) dialog.getFirstResult();
+            setModelPathText(selection.getFullPath().toPortableString());
             setRelativeElements();
             scheduleUpdateJob();
         }
-    };
 
-    private final SelectionListener modelPathListener = new SelectionListener() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            FileDialog fDialog = new FileDialog(getShell());
-            fDialog.setFilterExtensions(new String[] { FILE_NAME_FILTER + PooslConstants.POOSL_EXTENSION });
-            fDialog.setFilterPath(getFileSelectPath(modelPathTextControl));
-            fDialog.setText(FILE_DIALOG_TITLE);
-            String filePath = fDialog.open();
-            if (filePath != null) {
-                modelPathTextControl.setText(filePath);
-            }
-        }
+    }
 
-        @Override
-        public void widgetDefaultSelected(SelectionEvent e) {
-            widgetSelected(e);
+    private void browseExternPath() {
+        FileDialog fDialog = new FileDialog(getShell());
+        fDialog.setFilterExtensions(new String[] { FILE_NAME_FILTER + PooslConstants.EXTERN_CONFIG_EXTENSION });
+        fDialog.setFilterPath(getFileSelectPath(externPathTextControl));
+        fDialog.setText(EXTERN_CONFIG_DIALOG_TITLE);
+        String filePath = fDialog.open();
+        if (filePath != null) {
+            externPathTextControl.setText(filePath);
+            scheduleUpdateJob();
         }
-    };
+    }
 
-    private final SelectionListener externPathListener = new SelectionListener() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            FileDialog fDialog = new FileDialog(getShell());
-            fDialog.setFilterExtensions(new String[] { FILE_NAME_FILTER + PooslConstants.EXTERN_CONFIG_EXTENSION });
-            fDialog.setFilterPath(getFileSelectPath(externPathTextControl));
-            fDialog.setText(EXTERN_CONFIG_DIALOG_TITLE);
-            String filePath = fDialog.open();
-            if (filePath != null) {
-                externPathTextControl.setText(filePath);
-            }
+    private void setModelPathText(String path) {
+        String text = path;
+        if (path == null) {
+            text = "";
+        } else if (path.isEmpty() || IPath.SEPARATOR != path.charAt(0)) {
+            text = path;
+        } else {
+            text = path.substring(1);
         }
-
-        @Override
-        public void widgetDefaultSelected(SelectionEvent e) {
-            widgetSelected(e);
-        }
-    };
+        modelPathTextControl.setText(text);
+    }
 
     private String getFileSelectPath(Text textControl) {
         String modelPath = textControl.getText();
@@ -190,74 +212,44 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     @Override
     public void createControl(Composite parent) {
         control = new Composite(parent, SWT.NONE);
+        control.setLayout(new GridLayout(1, false));
 
-        GridLayout controlGrid = new GridLayout();
-        controlGrid.numColumns = 1;
-        control.setLayout(controlGrid);
+        modelPathTextControl = createBrowsableText(control, MODEL_ROLE, evt -> {
+            setRelativeElements();
+            scheduleUpdateJob();
+        }, evt -> browseModel());
+        externPathTextControl = createBrowsableText(control, EXTERN_ROLE, evt -> scheduleUpdateJob(), evt -> browseExternPath());
 
-        GridLayout grid = new GridLayout();
-        grid.numColumns = 3;
-        grid.makeColumnsEqualWidth = false;
-        GridData defaultGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+        forceCharsetControl = new Button(control, SWT.CHECK);
+        forceCharsetControl.setText(LABEL_FORCE_CHARSET);
+        forceCharsetControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        forceCharsetControl.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> scheduleUpdateJob()));
+        createSimulatorSettings();
 
-        Group modelGroup = new Group(control, SWT.SHADOW_OUT);
-        modelGroup.setText(GROUP_MODEL);
-        modelGroup.setLayout(grid);
-        modelGroup.setLayoutData(defaultGridData);
+        Label portInfoLabel = new Label(control, SWT.NONE);
+        portInfoLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BOTTOM, false, true));
+        portInfoLabel.setText(LABEL_PORTINFO);
+    }
 
-        modelPathTextControl = new Text(modelGroup, SWT.BORDER);
-        modelPathTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        modelPathTextControl.setText(""); //$NON-NLS-1$
-        modelPathTextControl.addModifyListener(fBasicModifyListener);
-
-        Button modelBrowseButton = new Button(modelGroup, SWT.PUSH);
-        modelBrowseButton.setText(BTN_BROWSE);
-        modelBrowseButton.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
-        modelBrowseButton.addSelectionListener(modelPathListener);
-
-        Group externGroup = new Group(control, SWT.SHADOW_OUT);
-        externGroup.setText(GROUP_EXTERN);
-        externGroup.setLayout(grid);
-        externGroup.setLayoutData(defaultGridData);
-
-        externPathTextControl = new Text(externGroup, SWT.BORDER);
-        externPathTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        externPathTextControl.setText(""); //$NON-NLS-1$
-        externPathTextControl.addModifyListener(fBasicModifyListener);
-
-        Button externBrowseButton = new Button(externGroup, SWT.PUSH);
-        externBrowseButton.setText(BTN_BROWSE);
-        externBrowseButton.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
-        externBrowseButton.addSelectionListener(externPathListener);
-
+    private void createSimulatorSettings() {
         Group serverGroup = new Group(control, SWT.SHADOW_OUT);
         serverGroup.setText(GROUP_SIM);
-        serverGroup.setLayout(grid);
+        serverGroup.setLayout(new GridLayout(3, false));
         serverGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
         Label seedLabel = new Label(serverGroup, SWT.NONE);
         seedLabel.setText(LABEL_SEED);
 
         seedTextControl = new Text(serverGroup, SWT.BORDER);
         seedTextControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         seedTextControl.setText(""); //$NON-NLS-1$
-        seedTextControl.addModifyListener(fBasicModifyListener);
+        seedTextControl.addModifyListener(evt -> scheduleUpdateJob());
 
         randomSeedButton = new Button(serverGroup, SWT.CHECK);
         randomSeedButton.setText(BTN_RANDOM);
-        randomSeedButton.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                scheduleUpdateJob();
-                boolean selection = ((Button) e.getSource()).getSelection();
-                seedTextControl.setEnabled(!selection);
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-        });
+        randomSeedButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
+            seedTextControl.setEnabled(!randomSeedButton.getSelection());
+            scheduleUpdateJob();
+        }));
 
         Label stackSizeLabel = new Label(serverGroup, SWT.NONE);
         stackSizeLabel.setText("Maximum stack size for data methods in bytes:");
@@ -273,7 +265,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
         portTextControl = new Text(serverGroup, SWT.BORDER);
         portTextControl.setLayoutData(new GridData(SWT.FILL, SWT.WRAP, true, false));
-        portTextControl.addModifyListener(fBasicModifyListener);
+        portTextControl.addModifyListener(evt -> scheduleUpdateJob());
         portTextControl.setText(""); //$NON-NLS-1$
 
         new Label(serverGroup, SWT.NONE);
@@ -282,25 +274,31 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
         quietLabel.setText(LABEL_QUIET);
 
         quietButton = new Button(serverGroup, SWT.CHECK);
-        quietButton.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                scheduleUpdateJob();
-            }
+        quietButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> scheduleUpdateJob()));
 
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-        });
+    }
 
-        Label portInfoLabel = new Label(control, SWT.NONE);
-        portInfoLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.BOTTOM, false, true));
-        portInfoLabel.setText(LABEL_PORTINFO);
+    private Text createBrowsableText(Composite container, String label, ModifyListener onEdit, Consumer<SelectionEvent> browse) {
+        Group group = new Group(control, SWT.SHADOW_OUT);
+        group.setText(label);
+        group.setLayout(new GridLayout(2, false));
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+
+        Text result = new Text(group, SWT.BORDER);
+        result.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        result.setText(""); //$NON-NLS-1$
+        result.addModifyListener(onEdit);
+
+        Button browseButton = new Button(group, SWT.PUSH);
+        browseButton.setText(BTN_BROWSE);
+        browseButton.setLayoutData(new GridData(SWT.END, SWT.TOP, false, false));
+        browseButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(browse));
+        return result;
     }
 
     @Override
     public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET, false);
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
@@ -310,105 +308,134 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     @Override
     public void initializeFrom(ILaunchConfiguration configuration) {
-        if (configuration != null) {
-            try {
-                String modelPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, ""); //$NON-NLS-1$
-                if (!modelPath.isEmpty()) {
-                    modelPathTextControl.setText(modelPath);
-                }
-
-                String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
-                if (!externalConfigPath.isEmpty()) {
-                    externPathTextControl.setText(externalConfigPath);
-                }
-                String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
-                portTextControl.setText(serverPort);
-                String stackSize = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
-                stackSizeTextControl.setText(stackSize);
-                String seed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
-                seedTextControl.setText(seed);
-                boolean boolAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
-                randomSeedButton.setSelection(boolAttribute);
-                boolean quietAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
-                quietButton.setSelection(quietAttribute);
-                seedTextControl.setEnabled(!boolAttribute);
-            } catch (CoreException e) {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
-            }
+        if (configuration == null) {
+            return;
         }
+        try {
+            projectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
+            relativePath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
+            setModelPathText(relativePath);
+
+            String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
+            if (!externalConfigPath.isEmpty()) {
+                externPathTextControl.setText(externalConfigPath);
+            }
+
+            forceCharsetControl.setSelection(configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET, false));
+
+            String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+            portTextControl.setText(serverPort);
+            String stackSize = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
+            stackSizeTextControl.setText(stackSize);
+            String seed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
+            seedTextControl.setText(seed);
+            boolean boolAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
+            randomSeedButton.setSelection(boolAttribute);
+            boolean quietAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
+            quietButton.setSelection(quietAttribute);
+            seedTextControl.setEnabled(!boolAttribute);
+        } catch (CoreException e) {
+            LOGGER.log(Level.WARNING, e.getMessage(), e);
+        }
+
     }
 
     @Override
     public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MODEL_PATH, modelPathTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, projectName);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, relativePath);
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, externPathTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET, forceCharsetControl.getSelection());
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, portTextControl.getText());
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, stackSizeTextControl.getText());
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, seedTextControl.getText());
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, randomSeedButton.getSelection());
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, quietButton.getSelection());
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, projectName);
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, relativePath);
     }
 
     @Override
     public boolean isValid(ILaunchConfiguration launchConfig) {
-        setErrorMessage(null);
-        String errorMessage = null;
-        if (!modelPathTextControl.getText().isEmpty()) {
-            File modelFile = new File(modelPathTextControl.getText());
-            if (!modelFile.exists()) {
-                errorMessage = VALIDATION_FILE_NOT_EXIST;
-            } else if (modelFile.isDirectory()) {
-                errorMessage = VALIDATION_FILE_IS_DIR;
-            } else if (!PooslConstants.POOSL_EXTENSION.equals(modelFile.getName().substring(modelFile.getName().lastIndexOf('.') + 1))) {
-                errorMessage = VALIDATION_FILE_POOSL;
-            }
-        } else {
-            errorMessage = VALIDATION_FILE_EMPTY;
-        }
+        String errorMessage = Stream.of(//
+                validateModel(), //
+                validateExternConfiguration(), //
+                validatePort(), //
+                validateSeed()) //
+                .filter(it -> it != null && !it.isEmpty())//
+                .findFirst().orElse(null);
 
-        if (!externPathTextControl.getText().isEmpty()) {
-            File externFile = new File(externPathTextControl.getText());
-            if (!externFile.exists()) {
-                errorMessage = VALIDATION_EXTERNAL_FILE_NOT_EXIST;
-            } else if (externFile.isDirectory()) {
-                errorMessage = VALIDATION_EXTERNAL_FILE_IS_DIR;
-            } else if (!PooslConstants.EXTERN_CONFIG_EXTENSION.equals(externFile.getName().substring(externFile.getName().lastIndexOf('.') + 1))) {
-                errorMessage = VALIDATION_EXTERNAL_FILE_EXTENSION;
-            }
-        }
+        setErrorMessage(errorMessage);
+        return errorMessage == null || errorMessage.isEmpty();
+    }
 
-        if (!portTextControl.getText().isEmpty()) {
-            if (!isInteger(portTextControl.getText())) {
-                errorMessage = VALIDATION_PORT_INVALID;
-            } else {
-                try {
-                    if (Integer.parseInt(portTextControl.getText()) < 1) {
-                        errorMessage = VALIDATION_PORT_INVALID;
-                    }
-                } catch (NumberFormatException e) {
-                    errorMessage = VALIDATION_PORT_NOT_INT;
-                }
-            }
-        } else {
-            errorMessage = VALIDATION_PORT_EMPTY;
-        }
-
+    private String validateSeed() {
         if (!seedTextControl.getText().isEmpty() && !randomSeedButton.getSelection()) {
             if (!isInteger(seedTextControl.getText())) {
-                errorMessage = VALIDATION_SEED_NOT_INT;
+                return VALIDATION_SEED_NOT_INT;
             }
         } else if (!randomSeedButton.getSelection()) {
-            errorMessage = VALIDATION_SEED_EMPTY;
+            return VALIDATION_SEED_EMPTY;
+        }
+        return null;
+    }
+
+    private String validatePort() {
+        if (portTextControl.getText().isEmpty()) {
+            return VALIDATION_PORT_EMPTY;
+        }
+        if (!isInteger(portTextControl.getText())) {
+            return VALIDATION_PORT_INVALID;
+        }
+        try {
+            if (Integer.parseInt(portTextControl.getText()) < 1) {
+                return VALIDATION_PORT_INVALID;
+            }
+        } catch (NumberFormatException e) {
+            return VALIDATION_PORT_NOT_INT;
         }
 
-        if (errorMessage != null && !errorMessage.isEmpty()) {
-            setErrorMessage(errorMessage);
-            return false;
-        } else {
-            return true;
+        return null;
+    }
+
+    private String validateModel() {
+        String text = modelPathTextControl.getText();
+        String realPath = text;
+        if (!text.isEmpty()) {
+            IPath ePath;
+            try {
+                ePath = ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(IPath.SEPARATOR + text)).getLocation();
+            } catch (IllegalArgumentException invalidPath) {
+                return MessageFormat.format(VALIDATION_FILE_NOT_EXIST, MODEL_ROLE, PooslConstants.POOSL_EXTENSION);
+            }
+            if (ePath != null) {
+                realPath = ePath.toOSString();
+            }
         }
+        return validateExistingFile(MODEL_ROLE, realPath, PooslConstants.POOSL_EXTENSION);
+    }
+
+    private String validateExternConfiguration() {
+        String text = externPathTextControl.getText();
+        return text.isEmpty() ? null : validateExistingFile(EXTERN_ROLE, text, PooslConstants.EXTERN_CONFIG_EXTENSION);
+    }
+
+    private static String validateExistingFile(String role, String path, String extension) {
+        if (path.isEmpty()) {
+            return MessageFormat.format(VALIDATION_FILE_EMPTY, role, extension);
+        }
+        File file = new File(path);
+        if (!file.exists()) {
+            return MessageFormat.format(VALIDATION_FILE_NOT_EXIST, role, extension);
+        }
+        if (file.isDirectory()) {
+            return MessageFormat.format(VALIDATION_FILE_IS_DIR, role, extension);
+        }
+        String filename = file.getName();
+        int ext = filename.lastIndexOf('.');
+
+        if (ext == -1 || !PooslConstants.POOSL_EXTENSION.equals(filename.substring(ext + 1))) {
+            return MessageFormat.format(VALIDATION_FILE_EXTENSION, role, extension);
+        }
+        return null;
     }
 
     public static boolean isInteger(String s) {
@@ -452,19 +479,18 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     }
 
     private void setRelativeElements() {
-        String modelLocation = modelPathTextControl.getText();
-        if (!modelLocation.isEmpty()) {
-            for (IProject iProject : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-                String projectLocation = iProject.getLocation().toOSString();
-                if (modelLocation.startsWith(projectLocation)) {
-                    projectName = iProject.getName();
-                    relativePath = "\\" + projectName + modelLocation.substring(projectLocation.length()); //$NON-NLS-1$
-
-                    return;
-                }
-            }
-        }
         projectName = ""; //$NON-NLS-1$
         relativePath = ""; //$NON-NLS-1$
+
+        String modelLocation = modelPathTextControl.getText();
+        if (modelLocation.isEmpty()) {
+            return;
+        }
+        relativePath = IPath.SEPARATOR + modelLocation;
+
+        int index = modelLocation.indexOf(IPath.SEPARATOR);
+        projectName = (index > -1) //
+                ? modelLocation.substring(0, index) //
+                : modelLocation;
     }
 }

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +40,17 @@ import org.eclipse.core.runtime.NullProgressMonitor;
  *
  */
 public final class PooslProjectSupport {
+
+    /**
+     * Charset supported for interpretation.
+     * <p>
+     * Currently simulation only support one charset for reading model for any platform host.
+     * </p>
+     */
+    public static final Charset SUPPORTED_CHARSET = StandardCharsets.ISO_8859_1;
+
+    /** Perspective ID for edition. */
+    public static final String ID_POOSL_EDIT_PERSPECTIVE = "org.eclipse.poosl.normalperspective"; //$NON-NLS-1$
 
     /**
      * The xtext project nature.
@@ -95,7 +107,7 @@ public final class PooslProjectSupport {
             if (!newProject.isOpen()) {
                 newProject.open(null);
             }
-            newProject.setDefaultCharset(StandardCharsets.ISO_8859_1.name(), new NullProgressMonitor());
+            newProject.setDefaultCharset(SUPPORTED_CHARSET.name(), new NullProgressMonitor());
         }
 
         return newProject;

@@ -72,10 +72,13 @@ public class ExternSelectionInformer {
                     ExternDebugMessage message = null;
 
                     if (lastMessage != null) {
-                        message = new ExternDebugMessage(launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""), //$NON-NLS-1$
-                                launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), lastMessage); //$NON-NLS-1$
+                        message = new ExternDebugMessage(launchConfiguration.getAttribute(//
+                                PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""), //$NON-NLS-1$
+                                launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), //$NON-NLS-1$
+                                lastMessage);
                     }
-                    ExternDebugItem selecteditem = new ExternDebugItem(diagram, launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), //$NON-NLS-1$
+                    ExternDebugItem selecteditem = new ExternDebugItem(diagram, launchConfiguration.getAttribute(//
+                            PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), //$NON-NLS-1$
                             launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""), //$NON-NLS-1$
                             launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, "")); //$NON-NLS-1$
                     for (IPooslDebugInformer extension : ExtensionHelper.getExtensions()) {
@@ -96,8 +99,10 @@ public class ExternSelectionInformer {
                 @Override
                 public void run() {
 
-                    MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(), Messages.DIALOG_EDITED_TITLE, MessageDialog.getImage(Dialog.DLG_IMG_MESSAGE_INFO),
-                            Messages.DIALOG_EDITED_TEXT, MessageDialog.INFORMATION, new String[] { Messages.DIALOG_EDITED_BT_OK }, 0);
+                    MessageDialog dialog = new MessageDialog(//
+                            Display.getDefault().getActiveShell(), //
+                            Messages.DIALOG_EDITED_TITLE, //
+                            MessageDialog.getImage(Dialog.DLG_IMG_MESSAGE_INFO), Messages.DIALOG_EDITED_TEXT, MessageDialog.INFORMATION, new String[] { Messages.DIALOG_EDITED_BT_OK }, 0);
                     dialog.open();
                 }
             });

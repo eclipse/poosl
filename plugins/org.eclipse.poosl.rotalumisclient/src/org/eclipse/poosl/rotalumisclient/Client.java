@@ -96,7 +96,7 @@ public class Client {
 
     private final Thread responseListenerThread;
 
-    public Client(String ip, int port) throws JAXBException, IOException, InterruptedException {
+    public Client(String ip, int port) throws IOException, InterruptedException {
         LOGGER.info("Starting a new client on ip: " + ip + ":" + port);
         socket = null;
         for (int i = 1; i <= MAX_CONNECTION_RETRY && socket == null; i++) {
@@ -123,19 +123,23 @@ public class Client {
 
         socketOutWriter = new PrintWriter(socket.getOutputStream(), true);
         objFactory = new ObjectFactory();
-        // Define JAXB context and marshaller/unmarshaller
-        final JAXBContext context = JAXBContext.newInstance(Request.class.getPackageName(), Request.class.getClassLoader());
-        marshaller = context.createMarshaller();
-        marshaller.setEventHandler(new DefaultValidationEventHandler());
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        marshaller.setProperty(Marshaller.JAXB_ENCODING, CHARSET.toString());
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Response.class.getPackageName(), Response.class.getClassLoader());
-        unmarshaller = jaxbContext.createUnmarshaller();
-        unmarshaller.setEventHandler(new DefaultValidationEventHandler());
-        // Create a permanent listener for responses from the server
-        responseListenerThread = new Thread(new ResponseListener(socket));
-        responseListenerThread.setName("ResponseListenerThread");
-        responseListenerThread.start();
+        try {
+            // Define JAXB context and marshaller/unmarshaller
+            final JAXBContext context = JAXBContext.newInstance(Request.class.getPackageName(), Request.class.getClassLoader());
+            marshaller = context.createMarshaller();
+            marshaller.setEventHandler(new DefaultValidationEventHandler());
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, CHARSET.toString());
+            final JAXBContext jaxbContext = JAXBContext.newInstance(Response.class.getPackageName(), Response.class.getClassLoader());
+            unmarshaller = jaxbContext.createUnmarshaller();
+            unmarshaller.setEventHandler(new DefaultValidationEventHandler());
+            // Create a permanent listener for responses from the server
+            responseListenerThread = new Thread(new ResponseListener(socket));
+            responseListenerThread.setName("ResponseListenerThread");
+            responseListenerThread.start();
+        } catch (JAXBException xmlEx) {
+            throw new IOException(xmlEx.getMessage(), xmlEx);
+        }
     }
 
     public PooslDebugTarget getDebugTarget() {

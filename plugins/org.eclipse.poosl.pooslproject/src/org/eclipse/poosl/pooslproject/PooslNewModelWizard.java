@@ -13,7 +13,12 @@
  *******************************************************************************/
 package org.eclipse.poosl.pooslproject;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
@@ -24,6 +29,9 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
  *
  */
 public class PooslNewModelWizard extends AbstractPooslModelWizard implements INewWizard {
+
+    private static final Logger LOGGER = Logger.getLogger(PooslNewModelWizard.class.getName());
+
     private static final String WIZARD_NAME = "New Poosl model";
 
     private WizardNewFileCreationPage pageOne;
@@ -36,7 +44,26 @@ public class PooslNewModelWizard extends AbstractPooslModelWizard implements INe
     @Override
     public boolean performFinish() {
         IFile file = pageOne.createNewFile();
+
+        try {
+            if (!isCharsetSupported(file.getParent())) {
+                file.setCharset(PooslProjectSupport.SUPPORTED_CHARSET.name(), null);
+            }
+        } catch (CoreException e) {
+            LOGGER.log(Level.FINE, "Fail to set supported charset.", e);
+        }
+
         return openFile(file);
+    }
+
+    private static boolean isCharsetSupported(IContainer container) throws CoreException {
+        if (container == null) {
+            return false; // Do not rely on workspace setting, it is not team conform.
+        }
+        String charset = container.getDefaultCharset(false);
+        return charset != null //
+                ? charset.equals(PooslProjectSupport.SUPPORTED_CHARSET.name()) //
+                : isCharsetSupported(container.getParent());
     }
 
     @Override
