@@ -13,8 +13,6 @@
  *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient;
 
-import org.eclipse.poosl.pooslproject.PooslProjectSupport;
-
 /**
  * The PooslConstants.
  * 
@@ -49,8 +47,6 @@ public final class PooslConstants {
     public static final String ID_POOSL_STACKTRACEVARIABLEVIEW = "org.eclipse.poosl.views.stacktracevariableview"; //$NON-NLS-1$
 
     // Perspective ID statics
-    /** Perspective ID for edition. */
-    public static final String ID_POOSL_EDIT_PERSPECTIVE = PooslProjectSupport.ID_POOSL_EDIT_PERSPECTIVE;
 
     /** Perspective ID for execution. */
     public static final String ID_POOSL_DEBUG_PERSPECTIVE = "org.eclipse.poosl.debugperspective"; //$NON-NLS-1$

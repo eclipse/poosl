@@ -26,11 +26,10 @@ import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.InstancePort;
 import org.eclipse.poosl.Port;
 import org.eclipse.poosl.impl.ChannelImpl;
-import org.eclipse.poosl.rotalumisclient.PooslConstants;
-import org.eclipse.poosl.rotalumisclient.RotalumisConstants;
 import org.eclipse.poosl.sirius.debug.MessagePath;
 import org.eclipse.poosl.sirius.debug.PathCalculator;
 import org.eclipse.poosl.sirius.debug.PooslDrawMessage;
+import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.sirius.diagram.DEdge;
 import org.eclipse.sirius.diagram.DNode;
 import org.eclipse.sirius.diagram.DiagramPackage;
@@ -51,6 +50,9 @@ import org.eclipse.swt.widgets.Display;
  *
  */
 public final class ColorGraphHelper {
+
+    private static final String SEPARATOR = "/"; //$NON-NLS-1$
+
     private static final String PARAMETER_VIEW = "view"; //$NON-NLS-1$
 
     private static final int LINE_WIDTH = 2;
@@ -361,12 +363,14 @@ public final class ColorGraphHelper {
             if (target instanceof InstancePort) {
                 InstancePort iPort = (InstancePort) target;
                 portName = (iPort.getPort() != null) ? iPort.getPort().getPort() : ""; //$NON-NLS-1$
-                parentName = owner + "/" + iPort.getInstance().getName(); //$NON-NLS-1$
+                parentName = owner + SEPARATOR + iPort.getInstance().getName();
             } else if (target instanceof Port) {
                 Port port = (Port) target;
                 portName = port.getName();
                 if (port.eContainer() instanceof ClusterClass) {
-                    parentName = (((ClusterClass) port.eContainer()).getName() == null) ? PooslConstants.PATH_SEPARATOR + RotalumisConstants.CLUSTER_SYSTEM : owner;
+                    parentName = (((ClusterClass) port.eContainer()).getName() == null) //
+                            ? SEPARATOR + GlobalConstants.POOSL_SYSTEM
+                            : owner;
                 }
 
             } else if (target instanceof Channel) {

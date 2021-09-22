@@ -299,23 +299,31 @@ public class ExternalCalls implements IExternalJavaAction {
                 DiagramDebugNote note = new DiagramDebugNote(diagram);
 
                 if (note.isVisible()) {
-                    note.setVisible(false);
-                    for (DEdge dEdge : diagram.getEdges()) {
-                        EdgeStyle style = dEdge.getOwnedStyle();
-                        style.getBeginLabelStyle().getDescription().setLabelExpression(""); //$NON-NLS-1$
-                        style.getEndLabelStyle().getDescription().setLabelExpression(""); //$NON-NLS-1$
-                    }
+                    hideDebugElements(diagram, note);
                 } else {
-                    note.setVisible(true);
-                    for (DEdge dEdge : diagram.getEdges()) {
-                        if (!isChannelConnection(dEdge.getTargetNode())) {
-                            dEdge.getOwnedStyle().getEndLabelStyle().getDescription().setLabelExpression(DEFAULT_DEBUG_LABEL);
-                        }
-                        if (!isChannelConnection(dEdge.getSourceNode())) {
-                            dEdge.getOwnedStyle().getBeginLabelStyle().getDescription().setLabelExpression(DEFAULT_DEBUG_LABEL);
-                        }
-                    }
+                    showDebugElements(diagram, note);
                 }
+            }
+        }
+    }
+
+    private void hideDebugElements(DSemanticDiagram diagram, DiagramDebugNote note) {
+        note.setVisible(false);
+        for (DEdge dEdge : diagram.getEdges()) {
+            EdgeStyle style = dEdge.getOwnedStyle();
+            style.getBeginLabelStyle().getDescription().setLabelExpression(""); //$NON-NLS-1$
+            style.getEndLabelStyle().getDescription().setLabelExpression(""); //$NON-NLS-1$
+        }
+    }
+
+    private void showDebugElements(DSemanticDiagram diagram, DiagramDebugNote note) {
+        note.setVisible(true);
+        for (DEdge dEdge : diagram.getEdges()) {
+            if (!isChannelConnection(dEdge.getTargetNode())) {
+                dEdge.getOwnedStyle().getEndLabelStyle().getDescription().setLabelExpression(DEFAULT_DEBUG_LABEL);
+            }
+            if (!isChannelConnection(dEdge.getSourceNode())) {
+                dEdge.getOwnedStyle().getBeginLabelStyle().getDescription().setLabelExpression(DEFAULT_DEBUG_LABEL);
             }
         }
     }

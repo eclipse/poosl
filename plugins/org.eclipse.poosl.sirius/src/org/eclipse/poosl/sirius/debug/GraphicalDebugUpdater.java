@@ -191,7 +191,7 @@ public class GraphicalDebugUpdater {
 
                     session.getTransactionalEditingDomain().getCommandStack().execute(new ColorChannelCommand(session, diagrams2Color, currentDrawMessages, pathCalculators));
                 }
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 return Status.CANCEL_STATUS;
             }
             return Status.OK_STATUS;

@@ -397,38 +397,8 @@
             id="org.eclipse.poosl.debugperspective"
             name="POOSL Debug">
       </perspective>
-      <perspective
-            class="org.eclipse.poosl.rotalumisclient.perspectives.PooslEditPerspective"
-            icon="icons/poosl_perspective.png"
-            id="org.eclipse.poosl.normalperspective"
-            name="POOSL Edit">
-      </perspective>
    </extension>
-	<extension point="org.eclipse.ui.navigator.navigatorContent"> 
-		<commonWizard type="new"
-		        wizardId="org.eclipse.poosl.pooslproject.projectwizard"> 
-		        <enablement> 
-					<with
-						variable="activeWorkbenchWindow.activePerspective">
-							<equals
-								value="org.eclipse.poosl.normalperspective">
-							</equals>
-					</with>
-		        </enablement> 
-		</commonWizard>
-  <commonWizard
-        type="new"
-        wizardId="org.eclipse.poosl.pooslproject.filewizard">
-     <enablement>
-        <with
-              variable="activeWorkbenchWindow.activePerspective">
-           <equals
-                 value="org.eclipse.poosl.normalperspective">
-           </equals>
-        </with>
-     </enablement>
-  </commonWizard> 
-    </extension>
+
     <extension
           point="org.eclipse.debug.core.sourceLocators">
        <sourceLocator
@@ -576,5 +546,16 @@
           name="POOSL Debug Context"
           parentId="org.eclipse.ui.contexts.window">
     </context>
+ </extension>
+ <extension
+       id="org.eclipse.poosl.normalperspective.rotalumisclient"
+       point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension targetID="org.eclipse.poosl.normalperspective">
+       <viewShortcut id="org.eclipse.poosl.views.debugview" />
+       <viewShortcut id="org.eclipse.poosl.views.petview" />
+       <viewShortcut id="org.eclipse.poosl.views.variablesview" />
+       <viewShortcut id="org.eclipse.poosl.views.sequencediagramview" />
+       <perspectiveShortcut id="org.eclipse.poosl.debugperspective" />
+    </perspectiveExtension>
  </extension>
 </plugin>

@@ -66,7 +66,7 @@ public abstract class AbstractPooslModelWizard extends Wizard implements INewWiz
             IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
             if (window != null) {
                 try {
-                    workbench.showPerspective(PooslProjectSupport.ID_POOSL_EDIT_PERSPECTIVE, window);
+                    workbench.showPerspective(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE, window);
                 } catch (WorkbenchException e) {
                     LOGGER.log(Level.SEVERE, "Could not switch to poosl perspective.", e);
                 }

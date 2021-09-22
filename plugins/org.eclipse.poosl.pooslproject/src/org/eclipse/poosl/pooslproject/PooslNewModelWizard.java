@@ -30,6 +30,9 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
  */
 public class PooslNewModelWizard extends AbstractPooslModelWizard implements INewWizard {
 
+    /** Declared ID. */ // Use PooslProjectConstant to reference
+    static final String ID = "org.eclipse.poosl.pooslproject.filewizard"; //$NON-NLS-1$
+
     private static final Logger LOGGER = Logger.getLogger(PooslNewModelWizard.class.getName());
 
     private static final String WIZARD_NAME = "New Poosl model";
@@ -47,7 +50,7 @@ public class PooslNewModelWizard extends AbstractPooslModelWizard implements INe
 
         try {
             if (!isCharsetSupported(file.getParent())) {
-                file.setCharset(PooslProjectSupport.SUPPORTED_CHARSET.name(), null);
+                file.setCharset(PooslProjectConstant.SUPPORTED_CHARSET.name(), null);
             }
         } catch (CoreException e) {
             LOGGER.log(Level.FINE, "Fail to set supported charset.", e);
@@ -62,7 +65,7 @@ public class PooslNewModelWizard extends AbstractPooslModelWizard implements INe
         }
         String charset = container.getDefaultCharset(false);
         return charset != null //
-                ? charset.equals(PooslProjectSupport.SUPPORTED_CHARSET.name()) //
+                ? charset.equals(PooslProjectConstant.SUPPORTED_CHARSET.name()) //
                 : isCharsetSupported(container.getParent());
     }
 

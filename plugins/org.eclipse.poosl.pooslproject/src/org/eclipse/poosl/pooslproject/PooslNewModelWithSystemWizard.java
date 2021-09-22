@@ -31,6 +31,10 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
  *
  */
 public class PooslNewModelWithSystemWizard extends AbstractPooslModelWizard implements INewWizard {
+
+    /** Declared ID. */ // Use PooslProjectConstant to reference
+    static final String ID = "org.eclipse.poosl.pooslproject.filewithsystemwizard"; //$NON-NLS-1$
+
     private static final Logger LOGGER = Logger.getLogger(PooslNewModelWithSystemWizard.class.getName());
 
     private static final String WIZARD_NAME = "New Poosl model with System";

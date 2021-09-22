@@ -21,8 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
-import org.eclipse.poosl.rotalumisclient.RotalumisConstants;
 import org.eclipse.poosl.rotalumisclient.extension.ExternDebugMessage;
+import org.eclipse.poosl.xtext.GlobalConstants;
 
 /**
  * The PooslDrawMessage.
@@ -135,36 +135,32 @@ public class PooslDrawMessage {
         List<MessagePath> path = new ArrayList<>();
 
         if (!isAdapterPath(sending)) {
-            try {
-                String processAndPort = process + "." + port; //$NON-NLS-1$
-                for (int i = 0; i < main; i++) {
-                    String externProcessAndPort = instancePortMap.get(processAndPort);
-                    if (externProcessAndPort == null) {
-                        LOGGER.log(Level.WARNING, "Could not find the external port for " + processAndPort);
-                        return path;
-                    }
 
-                    String[] externInfo = externProcessAndPort.split("\\."); //$NON-NLS-1$
-                    String externProcess = externInfo[0];
-                    String externPort = externInfo[1];
-
-                    String[] receiverInfo = processAndPort.split("\\."); //$NON-NLS-1$
-                    String receiverInfoProcess = receiverInfo[0];
-                    String receiverInfoPort = receiverInfo[1];
-
-                    if (sending) {
-                        path.add(new MessagePath(receiverInfoProcess, externProcess, receiverInfoPort, externPort));
-                    } else {
-                        path.add(new MessagePath(externProcess, receiverInfoProcess, externPort, receiverInfoPort));
-                    }
-
-                    processAndPort = externProcessAndPort;
+            String processAndPort = process + "." + port; //$NON-NLS-1$
+            for (int i = 0; i < main; i++) {
+                String externProcessAndPort = instancePortMap.get(processAndPort);
+                if (externProcessAndPort == null) {
+                    LOGGER.log(Level.WARNING, "Could not find the external port for " + processAndPort); //$NON-NLS-1$
+                    return path;
                 }
-            } catch (Exception e) {
-                LOGGER.log(Level.SEVERE,
-                        "Could not calculate message path for process:" + process + ", port: " + port + ", main: " + main + ", instanceportmap " + instancePortMap + ", and sending is " + sending,
-                        e.getCause());
+
+                String[] externInfo = externProcessAndPort.split("\\."); //$NON-NLS-1$
+                String externProcess = externInfo[0];
+                String externPort = externInfo[1];
+
+                String[] receiverInfo = processAndPort.split("\\."); //$NON-NLS-1$
+                String receiverInfoProcess = receiverInfo[0];
+                String receiverInfoPort = receiverInfo[1];
+
+                if (sending) {
+                    path.add(new MessagePath(receiverInfoProcess, externProcess, receiverInfoPort, externPort));
+                } else {
+                    path.add(new MessagePath(externProcess, receiverInfoProcess, externPort, receiverInfoPort));
+                }
+
+                processAndPort = externProcessAndPort;
             }
+
         }
         return path;
     }
@@ -174,11 +170,8 @@ public class PooslDrawMessage {
             return false;
         }
 
-        if (sending) {
-            return !sendLocation[0].equals(RotalumisConstants.CLUSTER_SYSTEM);
-        } else {
-            return !receiveLocation[0].equals(RotalumisConstants.CLUSTER_SYSTEM);
-        }
+        String[] locations = sending ? sendLocation : receiveLocation;
+        return !locations[0].equals(GlobalConstants.POOSL_SYSTEM);
     }
 
     private boolean messageToAdapter() {

@@ -33,8 +33,6 @@ public class MessagePath {
     private final String receiverPort;
 
     public MessagePath(String sender, String receiver, String senderPort, String receiverPort) {
-        super();
-
         this.sender = sender;
         this.receiver = receiver;
         this.senderPort = senderPort;

@@ -38,7 +38,7 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.poosl.pooslproject.PooslProjectSupport;
+import org.eclipse.poosl.pooslproject.PooslProjectConstant;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyListener;
@@ -83,7 +83,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private static final String LABEL_PORT = "Server port:";
 
-    private static final String LABEL_FORCE_CHARSET = "Avoid charset verification (Assuming " + PooslProjectSupport.SUPPORTED_CHARSET.displayName() + " compatible)";
+    private static final String LABEL_FORCE_CHARSET = "Avoid charset verification (Assuming " + PooslProjectConstant.SUPPORTED_CHARSET.displayName() + " compatible)";
 
     private static final String LABEL_QUIET = "Quiet mode:";
 

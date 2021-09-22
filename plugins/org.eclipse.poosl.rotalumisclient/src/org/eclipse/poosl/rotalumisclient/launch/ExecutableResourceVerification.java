@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.poosl.pooslproject.PooslProjectSupport;
+import org.eclipse.poosl.pooslproject.PooslProjectConstant;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
@@ -58,7 +58,7 @@ public class ExecutableResourceVerification {
     private static final String CHARSET_FORCE_TITLE = "Unsupported Charset";
 
     private static final String CHARSET_FORCE_MESSAGE = //
-            "Only " + PooslProjectSupport.SUPPORTED_CHARSET.displayName() + " is supported.\n"//
+            "Only " + PooslProjectConstant.SUPPORTED_CHARSET.displayName() + " is supported.\n"//
                     + "This has no impact when only Latin Characters are used in models.\n" //
                     + "(You can turn off this warning in Execution Configuration)"//
                     + "Continue execution ?";
@@ -90,7 +90,7 @@ public class ExecutableResourceVerification {
     }
 
     private boolean isCharsetSupported() throws CoreException {
-        if (forceCharset || PooslProjectSupport.SUPPORTED_CHARSET.name().equals(model.getCharset())) {
+        if (forceCharset || PooslProjectConstant.SUPPORTED_CHARSET.name().equals(model.getCharset())) {
             return true;
         }
         AtomicBoolean confirm = new AtomicBoolean(false);

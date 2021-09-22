@@ -36,6 +36,10 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
  *
  */
 public class PooslNewProjectWizard extends Wizard implements INewWizard {
+
+    /** Declared ID. */ // Use PooslProjectConstant to reference
+    static final String ID = "org.eclipse.poosl.pooslproject.projectwizard"; //$NON-NLS-1$
+
     private static final Logger LOGGER = Logger.getLogger(PooslNewProjectWizard.class.getName());
 
     private static final String WIZARD_NAME = "New Poosl project";
@@ -75,7 +79,7 @@ public class PooslNewProjectWizard extends Wizard implements INewWizard {
             IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
             if (window != null) {
                 try {
-                    workbench.showPerspective(PooslProjectSupport.ID_POOSL_EDIT_PERSPECTIVE, window);
+                    workbench.showPerspective(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE, window);
                 } catch (WorkbenchException e) {
                     LOGGER.log(Level.WARNING, "Could switch to poosl perspective.", e);
                 }

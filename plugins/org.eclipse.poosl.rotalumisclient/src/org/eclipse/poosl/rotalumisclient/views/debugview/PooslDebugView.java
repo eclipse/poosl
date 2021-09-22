@@ -43,7 +43,6 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.poosl.rotalumisclient.Messages;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
-import org.eclipse.poosl.rotalumisclient.RotalumisConstants;
 import org.eclipse.poosl.rotalumisclient.debug.PooslDebugElement;
 import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
 import org.eclipse.poosl.rotalumisclient.debug.PooslThread;
@@ -51,6 +50,7 @@ import org.eclipse.poosl.rotalumisclient.extension.ExternSelectionInformer;
 import org.eclipse.poosl.rotalumisclient.views.PooslProcessStep;
 import org.eclipse.poosl.rotalumisclient.views.ViewHelper;
 import org.eclipse.poosl.rotalumisclient.views.WindowCreater;
+import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
@@ -88,7 +88,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
                 PooslDebugTarget pooslTarget = (PooslDebugTarget) target;
                 pooslTarget.extentensionsInformStop();
             }
-    
+
             IProcess[] processes = launch.getProcesses();
             DebugPlugin plugin = DebugPlugin.getDefault();
             if (plugin != null) {
@@ -97,12 +97,12 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
                     PlatformUI.getWorkbench().getDisplay().asyncExec(new ResetListenersRunnable());
                 }
             }
-    
+
             IWorkbench workbench = PlatformUI.getWorkbench();
             if (workbench != null) {
                 workbench.getDisplay().asyncExec(new InputChangedRunnable());
             }
-    
+
             for (int i = 0; i < processes.length; i++) {
                 try {
                     processes[i].terminate();
@@ -111,7 +111,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
                 }
             }
         }
-    
+
         @Override
         public void launchChanged(ILaunch launch) {
             if (launch.getDebugTarget() != null) {
@@ -121,7 +121,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
                 }
             }
         }
-    
+
         @Override
         public void launchAdded(ILaunch launch) {
             IWorkbench workbench = PlatformUI.getWorkbench();
@@ -390,7 +390,7 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
                     } else if (data instanceof PooslDebugTreeItem) {
                         PooslDebugTreeItem treeItem = (PooslDebugTreeItem) data;
                         // dont show on <adapters>
-                        if (!(treeItem.getLevel() == 2 && !treeItem.getName().equals(RotalumisConstants.CLUSTER_SYSTEM))) {
+                        if (!(treeItem.getLevel() == 2 && !treeItem.getName().equals(GlobalConstants.POOSL_SYSTEM))) {
                             addMenuItemDebugDiagram(menu, treeItem);
                         }
 

@@ -49,6 +49,34 @@
             project="false">
       </wizard>
    </extension>
+ 
+    <extension point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.poosl.pooslproject.PooslEditPerspective"
+            icon="icons/poosl_perspective.png"
+            id="org.eclipse.poosl.normalperspective"
+            name="POOSL Edit">
+      </perspective>
+   </extension>
+   
+   	<extension point="org.eclipse.ui.navigator.navigatorContent"> 
+		<commonWizard type="new" wizardId="org.eclipse.poosl.pooslproject.projectwizard"> 
+	        <enablement> 
+				<with
+					variable="activeWorkbenchWindow.activePerspective">
+						<equals value="org.eclipse.poosl.normalperspective" />
+				</with>
+	        </enablement>
+		</commonWizard>
+  		<commonWizard type="new" wizardId="org.eclipse.poosl.pooslproject.filewizard">
+     		<enablement>
+        		<with variable="activeWorkbenchWindow.activePerspective">
+           			<equals value="org.eclipse.poosl.normalperspective" />
+        		</with>
+     		</enablement>
+  		</commonWizard> 
+   </extension>
+ 
    <!-- This extension can be used to add a Poosl project icon to the projects in the resource viewer.
    However this is not yet supported by xtext because they use a image decorator instead of the projectnatureimages extension point.
 	<extension
@@ -69,4 +97,6 @@
           natureId="org.eclipse.poosl.rotalumisclient.pooslnature">
     </image>
  </extension> -->
+ 
+ 
 </plugin>
