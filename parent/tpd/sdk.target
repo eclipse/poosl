@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Poosl SDK" sequenceNumber="1631180681">
+<target name="Poosl SDK" sequenceNumber="1632730084">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.platform.sdk" version="4.15.0.I20200305-0155"/>
@@ -24,12 +24,12 @@
       <unit id="org.eclipse.elk.algorithms.feature.feature.group" version="0.0.0"/>
       <repository id="ELK" location="https://download.eclipse.org/elk/updates/releases/0.7.1/"/>
     </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="2.0.2.v20181016-2210"/>
       <repository id="EPL" location="http://download.eclipse.org/cbi/updates/license"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.202107081530"/>
+      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.202109171116"/>
       <repository id="rotalumis" location="http://www.es.ele.tue.nl/rotalumis/repository/integration/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
