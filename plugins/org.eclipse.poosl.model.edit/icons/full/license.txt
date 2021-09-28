@@ -1,0 +1,30 @@
+These followings icons are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+<icon file path> - <original eclipse plug-in>
+
+
+icons/full/custo16/Channel.gif - org.polarsys.capella.core.sirius.analysis
+icons/full/custo16/Composition.gif - (original)
+icons/full/custo16/DataClass_Variable.gif - org.polarsys.capella.core.sirius.analysis
+icons/full/custo16/Generalization.gif - org.polarsys.capella.core.sirius.analysis
+icons/full/custo16/Port.png - org.polarsys.capella.core.sirius.analysis
+icons/full/custo16/ProcessParam.gif - org.polarsys.capella.core.sirius.analysis
+icons/full/custo16/ProcessVariable.gif - org.polarsys.capella.core.sirius.analysis
+icons/full/custo16/System.gif - org.polarsys.capella.core.sirius.analysis
+
+
+icons/full/obj16/Channel.gif - org.polarsys.capella.core.sirius.analysis
+icons/full/obj16/ClusterClass.gif - org.polarsys.capella.core.sirius.analysis (edited)
+icons/full/obj16/DataClass.gif - org.polarsys.capella.core.sirius.analysis 
+icons/full/obj16/DataMethodBinaryOperator.gif - org.polarsys.capella.core.sirius.analysis 
+icons/full/obj16/DataMethodNamed.gif - org.polarsys.capella.core.sirius.analysis 
+icons/full/obj16/DataMethodUnaryOperator.gif - org.polarsys.capella.core.sirius.analysis 
+icons/full/obj16/Instance.gif - org.polarsys.capella.core.sirius.analysis 
+icons/full/obj16/Port.gif - org.polarsys.capella.core.sirius.analysis 
+icons/full/obj16/ProcessClass.gif - org.polarsys.capella.core.sirius.analysis (edited)
+icons/full/obj16/ProcessClass.png - org.polarsys.capella.core.sirius.analysis (edited) 
+icons/full/obj16/ProcessMethod.gif - org.polarsys.capella.core.sirius.analysis 
+
+Other icons are provided at generation by "org.eclipse.emf.edit" plugin.

@@ -20,6 +20,7 @@ import org.eclipse.poosl.sirius.services.CompositeStructureDiagramServices
 import org.eclipse.poosl.sirius.services.CompositeStructureEditServices
 import org.eclipse.poosl.xtext.GlobalConstants
 import org.eclipse.sirius.viewpoint.description.Group
+import org.eclipse.sirius.viewpoint.description.UserColorsPalette
 import org.eclipse.sirius.viewpoint.description.Viewpoint
 import org.mypsycho.modit.emf.sirius.api.AbstractGroup
 
@@ -47,7 +48,21 @@ class PooslDesign extends AbstractGroup {
 				new ReusedDiagramDiagram(this)
 			].map[ createContent ]
 
+			
 		]
+		userColorsPalettes += UserColorsPalette.create[
+			name = "PooslColors"
+			entries += "ProcessBkg".color(150,177,218) // blue
+			entries += "ProcessBorder".color(74,74,151) // blue
+			entries += "ClusterBkg".color(255,252,183) // yellow
+			entries += "ClusterBorder".color(123,105,79) // brown
+			entries += "DataBkg".color(232,224,210) // Brown
+			entries += "DataBorder".color(123,105,79) // brown
+			
+			// entries += "SystemBg".color(150,177,218) // System is grey
+			
+		]
+		
 	}
 
 }

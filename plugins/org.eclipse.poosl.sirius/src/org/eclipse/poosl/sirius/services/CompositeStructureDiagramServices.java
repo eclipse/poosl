@@ -29,6 +29,7 @@ import org.eclipse.poosl.DataClass;
 import org.eclipse.poosl.DataMethod;
 import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstancePort;
+import org.eclipse.poosl.InstantiableClass;
 import org.eclipse.poosl.Poosl;
 import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.Port;
@@ -426,7 +427,7 @@ public class CompositeStructureDiagramServices {
      * @return true when allowed
      */
     public boolean canCreatePort(EObject object) {
-        return object instanceof ClusterClass || object instanceof Instance;
+        return object instanceof InstantiableClass || object instanceof Instance;
     }
 
     /**
@@ -449,6 +450,11 @@ public class CompositeStructureDiagramServices {
     public boolean isClusterClass(Instance instance) {
         IEObjectDescription classDef = PooslReferenceHelper.getInstantiableClassDescription(instance);
         return classDef.getEClass().equals(Literals.CLUSTER_CLASS);
+    }
+
+    public EObject getInstanceType(Instance instance) {
+        IEObjectDescription classDef = PooslReferenceHelper.getInstantiableClassDescription(instance);
+        return classDef != null ? classDef.getEObjectOrProxy() : null;
     }
 
     /**

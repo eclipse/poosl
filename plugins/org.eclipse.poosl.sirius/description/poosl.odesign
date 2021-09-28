@@ -3,7 +3,7 @@
   <ownedViewpoints name="POOSL viewpoint" modelFileExtension="poosl">
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Cluster diagram" label="Cluster diagram" titleExpression="aql:self.name" domainClass="poosl.ClusterClass" enablePopupBars="true">
       <metamodel href="http://poosl.eclipse.org/poosl/3.0.0#/"/>
-      <layout xsi:type="description_1:CompositeLayout" padding="60" direction="LeftToRight"/>
+      <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.layered" label="ELK Layered"/>
       <defaultLayer name="Default">
         <edgeMappings name="SimpleChannel" preconditionExpression="aql:self.isInstanceSimpleConnected(sourceView, targetView)" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Reused%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Delete%20Poosl%20Element']" semanticCandidatesExpression="aql:self.channels->select(it | it.isSimpleChannel())" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Edge']" sourceMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ClusterInstance']/@borderedNodeMappings[name='InstancePort'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@borderedNodeMappings[name='ExternalPort']" targetMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ClusterInstance']/@borderedNodeMappings[name='InstancePort']" targetFinderExpression="aql:self.getSimpleChannelEnd(true)" sourceFinderExpression="aql:self.getSimpleChannelEnd(false)" domainClass="poosl.Channel" useDomainElement="true" reconnections="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='Reconnect%20Channel']">
           <style targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan" endsCentering="Both">
@@ -63,14 +63,13 @@
         </edgeMappings>
         <containerMappings name="ClusterClass" pasteDescriptions="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Reused%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Copy%20Instance']" semanticCandidatesExpression="aql:self.getCleanedCacheSelf()" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Open%20Textual%20Editor']" synchronizationLock="true" domainClass="poosl.ClusterClass">
           <borderedNodeMappings name="ExternalPort" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='Delete%20Extern%20Port']" semanticCandidatesExpression="aql:self.ports" synchronizationLock="true" domainClass="poosl.Port">
-            <style xsi:type="style:SquareDescription" showIcon="false" sizeComputationExpression="4" labelPosition="node" resizeKind="NSEW" width="4" height="2">
+            <style xsi:type="style:WorkspaceImageDescription" labelSize="9" showIcon="false" sizeComputationExpression="2" workspacePath="/org.eclipse.poosl.model.edit/icons/full/custo16/Port.png">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
             </style>
           </borderedNodeMappings>
           <subNodeMappings name="ChannelCluster" preconditionExpression="aql:not self.isSimpleChannel()" semanticCandidatesExpression="feature:channels" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Channel']" synchronizationLock="true" domainClass="poosl.Channel">
-            <style xsi:type="style:SquareDescription" showIcon="false" labelExpression="" sizeComputationExpression="1" width="1" height="1">
+            <style xsi:type="style:SquareDescription" labelSize="9" showIcon="false" labelExpression="" sizeComputationExpression="1" width="1" height="1">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -78,26 +77,29 @@
           </subNodeMappings>
           <subNodeMappings name="ClusterInstance" navigationDescriptions="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateInstance']" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='Delete%20instance']" semanticCandidatesExpression="feature:instances" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Open%20Editor']" synchronizationLock="true" domainClass="poosl.Instance">
             <borderedNodeMappings name="InstancePort" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='Delete%20Port%20From%20Instance']" semanticCandidatesExpression="aql:self.getDeclaredInstancePorts()" synchronizationLock="true" domainClass="EObject">
-              <style xsi:type="style:SquareDescription" showIcon="false" labelExpression="aql:self.getPortName()" labelPosition="node" resizeKind="NSEW" width="4" height="2">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="9" showIcon="false" labelExpression="aql:self.getPortName()" sizeComputationExpression="2" workspacePath="/org.eclipse.poosl.model.edit/icons/full/custo16/Port.png">
                 <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
                 <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
               </style>
             </borderedNodeMappings>
-            <style xsi:type="style:SquareDescription" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.sirius/icons/process_icon.png" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="15" height="10">
+            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/Instance.gif" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="15" height="10">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
             </style>
-            <conditionnalStyles predicateExpression="service:isClusterClass">
-              <style xsi:type="style:SquareDescription" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.sirius/icons/cluster_icon.png" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="15" height="10">
+            <conditionnalStyles predicateExpression="aql:self.getInstanceType().oclIsKindOf(poosl::ProcessClass)">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ProcessClass.png" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="15" height="10" color="//@userColorsPalettes[name='PooslColors']/@entries[name='ProcessBkg']">
                 <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
                 <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </conditionnalStyles>
+            <conditionnalStyles predicateExpression="aql:self.getInstanceType().oclIsKindOf(poosl::ClusterClass)">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ClusterClass.png" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="15" height="10" color="//@userColorsPalettes[name='PooslColors']/@entries[name='ClusterBkg']">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               </style>
             </conditionnalStyles>
           </subNodeMappings>
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelExpression="aql:self.getDiagramName()" iconPath="/org.eclipse.poosl.sirius/icons/cluster_icon.png" labelAlignment="LEFT" roundedCorner="true" widthComputationExpression="20" heightComputationExpression="20">
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="9" labelExpression="aql:self.getDiagramName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ClusterClass.png" labelAlignment="LEFT" roundedCorner="true" widthComputationExpression="20" heightComputationExpression="20">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -106,7 +108,7 @@
             <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.0"/>
           </style>
           <conditionnalStyles predicateExpression="service:isSystemDiagram">
-            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelExpression="aql:self.getDiagramName()" iconPath="/org.eclipse.poosl.sirius/icons/system_icon.png" labelAlignment="LEFT" roundedCorner="true" widthComputationExpression="20" heightComputationExpression="20">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="9" labelExpression="aql:self.getDiagramName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/System.gif" labelAlignment="LEFT" roundedCorner="true" widthComputationExpression="20" heightComputationExpression="20">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelFormat>bold</labelFormat>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -190,7 +192,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ToolDescription" name="Create Instance" label="Instance" precondition="service:canCreateInstance()" forceRefresh="true" iconPath="org.eclipse.poosl.sirius/icons/instance.png">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Instance" label="Instance" precondition="service:canCreateInstance()" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/Instance.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
@@ -201,11 +203,11 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ToolDescription" name="Create Port" label="Port" precondition="service:canCreatePort()" forceRefresh="true">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Port" label="Port" precondition="service:canCreatePort()" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/Port.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createprocessclass" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createport" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="createport"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
@@ -274,7 +276,7 @@
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Class diagram" label="Class diagram" pasteDescriptions="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Copy%20Classes']" domainClass="poosl.Poosl" defaultConcern="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@concerns/@ownedConcernDescriptions.0" enablePopupBars="true">
       <metamodel href="http://poosl.eclipse.org/poosl/3.0.0#/"/>
       <filters xsi:type="filter:CompositeFilterDescription" documentation="This filter will collapse dataclasses called Array, Boolean, Char, Integer, Nil, Object, Real and String." name="Hide Basic Classes">
-        <filters xsi:type="filter:MappingFilter" mappings="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Data']" semanticConditionExpression="[isBasicClass()/]"/>
+        <filters xsi:type="filter:MappingFilter" mappings="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Data']" semanticConditionExpression="aql:self.isBasicClass()"/>
       </filters>
       <filters xsi:type="filter:CompositeFilterDescription" name="Hide Imports">
         <filters xsi:type="filter:MappingFilter" mappings="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Cluster'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Data'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Process'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_System']" viewConditionExpression="service:isImportedClass()"/>
@@ -282,6 +284,7 @@
       <concerns>
         <ownedConcernDescriptions name="Default" filters="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@filters[name='Hide%20Basic%20Classes'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@filters[name='Hide%20Imports']"/>
       </concerns>
+      <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.mrtree" label="ELK Mr. Tree"/>
       <defaultLayer name="Default">
         <edgeMappings name="CLA_Containment" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelContainment']" sourceMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_System'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Cluster']" targetMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Cluster'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Process']" targetFinderExpression="[thisEObject.getSystemInstances()/]">
           <style sourceArrow="FillDiamond" targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan">
@@ -311,95 +314,88 @@
           </style>
         </edgeMappings>
         <containerMappings name="CLA_System" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelSystem']" semanticCandidatesExpression="service:getSystemSpecification()" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" domainClass="poosl.ClusterClass" childrenPresentation="List">
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelExpression="System" iconPath="/org.eclipse.poosl.sirius/icons/system_icon.png" roundedCorner="true">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelFormat>bold</labelFormat>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
-            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
-          </style>
-        </containerMappings>
-        <containerMappings name="CLA_Cluster" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelCluster']" semanticCandidatesExpression="service:getAllClusterClasses()" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.ClusterClass" childrenPresentation="List">
-          <subNodeMappings name="CLA_Clus_Parameters" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelParameter']" semanticCandidatesExpression="service:getParameters" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.Variable">
-            <style xsi:type="style:SquareDescription" labelExpression="service:getVariableDescription" iconPath="org.eclipse.poosl.sirius/icons/parametericon.png" labelAlignment="LEFT" resizeKind="NSEW" height="1">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            </style>
-          </subNodeMappings>
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelExpression="service:getClassName" iconPath="/org.eclipse.poosl.sirius/icons/cluster_icon.png" roundedCorner="true">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelFormat>bold</labelFormat>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
-            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
-          </style>
-        </containerMappings>
-        <containerMappings name="CLA_Process" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelProcess']" semanticCandidatesExpression="service:getAllProcessClasses()" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.ProcessClass" childrenPresentation="List">
-          <subNodeMappings name="CLA_Proc_Parameters" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelParameter']" semanticCandidatesExpression="service:getParameters" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.Variable">
-            <style xsi:type="style:SquareDescription" labelExpression="service:getVariableDescription" iconPath="org.eclipse.poosl.sirius/icons/parametericon.png" labelAlignment="LEFT" resizeKind="NSEW">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            </style>
-          </subNodeMappings>
-          <subNodeMappings name="CLA_Proc_InstanceVariables" semanticCandidatesExpression="service:getVariables" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.Variable">
-            <style xsi:type="style:SquareDescription" labelExpression="service:getVariableDescription" iconPath="org.eclipse.poosl.sirius/icons/variableicon.png" labelAlignment="LEFT" resizeKind="NSEW">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            </style>
-          </subNodeMappings>
-          <subNodeMappings name="CLA_ProcessMethods" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelMethod']" semanticCandidatesExpression="[thisEObject.methods/]" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.ProcessMethod">
-            <style xsi:type="style:SquareDescription" labelExpression="[thisEObject.getProcessMethodLabel()/]" iconPath="org.eclipse.poosl.sirius/icons/cogicon.png" labelAlignment="LEFT" resizeKind="NSEW">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            </style>
-          </subNodeMappings>
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelExpression="service:getClassName" iconPath="/org.eclipse.poosl.sirius/icons/process_icon.png" roundedCorner="true">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelFormat>bold</labelFormat>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-          </style>
-        </containerMappings>
-        <containerMappings name="CLA_Data" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelData']" semanticCandidatesExpression="service:getAllDataClasses()" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.DataClass" childrenPresentation="List">
-          <subNodeMappings name="CLA_Data_InstanceVariables" semanticCandidatesExpression="service:getVariables" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.Variable">
-            <style xsi:type="style:SquareDescription" labelExpression="service:getVariableDescription" iconPath="org.eclipse.poosl.sirius/icons/variableicon.png" labelAlignment="LEFT" resizeKind="NSEW">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            </style>
-          </subNodeMappings>
-          <subNodeMappings name="CLA_DataMethods" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelMethod']" semanticCandidatesExpression="[thisEObject.dataMethodsNamed/]" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.DataMethodNamed">
-            <style xsi:type="style:SquareDescription" labelExpression="[thisEObject.getDataMethodLabel()/]" iconPath="org.eclipse.poosl.sirius/icons/cogicon.png" labelAlignment="LEFT" sizeComputationExpression="1" labelPosition="node" width="1" height="1">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            </style>
-          </subNodeMappings>
-          <subNodeMappings name="CLA_DataMethodUnaryOperator" semanticCandidatesExpression="[thisEObject.dataMethodsUnaryOperator/]" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.DataMethodUnaryOperator">
-            <style xsi:type="style:SquareDescription" labelExpression="[thisEObject.name/]" iconPath="org.eclipse.poosl.sirius/icons/cogicon.png" labelAlignment="LEFT" resizeKind="NSEW">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            </style>
-          </subNodeMappings>
-          <subNodeMappings name="CLA_DataMethodBinaryOperator" semanticCandidatesExpression="[thisEObject.dataMethodsBinaryOperator/]" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.DataMethodBinaryOperator">
-            <style xsi:type="style:SquareDescription" labelExpression="[thisEObject.getDataMethodLabel()/]" iconPath="org.eclipse.poosl.sirius/icons/cogicon.png" labelAlignment="LEFT" resizeKind="NSEW">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
-            </style>
-          </subNodeMappings>
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelExpression="service:getClassName" iconPath="/org.eclipse.poosl.sirius/icons/data_icon.png" roundedCorner="true">
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="9" labelExpression="System" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/System.gif" roundedCorner="true">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
-            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="CLA_Cluster" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelCluster']" semanticCandidatesExpression="service:getAllClusterClasses()" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.ClusterClass" childrenPresentation="List">
+          <subNodeMappings name="CLA_Clus_Parameters" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelParameter']" semanticCandidatesExpression="service:getParameters" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.Variable">
+            <style xsi:type="style:SquareDescription" labelSize="9" labelExpression="service:getVariableDescription" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/ProcessParam.gif" labelAlignment="LEFT" sizeComputationExpression="2" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#/0/@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderColor="//@userColorsPalettes[name='PooslColors']/@entries[name='ClusterBorder']" labelSize="9" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ClusterClass.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='PooslColors']/@entries[name='ClusterBkg']">
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="CLA_Process" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelProcess']" semanticCandidatesExpression="service:getAllProcessClasses()" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.ProcessClass" childrenPresentation="List">
+          <subNodeMappings name="CLA_Proc_Parameters" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelParameter']" semanticCandidatesExpression="service:getParameters" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.Variable">
+            <style xsi:type="style:SquareDescription" labelSize="9" labelExpression="service:getVariableDescription" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/ProcessParam.gif" labelAlignment="LEFT" sizeComputationExpression="2" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#/0/@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="CLA_Proc_InstanceVariables" semanticCandidatesExpression="service:getVariables" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.Variable">
+            <style xsi:type="style:SquareDescription" labelSize="9" labelExpression="aql:self.getVariableDescription()" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/ProcessVariable.gif" labelAlignment="LEFT" sizeComputationExpression="2" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#/0/@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="CLA_ProcessMethods" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelMethod']" semanticCandidatesExpression="aql:self.methods" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.ProcessMethod">
+            <style xsi:type="style:SquareDescription" labelSize="9" labelExpression="aql:self.getProcessMethodLabel()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ProcessMethod.gif" labelAlignment="LEFT" sizeComputationExpression="2" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#/0/@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderColor="//@userColorsPalettes[name='PooslColors']/@entries[name='ProcessBorder']" labelSize="9" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ProcessClass.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='PooslColors']/@entries[name='ProcessBkg']">
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="CLA_Data" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelData']" semanticCandidatesExpression="service:getAllDataClasses()" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.DataClass" childrenPresentation="List">
+          <subNodeMappings name="CLA_Data_InstanceVariables" semanticCandidatesExpression="service:getVariables" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.Variable">
+            <style xsi:type="style:SquareDescription" labelSize="9" labelExpression="service:getVariableDescription" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/DataClass_Variable.gif" labelAlignment="LEFT" sizeComputationExpression="2" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#/0/@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="CLA_DataMethods" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelMethod']" semanticCandidatesExpression="aql:self.dataMethodsNamed" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.DataMethodNamed">
+            <style xsi:type="style:SquareDescription" labelSize="9" labelExpression="aql:self.getDataMethodLabel()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/DataMethodNamed.gif" labelAlignment="LEFT" sizeComputationExpression="2" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#/0/@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="CLA_DataMethodUnaryOperator" semanticCandidatesExpression="aql:self.dataMethodsUnaryOperator" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.DataMethodUnaryOperator">
+            <style xsi:type="style:SquareDescription" labelSize="9" labelExpression="aql:self.name" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/DataMethodUnaryOperator.gif" labelAlignment="LEFT" sizeComputationExpression="2" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#/0/@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="CLA_DataMethodBinaryOperator" semanticCandidatesExpression="aql:self.dataMethodsBinaryOperator" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Variable']" synchronizationLock="true" domainClass="poosl.DataMethodBinaryOperator">
+            <style xsi:type="style:SquareDescription" labelSize="9" labelExpression="aql:self.getDataMethodLabel()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/DataMethodBinaryOperator.gif" labelAlignment="LEFT" sizeComputationExpression="2" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#/0/@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderColor="//@userColorsPalettes[name='PooslColors']/@entries[name='DataBorder']" labelSize="9" labelExpression="service:getClassName" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/DataClass.gif" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='PooslColors']/@entries[name='DataBkg']">
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
           </style>
         </containerMappings>
         <toolSections>
@@ -407,8 +403,10 @@
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="double click instance" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="double click instance" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="doubleclickclassdiagrammember"/>
+                <parameters name="element" value="aql:element"/>
+                <parameters name="elementView" value="aql:elementView"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -424,7 +422,7 @@
           <ownedTools xsi:type="tool:OperationAction" name="Edit Variable" precondition="service:isVariable">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="Edit Method" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="Edit Variable" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="editvariable"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
@@ -433,7 +431,7 @@
           <ownedTools xsi:type="tool:OperationAction" name="Edit Parameter" precondition="service:isParameter">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="Edit Method" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="Edit Parameter" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="editparameter"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
@@ -442,7 +440,7 @@
           <ownedTools xsi:type="tool:OperationAction" name="Open Textual Editor" precondition="[thisEObject.showMenuOpenTextualEditor()/]">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenTextualEditor" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenTextualEditor" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="opentextualeditor"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
@@ -451,7 +449,7 @@
           <ownedTools xsi:type="tool:OperationAction" name="Open Composite Structure Diagram" precondition="[thisEObject.showMenuOpenGraphicalEditor()/]">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenGraphicalEditor" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenGraphicalEditor" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="opengraphicaleditor"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
@@ -462,11 +460,11 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteparameter" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteparameter" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="deleteparameter"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
                 <parameters name="containerView" value="[containerView/]"/>
-                <parameters name="action" value="deleteparameter"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -475,11 +473,11 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="delete Variable" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="delete Variable" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="deletemethod"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
                 <parameters name="containerView" value="[containerView/]"/>
-                <parameters name="action" value="deletemethod"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -488,11 +486,11 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteparameter" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="delete Variable" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="deletevariable"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
                 <parameters name="containerView" value="[containerView/]"/>
-                <parameters name="action" value="deletevariable"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -501,11 +499,11 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteinheritance" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteinheritance" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="deleteinheritance"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
                 <parameters name="containerView" value="[containerView/]"/>
-                <parameters name="action" value="deleteinheritance"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -514,11 +512,11 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteparameter" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deletecluster" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="deletecluster"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
                 <parameters name="containerView" value="[containerView/]"/>
-                <parameters name="action" value="deletecluster"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -527,11 +525,11 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteparameter" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deletedata" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="deletedata"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
                 <parameters name="containerView" value="[containerView/]"/>
-                <parameters name="action" value="deletedata"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -540,7 +538,7 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteinstance" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deleteprocess" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="deleteprocess"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
@@ -559,11 +557,11 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deletecontainment" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="deletecontainment" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="deletecontainment"/>
                 <parameters name="element" value="[element/]"/>
                 <parameters name="view" value="[elementView/]"/>
                 <parameters name="containerView" value="[containerView/]"/>
-                <parameters name="action" value="deletecontainment"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -576,37 +574,37 @@
               <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool:If" conditionExpression="[copiedElement.oclIsKindOf(ClusterClass)/]">
                   <subModelOperations xsi:type="tool:CreateInstance" typeName="poosl.ClusterClass" referenceName="clusterClasses" variableName="clusterclass">
-                    <subModelOperations xsi:type="tool:SetValue" featureName="name" valueExpression="[container.getUniqueClusterName(copiedElement.name)/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="parameters" valueExpression="[copiedElement.parameters/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="ports" valueExpression="[copiedElement.ports/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="channels" valueExpression="[copiedElement.channels/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="instances" valueExpression="[copiedElement.instances/]"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="name" valueExpression="aql:container.getUniqueClusterName(copiedElement.name)"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="parameters" valueExpression="aql:copiedElement.parameters"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="ports" valueExpression="aql:copiedElement.ports"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="channels" valueExpression="aql:copiedElement.channels"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="instances" valueExpression="aql:copiedElement.instances"/>
                   </subModelOperations>
                   <subModelOperations xsi:type="tool:ExternalJavaActionCall" name="save" action="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Reused%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Copy%20Instance']/@initialOperation/@firstModelOperations/@subModelOperations.1"/>
                 </subModelOperations>
                 <subModelOperations xsi:type="tool:If" conditionExpression="[copiedElement.oclIsKindOf(ProcessClass)/]">
                   <subModelOperations xsi:type="tool:CreateInstance" typeName="poosl.ProcessClass" referenceName="processClasses" variableName="processClass">
-                    <subModelOperations xsi:type="tool:SetValue" featureName="name" valueExpression="[container.getUniqueProcessName(copiedElement.name)/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="parameters" valueExpression="[copiedElement.parameters/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="ports" valueExpression="[copiedElement.ports/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="superClass" valueExpression="[copiedElement.superClass/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="receiveMessages" valueExpression="[copiedElement.receiveMessages/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="sendMessages" valueExpression="[copiedElement.sendMessages/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="instanceVariables" valueExpression="[copiedElement.instanceVariables/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="methods" valueExpression="[copiedElement.methods/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="initialMethodCall" valueExpression="[copiedElement.initialMethodCall/]"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="name" valueExpression="aql:container.getUniqueProcessName(copiedElement.name)"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="parameters" valueExpression="aql:copiedElement.parameters"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="ports" valueExpression="aql:copiedElement.ports"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="superClass" valueExpression="aql:copiedElement.superClass"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="receiveMessages" valueExpression="aql:copiedElement.receiveMessages"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="sendMessages" valueExpression="aql:copiedElement.sendMessages"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="instanceVariables" valueExpression="aql:copiedElement.instanceVariables"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="methods" valueExpression="aql:copiedElement.methods"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="initialMethodCall" valueExpression="aql:copiedElement.initialMethodCall"/>
                   </subModelOperations>
                   <subModelOperations xsi:type="tool:ExternalJavaActionCall" name="save" action="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Reused%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Copy%20Instance']/@initialOperation/@firstModelOperations/@subModelOperations.1"/>
                 </subModelOperations>
                 <subModelOperations xsi:type="tool:If" conditionExpression="[copiedElement.oclIsKindOf(DataClass)/]">
                   <subModelOperations xsi:type="tool:CreateInstance" typeName="poosl.DataClass" referenceName="dataClasses" variableName="dataclasses">
-                    <subModelOperations xsi:type="tool:SetValue" featureName="name" valueExpression="[container.getUniqueDataName(copiedElement.name)/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="superClass" valueExpression="[copiedElement.superClass/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="instanceVariables" valueExpression="[copiedElement.instanceVariables/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="native" valueExpression="[copiedElement.native/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="dataMethodsNamed" valueExpression="[copiedElement.dataMethodsNamed/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="dataMethodsUnaryOperator" valueExpression="[copiedElement.dataMethodsUnaryOperator/]"/>
-                    <subModelOperations xsi:type="tool:SetValue" featureName="dataMethodsBinaryOperator" valueExpression="[copiedElement.dataMethodsBinaryOperator/]"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="name" valueExpression="aql:container.getUniqueDataName(copiedElement.name)"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="superClass" valueExpression="aql:copiedElement.superClass"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="instanceVariables" valueExpression="aql:copiedElement.instanceVariables"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="native" valueExpression="aql:copiedElement.native"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="dataMethodsNamed" valueExpression="aql:copiedElement.dataMethodsNamed"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="dataMethodsUnaryOperator" valueExpression="aql:copiedElement.dataMethodsUnaryOperator"/>
+                    <subModelOperations xsi:type="tool:SetValue" featureName="dataMethodsBinaryOperator" valueExpression="aql:copiedElement.dataMethodsBinaryOperator"/>
                   </subModelOperations>
                   <subModelOperations xsi:type="tool:ExternalJavaActionCall" name="save" action="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Reused%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Copy%20Instance']/@initialOperation/@firstModelOperations/@subModelOperations.1"/>
                 </subModelOperations>
@@ -615,109 +613,120 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Nodes">
-          <ownedTools xsi:type="tool:ToolDescription" name="Create Data Class" label="Data Class" precondition="[container.oclIsKindOf(Poosl)/]" forceRefresh="true" iconPath="org.eclipse.poosl.sirius/icons/data_icon.png">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Data Class" label="Data Class" precondition="[container.oclIsKindOf(Poosl)/]" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/DataClass.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createprocessclass" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="create Data" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="createdata"/>
-                <parameters name="view" value="[elementView/]"/>
                 <parameters name="element" value="[element/]"/>
+                <parameters name="view" value="[elementView/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ToolDescription" name="Create Process Class" label="Process Class" precondition="[container.oclIsKindOf(Poosl)/]" forceRefresh="true" iconPath="org.eclipse.poosl.sirius/icons/process_icon.png">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Process Class" label="Process Class" precondition="[container.oclIsKindOf(Poosl)/]" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ProcessClass.png">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createprocessclass" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="createprocess"/>
-                <parameters name="view" value="[elementView/]"/>
                 <parameters name="element" value="[element/]"/>
+                <parameters name="view" value="[elementView/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ToolDescription" name="Create Cluster Class" label="Cluster Class" precondition="[container.oclIsKindOf(Poosl)/]" forceRefresh="true" iconPath="org.eclipse.poosl.sirius/icons/cluster_icon.png">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Cluster Class" label="Cluster Class" precondition="[container.oclIsKindOf(Poosl)/]" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ClusterClass.png">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createprocessclass" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="create cluster class" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="createcluster"/>
-                <parameters name="view" value="[elementView/]"/>
                 <parameters name="element" value="[element/]"/>
+                <parameters name="view" value="[elementView/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ToolDescription" name="Create System" label="System" precondition="service:canCreateSystem" forceRefresh="true" iconPath="org.eclipse.poosl.sirius/icons/system_icon.png">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create System" label="System" precondition="service:canCreateSystem" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/System.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createprocessclass" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="create system" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="createsystem"/>
-                <parameters name="view" value="[elementView/]"/>
                 <parameters name="element" value="[element/]"/>
+                <parameters name="view" value="[elementView/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
         </toolSections>
         <toolSections name="Attributes">
-          <ownedTools xsi:type="tool:ToolDescription" name="Create Parameter" label="Parameter" precondition="service:hasParameters" forceRefresh="true" iconPath="org.eclipse.poosl.sirius/icons/parametericon.png">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Parameter" label="Parameter" precondition="service:hasParameters" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/ProcessParam.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createprocessclass" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="create parameter" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="createparameter"/>
-                <parameters name="view" value="[elementView/]"/>
                 <parameters name="element" value="[element/]"/>
+                <parameters name="view" value="[elementView/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ToolDescription" name="Create Variable" label="Variable" precondition="service:hasVariables" forceRefresh="true" iconPath="org.eclipse.poosl.sirius/icons/variableicon.png">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Variable" label="Variable" precondition="service:hasVariables" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/ProcessVariable.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createprocessclass" forceRefresh="true" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="Create Variable" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="createvariable"/>
-                <parameters name="view" value="[elementView/]"/>
                 <parameters name="element" value="[element/]"/>
+                <parameters name="view" value="[elementView/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ToolDescription" name="Create Method" label="Method" precondition="service:hasMethods" forceRefresh="true" iconPath="org.eclipse.poosl.sirius/icons/cogicon.png">
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Port" label="Port" precondition="service:canCreatePort()" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/Port.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createprocessclass" forceRefresh="true" id="externalcall">
-                <parameters name="action" value="createmethod"/>
-                <parameters name="view" value="[elementView/]"/>
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="createport" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="createport"/>
                 <parameters name="element" value="[element/]"/>
+                <parameters name="view" value="[elementView/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolDescription" name="Create Method" label="Method" precondition="service:hasMethods" forceRefresh="true" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ProcessMethod.gif">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="create Method" forceRefresh="true" id="externalcall">
+                <parameters name="action" value="createmethod"/>
+                <parameters name="element" value="[element/]"/>
+                <parameters name="view" value="[elementView/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
         </toolSections>
         <toolSections name="Relations">
-          <ownedTools xsi:type="tool_1:EdgeCreationDescription" name="Create Inheritance" label="Inheritance" precondition="[preTarget.oclIsKindOf(ProcessClass) or  preTarget.oclIsKindOf(DataClass)/]" edgeMappings="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@edgeMappings[name='CLA_DataInheritance'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@edgeMappings[name='CLA_ProcessInheritance']" iconPath="org.eclipse.poosl.sirius/icons/inheritance2_icon.png" connectionStartPrecondition="service:canInherit">
+          <ownedTools xsi:type="tool_1:EdgeCreationDescription" name="Create Inheritance" label="Inheritance" precondition="[preTarget.oclIsKindOf(ProcessClass) or  preTarget.oclIsKindOf(DataClass)/]" edgeMappings="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@edgeMappings[name='CLA_DataInheritance'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@edgeMappings[name='CLA_ProcessInheritance']" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/Generalization.gif" connectionStartPrecondition="service:canInherit">
             <sourceVariable name="source"/>
             <targetVariable name="target"/>
             <sourceViewVariable name="sourceView"/>
             <targetViewVariable name="targetView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="set Inheritance" id="externalcall">
-                <parameters name="source" value="[source/]"/>
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="set Inheritance" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="setinheritance"/>
+                <parameters name="source" value="[source/]"/>
                 <parameters name="target" value="[target/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool_1:EdgeCreationDescription" name="Create Containment" label="Containment" precondition="service:canBeContained()" edgeMappings="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@edgeMappings[name='CLA_Containment']" iconPath="org.eclipse.poosl.sirius/icons/containment_icon.png" connectionStartPrecondition="[preSource.oclIsKindOf(ClusterClass)/]">
+          <ownedTools xsi:type="tool_1:EdgeCreationDescription" name="Create Containment" label="Containment" precondition="service:canBeContained()" edgeMappings="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@edgeMappings[name='CLA_Containment']" iconPath="/org.eclipse.poosl.model.edit/icons/full/custo16/Composition.gif" connectionStartPrecondition="[preSource.oclIsKindOf(ClusterClass)/]">
             <sourceVariable name="source"/>
             <targetVariable name="target"/>
             <sourceViewVariable name="sourceView"/>
             <targetViewVariable name="targetView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="set Inheritance" id="externalcall">
-                <parameters name="source" value="[source/]"/>
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="create containment" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="createcontainment"/>
+                <parameters name="source" value="[source/]"/>
                 <parameters name="target" value="[target/]"/>
               </firstModelOperations>
             </initialOperation>
@@ -737,10 +746,10 @@
               <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="aql:element.deletePooslObject(elementView)"/>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:OperationAction" name="Open Textual Editor" precondition="[thisEObject.showMenuOpenTextualEditor()/]">
+          <ownedTools xsi:type="tool:OperationAction" name="Open Textual Editor" precondition="aql:self.showMenuOpenTextualEditor()">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenTextualEditor" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenTextualEditor" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="opentextualeditor"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
@@ -749,7 +758,7 @@
           <ownedTools xsi:type="tool:OperationAction" name="Open Class Diagram" precondition="true">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenClassDiagram" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenClassDiagram" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="openclassdiagram"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
@@ -763,13 +772,13 @@
             <initialOperation>
               <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="var:container">
                 <subModelOperations xsi:type="tool:CreateInstance" typeName="poosl.Instance" referenceName="instances">
-                  <subModelOperations xsi:type="tool:SetValue" featureName="name" valueExpression="[container.getUniqueInstanceName(copiedElement.name)/]"/>
-                  <subModelOperations xsi:type="tool:SetValue" featureName="classDefinition" valueExpression="[copiedElement.classDefinition/]"/>
-                  <subModelOperations xsi:type="tool:SetValue" featureName="instanceParameters" valueExpression="[copiedElement.instanceParameters/]"/>
+                  <subModelOperations xsi:type="tool:SetValue" featureName="name" valueExpression="aql:container.getUniqueDataName(copiedElement.name)"/>
+                  <subModelOperations xsi:type="tool:SetValue" featureName="classDefinition" valueExpression="aql:copiedElement.classDefinition"/>
+                  <subModelOperations xsi:type="tool:SetValue" featureName="instanceParameters" valueExpression="aql:copiedElement.instanceParameters"/>
                 </subModelOperations>
-                <subModelOperations xsi:type="tool:ExternalJavaAction" name="Save" id="externalcall">
-                  <parameters name="container" value="[container/]"/>
+                <subModelOperations xsi:type="tool:ExternalJavaAction" name="save" forceRefresh="true" id="externalcall">
                   <parameters name="action" value="save"/>
+                  <parameters name="view" value="[views/]"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -777,25 +786,25 @@
           <ownedTools xsi:type="tool:OperationAction" name="Show/Hide Communication Elements" precondition="true" forceRefresh="true">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenTextualEditor" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="toggle debugging communication visibility" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="showhidedebug"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:OperationAction" name="StructureDiagramFromStructure" label="Open Composite Structure Diagram" precondition="[thisEObject.showMenuInstanceOpenStructureDiagram()/]">
+          <ownedTools xsi:type="tool:OperationAction" name="StructureDiagramFromStructure" label="Open Composite Structure Diagram" precondition="aql:self.showMenuInstanceOpenStructureDiagram()">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenGraphicalEditor" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenGraphicalEditor" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="opengraphicaleditor"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:OperationAction" name="Open Instance in Textual Editor" precondition="[thisEObject.showMenuOpenTextualEditorInstance()/]">
+          <ownedTools xsi:type="tool:OperationAction" name="Open Instance in Textual Editor" precondition="aql:self.showMenuOpenTextualEditorInstance()">
             <view name="views"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenTextualEditor" id="externalcall">
+              <firstModelOperations xsi:type="tool:ExternalJavaAction" name="OpenTextualEditor" forceRefresh="true" id="externalcall">
                 <parameters name="action" value="openinstancetextualeditor"/>
                 <parameters name="view" value="[views/]"/>
               </firstModelOperations>
@@ -809,4 +818,12 @@
     <ownedJavaExtensions qualifiedClassName="org.eclipse.poosl.sirius.services.CompositeStructureEditServices"/>
     <ownedJavaExtensions qualifiedClassName="org.eclipse.poosl.sirius.services.ClassDiagramServices"/>
   </ownedViewpoints>
+  <userColorsPalettes name="PooslColors">
+    <entries xsi:type="description:UserFixedColor" red="150" green="177" blue="218" name="ProcessBkg"/>
+    <entries xsi:type="description:UserFixedColor" red="74" green="74" blue="151" name="ProcessBorder"/>
+    <entries xsi:type="description:UserFixedColor" red="255" green="252" blue="183" name="ClusterBkg"/>
+    <entries xsi:type="description:UserFixedColor" red="123" green="105" blue="79" name="ClusterBorder"/>
+    <entries xsi:type="description:UserFixedColor" red="232" green="224" blue="210" name="DataBkg"/>
+    <entries xsi:type="description:UserFixedColor" red="123" green="105" blue="79" name="DataBorder"/>
+  </userColorsPalettes>
 </description:Group>

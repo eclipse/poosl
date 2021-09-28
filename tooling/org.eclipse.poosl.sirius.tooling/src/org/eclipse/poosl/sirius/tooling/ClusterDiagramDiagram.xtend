@@ -17,15 +17,15 @@ import org.eclipse.poosl.Channel
 import org.eclipse.poosl.ClusterClass
 import org.eclipse.poosl.Instance
 import org.eclipse.poosl.Port
+import org.eclipse.poosl.ProcessClass
 import org.eclipse.sirius.diagram.LabelPosition
 import org.eclipse.sirius.diagram.ResizeKind
-import org.eclipse.sirius.diagram.description.CompositeLayout
 import org.eclipse.sirius.diagram.description.ContainerMapping
+import org.eclipse.sirius.diagram.description.CustomLayoutConfiguration
 import org.eclipse.sirius.diagram.description.DiagramDescription
 import org.eclipse.sirius.diagram.description.DiagramElementMapping
 import org.eclipse.sirius.diagram.description.EdgeMapping
 import org.eclipse.sirius.diagram.description.Layer
-import org.eclipse.sirius.diagram.description.LayoutDirection
 import org.eclipse.sirius.diagram.description.NodeMapping
 import org.eclipse.sirius.diagram.description.style.BeginLabelStyleDescription
 import org.eclipse.sirius.diagram.description.style.CenterLabelStyleDescription
@@ -33,6 +33,7 @@ import org.eclipse.sirius.diagram.description.style.EdgeStyleDescription
 import org.eclipse.sirius.diagram.description.style.EndLabelStyleDescription
 import org.eclipse.sirius.diagram.description.style.FlatContainerStyleDescription
 import org.eclipse.sirius.diagram.description.style.SquareDescription
+import org.eclipse.sirius.diagram.description.style.WorkspaceImageDescription
 import org.eclipse.sirius.diagram.description.tool.DeleteElementDescription
 import org.eclipse.sirius.diagram.description.tool.DiagramNavigationDescription
 import org.eclipse.sirius.diagram.description.tool.DoubleClickDescription
@@ -48,6 +49,7 @@ import org.eclipse.sirius.diagram.description.tool.ToolSection
 import org.eclipse.sirius.viewpoint.FontFormat
 import org.eclipse.sirius.viewpoint.LabelAlignment
 import org.eclipse.sirius.viewpoint.description.SystemColor
+import org.eclipse.sirius.viewpoint.description.UserFixedColor
 import org.eclipse.sirius.viewpoint.description.style.LabelBorderStyleDescription
 import org.eclipse.sirius.viewpoint.description.tool.ContainerViewVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementDeleteVariable
@@ -75,9 +77,9 @@ class ClusterDiagramDiagram extends PooslDiagram {
 
 		enablePopupBars = true
 			
-		layout = CompositeLayout.create [
-			padding = 60
-			direction = LayoutDirection.LEFT_TO_RIGHT
+		layout = CustomLayoutConfiguration.create [
+			id = "org.eclipse.elk.layered"
+			label = "ELK Layered"
 		]
 	}
 	
@@ -99,6 +101,16 @@ class ClusterDiagramDiagram extends PooslDiagram {
 		]
 	}
 	
+	def createNodePortStyle() {
+		WorkspaceImageDescription.createStyle [
+			// labelExpression = '''self.getPortName()'''.trimAql
+			labelPosition = LabelPosition.BORDER_LITERAL
+			
+			// Gif image has a blurry effect in sirius
+			workspacePath = EXTRA_ICON_PATH + "Port.png"
+		]
+	}
+	
 	override initContent(Layer it) {
 		containerMappings += ContainerMapping.createAs(Ns.node, "ClusterClass") [
 			
@@ -112,8 +124,8 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			// For conditional style, only icon seems different.
 			// Customization should be used.
 			val defaultClusterStyle = [FlatContainerStyleDescription it | 
-				labelSize = 8 // Built-in value; probably too small.
-				labelExpression = "aql:self.getDiagramName()"
+				// labelSize = 8 // Built-in value; probably too small.
+				labelExpression = "self.getDiagramName()".trimAql
 				labelFormat += FontFormat.BOLD_LITERAL				
 				labelAlignment = LabelAlignment.LEFT
 				roundedCorner = true
@@ -126,35 +138,25 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			
 			style = FlatContainerStyleDescription.createStyle[
 				defaultClusterStyle.apply(it)
-				iconPath = "/org.eclipse.poosl.sirius/icons/cluster_icon.png"				
+				iconPath = DEFAULT_ICON_PATH + "ClusterClass.png"
 			]
 
 			styleIf(FlatContainerStyleDescription, "service:isSystemDiagram") [
 				defaultClusterStyle.apply(it)
-				iconPath = "/org.eclipse.poosl.sirius/icons/system_icon.png"
+				iconPath = EXTRA_ICON_PATH + "System.gif"
 			]
 			
 			borderedNodeMappings += NodeMapping.createAs(Ns.node, "ExternalPort") [
-				semanticCandidatesExpression = "aql:self.ports"
+				semanticCandidatesExpression = '''self.ports'''.trimAql
 				synchronizationLock = true
 				domainClass = Port
 				deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Extern Port")
-				style = SquareDescription.createStyle [
-					borderSizeComputationExpression = "0"
-					// labelExpression = null // XXX default value is a real issue here
-					showIcon = false
-					sizeComputationExpression = "4"
-					labelPosition = LabelPosition.NODE_LITERAL
-					resizeKind = ResizeKind.NSEW_LITERAL
-					width = 4
-					height = 2
-					color = SystemColor.extraRef("color:light_yellow")
-				]
+				style = createNodePortStyle
 			]
 			subNodeMappings += NodeMapping.createAs(Ns.node, "ChannelCluster") [
 				domainClass = Channel
 				semanticCandidatesExpression = "feature:channels"
-				preconditionExpression = "aql:not self.isSimpleChannel()"
+				preconditionExpression = '''not self.isSimpleChannel()'''.trimAql
 				synchronizationLock = true
 				style = SquareDescription.createStyle [
 					// No resizable by default
@@ -167,6 +169,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					color = SystemColor.extraRef("color:black")
 				]
 			]
+			
 			subNodeMappings += NodeMapping.createAs(Ns.node, "ClusterInstance") [
 				semanticCandidatesExpression = "feature:instances"
 				synchronizationLock = true
@@ -177,39 +180,62 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				val defaultInstanceStyle = [SquareDescription it | 
 					labelExpression = "aql:self.getInstanceName()"
 					sizeComputationExpression = "8"
+					
+					borderSizeComputationExpression = "2" // Border size matches port icon.
 					labelPosition = LabelPosition.NODE_LITERAL
 					resizeKind = ResizeKind.NSEW_LITERAL
 					width = 15
 					height = 10
-					color = SystemColor.extraRef("color:white")
-				]
-
-				style = SquareDescription.createStyle [
-					defaultInstanceStyle.apply(it)
-					iconPath = "/org.eclipse.poosl.sirius/icons/process_icon.png"
 				]
 				
-				// XXX improve:Only iconPath is different, change to customProperty
-				styleIf(SquareDescription, "service:isClusterClass") [
+				// Design choice: 
+				// SquareDescription center label on element
+				// but color gradiant is not supported !
+				// Color gradiant is only on FlatContainerStyleDescription.
+				style = SquareDescription.createStyle [
 					defaultInstanceStyle.apply(it)
-					iconPath = "/org.eclipse.poosl.sirius/icons/cluster_icon.png"
+
+					color = Color.gray.lightRef
+					iconPath = DEFAULT_ICON_PATH + "Instance.gif"
 				]
+				
+				#[ 
+					ProcessClass ->"ProcessBkg", 
+					ClusterClass ->"ClusterBkg"
+				].forEach[ custo |
+					val className = custo.key.simpleName
+					
+					styleIf(SquareDescription, 
+						'''self.getInstanceType().oclIsKindOf(poosl::«className»)'''.trimAql) [
+						defaultInstanceStyle.apply(it)
+						
+						iconPath = '''«DEFAULT_ICON_PATH»«className».png'''
+						color = UserFixedColor.ref("color:" + custo.value)
+					]
+				]
+
 				
 				borderedNodeMappings += NodeMapping.createAs(Ns.node, "InstancePort") [
 					semanticCandidatesExpression = "aql:self.getDeclaredInstancePorts()"
 					synchronizationLock = true
 					domainClass = "EObject" // InstancePort + Port
 					deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Port From Instance")
-					style = SquareDescription.createStyle [
-						sizeComputationExpression="3" // default value; probably to large
-						showIcon = false
-						labelExpression = "aql:self.getPortName()"
-						labelPosition = LabelPosition.NODE_LITERAL
-						resizeKind = ResizeKind.NSEW_LITERAL
-						width = 4
-						height = 2
-						color = SystemColor.extraRef("color:light_blue")
+//					style = SquareDescription.createStyle [
+//						sizeComputationExpression="3" // default value; probably to large
+//						showIcon = false
+//						labelExpression = "aql:self.getPortName()"
+//						labelPosition = LabelPosition.NODE_LITERAL
+//						resizeKind = ResizeKind.NSEW_LITERAL
+//						width = 4
+//						height = 2
+//						color = SystemColor.extraRef("color:light_blue")
+//					]
+					style = createNodePortStyle.andThen[
+						labelExpression = '''self.getPortName()'''.trimAql
+						// customize(parentType.oclIsKindOf(poosl::ProcessClass) && isIn, 
+						// "workspacePath", "in.Gif")
 					]
+					
 				]
 			]
 		]
@@ -313,7 +339,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				label = "Instance"
 				precondition = "service:canCreateInstance()"
 				forceRefresh = true
-				iconPath = "org.eclipse.poosl.sirius/icons/instance.png"
+				iconPath = DEFAULT_ICON_PATH + "Instance.gif"
 				element = ElementVariable.named("element")
 				elementView = ElementViewVariable.named("elementView")
 				operation = "createprocessclass".callJavaAction("createprocessclass",
@@ -326,9 +352,10 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				label = "Port"
 				precondition = "service:canCreatePort()"
 				forceRefresh = true
+				iconPath = DEFAULT_ICON_PATH + "Port.gif"
 				element = ElementVariable.named("element")
 				elementView = ElementViewVariable.named("elementView")
-				operation = "createprocessclass".callJavaAction("createport",
+				operation = "createport".callJavaAction("createport",
 					"element" -> "[element/]",
 					"view" -> "[elementView/]"
 				)
@@ -370,7 +397,8 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				forceRefresh = true
 				view = ContainerViewVariable.named("views")
 				operation = "Change HighLight Color".callJavaAction("changecolor", 
-					"view" -> "[views/]")
+					"view" -> "[views/]"
+				)
 			]
 			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Open Textual Editor")
 			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Open Class Diagram")

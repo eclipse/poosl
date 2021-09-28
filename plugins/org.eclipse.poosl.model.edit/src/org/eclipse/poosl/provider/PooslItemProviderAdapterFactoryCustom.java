@@ -31,7 +31,6 @@ public class PooslItemProviderAdapterFactoryCustom extends PooslItemProviderAdap
         if (channelItemProvider == null) {
             channelItemProvider = new ChannelItemProviderCustom(this);
         }
-
         return channelItemProvider;
     }
 
@@ -40,7 +39,6 @@ public class PooslItemProviderAdapterFactoryCustom extends PooslItemProviderAdap
         if (instanceItemProvider == null) {
             instanceItemProvider = new InstanceItemProviderCustom(this);
         }
-
         return instanceItemProvider;
     }
 
@@ -49,7 +47,15 @@ public class PooslItemProviderAdapterFactoryCustom extends PooslItemProviderAdap
         if (instancePortItemProvider == null) {
             instancePortItemProvider = new InstancePortItemProviderCustom(this);
         }
-
         return instancePortItemProvider;
     }
+
+    @Override
+    public Adapter createClusterClassAdapter() {
+        if (clusterClassItemProvider == null) {
+            clusterClassItemProvider = new ClusterClassItemProviderCustom(this);
+        }
+        return clusterClassItemProvider;
+    }
+
 }

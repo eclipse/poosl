@@ -18,7 +18,6 @@ import org.eclipse.sirius.diagram.description.DiagramDescription
 import org.eclipse.sirius.diagram.description.Layer
 import org.eclipse.sirius.diagram.description.tool.DeleteElementDescription
 import org.eclipse.sirius.diagram.description.tool.ToolSection
-import org.eclipse.sirius.viewpoint.description.tool.ChangeContext
 import org.eclipse.sirius.viewpoint.description.tool.ContainerViewVariable
 import org.eclipse.sirius.viewpoint.description.tool.CreateInstance
 import org.eclipse.sirius.viewpoint.description.tool.DropContainerVariable
@@ -27,7 +26,6 @@ import org.eclipse.sirius.viewpoint.description.tool.ElementVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementViewVariable
 import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaAction
 import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaActionParameter
-import org.eclipse.sirius.viewpoint.description.tool.InitialOperation
 import org.eclipse.sirius.viewpoint.description.tool.OperationAction
 import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
 import org.eclipse.sirius.viewpoint.description.tool.SetValue
@@ -58,143 +56,74 @@ class ReusedDiagramDiagram extends PooslDiagram {
 				operation = '''element.deletePooslObject(elementView)'''.trimAql.toOperation
 			]
 			ownedTools += OperationAction.createAs(Ns.operation, "Open Textual Editor") [
-				precondition = "[thisEObject.showMenuOpenTextualEditor()/]"
+				precondition = '''self.showMenuOpenTextualEditor()'''.trimAql
 				view = ContainerViewVariable.named("views")
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "OpenTextualEditor"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "opentextualeditor"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[views/]"
-						]
-					]
-				]
+				operation = "OpenTextualEditor".callJavaAction("opentextualeditor", 
+					"view" -> "[views/]"
+				)
 			]
 			ownedTools += OperationAction.createAs(Ns.operation, "Open Class Diagram") [
 				precondition = "true"
 				view = ContainerViewVariable.named("views")
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "OpenClassDiagram"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "openclassdiagram"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[views/]"
-						]
-					]
-				]
+				operation = "OpenClassDiagram".callJavaAction("openclassdiagram", 
+					"view" -> "[views/]"
+				)
 			]
 			ownedTools += PasteDescription.createAs(Ns.operation, "Copy Instance") [
 				forceRefresh = true
-				container = DropContainerVariable.create [
-					name = "container"
-				]
-				containerView = ContainerViewVariable.create [
-					name = "containerView"
-				]
-				copiedView = ElementViewVariable.create [
-					name = "copiedView"
-				]
-				copiedElement = ElementVariable.create [
-					name = "copiedElement"
-				]
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ChangeContext.create [
-						browseExpression = "var:container"
-						subModelOperations += CreateInstance.create [
-							typeName = "poosl.Instance"
-							referenceName = "instances"
-							subModelOperations += SetValue.create [
-								featureName = "name"
-								valueExpression = "[container.getUniqueInstanceName(copiedElement.name)/]"
-							]
-							subModelOperations += SetValue.create [
-								featureName = "classDefinition"
-								valueExpression = "[copiedElement.classDefinition/]"
-							]
-							subModelOperations += SetValue.create [
-								featureName = "instanceParameters"
-								valueExpression = "[copiedElement.instanceParameters/]"
-							]
-						]
-						subModelOperations += ExternalJavaAction.createAs(Ns.operation, "Save") [
-							id = "externalcall"
-							parameters += ExternalJavaActionParameter.create [
-								name = "container"
-								value = "[container/]"
-							]
-							parameters += ExternalJavaActionParameter.create [
-								name = "action"
-								value = "save"
-							]
-						]
+				container = DropContainerVariable.named("container")
+				containerView = ContainerViewVariable.named("containerView")
+				copiedView = ElementViewVariable.named("copiedView")
+				copiedElement = ElementVariable.named("copiedElement")
+
+				operation = "var:container".toOperation.andThen [
+					subModelOperations += CreateInstance.create [
+						typeName = "poosl.Instance"
+						referenceName = "instances"
+						setValue("name", "container.getUniqueDataName(copiedElement.name)")
+						setValue("classDefinition", "copiedElement.classDefinition")
+						setValue("instanceParameters", "copiedElement.instanceParameters")
 					]
+//					subModelOperations += ExternalJavaAction.createAs(Ns.operation, "Save") [
+//						id = "externalcall"
+//						parameters += ExternalJavaActionParameter.create [
+//							name = "container"
+//							value = "[container/]"
+//						]
+//						parameters += ExternalJavaActionParameter.create [
+//							name = "action"
+//							value = "save"
+//						]
+//					]
+					
+					subModelOperations += Ns.operation.id("Save").alias(
+						"save".callJavaAction("save", 
+							"view" -> "[views/]"
+						))
 				]
 			]
 			ownedTools += OperationAction.createAs(Ns.operation, "Show/Hide Communication Elements") [
 				precondition = "true"
 				forceRefresh = true
 				view = ContainerViewVariable.named("views")
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "OpenTextualEditor"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "showhidedebug"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[views/]"
-						]
-					]
-				]
+				operation = "toggle debugging communication visibility".callJavaAction("showhidedebug", 
+					"view" -> "[views/]"
+				)
 			]
 			ownedTools += OperationAction.createAs(Ns.operation, "StructureDiagramFromStructure") [
 				label = "Open Composite Structure Diagram"
-				precondition = "[thisEObject.showMenuInstanceOpenStructureDiagram()/]"
+				precondition = '''self.showMenuInstanceOpenStructureDiagram()'''.trimAql
 				view = ContainerViewVariable.named("views")
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "OpenGraphicalEditor"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "opengraphicaleditor"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[views/]"
-						]
-					]
-				]
+				operation = "OpenGraphicalEditor".callJavaAction("opengraphicaleditor", 
+					"view" -> "[views/]"
+				)
 			]
 			ownedTools += OperationAction.createAs(Ns.operation, "Open Instance in Textual Editor") [
-				precondition = "[thisEObject.showMenuOpenTextualEditorInstance()/]"
+				precondition = '''self.showMenuOpenTextualEditorInstance()'''.trimAql
 				view = ContainerViewVariable.named("views")
-				initialOperation = InitialOperation.create [
-					firstModelOperations = ExternalJavaAction.create [
-						name = "OpenTextualEditor"
-						id = "externalcall"
-						parameters += ExternalJavaActionParameter.create [
-							name = "action"
-							value = "openinstancetextualeditor"
-						]
-						parameters += ExternalJavaActionParameter.create [
-							name = "view"
-							value = "[views/]"
-						]
-					]
-				]
+				operation = "OpenTextualEditor".callJavaAction("openinstancetextualeditor", 
+					"view" -> "[views/]"
+				)
 			]
 		]
 

@@ -19,15 +19,20 @@ import org.eclipse.sirius.diagram.description.style.SquareDescription
 import org.eclipse.sirius.diagram.description.tool.DeleteElementDescription
 import org.eclipse.sirius.diagram.description.tool.DoubleClickDescription
 import org.eclipse.sirius.viewpoint.description.AbstractVariable
+import org.eclipse.sirius.viewpoint.description.SystemColor
 import org.eclipse.sirius.viewpoint.description.style.BasicLabelStyleDescription
 import org.eclipse.sirius.viewpoint.description.tool.AbstractToolDescription
+import org.eclipse.sirius.viewpoint.description.tool.ContainerModelOperation
 import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaAction
 import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaActionParameter
-import org.eclipse.sirius.viewpoint.description.tool.InitialOperation
 import org.eclipse.sirius.viewpoint.description.tool.ModelOperation
 import org.eclipse.sirius.viewpoint.description.tool.OperationAction
+import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
+import org.eclipse.sirius.viewpoint.description.tool.SetValue
 import org.mypsycho.modit.emf.sirius.api.AbstractDiagram
 import org.mypsycho.modit.emf.sirius.api.AbstractGroup
+
+import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
 
 /**
  * Abstract class for all default value for POOSL diagrams.
@@ -36,6 +41,17 @@ import org.mypsycho.modit.emf.sirius.api.AbstractGroup
  * @since 2021-07-22
  */
 abstract class PooslDiagram extends AbstractDiagram {
+	
+	enum Color {
+		white, black, blue, chocolate, gray, green, red, yellow, purple, orange
+	}
+	
+	public val ICON_BASEPATH = "/org.eclipse.poosl.model.edit/icons/full/"
+	
+	public val DEFAULT_ICON_PATH = ICON_BASEPATH + "obj16/"
+	public val EXTRA_ICON_PATH = ICON_BASEPATH + "custo16/"
+	public val TOOL_ICON_PATH = ICON_BASEPATH + "ctool16/"
+	
 	
 	/**
 	 * Creates a factory for a diagram description
@@ -55,12 +71,12 @@ abstract class PooslDiagram extends AbstractDiagram {
 	
 	override initDefaultStyle(BasicLabelStyleDescription it) {
 		super.initDefaultStyle(it)
-		
+		labelSize = 9 // default of Eclipse is 
+					
 		labelExpression = "feature:name" // Ecore default value
 		
 		// Built-in value for square, probably improper
 		if (it instanceof SquareDescription) {
-			labelSize = 8
 			borderSizeComputationExpression = "0"
 		}
 	}
@@ -78,6 +94,13 @@ abstract class PooslDiagram extends AbstractDiagram {
 			name = varName
 		]
 	}
+	
+	def setValue(ContainerModelOperation it, String feat, String aqlExpr) {
+		subModelOperations += SetValue.create [
+			featureName = feat
+			valueExpression = aqlExpr.trimAql
+		]
+	}
 
     
 	// TODO: update AbstractDiagram
@@ -86,6 +109,7 @@ abstract class PooslDiagram extends AbstractDiagram {
 			OperationAction: initialOperation = value.toTool
 			DeleteElementDescription: initialOperation = value.toTool
 			DoubleClickDescription: initialOperation = value.toTool
+			PasteDescription: initialOperation = value.toTool
 			default: super.setOperation(it, value)
 		}	
 	}
@@ -102,4 +126,22 @@ abstract class PooslDiagram extends AbstractDiagram {
 			]
 		]
 	}
+	
+	
+	private def ref(Color it, String dim) {
+		SystemColor.extraRef('''color:«name»«dim»''')
+	}
+	
+	def ref(Color it) {
+		SystemColor.extraRef("color:" + it.name)
+	}
+
+	def lightRef(Color it) {
+		ref("_light")
+	}
+	
+	def darkRef(Color it) {
+		ref("_dark")
+	}
+	
 }
