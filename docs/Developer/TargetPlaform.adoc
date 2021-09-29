@@ -1,0 +1,74 @@
+== Managing Target Plaftorm
+
+=== Role
+
+A Target Platform is a set of Eclipse identified Features and Plugins.
+
+It must be defined for:
+
+* Maven/tycho to build classpaths for sources compilation and tests execution.
+
+* Developer IDE to compile and run configuration (product or tests)
+
+
+=== Editing Target platform
+
+Target Platforms are stored as _*.target_ files but are not easily editable:
+
+* They are in XML.
+
+* They require strict versions, no default or range constraints.
+
+* Editor is based on wizard performing a lot of internet access.
+
+* Editor does not handle well feature and plugins mixture.
+
+Currently, the best option is to use the Target Platform Definition Editor. +
+Based on textual representation, the editor created _*.tpd_ files.
+
+They can:
+
+* be organized by features,
+
+* reused using 'includes' directive,
+
+* managed in git.
+
+
+More information can be found at:
+https://github.com/eclipse-cbi/targetplatform-dsl
+
+Limitation: they cannot be used directly by Eclipse IDE or Maven/tycho. +
+They must be transformed into _*.target_ file using 'create Target Definition' action.
+
+=== List of Descriptions
+
+[plantuml, Target-Plateform-Definition, png]     
+....
+left to right direction 
+artifact runtime
+artifact test
+artifact build
+
+note top of build : "Used by Maven"
+
+artifact sdk
+
+note top of sdk : "Used by Eclipse"
+
+runtime <-- build
+test <-- build
+build <-- sdk
+....
+
+
+There is 2 main Target platform descriptions in this project.
+
+* _build.target_: Used by Maven POM for batch building.
+
+* _sdk.target_: Used by Eclipse IDE for real-time compilation and debugging. +
+ It includes at least _build.target_ but also sources and debug tools like Acceleo 
+ inspector.
+
+
+

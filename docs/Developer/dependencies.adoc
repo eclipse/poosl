@@ -1,0 +1,46 @@
+
+
+[plantuml, Dependencies, png]     
+....
+
+
+
+artifact poosl.model
+artifact poosl.model.edit
+poosl.model.edit .up.>> poosl.model
+
+artifact poosl.model.editor
+poosl.model.editor .up.>> poosl.model.edit
+
+artifact poosl.xtext
+poosl.xtext .up.>> poosl.model
+artifact poosl.xtext.ide
+poosl.xtext.ide .up.>> poosl.xtext
+artifact poosl.xtext.ui
+poosl.xtext.ui .up.>> poosl.xtext.ide
+
+
+artifact poosl.pooslproject
+
+artifact poosl.generatedxmlclasses
+
+artifact poosl.rotalumisclient
+poosl.rotalumisclient ..up.>> poosl.xtext.ui
+poosl.rotalumisclient .up.>> poosl.generatedxmlclasses
+poosl.rotalumisclient .up.>> poosl.pooslproject
+
+artifact poosl.sirius
+poosl.sirius .up.>> poosl.model.edit
+poosl.sirius .up.>> poosl.xtext.ui
+poosl.sirius .up.>> poosl.rotalumisclient
+
+artifact poosl.transformations
+poosl.transformations .up.>> poosl.generatedxmlclasses
+poosl.transformations .up.>> poosl.xtext.ui
+
+artifact poosl.help
+artifact poosl.ide.examples 
+
+....
+ 
+

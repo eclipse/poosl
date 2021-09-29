@@ -18,8 +18,7 @@ helps you to install Eclipse and POOSL features.
 
 ## How to download Eclipse Features
 
-Update site and help are accessible on <a 
-href="https://obeonetwork.github.io/POOSL" >gh-pages site</a>.
+Update site and help are accessible on [gh-pages site](https://obeonetwork.github.io/POOSL).
 
 
 ## How to build
@@ -50,52 +49,19 @@ Executing this command will build the plugins, features, updatesite and products
 Update site is available at __${POOSL_SRC}/releng/org.eclipse.poosl.update/target/repository__
 Product are available at __${POOSL_SRC}/releng/org.eclipse.poosl.product/target/products__
 
+## Development help
 
+Development guidelines are described at [org.eclipse.poosl.docs/Developer/readme.adoc](https://github.com/ObeoNetwork/POOSL/docs/org.eclipse.poosl.docs/Developer/readme.adoc)
 
-## Automatic Tests via RCPTT (__Currently under refactoring__)
+## Automatic Tests via RCPTT
 
-We have different ways of running the tests
+- In Eclipse environment, all tests are grouped in __org.eclipse.poosl.rcptt.allinone/AllTests.suite__
 
-- Running in a _Jenkins_ environment
-- Running as command line tool
-- Running with _maven_
-- Running with the _rcptt ide_
-
-All the needed tests and scripts are available at __${POOSL_SRC}\RCPTT__. 
-
-### Preconditions
-
-- jdk 11 is available
-- Only if running the scripts (not via maven)
-    - rcptt test runner is available at __C:\opt\rcptt\rcptt.runner-2.5.0__
-- eclipse runtime is available at __C:\opt\eclipse\eclipse-2019-12\eclipse__ and setup properly
-
-
-### Running tests
-
-To run the tests in a _Jenkins_ environment or as command line you will find the proper scripts in the poosl repository.
-
-#### The generic workflow to run the scripts are:
-
-1. Checkout the poosl source+scripts into __${MY_FOLDER}/poosl__
-1. Build the plugins as descript above.
-1. We can assume the build plugin artifacts are located in __${MY_FOLDER}/poosl/org.eclipse.poosl.update/target/repository__, which is the case after you do the build.
-1. Run one of the 
-    * scripts: ``{MY_FOLDER}/poosl/RCPTT/runnerScripts/*.cmd``
-    * maven: ``mvn clean package -f __${MY_FOLDER}/poosl/RCPTT/runnerScripts/pom-*.xml``
-1. Check the results
-    * scripts results in __${MY_FOLDER}/result__
-    * maven results in __${MY_FOLDER}/rcptt-target__
-
-#### Running with Jenkins
-
-The scripts are developed to run within _Jenkins_ out of the box.
-
-You can follow the generic running tests instructions above where __${MY_FOLDER}__ is automtically set to _Jenkins workspace_
-
-#### Running as Command
-
-To run the test as command line you can follow the generic workflow described above.
+- In bash mode, use maven command:
+```
+cd ${POOSL_SRC}
+mvn verify -P integration-tests
+```
 
 
 

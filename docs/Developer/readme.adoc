@@ -1,0 +1,203 @@
+= Architecture of POOSL IDE
+
+:toc: left
+
+== Project organization
+
+This organization is following a classic structure for OSGI-project. +
+More details here: +
+http://blog.vogella.com/2015/12/15/pom-less-tycho-builds-for-structured-environments/
+
+[cols="1,3", options="header"]
+.Organization
+|===
+| Name           | Details
+
+| parent         | Pom parent with development and build configurations.
+| plugins        | List of Eclipse plugins.
+| tests          | List of tests of Eclipse plugins.
+| releng         | Projects for release engineering.
+| tooling        | Tools to monitor or manages specific resources types.
+| docs\Developer | Specifications, Architecture, guidelines.
+| docs\User      | Documentations for users.
+| docs\samples   | Resources for use-cases.
+
+|===
+
+=== Features
+They are functional groups for users. +
+Plugins are organized by technical constraints: role and dependencies. +
+Features provide consistency for target deployment.
+
+=== Tests
+In Eclipse development, unlike classical Maven project, tests are located in a 
+separated compilation unit. +
+This is driven by OSGI architecture. +
+To have full access to tested classes, test project should be declared as fragment of
+tested plugins.
+
+=== External dependencies
+
+Detailed in link:TargetPlaform.adoc[Target platform].
+ 
+== Plugin descriptions
+
+`(*)` is a shortcut for `org.eclipse.poosl` prefix.
+
+[cols="2,1,4", options="header"]
+.Components
+|===
+| Name                  | Description
+
+| `(*).model`           | Ecore model. (mostly generated)
+| `(*).model.edit`      | Ecore service to edit model. (mostly generated)
+| `(*).model.editor`    | UI to edit abstract model, required by framework. (generated)
+| `(*).pooslproject`    | Functions to manage Poosl project edition.
+| `(*).generatedxmlclasses` 
+                        | Codec of exchange content with Rotalumis.
+| `(*).rotalumisclient` | Wrapping Rotalumis executable to run models.
+| `(*).sirius`          | Graphical edition of model and execution display.
+| `(*).xtext`           | Textual edition model
+| `(*).xtext.ide`       | Textual parse and save 
+| `(*).xtext.ui`        | Textual edition actions
+| `(*).transformations` | Generation of documentation for model
+| `(*).help`            | Embedded and on-line help.
+| `(*).ide.examples`    | Sample user can deploy at runtime.
+
+|===
+
+.Dependencies
+
+include::dependencies.adoc[]
+
+== Building the project
+
+**Maven** is required. Building will compile, run tests and assemble an P2 archive for Eclipse installation.
+
+Default command is: 
+
+[source,bash]
+----
+mvn clean verify
+----
+
+To use partial build in local (for testing), launch:
+
+[source,bash]
+----
+mvn clean install
+----
+
+In continuous integration, use batch mode: `-B`
+
+=== Noteworthy options 
+
+They can be set using `-D<option>=<value>` syntax.
+
+[cols="2,1,1,4", options="header"]
+|===
+| Option                    | Type      | Kind      | Action 
+
+| maven.test.failure.ignore | Boolean   | Built-in  | Run tests but ignore failures.
+| maven.test.skip           | Boolean   | Built-in  | No compilation or run for tests.
+| tycho.tests.patterns      | String    | Property  | Focus on 1 test or test group. 
+| debugPort                 | Integer   | Built-in  | Enable remote debug of tycho tests for 
+                                                      provided port.
+| tpd.mode                  | String    | Property  | Use an alternative Target Platform +
+                                                      (default: build)
+| tycho.releng.skip         | Boolean   | Property  | No build of feature or update-site.
+| tycho.localArtifacts=ignore
+                            | default +
+                              ignore    | Built-in  | Excludes locally built artifacts.
+                                                      (Advise for Continuous Integration)
+| git.dirty                 | error +
+                              warning +
+                              dirty     | Property  | Handle uncommitted files.
+|===
+
+=== Unitary testing
+
+In case a test is failing only in maven, it is possible to launch only 1 tests.
+
+To do so, install locally plugins so tests can use it.
+
+[source,bash]
+----
+mvn install -Dmaven.test.skip=true -Dgit.dirty=warning -Dtycho.releng.skip=true`
+----
+
+then launch specific test:
+
+[source,bash]
+----
+mvn package -f <test.project> -Dgit.dirty=warning -Dtycho.tests.patterns=*/<test.name>.java
+----
+
+If remote debugging is required, use 'debugPort' option.
+
+NOTE: If a plugin source is changed between execution, both command must launched.
+
+== Maven edition guideline
+
+* Modules must be listed in root container POM.
+
+* Update 'parent' pom if configuration is applicable for several component using activation.
+
+
+== Git
+
+On Windows host, ensure 'core.autocrlf = true'. +
+It can be verified/edited in _Windows/Preferences.../Team/git/configuration_
+
+
+== Java Source guideline
+
+=== Documentation
+
+At least, every class must have a description of its role and the behavior it ensures.
+
+'public' methods should also have a description unless inherited documentation is enough.
+
+=== Encoding, formatting and source paths
+
+To ensure uniformity in source project, on each new project, copy following elements 
+from an existing one:
+
+* __.classpath__
+* __.settings/*__
+* __build.properties__ (requires adaptations on _bin.includes_ list)
+* __pom.xml__ (requires adaptation on _packaging_ and _artifactId_)
+
+To ensure a proper behavior of 'Maven clean' command, eclipse output folder of java build is 
+'target/jdt-classes'
+
+=== Performance improvement
+
+* Limit computation in constructor.
+
+* Conform to checkstyle metrics about complexity.
+
+
+== Sirius Design guideline
+
+Edition is performed though 'Sirius.tooling' project.
+
+This allows :
+* concurrent edition 
+* better history management
+* simplification of mapping style 
+
+=== Code upgrading
+
+When editing Sirius Design, following must be apply to improve code readability. 
+
+* Replace Acceleo syntax by AQL
+* Replace Java External Call with AQL
+
+== RCPTT guideline
+
+* All tests are grouped in __org.eclipse.poosl.rcptt.allinone/AllTests.suite__.
+
+* Document steps in tests and test purpose (feature coverage).
+
+* Replace or document 'wait' statement.
