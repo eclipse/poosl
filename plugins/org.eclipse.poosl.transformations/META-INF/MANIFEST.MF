@@ -15,12 +15,11 @@ Require-Bundle: org.eclipse.poosl.xtext,
  org.eclipse.ui.ide,
  org.eclipse.core.runtime,
  org.eclipse.ui,
- org.eclipse.core.expressions
+ org.eclipse.core.expressions,
+ org.eclipse.jface.text
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Activator: org.eclipse.poosl.transformations.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
-Import-Package: org.eclipse.jface.text,
- org.eclipse.poosl.generatedxmlclasses
 Automatic-Module-Name: org.eclipse.poosl.transformations
 Bundle-Localization: plugin
