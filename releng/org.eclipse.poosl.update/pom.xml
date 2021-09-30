@@ -26,12 +26,14 @@
 
   <properties>
   	<help.res.path>plugins/org.eclipse.poosl.help/html</help.res.path>
+  	<tpd.path>parent/tpd</tpd.path>
 <!-- 
 Repository default path for archive is defined by in:
 https://github.com/eclipse/tycho/blob/tycho-2.3.0/tycho-p2/tycho-p2-repository-plugin/src/main/java/org/eclipse/tycho/plugins/p2/repository/AbstractRepositoryMojo.java
 -->
 
   	<repo.outputDirectory>${project.build.directory}/repository</repo.outputDirectory>
+
   </properties>
 
   <build>
@@ -54,6 +56,22 @@ https://github.com/eclipse/tycho/blob/tycho-2.3.0/tycho-p2/tycho-p2-repository-p
 							</resource>
 						</resources>
   						<outputDirectory>${repo.outputDirectory}/help</outputDirectory>
+  					</configuration>
+  				</execution>
+  				<execution>
+  					<id>include-tpd-help</id>
+  					<goals><goal>copy-resources</goal></goals>
+  					<phase>prepare-package</phase>
+  					<configuration>
+						<resources>
+							<resource>
+								<directory>../../${tpd.path}</directory>
+								<includes>
+									<include>**/*.tpd</include>
+								</includes>
+							</resource>
+						</resources>
+  						<outputDirectory>${repo.outputDirectory}/tpd</outputDirectory>
   					</configuration>
   				</execution>
   			</executions>
