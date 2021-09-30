@@ -54,7 +54,7 @@ Product are available at __${POOSL_SRC}/releng/org.eclipse.poosl.product/target/
 
 == Developing
 
-Development guidelines are described at [org.eclipse.poosl.docs/Developer/readme.adoc](https://github.com/ObeoNetwork/POOSL/docs/org.eclipse.poosl.docs/Developer/readme.adoc)
+Development guidelines are described at https://github.com/ObeoNetwork/POOSL/tree/main/docs/Developer[org.eclipse.poosl.docs/Developer/readme.adoc]
 
 Use following Oomph setup to have a proper tool set.
 
