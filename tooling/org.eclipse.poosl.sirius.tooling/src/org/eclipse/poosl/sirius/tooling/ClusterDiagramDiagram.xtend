@@ -379,7 +379,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				element = ElementDeleteVariable.named("element")
 				elementView = ElementDeleteVariable.named("elementView")
 				containerView = ContainerViewVariable.named("containerView")
-				operation = "deleteconnection".callJavaAction("deleteexternport",
+				operation = "deleteport".callJavaAction("deleteexternport",
 					"element" -> "[element/]",
 					"view" -> "[elementView/]",
 					"containerView" -> "[containerView/]"

@@ -71,6 +71,7 @@ import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
 import org.eclipse.sirius.viewpoint.description.tool.ToolDescription
 
 import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
+import org.eclipse.poosl.Port
 
 class ClassDiagramDiagram extends PooslDiagram {
 
@@ -183,6 +184,16 @@ class ClassDiagramDiagram extends PooslDiagram {
 					iconPath = EXTRA_ICON_PATH + "ProcessParam.gif"
 				]
 			]
+			subNodeMappings += NodeMapping.createAs(Ns.node, "CLA_Clus_Ports") [
+				semanticCandidatesExpression = '''self.ports'''.trimAql
+				synchronizationLock = true
+				domainClass = Port
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelPort")
+				memberStyle = [
+					labelExpression = '''self.name'''.trimAql
+					iconPath = DEFAULT_ICON_PATH + "Port.gif"
+				]
+			]
 		]
 		containerMappings += ContainerMapping.createAs(Ns.node, "CLA_Process") [
 			synchronizationLock = true
@@ -205,6 +216,17 @@ class ClassDiagramDiagram extends PooslDiagram {
 					iconPath = EXTRA_ICON_PATH + "ProcessParam.gif"
 				]
 			]
+			subNodeMappings += NodeMapping.createAs(Ns.node, "CLA_Proc_Ports") [
+				semanticCandidatesExpression = '''self.ports'''.trimAql
+				synchronizationLock = true
+				domainClass = Port
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelPort")
+				memberStyle = [
+					labelExpression = '''self.name'''.trimAql
+					iconPath = DEFAULT_ICON_PATH + "Port.gif"
+				]
+			]
+			
 			subNodeMappings += NodeMapping.createAs(Ns.node, "CLA_Proc_InstanceVariables") [
 				semanticCandidatesExpression = "service:getVariables"
 				synchronizationLock = true
@@ -401,6 +423,19 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelPort") [
+				precondition = "true"
+				forceRefresh = true
+				element = ElementDeleteVariable.named("element")
+				elementView = ElementDeleteVariable.named("elementView")
+				containerView = ContainerViewVariable.named("containerView")
+				operation = "deleteport".callJavaAction("deleteexternport",
+					"element" -> "[element/]",
+					"view" -> "[elementView/]",
+					"containerView" -> "[containerView/]"
+				)
+			]
+			
 			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelMethod") [
 				precondition = "true"
 				forceRefresh = true
