@@ -62,6 +62,7 @@ import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
 import org.eclipse.sirius.viewpoint.description.tool.ToolDescription
 
 import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
+import org.eclipse.sirius.diagram.description.CenteringStyle
 
 class ClusterDiagramDiagram extends PooslDiagram {
 
@@ -264,7 +265,9 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			targetFinderExpression = "aql:self.getSimpleChannelEnd(true)"
 
 			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
-			style = []
+			style = [
+				endsCentering = CenteringStyle.BOTH
+			]
 		]
 
 		edgeMappings += EdgeMapping.createAs(Ns.edge, "ChannelToEnd") [
@@ -286,7 +289,9 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				'''.trimAql // view.target
 
 			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
-			style = []
+			style = [
+				endsCentering = CenteringStyle.BOTH
+			]
 		]
 		
 		// A trick to transform a SimpleChannel into a ChannelCluster when 
