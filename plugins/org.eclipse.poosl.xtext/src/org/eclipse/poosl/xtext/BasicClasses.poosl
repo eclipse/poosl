@@ -798,7 +798,7 @@ methods
 	native toChar : Char
 
 	/* If the receiver is the String representation of a Float object (in line with the isFloat method), this object is returned. Otherwise, nil is returned. */
-	native toFloat : Integer
+	native toFloat : Float
 
 	/* If the receiver is the String representation of an Integer object (in line with the isInteger method), this object is returned. Otherwise, nil is returned. */
 	native toInteger : Integer
