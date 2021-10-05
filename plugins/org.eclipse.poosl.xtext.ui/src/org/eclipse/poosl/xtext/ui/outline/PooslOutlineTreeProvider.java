@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.ui.outline;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.poosl.ClusterClass;
@@ -33,6 +34,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
+import org.eclipse.xtext.ui.editor.outline.impl.EStructuralFeatureNode;
 
 /**
  * The PooslOutlineTreeProvider.
@@ -69,10 +71,6 @@ public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
     // --- POOSL -------
 
     protected void _createChildren(DocumentRootNode parentNode, Poosl poosl) {
-        createChildrenSinglePoosl(parentNode, poosl, true);
-    }
-
-    private void createChildrenSinglePoosl(IOutlineNode parentNode, Poosl poosl, boolean includeSystem) {
         IOutlineNode nodeDataClasses = createEStructuralFeatureNode(parentNode, poosl, PooslPackage.Literals.POOSL__DATA_CLASSES, _image(null), LABEL_DATA_CLASSES, poosl.getDataClasses().isEmpty());
         for (DataClass dClass : poosl.getDataClasses()) {
             createNode(nodeDataClasses, dClass);
@@ -87,12 +85,18 @@ public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
         IOutlineNode clusterDataClasses = createEStructuralFeatureNode(parentNode, poosl, PooslPackage.Literals.POOSL__CLUSTER_CLASSES, _image(null), LABEL_CLUSTER_CLASSES,
                 poosl.getClusterClasses().isEmpty());
         for (ClusterClass cClass : poosl.getClusterClasses()) {
-            createNode(clusterDataClasses, cClass);
+            if (cClass.getName() != null) {
+                createNode(clusterDataClasses, cClass);
+            }
         }
         ClusterClass system = HelperFunctions.getSystem(poosl);
-        if (includeSystem && system != null) {
+        if (system != null) {
             createNode(parentNode, system);
         }
+    }
+
+    @Override
+    protected void _createChildren(EStructuralFeatureNode parentNode, EObject modelElement) {
     }
 
     // --- Data class -------
