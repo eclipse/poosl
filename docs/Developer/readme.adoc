@@ -13,7 +13,7 @@ http://blog.vogella.com/2015/12/15/pom-less-tycho-builds-for-structured-environm
 |===
 | Name           | Details
 
-| parent         | Pom parent with development and build configurations.
+| parent         | Pom parent with build configurations.
 | plugins        | List of Eclipse plugins.
 | tests          | List of tests of Eclipse plugins.
 | releng         | Projects for release engineering.

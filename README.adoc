@@ -56,12 +56,30 @@ Product are available at __${POOSL_SRC}/releng/org.eclipse.poosl.product/target/
 
 Development guidelines are described at https://github.com/ObeoNetwork/POOSL/tree/main/docs/Developer[org.eclipse.poosl.docs/Developer/readme.adoc]
 
-Use following Oomph setup to have a proper tool set.
+=== Development environment
+
+With Eclipse instal, use following Oomph setup to have a proper tool set (in Advanced mode).
 
 [source]
 ----
 https://raw.githubusercontent.com/ObeoNetwork/POOSL/main/parent/oomph/org.eclipse.setup
 ----
+
+Once the repository is cloned, following preferences should be set:
+
+- Java/Code style/Formatter : org.eclipse.poosl.parent/preferences/JavaFormatter.xml
+
+=== Contributing
+
+- Create an github issue to describ the feature to add/fix.
+
+- Fork the project in your github account and push your code.
+Commit must start with '[#<issue-number>] ' tag.
+
+- Create a pull request
+
+- Wait for team review: a feedback will be proved or the commit will be merged.
+
 
 == Automatic Tests via RCPTT
 
