@@ -60,7 +60,7 @@ public class ExecutableResourceVerification {
     private static final String CHARSET_FORCE_MESSAGE = //
             "Only " + PooslProjectConstant.SUPPORTED_CHARSET.displayName() + " is supported.\n"//
                     + "This has no impact when only Latin Characters are used in models.\n" //
-                    + "(You can turn off this warning in Execution Configuration)"//
+                    + "(You can turn off this warning in Execution Configuration)\n"//
                     + "Continue execution ?";
 
     private static final Logger LOGGER = Logger.getLogger(ExecutableResourceVerification.class.getName());
