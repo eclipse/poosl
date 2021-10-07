@@ -70,7 +70,9 @@ location eclipse_update "http://download.eclipse.org/eclipse/updates/4.15" {
 
 
 location eclipselink "https://download.eclipse.org/rt/eclipselink/updates/" {
-   org.eclipse.persistence.moxy.feature.group // 2.7.7 ??
+   // This site is accumulative
+   // Thus 'Create target definition' is not repeatable unless specific version is defined
+   org.eclipse.persistence.moxy.feature.group  [2.7.7, 2.7.8) // fix version required for TPD
    // +-> org.eclipse.persistence.moxy
    // +-> jakarta.xml.bind-api
 }
