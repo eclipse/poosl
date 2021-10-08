@@ -52,7 +52,8 @@ class PooslDesign extends AbstractGroup {
 		]
 		userColorsPalettes += UserColorsPalette.create[
 			name = "PooslColors"
-			entries += "ProcessBkg".color(150,177,218) // blue
+			// entries += "ProcessBkg".color(150,177,218) // blue
+			entries += "ProcessBkg".color(195,230,255) // blue min
 			entries += "ProcessBorder".color(74,74,151) // blue
 			entries += "ClusterBkg".color(255,252,183) // yellow
 			entries += "ClusterBorder".color(123,105,79) // brown

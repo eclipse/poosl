@@ -19,6 +19,7 @@ import org.eclipse.poosl.DataMethodBinaryOperator
 import org.eclipse.poosl.DataMethodNamed
 import org.eclipse.poosl.DataMethodUnaryOperator
 import org.eclipse.poosl.Poosl
+import org.eclipse.poosl.Port
 import org.eclipse.poosl.ProcessClass
 import org.eclipse.poosl.ProcessMethod
 import org.eclipse.poosl.Variable
@@ -30,8 +31,10 @@ import org.eclipse.sirius.diagram.description.CenteringStyle
 import org.eclipse.sirius.diagram.description.ContainerMapping
 import org.eclipse.sirius.diagram.description.CustomLayoutConfiguration
 import org.eclipse.sirius.diagram.description.DiagramDescription
+import org.eclipse.sirius.diagram.description.DoubleLayoutOption
 import org.eclipse.sirius.diagram.description.EdgeMapping
 import org.eclipse.sirius.diagram.description.Layer
+import org.eclipse.sirius.diagram.description.LayoutOptionTarget
 import org.eclipse.sirius.diagram.description.NodeMapping
 import org.eclipse.sirius.diagram.description.concern.ConcernDescription
 import org.eclipse.sirius.diagram.description.concern.ConcernSet
@@ -71,7 +74,6 @@ import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
 import org.eclipse.sirius.viewpoint.description.tool.ToolDescription
 
 import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
-import org.eclipse.poosl.Port
 
 class ClassDiagramDiagram extends PooslDiagram {
 
@@ -121,6 +123,13 @@ class ClassDiagramDiagram extends PooslDiagram {
 		layout = CustomLayoutConfiguration.create [
 			id = "org.eclipse.elk.mrtree"
 			label = "ELK Mr. Tree"
+			
+			// Default spacing (20) is cumbersome
+			layoutOptions += DoubleLayoutOption.create [
+				id = "org.eclipse.elk.spacing.nodeNode"
+				targets += LayoutOptionTarget.PARENT
+				value = 40.0
+			]
 		]
 			
 		defaultConcern = ConcernDescription.localRef(Ns.show, "DefaultConcern")

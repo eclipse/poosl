@@ -20,12 +20,16 @@ import org.eclipse.poosl.Port
 import org.eclipse.poosl.ProcessClass
 import org.eclipse.sirius.diagram.LabelPosition
 import org.eclipse.sirius.diagram.ResizeKind
+import org.eclipse.sirius.diagram.description.CenteringStyle
 import org.eclipse.sirius.diagram.description.ContainerMapping
 import org.eclipse.sirius.diagram.description.CustomLayoutConfiguration
 import org.eclipse.sirius.diagram.description.DiagramDescription
 import org.eclipse.sirius.diagram.description.DiagramElementMapping
 import org.eclipse.sirius.diagram.description.EdgeMapping
+import org.eclipse.sirius.diagram.description.EnumLayoutValue
+import org.eclipse.sirius.diagram.description.EnumSetLayoutOption
 import org.eclipse.sirius.diagram.description.Layer
+import org.eclipse.sirius.diagram.description.LayoutOptionTarget
 import org.eclipse.sirius.diagram.description.NodeMapping
 import org.eclipse.sirius.diagram.description.style.BeginLabelStyleDescription
 import org.eclipse.sirius.diagram.description.style.CenterLabelStyleDescription
@@ -62,7 +66,6 @@ import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
 import org.eclipse.sirius.viewpoint.description.tool.ToolDescription
 
 import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
-import org.eclipse.sirius.diagram.description.CenteringStyle
 
 class ClusterDiagramDiagram extends PooslDiagram {
 
@@ -77,11 +80,31 @@ class ClusterDiagramDiagram extends PooslDiagram {
 		titleExpression = "aql:self.name"
 
 		enablePopupBars = true
-			
+		
+		// Was
+		/*	
+		layout = CompositeLayout.create[
+			padding = 60
+			direction = LayoutDirection.LEFT_TO_RIGHT
+		]
+		 */
 		layout = CustomLayoutConfiguration.create [
 			id = "org.eclipse.elk.layered"
 			label = "ELK Layered"
+			
+			layoutOptions += EnumSetLayoutOption.create [
+				id = "org.eclipse.elk.portLabels.placement"
+				targets += LayoutOptionTarget.NODE
+				// this feature is not working in ELK
+				values += "INSIDE,NEXT_TO_PORT_IF_POSSIBLE".split(",")
+					.map[ value |
+						EnumLayoutValue.create [ name = value ]
+					]
+
+			]
 		]
+		
+
 	}
 	
 	override initDefaultEdgeStyle(EdgeStyleDescription it) {
@@ -185,8 +208,13 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					borderSizeComputationExpression = "2" // Border size matches port icon.
 					labelPosition = LabelPosition.NODE_LITERAL
 					resizeKind = ResizeKind.NSEW_LITERAL
-					width = 15
+					width = 20 // was 15 but improper for medium name
 					height = 10
+					
+					// ELK tests
+//					sizeComputationExpression = "3"
+//					width = -1
+//					height = -1
 				]
 				
 				// Design choice: 

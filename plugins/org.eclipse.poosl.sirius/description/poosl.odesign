@@ -3,7 +3,13 @@
   <ownedViewpoints name="POOSL viewpoint" modelFileExtension="poosl">
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Cluster diagram" label="Cluster diagram" titleExpression="aql:self.name" domainClass="poosl.ClusterClass" enablePopupBars="true">
       <metamodel href="http://poosl.eclipse.org/poosl/3.0.0#/"/>
-      <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.layered" label="ELK Layered"/>
+      <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.layered" label="ELK Layered">
+        <layoutOptions xsi:type="description_1:EnumSetLayoutOption" id="org.eclipse.elk.portLabels.placement">
+          <targets>NODE</targets>
+          <values name="INSIDE"/>
+          <values name="NEXT_TO_PORT_IF_POSSIBLE"/>
+        </layoutOptions>
+      </layout>
       <defaultLayer name="Default">
         <edgeMappings name="SimpleChannel" preconditionExpression="aql:self.isInstanceSimpleConnected(sourceView, targetView)" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Reused%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Delete%20Poosl%20Element']" semanticCandidatesExpression="aql:self.channels->select(it | it.isSimpleChannel())" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Edge']" sourceMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ClusterInstance']/@borderedNodeMappings[name='InstancePort'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@borderedNodeMappings[name='ExternalPort']" targetMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='ClusterClass']/@subNodeMappings[name='ClusterInstance']/@borderedNodeMappings[name='InstancePort']" targetFinderExpression="aql:self.getSimpleChannelEnd(true)" sourceFinderExpression="aql:self.getSimpleChannelEnd(false)" domainClass="poosl.Channel" useDomainElement="true" reconnections="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='Reconnect%20Channel']">
           <style targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan" endsCentering="Both">
@@ -82,18 +88,18 @@
                 <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               </style>
             </borderedNodeMappings>
-            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/Instance.gif" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="15" height="10">
+            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/Instance.gif" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="20" height="10">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             </style>
             <conditionnalStyles predicateExpression="aql:self.getInstanceType().oclIsKindOf(poosl::ProcessClass)">
-              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ProcessClass.png" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="15" height="10" color="//@userColorsPalettes[name='PooslColors']/@entries[name='ProcessBkg']">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ProcessClass.png" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="20" height="10" color="//@userColorsPalettes[name='PooslColors']/@entries[name='ProcessBkg']">
                 <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
                 <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               </style>
             </conditionnalStyles>
             <conditionnalStyles predicateExpression="aql:self.getInstanceType().oclIsKindOf(poosl::ClusterClass)">
-              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ClusterClass.png" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="15" height="10" color="//@userColorsPalettes[name='PooslColors']/@entries[name='ClusterBkg']">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="2" labelSize="9" labelExpression="aql:self.getInstanceName()" iconPath="/org.eclipse.poosl.model.edit/icons/full/obj16/ClusterClass.png" sizeComputationExpression="8" labelPosition="node" resizeKind="NSEW" width="20" height="10" color="//@userColorsPalettes[name='PooslColors']/@entries[name='ClusterBkg']">
                 <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
                 <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               </style>
@@ -284,7 +290,11 @@
       <concerns>
         <ownedConcernDescriptions name="Default" filters="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@filters[name='Hide%20Basic%20Classes'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@filters[name='Hide%20Imports']"/>
       </concerns>
-      <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.mrtree" label="ELK Mr. Tree"/>
+      <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.mrtree" label="ELK Mr. Tree">
+        <layoutOptions xsi:type="description_1:DoubleLayoutOption" id="org.eclipse.elk.spacing.nodeNode" value="40.0">
+          <targets>PARENT</targets>
+        </layoutOptions>
+      </layout>
       <defaultLayer name="Default">
         <edgeMappings name="CLA_Containment" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelContainment']" sourceMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_System'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Cluster']" targetMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Cluster'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Process']" targetFinderExpression="[thisEObject.getSystemInstances()/]">
           <style sourceArrow="FillDiamond" targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan">
@@ -846,7 +856,7 @@
     <ownedJavaExtensions qualifiedClassName="org.eclipse.poosl.sirius.services.ClassDiagramServices"/>
   </ownedViewpoints>
   <userColorsPalettes name="PooslColors">
-    <entries xsi:type="description:UserFixedColor" red="150" green="177" blue="218" name="ProcessBkg"/>
+    <entries xsi:type="description:UserFixedColor" red="195" green="230" blue="255" name="ProcessBkg"/>
     <entries xsi:type="description:UserFixedColor" red="74" green="74" blue="151" name="ProcessBorder"/>
     <entries xsi:type="description:UserFixedColor" red="255" green="252" blue="183" name="ClusterBkg"/>
     <entries xsi:type="description:UserFixedColor" red="123" green="105" blue="79" name="ClusterBorder"/>
