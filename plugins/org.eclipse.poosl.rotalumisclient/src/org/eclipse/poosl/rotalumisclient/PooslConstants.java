@@ -20,14 +20,14 @@ package org.eclipse.poosl.rotalumisclient;
  *
  */
 public final class PooslConstants {
+
+    /** System Property to use custom Runner. */
+    public static final String RUNNER_PROPERTY_KEY = "POOSL_ROTALUMIS";
+
     // Debug model static
     public static final String DEBUG_MODEL_ID = "org.eclipse.poosl.rotalumisclient.DebugModelPresentation"; //$NON-NLS-1$
 
-    public static final String PLUGIN_ID = "org.eclipse.poosl.rotalumisclient"; //$NON-NLS-1$
-
     public static final String PLUGIN_ID_ROTALUMIS_EXECUTABLES = "nl.tue.rotalumis.executables"; //$NON-NLS-1$
-
-    public static final String POOSL_EXTENSION = "poosl"; //$NON-NLS-1$
 
     public static final String EXTERN_CONFIG_EXTENSION = "ini"; //$NON-NLS-1$
 

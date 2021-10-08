@@ -39,7 +39,9 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.poosl.pooslproject.PooslProjectConstant;
+import org.eclipse.poosl.rotalumisclient.Activator;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
+import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -158,7 +160,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
                     return false;
                 }
                 IFile file = (IFile) element;
-                return PooslConstants.POOSL_EXTENSION.equals(file.getFileExtension());
+                return GlobalConstants.FILE_EXTENSION.equals(file.getFileExtension());
             }
         });
 
@@ -404,13 +406,13 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
             try {
                 ePath = ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(IPath.SEPARATOR + text)).getLocation();
             } catch (IllegalArgumentException invalidPath) {
-                return MessageFormat.format(VALIDATION_FILE_NOT_EXIST, MODEL_ROLE, PooslConstants.POOSL_EXTENSION);
+                return MessageFormat.format(VALIDATION_FILE_NOT_EXIST, MODEL_ROLE, GlobalConstants.FILE_EXTENSION);
             }
             if (ePath != null) {
                 realPath = ePath.toOSString();
             }
         }
-        return validateExistingFile(MODEL_ROLE, realPath, PooslConstants.POOSL_EXTENSION);
+        return validateExistingFile(MODEL_ROLE, realPath, GlobalConstants.FILE_EXTENSION);
     }
 
     private String validateExternConfiguration() {
@@ -432,7 +434,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
         String filename = file.getName();
         int ext = filename.lastIndexOf('.');
 
-        if (ext == -1 || !PooslConstants.POOSL_EXTENSION.equals(filename.substring(ext + 1))) {
+        if (ext == -1 || !GlobalConstants.FILE_EXTENSION.equals(filename.substring(ext + 1))) {
             return MessageFormat.format(VALIDATION_FILE_EXTENSION, role, extension);
         }
         return null;
@@ -465,7 +467,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     @Override
     public Image getImage() {
-        Bundle bundle = Platform.getBundle(PooslConstants.PLUGIN_ID);
+        Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
         Path path = new Path("icons/poosl_simulation.gif"); //$NON-NLS-1$
         URL fileURL = FileLocator.find(bundle, path, null);
         InputStream inputStream = null;

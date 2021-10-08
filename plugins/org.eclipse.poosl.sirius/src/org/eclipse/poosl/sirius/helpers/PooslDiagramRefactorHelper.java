@@ -39,9 +39,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.Poosl;
-import org.eclipse.poosl.sirius.IPreferenceConstants;
 import org.eclipse.poosl.sirius.navigator.edit.CopyFileRepresentationsCommand;
 import org.eclipse.poosl.sirius.navigator.edit.RenameFileRepresentationsCommand;
+import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 import org.eclipse.poosl.xtext.importing.ImportingHelper;
 import org.eclipse.sirius.business.api.session.Session;
@@ -167,7 +167,7 @@ public final class PooslDiagramRefactorHelper {
     }
 
     private static void copyResource(Session session, Session destSession, IResource source, IResource destination, IProgressMonitor monitor) {
-        if (source.getType() == IResource.FILE && IPreferenceConstants.POOSL_FILE_EXT.equals(source.getFileExtension())) {
+        if (source.getType() == IResource.FILE && GlobalConstants.FILE_EXTENSION.equals(source.getFileExtension())) {
             copyIResource(session, destSession, source, destination, monitor);
         }
 

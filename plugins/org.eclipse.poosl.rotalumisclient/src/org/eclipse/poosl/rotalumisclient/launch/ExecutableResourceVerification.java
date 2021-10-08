@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.poosl.pooslproject.PooslProjectConstant;
-import org.eclipse.poosl.rotalumisclient.PooslConstants;
+import org.eclipse.poosl.rotalumisclient.Activator;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -123,7 +123,7 @@ public class ExecutableResourceVerification {
                         new WorkbenchPartLabelProvider(), "The following file(s) contain unsaved changes.\nSelect files to save.");
                 resourceSelectionDialog.setInitialSelections((Object[]) dirtyEditorParts);
                 if (resourceSelectionDialog.open() != SelectionDialog.OK) {
-                    return new Status(IStatus.CANCEL, PooslConstants.PLUGIN_ID, ""); //$NON-NLS-1$
+                    return new Status(IStatus.CANCEL, Activator.PLUGIN_ID, ""); //$NON-NLS-1$
                 }
 
                 Object[] result = resourceSelectionDialog.getResult();
@@ -131,7 +131,7 @@ public class ExecutableResourceVerification {
                     IEditorPart dirtyResourcePart = (IEditorPart) resultObject;
                     dirtyResources.get(dirtyResourcePart).saveEditor(dirtyResourcePart, false);
                 }
-                return new Status(IStatus.OK, PooslConstants.PLUGIN_ID, ""); //$NON-NLS-1$
+                return new Status(IStatus.OK, Activator.PLUGIN_ID, ""); //$NON-NLS-1$
             }
         };
         uiJob.schedule();

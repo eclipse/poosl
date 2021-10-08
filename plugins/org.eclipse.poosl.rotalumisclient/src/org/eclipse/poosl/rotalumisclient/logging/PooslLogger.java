@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.poosl.rotalumisclient.Activator;
@@ -35,6 +36,9 @@ import org.eclipse.poosl.rotalumisclient.PooslConstants;
  *
  */
 public final class PooslLogger {
+
+    private static final File RUNNING_LOGFILE = new File("Logging.html"); //$NON-NLS-1$
+
     private static FileHandler fileHTML;
 
     private static final Logger LOGGER = Logger.getLogger("org.eclipse.poosl"); //$NON-NLS-1$
@@ -52,21 +56,19 @@ public final class PooslLogger {
             LOGGER.removeHandler(handler);
         }
         // Get the log level value from the preferences
-        String logLevel = Platform.getPreferencesService().getString(PooslConstants.PLUGIN_ID, PooslConstants.PREFERENCES_LOG_LEVEL, PooslConstants.DEFAULT_LOG_LEVEL, null);
+        String logLevel = Platform.getPreferencesService().getString(Activator.PLUGIN_ID, PooslConstants.PREFERENCES_LOG_LEVEL, PooslConstants.DEFAULT_LOG_LEVEL, null);
         LOGGER.setLevel(Level.parse(logLevel));
 
-        // Add a listener to the preferences to react on changes
-        try {
-            // try to remove listener, avoiding duplicate
-            Activator.getDefault().getPreferenceStore().removePropertyChangeListener(propertyChangeListener);
-        } catch (Exception e) {
-            // remove not possible
+        // try to remove listener, avoiding duplicate
+        IPreferenceStore prefs = Activator.getDefault().getPreferenceStore();
+        if (propertyChangeListener != null) {
+            prefs.removePropertyChangeListener(propertyChangeListener);
         }
 
         propertyChangeListener = new IPropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
-                if ("LOG_LEVEL".equals(event.getProperty())) { //$NON-NLS-1$
+                if (PooslConstants.PREFERENCES_LOG_LEVEL.equals(event.getProperty())) { // $NON-NLS-1$
                     String value = event.getNewValue().toString();
                     LOGGER.setLevel(Level.parse(value));
                     if (fileHTML != null) {
@@ -75,21 +77,18 @@ public final class PooslLogger {
                 }
             }
         };
-        Activator.getDefault().getPreferenceStore().addPropertyChangeListener(propertyChangeListener);
+        prefs.addPropertyChangeListener(propertyChangeListener);
 
         // create HTML Formatter
         Formatter formatterHTML = new PooslHtmlFormatter();
 
         // Create HTML LOGGER
-        File logFile = new File("Logging.html"); //$NON-NLS-1$
-        if (logFile.exists()) {
-            boolean result = logFile.delete();
-            if (!result) {
-                LOGGER.log(Level.WARNING, "Could not delete file " + logFile.getAbsolutePath());
-            }
+        if (RUNNING_LOGFILE.exists() && !RUNNING_LOGFILE.delete()) {
+            LOGGER.log(Level.WARNING, "Could not delete file " // $NON-NLS-1$
+                    + RUNNING_LOGFILE.getAbsolutePath());
         }
         try {
-            fileHTML = new FileHandler("Logging.html", false); //$NON-NLS-1$
+            fileHTML = new FileHandler(RUNNING_LOGFILE.getPath(), false); // $NON-NLS-1$
         } catch (SecurityException | IOException e) {
             LOGGER.log(Level.WARNING, e.getMessage(), e);
         }

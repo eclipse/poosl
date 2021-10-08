@@ -22,8 +22,6 @@ package org.eclipse.poosl.sirius;
 public final class IPreferenceConstants {
     public static final String PREFERENCE_PLUGIN_ID = "org.eclipse.poosl.sirius"; //$NON-NLS-1$
 
-    public static final String POOSL_FILE_EXT = "poosl"; //$NON-NLS-1$
-
     public static final String PREFERENCE_PROJECT_EXPLORER = "PrefProjectExplorerDiagram"; //$NON-NLS-1$
 
     public static final String PREFERENCE_PROJECT_EXPLORER_TEXTUAL = "PrefPETextual"; //$NON-NLS-1$

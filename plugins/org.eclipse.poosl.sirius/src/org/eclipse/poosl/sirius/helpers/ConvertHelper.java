@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.poosl.Poosl;
-import org.eclipse.poosl.sirius.IPreferenceConstants;
+import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.poosl.xtext.importing.ImportingHelper;
 
 /**
@@ -51,7 +51,7 @@ public final class ConvertHelper {
 
     public static Resource convertIFileToResource(IFile file) {
         String fileExtension = file.getFileExtension();
-        if (fileExtension != null && fileExtension.equals(IPreferenceConstants.POOSL_FILE_EXT)) {
+        if (fileExtension != null && fileExtension.equals(GlobalConstants.FILE_EXTENSION)) {
             URI uri = URI.createPlatformResourceURI(file.getFullPath().toString().substring(1), true);
             ResourceSet resourceSet = new ResourceSetImpl();
             resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(), org.eclipse.poosl.PooslPackage.eINSTANCE);

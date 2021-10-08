@@ -434,14 +434,14 @@ public class Client {
             requestMessage = marshal(request);
         } catch (JAXBException e) {
             LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_MARSHAL_FAILED, e.getCause());
-            return new Status(Status.ERROR, PooslConstants.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_MARSHAL_FAILED, e.getCause());
+            return new Status(Status.ERROR, Activator.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_MARSHAL_FAILED, e.getCause());
         }
         LOGGER.finest("Message length: " + requestMessage.length());
         LOGGER.finer("<pre>" + requestMessage + "</pre>"); //$NON-NLS-1$ //$NON-NLS-2$
 
         if (requestMessage.length() > MAX_REQUEST_SIZE) {
             LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_TOO_LARGE);
-            return new Status(Status.ERROR, PooslConstants.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_TOO_LARGE + Messages.ROTALUMIS_REQUEST_TOO_LARGE_USER_INFO);
+            return new Status(Status.ERROR, Activator.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_TOO_LARGE + Messages.ROTALUMIS_REQUEST_TOO_LARGE_USER_INFO);
         }
 
         byte[] msg = requestMessage.getBytes(CHARSET);
@@ -455,15 +455,15 @@ public class Client {
                 socketOutWriter.flush();
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_NOT_SEND + " --- " + requestMessage, e.getCause());
-                return new Status(Status.ERROR, PooslConstants.PLUGIN_ID, MessageFormat.format(Messages.ROTALUMIS_REQUEST_NOT_SEND + Messages.ROTALUMIS_REQUEST_NOT_SEND_USER_INFO, socket.getPort()),
+                return new Status(Status.ERROR, Activator.PLUGIN_ID, MessageFormat.format(Messages.ROTALUMIS_REQUEST_NOT_SEND + Messages.ROTALUMIS_REQUEST_NOT_SEND_USER_INFO, socket.getPort()),
                         e.getCause());
             }
         } else {
             LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_SOCKET_CLOSED);
-            return new Status(Status.ERROR, PooslConstants.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_SOCKET_CLOSED);
+            return new Status(Status.ERROR, Activator.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_SOCKET_CLOSED);
         }
 
-        return new Status(Status.OK, PooslConstants.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_SEND);
+        return new Status(Status.OK, Activator.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_SEND);
     }
 
     public void terminate() {

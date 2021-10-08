@@ -41,11 +41,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.poosl.sirius.IPreferenceConstants;
 import org.eclipse.poosl.sirius.delete.PooslDiagramDeleteHelper;
 import org.eclipse.poosl.sirius.helpers.ConvertHelper;
 import org.eclipse.poosl.sirius.helpers.GraphicalEditorHelper;
 import org.eclipse.poosl.sirius.helpers.PooslDiagramRefactorHelper;
+import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 import org.eclipse.swt.SWT;
@@ -85,6 +85,8 @@ import org.eclipse.ui.progress.WorkbenchJob;
  */
 @SuppressWarnings("restriction")
 public class PooslDeleteAction extends SelectionListenerAction {
+
+    /** Unique identifier for this action. */
     public static final String ID = "org.eclipse.poosl.sirius.edit.delete"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(PooslDeleteAction.class.getName());
@@ -159,7 +161,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
 
     public static void getResources(IResource source, List<IResource> pooslFiles) {
 
-        if (source.getType() == IResource.FILE && IPreferenceConstants.POOSL_FILE_EXT.equals(source.getFileExtension())) {
+        if (source.getType() == IResource.FILE && GlobalConstants.FILE_EXTENSION.equals(source.getFileExtension())) {
             pooslFiles.add(source);
         }
 

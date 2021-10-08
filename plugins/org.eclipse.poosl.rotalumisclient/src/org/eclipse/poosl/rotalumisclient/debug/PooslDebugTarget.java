@@ -88,6 +88,7 @@ import org.eclipse.poosl.generatedxmlclasses.TSetVariableResponse;
 import org.eclipse.poosl.generatedxmlclasses.TSetVariableResult;
 import org.eclipse.poosl.generatedxmlclasses.TTransition;
 import org.eclipse.poosl.generatedxmlclasses.TVariable;
+import org.eclipse.poosl.rotalumisclient.Activator;
 import org.eclipse.poosl.rotalumisclient.Client;
 import org.eclipse.poosl.rotalumisclient.Messages;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
@@ -1219,11 +1220,11 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
             while (!isSetup) {
                 if (monitor.isCanceled() || isFailed) {
                     monitor.done();
-                    return new Status(IStatus.CANCEL, PooslConstants.PLUGIN_ID, "Model compilation is canceled.");
+                    return new Status(IStatus.CANCEL, Activator.PLUGIN_ID, "Model compilation is canceled.");
                 }
             }
             monitor.done();
-            return new Status(IStatus.OK, PooslConstants.PLUGIN_ID, "Model is compiled by Rotalumis.");
+            return new Status(IStatus.OK, Activator.PLUGIN_ID, "Model is compiled by Rotalumis.");
         }
 
         @Override

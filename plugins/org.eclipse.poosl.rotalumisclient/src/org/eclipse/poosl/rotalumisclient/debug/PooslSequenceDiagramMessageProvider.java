@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.poosl.generatedxmlclasses.TCommunicationEvent;
 import org.eclipse.poosl.generatedxmlclasses.TInstanceType;
+import org.eclipse.poosl.rotalumisclient.Activator;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.poosl.rotalumisclient.views.PooslSequenceDiagramView;
 import org.eclipse.poosl.rotalumisclient.views.diagram.PooslDiagramMessage;
@@ -136,7 +137,7 @@ public class PooslSequenceDiagramMessageProvider {
         launchConfigurationWorkingCopy.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_ORDER, messageOrder);
         launchConfigurationWorkingCopy.doSave();
 
-        int maxMessageBufferSize = Platform.getPreferencesService().getInt(PooslConstants.PLUGIN_ID, PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE, DEFAULT_MESSAGE_BUFFER_SIZE, null);
+        int maxMessageBufferSize = Platform.getPreferencesService().getInt(Activator.PLUGIN_ID, PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE, DEFAULT_MESSAGE_BUFFER_SIZE, null);
         messageArray = new PooslDiagramMessage[maxMessageBufferSize];
     }
 

@@ -233,6 +233,18 @@ public interface IBundleInfo {
 
     List<URI> find(Context context);
 
+    /**
+     * Provides a URI for provided filename.
+     * <p>
+     * Depending to the implementation, uri maybe null if resource does not exit but there is no warranty.
+     * </p>
+     * 
+     * @param context
+     *            to search in
+     * @param fileName
+     *            of resource
+     * @return URI or null if path is
+     */
     URI find(Context context, String fileName);
 
     List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions);
