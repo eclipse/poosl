@@ -74,6 +74,12 @@ public final class Messages {
 
     public static final String ACTION_MENU_PROCESS_STEP = "Perform Process Step";
 
+    public static final String RUNNER_NO_SUPPORT = "There is no support for your host: {0}";
+
+    public static final String RUNNER_NO_ENGINE_ERROR = "Could not find the Rotalumis engine at {0}";
+
+    public static final String RUNNER_NOT_EXECUTABLE_ERROR = "Failed to set executable at location: {0}";
+
     public static final String ROTALUMIS_REQUEST_SEND = "Request Message Send.";
 
     public static final String ROTALUMIS_REQUEST_MARSHAL_FAILED = "Simulator request failed: Could not marshal message.";

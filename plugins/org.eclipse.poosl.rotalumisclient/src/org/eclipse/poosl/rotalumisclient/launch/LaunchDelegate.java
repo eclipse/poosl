@@ -44,6 +44,7 @@ import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.poosl.rotalumisclient.Activator;
 import org.eclipse.poosl.rotalumisclient.Client;
 import org.eclipse.poosl.rotalumisclient.Messages;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
@@ -112,7 +113,6 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
             final boolean confIsQuiet = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
             final String confServerPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
             final String confServerIp = PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_IP;
-            final List<String> includes = getIncludePaths(project);
             final boolean confTest = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_TEST_CONF, false);
 
             if (confLaunchMode.equals(ILaunchManager.DEBUG_MODE) && !isServerPortAvailable(confServerPort, launch)) {
@@ -154,7 +154,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
                     args.add(OPTION_BASIC_CLASSES);
                     args.add(ImportingHelper.getBasicAbsoluteString());
                 }
-                for (String include : includes) {
+                for (String include : getIncludePaths(project)) {
                     args.add(OPTION_INCLUDE_LIB);
                     args.add(include);
                 }
@@ -188,9 +188,9 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
             if (confLaunchMode.equals(ILaunchManager.RUN_MODE)) {
                 // When in run mode start a thread and wait for process
                 // termination.
-                Thread simulatorTerminationWatcher = new Thread(new SimulatorTerminationWatcher(null, proc, project.getName()));
-                simulatorTerminationWatcher.setName("Simulator termination watcher");
-                simulatorTerminationWatcher.start();
+                Thread runner = new Thread(new SimulatorTerminationWatcher(null, proc, project.getName()));
+                runner.setName("Simulator termination watcher");
+                runner.start();
             } else if (confLaunchMode.equals(ILaunchManager.DEBUG_MODE)) {
                 // Create a client to connect to the running Rotalumis
                 // process
@@ -199,9 +199,9 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
 
                 // Create a debugtarget to take responsibility of
                 // debugging commands
-                PooslDebugTarget pooslDebugTarget = new PooslDebugTarget(launch, process, client, proc, includes);
+                PooslDebugTarget runner = new PooslDebugTarget(launch, process, client, proc, getIncludePaths(project));
                 monitor.setTaskName("Compiling Model and gathering debug information");
-                pooslDebugTarget.start();
+                runner.start();
             }
             monitor.done();
 
@@ -211,7 +211,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
             if (e.getCause() != null) {
                 errorMessage += "\n\n" + e.getCause().getMessage(); //$NON-NLS-1$
             }
-            throw new CoreException(new Status(Status.ERROR, PooslConstants.PLUGIN_ID, errorMessage, e));
+            throw new CoreException(new Status(Status.ERROR, Activator.PLUGIN_ID, errorMessage, e));
         }
 
     }
@@ -231,14 +231,11 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
 
     private static String getSimulationSeed(ILaunchConfiguration configuration) throws CoreException {
         final boolean isRandomSeed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
-        String seed;
         if (isRandomSeed) {
-            seed = Integer.toString(RANDOM.nextInt(Integer.MAX_VALUE));
-        } else {
-            String seedString = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
-            seed = (LaunchConfigurationPooslTab.isInteger(seedString)) ? seedString : PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED;
+            return Integer.toString(RANDOM.nextInt(Integer.MAX_VALUE));
         }
-        return seed;
+        String seedString = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
+        return (LaunchConfigurationPooslTab.isInteger(seedString)) ? seedString : PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED;
     }
 
     private static List<String> getIncludePaths(IProject project) {
@@ -323,7 +320,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
         File workingDirectory = new File(modelPath.substring(0, modelPath.lastIndexOf(File.separator)) + File.separator + PooslConstants.CONFIGURATION_ATTRIBUTE_SIMULATOR_INOUT_FOLDER);
         LOGGER.info("Working directory location: " + workingDirectory.getPath());
         if (!workingDirectory.exists() && !workingDirectory.mkdir()) {
-            IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "Could not create " + PooslConstants.CONFIGURATION_ATTRIBUTE_SIMULATOR_INOUT_FOLDER + " directory", null);
+            IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, "Could not create " + PooslConstants.CONFIGURATION_ATTRIBUTE_SIMULATOR_INOUT_FOLDER + " directory", null);
             LOGGER.log(Level.SEVERE, status.getMessage(), status);
             throw new CoreException(status);
         }
@@ -332,7 +329,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
 
     private void checkConfiguration(ILaunchConfiguration configuration) throws CoreException {
         if (configuration == null) {
-            IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The selected run configuration is not valid.", null);
+            IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, "The selected run configuration is not valid.", null);
             LOGGER.log(Level.SEVERE, status.getMessage(), status);
             throw new CoreException(status);
         }
@@ -340,22 +337,21 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
         String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
         if (!"".equals(modelPath)) { //$NON-NLS-1$
             if (!modelPath.endsWith(".poosl")) { //$NON-NLS-1$
-                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, //
+                IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, //
                         "The selected launch configuration does not contain a valid path to a poosl model.", null);
                 LOGGER.log(Level.SEVERE, status.getMessage(), status);
                 throw new CoreException(status);
             }
 
-            File f = new File(modelPath);
             if (!ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(modelPath)).exists()) {
-                IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The model in the selected launch configuration does not exist. "
+                IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, "The model in the selected launch configuration does not exist. "
                         + "This error can occur after moving the associated model. "
                         + "\n\nRight click in the project explorer or editor, select \"Run as -> Poosl model\" or \"Debug as -> Poosl model\" to automatically update and start the launch configuration. "
                         + "\n\nFor more information on running or debugging models and editing the launch configuration open Help (F1) and go to \"Contents -> Poosl -> Simulate\"", null);
                 throw new CoreException(status);
             }
         } else {
-            IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, "The selected launch configuration does not contain a path to a model.", null);
+            IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, "The selected launch configuration does not contain a path to a model.", null);
             LOGGER.log(Level.SEVERE, status.getMessage(), status);
             throw new CoreException(status);
         }
@@ -364,7 +360,7 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
             errorMessage = "The selected launch configuration does not contain a valid server port.";
         }
         if (errorMessage != null && !errorMessage.isEmpty()) {
-            IStatus status = new Status(Status.ERROR, PooslConstants.PLUGIN_ID, errorMessage, null);
+            IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, errorMessage, null);
             LOGGER.log(Level.SEVERE, status.getMessage(), status);
             throw new CoreException(status);
         }

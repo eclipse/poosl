@@ -24,16 +24,12 @@ import org.osgi.framework.BundleContext;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  */
 public class Activator extends AbstractUIPlugin {
-    /**
-     * The shared instance.
-     */
-    private static Activator plugin;
 
-    /**
-     * The constructor.
-     */
-    public Activator() {
-    }
+    /** Plugin ID. */
+    public static final String PLUGIN_ID = "org.eclipse.poosl.rotalumisclient"; //$NON-NLS-1$
+
+    /** The shared instance. */
+    private static Activator plugin;
 
     /**
      * {@inheritDoc}
