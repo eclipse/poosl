@@ -71,14 +71,14 @@ Once the repository is cloned, following preferences should be set:
 
 === Contributing
 
-- Create an github issue to describ the feature to add/fix.
+- Create an github issue to describe the feature to add/fix.
 
-- Fork the project in your github account and push your code.
+- Fork the project in your github account and push your code.+
 Commit must start with '[#<issue-number>] ' tag.
 
-- Create a pull request
+- Create a pull-request
 
-- Wait for team review: a feedback will be proved or the commit will be merged.
+- Wait for team review: a feedback will be provided or the commit will be merged.
 
 
 == Automatic Tests via RCPTT
