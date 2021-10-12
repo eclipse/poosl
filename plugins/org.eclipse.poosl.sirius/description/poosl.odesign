@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:filter="http://www.eclipse.org/sirius/diagram/description/filter/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" name="poosl" version="10.1.0.201507271600">
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:filter="http://www.eclipse.org/sirius/diagram/description/filter/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" name="poosl" version="12.0.0.2017041100">
   <ownedViewpoints name="POOSL viewpoint" modelFileExtension="poosl">
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Cluster diagram" label="Cluster diagram" titleExpression="aql:self.name" domainClass="poosl.ClusterClass" enablePopupBars="true">
       <metamodel href="http://poosl.eclipse.org/poosl/3.0.0#/"/>
@@ -290,11 +290,6 @@
       <concerns>
         <ownedConcernDescriptions name="Default" filters="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@filters[name='Hide%20Basic%20Classes'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@filters[name='Hide%20Imports']"/>
       </concerns>
-      <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.mrtree" label="ELK Mr. Tree">
-        <layoutOptions xsi:type="description_1:DoubleLayoutOption" id="org.eclipse.elk.spacing.nodeNode" value="40.0">
-          <targets>PARENT</targets>
-        </layoutOptions>
-      </layout>
       <defaultLayer name="Default">
         <edgeMappings name="CLA_Containment" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DelContainment']" sourceMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_System'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Cluster']" targetMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Cluster'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Class%20diagram']/@defaultLayer/@containerMappings[name='CLA_Process']" targetFinderExpression="[thisEObject.getSystemInstances()/]">
           <style sourceArrow="FillDiamond" targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan">

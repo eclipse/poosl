@@ -120,17 +120,21 @@ class ClassDiagramDiagram extends PooslDiagram {
 			]
 		]
 		
-		layout = CustomLayoutConfiguration.create [
-			id = "org.eclipse.elk.mrtree"
-			label = "ELK Mr. Tree"
-			
-			// Default spacing (20) is cumbersome
-			layoutOptions += DoubleLayoutOption.create [
-				id = "org.eclipse.elk.spacing.nodeNode"
-				targets += LayoutOptionTarget.PARENT
-				value = 40.0
-			]
-		]
+		
+		// Seen with Williams:
+		// As ELK layout adds as many issue as improvement.
+		// We keep TNO layout (== null)
+//		layout = CustomLayoutConfiguration.create [
+//			id = "org.eclipse.elk.mrtree"
+//			label = "ELK Mr. Tree"
+//			
+//			// Default spacing (20) is cumbersome
+//			layoutOptions += DoubleLayoutOption.create [
+//				id = "org.eclipse.elk.spacing.nodeNode"
+//				targets += LayoutOptionTarget.PARENT
+//				value = 40.0
+//			]
+//		]
 			
 		defaultConcern = ConcernDescription.localRef(Ns.show, "DefaultConcern")
 	}
