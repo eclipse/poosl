@@ -210,16 +210,16 @@ public class Client {
                             debugTarget.dispatchResponse(response);
                         }
                     }
-                } catch (IOException e) {
-                    LOGGER.log(Level.INFO, "Client response listener stopped:", e);
-                    return;
                 } catch (JAXBException e) {
                     LOGGER.log(Level.SEVERE, "Response listener was unable to parse the received response.", e);
                 } catch (DebugException e) {
                     LOGGER.log(Level.SEVERE, "Could not dispatch response.", e);
+                } catch (IOException e) {
+                    LOGGER.log(Level.INFO, "Client response listener stopped:", e);
+                    return; // Critical failure
                 } catch (NumberFormatException e) {
                     LOGGER.log(Level.WARNING, e.getMessage(), e);
-                    return;
+                    return; // Critical failure
                 }
             }
         }
