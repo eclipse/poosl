@@ -1,13 +1,13 @@
 --- RCPTT testcase ---
 Format-Version: 1.0
-Contexts: _jSds4OTxEeS0itSwbx-n-w,_0xOUsD9EEeWqI5T62C2nUQ,_ueo_sD9tEeWqI5T62C2nUQ,_BwlHUB7pEeWW8tYfmHmITA,_LQaFcD9vEeWqI5T62C2nUQ,__IJ8MD9YEeWqI5T62C2nUQ
+Contexts: _jSds4OTxEeS0itSwbx-n-w,_0xOUsD9EEeWqI5T62C2nUQ,_ueo_sD9tEeWqI5T62C2nUQ,_-6xq0Nf8Eea3P5Zs0ralfQ,_BwlHUB7pEeWW8tYfmHmITA,_LQaFcD9vEeWqI5T62C2nUQ,__IJ8MD9YEeWqI5T62C2nUQ,_BQMNoCv5EeydTID_58BPHQ
 Element-Name: TraceView Multiple Models
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _5im44D9sEeWqI5T62C2nUQ
-Runtime-Version: 2.3.0.201806262310
-Save-Time: 7/31/19 7:34 AM
+Runtime-Version: 2.5.1.M3
+Save-Time: 10/13/21, 9:46 AM
 Tags: StrackTrace Error
 Testcase-Type: ecl
 
@@ -15,26 +15,26 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-with [get-view StackTrace] {
+proc "assertPcError" {
+	assertStackTrace 
+		-size 4 
+		-message "The index (4) is out of bounds. Index should be within range: 1 <= index <=  2."
+}
 
-	get-editbox -after [get-label "Error Message:"] | get-property text 
-    | equals "The index (4) is out of bounds. Index should be within range: 1 <= index <=  2." | verify-true
-    get-list | get-property "getItems().length" | equals 4 | verify-true
-} 
+// With current selection (producer_consumer) , error in StackTrace
+assertPcError
 get-view "StackTrace Variables" | get-tree | get-property itemCount | equals 3 | verify-true
+
+// Verify in ShoppingCarts: no message
 get-view Debug | get-tree | select "ShoppingCarts.poosl \\[Simulated time: 0\\]"
-with [get-view StackTrace] {
-    get-editbox -after [get-label "Error Message:"] | get-property text | equals "" | verify-true
-    get-list | get-property "getItems().length" | equals 0 | verify-true
-}
-get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Consumer"
-with [get-view StackTrace] {
-    get-editbox -after [get-label "Error Message:"] | get-property text | equals "The index (4) is out of bounds. Index should be within range: 1 <= index <=  2." | verify-true
-    get-list | get-property "getItems().length" | equals 4 | verify-true
-}
-get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer"
-with [get-view StackTrace] {
-    get-editbox -after [get-label "Error Message:"] | get-property text | equals "The index (4) is out of bounds. Index should be within range: 1 <= index <=  2." | verify-true
-    get-list | get-property "getItems().length" | equals 4 | verify-true
-}
+assertNoStackTrace
+
+// Verify in producer_consumer: 
+get-view Debug | get-tree 
+	| select "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Consumer"
+assertPcError
+
+get-view Debug | get-tree 
+	| select "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer"
+assertPcError
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

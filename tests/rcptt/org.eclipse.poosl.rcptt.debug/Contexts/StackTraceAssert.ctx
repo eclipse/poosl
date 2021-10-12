@@ -1,0 +1,31 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: StackTraceAssert
+Element-Type: context
+Element-Version: 2.0
+Id: _BQMNoCv5EeydTID_58BPHQ
+Runtime-Version: 2.5.1.M3
+Save-Time: 10/13/21, 9:46 AM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+proc "assertStackTrace" 
+		[val size] /* expected size */
+		[val message] /* expected  */{
+	with [get-view StackTrace] {
+	    get-editbox -after [get-label "Error Message:"] 
+	    	| get-property text 
+	    	| equals $message 
+	    	| verify-true
+	    get-list | get-property "getItems().length" | equals $size | verify-true
+	}
+}
+
+proc "assertNoStackTrace" {
+	assertStackTrace -size 0 -message ""
+}
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

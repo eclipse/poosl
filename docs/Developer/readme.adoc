@@ -196,8 +196,10 @@ When editing Sirius Design, following must be apply to improve code readability.
 
 == RCPTT guideline
 
-* All tests are grouped in __org.eclipse.poosl.rcptt.allinone/AllTests.suite__.
+* All tests must be listed in suites 
 
-* Document steps in tests and test purpose (feature coverage).
+* All suite must be listed directly or indirectly in __org.eclipse.poosl.rcptt.allinone/AllTests.suite__.
 
-* Replace or document 'wait' statement.
+* Each test and step in tests must have a comment. It should explicit which feature is covered.
+
+* 'wait' statement must be commented/justified.

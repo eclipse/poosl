@@ -71,11 +71,11 @@ import org.osgi.framework.Bundle;
 public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab {
 
     // UI text
-    private static final String MODEL_ROLE = "Model";
+    private static final String MODEL_GROUP = "Model";
 
-    private static final String EXTERN_ROLE = "External port configuration";
+    private static final String EXTERN_CFG_GROUP = "External port configuration";
 
-    private static final String GROUP_SIM = "Simulator settings:";
+    private static final String GROUP_SIM = "Simulator settings";
 
     private static final String BTN_RANDOM = "Random";
 
@@ -102,13 +102,13 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     private static final String FILE_NAME_FILTER = "*."; //$NON-NLS-1$
 
     // Validation
-    private static final String VALIDATION_FILE_EMPTY = "{1} path cannot be empty";
+    private static final String VALIDATION_FILE_EMPTY = "{0} path cannot be empty";
 
-    private static final String VALIDATION_FILE_EXTENSION = "The {1} is not a .{2} file";
+    private static final String VALIDATION_FILE_EXTENSION = "The {0} is not a .{1} file";
 
-    private static final String VALIDATION_FILE_IS_DIR = "The {1} path is a directory and not a .{2} file";
+    private static final String VALIDATION_FILE_IS_DIR = "The {0} path is a directory and not a .{1} file";
 
-    private static final String VALIDATION_FILE_NOT_EXIST = "The selected {1} does not exist";
+    private static final String VALIDATION_FILE_NOT_EXIST = "The selected {0} file does not exist";
 
     private static final String VALIDATION_SEED_EMPTY = "Seed for resolving non-determinism cannot be empty";
 
@@ -216,16 +216,15 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
         control = new Composite(parent, SWT.NONE);
         control.setLayout(new GridLayout(1, false));
 
-        modelPathTextControl = createBrowsableText(control, MODEL_ROLE, evt -> {
+        modelPathTextControl = createBrowsableText(control, MODEL_GROUP, evt -> {
             setRelativeElements();
             scheduleUpdateJob();
         }, evt -> browseModel());
-        externPathTextControl = createBrowsableText(control, EXTERN_ROLE, evt -> scheduleUpdateJob(), evt -> browseExternPath());
-
         forceCharsetControl = new Button(control, SWT.CHECK);
         forceCharsetControl.setText(LABEL_FORCE_CHARSET);
         forceCharsetControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         forceCharsetControl.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> scheduleUpdateJob()));
+        externPathTextControl = createBrowsableText(control, EXTERN_CFG_GROUP, evt -> scheduleUpdateJob(), evt -> browseExternPath());
         createSimulatorSettings();
 
         Label portInfoLabel = new Label(control, SWT.NONE);
@@ -406,18 +405,20 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
             try {
                 ePath = ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(IPath.SEPARATOR + text)).getLocation();
             } catch (IllegalArgumentException invalidPath) {
-                return MessageFormat.format(VALIDATION_FILE_NOT_EXIST, MODEL_ROLE, GlobalConstants.FILE_EXTENSION);
+                return MessageFormat.format(VALIDATION_FILE_NOT_EXIST, MODEL_GROUP, GlobalConstants.FILE_EXTENSION);
             }
             if (ePath != null) {
                 realPath = ePath.toOSString();
             }
         }
-        return validateExistingFile(MODEL_ROLE, realPath, GlobalConstants.FILE_EXTENSION);
+        return validateExistingFile(MODEL_GROUP, realPath, GlobalConstants.FILE_EXTENSION);
     }
 
     private String validateExternConfiguration() {
         String text = externPathTextControl.getText();
-        return text.isEmpty() ? null : validateExistingFile(EXTERN_ROLE, text, PooslConstants.EXTERN_CONFIG_EXTENSION);
+        return text.isEmpty() //
+                ? null //
+                : validateExistingFile(EXTERN_CFG_GROUP, text, PooslConstants.EXTERN_CONFIG_EXTENSION);
     }
 
     private static String validateExistingFile(String role, String path, String extension) {
@@ -434,8 +435,8 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
         String filename = file.getName();
         int ext = filename.lastIndexOf('.');
 
-        if (ext == -1 || !GlobalConstants.FILE_EXTENSION.equals(filename.substring(ext + 1))) {
-            return MessageFormat.format(VALIDATION_FILE_EXTENSION, role, extension);
+        if (ext == -1 || !extension.equals(filename.substring(ext + 1))) {
+            return MessageFormat.format(VALIDATION_FILE_EXTENSION, path, extension);
         }
         return null;
     }

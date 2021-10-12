@@ -13,7 +13,6 @@
  *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.debug;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +32,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -45,6 +44,7 @@ import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.IDebugEventSetListener;
 import org.eclipse.debug.core.ILaunch;
+import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IMemoryBlock;
@@ -54,7 +54,6 @@ import org.eclipse.debug.core.model.IStepFilters;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.debug.ui.DebugUITools;
-import org.eclipse.debug.ui.contexts.DebugContextEvent;
 import org.eclipse.debug.ui.contexts.IDebugContextListener;
 import org.eclipse.debug.ui.contexts.IDebugContextService;
 import org.eclipse.emf.common.util.URI;
@@ -62,6 +61,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.poosl.generatedxmlclasses.Response;
 import org.eclipse.poosl.generatedxmlclasses.TCommandResponse;
 import org.eclipse.poosl.generatedxmlclasses.TCommandResult;
@@ -100,6 +100,7 @@ import org.eclipse.poosl.rotalumisclient.extension.ExternMessageInformer;
 import org.eclipse.poosl.rotalumisclient.runner.FileURIConverter;
 import org.eclipse.poosl.rotalumisclient.sourcemapping.PooslSourceMap;
 import org.eclipse.poosl.rotalumisclient.views.WindowCreater;
+import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.poosl.xtext.importing.ImportingHelper;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
@@ -122,6 +123,12 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
 
     private static final Logger LOGGER = Logger.getLogger(PooslDebugTarget.class.getName());
 
+    private static final TransitionHandlerComparator<?>[] TRANST_HANDLER_COMPARATORS = { //
+            new TransitionHandlerComparator<>(it -> it.getDelay(), it -> it.getHandle()), //
+            new TransitionHandlerComparator<>(it -> it.getCommunication(), it -> it.getHandle()), //
+            new TransitionHandlerComparator<>(it -> it.getDataStep(), it -> it.getHandle()), //
+            new TransitionHandlerComparator<>(it -> it.getProcessStep(), it -> it.getHandle()) };
+
     IResourceChangeListener resourceChangeListener = new IResourceChangeListener() {
         @Override
         public void resourceChanged(IResourceChangeEvent event) {
@@ -129,170 +136,48 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
             if (event.getType() != IResourceChangeEvent.POST_CHANGE) {
                 return;
             }
-            IResourceDelta rootDelta = event.getDelta();
             final List<IResource> changed = new ArrayList<>();
-            IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
-                @Override
-                public boolean visit(IResourceDelta delta) {
+            try {
+                event.getDelta().accept(delta -> {
                     // only interested in changed resources (not added or removed)
                     // only interested in content changes
                     if ((delta.getKind() == IResourceDelta.CHANGED) && (delta.getFlags() & IResourceDelta.CONTENT) != 0) {
                         IResource resource = delta.getResource();
                         // only interested in files with the "poosl" extension
-                        if (resource.getType() == IResource.FILE && "poosl".equalsIgnoreCase(resource.getFileExtension()) && resource.getLocation().toString().contains(projectName)) { //$NON-NLS-1$
+                        if (resource.getType() == IResource.FILE //
+                                && GlobalConstants.FILE_EXTENSION.equalsIgnoreCase(resource.getFileExtension()) //
+                                && resource.getLocation().toString().contains(projectName)) {
                             changed.add(resource);
                         }
                     }
                     return true;
-                }
-            };
-            try {
-                rootDelta.accept(visitor);
+                });
             } catch (CoreException e) {
                 LOGGER.log(Level.WARNING, "Cannot accept delta from resource changelistener", e);
             }
             // nothing more to do if there were no changed files
-            if (!changed.isEmpty()) {
-                final String fileName = changed.get(0).getName();
-                Display.getDefault().asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        String targetName = "?"; //$NON-NLS-1$
-                        try {
-                            targetName = " for " + target.getName() + "?"; //$NON-NLS-2$
-                        } catch (DebugException e1) {
-                            LOGGER.log(Level.WARNING, "Could not get debug target name.", e1.getSuppressed());
-                        }
-                        MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(), Messages.DIALOG_RELAUNCH_TITLE, MessageDialog.getImage(Dialog.DLG_IMG_MESSAGE_WARNING),
-                                MessageFormat.format(Messages.DIALOG_RELAUNCH_TEXT, fileName, targetName), MessageDialog.WARNING,
-                                new String[] { Messages.DIALOG_RELAUNCH_BT_TERMINATE, Messages.DIALOG_RELAUNCH_BT_CONTINUE }, 0);
+            askRestartOnChange(changed);
+        }
 
-                        if (dialog.open() == 0) {
-                            try {
-                                relaunch = true;
-                                launch.terminate();
-                            } catch (DebugException e) {
-                                LOGGER.log(Level.WARNING, "Could not terminate and relaunch after a save.", e);
-                            }
-                        } else {
-                            extentensionsInformStop();
-                            edited = true;
-                        }
-                    }
-                });
-            }
+    };
+
+    private IDebugEventSetListener debugEventSetListener = events -> {
+        for (DebugEvent debugEvent : events) {
+            dispatchEvent(debugEvent);
         }
     };
 
-    IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
-        @Override
-        public void handleDebugEvents(DebugEvent[] events) {
-            for (final DebugEvent debugEvent : events) {
-                Object context = debugEvent.getSource();
-                if (context instanceof ExecutionTreeContext) {
-                    context = ((ExecutionTreeContext) context).getContext();
-                }
-                if (context instanceof TreeSelection) {
-                    context = ((TreeSelection) context).getFirstElement();
-                }
-                if (context instanceof PooslDebugElement && ((PooslDebugElement) context).getDebugTarget() != PooslDebugTarget.this.target) {
-                    return;
-                }
-
-                String threadName = ""; //$NON-NLS-1$
-                if (context instanceof IThread) {
-                    IThread thread = (IThread) context;
-                    try {
-                        threadName = thread.getName();
-                    } catch (DebugException e) {
-                        LOGGER.log(Level.WARNING, "Could not get thread name when respond to debug event.", e);
-                    }
-                }
-
-                if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC) {
-                    // Only react to model specific debug events.
-                    if (debugEvent.getDetail() == PooslConstants.INSPECT_REQUEST) {
-                        // The debug view, PET view or variables view requested
-                        // an inspect
-                        Object source = debugEvent.getSource();
-                        if (source instanceof TreeSelection) {
-                            source = ((TreeSelection) source).getFirstElement();
-                        }
-                        if (source instanceof ExecutionTreeContext) {
-                            source = ((ExecutionTreeContext) source).getExecutiontreeBase();
-                        }
-                        if (source instanceof PooslVariable) {
-                            try {
-                                PooslValue selectedVariableValue = (PooslValue) ((PooslVariable) source).getValue();
-                                for (IVariable variable : selectedVariableValue.getVariables()) {
-                                    ((PooslVariable) variable).getSubVariables();
-                                }
-                            } catch (DebugException e) {
-                                LOGGER.log(Level.WARNING, "Could not handle debug event.", e);
-                            }
-                        } else if (source instanceof TExecutiontreeBase) {
-                            requests.put(((TExecutiontreeBase) source).getLocal().intValue(), threadName);
-                            client.inspectByHandle(((TExecutiontreeBase) source).getLocal(), TInspectType.VARIABLE_CONTEXT);
-                        }
-                    } else if (debugEvent.getDetail() == PooslConstants.PERFORM_TRANSITION) {
-                        // The PET view requested a transition perform.
-                        Object source = debugEvent.getSource();
-
-                        if (source instanceof ExecutionTreeContext) {
-                            source = ((ExecutionTreeContext) source).getExecutiontreeBase();
-                        }
-                        if (source instanceof TExecutiontreeBase) {
-                            BigInteger handle = ((TExecutiontreeBase) source).getHandle();
-                            requests.put(handle.intValue(), threadName);
-                            clearStackframesOfAllThreads();
-                            clearPossibleTransitions();
-
-                            client.performTransition(handle);
-                        }
-                    } else if (debugEvent.getDetail() == PooslConstants.COMM_EVENTS_CHANGE) {
-                        Display.getDefault().asyncExec(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                if (PooslDebugHelper.isActiveDebugTarget(target)) {
-                                    // If this debugtarget is the current
-                                    // context enable/disable events
-                                    setCommEventsEnabled((boolean) debugEvent.getData());
-                                }
-                            }
-                        });
-
-                    } else if (debugEvent.getDetail() == PooslConstants.CLEAR_COMM_EVENTS) {
-                        Display.getDefault().asyncExec(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                if (PooslDebugHelper.isActiveDebugTarget(target)) {
-                                    // If this debugTarget is the current
-                                    // context then clear all comm messages
-                                    pooslSequenceDiagramMessageProvider.clearMessages();
-                                }
-                            }
-                        });
-                    }
-                }
+    private IDebugContextListener debugContextListener = event -> {
+        // Store the last selected thread.
+        ISelection selection = event.getContext();
+        if (selection instanceof TreeSelection) {
+            TreeSelection treeSelection = (TreeSelection) selection;
+            if (treeSelection.getFirstElement() instanceof PooslThread) {
+                PooslThread selectedThread = (PooslThread) treeSelection.getFirstElement();
+                selectedThread.getRotalumisStackFrames();
             }
         }
-    };
 
-    IDebugContextListener debugContextListener = new IDebugContextListener() {
-        @Override
-        public void debugContextChanged(DebugContextEvent event) {
-            // Store the last selected thread.
-            ISelection selection = event.getContext();
-            if (selection instanceof TreeSelection) {
-                TreeSelection treeSelection = (TreeSelection) selection;
-                if (treeSelection.getFirstElement() instanceof PooslThread) {
-                    PooslThread selectedThread = (PooslThread) treeSelection.getFirstElement();
-                    selectedThread.getRotalumisStackFrames();
-                }
-            }
-        }
     };
 
     private PooslSourceMap pooslSourceMap;
@@ -368,25 +253,31 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
     private boolean isDisconnected;
 
     public PooslDebugTarget(ILaunch launch, IProcess process, Client client, Process proc, List<String> includes) throws CoreException {
-        super(null);
+        super(null); // cannot use this in super.
         this.launch = launch;
         this.process = process;
         this.client = client;
         this.target = this;
         this.includes = includes;
 
+        ILaunchConfiguration cfg = launch.getLaunchConfiguration();
+
         // Set the name for this debugTarget to the name of the model
-        String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
-        this.name = modelPath.substring(modelPath.lastIndexOf(File.separator) + 1);
+        String modelPath = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, "");
+        // //$NON-NLS-1$
+        this.name = modelPath.substring(modelPath.lastIndexOf("/") + 1);
+        // XXX should be
+        // this.name = cfg.getName();
+
         // Get the projectName from the launchConfiguration
-        projectName = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
+        projectName = cfg.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
 
         // Initialize the Sequence diagram message provider
         messageCreditor = new PooslMessageCreditor(this);
         externMessageInformer = new ExternMessageInformer();
 
         // Add all listeners to the debug target
-        Display.getDefault().asyncExec(new AddListeners());
+        Display.getDefault().asyncExec(() -> addDebugListeners());
         // Create a simulator watcher that terminates the debugTarget if the
         // process is killed or terminated.
         Thread simulatorTerminationWatcher = new Thread(new SimulatorTerminationWatcher(this, proc, projectName));
@@ -424,29 +315,130 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
         }
     }
 
-    private final class AddListeners implements Runnable {
-        @Override
-        public void run() {
-            final IWorkbench workbench = PlatformUI.getWorkbench();
-            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-            if (window == null) {
-                LOGGER.log(Level.SEVERE, "Could not get active workbench window when trying to add required listeners.");
-                try {
-                    target.terminate();
-                } catch (DebugException e) {
-                    LOGGER.log(Level.SEVERE, "Could not terminate target after adding of listeners failed.", e);
+    private void dispatchEvent(DebugEvent debugEvent) {
+        Object context = debugEvent.getSource();
+        if (context instanceof ExecutionTreeContext) {
+            context = ((ExecutionTreeContext) context).getContext();
+        }
+        if (context instanceof TreeSelection) {
+            context = ((TreeSelection) context).getFirstElement();
+        }
+        if (context instanceof PooslDebugElement //
+                && ((PooslDebugElement) context).getDebugTarget() != target) {
+            return;
+        }
+
+        String threadName = ""; //$NON-NLS-1$
+        if (context instanceof IThread) {
+            IThread thread = (IThread) context;
+            try {
+                threadName = thread.getName();
+            } catch (DebugException e) {
+                LOGGER.log(Level.WARNING, "Could not get thread name when respond to debug event.", e);
+            }
+        }
+
+        if (debugEvent.getKind() != DebugEvent.MODEL_SPECIFIC) {
+            return;
+        }
+        // Only react to model specific debug events.
+        switch (debugEvent.getDetail()) {
+        case PooslConstants.INSPECT_REQUEST:
+            handleInspectRequest(threadName, debugEvent);
+            break;
+        case PooslConstants.PERFORM_TRANSITION:
+            handlePerformTransition(threadName, debugEvent);
+            break;
+        case PooslConstants.COMM_EVENTS_CHANGE:
+            handleCommEventsChange(threadName, debugEvent);
+            break;
+        case PooslConstants.CLEAR_COMM_EVENTS:
+            handleClearCommEvents(threadName, debugEvent);
+            break;
+        default:
+            // ignore other events
+        }
+
+    }
+
+    private void handleClearCommEvents(String threadName, DebugEvent debugEvent) {
+        Display.getDefault().asyncExec(new Runnable() {
+
+            @Override
+            public void run() {
+                if (PooslDebugHelper.isActiveDebugTarget(target)) {
+                    // If this debugTarget is the current
+                    // context then clear all comm messages
+                    pooslSequenceDiagramMessageProvider.clearMessages();
                 }
             }
-            // Get the context service and active our debug context to enable
-            // key bindings
-            IContextService contextService = workbench.getService(IContextService.class);
-            if (contextService != null) {
-                contextActivationToken = contextService.activateContext("org.eclipse.poosl.rotalumisclient.debugcontext"); //$NON-NLS-1$
-            }
-            // Add a debug context and debug event listener to react on debug
-            // changes
+        });
+    }
 
-            IDebugContextService service = DebugUITools.getDebugContextManager().getContextService(window);
+    private void handleCommEventsChange(String threadName, DebugEvent debugEvent) {
+        Display.getDefault().asyncExec(new Runnable() {
+
+            @Override
+            public void run() {
+                if (PooslDebugHelper.isActiveDebugTarget(target)) {
+                    // If this debugtarget is the current
+                    // context enable/disable events
+                    setCommEventsEnabled((boolean) debugEvent.getData());
+                }
+            }
+        });
+    }
+
+    private void handlePerformTransition(String threadName, DebugEvent debugEvent) {
+        // The PET view requested a transition perform.
+        Object source = debugEvent.getSource();
+
+        if (source instanceof ExecutionTreeContext) {
+            source = ((ExecutionTreeContext) source).getExecutiontreeBase();
+        }
+        if (source instanceof TExecutiontreeBase) {
+            BigInteger handle = ((TExecutiontreeBase) source).getHandle();
+            requests.put(handle.intValue(), threadName);
+            clearStackframesOfAllThreads();
+            clearPossibleTransitions();
+
+            client.performTransition(handle);
+        }
+    }
+
+    private void handleInspectRequest(String threadName, DebugEvent debugEvent) {
+        // The debug view, PET view or variables view requested
+        // an inspect
+        Object source = debugEvent.getSource();
+        if (source instanceof TreeSelection) {
+            source = ((TreeSelection) source).getFirstElement();
+        }
+        if (source instanceof ExecutionTreeContext) {
+            source = ((ExecutionTreeContext) source).getExecutiontreeBase();
+        }
+        if (source instanceof PooslVariable) {
+            try {
+                PooslValue selectedVariableValue = (PooslValue) ((PooslVariable) source).getValue();
+                for (IVariable variable : selectedVariableValue.getVariables()) {
+                    ((PooslVariable) variable).getSubVariables();
+                }
+            } catch (DebugException e) {
+                LOGGER.log(Level.WARNING, "Could not handle debug event.", e);
+            }
+        } else if (source instanceof TExecutiontreeBase) {
+            requests.put(((TExecutiontreeBase) source).getLocal().intValue(), threadName);
+            client.inspectByHandle(((TExecutiontreeBase) source).getLocal(), TInspectType.VARIABLE_CONTEXT);
+        }
+    }
+
+    private void addDebugListeners() {
+        performDebugSetting("Add listener", (workbench, window, contextService, service) -> {
+            if (contextService != null) {
+                contextActivationToken = contextService.activateContext(//
+                        "org.eclipse.poosl.rotalumisclient.debugcontext"); //$NON-NLS-1$
+            }
+
+            // Add a debug context and debug event listener to react on debug changes
             service.addDebugContextListener(debugContextListener);
             DebugPlugin.getDefault().addDebugEventListener(debugEventSetListener);
             // Add this debugtarget as a breakpointlistener
@@ -460,37 +452,76 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
             } catch (WorkbenchException e) {
                 LOGGER.log(Level.WARNING, "Could not switch to debug perspective:", e);
             }
-        }
+        });
     }
 
-    private final class RemoveListeners implements Runnable {
-        @Override
-        public void run() {
-            final IWorkbench workbench = PlatformUI.getWorkbench();
-            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-            if (window == null) {
-                LOGGER.log(Level.SEVERE, "Could not get active workbench window when trying to remove required listeners.");
-                try {
-                    target.terminate();
-                } catch (DebugException e) {
-                    LOGGER.log(Level.SEVERE, "Could not terminate target after removing of listeners failed.", e);
-                }
-            }
-            // Deactive the poosl debug context to remove key bindings again.
-            IContextService contextService = workbench.getService(IContextService.class);
+    private void removeDebugListeners() {
+        performDebugSetting("Remove listener", (workbench, window, contextService, service) -> {
             if (contextService != null) {
                 contextService.deactivateContext(contextActivationToken);
             }
             // Remove debug context and debug event listeners.
             DebugPlugin.getDefault().removeDebugEventListener(debugEventSetListener);
 
-            IDebugContextService service = DebugUITools.getDebugContextManager().getContextService(window);
             service.removeDebugContextListener(debugContextListener);
             // Remove breakpoint listener.
             DebugPlugin.getDefault().getBreakpointManager().removeBreakpointListener(target);
             // Remove the resourcechange listener
             ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+        });
+    }
+
+    private void askRestartOnChange(final List<IResource> changed) {
+        if (changed.isEmpty()) {
+            return;
         }
+        final String fileName = changed.get(0).getName();
+        Display.getDefault().asyncExec(() -> {
+            String targetName = "?"; //$NON-NLS-1$
+            try {
+                targetName = " for " + target.getName() + "?"; //$NON-NLS-2$
+            } catch (DebugException e1) {
+                LOGGER.log(Level.WARNING, "Could not get debug target name.", e1.getSuppressed());
+            }
+            MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(), //
+                    Messages.DIALOG_RELAUNCH_TITLE, //
+                    MessageDialog.getImage(Dialog.DLG_IMG_MESSAGE_WARNING), //
+                    MessageFormat.format(Messages.DIALOG_RELAUNCH_TEXT, fileName, targetName), //
+                    MessageDialog.WARNING, //
+                    new String[] { Messages.DIALOG_RELAUNCH_BT_TERMINATE, Messages.DIALOG_RELAUNCH_BT_CONTINUE }, 0);
+
+            if (dialog.open() == Window.OK) {
+                try {
+                    relaunch = true;
+                    launch.terminate();
+                } catch (DebugException e) {
+                    LOGGER.log(Level.WARNING, "Could not terminate and relaunch after a save.", e);
+                }
+            } else {
+                extentensionsInformStop();
+                edited = true;
+            }
+        });
+    }
+
+    private interface DebugSettingTask {
+        void apply(IWorkbench workbench, IWorkbenchWindow window, IContextService contextService, IDebugContextService service);
+    }
+
+    private void performDebugSetting(String taskname, DebugSettingTask task) {
+        final IWorkbench workbench = PlatformUI.getWorkbench();
+        IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+        if (window == null) {
+            LOGGER.log(Level.SEVERE, "Could not get active workbench window when trying to " + taskname + ".");
+            try {
+                target.terminate();
+            } catch (DebugException e) {
+                LOGGER.log(Level.SEVERE, "Could not terminate target when trying to " + taskname + ".", e);
+            }
+        }
+        IContextService contextService = workbench.getService(IContextService.class);
+        IDebugContextService service = DebugUITools.getDebugContextManager().getContextService(window);
+        task.apply(workbench, window, contextService, service);
     }
 
     public void extentensionsInformStop() {
@@ -510,346 +541,46 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
      */
     public void dispatchResponse(Response response) throws DebugException {
         if (response.getCompile() != null) {
-            TCompileResponse compileResponse = response.getCompile();
-            if (compileResponse.getError() != null && !compileResponse.getError().isEmpty()) {
-                LOGGER.severe("Could not compile model: " + compileResponse.getError());
-                PooslDebugHelper.showErrorMessage("Rotalumis Error", "Rotalumis is unable to compile the model due to " + "an error: \n\n" + compileResponse.getError());
-                this.terminate();
-            } else {
-                this.modelHandle = compileResponse.getHandle();
-                if (modelHandle != null) {
-                    client.instantiateModel(modelHandle, externalConfigPath);
-                } else {
-                    LOGGER.severe("Invalid Rotalumis compile response. No error and no handle are returned.");
-                }
-            }
+            dispatchCompileResponse(response);
         } else if (response.getEengineEventError() != null) {
-            stacktrace = response.getEengineEventError();
-            LOGGER.fine("Engine error: " + stacktrace.getError() + " - " + stacktrace.getProcessPath() + ":" + stacktrace.getStmtHandle()); //$NON-NLS-2$ //$NON-NLS-3$
-
-            PooslThread errorThread = PooslDebugHelper.getThreadByName(threads, stacktrace.getProcessPath());
-            if (errorThread == null && threads != null && threads.length > 0 && threads[0] instanceof PooslThread) {
-                errorThread = threads[0];
-            }
-
-            TErrorStacktrace errorStackTrace = stacktrace.getStacktrace();
-            if (errorStackTrace != null && errorStackTrace.getStackframe() != null) {
-                for (TErrorStackframe errorFrame : errorStackTrace.getStackframe()) {
-                    PooslStackFrame stackFrame = new PooslStackFrame(this, errorThread, stacktrace.getProcessPath() + "/stackframe" + errorFrame.getId(), //$NON-NLS-1$
-                            errorFrame.getVariableContextGlobal().getVariable(), null);
-                    stackFrame.addLocalVariables(errorFrame.getVariableContextLocal().getVariable(), null);
-                    stackFrames.put(errorFrame.getId(), stackFrame);
-                }
-            } else {
-                LOGGER.warning("Retrieved stacktrace with no stackframes!");
-            }
-
-            if (pooslSourceMap != null) {
-                openErrorWindow();
-            }
-            fireEvent(new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.ENGINE_ERROR));
+            dispatchEngineEventError(response);
         } else if (response.getInstantiate() != null) {
-            TInstantiateResponse instantiateResponse = response.getInstantiate();
-            LOGGER.fine("Instantiate response: " + instantiateResponse.getResult());
-            if (instantiateResponse.getResult().equals(TInstantiateResult.OK)) {
-                client.getListFiles(this.modelHandle);
-                client.inspectModel();
-
-                // Instantiate successful: send Sequence diagram setting to the simulator.
-                client.setupCommunicationEvents(isCommEventsEnabled(), messageCreditor.getCurrentMax());
-            } else {
-                LOGGER.fine("Rotalumis is unable to instantiate the model: \n" + instantiateResponse.getResult());
-                this.terminate();
-            }
+            dispatchInstantiateResponse(response);
         } else if (response.getCommand() != null) {
-            TCommandResponse commandResponse = response.getCommand();
-            LOGGER.fine("Command response: " + commandResponse.getType() + " " + commandResponse.getResult()); //$NON-NLS-2$
-            switch (commandResponse.getType()) {
-            case RUN:
-                simulatedTime = ""; //$NON-NLS-1$
-                for (IThread t : getThreads()) {
-                    t.resume();
-                }
-                fireEvent(new DebugEvent(this, DebugEvent.RESUME, DebugEvent.CLIENT_REQUEST));
-                if (stacktrace != null) {
-                    openErrorWindow();
-                }
-                if (TCommandResult.ERROR == commandResponse.getResult()) {
-                    isSuspended = true;
-                    client.getExecutionState();
-                    fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
-                }
-                stopTransitionRequester();
-                break;
-            case PAUSE:
-                fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
-                client.getExecutionState();
-                startTransitionRequester();
-                break;
-            case STOP:
-                simulatedTime = ""; //$NON-NLS-1$
-                client.disconnect();
-                fireEvent(new DebugEvent(this, DebugEvent.TERMINATE, DebugEvent.CLIENT_REQUEST));
-                if (process.canTerminate() && !process.isTerminated()) {
-                    process.terminate();
-                }
-                stopTransitionRequester();
-                break;
-            case STEP:
-                isSuspended = true;
-                client.getExecutionState();
-                client.getTransitions();
-                fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
-                break;
-            case COMM_STEP:
-                // intentional fall-through
-            case PROCESS_STEP:
-                // intentional fall-through
-            case TIME_STEP:
-                // No action required as these steps return the command
-                // immediately. When the command is finished an execution state
-                // event will occur instead this will not occur when there is an
-                // error in the model and this step is executed
-                if (TCommandResult.ERROR == commandResponse.getResult()) {
-                    isSuspended = true;
-                    client.getExecutionState();
-                    fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
-                }
-                break;
-            default:
-                LOGGER.warning("Unrecognized command response received: " + commandResponse.getType());
-                break;
-            }
+            dispatchCommandResponse(response);
         } else if (response.getInspect() != null) {
-            final TInspectResponse inspectResponse = response.getInspect();
-            if (inspectResponse.getProcess() != null) {
-                // Process class inspect response received so update the
-                // corresponding thread with the execution tree and global
-                // variables
-                LOGGER.fine("Inspect response process: " + inspectResponse.getName());
-                final PooslThread thread = PooslDebugHelper.getThreadByName(threads, inspectResponse.getName());
-                if (thread != null) {
-                    thread.setExecutiontree(inspectResponse.getProcess().getExecutionTree());
-                    if (inspectResponse.getProcess().getInstanceVariables() != null) {
-                        thread.addStackFrame(inspectResponse.getProcess().getInstanceVariables().getVariable());
-                        fireEvent(new DebugEvent(thread, DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_RECEIVED));
-                    }
-                }
-            } else if (inspectResponse.getData() != null) {
-                // Data inspect response received so update all corresponding
-                // PooslValue objects.
-                if (inspectResponse.getData().getVariables() != null) {
-                    // Needed for at least Rotalumis 23-11-2016
-                    BigInteger handle = inspectResponse.getData().getHandle();
-                    for (PooslStackFrame pooslStackFrame : Iterables.concat(PooslDebugHelper.threadsToStackFrames(threads), stackFrames.values())) {
-                        if (pooslStackFrame.updateVariable(this, handle, inspectResponse.getData().getVariables().getVariable())) {
-                            fireEvent(new DebugEvent(pooslStackFrame, DebugEvent.CHANGE, DebugEvent.CONTENT));
-                        }
-                    }
-                    LOGGER.fine("Inspect response data: " + handle + " - " + inspectResponse.getData().getLiteral() + ":" + inspectResponse.getData().getType()); //$NON-NLS-2$ //$NON-NLS-3$
-                }
-            } else if (inspectResponse.getVariableContext() != null) {
-                // Variable context inspect response received so update
-                // corresponding stackframe with local variables
-                List<TVariable> tVariables = inspectResponse.getVariableContext().getVariable();
-                BigInteger listHandle = inspectResponse.getHandle();
-
-                LOGGER.fine("Inspect response variablecontext: " + tVariables);
-                if (inspectResponse.getResult() == TObjectQueryResult.UNKNOWN_HANDLE) {
-                    LOGGER.warning("Inspect on variable context returns unknown handle: ");
-                    try {
-                        LOGGER.warning(client.marshal(response));
-                    } catch (JAXBException e) {
-                        LOGGER.log(Level.WARNING, COULD_NOT_LOG_RESPONSE, e);
-                    }
-                    return;
-                }
-
-                String threadName = requests.get(listHandle.intValue());
-                if (threadName != null) {
-                    // localVariables
-                    PooslThread threadRequest = PooslDebugHelper.getThreadByName(getThreads(), threadName);
-                    if (threadRequest != null) {
-                        PooslStackFrame stackFrame = (PooslStackFrame) threadRequest.getStackFrame();
-                        if (stackFrame != null) {
-                            stackFrame.addLocalVariables(tVariables, listHandle);
-                            fireEvent(new DebugEvent(stackFrame, DebugEvent.CHANGE, DebugEvent.CONTENT));
-                        }
-                    }
-                } else {
-                    // subVariables
-                    for (PooslStackFrame pooslStackFrame : Iterables.concat(PooslDebugHelper.threadsToStackFrames(threads), stackFrames.values())) {
-                        if (pooslStackFrame.updateSubVariables(this, listHandle, tVariables)) {
-                            fireEvent(new DebugEvent(pooslStackFrame, DebugEvent.CHANGE, DebugEvent.CONTENT));
-                        }
-                    }
-                }
-            } else if (inspectResponse.getModel() != null) {
-                LOGGER.fine("Inspect response model: " + inspectResponse.getModel());
-                finalizingSetup(inspectResponse.getModel());
-
-            } else {
-                LOGGER.warning("Unrecognized inspect response received ");
-                try {
-                    LOGGER.warning(client.marshal(response));
-                } catch (JAXBException e) {
-                    LOGGER.log(Level.WARNING, COULD_NOT_LOG_RESPONSE, e);
-                }
-            }
+            dispatchInspectResponse(response);
         } else if (response.getGetTransitions() != null) {
-            // Transitions inspect response received so get the selected
-            // PooslThread in the debugview to get the
-            // new PET and global variables
-            TGetTransitionsResponse transitions = response.getGetTransitions();
-            LOGGER.fine("Inspect response getTransitions");
-
-            if (isTransitionUpdate(transitions.getTransitions().getTransition())) {
-                fireEvent(new DebugEvent(target, DebugEvent.CHANGE, DebugEvent.CONTENT));
-            }
+            dispatchGetTransitionResponse(response);
         } else if (response.getPerformTransition() != null) {
-            // Single transition performed so get the new possible transitions.
-            // Also get the execution state of the simulator to check for
-            // breakpoint hits.
-            TPerformTransitionResponse performedTransitionResponse = response.getPerformTransition();
-            LOGGER.fine("Perform transition response: " + performedTransitionResponse.getResult());
-            if (performedTransitionResponse.getResult() == TPerformTransitionResponseResult.OK) {
-                clearStackframesOfAllThreads();
-                clearPossibleTransitions();
-                client.getTransitions();
-                client.getExecutionState();
-                fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.STEP_END));
-            }
+            dispatchPerformTransitionResponse(response);
         } else if (response.getCreateBreakpoint() != null) {
-            breakpointManager.handleBreakpointResonse(response.getCreateBreakpoint());
-            String result = response.getCreateBreakpoint().getResult();
-            LOGGER.fine("Create breakpoint response: " + result);
-
+            dispathCreateBreakpointResponse(response);
         } else if (response.getDeleteBreakpoint() != null) {
-            String result = response.getDeleteBreakpoint().getResult();
-            LOGGER.fine("Delete breakpoint response: " + result);
-            if (!Messages.RESULT_OK.equals(result)) {
-                LOGGER.warning("Failed to delete breakpoint");
-            }
+            dispatchConfirmationResponse("Delete breakpoint", //
+                    response.getDeleteBreakpoint().getResult());
         } else if (response.getEnableBreakpoint() != null) {
-            String result = response.getEnableBreakpoint().getResult();
-            LOGGER.fine("Enable breakpoint response: " + result);
-            if (!Messages.RESULT_OK.equals(result)) {
-                LOGGER.warning("Failed to enable breakpoint");
-            }
+            dispatchConfirmationResponse("Enable breakpoint", //
+                    response.getEnableBreakpoint().getResult());
         } else if (response.getDisableBreakpoint() != null) {
-            String result = response.getDisableBreakpoint().getResult();
-            LOGGER.fine("Disable breakpoint response: " + result);
-            if (!Messages.RESULT_OK.equals(result)) {
-                LOGGER.warning("Failed to disable breakpoint");
-            }
+            dispatchConfirmationResponse("Disable breakpoint", //
+                    response.getDisableBreakpoint().getResult());
         } else if (response.getExecutionState() != null) {
-            // Respond to a change in the execution state of the simulator. This
-            // usually only happens on a breakpoint hit or when specifically
-            // requested.
-            final TExecutionStateChangeResponse state = response.getExecutionState();
-            simulatedTime = state.getTime().toString();
-            LOGGER.fine("Execution state response: State->" + state.getState() + " simulatedTime->" + simulatedTime);
-
-            if (state.getBreakpoints() != null) {
-                if (!state.getBreakpoints().getBreakpoint().isEmpty()) {
-                    isSuspended = true;
-                    breakpointManager.handleBreakpointHit(this, state, pooslSourceMap);
-                }
-
-            } else if ("stopped".equals(state.getState())) { //$NON-NLS-1$
-                isSuspended = true;
-                fireEvent(new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.STOPPED_STATE));
-
-                final String message = (state.getMessage() != null && !state.getMessage().isEmpty()) ? state.getMessage() : Messages.DEFAULT_STOPPED_TEXT;
-                Display.getDefault().asyncExec(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        MessageDialog.openInformation(Display.getDefault().getActiveShell(), Messages.DEFAULT_STOPPED_TITLE, message);
-                    }
-                });
-
-            } else if (state.getError() != null) {
-                isSuspended = true;
-                final TErrorInfo errorState = state.getError();
-                String processPath = errorState.getProcessPath();
-
-                if (processPath != null && !processPath.isEmpty()) {
-                    final PooslThread errorThread = PooslDebugHelper.getThreadByName(threads, processPath);
-
-                    // If a stacktrace is present StacktraceView will highlight
-                    // and navigate to the code (more precisely).
-                    // Active breakpoint which enables the same behavior in the
-                    // PETview is not needed in this case.
-                    if (stacktrace == null) {
-                        errorThread.setActiveBreakpointNode(BigInteger.valueOf(errorState.getNode()));
-                    }
-                    // Fire a debug event to inform other views of the error in
-                    // the thread
-                    fireEvent(new DebugEvent(errorThread, DebugEvent.MODEL_SPECIFIC, PooslConstants.ERROR_STATE));
-
-                }
-            } else {
-                // Got execution state event without breakpoints so conform to
-                // the new state (for now the simulator only sends paused)
-                if ("paused".equals(state.getState()) && !isSuspended()) { //$NON-NLS-1$
-                    isSuspended = true;
-                    fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
-                    client.getTransitions();
-                }
-            }
+            dispatchExecutionStateResponse(response);
         } else if (response.getCommunicationEvent() != null) {
-            // Received a sequence diagram message so add the message to the
-            // provider
-            TCommunicationEvent communicationEvent = response.getCommunicationEvent();
-            LOGGER.fine("Sequence diagram message");
-            pooslSequenceDiagramMessageProvider.addMessage(communicationEvent);
-            externMessageInformer.executeInformMessage(target.getLaunch(), communicationEvent);
-            messageCreditor.useCredit();
+            dispatchCommunicationEventResponse(response);
         } else if (response.getEengineEventSetup() != null) {
             LOGGER.fine("Set sequence diagram setting response: " + response.getEengineEventSetup().getResult());
-            // Response of the enabling or disabling of the sequence diagram
-            // messages. No action required
+            // Response of the enabling or disabling of the sequence diagram messages.
+            // No action required
         } else if (response.getListFiles() != null) {
-            List<org.eclipse.poosl.generatedxmlclasses.TListFilesResponse.File> rotalumisFiles = response.getListFiles().getFile();
-            if (rotalumisFiles != null) {
-                List<URI> uriFiles = new ArrayList<>();
-                for (org.eclipse.poosl.generatedxmlclasses.TListFilesResponse.File rfcFile : rotalumisFiles) {
-                    String stringFile = FileURIConverter.fromConversion(rfcFile.getValue());
-                    uriFiles.add(URI.createFileURI(stringFile));
-                    files2handle.put(stringFile, rfcFile.getHandle());
-                }
-                (new ExternLaunchStartInformer()).executeInformDebugSelection(this, uriFiles);
-            } else {
-                LOGGER.severe("Invalid ListFiles Rotalumis response. Response contains no files.");
-            }
+            dispatchGetListFilesResponse(response);
         } else if (response.getGetPosition() != null) {
             LOGGER.fine("Received position for handle:" + response.getGetPosition().getStmtHandle());
             pooslSourceMap.reponseSourceMapping(response.getGetPosition());
 
         } else if (response.getSetVariable() != null) {
-            TSetVariableResponse varRequest = response.getSetVariable();
-            LOGGER.fine("Set variable response for handle: " + varRequest.getVarHandle());
-            PooslVariable pVar = setVariableRequests.remove(varRequest.getVarHandle());
-            if (varRequest.getResult() == TSetVariableResult.OK) {
-                if (pVar != null) {
-                    pVar.verifiedNewValue();
-                }
-
-                // Get update from Rotalumis after set Variable succeeded
-                clearPossibleTransitions();
-                client.getTransitions();
-                client.getExecutionState();
-
-                PooslThread thread = PooslDebugHelper.getThread(threads, varRequest.getListHandle());
-                if (thread != null) {
-                    thread.clearStackFrames();
-                    thread.getRotalumisStackFrames();
-                }
-            } else {
-                LOGGER.warning("Variable could not be set for handle " + varRequest.getVarHandle() + " with error " + varRequest.getError() + "  " + varRequest.getResult()); //$NON-NLS-3$
-                PooslDebugHelper.showErrorMessage(Messages.DIALOG_SETVARIABLE_TITLE, Messages.DIALOG_SETVARIABLE_TEXT);
-            }
+            dispatchSetVariableResponse(response);
         } else {
             LOGGER.warning("Unrecognized response: ");
             try {
@@ -859,6 +590,365 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
             }
         }
 
+    }
+
+    private void dispatchInspectResponse(Response response) throws DebugException {
+        TInspectResponse inspectResponse = response.getInspect();
+
+        if (inspectResponse.getProcess() != null) {
+            inspectProcess(inspectResponse);
+        } else if (inspectResponse.getData() != null) {
+            inspectData(inspectResponse);
+        } else if (inspectResponse.getVariableContext() != null) {
+            inspectVariableContext(response, inspectResponse);
+        } else if (inspectResponse.getModel() != null) {
+            LOGGER.fine("Inspect response model: " + inspectResponse.getModel());
+            finalizingSetup(inspectResponse.getModel());
+
+        } else {
+            LOGGER.warning("Unrecognized inspect response received ");
+            try {
+                LOGGER.warning(client.marshal(response));
+            } catch (JAXBException e) {
+                LOGGER.log(Level.WARNING, COULD_NOT_LOG_RESPONSE, e);
+            }
+        }
+
+    }
+
+    private void inspectData(TInspectResponse inspectResponse) throws DebugException {
+        // Data inspect response received so update all corresponding
+        // PooslValue objects.
+        if (inspectResponse.getData().getVariables() != null) {
+            // Needed for at least Rotalumis 23-11-2016
+            BigInteger handle = inspectResponse.getData().getHandle();
+            for (PooslStackFrame pooslStackFrame : Iterables.concat(PooslDebugHelper.threadsToStackFrames(threads), stackFrames.values())) {
+                if (pooslStackFrame.updateVariable(this, handle, inspectResponse.getData().getVariables().getVariable())) {
+                    fireEvent(new DebugEvent(pooslStackFrame, DebugEvent.CHANGE, DebugEvent.CONTENT));
+                }
+            }
+            LOGGER.fine("Inspect response data: " + handle + " - " + inspectResponse.getData().getLiteral() + ":" + inspectResponse.getData().getType()); //$NON-NLS-2$ //$NON-NLS-3$
+        }
+    }
+
+    private void inspectProcess(TInspectResponse inspectResponse) throws DebugException {
+        // Process class inspect response received so update the
+        // corresponding thread with the execution tree and global
+        // variables
+        LOGGER.fine("Inspect response process: " + inspectResponse.getName());
+        final PooslThread thread = PooslDebugHelper.getThreadByName(threads, inspectResponse.getName());
+        if (thread != null) {
+            thread.setExecutiontree(inspectResponse.getProcess().getExecutionTree());
+            if (inspectResponse.getProcess().getInstanceVariables() != null) {
+                thread.addStackFrame(inspectResponse.getProcess().getInstanceVariables().getVariable());
+                fireEvent(new DebugEvent(thread, DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_RECEIVED));
+            }
+        }
+    }
+
+    private void inspectVariableContext(Response response, TInspectResponse inspectResponse) throws DebugException {
+        // Variable context inspect response received so update
+        // corresponding stackframe with local variables
+        List<TVariable> tVariables = inspectResponse.getVariableContext().getVariable();
+        BigInteger listHandle = inspectResponse.getHandle();
+
+        LOGGER.fine("Inspect response variablecontext: " + tVariables);
+        if (inspectResponse.getResult() == TObjectQueryResult.UNKNOWN_HANDLE) {
+            LOGGER.warning("Inspect on variable context returns unknown handle: ");
+            try {
+                LOGGER.warning(client.marshal(response));
+            } catch (JAXBException e) {
+                LOGGER.log(Level.WARNING, COULD_NOT_LOG_RESPONSE, e);
+            }
+            return;
+        }
+
+        String threadName = requests.get(listHandle.intValue());
+        if (threadName != null) {
+            // localVariables
+            PooslThread threadRequest = PooslDebugHelper.getThreadByName(getThreads(), threadName);
+            if (threadRequest != null) {
+                PooslStackFrame stackFrame = (PooslStackFrame) threadRequest.getStackFrame();
+                if (stackFrame != null) {
+                    stackFrame.addLocalVariables(tVariables, listHandle);
+                    fireEvent(new DebugEvent(stackFrame, DebugEvent.CHANGE, DebugEvent.CONTENT));
+                }
+            }
+        } else {
+            // subVariables
+            for (PooslStackFrame pooslStackFrame : Iterables.concat(PooslDebugHelper.threadsToStackFrames(threads), stackFrames.values())) {
+                if (pooslStackFrame.updateSubVariables(this, listHandle, tVariables)) {
+                    fireEvent(new DebugEvent(pooslStackFrame, DebugEvent.CHANGE, DebugEvent.CONTENT));
+                }
+            }
+        }
+    }
+
+    private void dispatchGetTransitionResponse(Response response) {
+        // Transitions inspect response received so get the selected
+        // PooslThread in the debugview to get the
+        // new PET and global variables
+        TGetTransitionsResponse transitions = response.getGetTransitions();
+        LOGGER.fine("Inspect response getTransitions");
+
+        if (isTransitionUpdate(transitions.getTransitions().getTransition())) {
+            fireEvent(new DebugEvent(target, DebugEvent.CHANGE, DebugEvent.CONTENT));
+        }
+    }
+
+    private void dispatchPerformTransitionResponse(Response response) {
+        // Single transition performed so get the new possible transitions.
+        // Also get the execution state of the simulator to check for
+        // breakpoint hits.
+        TPerformTransitionResponse performedTransitionResponse = response.getPerformTransition();
+        LOGGER.fine("Perform transition response: " + performedTransitionResponse.getResult());
+        if (performedTransitionResponse.getResult() == TPerformTransitionResponseResult.OK) {
+            clearStackframesOfAllThreads();
+            clearPossibleTransitions();
+            client.getTransitions();
+            client.getExecutionState();
+            fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.STEP_END));
+        }
+    }
+
+    private void dispathCreateBreakpointResponse(Response response) {
+        breakpointManager.handleBreakpointResonse(response.getCreateBreakpoint());
+        dispatchConfirmationResponse("Create breakpoint", //
+                response.getCreateBreakpoint().getResult());
+    }
+
+    private void dispatchConfirmationResponse(String action, String message) {
+        LOGGER.fine(action + " response: " + message);
+        if (!Messages.RESULT_OK.equals(message)) {
+            LOGGER.warning("Failed to " + action);
+        }
+    }
+
+    private void dispatchExecutionStateResponse(Response response) throws DebugException {
+        // Respond to a change in the execution state of the simulator. This
+        // usually only happens on a breakpoint hit or when specifically
+        // requested.
+        final TExecutionStateChangeResponse state = response.getExecutionState();
+        simulatedTime = state.getTime().toString();
+        LOGGER.fine("Execution state response: State->" + state.getState() + " simulatedTime->" + simulatedTime);
+
+        if (state.getBreakpoints() != null) {
+            if (!state.getBreakpoints().getBreakpoint().isEmpty()) {
+                isSuspended = true;
+                breakpointManager.handleBreakpointHit(this, state, pooslSourceMap);
+            }
+
+        } else if ("stopped".equals(state.getState())) { //$NON-NLS-1$
+            isSuspended = true;
+            fireEvent(new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.STOPPED_STATE));
+
+            final String message = (state.getMessage() != null && !state.getMessage().isEmpty()) ? state.getMessage() : Messages.DEFAULT_STOPPED_TEXT;
+            Display.getDefault().asyncExec(new Runnable() {
+
+                @Override
+                public void run() {
+                    MessageDialog.openInformation(Display.getDefault().getActiveShell(), Messages.DEFAULT_STOPPED_TITLE, message);
+                }
+            });
+
+        } else if (state.getError() != null) {
+            isSuspended = true;
+            final TErrorInfo errorState = state.getError();
+            String processPath = errorState.getProcessPath();
+
+            if (processPath != null && !processPath.isEmpty()) {
+                final PooslThread errorThread = PooslDebugHelper.getThreadByName(threads, processPath);
+
+                // If a stacktrace is present StacktraceView will highlight
+                // and navigate to the code (more precisely).
+                // Active breakpoint which enables the same behavior in the
+                // PETview is not needed in this case.
+                if (stacktrace == null) {
+                    errorThread.setActiveBreakpointNode(BigInteger.valueOf(errorState.getNode()));
+                }
+                // Fire a debug event to inform other views of the error in
+                // the thread
+                fireEvent(new DebugEvent(errorThread, DebugEvent.MODEL_SPECIFIC, PooslConstants.ERROR_STATE));
+
+            }
+        } else {
+            // Got execution state event without breakpoints so conform to
+            // the new state (for now the simulator only sends paused)
+            if ("paused".equals(state.getState()) && !isSuspended()) { //$NON-NLS-1$
+                isSuspended = true;
+                fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
+                client.getTransitions();
+            }
+        }
+    }
+
+    private void dispatchCommunicationEventResponse(Response response) {
+        // Received a sequence diagram message so add the message to the
+        // provider
+        TCommunicationEvent communicationEvent = response.getCommunicationEvent();
+        LOGGER.fine("Sequence diagram message");
+        pooslSequenceDiagramMessageProvider.addMessage(communicationEvent);
+        externMessageInformer.executeInformMessage(target.getLaunch(), communicationEvent);
+        messageCreditor.useCredit();
+    }
+
+    private void dispatchGetListFilesResponse(Response response) {
+        List<org.eclipse.poosl.generatedxmlclasses.TListFilesResponse.File> rotalumisFiles = response.getListFiles().getFile();
+        if (rotalumisFiles != null) {
+            List<URI> uriFiles = new ArrayList<>();
+            for (org.eclipse.poosl.generatedxmlclasses.TListFilesResponse.File rfcFile : rotalumisFiles) {
+                String stringFile = FileURIConverter.fromConversion(rfcFile.getValue());
+                uriFiles.add(URI.createFileURI(stringFile));
+                files2handle.put(stringFile, rfcFile.getHandle());
+            }
+            (new ExternLaunchStartInformer()).executeInformDebugSelection(this, uriFiles);
+        } else {
+            LOGGER.severe("Invalid ListFiles Rotalumis response. Response contains no files.");
+        }
+    }
+
+    private void dispatchSetVariableResponse(Response response) {
+        TSetVariableResponse varRequest = response.getSetVariable();
+        LOGGER.fine("Set variable response for handle: " + varRequest.getVarHandle());
+        PooslVariable pVar = setVariableRequests.remove(varRequest.getVarHandle());
+        if (varRequest.getResult() == TSetVariableResult.OK) {
+            if (pVar != null) {
+                pVar.verifiedNewValue();
+            }
+
+            // Get update from Rotalumis after set Variable succeeded
+            clearPossibleTransitions();
+            client.getTransitions();
+            client.getExecutionState();
+
+            PooslThread thread = PooslDebugHelper.getThread(threads, varRequest.getListHandle());
+            if (thread != null) {
+                thread.clearStackFrames();
+                thread.getRotalumisStackFrames();
+            }
+        } else {
+            LOGGER.warning("Variable could not be set for handle " + varRequest.getVarHandle() + " with error " + varRequest.getError() + "  " + varRequest.getResult()); //$NON-NLS-3$
+            PooslDebugHelper.showErrorMessage(Messages.DIALOG_SETVARIABLE_TITLE, Messages.DIALOG_SETVARIABLE_TEXT);
+        }
+    }
+
+    private void dispatchCommandResponse(Response response) throws DebugException {
+        TCommandResponse commandResponse = response.getCommand();
+        LOGGER.fine("Command response: " + commandResponse.getType() + " " + commandResponse.getResult()); //$NON-NLS-2$
+        switch (commandResponse.getType()) {
+        case RUN:
+            simulatedTime = ""; //$NON-NLS-1$
+            for (IThread t : getThreads()) {
+                t.resume();
+            }
+            fireEvent(new DebugEvent(this, DebugEvent.RESUME, DebugEvent.CLIENT_REQUEST));
+            if (stacktrace != null) {
+                openErrorWindow();
+            }
+            if (TCommandResult.ERROR == commandResponse.getResult()) {
+                isSuspended = true;
+                client.getExecutionState();
+                fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
+            }
+            stopTransitionRequester();
+            break;
+        case PAUSE:
+            fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
+            client.getExecutionState();
+            startTransitionRequester();
+            break;
+        case STOP:
+            simulatedTime = ""; //$NON-NLS-1$
+            client.disconnect();
+            fireEvent(new DebugEvent(this, DebugEvent.TERMINATE, DebugEvent.CLIENT_REQUEST));
+            if (process.canTerminate() && !process.isTerminated()) {
+                process.terminate();
+            }
+            stopTransitionRequester();
+            break;
+        case STEP:
+            isSuspended = true;
+            client.getExecutionState();
+            client.getTransitions();
+            fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
+            break;
+        case COMM_STEP:
+            // intentional fall-through
+        case PROCESS_STEP:
+            // intentional fall-through
+        case TIME_STEP:
+            // No action required as these steps return the command
+            // immediately. When the command is finished an execution state
+            // event will occur instead this will not occur when there is an
+            // error in the model and this step is executed
+            if (TCommandResult.ERROR == commandResponse.getResult()) {
+                isSuspended = true;
+                client.getExecutionState();
+                fireEvent(new DebugEvent(this, DebugEvent.SUSPEND, DebugEvent.CLIENT_REQUEST));
+            }
+            break;
+        default:
+            LOGGER.warning("Unrecognized command response received: " + commandResponse.getType());
+            break;
+        }
+    }
+
+    private void dispatchInstantiateResponse(Response response) throws DebugException {
+        TInstantiateResponse instantiateResponse = response.getInstantiate();
+        LOGGER.fine("Instantiate response: " + instantiateResponse.getResult());
+        if (instantiateResponse.getResult().equals(TInstantiateResult.OK)) {
+            client.getListFiles(this.modelHandle);
+            client.inspectModel();
+
+            // Instantiate successful: send Sequence diagram setting to the simulator.
+            client.setupCommunicationEvents(isCommEventsEnabled(), messageCreditor.getCurrentMax());
+        } else {
+            LOGGER.fine("Rotalumis is unable to instantiate the model: \n" + instantiateResponse.getResult());
+            this.terminate();
+        }
+    }
+
+    private void dispatchEngineEventError(Response response) throws DebugException {
+        stacktrace = response.getEengineEventError();
+        LOGGER.fine("Engine error: " + stacktrace.getError() + " - " + stacktrace.getProcessPath() + ":" + stacktrace.getStmtHandle()); //$NON-NLS-2$ //$NON-NLS-3$
+
+        PooslThread errorThread = PooslDebugHelper.getThreadByName(threads, stacktrace.getProcessPath());
+        if (errorThread == null && threads != null && threads.length > 0 && threads[0] instanceof PooslThread) {
+            errorThread = threads[0];
+        }
+
+        TErrorStacktrace errorStackTrace = stacktrace.getStacktrace();
+        if (errorStackTrace != null && errorStackTrace.getStackframe() != null) {
+            for (TErrorStackframe errorFrame : errorStackTrace.getStackframe()) {
+                PooslStackFrame stackFrame = new PooslStackFrame(this, errorThread, stacktrace.getProcessPath() + "/stackframe" + errorFrame.getId(), //$NON-NLS-1$
+                        errorFrame.getVariableContextGlobal().getVariable(), null);
+                stackFrame.addLocalVariables(errorFrame.getVariableContextLocal().getVariable(), null);
+                stackFrames.put(errorFrame.getId(), stackFrame);
+            }
+        } else {
+            LOGGER.warning("Retrieved stacktrace with no stackframes!");
+        }
+
+        if (pooslSourceMap != null) {
+            openErrorWindow();
+        }
+        fireEvent(new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.ENGINE_ERROR));
+    }
+
+    private void dispatchCompileResponse(Response response) throws DebugException {
+        TCompileResponse compileResponse = response.getCompile();
+        if (compileResponse.getError() != null && !compileResponse.getError().isEmpty()) {
+            LOGGER.severe("Could not compile model: " + compileResponse.getError());
+            PooslDebugHelper.showErrorMessage("Rotalumis Error", "Rotalumis is unable to compile the model due to " + "an error: \n\n" + compileResponse.getError());
+            this.terminate();
+        } else {
+            this.modelHandle = compileResponse.getHandle();
+            if (modelHandle != null) {
+                client.instantiateModel(modelHandle, externalConfigPath);
+            } else {
+                LOGGER.severe("Invalid Rotalumis compile response. No error and no handle are returned.");
+            }
+        }
     }
 
     private void finalizingSetup(TInspectModel tInspectModel) {
@@ -1038,7 +1128,6 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
         } catch (Exception e) {
             return null;
         }
-
     }
 
     public boolean isEdited() {
@@ -1092,7 +1181,7 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
         }
 
         // Remove selection listeners from the debug target
-        Display.getDefault().asyncExec(new RemoveListeners());
+        Display.getDefault().asyncExec(() -> removeDebugListeners());
         if (!isTerminated) {
             isTerminated = true;
             disconnect();
@@ -1242,21 +1331,18 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
     private void startTransitionRequester() {
         stopTransitionRequester();
         timer = new Timer(true);
-        timer.scheduleAtFixedRate(new TransitionRequester(), 0, 1000);
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                client.getTransitions();
+            }
+        }, 0, 1000);
     }
 
     private void stopTransitionRequester() {
         if (timer != null) {
             timer.cancel();
             timer = null;
-        }
-    }
-
-    class TransitionRequester extends TimerTask {
-
-        @Override
-        public void run() {
-            client.getTransitions();
         }
     }
 
@@ -1274,61 +1360,44 @@ public final class PooslDebugTarget extends PooslDebugElement implements IDebugT
         return false;
     }
 
-    private boolean isTransEqual(TTransition current, TTransition update) {
-        if (current == null) {
-            return update == null;
-        } else if (update == null) {
-            return false;
+    private static final class TransitionHandlerComparator<S> {
+        private final Function<TTransition, S> getter;
+
+        private final Function<S, BigInteger> handler;
+
+        private TransitionHandlerComparator(Function<TTransition, S> getter, Function<S, BigInteger> handler) {
+            this.getter = getter;
+            this.handler = handler;
         }
 
-        if (current.getDelay() != null) {
-            if (update.getDelay() != null) {
-                return equalHandle(current.getDelay().getHandle(), update.getDelay().getHandle());
-            } else {
-                return false;
+        private Boolean isEquals(TTransition current, TTransition update) {
+
+            S currentValue = getter.apply(current);
+            S updateValue = getter.apply(update);
+            if (currentValue == null && currentValue == null) {
+                return null; // handle not applicable
             }
-        } else {
-            if (update.getDelay() != null) {
-                return false;
+            return (currentValue != null) && (currentValue != null) //
+                    ? handler.apply(currentValue).equals(handler.apply(updateValue))
+                    : false;
+        }
+
+    }
+
+    private boolean isTransEqual(TTransition current, TTransition update) {
+        if (current == update) {
+            return true;
+        } else if (update == null || current == null) {
+            return false; // we know update != current
+        }
+        for (TransitionHandlerComparator<?> comparator : TRANST_HANDLER_COMPARATORS) {
+            Boolean result = comparator.isEquals(current, update);
+            if (result != null) {
+                return result;
             }
         }
-        if (current.getCommunication() != null) {
-            if (update.getCommunication() != null) {
-                return equalHandle(current.getCommunication().getHandle(), update.getCommunication().getHandle());
-            } else {
-                return false;
-            }
-        } else {
-            if (update.getCommunication() != null) {
-                return false;
-            }
-        }
-        if (current.getDataStep() != null) {
-            if (update.getDataStep() != null) {
-                return equalHandle(current.getDataStep().getHandle(), update.getDataStep().getHandle());
-            } else {
-                return false;
-            }
-        } else {
-            if (update.getDataStep() != null) {
-                return false;
-            }
-        }
-        if (current.getProcessStep() != null) {
-            if (update.getProcessStep() != null) {
-                return equalHandle(current.getProcessStep().getHandle(), update.getProcessStep().getHandle());
-            } else {
-                return false;
-            }
-        } else {
-            if (update.getProcessStep() != null) {
-                return false;
-            }
-        }
+
         return true;
     }
 
-    private boolean equalHandle(BigInteger current, BigInteger update) {
-        return current.compareTo(update) == 0;
-    }
 }

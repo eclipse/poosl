@@ -5,8 +5,8 @@ Element-Name: LaunchProcs
 Element-Type: context
 Element-Version: 2.0
 Id: _-6xq0Nf8Eea3P5Zs0ralfQ
-Runtime-Version: 2.3.0.201806262310
-Save-Time: 8/7/19 7:50 AM
+Runtime-Version: 2.5.1.M3
+Save-Time: 10/12/21, 4:52 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -14,82 +14,86 @@ Entry-Name: .ecl.context
 
 proc "launch-debug" [val name] [val file] [val port] {
 	get-menu "Run/Debug Configurations..." | click
-		with [get-window "Debug Configurations"] {
-			launch-conf -name $name -port $port -file $file
-		    get-button Debug | click
-		}
+	with [get-window "Debug Configurations"] {
+		launch-conf -name $name -port $port -file $file
+	    get-button Debug | click
+	}
 }
 
 proc "launch-debug-external" [val name] [val file] [val port] [val ini] {
 	get-menu "Run/Debug Configurations..." | click
-		with [get-window "Debug Configurations"] {
-			launch-ini -name $name -port $port -file $file -ini $ini
-		    get-button Debug | click
-		}
+	with [get-window "Debug Configurations"] {
+		launch-ini -name $name -port $port -file $file -ini $ini
+	    get-button Debug | click
+	}
 }
 
 proc "add-launch-debug" [val name] [val file] [val port] {
 	get-menu "Run/Debug Configurations..." | click
-		with [get-window "Debug Configurations"] {
-			launch-conf -name $name -port $port -file $file
-		    get-button Close | click
-		}
+	with [get-window "Debug Configurations"] {
+		launch-conf -name $name -port $port -file $file
+	    get-button Close | click
+	}
 }
 
 proc "launch-run" [val name] [val file] [val port] {
 	get-menu "Run/Run Configurations..." | click
-		with [get-window "Run Configurations"] {
-			launch-conf -name $name -port $port -file $file
-		    get-button Run | click
-		}
+	with [get-window "Run Configurations"] {
+		launch-conf -name $name -port $port -file $file
+	    get-button Run | click
+	}
 }
 
 proc "add-launch-run" [val name] [val file] [val port] {
 	get-menu "Run/Run Configurations..." | click
-		with [get-window "Run Configurations"] {
-			launch-conf -name $name -port $port -file $file
-		    get-button Close | click
-		}
+	with [get-window "Run Configurations"] {
+		launch-conf -name $name -port $port -file $file
+	    get-button Close | click
+	}
 }
 
-proc "launch-conf" [val name] [val file] [val port] {
-	get-tree | select "POOSL Simulation" | get-menu "New Configuration" | click
-    with [get-editbox -after [get-label "Name:"]] {
-        set-text $name
-    }  
-    set-dialog-result File [concat "platform:/resource/" $file] 
-    get-window "Debug Configurations" | get-group "Model:" | get-button Browse | click 
-
-    get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text $port
-    get-button Apply | click
+/**
+ * Creates a POOSL Simulation config and save it.
+ */
+proc "launch-conf" 
+		[val name]/* of configuration */ 
+		[val file]/* model qualified path */
+		[val port]/* to simulate on */ {
+	launch-ini -name $name -file $file -port $port -ini ""
 }
 
-proc "launch-ini" [val name] [val file] [val port] [val ini] {
+/**
+ * Creates a POOSL Simulation config with ini file and save it.
+ */
+proc "launch-ini" 
+		[val name]/* of configuration */ 
+		[val file]/* model qualified path */
+		[val port]/* to simulate on */ 
+		[val ini ]/* external config qualified path */ {
 	get-tree | select "POOSL Simulation" | get-menu "New Configuration" | click
-    with [get-editbox -after [get-label "Name:"]] {
-        set-text $name
-    }  
-    set-dialog-result File [concat "platform:/resource/" $file] 
-    get-window "Debug Configurations" | get-group "Model:" | get-button Browse | click 
+    get-editbox -after [get-label "Name:"] | set-text $name
+    get-group Model | get-editbox | set-text $file
     
-    set-dialog-result File [concat "platform:/resource/" $ini]
-    get-window "Debug Configurations" | get-group "External port configuration:" | get-button Browse | click 
+    if [ $ini | not-eq "" ] { 
+      set-dialog-result File [concat "platform:/resource/" $ini]
+      get-window "Debug Configurations" | get-group "External port configuration" | get-button Browse | click 
+    }
 
-    get-group "Simulator settings:" | get-editbox -after [get-label "Server port:"] | set-text $port
+    get-group "Simulator settings" | get-editbox -after [get-label "Server port:"] | set-text $port
     get-button Apply | click
 }
 
 proc "launch-debug-source" [val name] [val file] [val port] {
 	get-menu "Run/Debug Configurations..." | click
-		with [get-window "Debug Configurations"] {
-			launch-conf -name $name -port $port -file $file
-			add-examples-source
-		    get-button Debug | click
-		}
+	with [get-window "Debug Configurations"] {
+		launch-conf -name $name -port $port -file $file
+		add-examples-source
+	    get-button Debug | click
+	}
 }
 
 proc "add-examples-source" {
-	 get-tab-folder | get-tab-item Source | click
+	get-tab-folder | get-tab-item Source | click
     get-button "Add..." | click
     with [get-window "Add Source"] {
         get-table | select Project
