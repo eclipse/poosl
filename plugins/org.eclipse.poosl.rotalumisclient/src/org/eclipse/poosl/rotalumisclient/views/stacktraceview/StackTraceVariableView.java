@@ -17,8 +17,7 @@ import org.eclipse.debug.core.DebugEvent;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.IDebugEventSetListener;
 import org.eclipse.debug.internal.ui.views.variables.VariablesView;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.swt.widgets.Composite;
@@ -35,24 +34,23 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("restriction")
 public class StackTraceVariableView extends VariablesView {
 
-    IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
-        @Override
-        public void handleDebugEvents(DebugEvent[] events) {
-            final Viewer viewer = getViewer();
-            if (viewer != null) {
-                for (DebugEvent debugEvent : events) {
-                    if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.STACKFRAME_INSPECT) {
-                        final Object data = debugEvent.getData();
-                        Display.getDefault().asyncExec(new Runnable() {
-                            @Override
-                            public void run() {
-                                viewer.setInput(data);
-                            }
-                        });
-                    }
-                }
+    private final IDebugEventSetListener debugEventSetListener = events -> {
+        final Viewer viewer = getViewer();
+        if (viewer == null) {
+            return; // view is not ready
+        }
+        Object inspectData = null;
+        for (DebugEvent debugEvent : events) {
+            if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC //
+                    && debugEvent.getDetail() == PooslConstants.STACKFRAME_INSPECT) {
+                inspectData = debugEvent.getData();
             }
         }
+        if (inspectData != null) {
+            Object newInput = inspectData;
+            Display.getDefault().asyncExec(() -> setViewerInput(newInput));
+        }
+
     };
 
     @Override
@@ -66,25 +64,38 @@ public class StackTraceVariableView extends VariablesView {
 
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_stacktrace_variables"); //$NON-NLS-1$
+            workbench.getHelpSystem().setHelp(parent, //
+                    "org.eclipse.poosl.help.help_stacktrace_variables"); //$NON-NLS-1$
         }
     }
 
     @Override
     public Viewer createViewer(Composite parent) {
         Viewer viewer = super.createViewer(parent);
-        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                // On selection change send out an model specific debug event
-                // for a inspect request for the selected element.
-                DebugPlugin plugin = DebugPlugin.getDefault();
-                if (plugin != null) {
-                    plugin.fireDebugEventSet(new DebugEvent[] { new DebugEvent(event.getSelection(), DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_REQUEST) });
-                }
-            }
-        });
+        // On selection change send out an model specific debug event
+        // for a inspect request for the selected element.
+
+        viewer.addSelectionChangedListener(event -> sendInspectDebugEvent(event.getSelection()));
+
         return viewer;
+    }
+
+    private void sendInspectDebugEvent(Object source) {
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        if (plugin != null) {
+            plugin.fireDebugEventSet(new DebugEvent[] { //
+                    new DebugEvent(source, DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_REQUEST) });
+        }
+    }
+
+    @Override
+    protected void setViewerInput(Object context) {
+        // Cell modifier is built for each input
+        super.setViewerInput(context);
+
+        // Rotalumis does not support change here
+        // but PooslVariable does not know the context from Execution Tree.
+        ((TreeViewer) getViewer()).setCellModifier(null);
     }
 
     @Override
