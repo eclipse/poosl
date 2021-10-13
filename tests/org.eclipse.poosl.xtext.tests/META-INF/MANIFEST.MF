@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.eclipse.poosl.xtext.tests
 Bundle-Vendor: TNO ESI
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-SymbolicName: org.eclipse.poosl.xtext.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.poosl.xtext,
