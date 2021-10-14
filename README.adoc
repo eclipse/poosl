@@ -67,7 +67,9 @@ https://raw.githubusercontent.com/ObeoNetwork/POOSL/main/parent/oomph/org.eclips
 
 Once the repository is cloned, following preferences should be set:
 
-- Java/Code style/Formatter : org.eclipse.poosl.parent/preferences/JavaFormatter.xml
+- *Java/Code style/Formatter*: import _org.eclipse.poosl.parent/preferences/JavaFormatter.xml_
+- *Java/Code style/Clean Up*: import _org.eclipse.poosl.parent/preferences/CleanupProfile.xml_
+- *Java/Code style/Code Templates*: import _/org.eclipse.poosl.parent/preferences/java-codetemplates.xml_
 
 === Contributing
 

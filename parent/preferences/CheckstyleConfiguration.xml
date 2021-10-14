@@ -37,6 +37,7 @@
     <module name="JavadocVariable">
       <property name="severity" value="warning"/>
       <property name="scope" value="protected"/>
+      <property name="tokens" value="VARIABLE_DEF"/> <!-- ignore enum values-->
     </module>
     <module name="ConstantName">
       <property name="severity" value="error"/>
@@ -163,7 +164,8 @@
       <property name="severity" value="error"/>
     </module>
     <module name="DeclarationOrder">
-      <property name="severity" value="error"/>
+    	 <!-- Not an issue, maybe ignore for readability  -->
+      <property name="severity" value="info"/>
     </module>
     <module name="EmptyStatement">
       <property name="severity" value="error"/>

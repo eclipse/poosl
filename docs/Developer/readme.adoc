@@ -70,6 +70,7 @@ Detailed in link:TargetPlaform.adoc[Target platform].
 
 include::dependencies.adoc[]
 
+
 == Building the project
 
 **Maven** is required. Building will compile, run tests and assemble an P2 archive for Eclipse installation.
@@ -143,6 +144,15 @@ NOTE: If a plugin source is changed between execution, both command must launche
 
 * Update 'parent' pom if configuration is applicable for several component using activation.
 
+=== Updating version
+
+To change version, use following command with proper number:
+
+[source,bash]
+----
+mvn org.eclipse.tycho:tycho-versions-plugin:set-version  -DnewVersion=0.0.0-SNAPSHOT
+----
+
 
 == Git
 
@@ -160,6 +170,8 @@ At least, every class must have a description of its role and the behavior it en
 
 === Encoding, formatting and source paths
 
+==== In-short
+
 To ensure uniformity in source project, on each new project, copy following elements 
 from an existing one:
 
@@ -168,8 +180,21 @@ from an existing one:
 * __build.properties__ (requires adaptations on _bin.includes_ list)
 * __pom.xml__ (requires adaptation on _packaging_ and _artifactId_)
 
-To ensure a proper behavior of 'Maven clean' command, eclipse output folder of java build is 
+==== Classpath configuation
+
+To ensure a proper behavior of 'Maven clean' command, eclipse output folder of java build is+
 'target/jdt-classes'
+
+==== Checkstyle
+
+Using local configuration prevents border effects when having external project in workspace
+
+==== Code style 
+
+Like Checkstyle, to prevent border effects and to follow modication, configurations are declared
+in folder:
+org.eclipse.poosl.parent/preferences
+
 
 === Performance improvement
 
@@ -186,6 +211,12 @@ This allows :
 * concurrent edition 
 * better history management
 * simplification of mapping style 
+
+To generate, use 'DesignGeneration' run configuration.
+
+If you edit directly _org.eclipse.poosl.sirius/description/poosl.odesign_ for test purpose, launch
+'DesignReverse' and extract properties from xtend file at 
+_org.eclipse.poosl.sirius.tooling/target/rvs_
 
 === Code upgrading
 
