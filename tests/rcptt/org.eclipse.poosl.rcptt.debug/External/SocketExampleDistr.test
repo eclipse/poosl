@@ -7,14 +7,14 @@ Element-Version: 3.0
 External-Reference: 
 Id: _VKU4sCMKEemTAfKT-AIu5w
 Runtime-Version: 2.5.1.M3
-Save-Time: 10/12/21, 11:05 AM
+Save-Time: 10/19/21, 3:07 PM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
 Content-Type: text/plain
 Entry-Name: .description
 
-Launch 2 communicating simulation.
+Launch simulations of 2 communicating models.
 Test echanges creates corresponding transition.
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -24,14 +24,16 @@ Entry-Name: .content
 let [val testModelPath "poosl.examples/models-cosim/SocketExampleDistributed/" ] {
 	launch-debug-external 
 		-name "Server" 
-		-file [concat $testModelPath "Client/Client.poosl" ] 
-		-port 10001 
-		-ini [concat $testModelPath "Client/client.ini" ]
-	launch-debug-external 
-		-name "Client" 
 		-file [concat $testModelPath "Server/Server.poosl" ]
 		-port 10002 
 		-ini [concat $testModelPath "Server/server.ini" ]
+
+	launch-debug-external 
+		-name "Client" 
+		-file [concat $testModelPath "Client/Client.poosl" ] 
+		-port 10001 
+		-ini [concat $testModelPath "Client/client.ini" ]
+
 }
 with [get-view Debug | get-tree] {
     select "Server.poosl \\[Simulated time: 0\\]/system/Server" | double-click
@@ -43,17 +45,15 @@ with [get-view Debug | get-tree] {
     select "Client.poosl \\[Simulated time: 0\\]/system/Client" | double-click
     select "Client.poosl \\[Simulated time: 0\\]/system/Client" | double-click
 }
-	
-get-window "Simulator has stopped" | get-button OK | click
 
-// Style verification fails: Server node is no more red
+// At this point "Server" process must have an active "Port?readLine(Input)" transition
 	
-//	get-view Debug | get-tree | get-item -path "Server.poosl \\[Simulated time: 0\\]/system" 
-//    	| get-property "styles[0].foregroundColor" | equals "#FF0000" | verify-true // is red
+get-view Debug | get-tree | get-item -path "Server.poosl \\[Simulated time: 0\\]/system" 
+   	| get-property "styles[0].foregroundColor" | equals "#FF0000" /*red*/ | verify-true
 
-get-view Debug | get-tree | select "Client.poosl \\[Simulated time: 0\\]"
-get-button "Terminate (M1+F2)" | click
 get-view Debug | get-tree | select "Server.poosl \\[Simulated time: 0\\]"
-get-button Terminate -index 1 | click
+get-button "Terminate (M1+F2)" | click
+get-view Debug | get-tree | select "Client.poosl \\[Simulated time: 0\\]"
+get-button Terminate -index 1 | click // index=1 only apply if 'Console' view is open.
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
