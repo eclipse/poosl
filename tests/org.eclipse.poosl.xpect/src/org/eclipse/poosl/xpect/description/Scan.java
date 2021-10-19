@@ -156,7 +156,7 @@ public class Scan implements IResourceFactory<IResource, IContainer> {
                 extensions.toArray(new String[extensions.size()]));
 
         // TODO Use
-        children = bundleInfo.find(Context.ROOT, "src\\org\\eclipse\\poosl\\xpect\\validation\\importing", getFilenameMatcher());
+        children = bundleInfo.find(Context.ROOT, "src/org/eclipse/poosl/xpect/validation/importing", getFilenameMatcher());
 
         // IBundleInfo bundleInfo = IBundleInfo.Registry.INSTANCE.getBundle(ctx.getXpectFileURI());
         // bundleInfo.find(context, path, matcher, fileExtensions)

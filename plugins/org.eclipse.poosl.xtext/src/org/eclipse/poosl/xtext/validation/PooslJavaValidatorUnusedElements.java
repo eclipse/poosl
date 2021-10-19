@@ -71,17 +71,21 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
 
     public void warnUnusedMessageSignature(ProcessClass pClass, PooslMessageType type) {
         Set<String> usedMessages = HelperFunctions.getUsedMessages(pClass, type);
-        EList<MessageSignature> declaredMessages = (type == PooslMessageType.RECEIVE) ? pClass.getReceiveMessages() : pClass.getSendMessages();
-        String warning = (type == PooslMessageType.RECEIVE) ? NO_RECEIVE_STATEMENT : NO_SEND_STATEMENT;
+        EList<MessageSignature> declaredMessages = (type == PooslMessageType.RECEIVE)
+            ? pClass.getReceiveMessages() : pClass.getSendMessages();
+        String warning = (type == PooslMessageType.RECEIVE)
+            ? NO_RECEIVE_STATEMENT : NO_SEND_STATEMENT;
 
         Map<String, MessageSignature> messageIdMap = new HashMap<>();
         for (MessageSignature messageSignature : declaredMessages) {
-            messageIdMap.put(PooslMessageSignatureCallHelper.getSignatureID(messageSignature, type), messageSignature);
+            messageIdMap.put(PooslMessageSignatureCallHelper.getSignatureID(messageSignature, type),
+                    messageSignature);
         }
 
         for (Entry<String, MessageSignature> entry : messageIdMap.entrySet()) {
             if (!usedMessages.contains(entry.getKey())) {
-                warning(warning, entry.getValue(), null, PooslIssueCodes.UNUSED_MESSAGE_SIGNATURE, WarningType.UNUSED);
+                warning(warning, entry.getValue(), null, PooslIssueCodes.UNUSED_MESSAGE_SIGNATURE,
+                        WarningType.UNUSED);
             }
         }
     }
@@ -89,7 +93,8 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
     // --- Ports -------
 
     public void warnUnusedPorts(ProcessClass pClass, Port port) {
-        List<IEObjectDescription> pClasses = PooslCache.get(pClass.eResource()).getProcessReflexiveChildren(pClass.getName());
+        List<IEObjectDescription> pClasses = PooslCache.get(pClass.eResource())
+                .getProcessReflexiveChildren(pClass.getName());
 
         for (IEObjectDescription pDescr : pClasses) {
             List<String> usedPorts = PooslProcessClassDescription.getUsedPorts(pDescr);
@@ -97,7 +102,8 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
                 return;
         }
 
-        warning(PORT_IS_NOT_USED, port, null, PooslIssueCodes.UNUSED_PROCESS_PORT, WarningType.UNUSED);
+        warning(PORT_IS_NOT_USED, port, null, PooslIssueCodes.UNUSED_PROCESS_PORT,
+                WarningType.UNUSED);
 
     }
 
@@ -105,27 +111,34 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
 
     @Check(CheckType.FAST)
     public void warnUnusedProcessMethod(Poosl poosl) {
-        Set<String> usedClassMethods = getAllUsedProcessMethods(poosl);
+        PERF.benchmark("warnUnusedProcessMethod", () -> { //$NON-NLS-1$
+            Set<String> usedClassMethods = getAllUsedProcessMethods(poosl);
 
-        for (ProcessClass pClass : poosl.getProcessClasses()) {
-            if (pClass.getName() != null) {
-                for (ProcessMethod processMethod : pClass.getMethods()) {
-                    if (!usedClassMethods.contains(PooslProcessMethodParser.getProcessMethodIDWithClassName(processMethod))) {
-                        warning(METHOD_IS_NOT_USED, processMethod, Literals.PROCESS_METHOD__NAME, PooslIssueCodes.UNUSED_PROCESS_METHOD, WarningType.UNUSED);
+            for (ProcessClass pClass : poosl.getProcessClasses()) {
+                if (pClass.getName() != null) {
+                    for (ProcessMethod processMethod : pClass.getMethods()) {
+                        if (!usedClassMethods.contains(PooslProcessMethodParser
+                                .getProcessMethodIDWithClassName(processMethod))) {
+                            warning(METHOD_IS_NOT_USED, processMethod,
+                                    Literals.PROCESS_METHOD__NAME,
+                                    PooslIssueCodes.UNUSED_PROCESS_METHOD, WarningType.UNUSED);
+                        }
                     }
                 }
             }
-        }
+        });
     }
 
     public Set<String> getAllUsedProcessMethods(Poosl poosl) {
         Resource resource = poosl.eResource();
-        List<IEObjectDescription> allRelevantProcessClasses = PooslCache.get(resource).getAllRelevantProcessClasses();
+        List<IEObjectDescription> allRelevantProcessClasses = PooslCache.get(resource)
+                .getAllRelevantProcessClasses();
 
         Map<String, Map<String, List<String>>> class2method2calledMethods = new HashMap<>();
         for (IEObjectDescription pClass : allRelevantProcessClasses) {
             String name = HelperFunctions.getName(pClass);
-            class2method2calledMethods.put(name, PooslProcessClassDescription.getUsedProcessMethods(pClass));
+            class2method2calledMethods.put(name,
+                    PooslProcessClassDescription.getUsedProcessMethods(pClass));
         }
 
         Set<String> methods = new HashSet<>();
@@ -135,7 +148,9 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
         return methods;
     }
 
-    private Set<String> getAllUsedProcessMethods(Resource resource, Map<String, Map<String, List<String>>> class2method2calledMethods, IEObjectDescription pDescr) {
+    private Set<String> getAllUsedProcessMethods(
+            Resource resource, Map<String, Map<String, List<String>>> class2method2calledMethods,
+            IEObjectDescription pDescr) {
         String pClassName = HelperFunctions.getName(pDescr);
         List<String> pClasses = HelperFunctions.computeProcessClassChain(resource, pClassName);
         String initial = PooslProcessClassDescription.getInitialMethodCall(pDescr);
@@ -154,13 +169,15 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
             processed.add(pMethod);
 
             for (String pClass : pClasses) {
-                Map<String, List<String>> method2calledMethods = class2method2calledMethods.get(pClass);
+                Map<String, List<String>> method2calledMethods = class2method2calledMethods
+                        .get(pClass);
                 if (method2calledMethods.containsKey(pMethod)) {
                     methods.add(pClass + ":" + pMethod); //$NON-NLS-1$
 
                     List<String> calledMethods = method2calledMethods.get(pMethod);
                     for (String calledMethod : calledMethods) {
-                        if (!processed.contains(calledMethod) && !toBeProcessed.contains(calledMethod)) {
+                        if (!processed.contains(calledMethod)
+                                && !toBeProcessed.contains(calledMethod)) {
                             toBeProcessed.add(calledMethod);
                         }
                     }
@@ -194,7 +211,8 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
 
     public void warnUnusedProcessClassParametersAndInstanceVariables(ProcessClass pClass) {
         Set<String> variables = new HashSet<>();
-        List<IEObjectDescription> pClasses = PooslCache.get(pClass.eResource()).getProcessReflexiveChildren(pClass.getName());
+        List<IEObjectDescription> pClasses = PooslCache.get(pClass.eResource())
+                .getProcessReflexiveChildren(pClass.getName());
         for (IEObjectDescription pDescr : pClasses) {
             variables.addAll(PooslProcessClassDescription.getUsedVariables(pDescr));
         }
@@ -205,7 +223,8 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
 
     public void warnUnusedDataClassInstanceVariables(DataClass dClass) {
         Set<String> variables = new HashSet<>();
-        List<IEObjectDescription> dClasses = PooslCache.get(dClass.eResource()).getDataReflexiveChildren(dClass.getName());
+        List<IEObjectDescription> dClasses = PooslCache.get(dClass.eResource())
+                .getDataReflexiveChildren(dClass.getName());
         for (IEObjectDescription dDescr : dClasses) {
             variables.addAll(PooslDataClassDescription.getUsedVariables(dDescr));
         }
@@ -217,7 +236,8 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
         for (Declaration declaration : declarations) {
             for (Variable variable : declaration.getVariables()) {
                 if (!usedVariables.contains(variable.getName())) {
-                    warning(VARIABLE_IS_NOT_USED, variable, null, PooslIssueCodes.UNUSED_VARIABLE, WarningType.UNUSED);
+                    warning(VARIABLE_IS_NOT_USED, variable, null, PooslIssueCodes.UNUSED_VARIABLE,
+                            WarningType.UNUSED);
                 }
             }
         }
@@ -227,7 +247,8 @@ public class PooslJavaValidatorUnusedElements extends PooslJavaValidatorSuppress
         for (Declaration declaration : declarations) {
             for (Variable variable : declaration.getVariables()) {
                 if (!isObjectUsed(variable)) {
-                    warning(VARIABLE_IS_NOT_USED, variable, null, PooslIssueCodes.UNUSED_VARIABLE, WarningType.UNUSED);
+                    warning(VARIABLE_IS_NOT_USED, variable, null, PooslIssueCodes.UNUSED_VARIABLE,
+                            WarningType.UNUSED);
                 }
             }
         }

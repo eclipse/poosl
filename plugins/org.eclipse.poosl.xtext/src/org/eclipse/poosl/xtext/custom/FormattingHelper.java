@@ -68,7 +68,19 @@ public final class FormattingHelper {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void formatTypes(StringBuilder buf, List<String> types) {
+    /**
+     * Appends textual value from a list of type name.
+     * <p>
+     * Basically display : (&lt;name1&gt;, &lt;name2&gt;, ...)
+     * </p>
+     *
+     * @param buf
+     *     to append in
+     * @param types
+     *     to format
+     * @return provided buffer
+     */
+    public static StringBuilder formatTypes(StringBuilder buf, List<String> types) {
         buf.append(PREFIX_PARAMETERS);
 
         boolean isFirstVariable = true;
@@ -82,6 +94,21 @@ public final class FormattingHelper {
             buf.append(type);
         }
         buf.append(POSTFIX_PARAMETERS);
+        return buf;
+    }
+
+    /**
+     * Gets textual value from a list of type name.
+     * <p>
+     * Basically display : (&lt;name1&gt;, &lt;name2&gt;, ...)
+     * </p>
+     *
+     * @param types
+     *     to format
+     * @return text
+     */
+    public static String formatTypes(List<String> types) {
+        return formatTypes(new StringBuilder(), types).toString();
     }
 
     public static String[] unformatTypeNames(String typesString) {
@@ -93,7 +120,8 @@ public final class FormattingHelper {
         formatDeclarations(buf, declarations, true);
     }
 
-    public static void formatDeclarations(StringBuilder buf, List<Declaration> declarations, boolean useNode) {
+    public static void formatDeclarations(
+            StringBuilder buf, List<Declaration> declarations, boolean useNode) {
         buf.append(PREFIX_PARAMETERS);
         for (Declaration declaration : declarations) {
             formatDeclaration(buf, declaration == declarations.get(0), declaration, useNode);
@@ -101,15 +129,18 @@ public final class FormattingHelper {
         buf.append(POSTFIX_PARAMETERS);
     }
 
-    public static void formatDeclaration(StringBuilder buf, boolean isFirstVariable, Declaration declaration) {
+    public static void formatDeclaration(
+            StringBuilder buf, boolean isFirstVariable, Declaration declaration) {
         formatDeclaration(buf, isFirstVariable, declaration, true);
     }
 
-    public static void formatDeclaration(StringBuilder buf, boolean isFirstVariable, Declaration declaration, boolean useNodes) {
+    public static void formatDeclaration(
+            StringBuilder buf, boolean isFirstVariable, Declaration declaration, boolean useNodes) {
         String type = null;
         if (useNodes) {
             // still needed?
-            List<INode> nodes = NodeModelUtils.findNodesForFeature(declaration, Literals.DECLARATION__TYPE);
+            List<INode> nodes = NodeModelUtils.findNodesForFeature(declaration,
+                    Literals.DECLARATION__TYPE);
             type = (nodes.isEmpty()) ? null : nodes.get(0).getText();
         } else {
             if (declaration.getType() != null) {
@@ -154,7 +185,8 @@ public final class FormattingHelper {
 
     private static void formatClassName(StringBuilder buf, Variable variable) {
         EObject obj = variable;
-        while (!(obj instanceof DataClass) && !(obj instanceof DataMethod) && !(obj instanceof InstantiableClass) && !(obj instanceof ProcessMethod)) {
+        while (!(obj instanceof DataClass) && !(obj instanceof DataMethod)
+                && !(obj instanceof InstantiableClass) && !(obj instanceof ProcessMethod)) {
             obj = obj.eContainer();
         }
         if (obj instanceof DataClass) {
@@ -164,11 +196,13 @@ public final class FormattingHelper {
         }
     }
 
-    public static void formatDataMethod(StringBuilder buf, DataMethod dMethod, boolean includeClass) {
+    public static void formatDataMethod(
+            StringBuilder buf, DataMethod dMethod, boolean includeClass) {
         formatDataMethod(buf, dMethod, includeClass, true);
     }
 
-    public static void formatDataMethod(StringBuilder buf, IEObjectDescription dMethod, boolean includeClass) {
+    public static void formatDataMethod(
+            StringBuilder buf, IEObjectDescription dMethod, boolean includeClass) {
         if (includeClass)
             appendClassName(buf, PooslDataMethodDescription.getClassName(dMethod));
         buf.append(HelperFunctions.getName(dMethod));
@@ -181,7 +215,8 @@ public final class FormattingHelper {
     }
 
     // useNode is set to false when called from sirius
-    public static void formatDataMethod(StringBuilder buf, DataMethod dMethod, boolean includeClass, boolean useNode) {
+    public static void formatDataMethod(
+            StringBuilder buf, DataMethod dMethod, boolean includeClass, boolean useNode) {
         if (includeClass)
             appendClassName(buf, ((DataClass) dMethod.eContainer()).getName());
         formatDataName(buf, dMethod);
@@ -190,10 +225,12 @@ public final class FormattingHelper {
         formatDataReturnType(buf, dMethod, useNode);
     }
 
-    private static void formatDataReturnType(StringBuilder buf, DataMethod dMethod, boolean useNode) {
+    private static void formatDataReturnType(
+            StringBuilder buf, DataMethod dMethod, boolean useNode) {
         String type = null;
         if (useNode) {
-            List<INode> nodes = NodeModelUtils.findNodesForFeature(dMethod, Literals.DATA_METHOD__RETURN_TYPE);
+            List<INode> nodes = NodeModelUtils.findNodesForFeature(dMethod,
+                    Literals.DATA_METHOD__RETURN_TYPE);
             type = (nodes.isEmpty()) ? null : nodes.get(0).getText();
         } else {
             if (dMethod.getReturnType() != null) {
@@ -227,19 +264,23 @@ public final class FormattingHelper {
 
     public static void formatProcessMethod(StringBuilder buf, IEObjectDescription descr) {
         buf.append(HelperFunctions.getName(descr));
-        String formattedInputParameters = PooslProcessMethodDescription.getFormattedInputParameters(descr);
-        String formattedOutputParameters = PooslProcessMethodDescription.getFormattedOutputParameters(descr);
+        String formattedInputParameters = PooslProcessMethodDescription
+                .getFormattedInputParameters(descr);
+        String formattedOutputParameters = PooslProcessMethodDescription
+                .getFormattedOutputParameters(descr);
         if (formattedInputParameters != null && formattedOutputParameters != null) {
             buf.append(formattedInputParameters);
             buf.append(formattedOutputParameters);
         }
     }
 
-    public static void formatProcessMethod(StringBuilder buf, ProcessMethod pMethod, boolean includeClass) {
+    public static void formatProcessMethod(
+            StringBuilder buf, ProcessMethod pMethod, boolean includeClass) {
         formatProcessMethod(buf, pMethod, includeClass, true);
     }
 
-    public static void formatProcessMethod(StringBuilder buf, ProcessMethod pMethod, boolean includeClass, boolean useNode) {
+    public static void formatProcessMethod(
+            StringBuilder buf, ProcessMethod pMethod, boolean includeClass, boolean useNode) {
         if (includeClass)
             appendClassName(buf, ((ProcessClass) pMethod.eContainer()).getName());
         if (pMethod.getName() != null) {
@@ -249,24 +290,28 @@ public final class FormattingHelper {
         formatDeclarations(buf, pMethod.getOutputParameters(), useNode);
     }
 
-    public static void formatInstantiableClass(StringBuilder buf, InstantiableClass iClass, boolean includePorts) {
+    public static void formatInstantiableClass(
+            StringBuilder buf, InstantiableClass iClass, boolean includePorts) {
         if (iClass != null) {
             boolean hasName = iClass.getName() != null;
             if (hasName) {
                 buf.append(iClass.getName());
 
-                Map<String, IEObjectDescription> params = PooslCache.get(iClass.eResource()).getInstantiableClassParameters(iClass.getName());
+                Map<String, IEObjectDescription> params = PooslCache.get(iClass.eResource())
+                        .getInstantiableClassParameters(iClass.getName());
                 formatDeclarations(buf, params);
             }
 
             if (includePorts) {
-                Iterable<String> ports = hasName ? PooslCache.get(iClass.eResource()).getInstantiableClassPorts(iClass.getName()).keySet()
-                        : Iterables.transform(iClass.getPorts(), new Function<Port, String>() {
-                            @Override
-                            public String apply(Port port) {
-                                return port.getName();
-                            }
-                        });
+                Iterable<String> ports = hasName
+                    ? PooslCache.get(iClass.eResource()).getInstantiableClassPorts(iClass.getName())
+                            .keySet()
+                    : Iterables.transform(iClass.getPorts(), new Function<Port, String>() {
+                        @Override
+                        public String apply(Port port) {
+                            return port.getName();
+                        }
+                    });
                 if (ports.iterator().hasNext()) {
                     buf.append(PREFIX_PORTS);
                     boolean isFirstPort = true;
@@ -296,7 +341,8 @@ public final class FormattingHelper {
         }
     }
 
-    public static void formatMessageSignature(StringBuilder buf, MessageSignature msgSig, boolean appendClassName) {
+    public static void formatMessageSignature(
+            StringBuilder buf, MessageSignature msgSig, boolean appendClassName) {
         if (appendClassName) {
             appendClassName(buf, ((ProcessClass) msgSig.eContainer()).getName());
         }
@@ -333,7 +379,8 @@ public final class FormattingHelper {
 
     public static List<String> unformatDeclarationsToTypeNames(String formattedString) {
         List<String> declarations = new ArrayList<>();
-        if (formattedString != null && !formattedString.isEmpty() && !formattedString.equals("()")) { //$NON-NLS-1$
+        if (formattedString != null && !formattedString.isEmpty()
+                && !formattedString.equals("()")) { //$NON-NLS-1$
             String withoutBrackets = formattedString.substring(1, formattedString.length() - 1);
             String[] vars = withoutBrackets.split(","); //$NON-NLS-1$
             for (String var : vars) {
@@ -353,7 +400,8 @@ public final class FormattingHelper {
         return 0;
     }
 
-    public static void formatDeclarations(StringBuilder buf, Map<String, IEObjectDescription> declarationDescriptions) {
+    public static void formatDeclarations(
+            StringBuilder buf, Map<String, IEObjectDescription> declarationDescriptions) {
         buf.append(PREFIX_PARAMETERS);
         boolean isFirstDeclaration = true;
         for (Entry<String, IEObjectDescription> entry : declarationDescriptions.entrySet()) {

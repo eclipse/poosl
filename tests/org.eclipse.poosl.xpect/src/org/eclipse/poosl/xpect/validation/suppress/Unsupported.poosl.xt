@@ -1,16 +1,16 @@
 /* XPECT_SETUP org.eclipse.poosl.xpect.validation.suppress.PooslValidationSuppressTest END_SETUP */
 
-//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 @UnRecognized
 data class DataClass extends Object
 variables	
 methods
-	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 	@UnRecognized
 	someMethod() : Object |  |
 		return nil
 
-//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 @UnRecognized	
 process class someClass()
 ports	
@@ -21,34 +21,34 @@ variables
 init
 	someMethod()()
 methods
-	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 	@UnRecognized
 	someMethod()() | |	
 		skip
 	
 
-//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 @UnRecognized
 cluster class secondClass()
 ports
 	p
 instances
-	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 	@UnRecognized
 	someInstance : someClass2()
 channels
-	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 	@UnRecognized
 	{ p, someInstance.p }
 
 system
 instances
-	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 	@UnRecognized
 	someInstance : someClass3() 
 	someInstance2 : someClass3() 
 channels
-	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are SuppressWarnings, Init, Test, Error and Skip)" at "UnRecognized"
+	//XPECT warnings --> "Annotation is not recognized. (Supported annotation are Test, Skip, Error, Init, SuppressWarnings)" at "UnRecognized"
 	@UnRecognized
  	{ someInstance.p, someInstance2.p }	
 

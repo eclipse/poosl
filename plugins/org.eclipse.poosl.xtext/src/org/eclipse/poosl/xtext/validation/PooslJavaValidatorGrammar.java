@@ -13,6 +13,10 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.validation;
 
+import java.text.MessageFormat;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.poosl.Annotation;
 import org.eclipse.poosl.Channel;
@@ -22,12 +26,14 @@ import org.eclipse.poosl.DataMethod;
 import org.eclipse.poosl.DataMethodBinaryOperator;
 import org.eclipse.poosl.DataMethodCallExpression;
 import org.eclipse.poosl.Declaration;
+import org.eclipse.poosl.Expression;
 import org.eclipse.poosl.GuardedStatement;
 import org.eclipse.poosl.PooslPackage;
 import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ReturnExpression;
 import org.eclipse.poosl.SelfExpression;
+import org.eclipse.poosl.StringConstant;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
@@ -39,7 +45,15 @@ import org.eclipse.xtext.validation.CheckType;
  *
  */
 public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
-    private static final String ANNOTATION_SEPARATOR = ", "; //$NON-NLS-1$
+
+    /** The UNKNOWN_WARNING_TYPE. */
+    private static final String UNKNOWN_WARNING_TYPE = "Suppressed warning type is not recognized. The type should be between quotes in lower case. "
+            + "(Supported types are {0})";
+
+    /** The UNKNOWN ANNOTATION message. */
+    private static final String UNKNOWN_ANNOTATION = "Annotation is not recognized. (Supported annotation are {0})";
+
+    private static final String VALUES_SEPARATOR = ", "; //$NON-NLS-1$
 
     private static final String NATIVE_METHOD_EMPTY = "The body of a native data method should be empty";
 
@@ -67,8 +81,13 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
 
     private static final String DATA_BINARY_1_PARAMETER = "Data methods for binary operators should have exactly 1 parameter";
 
+    // Annotation text has no l10n: used as technical tokens.
     private enum Annotations {
-        TEST("Test"), SKIP("Skip"), ERROR("Error"), INIT("Init"), SUPPRESSWARNINGS("SuppressWarnings"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+        TEST("Test"), //$NON-NLS-1$
+        SKIP("Skip"), //$NON-NLS-1$
+        ERROR("Error"), //$NON-NLS-1$
+        INIT("Init"), //$NON-NLS-1$
+        SUPPRESSWARNINGS("SuppressWarnings"); //$NON-NLS-1$
 
         private final String text;
 
@@ -80,6 +99,17 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
         public String toString() {
             return text;
         }
+    }
+
+    private static final String ANNOTATION_NAMES = asTextualList(Annotations.values());
+
+    private static final String WARNING_TYPE_NAMES = asTextualList(
+            // XXX: confirm the subset for message
+            WarningType.UNUSED, WarningType.UNCONNECTED, WarningType.TYPECHECK, WarningType.RETURN);
+
+    private static String asTextualList(Enum<?>... values) {
+        return Stream.of(values).map(it -> it.toString())
+                .collect(Collectors.joining(VALUES_SEPARATOR));
     }
 
     @Check(CheckType.FAST)
@@ -108,7 +138,8 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
     public void errorContextOfCurrentTimeExpression(CurrentTimeExpression expr) {
         EObject previous = null;
         EObject current = expr;
-        while ((current != null) && !(current instanceof ProcessClass) && !(current instanceof GuardedStatement)) {
+        while ((current != null) && !(current instanceof ProcessClass)
+                && !(current instanceof GuardedStatement)) {
             previous = current;
             current = current.eContainer();
         }
@@ -116,7 +147,8 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
         if (current == null) {
             error(CURRENT_TIME_USAGE, null);
         } else {
-            if (current instanceof GuardedStatement && previous == ((GuardedStatement) current).getGuard()) {
+            if (current instanceof GuardedStatement
+                    && previous == ((GuardedStatement) current).getGuard()) {
                 error(CURRENT_TIME_NOT_ALLOWED, null);
             }
         }
@@ -172,8 +204,8 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
         Annotations eAnnotation = getEnumAnnotation(annotation);
 
         if (eAnnotation == null) {
-            warning("Annotation is not recognized. (Supported annotation are " + Annotations.SUPPRESSWARNINGS + ANNOTATION_SEPARATOR + Annotations.INIT + ANNOTATION_SEPARATOR + Annotations.TEST
-                    + ANNOTATION_SEPARATOR + Annotations.ERROR + " and " + Annotations.SKIP + ")", annotation, PooslPackage.Literals.ANNOTATION__NAME, PooslIssueCodes.UNKNOWN_ANNOTATION,
+            warning(MessageFormat.format(UNKNOWN_ANNOTATION, ANNOTATION_NAMES), annotation,
+                    PooslPackage.Literals.ANNOTATION__NAME, PooslIssueCodes.UNKNOWN_ANNOTATION,
                     WarningType.ANNOTATION);
         } else {
             switch (eAnnotation) {
@@ -193,6 +225,29 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
         }
     }
 
+    private boolean warningTypeExists(String providedType) {
+        for (WarningType warningType : WarningType.values()) {
+            if (warningType.toString().equalsIgnoreCase(providedType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void checkSuppresWarningArguments(Annotation annotation) {
+        int index = 0;
+        for (Expression exp : annotation.getArguments()) {
+            if (exp instanceof StringConstant) {
+                String providedType = ((StringConstant) exp).getValue();
+                if (!warningTypeExists(providedType)) {
+                    warning(MessageFormat.format(UNKNOWN_WARNING_TYPE, WARNING_TYPE_NAMES),
+                            annotation, PooslPackage.Literals.ANNOTATION__ARGUMENTS, index++, null,
+                            WarningType.ANNOTATION);
+                }
+            }
+        }
+    }
+
     private Annotations getEnumAnnotation(Annotation annotation) {
         for (Annotations c : Annotations.values()) {
             if (c.name().equalsIgnoreCase(annotation.getName())) {
@@ -204,7 +259,8 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
 
     private void checkNoArguments(Annotation annotation) {
         for (int i = 0; i < annotation.getArguments().size(); i++) {
-            warning("This annotation doesn't support any arguments.", annotation, PooslPackage.Literals.ANNOTATION__ARGUMENTS, i, null, WarningType.ANNOTATION);
+            warning("This annotation doesn't support any arguments.", annotation,
+                    PooslPackage.Literals.ANNOTATION__ARGUMENTS, i, null, WarningType.ANNOTATION);
         }
     }
 
@@ -212,7 +268,7 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
     public void errorTestDataMethod(DataMethod dMethod) {
         if (!dMethod.getParameters().isEmpty()) {
             for (Annotation annotation : dMethod.getAnnotations()) {
-                if (annotation.getName().equalsIgnoreCase("test")) {
+                if (annotation.getName().equalsIgnoreCase(Annotations.TEST.toString())) {
                     error(ILLEGAL_TEST_DATA_METHOD, annotation, null);
                 }
             }
@@ -228,14 +284,16 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
         if (portCount == 0) {
             error(UNUSED_CHANNEL_NONE, channel, null, PooslIssueCodes.ERROR_UNUSED_CHANNEL);
         } else if (portCount == 1) {
-            warning(UNUSED_CHANNEL_ONE, channel, null, PooslIssueCodes.WARNING_UNUSED_CHANNEL, WarningType.UNUSED);
+            warning(UNUSED_CHANNEL_ONE, channel, null, PooslIssueCodes.WARNING_UNUSED_CHANNEL,
+                    WarningType.UNUSED);
         }
     }
 
     @Check(CheckType.FAST)
     public void missingProcessInitMethod(ProcessClass pClass) {
         if (pClass.getInitialMethodCall() == null) {
-            error("Process class is missing an init method call.", Literals.INSTANTIABLE_CLASS__NAME);
+            error("Process class is missing an init method call.",
+                    Literals.INSTANTIABLE_CLASS__NAME);
         }
     }
 }

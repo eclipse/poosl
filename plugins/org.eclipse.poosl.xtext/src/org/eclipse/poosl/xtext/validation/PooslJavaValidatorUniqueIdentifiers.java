@@ -113,46 +113,53 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
 
     @Check(CheckType.FAST)
     public void checkDataClasses(Poosl poosl) {
-        EList<DataClass> localClasses = poosl.getDataClasses();
-        Map<String, String> duplicatesMap = getDuplicateDataClasses(poosl);
+        PERF.benchmark("checkDataClasses", () -> { //$NON-NLS-1$
+            EList<DataClass> localClasses = poosl.getDataClasses();
+            Map<String, String> duplicatesMap = getDuplicateDataClasses(poosl);
 
-        for (DataClass dClass : localClasses) {
-            checkDataSuperClass(dClass);
-            if (checkUniqueDataClasses(dClass, duplicatesMap) && checkCyclesDataClasses(dClass)) {
-                checkUniqueDataMethods(dClass);
-                checkUniqueVariables(dClass);
+            for (DataClass dClass : localClasses) {
+                checkDataSuperClass(dClass);
+                if (checkUniqueDataClasses(dClass, duplicatesMap)
+                        && checkCyclesDataClasses(dClass)) {
+                    checkUniqueDataMethods(dClass);
+                    checkUniqueVariables(dClass);
+                }
             }
-        }
+        });
     }
 
     @Check(CheckType.FAST)
     public void checkInstantiableClasses(Poosl poosl) {
-        Iterable<InstantiableClass> localClasses = Iterables.concat(poosl.getProcessClasses(), poosl.getClusterClasses());
-        Map<InstantiableClass, String> doubleClassesLocation = getDuplicateInstantiableClasses(poosl, localClasses);
+        PERF.benchmark("checkInstantiableClasses", () -> { //$NON-NLS-1$
+            Iterable<InstantiableClass> localClasses = Iterables.concat(poosl.getProcessClasses(),
+                    poosl.getClusterClasses());
+            Map<InstantiableClass, String> doubleClassesLocation = getDuplicateInstantiableClasses(
+                    poosl, localClasses);
 
-        for (InstantiableClass iClass : localClasses) {
-            if (checkUniqueInstantiableClasses(iClass, doubleClassesLocation)) {
-                if (iClass instanceof ProcessClass) {
-                    ProcessClass pClass = (ProcessClass) iClass;
-                    checkProcessSuperClass(pClass);
-                    if (checkCyclesProcessClasses(pClass)) {
-                        // There is no cyclic dependency so check the unique
-                        // elements of this class
-                        checkUniquePorts(pClass);
-                        checkProcessClassMessageSignaturePorts(pClass);
-                        checkUniqueMessageSignatures(pClass, PooslMessageType.RECEIVE);
-                        checkUniqueMessageSignatures(pClass, PooslMessageType.SEND);
-                        checkUniqueProcessMethods(pClass);
-                        checkUniqueVariables(pClass);
+            for (InstantiableClass iClass : localClasses) {
+                if (checkUniqueInstantiableClasses(iClass, doubleClassesLocation)) {
+                    if (iClass instanceof ProcessClass) {
+                        ProcessClass pClass = (ProcessClass) iClass;
+                        checkProcessSuperClass(pClass);
+                        if (checkCyclesProcessClasses(pClass)) {
+                            // There is no cyclic dependency so check the unique
+                            // elements of this class
+                            checkUniquePorts(pClass);
+                            checkProcessClassMessageSignaturePorts(pClass);
+                            checkUniqueMessageSignatures(pClass, PooslMessageType.RECEIVE);
+                            checkUniqueMessageSignatures(pClass, PooslMessageType.SEND);
+                            checkUniqueProcessMethods(pClass);
+                            checkUniqueVariables(pClass);
+                        }
+                    } else if (iClass instanceof ClusterClass) {
+                        ClusterClass cClass = (ClusterClass) iClass;
+                        checkCyclesClusterClasses(cClass);
+                        checkUniquePorts(cClass);
+                        checkUniqueVariables(cClass);
                     }
-                } else if (iClass instanceof ClusterClass) {
-                    ClusterClass cClass = (ClusterClass) iClass;
-                    checkCyclesClusterClasses(cClass);
-                    checkUniquePorts(cClass);
-                    checkUniqueVariables(cClass);
                 }
             }
-        }
+        });
     }
 
     public void checkProcessClassMessageSignaturePorts(ProcessClass pClass) {
@@ -161,70 +168,90 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         checkMessageSignaturePorts(pClass.getReceiveMessages(), portNames);
     }
 
-    private void checkMessageSignaturePorts(List<MessageSignature> messageSignatures, Set<String> portNames) {
+    private void checkMessageSignaturePorts(
+            List<MessageSignature> messageSignatures, Set<String> portNames) {
         for (MessageSignature messageSignature : messageSignatures) {
             String portName = messageSignature.getPort().getPort();
             if (!portNames.contains(portName)) {
-                error(MessageFormat.format(NOT_DECLARED, Literals.PORT.getName(), portName), messageSignature, Literals.MESSAGE_SIGNATURE__PORT, Diagnostic.LINKING_DIAGNOSTIC);
+                error(MessageFormat.format(NOT_DECLARED, Literals.PORT.getName(), portName),
+                        messageSignature, Literals.MESSAGE_SIGNATURE__PORT,
+                        Diagnostic.LINKING_DIAGNOSTIC);
             }
         }
     }
 
     public void checkProcessSuperClass(ProcessClass pClass) {
         String superClass = pClass.getSuperClass();
-        if (superClass != null && PooslCache.get(pClass.eResource()).getProcessClass(superClass) == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.PROCESS_CLASS.getName(), superClass), pClass, Literals.PROCESS_CLASS__SUPER_CLASS, Diagnostic.LINKING_DIAGNOSTIC);
+        if (superClass != null
+                && PooslCache.get(pClass.eResource()).getProcessClass(superClass) == null) {
+            error(MessageFormat.format(NOT_DECLARED, Literals.PROCESS_CLASS.getName(), superClass),
+                    pClass, Literals.PROCESS_CLASS__SUPER_CLASS, Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 
     public void checkDataSuperClass(DataClass dClass) {
         String superClass = dClass.getSuperClass();
-        if (superClass != null && PooslCache.get(dClass.eResource()).getDataClass(superClass) == null && !HelperFunctions.PERMANENT_DATA_CLASSES.contains(superClass)) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(), superClass), dClass, Literals.DATA_CLASS__SUPER_CLASS, Diagnostic.LINKING_DIAGNOSTIC);
+        if (superClass != null
+                && PooslCache.get(dClass.eResource()).getDataClass(superClass) == null
+                && !HelperFunctions.PERMANENT_DATA_CLASSES.contains(superClass)) {
+            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(), superClass),
+                    dClass, Literals.DATA_CLASS__SUPER_CLASS, Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 
     @Check(CheckType.FAST)
     public void checkImportConflictsDataClasses(Poosl poosl) {
-        Map<Import, List<IEObjectDescription>> dataClasses = PooslCache.get(poosl.eResource()).getImportedDataClasses();
+        PERF.benchmark("checkImportConflictsDataClasses", () -> { //$NON-NLS-1$
+            Map<Import, List<IEObjectDescription>> dataClasses = PooslCache.get(poosl.eResource())
+                    .getImportedDataClasses();
 
-        Map<Import, Iterable<IEObjectDescription>> importedDataClasses = new HashMap<>();
-        for (Import imported : Iterables.concat(poosl.getImportLibs(), poosl.getImports())) {
-            List<IEObjectDescription> dataImports = dataClasses.get(imported);
-            if (dataImports != null) {
-                importedDataClasses.put(imported, dataImports);
+            Map<Import, Iterable<IEObjectDescription>> importedDataClasses = new HashMap<>();
+            for (Import imported : Iterables.concat(poosl.getImportLibs(), poosl.getImports())) {
+                List<IEObjectDescription> dataImports = dataClasses.get(imported);
+                if (dataImports != null) {
+                    importedDataClasses.put(imported, dataImports);
+                }
             }
-        }
 
-        checkImportDescriptionConflicts(importedDataClasses, DUPLICATE_IMPORT_DATA_CLASS);
+            checkImportDescriptionConflicts(importedDataClasses, DUPLICATE_IMPORT_DATA_CLASS);
+        });
     }
 
     @Check(CheckType.FAST)
     public void checkImportConflictsInstantiableClasses(Poosl poosl) {
-        PooslCacheEntry pooslCacheEntry = PooslCache.get(poosl.eResource());
-        Map<Import, List<IEObjectDescription>> processClasses = pooslCacheEntry.getImportedProcessClasses();
-        Map<Import, List<IEObjectDescription>> clusterClasses = pooslCacheEntry.getImportedClusterClasses();
+        PERF.benchmark("checkImportConflictsInstantiableClasses", () -> { //$NON-NLS-1$
+            PooslCacheEntry pooslCacheEntry = PooslCache.get(poosl.eResource());
+            Map<Import, List<IEObjectDescription>> processClasses = pooslCacheEntry
+                    .getImportedProcessClasses();
+            Map<Import, List<IEObjectDescription>> clusterClasses = pooslCacheEntry
+                    .getImportedClusterClasses();
 
-        Map<Import, Iterable<IEObjectDescription>> importedInstantiableClasses = new HashMap<>();
-        for (Import imported : Iterables.concat(poosl.getImportLibs(), poosl.getImports())) {
-            List<IEObjectDescription> processImports = processClasses.get(imported);
-            List<IEObjectDescription> clusterImports = clusterClasses.get(imported);
-            if (processImports != null && clusterImports != null) {
-                importedInstantiableClasses.put(imported, Iterables.concat(processImports, clusterImports));
-            } else if (processImports != null) {
-                importedInstantiableClasses.put(imported, processImports);
-            } else if (clusterImports != null) {
-                importedInstantiableClasses.put(imported, clusterImports);
+            Map<Import, Iterable<IEObjectDescription>> importedInstantiableClasses = new HashMap<>();
+            for (Import imported : Iterables.concat(poosl.getImportLibs(), poosl.getImports())) {
+                List<IEObjectDescription> processImports = processClasses.get(imported);
+                List<IEObjectDescription> clusterImports = clusterClasses.get(imported);
+                if (processImports != null && clusterImports != null) {
+                    importedInstantiableClasses.put(imported,
+                            Iterables.concat(processImports, clusterImports));
+                } else if (processImports != null) {
+                    importedInstantiableClasses.put(imported, processImports);
+                } else if (clusterImports != null) {
+                    importedInstantiableClasses.put(imported, clusterImports);
+                }
             }
-        }
 
-        checkImportDescriptionConflicts(importedInstantiableClasses, DUPLICATE_IMPORT_PROCESS_CLUSTER_CLASS);
+            checkImportDescriptionConflicts(importedInstantiableClasses,
+                    DUPLICATE_IMPORT_PROCESS_CLUSTER_CLASS);
+        });
     }
 
-    private void checkImportDescriptionConflicts(Map<Import, Iterable<IEObjectDescription>> importedDescriptions, String error) {
-        for (Entry<Import, Iterable<IEObjectDescription>> entry1 : importedDescriptions.entrySet()) {
+    private void checkImportDescriptionConflicts(
+            Map<Import, Iterable<IEObjectDescription>> importedDescriptions, String error) {
+        for (Entry<Import, Iterable<IEObjectDescription>> entry1 : importedDescriptions
+                .entrySet()) {
             Import import1 = entry1.getKey();
-            for (Entry<Import, Iterable<IEObjectDescription>> entry2 : importedDescriptions.entrySet()) {
+            for (Entry<Import, Iterable<IEObjectDescription>> entry2 : importedDescriptions
+                    .entrySet()) {
                 Import import2 = entry2.getKey();
                 if (import1 != import2) {
                     checkDuplicateDescriptions(error, entry1, entry2);
@@ -233,12 +260,17 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         }
     }
 
-    private void checkDuplicateDescriptions(String error, Entry<Import, Iterable<IEObjectDescription>> entry1, Entry<Import, Iterable<IEObjectDescription>> entry2) {
-        Map<IEObjectDescription, IEObjectDescription> duplicateSet = getDuplicateDescriptionNames(entry1.getValue(), entry2.getValue());
+    private void checkDuplicateDescriptions(
+            String error, Entry<Import, Iterable<IEObjectDescription>> entry1,
+            Entry<Import, Iterable<IEObjectDescription>> entry2) {
+        Map<IEObjectDescription, IEObjectDescription> duplicateSet = getDuplicateDescriptionNames(
+                entry1.getValue(), entry2.getValue());
         for (Entry<IEObjectDescription, IEObjectDescription> entry : duplicateSet.entrySet()) {
             String file1 = descriptionToFileLocation(entry.getValue());
             String file2 = descriptionToFileLocation(entry.getKey());
-            error(MessageFormat.format(error, HelperFunctions.getName(entry.getKey()), file1, entry1.getKey().getImportURI(), file2, entry2.getKey().getImportURI()), entry1.getKey(), null, null);
+            error(MessageFormat.format(error, HelperFunctions.getName(entry.getKey()), file1,
+                    entry1.getKey().getImportURI(), file2, entry2.getKey().getImportURI()),
+                    entry1.getKey(), null, null);
         }
     }
 
@@ -256,7 +288,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         return uri.toString();
     }
 
-    private Map<IEObjectDescription, IEObjectDescription> getDuplicateDescriptionNames(Iterable<IEObjectDescription> descriptions, Iterable<IEObjectDescription> descriptions2) {
+    private Map<IEObjectDescription, IEObjectDescription> getDuplicateDescriptionNames(
+            Iterable<IEObjectDescription> descriptions,
+            Iterable<IEObjectDescription> descriptions2) {
         Map<String, IEObjectDescription> mapPooslClasses = new HashMap<>();
         Map<IEObjectDescription, IEObjectDescription> duplicates = new HashMap<>();
 
@@ -267,7 +301,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         for (IEObjectDescription descr : descriptions2) {
             String name = HelperFunctions.getName(descr);
             IEObjectDescription duplicate = mapPooslClasses.put(name, descr);
-            if (duplicate != null && !descr.getEObjectURI().path().equals(duplicate.getEObjectURI().path())) {
+            if (duplicate != null
+                    && !descr.getEObjectURI().path().equals(duplicate.getEObjectURI().path())) {
                 duplicates.put(descr, duplicate);
             }
             if (duplicate != null) {
@@ -282,7 +317,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     }
 
     private Map<String, String> getDuplicateDataClasses(Poosl poosl) {
-        Iterable<IEObjectDescription> scopeClasses = PooslCache.get(poosl.eResource()).getAllRelevantDataClasses();
+        Iterable<IEObjectDescription> scopeClasses = PooslCache.get(poosl.eResource())
+                .getAllRelevantDataClasses();
         String resourcePath = poosl.eResource().getURI().path();
 
         Map<String, String> dataClassesMap = new HashMap<>();
@@ -312,25 +348,30 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
                 // the parser sees 'Object' as the data class name
                 // This results in the warning "There is another data class with
                 // the same name Object"
-                error(MessageFormat.format(DUPLICATE_DATA_CLASS, dClass.getName(), location), dClass, Literals.DATA_CLASS__NAME, PooslIssueCodes.DUPLICATE_CLASS_NAME);
+                error(MessageFormat.format(DUPLICATE_DATA_CLASS, dClass.getName(), location),
+                        dClass, Literals.DATA_CLASS__NAME, PooslIssueCodes.DUPLICATE_CLASS_NAME);
             }
             return false;
         }
         return true;
     }
 
-    private boolean checkUniqueInstantiableClasses(InstantiableClass iClass, Map<InstantiableClass, String> doubleClassesLocation) {
+    private boolean checkUniqueInstantiableClasses(
+            InstantiableClass iClass, Map<InstantiableClass, String> doubleClassesLocation) {
         if (doubleClassesLocation.containsKey(iClass)) {
-            error(MessageFormat.format(DUPLICATE_PROCESS_CLUSTER_CLASS, iClass.getName(), doubleClassesLocation.get(iClass)), iClass, Literals.INSTANTIABLE_CLASS__NAME,
+            error(MessageFormat.format(DUPLICATE_PROCESS_CLUSTER_CLASS, iClass.getName(),
+                    doubleClassesLocation.get(iClass)), iClass, Literals.INSTANTIABLE_CLASS__NAME,
                     PooslIssueCodes.DUPLICATE_CLASS_NAME);
             return false;
         }
         return true;
     }
 
-    private Map<InstantiableClass, String> getDuplicateInstantiableClasses(Poosl poosl, Iterable<InstantiableClass> localClasses) {
+    private Map<InstantiableClass, String> getDuplicateInstantiableClasses(
+            Poosl poosl, Iterable<InstantiableClass> localClasses) {
         Resource resource = poosl.eResource();
-        Iterable<IEObjectDescription> scopeClasses = HelperFunctions.getAllRelevantInstantiableClasses(resource);
+        Iterable<IEObjectDescription> scopeClasses = HelperFunctions
+                .getAllRelevantInstantiableClasses(resource);
         Map<String, Object> instantiableClassesMap = new HashMap<>();
         for (IEObjectDescription iClass : scopeClasses) {
             if (!iClass.getEObjectURI().path().equals(resource.getURI().path())) {
@@ -386,24 +427,7 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             }
         }
         // find all double Ports
-        Set<Port> doublePorts = new HashSet<>();
-        Map<String, Port> portsMap = new HashMap<>();
-        for (Port localPort : iClass.getPorts()) {
-            String portName = localPort.getName();
-            if (portName != null) {
-                if (ancestorPorts != null && ancestorPorts.contains(portName)) {
-                    doublePorts.add(localPort);
-                } else {
-                    Port duplicate = portsMap.get(portName);
-                    if (duplicate != null) {
-                        doublePorts.add(localPort);
-                        doublePorts.add(duplicate);
-                    } else {
-                        portsMap.put(portName, localPort);
-                    }
-                }
-            }
-        }
+        Set<Port> doublePorts = findAllDoublePorts(iClass, ancestorPorts);
         // show warning on double ports, otherwise warn if unused
         for (Port port : iClass.getPorts()) {
             if (doublePorts.contains(port)) {
@@ -418,6 +442,28 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         }
     }
 
+    private Set<Port> findAllDoublePorts(InstantiableClass iClass, Set<String> ancestorPorts) {
+        Set<Port> result = new HashSet<>();
+        Map<String, Port> portsMap = new HashMap<>();
+        for (Port localPort : iClass.getPorts()) {
+            String portName = localPort.getName();
+            if (portName != null) {
+                if (ancestorPorts != null && ancestorPorts.contains(portName)) {
+                    result.add(localPort);
+                } else {
+                    Port duplicate = portsMap.get(portName);
+                    if (duplicate != null) {
+                        result.add(localPort);
+                        result.add(duplicate);
+                    } else {
+                        portsMap.put(portName, localPort);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
     public void warnUnconnectedPorts(ClusterClass cClass, Port port) {
         boolean found = false;
         for (Channel channel : cClass.getChannels()) {
@@ -427,7 +473,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             }
         }
         if (!found) {
-            warning(UNCONNECTED_PORT, port, null, PooslIssueCodes.UNCONNECTED_EXTERNAL_PORT, WarningType.UNCONNECTED);
+            warning(UNCONNECTED_PORT, port, null, PooslIssueCodes.UNCONNECTED_EXTERNAL_PORT,
+                    WarningType.UNCONNECTED);
         }
     }
 
@@ -436,7 +483,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     @Check(CheckType.FAST)
     public void checkArchitecturalClassUniqueInstances(ClusterClass aClass) {
         List<Instance> instances = aClass.getInstances();
-        Map<String, Instance> duplicateInstances = new HashMap<>((int) (instances.size() * HASHMAP_SIZE_FACTOR));
+        Map<String, Instance> duplicateInstances = new HashMap<>(
+                (int) (instances.size() * HASHMAP_SIZE_FACTOR));
         Set<Instance> duplicates = new HashSet<>();
 
         for (Instance instance : instances) {
@@ -447,14 +495,17 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             }
         }
         for (Instance instance : duplicates) {
-            error(MessageFormat.format(DUPLICATE_INSTANCE, instance.getName()), instance, Literals.INSTANCE__NAME, null);
+            error(MessageFormat.format(DUPLICATE_INSTANCE, instance.getName()), instance,
+                    Literals.INSTANCE__NAME, null);
         }
 
         for (Instance instance : instances) {
-            IEObjectDescription classDef = PooslReferenceHelper.getInstantiableClassDescription(instance);
+            IEObjectDescription classDef = PooslReferenceHelper
+                    .getInstantiableClassDescription(instance);
             if (classDef == null) {
-                error(MessageFormat.format(NOT_DECLARED, Literals.INSTANTIABLE_CLASS.getName(), instance.getClassDefinition()), instance, Literals.INSTANCE__CLASS_DEFINITION,
-                        Diagnostic.LINKING_DIAGNOSTIC);
+                error(MessageFormat.format(NOT_DECLARED, Literals.INSTANTIABLE_CLASS.getName(),
+                        instance.getClassDefinition()), instance,
+                        Literals.INSTANCE__CLASS_DEFINITION, Diagnostic.LINKING_DIAGNOSTIC);
             }
 
             if (!duplicates.contains(instance)) {
@@ -476,9 +527,12 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
                 }
                 if (namesMap == null)
                     continue;
-                String portName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
+                String portName = (instancePort.getPort() != null)
+                    ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
                 if (!namesMap.contains(portName)) {
-                    error(MessageFormat.format(NOT_DECLARED, Literals.PORT.getName(), portName), instancePort, Literals.INSTANCE_PORT__PORT, Diagnostic.LINKING_DIAGNOSTIC);
+                    error(MessageFormat.format(NOT_DECLARED, Literals.PORT.getName(), portName),
+                            instancePort, Literals.INSTANCE_PORT__PORT,
+                            Diagnostic.LINKING_DIAGNOSTIC);
                 }
             }
         }
@@ -497,7 +551,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             // once
             for (InstancePort instancePort : channel.getInstancePorts()) {
                 String instancePortName = computeInstancePortName(instancePort);
-                InstancePort duplicateInstancePort = instancePortNameToInstancePort.put(instancePortName, instancePort);
+                InstancePort duplicateInstancePort = instancePortNameToInstancePort
+                        .put(instancePortName, instancePort);
                 if (duplicateInstancePort != null) {
                     duplicateInstancePorts.add(duplicateInstancePort);
                     duplicateInstancePorts.add(instancePort);
@@ -510,7 +565,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
                         instancePortToExternalPorts.put(instancePortName, externalPorts);
                     }
                     if (((Channel) duplicateInstancePort.eContainer()).getExternalPort() != null) {
-                        externalPorts.add(((Channel) duplicateInstancePort.eContainer()).getExternalPort());
+                        externalPorts.add(
+                                ((Channel) duplicateInstancePort.eContainer()).getExternalPort());
                     }
                     if (((Channel) instancePort.eContainer()).getExternalPort() != null) {
                         externalPorts.add(((Channel) instancePort.eContainer()).getExternalPort());
@@ -519,7 +575,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             }
             // Each external port should be used at most once
             if (channel.getExternalPort() != null) {
-                Channel duplicateExternalPort = externalPortToChannel.put(channel.getExternalPort(), channel);
+                Channel duplicateExternalPort = externalPortToChannel.put(channel.getExternalPort(),
+                        channel);
                 if (duplicateExternalPort != null) {
                     duplicateExternalPorts.add(duplicateExternalPort);
                     duplicateExternalPorts.add(channel);
@@ -527,6 +584,17 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             }
         }
 
+        errorOverlappingChannels(duplicateInstancePorts, instancePortToExternalPorts);
+        for (Channel ch : duplicateExternalPorts) {
+            error(MULTIPLE_CONNECTION_EXTERNAL_PORT, ch,
+                    PooslPackage.Literals.CHANNEL__EXTERNAL_PORT,
+                    PooslIssueCodes.MULTIPLE_CHANNELS_CONNECTED_TO_EXTERNAL_PORT);
+        }
+    }
+
+    private void errorOverlappingChannels(
+            Set<InstancePort> duplicateInstancePorts,
+            Map<String, Set<Port>> instancePortToExternalPorts) {
         for (InstancePort instancePort : duplicateInstancePorts) {
             // Check if different external ports are referenced by the duplicate
             // instance port. If so, then don't offer a quickfix
@@ -534,11 +602,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             if (instancePortToExternalPorts.get(instancePortName).size() > 1) {
                 error(MULTIPLE_CONNECTION_INSTANCEPORT, instancePort, null, null);
             } else {
-                error(MULTIPLE_CONNECTION_INSTANCEPORT, instancePort, null, PooslIssueCodes.MULTIPLE_CHANNELS_CONNECTED_TO_INSTANCE_PORT);
+                error(MULTIPLE_CONNECTION_INSTANCEPORT, instancePort, null,
+                        PooslIssueCodes.MULTIPLE_CHANNELS_CONNECTED_TO_INSTANCE_PORT);
             }
-        }
-        for (Channel ch : duplicateExternalPorts) {
-            error(MULTIPLE_CONNECTION_EXTERNAL_PORT, ch, PooslPackage.Literals.CHANNEL__EXTERNAL_PORT, PooslIssueCodes.MULTIPLE_CHANNELS_CONNECTED_TO_EXTERNAL_PORT);
         }
     }
 
@@ -546,7 +612,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         Instance instance = instancePort.getInstance();
         if (instance != null) {
             String instanceName = instance.getName();
-            String portName = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
+            String portName = (instancePort.getPort() != null)
+                ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
             if (instanceName != null && portName != null) {
                 return instanceName + "." + portName; //$NON-NLS-1$
             }
@@ -557,13 +624,15 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     @Check(CheckType.FAST)
     public void checkInstanceUniqueParameterInstantiations(Instance instance) {
         List<InstanceParameter> localParameterInstantiations = instance.getInstanceParameters();
-        Map<String, InstanceParameter> variablesMap = new HashMap<>((int) (localParameterInstantiations.size() * HASHMAP_SIZE_FACTOR));
+        Map<String, InstanceParameter> variablesMap = new HashMap<>(
+                (int) (localParameterInstantiations.size() * HASHMAP_SIZE_FACTOR));
         Set<InstanceParameter> duplicateVariables = new HashSet<>();
 
         for (InstanceParameter parameterInstantiation : localParameterInstantiations) {
             String parName = parameterInstantiation.getParameter();
             if (parName != null) {
-                InstanceParameter duplicateParameterInstantiation = variablesMap.put(parName, parameterInstantiation);
+                InstanceParameter duplicateParameterInstantiation = variablesMap.put(parName,
+                        parameterInstantiation);
                 if (duplicateParameterInstantiation != null) {
                     duplicateVariables.add(parameterInstantiation);
                     duplicateVariables.add(duplicateParameterInstantiation);
@@ -571,7 +640,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             }
         }
         for (InstanceParameter parameterInstantiation : duplicateVariables) {
-            error(MessageFormat.format(DUPLICATE_PARAMETER_INSTANTIATION, parameterInstantiation.getParameter()), parameterInstantiation, Literals.INSTANCE_PARAMETER__PARAMETER, null);
+            error(MessageFormat.format(DUPLICATE_PARAMETER_INSTANTIATION,
+                    parameterInstantiation.getParameter()), parameterInstantiation,
+                    Literals.INSTANCE_PARAMETER__PARAMETER, null);
         }
     }
 
@@ -579,61 +650,77 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
 
     public void checkUniqueProcessMethods(ProcessClass pClass) {
         List<ProcessMethod> methods = pClass.getMethods();
-        Map<String, ProcessMethod> methodsMap = new HashMap<>((int) (methods.size() * HASHMAP_SIZE_FACTOR));
+        Map<String, ProcessMethod> methodsMap = new HashMap<>(
+                (int) (methods.size() * HASHMAP_SIZE_FACTOR));
         Set<ProcessMethod> duplicates = new HashSet<>();
         for (ProcessMethod method : methods) {
-            ProcessMethod duplicateMethod = methodsMap.put(processMethod2StringNameAndParameterCounts(method), method);
+            ProcessMethod duplicateMethod = methodsMap
+                    .put(processMethod2StringNameAndParameterCounts(method), method);
             if (duplicateMethod != null) {
                 duplicates.add(duplicateMethod);
                 duplicates.add(method);
             }
         }
         for (ProcessMethod method : duplicates) {
-            error(MessageFormat.format(DUPLICATE_METHOD, method.getName()), method, Literals.PROCESS_METHOD__NAME, PooslIssueCodes.DUPLICATE_METHOD_NAME);
+            error(MessageFormat.format(DUPLICATE_METHOD, method.getName()), method,
+                    Literals.PROCESS_METHOD__NAME, PooslIssueCodes.DUPLICATE_METHOD_NAME);
         }
     }
 
     public void checkUniqueDataMethods(DataClass dClass) {
         List<DataMethodNamed> dataMethodsNamed = dClass.getDataMethodsNamed();
-        Map<String, DataMethodNamed> dataMethodsNamedMap = new HashMap<>((int) (dataMethodsNamed.size() * HASHMAP_SIZE_FACTOR));
+        Map<String, DataMethodNamed> dataMethodsNamedMap = new HashMap<>(
+                (int) (dataMethodsNamed.size() * HASHMAP_SIZE_FACTOR));
         Set<DataMethodNamed> dataMethodsNamedduplicates = new HashSet<>();
         for (DataMethodNamed method : dataMethodsNamed) {
-            DataMethodNamed duplicateMethod = dataMethodsNamedMap.put(dataMethod2StringNameAndParameterCount(method.getName(), method), method);
+            DataMethodNamed duplicateMethod = dataMethodsNamedMap
+                    .put(dataMethod2StringNameAndParameterCount(method.getName(), method), method);
             if (duplicateMethod != null) {
                 dataMethodsNamedduplicates.add(duplicateMethod);
                 dataMethodsNamedduplicates.add(method);
             }
         }
         for (DataMethodNamed method : dataMethodsNamedduplicates) {
-            error(MessageFormat.format(DUPLICATE_METHOD, method.getName()), method, Literals.DATA_METHOD_NAMED__NAME, PooslIssueCodes.DUPLICATE_METHOD_NAME);
+            error(MessageFormat.format(DUPLICATE_METHOD, method.getName()), method,
+                    Literals.DATA_METHOD_NAMED__NAME, PooslIssueCodes.DUPLICATE_METHOD_NAME);
         }
 
         List<DataMethodUnaryOperator> dataMethodsUnary = dClass.getDataMethodsUnaryOperator();
-        Map<String, DataMethodUnaryOperator> dataMethodsUnaryMap = new HashMap<>((int) (dataMethodsUnary.size() * HASHMAP_SIZE_FACTOR));
+        Map<String, DataMethodUnaryOperator> dataMethodsUnaryMap = new HashMap<>(
+                (int) (dataMethodsUnary.size() * HASHMAP_SIZE_FACTOR));
         Set<DataMethodUnaryOperator> dataMethodsUnaryduplicates = new HashSet<>();
         for (DataMethodUnaryOperator method : dataMethodsUnary) {
-            DataMethodUnaryOperator duplicateMethod = dataMethodsUnaryMap.put(dataMethod2StringNameAndParameterCount(method.getName().getLiteral(), method), method);
+            DataMethodUnaryOperator duplicateMethod = dataMethodsUnaryMap.put(
+                    dataMethod2StringNameAndParameterCount(method.getName().getLiteral(), method),
+                    method);
             if (duplicateMethod != null) {
                 dataMethodsUnaryduplicates.add(duplicateMethod);
                 dataMethodsUnaryduplicates.add(method);
             }
         }
         for (DataMethodUnaryOperator method : dataMethodsUnaryduplicates) {
-            error(MessageFormat.format(DUPLICATE_METHOD, method.getName()), method, Literals.DATA_METHOD_UNARY_OPERATOR__NAME, PooslIssueCodes.DUPLICATE_METHOD_NAME);
+            error(MessageFormat.format(DUPLICATE_METHOD, method.getName()), method,
+                    Literals.DATA_METHOD_UNARY_OPERATOR__NAME,
+                    PooslIssueCodes.DUPLICATE_METHOD_NAME);
         }
 
         List<DataMethodBinaryOperator> dataMethodsBinary = dClass.getDataMethodsBinaryOperator();
-        Map<String, DataMethodBinaryOperator> dataMethodsBinaryMap = new HashMap<>((int) (dataMethodsBinary.size() * HASHMAP_SIZE_FACTOR));
+        Map<String, DataMethodBinaryOperator> dataMethodsBinaryMap = new HashMap<>(
+                (int) (dataMethodsBinary.size() * HASHMAP_SIZE_FACTOR));
         Set<DataMethodBinaryOperator> dataMethodsBinaryduplicates = new HashSet<>();
         for (DataMethodBinaryOperator method : dataMethodsBinary) {
-            DataMethodBinaryOperator duplicateMethod = dataMethodsBinaryMap.put(dataMethod2StringNameAndParameterCount(method.getName().getLiteral(), method), method);
+            DataMethodBinaryOperator duplicateMethod = dataMethodsBinaryMap.put(
+                    dataMethod2StringNameAndParameterCount(method.getName().getLiteral(), method),
+                    method);
             if (duplicateMethod != null) {
                 dataMethodsBinaryduplicates.add(duplicateMethod);
                 dataMethodsBinaryduplicates.add(method);
             }
         }
         for (DataMethodBinaryOperator method : dataMethodsBinaryduplicates) {
-            error(MessageFormat.format(DUPLICATE_METHOD, method.getName()), method, Literals.DATA_METHOD_BINARY_OPERATOR__NAME, PooslIssueCodes.DUPLICATE_METHOD_NAME);
+            error(MessageFormat.format(DUPLICATE_METHOD, method.getName()), method,
+                    Literals.DATA_METHOD_BINARY_OPERATOR__NAME,
+                    PooslIssueCodes.DUPLICATE_METHOD_NAME);
         }
     }
 
@@ -641,13 +728,15 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
 
     public void checkUniqueVariables(ClusterClass cClass) {
         boolean hasError = false;
-        Set<String> localVariables = new HashSet<>((int) (cClass.getParameters().size() * HASHMAP_SIZE_FACTOR));
+        Set<String> localVariables = new HashSet<>(
+                (int) (cClass.getParameters().size() * HASHMAP_SIZE_FACTOR));
         for (Declaration declaration : cClass.getParameters()) {
             for (Variable variable : declaration.getVariables()) {
                 String varName = variable.getName();
                 if (localVariables.contains(varName)) {
                     hasError = true;
-                    error(MessageFormat.format(DUPLICATE_VARIABLE, variable.getName()), variable, null, null);
+                    error(MessageFormat.format(DUPLICATE_VARIABLE, variable.getName()), variable,
+                            null, null);
                 } else {
                     localVariables.add(varName);
                 }
@@ -663,12 +752,14 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         Set<String> scopeVars = new HashSet<>();
         String parent = pClass.getSuperClass();
         if (parent != null) {
-            scopeVars.addAll(PooslCache.get(pClass.eResource()).getProcessClassParametersAndVariables(parent).keySet());
+            scopeVars.addAll(PooslCache.get(pClass.eResource())
+                    .getProcessClassParametersAndVariables(parent).keySet());
         }
 
         boolean hasError = checkOverlapVariablesDeclarations(scopeVars, pClass.getParameters());
         addVariablesToScope(scopeVars, pClass.getParameters());
-        hasError = checkOverlapVariablesDeclarations(scopeVars, pClass.getInstanceVariables()) || hasError;
+        hasError = checkOverlapVariablesDeclarations(scopeVars, pClass.getInstanceVariables())
+                || hasError;
         addVariablesToScope(scopeVars, pClass.getInstanceVariables());
 
         if (!hasError) {
@@ -683,13 +774,16 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public boolean checkUniqueVariables(ProcessMethod pMethod, Set<String> scopeVariables) {
         Set<String> methodScope = new HashSet<>(scopeVariables);
 
-        boolean hasError = checkOverlapVariablesDeclarations(methodScope, pMethod.getInputParameters());
+        boolean hasError = checkOverlapVariablesDeclarations(methodScope,
+                pMethod.getInputParameters());
         addVariablesToScope(methodScope, pMethod.getInputParameters());
 
-        hasError = checkOverlapVariablesDeclarations(methodScope, pMethod.getLocalVariables()) || hasError;
+        hasError = checkOverlapVariablesDeclarations(methodScope, pMethod.getLocalVariables())
+                || hasError;
         addVariablesToScope(methodScope, pMethod.getLocalVariables());
 
-        hasError = checkOverlapVariablesDeclarations(methodScope, pMethod.getOutputParameters()) || hasError;
+        hasError = checkOverlapVariablesDeclarations(methodScope, pMethod.getOutputParameters())
+                || hasError;
         if (!hasError) {
             warnUnusedProcessMethodParameterAndLocalVariables(pMethod);
         }
@@ -701,10 +795,12 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
 
         Set<String> scopeVariables = new HashSet<>();
         if (parentName != null) {
-            scopeVariables.addAll(PooslCache.get(dClass.eResource()).getDataClassVariables(parentName).keySet());
+            scopeVariables.addAll(
+                    PooslCache.get(dClass.eResource()).getDataClassVariables(parentName).keySet());
         }
 
-        boolean hasError = checkOverlapVariablesDeclarations(scopeVariables, dClass.getInstanceVariables());
+        boolean hasError = checkOverlapVariablesDeclarations(scopeVariables,
+                dClass.getInstanceVariables());
 
         addVariablesToScope(scopeVariables, dClass.getInstanceVariables());
 
@@ -732,7 +828,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
 
         addVariablesToScope(methodScope, dMethod.getParameters());
 
-        hasError = checkOverlapVariablesDeclarations(methodScope, dMethod.getLocalVariables()) || hasError;
+        hasError = checkOverlapVariablesDeclarations(methodScope, dMethod.getLocalVariables())
+                || hasError;
 
         if (!hasError) {
             warnUnusedDataMethodParameterAndLocalVariables(dMethod);
@@ -740,20 +837,24 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         return hasError;
     }
 
-    private boolean checkOverlapVariablesDeclarations(Set<String> scopeVariables, List<Declaration> declarations) {
+    private boolean checkOverlapVariablesDeclarations(
+            Set<String> scopeVariables, List<Declaration> declarations) {
         boolean error = false;
-        Set<String> localVariables = new HashSet<>((int) (declarations.size() * HASHMAP_SIZE_FACTOR));
+        Set<String> localVariables = new HashSet<>(
+                (int) (declarations.size() * HASHMAP_SIZE_FACTOR));
 
         for (Declaration declaration : declarations) {
             for (Variable variable : declaration.getVariables()) {
                 String varName = variable.getName();
                 if (scopeVariables.contains(varName)) {
                     error = true;
-                    error(MessageFormat.format(DUPLICATE_VARIABLE, variable.getName()), variable, null, null);
+                    error(MessageFormat.format(DUPLICATE_VARIABLE, variable.getName()), variable,
+                            null, null);
                 } else {
                     if (localVariables.contains(varName)) {
                         error = true;
-                        error(MessageFormat.format(DUPLICATE_VARIABLE, variable.getName()), variable, null, null);
+                        error(MessageFormat.format(DUPLICATE_VARIABLE, variable.getName()),
+                                variable, null, null);
                     } else {
                         localVariables.add(varName);
                     }
@@ -784,12 +885,14 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     }
 
     private void reportDuplicateAssignments(List<OutputVariable> outputVariables) {
-        Map<String, OutputVariable> duplicateInstances = new HashMap<>((int) (outputVariables.size() * HASHMAP_SIZE_FACTOR));
+        Map<String, OutputVariable> duplicateInstances = new HashMap<>(
+                (int) (outputVariables.size() * HASHMAP_SIZE_FACTOR));
         Set<OutputVariable> duplicates = new HashSet<>();
         for (OutputVariable outputVariable : outputVariables) {
             String outputName = outputVariable.getVariable();
             if (outputName != null) {
-                OutputVariable duplicateVariable = duplicateInstances.put(outputName, outputVariable);
+                OutputVariable duplicateVariable = duplicateInstances.put(outputName,
+                        outputVariable);
                 if (duplicateVariable != null) {
                     duplicates.add(duplicateVariable);
                     duplicates.add(outputVariable);
@@ -797,20 +900,26 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
             }
         }
         for (OutputVariable outputVariable : duplicates) {
-            warning(MessageFormat.format(DUPLICATE_VARIABLE_ASSIGNMENT, outputVariable.getVariable()), outputVariable, null, null, WarningType.ASSIGNMENT);
+            warning(MessageFormat.format(DUPLICATE_VARIABLE_ASSIGNMENT,
+                    outputVariable.getVariable()), outputVariable, null, null,
+                    WarningType.ASSIGNMENT);
         }
     }
 
     // --- Message signatures -------
 
     public void checkUniqueMessageSignatures(ProcessClass pClass, PooslMessageType type) {
-        List<MessageSignature> localSignatures = (type == PooslMessageType.RECEIVE) ? pClass.getReceiveMessages() : pClass.getSendMessages();
+        List<MessageSignature> localSignatures = (type == PooslMessageType.RECEIVE)
+            ? pClass.getReceiveMessages() : pClass.getSendMessages();
 
         String superClass = pClass.getSuperClass();
-        Iterable<IEObjectDescription> ancestorSignatures = (superClass != null) ? PooslCache.get(pClass.eResource()).getMessages(superClass, type) : null;
+        Iterable<IEObjectDescription> ancestorSignatures = (superClass != null)
+            ? PooslCache.get(pClass.eResource()).getMessages(superClass, type) : null;
 
-        Set<MessageSignature> duplicateSignatures = checkOverlapMessageSignatures(ancestorSignatures, localSignatures);
-        String duplicateWarning = (type == PooslMessageType.RECEIVE) ? DUPLICATE_RECEIVE_MESSAGE : DUPLICATE_SEND_MESSAGE;
+        Set<MessageSignature> duplicateSignatures = checkOverlapMessageSignatures(
+                ancestorSignatures, localSignatures);
+        String duplicateWarning = (type == PooslMessageType.RECEIVE)
+            ? DUPLICATE_RECEIVE_MESSAGE : DUPLICATE_SEND_MESSAGE;
         for (MessageSignature signature : duplicateSignatures) {
             error(duplicateWarning, signature, null, null);
         }
@@ -819,11 +928,15 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
         }
     }
 
-    private Set<MessageSignature> checkOverlapMessageSignatures(Iterable<IEObjectDescription> ancestorSignatures, List<MessageSignature> localSignatures) {
-        Map<String, Object> signaturesMap = new HashMap<>((int) (localSignatures.size() * HASHMAP_SIZE_FACTOR));
+    private Set<MessageSignature> checkOverlapMessageSignatures(
+            Iterable<IEObjectDescription> ancestorSignatures,
+            List<MessageSignature> localSignatures) {
+        Map<String, Object> signaturesMap = new HashMap<>(
+                (int) (localSignatures.size() * HASHMAP_SIZE_FACTOR));
         if (ancestorSignatures != null) {
             for (IEObjectDescription signature : ancestorSignatures) {
-                signaturesMap.put(PooslMessageSignatureCallHelper.getSignatureID(signature), signature);
+                signaturesMap.put(PooslMessageSignatureCallHelper.getSignatureID(signature),
+                        signature);
             }
         }
         Set<MessageSignature> duplicateSignatures = new HashSet<>();
@@ -877,7 +990,8 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkAssignmentExpression(AssignmentExpression assignExpr) {
         IEObjectDescription var = PooslReferenceHelper.getVariableDescription(assignExpr);
         if (var == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (assignExpr.getVariable() != null) ? assignExpr.getVariable() : ""), assignExpr, //$NON-NLS-1$
+            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(),
+                    (assignExpr.getVariable() != null) ? assignExpr.getVariable() : ""), assignExpr, //$NON-NLS-1$
                     Literals.ASSIGNMENT_EXPRESSION__VARIABLE, Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
@@ -886,8 +1000,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkVariableExpression(VariableExpression varExpr) {
         IEObjectDescription var = PooslReferenceHelper.getVariableDescription(varExpr);
         if (var == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (varExpr.getVariable() != null) ? varExpr.getVariable() : ""), varExpr, Literals.VARIABLE_EXPRESSION__VARIABLE, //$NON-NLS-1$
-                    Diagnostic.LINKING_DIAGNOSTIC);
+            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(),
+                    (varExpr.getVariable() != null) ? varExpr.getVariable() : ""), varExpr, //$NON-NLS-1$
+                    Literals.VARIABLE_EXPRESSION__VARIABLE, Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 
@@ -895,8 +1010,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkOutputVariable(OutputVariable outVar) {
         IEObjectDescription var = PooslReferenceHelper.getVariableDescription(outVar);
         if (var == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (outVar.getVariable() != null) ? outVar.getVariable() : ""), outVar, Literals.OUTPUT_VARIABLE__VARIABLE, //$NON-NLS-1$
-                    Diagnostic.LINKING_DIAGNOSTIC);
+            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(),
+                    (outVar.getVariable() != null) ? outVar.getVariable() : ""), outVar, //$NON-NLS-1$
+                    Literals.OUTPUT_VARIABLE__VARIABLE, Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 
@@ -904,8 +1020,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkInstanceParameter(InstanceParameter iParam) {
         IEObjectDescription var = PooslReferenceHelper.getVariableDescription(iParam);
         if (var == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(), (iParam.getParameter() != null) ? iParam.getParameter() : ""), iParam, Literals.INSTANCE_PARAMETER__PARAMETER, //$NON-NLS-1$
-                    Diagnostic.LINKING_DIAGNOSTIC);
+            error(MessageFormat.format(NOT_DECLARED, Literals.VARIABLE.getName(),
+                    (iParam.getParameter() != null) ? iParam.getParameter() : ""), iParam, //$NON-NLS-1$
+                    Literals.INSTANCE_PARAMETER__PARAMETER, Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 
@@ -915,7 +1032,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkNewExpression(NewExpression newExpr) {
         IEObjectDescription dClass = PooslReferenceHelper.getDataClassDescription(newExpr);
         if (dClass == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(), newExpr.getDataClass()), newExpr, Literals.NEW_EXPRESSION__DATA_CLASS, Diagnostic.LINKING_DIAGNOSTIC);
+            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(),
+                    newExpr.getDataClass()), newExpr, Literals.NEW_EXPRESSION__DATA_CLASS,
+                    Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 
@@ -923,7 +1042,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkDataMethod(DataMethod dMethod) {
         IEObjectDescription dClass = PooslReferenceHelper.getDataClassDescription(dMethod);
         if (dClass == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(), dMethod.getReturnType()), dMethod, Literals.DATA_METHOD__RETURN_TYPE, Diagnostic.LINKING_DIAGNOSTIC);
+            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(),
+                    dMethod.getReturnType()), dMethod, Literals.DATA_METHOD__RETURN_TYPE,
+                    Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 
@@ -931,7 +1052,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkDeclaration(Declaration declaration) {
         IEObjectDescription dClass = PooslReferenceHelper.getDataClassDescription(declaration);
         if (dClass == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(), declaration.getType()), declaration, Literals.DECLARATION__TYPE, Diagnostic.LINKING_DIAGNOSTIC);
+            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(),
+                    declaration.getType()), declaration, Literals.DECLARATION__TYPE,
+                    Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 
@@ -939,7 +1062,9 @@ public class PooslJavaValidatorUniqueIdentifiers extends PooslJavaValidatorAPI {
     public void checkNewExpression(MessageParameter msgParam) {
         IEObjectDescription dClass = PooslReferenceHelper.getDataClassDescription(msgParam);
         if (dClass == null) {
-            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(), msgParam.getType()), msgParam, Literals.MESSAGE_PARAMETER__TYPE, Diagnostic.LINKING_DIAGNOSTIC);
+            error(MessageFormat.format(NOT_DECLARED, Literals.DATA_CLASS.getName(),
+                    msgParam.getType()), msgParam, Literals.MESSAGE_PARAMETER__TYPE,
+                    Diagnostic.LINKING_DIAGNOSTIC);
         }
     }
 }

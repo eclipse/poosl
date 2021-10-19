@@ -38,13 +38,16 @@ public class PooslJavaValidatorAPI extends PooslJavaValidatorGrammar {
 
     @Check(CheckType.FAST)
     public void checkPermanentDataClasses(Poosl poosl) {
-        Resource resource = poosl.eResource();
-        Map<String, IEObjectDescription> allDataClasses = PooslCache.get(resource).getDataClassMap();
-        for (String dClass : HelperFunctions.PERMANENT_DATA_CLASSES) {
-            if (!allDataClasses.containsKey(dClass)) {
-                error(String.format(ERROR_MESSAGE_MISSING_PERMANENT_CLASS, dClass), null);
+        PERF.benchmark("checkPermanentDataClasses", () -> { //$NON-NLS-1$
+            Resource resource = poosl.eResource();
+            Map<String, IEObjectDescription> allDataClasses = PooslCache.get(resource)
+                    .getDataClassMap();
+            for (String dClass : HelperFunctions.PERMANENT_DATA_CLASSES) {
+                if (!allDataClasses.containsKey(dClass)) {
+                    error(String.format(ERROR_MESSAGE_MISSING_PERMANENT_CLASS, dClass), null);
+                }
             }
-        }
+        });
     }
 
     @Check(CheckType.FAST)
@@ -52,7 +55,8 @@ public class PooslJavaValidatorAPI extends PooslJavaValidatorGrammar {
         String superClass = dClass.getSuperClass();
 
         if (HelperFunctions.PRIMITIVE_DATA_CLASSES.contains(superClass)) {
-            error(String.format(ERROR_MESSAGE_NOT_EXTENDABLE, superClass), Literals.DATA_CLASS__SUPER_CLASS);
+            error(String.format(ERROR_MESSAGE_NOT_EXTENDABLE, superClass),
+                    Literals.DATA_CLASS__SUPER_CLASS);
         }
     }
 }
