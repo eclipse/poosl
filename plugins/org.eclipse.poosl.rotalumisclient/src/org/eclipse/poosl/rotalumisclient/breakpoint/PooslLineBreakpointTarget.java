@@ -54,8 +54,11 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
-public class PooslLineBreakpointTarget implements IToggleBreakpointsTarget, IToggleBreakpointsTargetExtension {
-    private static final Logger LOGGER = Logger.getLogger(PooslLineBreakpointTarget.class.getName());
+public class PooslLineBreakpointTarget implements
+        IToggleBreakpointsTarget,
+        IToggleBreakpointsTargetExtension {
+    private static final Logger LOGGER = Logger
+            .getLogger(PooslLineBreakpointTarget.class.getName());
 
     @Override
     public boolean canToggleLineBreakpoints(IWorkbenchPart part, ISelection selection) {
@@ -63,7 +66,8 @@ public class PooslLineBreakpointTarget implements IToggleBreakpointsTarget, ITog
     }
 
     @Override
-    public void toggleLineBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+    public void toggleLineBreakpoints(IWorkbenchPart part, ISelection selection)
+            throws CoreException {
         XtextEditor xtextEditor = getEditor(part);
         IXtextDocument document = getDocument(xtextEditor);
         if (xtextEditor != null && document != null) {
@@ -79,33 +83,42 @@ public class PooslLineBreakpointTarget implements IToggleBreakpointsTarget, ITog
                 return;
             }
 
-            Statement actualSemanticObject = getSemanticStatement(resource, document, selectedLineNumber);
+            Statement actualSemanticObject = getSemanticStatement(resource, document,
+                    selectedLineNumber);
             if (actualSemanticObject == null) {
-                PooslDebugHelper.showInfoMessage(Messages.DIALOG_BREAKPOINT_TITLE, Messages.DIALOG_BREAKPOINT_NO_STATEMENT);
+                PooslDebugHelper.showInfoMessage(Messages.DIALOG_BREAKPOINT_TITLE,
+                        Messages.DIALOG_BREAKPOINT_NO_STATEMENT);
                 return;
             }
-            if (actualSemanticObject instanceof ProcessMethodCall && actualSemanticObject.eContainer() instanceof ProcessClass) {
+            if (actualSemanticObject instanceof ProcessMethodCall
+                    && actualSemanticObject.eContainer() instanceof ProcessClass) {
                 // Initial method call
-                PooslDebugHelper.showInfoMessage(Messages.DIALOG_BREAKPOINT_TITLE, Messages.DIALOG_BREAKPOINT_INIT_METHOD);
+                PooslDebugHelper.showInfoMessage(Messages.DIALOG_BREAKPOINT_TITLE,
+                        Messages.DIALOG_BREAKPOINT_INIT_METHOD);
                 return;
             }
 
-            int statementLineNumber = NodeModelUtils.getNode(actualSemanticObject).getStartLine() - 1;
+            int statementLineNumber = NodeModelUtils.getNode(actualSemanticObject).getStartLine()
+                    - 1;
 
             // Check if there is an existing breakpoint on this line number
             if (!deleteBreakpointAtLine(resource, statementLineNumber)) {
                 // create line breakpoint (doc line numbers start at 0)
-                PooslLineBreakpoint lineBreakpoint = new PooslLineBreakpoint(resource, statementLineNumber + 1);
+                PooslLineBreakpoint lineBreakpoint = new PooslLineBreakpoint();
+                lineBreakpoint.markLine(resource, statementLineNumber + 1);
                 DebugPlugin.getDefault().getBreakpointManager().addBreakpoint(lineBreakpoint);
             }
         }
     }
 
-    private boolean deleteBreakpointAtLine(IResource resource, int lineNumber) throws CoreException {
-        IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager().getBreakpoints(PooslConstants.DEBUG_MODEL_ID);
+    private boolean deleteBreakpointAtLine(IResource resource, int lineNumber)
+            throws CoreException {
+        IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager()
+                .getBreakpoints(PooslConstants.DEBUG_MODEL_ID);
         for (int i = 0; i < breakpoints.length; i++) {
             IBreakpoint breakpoint = breakpoints[i];
-            if (resource.equals(breakpoint.getMarker().getResource()) && ((ILineBreakpoint) breakpoint).getLineNumber() == (lineNumber + 1)) {
+            if (resource.equals(breakpoint.getMarker().getResource())
+                    && ((ILineBreakpoint) breakpoint).getLineNumber() == (lineNumber + 1)) {
                 // existing breakpoint; delete
                 breakpoint.delete();
                 return true;
@@ -114,7 +127,8 @@ public class PooslLineBreakpointTarget implements IToggleBreakpointsTarget, ITog
         return false;
     }
 
-    private Statement getSemanticStatement(IResource resource, IXtextDocument document, int lineNumber) {
+    private Statement getSemanticStatement(
+            IResource resource, IXtextDocument document, int lineNumber) {
         int lineOffset = -1;
         try {
             lineOffset = document.getLineInformation(lineNumber).getOffset();
@@ -144,10 +158,12 @@ public class PooslLineBreakpointTarget implements IToggleBreakpointsTarget, ITog
 
     private EObject getSemanticObject(IResource resource, int lineOffset) {
         XtextResourceSet resourceSet = new XtextResourceSet();
-        resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(), org.eclipse.poosl.PooslPackage.eINSTANCE);
+        resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(),
+                org.eclipse.poosl.PooslPackage.eINSTANCE);
         URI uri = URI.createFileURI(resource.getLocation().toOSString());
         XtextResource xtextResource = (XtextResource) resourceSet.getResource(uri, true);
-        ILeafNode leafNode = NodeModelUtils.findLeafNodeAtOffset(xtextResource.getParseResult().getRootNode(), lineOffset);
+        ILeafNode leafNode = NodeModelUtils
+                .findLeafNodeAtOffset(xtextResource.getParseResult().getRootNode(), lineOffset);
         return NodeModelUtils.findActualSemanticObjectFor(leafNode);
     }
 
@@ -184,7 +200,8 @@ public class PooslLineBreakpointTarget implements IToggleBreakpointsTarget, ITog
     }
 
     @Override
-    public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+    public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection)
+            throws CoreException {
         throw new UnsupportedOperationException("toggleMethodBreakpoints() not supported");
     }
 

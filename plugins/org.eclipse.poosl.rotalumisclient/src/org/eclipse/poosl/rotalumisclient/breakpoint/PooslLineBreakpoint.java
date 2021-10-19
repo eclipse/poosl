@@ -13,11 +13,10 @@
  *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.breakpoint;
 
+import java.text.MessageFormat;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRunnable;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
@@ -31,24 +30,31 @@ import org.eclipse.poosl.rotalumisclient.PooslConstants;
  */
 public class PooslLineBreakpoint extends LineBreakpoint {
 
-    public PooslLineBreakpoint() {
-        // Add empty constructor for reflection purposes
-    }
+    private static final String MARKER_ID = "org.eclipse.poosl.rotalumisclient.pooslLineBreakpointMarker"; //$NON-NLS-1$
 
-    public PooslLineBreakpoint(final IResource resource, final int lineNumber) throws DebugException {
-        super();
-        IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
-            public void run(IProgressMonitor monitor) throws CoreException {
-                IMarker marker = resource.createMarker("org.eclipse.poosl.rotalumisclient.pooslLineBreakpointMarker"); //$NON-NLS-1$
-                setMarker(marker);
-                marker.setAttribute(IBreakpoint.ENABLED, true);
-                marker.setAttribute(IBreakpoint.PERSISTED, true);
-                marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
-                marker.setAttribute(IBreakpoint.ID, getModelIdentifier());
-                marker.setAttribute(IMarker.MESSAGE, "Poosl Line Breakpoint: " + resource.getName() + " [line: " + lineNumber + "]");
-            }
-        };
-        run(getMarkerRule(resource), runnable);
+    private static final String MESSAGE_PATTERN = "Poosl Line Breakpoint: {0} [line: {1}]";
+
+    /**
+     * Sets the resource and the line of this breakpoint into marker.
+     *
+     * @param resource
+     *     to breakpoint
+     * @param lineNumber
+     *     of breakpoint
+     * @throws DebugException
+     *     if fails to mark
+     */
+    public void markLine(final IResource resource, final int lineNumber) throws DebugException {
+        run(getMarkerRule(resource), monitor -> {
+            IMarker marker = resource.createMarker(MARKER_ID);
+            setMarker(marker);
+            marker.setAttribute(IBreakpoint.ENABLED, true);
+            marker.setAttribute(IBreakpoint.PERSISTED, true);
+            marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
+            marker.setAttribute(IBreakpoint.ID, getModelIdentifier());
+            marker.setAttribute(IMarker.MESSAGE,
+                    MessageFormat.format(MESSAGE_PATTERN, resource.getName(), lineNumber));
+        });
     }
 
     @Override
