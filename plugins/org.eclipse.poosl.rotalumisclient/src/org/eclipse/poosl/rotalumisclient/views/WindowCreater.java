@@ -39,11 +39,15 @@ import org.eclipse.ui.PartInitException;
 
 /**
  * Helper class to create new seperate windows. </br>
- * {@link WindowCreater#getWindowForError(IWorkbenchPartSite, PooslDebugTarget)} creates if need a new window containing
- * {@link StackTraceView} and {@link StackTraceVariableView} containing stacktrace information when an error occurs.
+ * {@link WindowCreater#getWindowForError(IWorkbenchPartSite, PooslDebugTarget)}
+ * creates if need a new window containing
+ * {@link StackTraceView} and {@link StackTraceVariableView} containing
+ * stacktrace information when an error occurs.
  * </br>
- * {@link WindowCreater#getWindowForThread(IWorkbenchPartSite, PooslThread)} creates if needed a new window containing
- * {@link PooslPETView} and {@link PooslVariablesView} to show information on a specific thread determined by the views
+ * {@link WindowCreater#getWindowForThread(IWorkbenchPartSite, PooslThread)}
+ * creates if needed a new window containing
+ * {@link PooslPETView} and {@link PooslVariablesView} to show information on a
+ * specific thread determined by the views
  * second ID.
  * 
  * @author Koen Staal
@@ -57,44 +61,54 @@ public final class WindowCreater {
     }
 
     /**
-     * Creates or finds the thread window that contains the seperate PETView and VariableView for the given thread. The
-     * created views get a secondid, see {@link ViewHelper#getSecondId(PooslThread)}. It creates a new window if both
+     * Creates or finds the thread window that contains the seperate PETView and
+     * VariableView for the given thread. The
+     * created views get a secondid, see
+     * {@link ViewHelper#getSecondId(PooslThread)}. It creates a new window if
+     * both
      * views are not in the same window.
      * 
      * @param site
-     *            {@link IWorkbenchPartSite} used as context to search for the views and creating the window.
+     *     {@link IWorkbenchPartSite} used as context to search for the views
+     *     and creating the window.
      * @param thread
-     *            The {@link PooslThread} that should be shown in the window
+     *     The {@link PooslThread} that should be shown in the window
      * @return A {@link MWindow} with a PET view and Variable view of the thread
      * @throws DebugException
      * @throws PartInitException
      */
-    public static MWindow getWindowForThread(IWorkbenchPartSite site, PooslThread thread) throws DebugException, PartInitException {
+    public static MWindow getWindowForThread(IWorkbenchPartSite site, PooslThread thread)
+            throws DebugException, PartInitException {
         MWindow window = null;
         IViewPart petView = null;
         IViewPart varView = null;
 
         String secondID = ViewHelper.getSecondId(thread);
 
-        IViewReference petReference = site.getPage().findViewReference(PooslConstants.ID_POOSL_PETVIEW, secondID);
+        IViewReference petReference = site.getPage()
+                .findViewReference(PooslConstants.ID_POOSL_PETVIEW, secondID);
         if (petReference != null) {
             petView = petReference.getView(true);
         }
 
-        IViewReference varReference = site.getPage().findViewReference(PooslConstants.ID_POOSL_VARIABLESVIEW, secondID);
+        IViewReference varReference = site.getPage()
+                .findViewReference(PooslConstants.ID_POOSL_VARIABLESVIEW, secondID);
         if (varReference != null) {
             varView = varReference.getView(true);
         }
         if (petView == null) {
-            petView = site.getPage().showView(PooslConstants.ID_POOSL_PETVIEW, secondID, IWorkbenchPage.VIEW_VISIBLE);
+            petView = site.getPage().showView(PooslConstants.ID_POOSL_PETVIEW, secondID,
+                    IWorkbenchPage.VIEW_VISIBLE);
         }
         if (varView == null) {
-            varView = site.getPage().showView(PooslConstants.ID_POOSL_VARIABLESVIEW, secondID, IWorkbenchPage.VIEW_VISIBLE);
+            varView = site.getPage().showView(PooslConstants.ID_POOSL_VARIABLESVIEW, secondID,
+                    IWorkbenchPage.VIEW_VISIBLE);
         }
         EModelService service = site.getService(EModelService.class);
         window = findWindow(petView, varView);
         if (window == null) {
-            window = WindowCreater.createCombinedWindow(service, petView, varView, new WindowShape(450, 600, false));
+            window = WindowCreater.createCombinedWindow(service, petView, varView,
+                    new WindowShape(450, 600, false));
             window.setLabel(thread.getDebugTarget().getName() + " " + thread.getName()); //$NON-NLS-1$
         } else {
             service.bringToTop(window);
@@ -103,31 +117,42 @@ public final class WindowCreater {
     }
 
     /**
-     * If either the {@link StackTraceView} or the {@link StackTraceVariableView} is not shown a new window is created
-     * with them in it. If they are already shown not window is created and null is returned. (The views dont have to be
+     * If either the {@link StackTraceView} or the
+     * {@link StackTraceVariableView} is not shown a new window is created
+     * with them in it. If they are already shown not window is created and null
+     * is returned. (The views dont have to be
      * in the same Window.)
      * 
      * @param site
-     *            {@link IWorkbenchPartSite} used as context to search for the views and creating the window.
+     *     {@link IWorkbenchPartSite} used as context to search for the views
+     *     and creating the window.
      * @param target
-     *            {@link PooslDebugTarget} is given to the {@link StackTraceView} after creation
+     *     {@link PooslDebugTarget} is given to the {@link StackTraceView} after
+     *     creation
      * @return {@link MWindow} if one is created otherwise it returns null
      * @throws DebugException
      * @throws PartInitException
      */
-    public static MWindow getWindowForError(IWorkbenchPartSite site, PooslDebugTarget target) throws PartInitException {
-        IViewReference traceReference = site.getPage().findViewReference(PooslConstants.ID_POOSL_STACKTRACEVIEW);
-        IViewReference frameReference = site.getPage().findViewReference(PooslConstants.ID_POOSL_STACKTRACEVARIABLEVIEW);
+    public static MWindow getWindowForError(IWorkbenchPartSite site, PooslDebugTarget target)
+            throws PartInitException {
+        IViewReference traceReference = site.getPage()
+                .findViewReference(PooslConstants.ID_POOSL_STACKTRACEVIEW);
+        IViewReference frameReference = site.getPage()
+                .findViewReference(PooslConstants.ID_POOSL_STACKTRACEVARIABLEVIEW);
         if (traceReference != null && frameReference != null) {
             IViewPart traceView = traceReference.getView(true);
             IViewPart frameView = frameReference.getView(true);
 
-            frameView.getViewSite().getPage().showView(PooslConstants.ID_POOSL_STACKTRACEVARIABLEVIEW, null, IWorkbenchPage.VIEW_ACTIVATE);
-            traceView.getViewSite().getPage().showView(PooslConstants.ID_POOSL_STACKTRACEVIEW, null, IWorkbenchPage.VIEW_ACTIVATE);
+            frameView.getViewSite().getPage().showView(
+                    PooslConstants.ID_POOSL_STACKTRACEVARIABLEVIEW, null,
+                    IWorkbenchPage.VIEW_ACTIVATE);
+            traceView.getViewSite().getPage().showView(PooslConstants.ID_POOSL_STACKTRACEVIEW, null,
+                    IWorkbenchPage.VIEW_ACTIVATE);
             return null;
         } else {
             IViewPart traceView = site.getPage().showView(PooslConstants.ID_POOSL_STACKTRACEVIEW);
-            IViewPart frameView = site.getPage().showView(PooslConstants.ID_POOSL_STACKTRACEVARIABLEVIEW);
+            IViewPart frameView = site.getPage()
+                    .showView(PooslConstants.ID_POOSL_STACKTRACEVARIABLEVIEW);
 
             if (traceView instanceof StackTraceView) {
                 ((StackTraceView) traceView).setDebugContext(target);
@@ -136,7 +161,8 @@ public final class WindowCreater {
             EModelService service = site.getService(EModelService.class);
             MWindow window = findWindow(traceView, frameView);
             if (window == null) {
-                window = createCombinedWindow(service, traceView, frameView, new WindowShape(900, 600, true));
+                window = createCombinedWindow(service, traceView, frameView,
+                        new WindowShape(900, 600, true));
                 window.setLabel("StackTrace");
             } else {
                 service.bringToTop(window);
@@ -150,7 +176,8 @@ public final class WindowCreater {
      * 
      * @param petView
      * @param varView
-     * @return null if the views are not in their own window otherwise return the window
+     * @return null if the views are not in their own window otherwise return
+     *     the window
      */
     private static MTrimmedWindow findWindow(IViewPart petView, IViewPart varView) {
         MUIElement petElement = petView.getSite().getService(MPart.class);
@@ -163,12 +190,14 @@ public final class WindowCreater {
             varElement = varElement.getCurSharedRef();
         }
 
-        if (petElement.getParent() != null && petElement.getParent().getParent() != null && varElement.getParent() != null && varElement.getParent().getParent() != null) {
+        if (petElement.getParent() != null && petElement.getParent().getParent() != null
+                && varElement.getParent() != null && varElement.getParent().getParent() != null) {
             MElementContainer<MUIElement> petContainer = petElement.getParent().getParent();
             MElementContainer<MUIElement> varContainer = varElement.getParent().getParent();
             if ((petContainer == varContainer) && (petContainer.getParent() != null)) {
                 MUIElement parentElement = petContainer.getParent();
-                if (parentElement instanceof MTrimmedWindow && parentElement.getElementId() != null && parentElement.getElementId().equals(POOSL_THREAD_WINDOW)) {
+                if (parentElement instanceof MTrimmedWindow && parentElement.getElementId() != null
+                        && parentElement.getElementId().equals(POOSL_THREAD_WINDOW)) {
                     return (MTrimmedWindow) parentElement;
                 }
 
@@ -183,20 +212,24 @@ public final class WindowCreater {
      * 
      * @param service
      * @param firstView
+     *     of site
      * @param secondView
+     *     of site
      * @param shape
-     * @return
+     * @return created window
      * @throws PartInitException
      * @see {@link WindowShape}
      */
-    private static MWindow createCombinedWindow(EModelService service, IViewPart firstView, IViewPart secondView, WindowShape shape) {
+    private static MWindow createCombinedWindow(
+            EModelService service, IViewPart firstView, IViewPart secondView, WindowShape shape) {
         MPart topPart = firstView.getSite().getService(MPart.class);
         MPart botPart = secondView.getSite().getService(MPart.class);
 
         MWindow window = service.getTopLevelWindowFor(topPart);
         MPerspective thePersp = service.getPerspectiveFor(topPart);
 
-        MWindowElement container = wrapElementsInContainer(service, topPart, botPart, shape.isHorizontal());
+        MWindowElement container = wrapElementsInContainer(service, topPart, botPart,
+                shape.isHorizontal());
         MTrimmedWindow newWindow = createNewWindow(service, shape);
         newWindow.setElementId(POOSL_THREAD_WINDOW);
         newWindow.getChildren().add(container);
@@ -213,13 +246,20 @@ public final class WindowCreater {
      * Puts both elements in a container. Vital for arranging them in a window.
      * 
      * @param service
-     * @param firstElement
-     * @param secondElement
+     * @param first
+     *     top
+     * @param second
+     *     bottom
      * @param horizontal
-     *            The direction the views will be placed compared to each other
+     *     The direction the views will be placed compared to each other
      * @return {@link MPartSashContainer} as {@link MWindowElement}
      */
-    private static MWindowElement wrapElementsInContainer(EModelService service, MPartSashContainerElement firstElement, MPartSashContainerElement secondElement, boolean horizontal) {
+    private static MWindowElement wrapElementsInContainer(
+            EModelService service, MPartSashContainerElement first,
+            MPartSashContainerElement second, boolean horizontal) {
+        MPartSashContainerElement firstElement = first;
+        MPartSashContainerElement secondElement = second;
+
         if (firstElement.getCurSharedRef() != null) {
             firstElement = firstElement.getCurSharedRef();
         }
@@ -246,11 +286,13 @@ public final class WindowCreater {
     }
 
     /**
-     * Create new Window based on the shape
+     * Create new Window based on the shape.
      * 
      * @param service
+     *     to create ui model
      * @param shape
-     * @return
+     *     of window
+     * @return created window
      */
     private static MTrimmedWindow createNewWindow(EModelService service, WindowShape shape) {
         MTrimmedWindow newWindow = service.createModelElement(MTrimmedWindow.class);
@@ -261,7 +303,8 @@ public final class WindowCreater {
         return newWindow;
     }
 
-    private static MPartStack wrapElementForWindow(EModelService service, MPartSashContainerElement element) {
+    private static MPartStack wrapElementForWindow(
+            EModelService service, MPartSashContainerElement element) {
         if (element instanceof MPlaceholder) {
             MUIElement ref = ((MPlaceholder) element).getRef();
             if (ref instanceof MPart) {
@@ -295,7 +338,6 @@ public final class WindowCreater {
         private final boolean horizontal;
 
         WindowShape(int width, int height, boolean horizontal) {
-            super();
             this.x = 100;
             this.y = 100;
             this.width = width;
@@ -328,12 +370,14 @@ public final class WindowCreater {
      * Closes all thread windows within the {@link IWorkbenchPage}.
      * 
      * @param page
-     *            {@link IWorkbenchPage} In this page it searches for views having a secondary id starting with
-     *            {@link PooslConstants#THREAD_VIEW_ID} and hides them.
+     *     {@link IWorkbenchPage} In this page it searches for views having a
+     *     secondary id starting with
+     *     {@link PooslConstants#THREAD_VIEW_ID} and hides them.
      */
     public static void closeAllThreadWindows(IWorkbenchPage page) {
         for (IViewReference iViewReference : page.getViewReferences()) {
-            if (iViewReference.getSecondaryId() != null && iViewReference.getSecondaryId().startsWith(PooslConstants.THREAD_VIEW_ID)) {
+            if (iViewReference.getSecondaryId() != null
+                    && iViewReference.getSecondaryId().startsWith(PooslConstants.THREAD_VIEW_ID)) {
                 // A view can be shown in multiple pages, it is disposed when its hidden in all
                 // of them
                 page.hideView(iViewReference);

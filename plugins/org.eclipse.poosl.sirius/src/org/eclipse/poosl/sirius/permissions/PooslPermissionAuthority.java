@@ -50,7 +50,8 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
     private List<IAuthorityListener> listeners = new CopyOnWriteArrayList<>();
 
     /** the locked objects. */
-    private ConcurrentMap<EObject, Object> lockedObjects = new MapMaker().concurrencyLevel(4).weakKeys().makeMap();
+    private ConcurrentMap<EObject, Object> lockedObjects = new MapMaker().concurrencyLevel(4)
+            .weakKeys().makeMap();
 
     public PooslPermissionAuthority() {
     }
@@ -63,7 +64,8 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
         return Activator.MESSAGEUPDATER.getLockedFiles().get(launchID);
     }
 
-    private boolean isReadOnly(EObject diagramObj) {
+    private boolean isReadOnly(EObject it) {
+        EObject diagramObj = it;
         if (diagramObj instanceof DiagramImpl) {
             DiagramImpl dd = (DiagramImpl) diagramObj;
             diagramObj = dd.getElement();
@@ -71,8 +73,9 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
         if (diagramObj instanceof DSemanticDecorator) {
             diagramObj = ((DSemanticDecorator) diagramObj).getTarget();
         }
-        if (diagramObj == null)
+        if (diagramObj == null) {
             return false;
+        }
 
         URI uri = null;
         if (diagramObj.eResource() != null) {
@@ -117,7 +120,7 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
      * Check approval for editing this object.
      * 
      * @param eObject
-     *            the object
+     *     the object
      * @return <code>true</code>if approval, <code>false</code> otherwise
      */
     private boolean checkApproval(final EObject eObject) {
@@ -191,7 +194,7 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
      * Check if an object is locked or not.
      * 
      * @param eObject
-     *            the object to check
+     *     the object to check
      * @return <code>true</code> if is locked, <code>false</code> otherwise
      */
     private boolean isLocked(final EObject eObject) {
@@ -202,7 +205,7 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
      * Store as locked instance and notify.
      * 
      * @param eObject
-     *            the locked instance
+     *     the locked instance
      */
     private void storeAsLockedAndNotify(final EObject eObject) {
         lockedObjects.put(eObject, true);
@@ -215,7 +218,7 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
      * Release and notify.
      * 
      * @param eObject
-     *            the locked instance
+     *     the locked instance
      */
     private void releaseFromLockedAndNotify(final EObject eObject) {
         lockedObjects.remove(eObject);
@@ -284,8 +287,11 @@ public class PooslPermissionAuthority implements IPermissionAuthority {
         creatingURIs.remove(uri);
     }
 
+    @Override
     public List<EObject> getLockedObjects() {
-        // TODO Auto-generated method stub
+        // According to Sirius, every locked EObject should be returned.
+        // As locked objects are only the representation at creation time,
+        // result match empty list most of the time.
         return new ArrayList<>();
     }
 }

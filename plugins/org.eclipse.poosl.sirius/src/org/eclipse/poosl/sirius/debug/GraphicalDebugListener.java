@@ -73,7 +73,8 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
         files.addAll(startMessage.getFiles());
         files.addAll(getRelativeUris(startMessage.getRelativeModelPath(), files, projectName));
 
-        Activator.MESSAGEUPDATER.launchStarted(startMessage.getLaunchID(), startMessage.getInstancePortMap(), files);
+        Activator.MESSAGEUPDATER.launchStarted(startMessage.getLaunchID(),
+                startMessage.getInstancePortMap(), files);
     }
 
     @Override
@@ -82,13 +83,16 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     }
 
     @Override
-    public void debugSelectionChanged(final ExternDebugItem selectedItem, ExternDebugMessage message) {
-        final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(selectedItem.getProjectName());
+    public void debugSelectionChanged(
+            final ExternDebugItem selectedItem, ExternDebugMessage message) {
+        final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+                .getProject(selectedItem.getProjectName());
         final EObject diagramTarget = getDiagramTarget(selectedItem);
         if (diagramTarget != null) {
             GraphicalEditorHelper.openCommunicationDiagram(selectedItem, project, diagramTarget);
         } else {
-            LOGGER.log(Level.SEVERE, "Could not find ecore model of the diagram target " + selectedItem.getDiagram());
+            LOGGER.log(Level.SEVERE, "Could not find ecore model of the diagram target "
+                    + selectedItem.getDiagram());
         }
     }
 
@@ -98,13 +102,15 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
         ArrayList<String> idAsArray = new ArrayList<>(Arrays.asList(launchID));
         for (final Session session : SessionManager.INSTANCE.getSessions()) {
             UpdateHelper.addRepresentations(idAsArray, session2Descriptors, session);
-            PooslPermissionAuthority authority = GraphicalEditorHelper.getPermissionAuthority(session);
+            PooslPermissionAuthority authority = GraphicalEditorHelper
+                    .getPermissionAuthority(session);
             if (authority != null) {
                 authority.deActivate(launchID);
             }
         }
         Activator.MESSAGEUPDATER.launchStopped(launchID);
-        PooslDiagramDeleteHelper.closeAndDeleteDiagrams(UpdateHelper.getPooslShell(), session2Descriptors);
+        PooslDiagramDeleteHelper.closeAndDeleteDiagrams(UpdateHelper.getPooslShell(),
+                session2Descriptors);
     }
 
     private EObject getDiagramTarget(ExternDebugItem selectedItem) {
@@ -121,17 +127,19 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     }
 
     private ClusterClass getClusterClass(String[] path, ClusterClass cluster) {
+        ClusterClass result = cluster;
         for (int i = 2; i < path.length; i++) {
-            cluster = getInstanceClass(cluster, path[i]);
+            result = getInstanceClass(result, path[i]);
         }
-        return cluster;
+        return result;
     }
 
     private ClusterClass getInstanceClass(ClusterClass cluster, String instanceName) {
         if (cluster != null && instanceName != null) {
             for (Instance instance : cluster.getInstances()) {
                 if (instance.getName().equals(instanceName)) {
-                    IEObjectDescription descr = PooslReferenceHelper.getInstantiableClassDescription(instance);
+                    IEObjectDescription descr = PooslReferenceHelper
+                            .getInstantiableClassDescription(instance);
                     if (descr.getEClass() == Literals.CLUSTER_CLASS) {
                         EObject obj = descr.getEObjectOrProxy();
                         if (obj.eIsProxy())
@@ -144,14 +152,17 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
         return null;
     }
 
-    private List<URI> getRelativeUris(String relativeModelPath, List<URI> files, String projectName) {
+    private List<URI> getRelativeUris(
+            String relativeModelPath, List<URI> files, String projectName) {
         String absoluteMain = getMainFile(relativeModelPath, files);
         List<URI> relatives = new ArrayList<>();
         if (absoluteMain != null) {
-            String base = absoluteMain.substring(0, absoluteMain.length() - relativeModelPath.substring(projectName.length() + 1).length());
+            String base = absoluteMain.substring(0, absoluteMain.length()
+                    - relativeModelPath.substring(projectName.length() + 1).length());
             for (URI absolute : files) {
                 if (absolute.isFile() && absolute.toFileString().startsWith(base)) {
-                    relatives.add(URI.createPlatformResourceURI(absolute.toFileString().replace(base, "\\" + projectName), true)); //$NON-NLS-1$
+                    relatives.add(URI.createPlatformResourceURI(
+                            absolute.toFileString().replace(base, "\\" + projectName), true)); //$NON-NLS-1$
                 }
             }
         }
@@ -159,11 +170,14 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     }
 
     /**
-     * find main file (used to start the debug session), IDE no longer controls the location in the list
+     * Finds main file (used to start the debug session), IDE no longer controls
+     * the location in the list.
      * 
      * @param relativeModelPath
+     *     from project
      * @param files
-     * @return
+     *     loaded for debug
+     * @return the main file path of null
      */
     private String getMainFile(String relativeModelPath, List<URI> files) {
         // first or last are most likely to be main file.
@@ -187,19 +201,23 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     }
 
     /**
-     * Get Session without having to provide the monitor and still use the Progress Service from non gui context.
+     * Get Session without having to provide the monitor and still use the
+     * Progress Service from non gui context.
      * 
      * @param activeProject
      * @param editor
      * @param create
      * @return session or null
      */
-    public static Session getSession(final IProject activeProject, final IEditorPart editor, final boolean create) {
+    public static Session getSession(
+            final IProject activeProject, final IEditorPart editor, final boolean create) {
         final Set<Session> sessions = new HashSet<>();
         IRunnableWithProgress runnable = new IRunnableWithProgress() {
             @Override
-            public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-                sessions.add(GraphicalEditorHelper.getSession(activeProject, editor, create, false, monitor));
+            public void run(IProgressMonitor monitor)
+                    throws InvocationTargetException, InterruptedException {
+                sessions.add(GraphicalEditorHelper.getSession(activeProject, editor, create, false,
+                        monitor));
             }
         };
 

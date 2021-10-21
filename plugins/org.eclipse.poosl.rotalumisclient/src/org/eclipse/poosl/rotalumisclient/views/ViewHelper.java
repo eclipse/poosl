@@ -51,8 +51,11 @@ public final class ViewHelper {
         IWorkbenchWindow window = null;
         try {
             window = part.getSite().getWorkbenchWindow().getWorkbench().getActiveWorkbenchWindow();
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Could not get workbench window while getting debugContextService", e.getCause());
+        } catch (NullPointerException e) {
+            // Unlikely, unless for unexpected configuration
+            LOGGER.log(Level.WARNING,
+                    "Could not get workbench window while getting debugContextService",
+                    e.getCause());
         }
         IDebugContextManager contextManager = DebugUITools.getDebugContextManager();
         if (contextManager != null && window != null) {
@@ -64,17 +67,20 @@ public final class ViewHelper {
     /**
      * If the secondID represents the thread it returns true.
      * 
-     * This method is used by views that have a secondID to determine if they should show information of the thread or
-     * react to changes in the debug state. Views that have a secondID are dedicated to show only information on a
+     * This method is used by views that have a secondID to determine if they
+     * should show information of the thread or
+     * react to changes in the debug state. Views that have a secondID are
+     * dedicated to show only information on a
      * specific thread.
      * <p>
-     * Also see {@link ViewHelper#isTargetID(IDebugTarget, String)} and {@link ViewHelper#getSecondId(PooslThread)}
+     * Also see {@link ViewHelper#isTargetID(IDebugTarget, String)} and
+     * {@link ViewHelper#getSecondId(PooslThread)}
      * </p>
      * 
      * @param thread
-     *            The thread that contains new information
+     *     The thread that contains new information
      * @param secondID
-     *            secondid of the {@link ViewPart}
+     *     secondid of the {@link ViewPart}
      * @return true if the secondid represents the thread
      * 
      */
@@ -86,10 +92,13 @@ public final class ViewHelper {
     /**
      * If the secondID represents the IDebugTarget it returns true.
      * 
-     * This method is used by views that have a secondid to determine if they should react to changes in the debug
-     * state. Views that have a secondid are dedicated to show only information on a specific thread.
+     * This method is used by views that have a secondid to determine if they
+     * should react to changes in the debug
+     * state. Views that have a secondid are dedicated to show only information
+     * on a specific thread.
      * <p>
-     * Also see {@link ViewHelper#isThreadID(PooslThread, String)} and {@link ViewHelper#getSecondId(PooslThread)}
+     * Also see {@link ViewHelper#isThreadID(PooslThread, String)} and
+     * {@link ViewHelper#getSecondId(PooslThread)}
      * </p>
      * 
      * @param target
@@ -107,26 +116,33 @@ public final class ViewHelper {
     }
 
     /**
-     * Returns the secondID of the given thread. The secondID contains the debugtarget name and thread name. This
-     * secondID is used by Views that only need to show information on a specific thread.
+     * Returns the secondID of the given thread. The secondID contains the
+     * debugtarget name and thread name. This
+     * secondID is used by Views that only need to show information on a
+     * specific thread.
      * 
      * @param thread
-     *            {@link PooslThread}
-     * @return If the target or thread name could not be retrieved it returns an empty string.
+     *     {@link PooslThread}
+     * @return If the target or thread name could not be retrieved it returns an
+     *     empty string.
      */
     public static String getSecondId(PooslThread thread) {
-        ILaunchConfiguration launchConfiguration = thread.getDebugTarget().getLaunch().getLaunchConfiguration();
+        ILaunchConfiguration launchConfiguration = thread.getDebugTarget().getLaunch()
+                .getLaunchConfiguration();
 
         String port = ""; //$NON-NLS-1$
         try {
-            port = launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""); //$NON-NLS-1$
+            port = launchConfiguration
+                    .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""); //$NON-NLS-1$
         } catch (CoreException e) {
-            LOGGER.log(Level.WARNING, "Rotalumis Port could not be retrieved from the launch configuration.", e);
+            LOGGER.log(Level.WARNING,
+                    "Rotalumis Port could not be retrieved from the launch configuration.", e);
         }
 
         String id = ""; //$NON-NLS-1$
         try {
-            id = PooslConstants.THREAD_VIEW_ID + port + SECONDID_SPLIT + thread.getDebugTarget().getName() + SECONDID_SPLIT + thread.getName();
+            id = PooslConstants.THREAD_VIEW_ID + port + SECONDID_SPLIT
+                    + thread.getDebugTarget().getName() + SECONDID_SPLIT + thread.getName();
         } catch (DebugException e) {
             LOGGER.log(Level.SEVERE, "Thread name could not be read.", e);
         }
@@ -169,38 +185,43 @@ public final class ViewHelper {
     }
 
     /**
-     * If the thread is not yet set, get the thread represented by the secondid using the events source only. Used by
-     * the separate PETView and Variable view after the model is terminated and restarted.
+     * If the thread is not yet set, get the thread represented by the secondid
+     * using the events source only. Used by
+     * the separate PETView and Variable view after the model is terminated and
+     * restarted.
      * 
      * @param thread
-     *            Current {@link PooslThread}
+     *     Current {@link PooslThread}
      * @param debugEvent
-     *            {@link DebugEvent} that is triggered
+     *     {@link DebugEvent} that is triggered
      * @param secondID
-     *            {@link String} secondid that represents the thread.
+     *     {@link String} secondid that represents the thread.
      * @return {@link PooslThread} thread
      */
-    public static PooslThread getThreadFromEvent(PooslThread thread, DebugEvent debugEvent, String secondID) {
-        if (thread != null && thread.isTerminated()) {
-            thread = null;
+    public static PooslThread getThreadFromEvent(
+            PooslThread thread, DebugEvent debugEvent, String secondID) {
+        PooslThread result = thread;
+        if (result != null && result.isTerminated()) {
+            result = null;
         }
-        if (thread == null && secondID != null) {
+        if (result == null && secondID != null) {
             if (debugEvent.getSource() instanceof PooslDebugTarget) {
 
                 try {
                     PooslDebugTarget target = (PooslDebugTarget) debugEvent.getSource();
                     String targetName = target.getName();
                     if (targetName.equals(ViewHelper.getDebugTargetName(secondID))) {
-                        thread = PooslDebugHelper.getThreadByName(target.getThreads(), ViewHelper.getThreadName(secondID));
+                        result = PooslDebugHelper.getThreadByName(target.getThreads(),
+                                ViewHelper.getThreadName(secondID));
                     }
                 } catch (DebugException e) {
                     LOGGER.log(Level.WARNING, "Could not get name of the debugtarget.", e);
                 }
             } else if (debugEvent.getSource() instanceof PooslThread) {
                 PooslThread newThread = (PooslThread) debugEvent.getSource();
-                thread = (isThreadID(newThread, secondID)) ? newThread : null;
+                result = (isThreadID(newThread, secondID)) ? newThread : null;
             }
         }
-        return thread;
+        return result;
     }
 }
