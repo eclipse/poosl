@@ -22,7 +22,7 @@ with requirements
 environment JavaSE-11
 
 
-location eclipse_core "https://download.eclipse.org/releases/2020-03/" {	
+location eclipse_core "https://download.eclipse.org/releases/2021-06/" {	
 // Following dependencies are already required by runtime or tests
 // But they are also required for tools.
 
@@ -51,7 +51,7 @@ location eclipse_core "https://download.eclipse.org/releases/2020-03/" {
 }
 
 
-location sirius "https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-03/" {
+location sirius "https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-09/" {
 	
 	// Includes Odesign edit, Sirius interpreter view and Odesign reload 
 	org.eclipse.sirius.specifier.ide.ui.feature.group

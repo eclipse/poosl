@@ -80,8 +80,8 @@
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="eclipse" label="Eclipse basic">
 			
-			<repository url="http://download.eclipse.org/releases/2020-03" />
-			<repository url="http://download.eclipse.org/technology/epp/packages/2020-03" />
+			<repository url="http://download.eclipse.org/releases/2021-06" />
+			<repository url="http://download.eclipse.org/technology/epp/packages/2021-06" />
 
 			<requirement name="epp.package.modeling" versionRange="[4.6.0,5.0.0)" />
 			<requirement name="org.eclipse.platform.feature.group" versionRange="[4.6.0,5.0.0)" />
@@ -144,7 +144,7 @@
 		</setupTask>
 				
 		<setupTask xsi:type="setup.p2:P2Task" id="ui" label="UI designer">
-			<repository url="http://download.eclipse.org/releases/2020-03" />
+			<repository url="http://download.eclipse.org/releases/2021-06" />
 			
       		<!-- javafx -->
 			<repository url="http://download.eclipse.org/efxclipse/updates-released/3.6.0/site/" />
@@ -169,7 +169,7 @@
 		
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="langs" label="Language">
-			<repository url="http://download.eclipse.org/releases/2020-03" />
+			<repository url="http://download.eclipse.org/releases/2021-06" />
 		
 			 <!-- Java language -->
 			<requirement name="org.eclipse.xtend.sdk.feature.group" />
@@ -198,7 +198,7 @@
 		https://bugs.eclipse.org/bugs/show_bug.cgi?id=575002
 		-->
 		
-			<repository url="http://download.eclipse.org/releases/2020-03" />
+			<repository url="http://download.eclipse.org/releases/2021-06" />
 			<requirement name="org.eclipse.eclemma.feature.feature.group" /> <!-- from eclipse dist -->
 			<requirement name="org.eclipse.rcptt.platform.feature.group" />
 			
@@ -233,7 +233,7 @@
 		</setupTask>
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="modeling" label="Eclipse Modeling">
-			<repository url="http://download.eclipse.org/releases/2020-03" />
+			<repository url="http://download.eclipse.org/releases/2021-06" />
 			<requirement name="org.eclipse.emf.sdk.feature.group" />
 			<requirement name="org.eclipse.emf.query.sdk.feature.group" />
 			<requirement name="org.eclipse.emf.transaction.sdk.feature.group" />
@@ -246,7 +246,7 @@
 			<requirement name="org.eclipse.emf.ecore.xcore.sdk.feature.group" />
 			
 			<!-- We do not reference Sirius from Eclipse release as source in not available -->
-			<repository url="https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-03" />
+			<repository url="https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-09" />
 			<requirement name="org.eclipse.sirius.specifier.ide.ui.source.feature.group" />
 			<requirement name="org.eclipse.sirius.diagram.elk.sdk.feature.feature.group" />
 			<requirement name="org.eclipse.acceleo.ui.interpreter.feature.group" />
@@ -267,7 +267,7 @@
 		</setupTask>
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="modeling-extras" label="Eclipse Modeling extra">
-			<repository url="http://download.eclipse.org/releases/2020-03" />
+			<repository url="http://download.eclipse.org/releases/2021-06" />
 
 			<requirement name="org.eclipse.xtext.sdk.feature.group" />
 			<requirement name="org.eclipse.ocl.all.sdk.feature.group" />

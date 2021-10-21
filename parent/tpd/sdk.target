@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Poosl SDK" sequenceNumber="1632730084">
+<target name="Poosl SDK" sequenceNumber="1634809967">
   <locations>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.platform.sdk" version="4.15.0.I20200305-0155"/>
-      <repository id="eclipse_update" location="http://download.eclipse.org/eclipse/updates/4.15"/>
-    </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.persistence.moxy.feature.group" version="2.7.7.v20200504-69f2c2b80d"/>
       <repository id="eclipselink" location="https://download.eclipse.org/rt/eclipselink/updates/"/>
@@ -29,7 +25,7 @@
       <repository id="EPL" location="http://download.eclipse.org/cbi/updates/license"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.202109171116"/>
+      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.202110180801"/>
       <repository id="rotalumis" location="http://www.es.ele.tue.nl/rotalumis/repository/integration/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
@@ -48,29 +44,30 @@
       <unit id="org.eclipse.rcptt.updates.feature.group" version="2.5.1.M3"/>
       <unit id="org.eclipse.rcptt.watson.feature.group" version="2.5.1.M3"/>
       <unit id="org.junit" version="4.13.0.v20200204-1500"/>
-      <unit id="org.eclipse.jdt.feature.group" version="3.18.300.v20200305-0155"/>
-      <unit id="org.eclipse.pde.feature.group" version="3.14.300.v20200305-0155"/>
-      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.21.0.v20200302-1509"/>
-      <unit id="org.eclipse.emf.mwe2.launcher.feature.group" version="2.11.2.v20200224-0816"/>
+      <unit id="org.eclipse.jdt.feature.group" version="3.18.800.v20210611-1600"/>
+      <unit id="org.eclipse.pde.feature.group" version="3.14.800.v20210611-1636"/>
+      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.25.0.v20210301-1429"/>
+      <unit id="org.eclipse.emf.mwe2.launcher.feature.group" version="2.12.1.v20210218-2134"/>
       <unit id="org.eclipse.xpand.feature.group" version="2.2.0.v201605260315"/>
       <unit id="org.eclipse.xtend.feature.group" version="2.2.0.v201605260315"/>
-      <unit id="org.eclipse.platform.feature.group" version="4.15.0.v20200305-0155"/>
-      <unit id="javax.activation" version="1.1.0.v201211130549"/>
-      <unit id="org.eclipse.xtext.redist.feature.group" version="2.21.0.v20200302-1509"/>
+      <unit id="org.eclipse.platform.feature.group" version="4.20.0.v20210611-1600"/>
+      <unit id="javax.activation" version="1.2.2.v20201119-1642"/>
+      <unit id="org.eclipse.xtext.redist.feature.group" version="2.25.0.v20210301-1429"/>
       <unit id="org.antlr.runtime" version="3.2.0.v201101311130"/>
-      <unit id="org.apache.commons.cli" version="1.2.0.v201404270220"/>
-      <unit id="org.eclipse.emf.feature.group" version="2.21.0.v20200205-0529"/>
+      <unit id="org.apache.commons.cli" version="1.4.0.v20200417-1444"/>
+      <unit id="org.eclipse.emf.feature.group" version="2.26.0.v20210506-1425"/>
       <unit id="org.eclipse.emf.transaction.feature.group" version="1.12.0.201805140824"/>
       <unit id="org.eclipse.emf.query.feature.group" version="1.12.0.201805030653"/>
-      <unit id="org.eclipse.emf.validation.feature.group" version="1.12.1.201812070911"/>
+      <unit id="org.eclipse.emf.validation.feature.group" version="1.12.2.202008210805"/>
       <unit id="org.eclipse.gef.feature.group" version="3.11.0.201606061308"/>
-      <unit id="org.eclipse.acceleo.feature.group" version="3.7.10.202002210922"/>
-      <unit id="org.eclipse.acceleo.query.feature.group" version="7.0.0.202002210922"/>
-      <unit id="org.eclipse.ocl.feature.group" version="3.14.2.v20200309-0848"/>
-      <unit id="org.eclipse.egit.feature.group" version="5.7.0.202003110725-r"/>
-      <unit id="org.eclipse.platform.ide" version="4.15.0.I20200305-0155"/>
-      <unit id="org.eclipse.equinox.executable.feature.group" version="3.8.700.v20200207-2156"/>
-      <repository id="eclipse_core" location="https://download.eclipse.org/releases/2020-03/"/>
+      <unit id="org.eclipse.acceleo.feature.group" version="3.7.11.202102190929"/>
+      <unit id="org.eclipse.acceleo.query.feature.group" version="7.0.0.202102190929"/>
+      <unit id="org.eclipse.ocl.feature.group" version="3.14.500.v20210609-1442"/>
+      <unit id="org.eclipse.egit.feature.group" version="5.12.0.202106070339-r"/>
+      <unit id="org.eclipse.platform.ide" version="4.20.0.I20210611-1600"/>
+      <unit id="org.eclipse.equinox.executable.feature.group" version="3.8.1200.v20210527-0259"/>
+      <unit id="org.eclipse.platform.sdk" version="4.20.0.I20210611-1600"/>
+      <repository id="eclipse_core" location="https://download.eclipse.org/releases/2021-06/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.sirius.specifier.ide.ui.feature.group" version="6.5.1.202106111115"/>
@@ -89,7 +86,7 @@
       <unit id="org.eclipse.eef.ext.widgets.reference.feature.feature.group" version="2.1.5.202008270808"/>
       <unit id="org.eclipse.sirius.interpreter.feature.feature.group" version="6.5.1.202106111115"/>
       <unit id="org.eclipse.sirius.diagram.elk.feature.feature.group" version="6.5.1.202106111115"/>
-      <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-03/"/>
+      <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-09/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.mypsycho.emf.modit_feature.feature.group" version="0.7.1.v20210723-1525"/>
