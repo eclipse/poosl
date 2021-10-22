@@ -81,18 +81,27 @@ import com.google.common.collect.Iterables;
  *
  */
 public class PooslJavaValidatorMisc extends PooslJavaValidatorUnusedElements {
-    private static final String INVALID_IMPORTLIB_LOCATION_INCL_INFO = " The Poosl include paths can be changed using Project -> Properties -> Poosl.";
+    private static final String IMPORTLIB_LOCATION_INCL_INFO = " The Poosl include paths can be changed using Project -> Properties -> Poosl.";
 
-    private static final String INVALID_IMPORTLIB_UNRESOLVED_ORIGINAL_AND_LOCAL = "Imported file \"{0}\" contains an importlib \"{1}\" that can not be resolved using the Poosl include "
-            + "paths of the current project." + INVALID_IMPORTLIB_LOCATION_INCL_INFO;
+    private static final String IMPORTLIB_RESOLUTION_INFO = " However, it was originally resolved to \"{2}\".";
 
-    private static final String INVALID_IMPORTLIB_UNRESOLVED_LOCAL = "Imported file \"{0}\" contains an importlib \"{1}\" that can not be resolved using the Poosl include paths of the "
-            + "current project. However, it was originally resolved to \"{2}\"."
-            + INVALID_IMPORTLIB_LOCATION_INCL_INFO;
+    private static final String IMPORTLIB_UNRESOLVED_ORIGINAL_AND_LOCAL = //
+            "Imported file \"{0}\" contains an importlib \"{1}\" that can not be resolved using the Poosl include paths of the current project.";
 
-    private static final String INVALID_IMPORTLIB_RESOLVED_DIFF = "Imported file \"{0}\" contains an importlib \"{1}\" that resolves to \"{3}\" using the Poosl include paths of the "
-            + "current project. However, it was originally resolved to \"{2}\"."
-            + INVALID_IMPORTLIB_LOCATION_INCL_INFO;
+    private static final String IMPORTLIB_UNRESOLVED_LOCAL = //
+            "Imported file \"{0}\" contains an importlib \"{1}\" that can not be resolved using the Poosl include paths of the current project. ";
+
+    private static final String IMPORTLIB_RESOLVED_DIFF = //
+            "Imported file \"{0}\" contains an importlib \"{1}\" that resolves to \"{3}\" using the Poosl include paths of the current project. ";
+
+    private static final String INVALID_IMPORTLIB_UNRESOLVED_ORIGINAL_AND_LOCAL = IMPORTLIB_UNRESOLVED_ORIGINAL_AND_LOCAL
+            + IMPORTLIB_LOCATION_INCL_INFO;
+
+    private static final String INVALID_IMPORTLIB_UNRESOLVED_LOCAL = IMPORTLIB_UNRESOLVED_LOCAL
+            + IMPORTLIB_RESOLUTION_INFO + IMPORTLIB_LOCATION_INCL_INFO;
+
+    private static final String INVALID_IMPORTLIB_RESOLVED_DIFF = IMPORTLIB_RESOLVED_DIFF
+            + IMPORTLIB_RESOLUTION_INFO + IMPORTLIB_LOCATION_INCL_INFO;
 
     private static final String NO_RECEIVING_MESSAGE = "On {0}, process port {1} can send message ''{2}'' with {3} parameter(s),"
             + " but no process port can receive it";

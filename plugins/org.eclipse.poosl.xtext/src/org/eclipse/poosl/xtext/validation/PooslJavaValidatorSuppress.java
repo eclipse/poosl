@@ -63,7 +63,7 @@ public class PooslJavaValidatorSuppress extends AbstractPooslValidator {
     }
 
     /** Singleton for performance measure. */
-    protected static final Perf PERF = new Perf("PooslValidation", true); //$NON-NLS-1$
+    protected static final Perf PERF = new Perf("PooslValidator", false); //$NON-NLS-1$
 
     /** Message on misuse of warning method. */
     private static final String ILLEGAL_WARNING_CALL = //
