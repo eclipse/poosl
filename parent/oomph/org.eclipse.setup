@@ -199,7 +199,6 @@
 		
 			<repository url="http://download.eclipse.org/releases/2020-09" />
 			<requirement name="org.eclipse.eclemma.feature.feature.group" /> <!-- from eclipse dist -->
-			<requirement name="org.eclipse.rcptt.platform.feature.group" />
 
 			<repository url="https://checkstyle.org/eclipse-cs-update-site" />
 			<requirement name="net.sf.eclipsecs.feature.group" />
@@ -223,6 +222,18 @@
 			-->
 			
 		</setupTask>
+		
+		<setupTask xsi:type="setup.p2:P2Task" id="RCP Tests" label="RCP Tests">
+		<!-- 
+		/!\
+		Warning RCPTT of Eclipse 2020-06 is broken 
+		https://bugs.eclipse.org/bugs/show_bug.cgi?id=575002
+		-->		
+			<repository url="http://download.eclipse.org/releases/2020-09" />
+			<requirement name="org.eclipse.rcptt.platform.feature.group" />
+			
+		</setupTask>
+		
 		
 		<setupTask xsi:type="setup.p2:P2Task" id="modeling" label="Eclipse Modeling">
 			<repository url="http://download.eclipse.org/releases/2020-09" />

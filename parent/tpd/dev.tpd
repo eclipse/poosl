@@ -22,7 +22,7 @@ with requirements
 environment JavaSE-11
 
 
-location eclipse_core "https://download.eclipse.org/releases/2021-06/" {	
+location eclipse_core "https://download.eclipse.org/releases/2020-09/" {	
 // Following dependencies are already required by runtime or tests
 // But they are also required for tools.
 

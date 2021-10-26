@@ -23,7 +23,7 @@ with requirements
 
 // This target platform declare dependencies of components to be release
 
-location eclipse_core "https://download.eclipse.org/releases/2021-06/" {
+location eclipse_core "https://download.eclipse.org/releases/2020-09/" {
 	
 	 org.eclipse.platform.feature.group
 	// +-> org.eclipse.ui.ide.application (default of sure-fire)
