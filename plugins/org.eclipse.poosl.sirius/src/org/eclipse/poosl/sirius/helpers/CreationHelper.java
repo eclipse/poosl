@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -90,6 +90,8 @@ import com.google.common.collect.Lists;
  *
  */
 public final class CreationHelper {
+    private static final ILog LOGGER = Platform.getLog(CreationHelper.class);
+
     private static final String COMMA = ","; //$NON-NLS-1$
 
     private static final String MESSAGE_TITLE_ADD_PORT = "Adding port";
@@ -140,14 +142,16 @@ public final class CreationHelper {
             return;
         }
 
-        NewInstanceDialog inputDialog = new NewInstanceDialog(Display.getDefault().getActiveShell(), poosl, container);
+        NewInstanceDialog inputDialog = new NewInstanceDialog(Display.getDefault().getActiveShell(),
+                poosl, container);
         if (inst != null) {
             inputDialog.setInstantiableClass(inst);
         }
 
         if (inputDialog.open() == Window.OK) {
             String name = inputDialog.getName();
-            String classDef = (inst == null) ? getInstantiableClass(container, poosl, inputDialog) : inst.getName();
+            String classDef = (inst == null)
+                ? getInstantiableClass(container, poosl, inputDialog) : inst.getName();
 
             Instance instance = PooslFactoryImpl.init().createInstance();
             instance.setClassDefinition(classDef);
@@ -158,16 +162,18 @@ public final class CreationHelper {
     }
 
     /**
-     * Creates a channel with the two ports, if a channel already exists add the source port to the target port. If 2
+     * Creates a channel with the two ports, if a channel already exists add the
+     * source port to the target port. If 2
      * channels are selected the 2 channels are combined
      * 
      * @param sourceobject
-     *            to connect
+     *     to connect
      * @param targetView
-     *            representation of target
+     *     representation of target
      * @param targetobject
      */
-    public static void createConnection(EObject sourceobject, EObject targetView, EObject targetobject) {
+    public static void createConnection(
+            EObject sourceobject, EObject targetView, EObject targetobject) {
         if (sourceobject instanceof Port) {
             // From externalport
             doCreateConnection((Port) sourceobject, targetView, targetobject);
@@ -181,7 +187,8 @@ public final class CreationHelper {
         CreationHelper.doValidate(targetobject, targetView);
     }
 
-    private static void doCreateConnection(Port sourceport, EObject targetView, EObject targetobject) {
+    private static void doCreateConnection(
+            Port sourceport, EObject targetView, EObject targetobject) {
         Channel sourcechannel = findChannelForExternalPort(sourceport);
         InstancePort targetport = null;
         Channel targetchannel = null;
@@ -198,7 +205,8 @@ public final class CreationHelper {
         combineChannels(sourceport, sourcechannel, targetport, targetchannel);
     }
 
-    private static void doCreateConnection(InstancePort sourceport, EObject targetView, EObject targetobject) {
+    private static void doCreateConnection(
+            InstancePort sourceport, EObject targetView, EObject targetobject) {
         Channel sourcechannel = (Channel) sourceport.eContainer();
         if (targetobject instanceof Channel) {
             // instanceport to channel
@@ -217,7 +225,8 @@ public final class CreationHelper {
         }
     }
 
-    private static void doCreateConnection(Channel sourcechannel, EObject targetView, EObject targetobject) {
+    private static void doCreateConnection(
+            Channel sourcechannel, EObject targetView, EObject targetobject) {
         if (targetobject instanceof Channel) {
             // channel to channel
             Channel targetchannel = (Channel) targetobject;
@@ -236,24 +245,28 @@ public final class CreationHelper {
     }
 
     /**
-     * The connection is changed which means a port should be removed from the channel and add the new port to the
-     * channel. This method uses {@link CreationHelper#createConnection(EObject, Object, EObject)} to add the new port
+     * The connection is changed which means a port should be removed from the
+     * channel and add the new port to the
+     * channel. This method uses
+     * {@link CreationHelper#createConnection(EObject, Object, EObject)} to add
+     * the new port
      * to the channel.
      * 
      * @param channel
-     *            to update
+     *     to update
      * @param view
-     *            element to refresh
+     *     element to refresh
      * 
      * @param old
-     *            The port that will be removed from the channel
+     *     The port that will be removed from the channel
      * @param oldContainer
-     *            Diagram target element
+     *     Diagram target element
      * @param target
-     *            The port that will added to the channel
+     *     The port that will added to the channel
      * @param targetContainer
      */
-    public static void reconnectConnection(Channel channel, EObject view, //
+    public static void reconnectConnection(
+            Channel channel, EObject view, //
             EObject old, EObject oldContainer, EObject target, EObject targetContainer) {
 
         // Remove disconnected port from channel and remember this channel
@@ -275,9 +288,9 @@ public final class CreationHelper {
      * Creates InstancePort.
      * 
      * @param instance
-     *            of element
+     *     of element
      * @param port
-     *            of element
+     *     of element
      * @return new unattached InstancePort
      */
     public static InstancePort createInstancePort(Instance instance, Port port) {
@@ -299,7 +312,8 @@ public final class CreationHelper {
             InstantiableClass obj = PooslReferenceHelper.getInstantiableClassEObject(instance);
             if (obj != null) {
                 String type = (obj instanceof ClusterClass) ? "cluster class" : "process class";
-                boolean dialog = MessageDialog.openConfirm(Display.getDefault().getActiveShell(), MESSAGE_TITLE_ADD_PORT, MESSAGE_ADD_PORT + type + " " + obj.getName()); //$NON-NLS-1$
+                boolean dialog = MessageDialog.openConfirm(Display.getDefault().getActiveShell(),
+                        MESSAGE_TITLE_ADD_PORT, MESSAGE_ADD_PORT + type + " " + obj.getName()); //$NON-NLS-1$
                 if (dialog) {
                     addPort(obj);
                     saveChanges(obj);
@@ -309,7 +323,9 @@ public final class CreationHelper {
     }
 
     public static void createVariable(EObject container) {
-        NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), container.eResource(), getExistingVariablesFromClass(container), "variable"); //$NON-NLS-1$
+        NewVariableDialog variableDialog = new NewVariableDialog(
+                Display.getDefault().getActiveShell(), container.eResource(),
+                getExistingVariablesFromClass(container), "variable"); //$NON-NLS-1$
         if (variableDialog.open() == Window.OK) {
             String name = variableDialog.getName();
             String selectedClass = variableDialog.getSelectedClass();
@@ -338,7 +354,9 @@ public final class CreationHelper {
 
     public static void createParameter(final InstantiableClass container) {
         Resource resource = container.eResource();
-        final NewVariableDialog parameterDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesFromClass(container), "parameter"); //$NON-NLS-1$
+        final NewVariableDialog parameterDialog = new NewVariableDialog(
+                Display.getDefault().getActiveShell(), resource,
+                getExistingVariablesFromClass(container), "parameter"); //$NON-NLS-1$
 
         if (parameterDialog.open() == Window.OK) {
             String name = parameterDialog.getName();
@@ -354,7 +372,8 @@ public final class CreationHelper {
     public static void createMethod(EObject container) {
         if (container instanceof ProcessClass) {
             ProcessClass processclass = (ProcessClass) container;
-            NewMethodProcessDialog methodDialog = new NewMethodProcessDialog(Display.getDefault().getActiveShell(), processclass);
+            NewMethodProcessDialog methodDialog = new NewMethodProcessDialog(
+                    Display.getDefault().getActiveShell(), processclass);
             if (methodDialog.open() == Window.OK) {
                 String name = methodDialog.getName();
                 List<Declaration> inputVariables = methodDialog.getInputVariables();
@@ -370,7 +389,8 @@ public final class CreationHelper {
             }
         } else if (container instanceof DataClass) {
             DataClass dataClass = (DataClass) container;
-            NewMethodDataDialog methodDialog = new NewMethodDataDialog(Display.getDefault().getActiveShell(), dataClass);
+            NewMethodDataDialog methodDialog = new NewMethodDataDialog(
+                    Display.getDefault().getActiveShell(), dataClass);
             if (methodDialog.open() == Window.OK) {
                 String name = methodDialog.getName();
                 List<Declaration> inputVariables = methodDialog.getInputVariables();
@@ -392,7 +412,8 @@ public final class CreationHelper {
     }
 
     public static void createProcessClass(Poosl container) {
-        NameDialog nameDialog = new NameDialog(Display.getDefault().getActiveShell(), NameHelper.getAllInstantiableNames(container), PooslClassType.PROCESSCLASS);
+        NameDialog nameDialog = new NameDialog(Display.getDefault().getActiveShell(),
+                NameHelper.getAllInstantiableNames(container), PooslClassType.PROCESSCLASS);
         if (nameDialog.open() == Window.OK) {
             String name = nameDialog.getName();
 
@@ -403,9 +424,11 @@ public final class CreationHelper {
     }
 
     public static void createDataClass(Poosl container) {
-        List<String> dataClassNames = new ArrayList<>(PooslCache.get(container.eResource()).getDataClassMap().keySet());
+        List<String> dataClassNames = new ArrayList<>(
+                PooslCache.get(container.eResource()).getDataClassMap().keySet());
 
-        NameDialog nameDialog = new NameDialog(Display.getDefault().getActiveShell(), dataClassNames, PooslClassType.DATACLASS);
+        NameDialog nameDialog = new NameDialog(Display.getDefault().getActiveShell(),
+                dataClassNames, PooslClassType.DATACLASS);
         if (nameDialog.open() == Window.OK) {
             PooslFactory pooslFactory = PooslFactoryImpl.init();
             DataClass dataClass = pooslFactory.createDataClass();
@@ -426,7 +449,8 @@ public final class CreationHelper {
     }
 
     public static void createClusterClass(Poosl container) {
-        NameDialog nameDialog = new NameDialog(Display.getDefault().getActiveShell(), NameHelper.getAllInstantiableNames(container), PooslClassType.CLUSTERCLASS);
+        NameDialog nameDialog = new NameDialog(Display.getDefault().getActiveShell(),
+                NameHelper.getAllInstantiableNames(container), PooslClassType.CLUSTERCLASS);
         if (nameDialog.open() == Window.OK) {
             String name = nameDialog.getName();
 
@@ -439,13 +463,17 @@ public final class CreationHelper {
     public static void deleteInstance(Instance instance) {
         if (isEditAllowed(instance) && instance.eContainer() instanceof ClusterClass) {
             ClusterClass cluster = (ClusterClass) instance.eContainer();
-            for (Iterator<Channel> channelIt = cluster.getChannels().iterator(); channelIt.hasNext(); /**/) {
+            for (Iterator<Channel> channelIt = cluster.getChannels().iterator(); channelIt
+                    .hasNext(); /**/) {
                 Channel channel = channelIt.next();
-                for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); /**/) {
+                for (Iterator<InstancePort> iterator = channel.getInstancePorts()
+                        .iterator(); iterator.hasNext(); /**/) {
                     InstancePort instanceport = iterator.next();
                     if (instanceport.getInstance() == instance) {
                         iterator.remove();
-                        if (channel.getInstancePorts().isEmpty() || (channel.getInstancePorts().size() == 1 && channel.getExternalPort() == null)) {
+                        if (channel.getInstancePorts().isEmpty()
+                                || (channel.getInstancePorts().size() == 1
+                                        && channel.getExternalPort() == null)) {
                             channelIt.remove();
                         }
                     }
@@ -461,7 +489,8 @@ public final class CreationHelper {
         saveChanges(channel);
     }
 
-    private static void doDeleteChannelConnection(Channel channel, EObject port, EObject portParent) {
+    private static void doDeleteChannelConnection(
+            Channel channel, EObject port, EObject portParent) {
         if (port instanceof InstancePort) {
             channel.getInstancePorts().remove(port);
         } else if (portParent instanceof ClusterClass) {
@@ -556,7 +585,7 @@ public final class CreationHelper {
                 obj = EcoreUtil.resolve(obj, iPort);
             deletePort((Port) obj);
         } else {
-            Logger.getGlobal().log(Level.SEVERE, "Port couldn't be found.");
+            LOGGER.error("Port couldn't be found.");
             // should not happen?
         }
     }
@@ -609,7 +638,9 @@ public final class CreationHelper {
 
     public static void editMethod(ProcessMethod processMethod) {
         if (isEditAllowed(processMethod)) {
-            NewMethodProcessDialog methodDialog = new NewMethodProcessDialog(Display.getDefault().getActiveShell(), (ProcessClass) processMethod.eContainer());
+            NewMethodProcessDialog methodDialog = new NewMethodProcessDialog(
+                    Display.getDefault().getActiveShell(),
+                    (ProcessClass) processMethod.eContainer());
             methodDialog.setProcessMethod(processMethod);
 
             if (methodDialog.open() == Window.OK) {
@@ -638,7 +669,8 @@ public final class CreationHelper {
     }
 
     public static void editMethod(DataMethod dataMethod) {
-        NewMethodDataDialog methodDialog = new NewMethodDataDialog(Display.getDefault().getActiveShell(), (DataClass) dataMethod.eContainer());
+        NewMethodDataDialog methodDialog = new NewMethodDataDialog(
+                Display.getDefault().getActiveShell(), (DataClass) dataMethod.eContainer());
         methodDialog.setDataMethod(dataMethod);
 
         if ((methodDialog.open() == Window.OK) && dataMethod instanceof DataMethodNamed) {
@@ -661,7 +693,9 @@ public final class CreationHelper {
         if (isEditAllowed(variable)) {
             Resource resource = variable.eResource();
             Declaration declaration = (Declaration) variable.eContainer();
-            NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesWithoutDeclaration(declaration), "variable"); //$NON-NLS-1$
+            NewVariableDialog variableDialog = new NewVariableDialog(
+                    Display.getDefault().getActiveShell(), resource,
+                    getExistingVariablesWithoutDeclaration(declaration), "variable"); //$NON-NLS-1$
             variableDialog.setVariable(declaration);
 
             if (variableDialog.open() == Window.OK) {
@@ -684,7 +718,8 @@ public final class CreationHelper {
         return editDeclarationVariables(declaration, variables);
     }
 
-    public static Declaration editDeclarationVariables(Declaration declaration, List<String> variables) {
+    public static Declaration editDeclarationVariables(
+            Declaration declaration, List<String> variables) {
         PooslFactory pooslFactory = PooslFactoryImpl.init();
         int existingvars = declaration.getVariables().size();
 
@@ -716,7 +751,9 @@ public final class CreationHelper {
             Resource resource = variable.eResource();
             Declaration declaration = (Declaration) variable.eContainer();
 
-            NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), resource, getExistingVariablesWithoutDeclaration(declaration), "parameter"); //$NON-NLS-1$
+            NewVariableDialog variableDialog = new NewVariableDialog(
+                    Display.getDefault().getActiveShell(), resource,
+                    getExistingVariablesWithoutDeclaration(declaration), "parameter"); //$NON-NLS-1$
             StringBuilder varname = new StringBuilder();
             for (int i = 0; i < declaration.getVariables().size(); i++) {
                 varname = (i > 0) ? varname.append(COMMA) : varname;
@@ -742,11 +779,14 @@ public final class CreationHelper {
 
     public static List<String> getExistingVariablesFromClass(EObject object) {
         if (object instanceof DataClass) {
-            return variableScopeToNameList(PooslScopeProvider.helperScope_DataClass_variable((DataClass) object));
+            return variableScopeToNameList(
+                    PooslScopeProvider.helperScope_DataClass_variable((DataClass) object));
         } else if (object instanceof ProcessClass) {
-            return variableScopeToNameList(PooslScopeProvider.helperScope_ProcessClass_parameterAndVariable((ProcessClass) object));
+            return variableScopeToNameList(PooslScopeProvider
+                    .helperScope_ProcessClass_parameterAndVariable((ProcessClass) object));
         } else if (object instanceof ClusterClass) {
-            return getVariableNames(PooslScopeProvider.getLocalScopeParameters((ClusterClass) object));
+            return getVariableNames(
+                    PooslScopeProvider.getLocalScopeParameters((ClusterClass) object));
         } else {
             return Collections.emptyList();
         }
@@ -754,14 +794,16 @@ public final class CreationHelper {
 
     public static void createInheritance(EObject source, EObject target) {
         if (!source.equals(target))
-            if (source instanceof ProcessClass && target instanceof ProcessClass && (((ProcessClass) source).getSuperClass() == null)) {
+            if (source instanceof ProcessClass && target instanceof ProcessClass
+                    && (((ProcessClass) source).getSuperClass() == null)) {
                 ProcessClass sourceProcess = (ProcessClass) source;
                 ProcessClass targetProcess = (ProcessClass) target;
                 if (!HelperFunctions.isReflexiveAncestorProcess(sourceProcess, targetProcess)) {
                     sourceProcess.setSuperClass(targetProcess.getName());
                     saveChanges(sourceProcess);
                 }
-            } else if (source instanceof DataClass && target instanceof DataClass && (((DataClass) source).getSuperClass() == null)) {
+            } else if (source instanceof DataClass && target instanceof DataClass
+                    && (((DataClass) source).getSuperClass() == null)) {
                 DataClass sourceData = (DataClass) source;
                 DataClass targetData = (DataClass) target;
                 if (!HelperFunctions.isReflexiveAncestorData(sourceData, targetData)) {
@@ -772,7 +814,8 @@ public final class CreationHelper {
     }
 
     public static void createContainment(EObject source, EObject target) {
-        if (!source.equals(target) && source instanceof ClusterClass && target instanceof InstantiableClass) {
+        if (!source.equals(target) && source instanceof ClusterClass
+                && target instanceof InstantiableClass) {
             CreationHelper.createNewInstance((ClusterClass) source, (InstantiableClass) target);
         }
     }
@@ -789,15 +832,18 @@ public final class CreationHelper {
         return null;
     }
 
-    private static String getInstantiableClass(ClusterClass container, Poosl poosl, NewInstanceDialog inputDialog) {
+    private static String getInstantiableClass(
+            ClusterClass container, Poosl poosl, NewInstanceDialog inputDialog) {
         String instclass;
         if (inputDialog.getHasNewClass()) {
             if (inputDialog.getSelectedType() == Type.PROCESSCLASS) {
-                ProcessClass process = CreationHelper.createProcessClass(inputDialog.getNewClassName());
+                ProcessClass process = CreationHelper
+                        .createProcessClass(inputDialog.getNewClassName());
                 poosl.getProcessClasses().add(process);
                 instclass = process.getName();
             } else {
-                ClusterClass cluster = CreationHelper.createClusterClass(inputDialog.getNewClassName());
+                ClusterClass cluster = CreationHelper
+                        .createClusterClass(inputDialog.getNewClassName());
                 poosl.getClusterClasses().add(cluster);
                 instclass = cluster.getName();
             }
@@ -809,7 +855,8 @@ public final class CreationHelper {
     }
 
     private static void addPort(InstantiableClass instClass) {
-        NewPortDialog inputDialog = new NewPortDialog(Display.getDefault().getActiveShell(), instClass);
+        NewPortDialog inputDialog = new NewPortDialog(Display.getDefault().getActiveShell(),
+                instClass);
         if (inputDialog.open() == Window.OK) {
             String name = inputDialog.getName();
 
@@ -819,7 +866,9 @@ public final class CreationHelper {
         }
     }
 
-    private static void combineChannels(Port sourceport, Channel sourcechannel, InstancePort targetport, Channel targetchannel) {
+    private static void combineChannels(
+            Port sourceport, Channel sourcechannel, InstancePort targetport,
+            Channel targetchannel) {
         if (sourcechannel == targetchannel && sourcechannel != null) {
             return;
         }
@@ -852,7 +901,9 @@ public final class CreationHelper {
         }
     }
 
-    private static void combineChannels(Channel sourcechannel, Channel targetchannel, InstancePort sourceport, InstancePort targetport) {
+    private static void combineChannels(
+            Channel sourcechannel, Channel targetchannel, InstancePort sourceport,
+            InstancePort targetport) {
         if (sourcechannel == targetchannel && sourcechannel != null) {
             return;
         }
@@ -864,7 +915,8 @@ public final class CreationHelper {
                     // sourcechannel
                     targetchannel.getInstancePorts().add(sourcechannel.getInstancePorts().get(0));
                 }
-                if (targetchannel.getExternalPort() == null && sourcechannel.getExternalPort() != null) {
+                if (targetchannel.getExternalPort() == null
+                        && sourcechannel.getExternalPort() != null) {
                     targetchannel.setExternalPort(sourcechannel.getExternalPort());
                 }
                 removeObsoleteChannel(sourcechannel);
@@ -929,7 +981,8 @@ public final class CreationHelper {
         Session session = SessionManager.INSTANCE.getSession(targetobject);
 
         if (diagram != null && session != null) {
-            IEditorPart tempeditor = DialectUIManager.INSTANCE.openEditor(session, diagram, new NullProgressMonitor());
+            IEditorPart tempeditor = DialectUIManager.INSTANCE.openEditor(session, diagram,
+                    new NullProgressMonitor());
 
             if (tempeditor instanceof DialectEditor) {
                 dialecteditor = (DialectEditor) tempeditor;
@@ -969,15 +1022,18 @@ public final class CreationHelper {
 
         boolean allowed = true;
         if (classesusingport.size() > 1) {
-            allowed = MessageDialog.openConfirm(Display.getDefault().getActiveShell(), MESSAGE_TITLE_DELETE_PORT, MESSAGE_DELETE_PORT);
+            allowed = MessageDialog.openConfirm(Display.getDefault().getActiveShell(),
+                    MESSAGE_TITLE_DELETE_PORT, MESSAGE_DELETE_PORT);
         }
 
         if (allowed) {
             for (ClusterClass cClass : classesusingport) {
                 for (Channel channel : cClass.getChannels()) {
-                    for (Iterator<InstancePort> iterator = channel.getInstancePorts().iterator(); iterator.hasNext(); /**/) {
+                    for (Iterator<InstancePort> iterator = channel.getInstancePorts()
+                            .iterator(); iterator.hasNext(); /**/) {
                         InstancePort instancePort = iterator.next();
-                        String iPort = (instancePort.getPort() != null) ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
+                        String iPort = (instancePort.getPort() != null)
+                            ? instancePort.getPort().getPort() : ""; //$NON-NLS-1$
                         if (iPort.equals(port.getName())) {
                             iterator.remove();
                         }
@@ -1003,7 +1059,8 @@ public final class CreationHelper {
     }
 
     private static void showDialogInUse(String message) {
-        MessageDialog.openError(Display.getDefault().getActiveShell(), MESSAGE_TITLE_IN_USE, message);
+        MessageDialog.openError(Display.getDefault().getActiveShell(), MESSAGE_TITLE_IN_USE,
+                message);
     }
 
     private static ProcessClass createProcessClass(String name) {
@@ -1043,7 +1100,7 @@ public final class CreationHelper {
             IWorkbench wb = PlatformUI.getWorkbench();
             wb.getProgressService().run(true, true, runnable);
         } catch (InvocationTargetException e) {
-            Logger.getLogger(CreationHelper.class.getName()).log(Level.WARNING, "Could not find reference to element " + element, e);
+            LOGGER.warn("Could not find reference to element " + element, e);
             return false;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -1068,8 +1125,10 @@ public final class CreationHelper {
 
         if (referer instanceof Instance) {
             ClusterClass cluster = (ClusterClass) referer.eContainer();
-            message = (cluster.getName() == null) ? String.format(USED_BY_INSTANCE_SYSTEM, ((Instance) referer).getName())
-                    : String.format(USED_BY_INSTANCE_CLUSTER, ((Instance) referer).getName(), cluster.getName());
+            message = (cluster.getName() == null)
+                ? String.format(USED_BY_INSTANCE_SYSTEM, ((Instance) referer).getName())
+                : String.format(USED_BY_INSTANCE_CLUSTER, ((Instance) referer).getName(),
+                        cluster.getName());
 
         } else if (referer instanceof DataMethod) {
             String name = null;
@@ -1086,20 +1145,27 @@ public final class CreationHelper {
                     name = op.getName();
                 }
             }
-            message = String.format(USED_BY_METHOD_DATA, name, ((DataClass) referer.eContainer()).getName());
+            message = String.format(USED_BY_METHOD_DATA, name,
+                    ((DataClass) referer.eContainer()).getName());
         } else if (referer instanceof ProcessMethod) {
-            message = String.format(USED_BY_METHOD_PROCESS, ((ProcessMethod) referer).getName(), ((ProcessClass) referer.eContainer()).getName());
-        } else if (referer instanceof ProcessMethodCall && referer.eContainingFeature() == Literals.PROCESS_CLASS__INITIAL_METHOD_CALL) {
-            message = String.format(USED_BY_INITIAL_METHOD_CALL, ((ProcessClass) referer.eContainer()).getName());
+            message = String.format(USED_BY_METHOD_PROCESS, ((ProcessMethod) referer).getName(),
+                    ((ProcessClass) referer.eContainer()).getName());
+        } else if (referer instanceof ProcessMethodCall
+                && referer.eContainingFeature() == Literals.PROCESS_CLASS__INITIAL_METHOD_CALL) {
+            message = String.format(USED_BY_INITIAL_METHOD_CALL,
+                    ((ProcessClass) referer.eContainer()).getName());
         } else if (referer instanceof Channel) {
-            message = (((InstantiableClass) referer.eContainer()).getName() == null) ? USED_BY_CHANNEL_SYSTEM
-                    : String.format(USED_BY_CHANNEL_CLUSTERCLASS, ((ClusterClass) referer.eContainer()).getName());
+            message = (((InstantiableClass) referer.eContainer()).getName() == null)
+                ? USED_BY_CHANNEL_SYSTEM : String.format(USED_BY_CHANNEL_CLUSTERCLASS,
+                        ((ClusterClass) referer.eContainer()).getName());
         } else if (referer instanceof DataClass) {
             message = String.format(USED_BY_DATACLASS, ((DataClass) referer).getName());
         } else if (referer instanceof ProcessClass) {
             message = String.format(USED_BY_PROCESSCLASS, ((ProcessClass) referer).getName());
         } else if (referer instanceof ClusterClass) {
-            message = (((ClusterClass) referer).getName() == null) ? USED_BY_SYSTEM : String.format(USED_BY_CLUSTERCLASS, ((ClusterClass) referer).getName());
+            message = (((ClusterClass) referer).getName() == null)
+                ? USED_BY_SYSTEM
+                : String.format(USED_BY_CLUSTERCLASS, ((ClusterClass) referer).getName());
         }
 
         return USED_BY_MESSAGE + message + " (" + resource.getURI().toString() + ")"; //$NON-NLS-1$ //$NON-NLS-2$

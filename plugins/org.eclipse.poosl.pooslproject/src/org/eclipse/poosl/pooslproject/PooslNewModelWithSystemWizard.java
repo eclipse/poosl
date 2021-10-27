@@ -16,11 +16,11 @@ package org.eclipse.poosl.pooslproject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
@@ -35,7 +35,7 @@ public class PooslNewModelWithSystemWizard extends AbstractPooslModelWizard impl
     /** Declared ID. */ // Use PooslProjectConstant to reference
     static final String ID = "org.eclipse.poosl.pooslproject.filewithsystemwizard"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(PooslNewModelWithSystemWizard.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslNewModelWithSystemWizard.class);
 
     private static final String WIZARD_NAME = "New Poosl model with System";
 
@@ -64,7 +64,7 @@ public class PooslNewModelWithSystemWizard extends AbstractPooslModelWizard impl
             inputStream = url.openConnection().getInputStream();
             file.setContents(inputStream, 0, null);
         } catch (IOException | CoreException e) {
-            LOGGER.log(Level.FINE, "Could not add template to poosl file.");
+            LOGGER.error("Could not add template to poosl file.");
         }
     }
 

@@ -16,8 +16,8 @@ package org.eclipse.poosl.sirius;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.poosl.Channel;
@@ -144,7 +144,7 @@ public class ExternalCalls implements IExternalJavaAction {
 
     private static final String ACTION_MENU_OPEN_TEXTUAL_EDITOR_TEXTUAL = "openinstancetextualeditor"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(ExternalCalls.class.getName());
+    private static final ILog LOGGER = Platform.getLog(ExternalCalls.class);
 
     private static final String DEFAULT_DEBUG_LABEL = "? 0 / ! 0 "; //$NON-NLS-1$
 
@@ -273,10 +273,10 @@ public class ExternalCalls implements IExternalJavaAction {
                 showHideDebugElements(eobjects, parameters);
                 break;
             default:
-                LOGGER.log(Level.SEVERE, "Unknown action:" + action);
+                LOGGER.error("Unknown action:" + action);
             }
         } else {
-            LOGGER.log(Level.SEVERE, "No Action specified");
+            LOGGER.error("No Action specified");
         }
     }
 

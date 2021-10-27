@@ -15,8 +15,8 @@ package org.eclipse.poosl.sirius.navigator.rename;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -37,7 +37,7 @@ import org.eclipse.ltk.core.refactoring.participants.RenameParticipant;
  *
  */
 public class PooslFileRenameParticipant extends RenameParticipant {
-    private static final Logger LOGGER = Logger.getLogger(PooslFileRenameParticipant.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslFileRenameParticipant.class);
 
     private static final String NAME = "PooslFileRenameParticipant";
 
@@ -99,7 +99,7 @@ public class PooslFileRenameParticipant extends RenameParticipant {
         try {
             folder.accept(visitor);
         } catch (CoreException e) {
-            LOGGER.log(Level.WARNING, "Cannot accept delta from resource changelistener", e);
+            LOGGER.warn("Cannot accept delta from resource changelistener", e);
         }
         Change[] changes = new Change[files.size()];
         for (int i = 0; i < files.size(); i++) {

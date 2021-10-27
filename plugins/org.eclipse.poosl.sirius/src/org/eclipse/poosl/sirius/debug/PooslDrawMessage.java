@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.poosl.rotalumisclient.extension.ExternDebugMessage;
 import org.eclipse.poosl.xtext.GlobalConstants;
@@ -31,7 +31,7 @@ import org.eclipse.poosl.xtext.GlobalConstants;
  *
  */
 public class PooslDrawMessage {
-    private static final Logger LOGGER = Logger.getLogger(PooslDrawMessage.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslDrawMessage.class);
 
     private ExternDebugMessage message;
 
@@ -52,7 +52,8 @@ public class PooslDrawMessage {
     private void setCommonClusterIndex() {
         // find highest common cluster
         commonIndex = 0;
-        while (sendLocation[commonIndex] != null && receiveLocation[commonIndex] != null && sendLocation[commonIndex].equals(receiveLocation[commonIndex])) {
+        while (sendLocation[commonIndex] != null && receiveLocation[commonIndex] != null
+                && sendLocation[commonIndex].equals(receiveLocation[commonIndex])) {
             commonIndex++;
         }
     }
@@ -60,7 +61,8 @@ public class PooslDrawMessage {
     private void setMessage(ExternDebugMessage message) {
         this.message = message;
         sendLocation = message.getSendProcess().substring(1).split(PooslConstants.PATH_SEPARATOR);
-        receiveLocation = message.getReceiveProcess().substring(1).split(PooslConstants.PATH_SEPARATOR);
+        receiveLocation = message.getReceiveProcess().substring(1)
+                .split(PooslConstants.PATH_SEPARATOR);
     }
 
     public ExternDebugMessage getMessage() {
@@ -68,7 +70,8 @@ public class PooslDrawMessage {
     }
 
     /**
-     * Returns a {@link Map} diagram name as key and the messagepath as value, may return null.
+     * Returns a {@link Map} diagram name as key and the messagepath as value,
+     * may return null.
      * 
      * @return the diagram/messagePath map
      */
@@ -95,8 +98,12 @@ public class PooslDrawMessage {
 
     private List<MessagePath> calculateMessagePath(Map<String, String> instancePortMap) {
         List<MessagePath> allPaths = new ArrayList<>();
-        List<MessagePath> sendingPaths = createMessagePaths(message.getSendProcess(), message.getSendPort(), (sendLocation.length - commonIndex) - 1, instancePortMap, true);
-        List<MessagePath> receivingPaths = createMessagePaths(message.getReceiveProcess(), message.getReceivePort(), (receiveLocation.length - commonIndex) - 1, instancePortMap, false);
+        List<MessagePath> sendingPaths = createMessagePaths(message.getSendProcess(),
+                message.getSendPort(), (sendLocation.length - commonIndex) - 1, instancePortMap,
+                true);
+        List<MessagePath> receivingPaths = createMessagePaths(message.getReceiveProcess(),
+                message.getReceivePort(), (receiveLocation.length - commonIndex) - 1,
+                instancePortMap, false);
 
         allPaths.addAll(sendingPaths);
         allPaths.addAll(receivingPaths);
@@ -106,7 +113,8 @@ public class PooslDrawMessage {
         return allPaths;
     }
 
-    private MessagePath createMainMessagePath(List<MessagePath> sendingPaths, List<MessagePath> receivingPaths) {
+    private MessagePath createMainMessagePath(
+            List<MessagePath> sendingPaths, List<MessagePath> receivingPaths) {
         String sender;
         String senderPort;
         if (sendingPaths.isEmpty()) {
@@ -131,7 +139,9 @@ public class PooslDrawMessage {
         return new MessagePath(sender, receiver, senderPort, receiverPort);
     }
 
-    private List<MessagePath> createMessagePaths(String process, String port, int main, Map<String, String> instancePortMap, boolean sending) {
+    private List<MessagePath> createMessagePaths(
+            String process, String port, int main, Map<String, String> instancePortMap,
+            boolean sending) {
         List<MessagePath> path = new ArrayList<>();
 
         if (!isAdapterPath(sending)) {
@@ -140,7 +150,7 @@ public class PooslDrawMessage {
             for (int i = 0; i < main; i++) {
                 String externProcessAndPort = instancePortMap.get(processAndPort);
                 if (externProcessAndPort == null) {
-                    LOGGER.log(Level.WARNING, "Could not find the external port for " + processAndPort); //$NON-NLS-1$
+                    LOGGER.warn("Could not find the external port for " + processAndPort); //$NON-NLS-1$
                     return path;
                 }
 
@@ -153,9 +163,11 @@ public class PooslDrawMessage {
                 String receiverInfoPort = receiverInfo[1];
 
                 if (sending) {
-                    path.add(new MessagePath(receiverInfoProcess, externProcess, receiverInfoPort, externPort));
+                    path.add(new MessagePath(receiverInfoProcess, externProcess, receiverInfoPort,
+                            externPort));
                 } else {
-                    path.add(new MessagePath(externProcess, receiverInfoProcess, externPort, receiverInfoPort));
+                    path.add(new MessagePath(externProcess, receiverInfoProcess, externPort,
+                            receiverInfoPort));
                 }
 
                 processAndPort = externProcessAndPort;

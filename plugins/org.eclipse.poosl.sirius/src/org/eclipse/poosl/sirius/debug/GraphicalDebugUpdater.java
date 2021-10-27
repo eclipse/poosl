@@ -22,12 +22,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.poosl.rotalumisclient.extension.ExternDebugMessage;
@@ -47,18 +47,20 @@ import org.eclipse.ui.progress.UIJob;
  *
  */
 public class GraphicalDebugUpdater {
-    private static final Logger LOGGER = Logger.getLogger(GraphicalDebugUpdater.class.getName());
+    private static final ILog LOGGER = Platform.getLog(GraphicalDebugUpdater.class);
 
     private static final Map<String, List<URI>> LOCKED_FILES = new HashMap<>();
 
     /**
-     * This map contains messages that need still need to be drawn. When the message is drawn it is removed from this
+     * This map contains messages that need still need to be drawn. When the
+     * message is drawn it is removed from this
      * map to avoid the overhead of redrawing
      */
     private final ConcurrentHashMap<String, PooslDrawMessage> drawMessages = new ConcurrentHashMap<>();
 
     /**
-     * This map contains the last message of the launch. When a new communication diagram is opened it retrieves the
+     * This map contains the last message of the launch. When a new
+     * communication diagram is opened it retrieves the
      * last message from this map.
      */
     private final ConcurrentHashMap<String, PooslDrawMessage> lastMessages = new ConcurrentHashMap<>();
@@ -85,12 +87,13 @@ public class GraphicalDebugUpdater {
 
             // No need to start updatejob at all if no representations/diagrams
             // exist
-            Map<Session, Set<DRepresentationDescriptor>> session2Descriptors = UpdateHelper.getLaunchRepresentations(drawMessages.keySet());
+            Map<Session, Set<DRepresentationDescriptor>> session2Descriptors = UpdateHelper
+                    .getLaunchRepresentations(drawMessages.keySet());
             if (!session2Descriptors.isEmpty()) {
                 drawMessages();
             }
         } else {
-            LOGGER.log(Level.INFO,
+            LOGGER.warn(
                     "Received message but there is no instanceport mapping to calculate messagepath, it's likely that the message was received after the debug sessions was terminated.");
         }
     }
@@ -138,13 +141,14 @@ public class GraphicalDebugUpdater {
                 }
             }
         } catch (CoreException e) {
-            LOGGER.log(Level.WARNING, "Could not get current launches.");
+            LOGGER.warn("Could not get current launches.", e);
         }
     }
 
     public void draw(Session session, DRepresentationDescriptor descriptor) {
         if (descriptor != null) {
-            final UpdateSingleDiagramViewJob singleUpdateJob = new UpdateSingleDiagramViewJob(session, descriptor);
+            final UpdateSingleDiagramViewJob singleUpdateJob = new UpdateSingleDiagramViewJob(
+                    session, descriptor);
             UpdateHelper.getPooslShell().getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
@@ -152,7 +156,7 @@ public class GraphicalDebugUpdater {
                 }
             });
         } else {
-            LOGGER.log(Level.WARNING, "No debug representation found to show.");
+            LOGGER.warn("No debug representation found to show.");
         }
     }
 
@@ -171,25 +175,31 @@ public class GraphicalDebugUpdater {
                 currentDrawMessages.put(drawMessage.getMessage().getLaunch(), drawMessage);
             }
 
-            Map<Session, Set<DRepresentationDescriptor>> session2Descriptors = UpdateHelper.getLaunchRepresentations(currentDrawMessages.keySet());
+            Map<Session, Set<DRepresentationDescriptor>> session2Descriptors = UpdateHelper
+                    .getLaunchRepresentations(currentDrawMessages.keySet());
             try {
-                for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors.entrySet()) {
+                for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors
+                        .entrySet()) {
                     Session session = entry.getKey();
                     Set<DRepresentationDescriptor> descriptors = entry.getValue();
 
                     ArrayList<DRepresentationDescriptor> diagrams2Color = new ArrayList<>();
 
-                    IEditingSession editingSession = SessionUIManager.INSTANCE.getUISession(session);
+                    IEditingSession editingSession = SessionUIManager.INSTANCE
+                            .getUISession(session);
                     if (editingSession != null) {
                         for (DRepresentationDescriptor descriptor : descriptors) {
-                            DialectEditor editor = editingSession.getEditor(descriptor.getRepresentation());
+                            DialectEditor editor = editingSession
+                                    .getEditor(descriptor.getRepresentation());
                             if (editor != null) {
                                 diagrams2Color.add(descriptor);
                             }
                         }
                     }
 
-                    session.getTransactionalEditingDomain().getCommandStack().execute(new ColorChannelCommand(session, diagrams2Color, currentDrawMessages, pathCalculators));
+                    session.getTransactionalEditingDomain().getCommandStack()
+                            .execute(new ColorChannelCommand(session, diagrams2Color,
+                                    currentDrawMessages, pathCalculators));
                 }
             } catch (RuntimeException e) {
                 return Status.CANCEL_STATUS;
@@ -211,12 +221,14 @@ public class GraphicalDebugUpdater {
 
         @Override
         public IStatus runInUIThread(IProgressMonitor monitor) {
-            String launchID = GraphicalEditorHelper.getLaunchIdFromDocumentation(descriptor.getDocumentation());
+            String launchID = GraphicalEditorHelper
+                    .getLaunchIdFromDocumentation(descriptor.getDocumentation());
             PooslDrawMessage toDrawMessage = lastMessages.get(launchID);
             Map<String, PooslDrawMessage> messages = new HashMap<>();
             messages.put(launchID, toDrawMessage);
             try {
-                session.getTransactionalEditingDomain().getCommandStack().execute(new ColorChannelCommand(session, descriptor, messages, pathCalculators));
+                session.getTransactionalEditingDomain().getCommandStack().execute(
+                        new ColorChannelCommand(session, descriptor, messages, pathCalculators));
 
             } catch (Exception e) {
                 return Status.CANCEL_STATUS;
@@ -225,7 +237,8 @@ public class GraphicalDebugUpdater {
         }
     }
 
-    public void launchStarted(String launchID, Map<String, String> instancePortMap, List<URI> files) {
+    public void launchStarted(
+            String launchID, Map<String, String> instancePortMap, List<URI> files) {
         notSetupLaunches.add(launchID);
         this.instancePortMappings.put(launchID, instancePortMap);
         LOCKED_FILES.put(launchID, files);

@@ -20,8 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
@@ -65,7 +65,7 @@ public final class PooslDiagramRefactorHelper {
 
     private static final String DESTINATION_SESSION_NOT_FOUND = "Session destination is null, could not get session to copy the diagrams to.";
 
-    private static final Logger LOGGER = Logger.getLogger(PooslDiagramRefactorHelper.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslDiagramRefactorHelper.class);
 
     private PooslDiagramRefactorHelper() {
         throw new IllegalStateException("Utility class");
@@ -84,7 +84,7 @@ public final class PooslDiagramRefactorHelper {
                     copyResource(session, destinationSession, resource, destination, monitor);
                 }
             } else {
-                LOGGER.log(Level.WARNING, DESTINATION_SESSION_NOT_FOUND);
+                LOGGER.warn(DESTINATION_SESSION_NOT_FOUND);
             }
         }
     }
@@ -179,7 +179,7 @@ public final class PooslDiagramRefactorHelper {
                     copyResource(session, destSession, iResource, membersMap.get(iResource.getName()), monitor);
                 }
             } catch (CoreException e) {
-                LOGGER.log(Level.WARNING, COPY_FOLDER_FAILED, e);
+                LOGGER.warn(COPY_FOLDER_FAILED, e);
             }
         }
     }
@@ -198,7 +198,7 @@ public final class PooslDiagramRefactorHelper {
                     map.put(iResource.getName(), iResource);
                 }
             } catch (CoreException e) {
-                LOGGER.log(Level.WARNING, CONTAINER_GET_MEMBERS_FAILED, e);
+                LOGGER.warn(CONTAINER_GET_MEMBERS_FAILED, e);
             }
         }
         return map;

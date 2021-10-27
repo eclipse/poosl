@@ -15,12 +15,14 @@ package org.eclipse.poosl.transformations.poosl2html;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.function.BiConsumer;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -56,40 +58,63 @@ import com.google.inject.Injector;
  */
 public class Poosl2Html {
 
-    private static final Logger LOGGER = Logger.getLogger(Poosl2Html.class.getName());
-
-    private static final String HTML_HEADER = "<html>\n<head>\n\t<style>body{font-family:Arial;} " //$NON-NLS-1$
-            + "h3{font-size: 1.2em; margin-bottom: 0em;}h4{font-size: 1em; margin-bottom: 0em;}div.indented{margin-left:2em;}</style>\n</head>\n<body>"; //$NON-NLS-1$
+    private static final String HTML_HEADER = //
+            "<html>\n<head>\n\t<style>" //$NON-NLS-1$
+                    + "body{font-family:Arial;} " //$NON-NLS-1$
+                    + "h3{font-size: 1.2em; margin-bottom: 0em;}" //$NON-NLS-1$
+                    + "h4{font-size: 1em; margin-bottom: 0em;}" //$NON-NLS-1$
+                    + "div.indented{margin-left:2em;}" //$NON-NLS-1$
+                    + "</style>\n</head>\n<body>"; //$NON-NLS-1$
 
     private static final String HTML_FOOTER = "\n</body>\n</html>"; //$NON-NLS-1$
 
+    private static final BiConsumer<String, Throwable> DEFAULT_TRACER = (message, throwable) -> {
+        PrintStream err = System.err; // CHECKSTYLE concern 
+        err.println(message);
+    };
+
     @Inject
     private IEObjectDocumentationProvider documentationProvider;
+
+    private BiConsumer<String, Throwable> tracer = DEFAULT_TRACER;
 
     public static void main(String[] args) {
         String input = ""; //$NON-NLS-1$
         if (args.length > 0) {
             input = args[0];
         }
-        if (!input.isEmpty()) {
-            Injector pooslInjector = new PooslStandaloneSetup().createInjectorAndDoEMFRegistration();
-            Poosl2Html headless = pooslInjector.getInstance(Poosl2Html.class);
-            File fInput = new File(input);
-            ResourceSet resourceSet = new ResourceSetImpl();
-            resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(), org.eclipse.poosl.PooslPackage.eINSTANCE);
-            URI uri = URI.createFileURI(fInput.getAbsolutePath());
-            Resource resource = resourceSet.getResource(uri, true);
-            headless.run((Poosl) resource.getContents().get(0), fInput.getAbsolutePath());
-        } else {
-            LOGGER.severe("please supply a valid input file");
+
+        if (input.isEmpty()) {
+            DEFAULT_TRACER.accept("Please supply a valid input file as 1rst argument.", null);
+            return;
         }
+        Injector pooslInjector = new PooslStandaloneSetup().createInjectorAndDoEMFRegistration();
+        Poosl2Html headless = pooslInjector.getInstance(Poosl2Html.class);
+
+        File fInput = new File(input);
+        ResourceSet resourceSet = new ResourceSetImpl();
+        resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(),
+                org.eclipse.poosl.PooslPackage.eINSTANCE);
+        URI uri = URI.createFileURI(fInput.getAbsolutePath());
+        Resource resource = resourceSet.getResource(uri, true);
+        headless.run((Poosl) resource.getContents().get(0), fInput.getAbsolutePath());
+
+    }
+
+    private void setTracer(BiConsumer<String, Throwable> it) {
+        tracer = it;
     }
 
     public static void generateDocumentation(String inputFile) {
         Injector pooslInjector = Guice.createInjector(new PooslRuntimeModule());
         Poosl2Html headless = pooslInjector.getInstance(Poosl2Html.class);
+
+        ILog logger = Platform.getLog(Poosl2Html.class); // not static to handle stand-alone call
+        headless.setTracer((message, err) -> logger.warn(message, err));
+
         ResourceSet resourceSet = new ResourceSetImpl();
-        resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(), org.eclipse.poosl.PooslPackage.eINSTANCE);
+        resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(),
+                org.eclipse.poosl.PooslPackage.eINSTANCE);
         URI uri = URI.createFileURI(inputFile);
         Resource resource = resourceSet.getResource(uri, true);
         if (resource.getContents().get(0) instanceof Poosl) {
@@ -113,9 +138,12 @@ public class Poosl2Html {
                 String fullName = name;
                 String extendsClass = dataClass.getSuperClass();
                 if (extendsClass != null) {
-                    IEObjectDescription superClass = PooslCache.get(poosl.eResource()).getDataClass(extendsClass);
-                    if (superClass != null && superClass.getEObjectURI().trimFragment().equals(poosl.eResource().getURI())) {
-                        extendsClass = "<a href=\"#data-" + extendsClass + "\">" + extendsClass + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    IEObjectDescription superClass = PooslCache.get(poosl.eResource())
+                            .getDataClass(extendsClass);
+                    if (superClass != null && superClass.getEObjectURI().trimFragment()
+                            .equals(poosl.eResource().getURI())) {
+                        extendsClass = "<a href=\"#data-" + extendsClass + "\">" + extendsClass //$NON-NLS-1$//$NON-NLS-2$
+                                + "</a>"; //$NON-NLS-1$
                     }
                     fullName += " (extends " + extendsClass + ")"; //$NON-NLS-1$ //$NON-NLS-2$
                 }
@@ -148,8 +176,10 @@ public class Poosl2Html {
                 String fullName = name;
                 if (processClass.getSuperClass() != null) {
                     String extendsClass = processClass.getSuperClass();
-                    IEObjectDescription superClass = PooslCache.get(processClass.eResource()).getProcessClass(processClass.getSuperClass());
-                    if (superClass.getEObjectURI().trimFragment().equals(EcoreUtil.getURI(processClass).trimFragment())) {
+                    IEObjectDescription superClass = PooslCache.get(processClass.eResource())
+                            .getProcessClass(processClass.getSuperClass());
+                    if (superClass.getEObjectURI().trimFragment()
+                            .equals(EcoreUtil.getURI(processClass).trimFragment())) {
                         StringBuilder buf = new StringBuilder();
                         buf.append("<a href=\"#process-"); //$NON-NLS-1$
                         buf.append(extendsClass);
@@ -268,7 +298,8 @@ public class Poosl2Html {
     }
 
     private void appendParameterToHtml(StringBuilder html, String name, String type, String doc) {
-        html.append("<p><h4>").append(name).append(":").append(type).append("</h4>").append(doc != null ? doc : "").append("</p>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+        html.append("<p><h4>").append(name).append(":").append(type).append("</h4>") //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+                .append(doc != null ? doc : "").append("</p>"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private void appendHorizontalLine(StringBuilder html, int width) {
@@ -284,15 +315,19 @@ public class Poosl2Html {
     }
 
     private void appendTocItem(StringBuilder html, String name, String type) {
-        html.append("<li><a href=\"#").append(type).append("-").append(name).append("\">").append(name).append("</a></li>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        html.append("<li><a href=\"#").append(type).append("-").append(name).append("\">") //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+                .append(name).append("</a></li>"); //$NON-NLS-1$
     }
 
-    private void appendClassToHtml(StringBuilder html, String name, String fullName, String type, String doc) {
-        html.append("<h2><a id=\"").append(type).append("-").append(name).append("\"/>").append(fullName).append("</h2>").append(doc != null ? doc : ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+    private void appendClassToHtml(
+            StringBuilder html, String name, String fullName, String type, String doc) {
+        html.append("<h2><a id=\"").append(type).append("-").append(name).append("\"/>") //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+                .append(fullName).append("</h2>").append(doc != null ? doc : ""); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private void appendNamedElementToHtml(StringBuilder html, String name, String doc) {
-        html.append("<p><h4>").append(name).append("</h4>").append(doc != null ? doc : "").append("</p>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        html.append("<p><h4>").append(name).append("</h4>").append(doc != null ? doc : "") //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+                .append("</p>"); //$NON-NLS-1$
     }
 
     private void appendHtmlHeader(StringBuilder html) {
@@ -345,25 +380,27 @@ public class Poosl2Html {
 
     private void writeHtmlToFile(StringBuilder html, String path) {
         // Check if the simulator directory already exists
-        File workingDirectory = new File(path.substring(0, path.lastIndexOf(File.separator)) + File.separator + "documentation"); //$NON-NLS-1$
+        File workingDirectory = new File(path.substring(0, path.lastIndexOf(File.separator))
+                + File.separator + "documentation"); //$NON-NLS-1$
         if (!workingDirectory.exists()) {
             workingDirectory.mkdir();
         }
         // Get the html path
         String htmlPath = createHTMLPath(path);
-        try {
-            PrintWriter fileWriter = new PrintWriter(htmlPath);
+        try (PrintWriter fileWriter = new PrintWriter(htmlPath)) {
             fileWriter.append(html);
-            fileWriter.close();
         } catch (FileNotFoundException e) {
-            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            tracer.accept(e.getMessage(), e);
         }
     }
 
     private String createHTMLPath(String path) {
         StringBuilder stringBuilder = new StringBuilder(path);
-        stringBuilder.replace(stringBuilder.lastIndexOf(File.separator), stringBuilder.lastIndexOf(File.separator), File.separator + "documentation"); //$NON-NLS-1$
-        stringBuilder.replace(stringBuilder.lastIndexOf("."), stringBuilder.length(), ".html"); //$NON-NLS-1$ //$NON-NLS-2$
+        stringBuilder.replace(stringBuilder.lastIndexOf(File.separator),
+                stringBuilder.lastIndexOf(File.separator), //
+                File.separator + "documentation"); //$NON-NLS-1$
+        stringBuilder.replace(stringBuilder.lastIndexOf("."), //$NON-NLS-1$ 
+                stringBuilder.length(), ".html"); //$NON-NLS-1$ 
         return stringBuilder.toString();
     }
 }

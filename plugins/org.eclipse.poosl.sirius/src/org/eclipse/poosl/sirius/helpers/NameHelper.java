@@ -15,8 +15,8 @@ package org.eclipse.poosl.sirius.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,7 +32,7 @@ import org.eclipse.poosl.xtext.helpers.HelperFunctions;
  *
  */
 public final class NameHelper {
-    private static final Logger LOGGER = Logger.getLogger(NameHelper.class.getName());
+    private static final ILog LOGGER = Platform.getLog(NameHelper.class);
 
     private static final String TXT_INSTANCE = "newInstance";
 
@@ -73,7 +73,7 @@ public final class NameHelper {
             }
             return name;
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Can not create new name. " + e.getMessage(), e.getCause());
+            LOGGER.error("Can not create new name. " + e.getMessage(), e.getCause());
             return UNDEFINED;
         }
     }

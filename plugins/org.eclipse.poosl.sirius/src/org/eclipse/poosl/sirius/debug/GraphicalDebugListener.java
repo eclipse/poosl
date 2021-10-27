@@ -21,18 +21,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableContext;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.Poosl;
@@ -63,7 +61,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
  *
  */
 public class GraphicalDebugListener implements IPooslDebugInformer {
-    private static final Logger LOGGER = Logger.getLogger(GraphicalDebugListener.class.getName());
+    private static final ILog LOGGER = Platform.getLog(GraphicalDebugListener.class);
 
     @Override
     public void launchStart(ExternLaunchStartMessage startMessage) {
@@ -91,7 +89,7 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
         if (diagramTarget != null) {
             GraphicalEditorHelper.openCommunicationDiagram(selectedItem, project, diagramTarget);
         } else {
-            LOGGER.log(Level.SEVERE, "Could not find ecore model of the diagram target "
+            LOGGER.error("Could not find ecore model of the diagram target "
                     + selectedItem.getDiagram());
         }
     }
@@ -212,21 +210,17 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     public static Session getSession(
             final IProject activeProject, final IEditorPart editor, final boolean create) {
         final Set<Session> sessions = new HashSet<>();
-        IRunnableWithProgress runnable = new IRunnableWithProgress() {
-            @Override
-            public void run(IProgressMonitor monitor)
-                    throws InvocationTargetException, InterruptedException {
-                sessions.add(GraphicalEditorHelper.getSession(activeProject, editor, create, false,
-                        monitor));
-            }
-        };
 
         Shell shell = UpdateHelper.getPooslShell();
         IRunnableContext context = new ProgressMonitorDialog(shell);
         try {
-            PlatformUI.getWorkbench().getProgressService().runInUI(context, runnable, null);
+            PlatformUI.getWorkbench().getProgressService()
+                    .runInUI(
+                            context, monitor -> sessions.add(GraphicalEditorHelper
+                                    .getSession(activeProject, editor, create, false, monitor)),
+                            null);
         } catch (InvocationTargetException | InterruptedException e) {
-            LOGGER.log(Level.WARNING, "Could not get session", e.getCause());
+            LOGGER.error("Could not get session", e.getCause());
         }
         if (sessions.iterator().hasNext()) {
             return sessions.iterator().next();

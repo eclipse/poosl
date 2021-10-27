@@ -14,13 +14,14 @@
 package org.eclipse.poosl.sirius.navigator.edit;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.FileTransfer;
@@ -32,7 +33,8 @@ import org.eclipse.ui.actions.SelectionListenerAction;
 import org.eclipse.ui.part.ResourceTransfer;
 
 /**
- * This Action copies the selected resources to the provided destination and also copies any Poosl-Sirius diagrams using
+ * This Action copies the selected resources to the provided destination and
+ * also copies any Poosl-Sirius diagrams using
  * {@link PooslCopyOperation}. Based on the not extendable
  * org.eclipse.ui.internal.navigator.resources.actions.PasteAction
  * 
@@ -45,7 +47,7 @@ public class PooslPasteAction extends SelectionListenerAction {
      */
     public static final String ID = "PooslPasteAction"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(PooslPasteAction.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslPasteAction.class);
 
     private static final String LABEL = "Paste (including Diagrams)";
 
@@ -65,9 +67,9 @@ public class PooslPasteAction extends SelectionListenerAction {
      * Creates a new action.
      *
      * @param shell
-     *            the shell for any dialogs
+     *     the shell for any dialogs
      * @param clipboard
-     *            the clipboard
+     *     the clipboard
      */
     public PooslPasteAction(Shell shell, Clipboard clipboard) {
         super(LABEL);
@@ -81,7 +83,8 @@ public class PooslPasteAction extends SelectionListenerAction {
     }
 
     /**
-     * Returns the actual target of the paste action. Returns null if no valid target is selected.
+     * Returns the actual target of the paste action. Returns null if no valid
+     * target is selected.
      *
      * @return the actual target of the paste action
      */
@@ -105,8 +108,9 @@ public class PooslPasteAction extends SelectionListenerAction {
      * Returns whether any of the given resources are linked resources.
      *
      * @param resources
-     *            resource to check for linked type. may be null
-     * @return true=one or more resources are linked. false=none of the resources are linked
+     *     resource to check for linked type. may be null
+     * @return true=one or more resources are linked. false=none of the
+     *     resources are linked
      */
     private boolean isLinked(IResource[] resources) {
         for (int i = 0; i < resources.length; i++) {
@@ -147,7 +151,7 @@ public class PooslPasteAction extends SelectionListenerAction {
             return;
         }
 
-        LOGGER.warning("Failed to copy Diagrams, no resources found");
+        LOGGER.warn("Failed to copy Diagrams, no resources found");
     }
 
     /**
@@ -162,11 +166,15 @@ public class PooslPasteAction extends SelectionListenerAction {
     }
 
     /**
-     * The <code>PasteAction</code> implementation of this <code>SelectionListenerAction</code> method enables this
-     * action if a resource compatible with what is on the clipboard is selected.
+     * The <code>PasteAction</code> implementation of this
+     * <code>SelectionListenerAction</code> method enables this
+     * action if a resource compatible with what is on the clipboard is
+     * selected.
      *
-     * -Clipboard must have IResource or java.io.File -Projects can always be pasted if they are open -Workspace folder
-     * may not be copied into itself -Files and folders may be pasted to a single selected folder in open project or
+     * -Clipboard must have IResource or java.io.File -Projects can always be
+     * pasted if they are open -Workspace folder
+     * may not be copied into itself -Files and folders may be pasted to a
+     * single selected folder in open project or
      * multiple selected files in the same folder
      */
     @Override
@@ -185,13 +193,15 @@ public class PooslPasteAction extends SelectionListenerAction {
             }
         });
         IResource[] resourceData = clipboardData[0];
-        boolean isProjectRes = resourceData != null && resourceData.length > 0 && resourceData[0].getType() == IResource.PROJECT;
+        boolean isProjectRes = resourceData != null && resourceData.length > 0
+                && resourceData[0].getType() == IResource.PROJECT;
 
         if (isProjectRes) {
             for (int i = 0; i < resourceData.length; i++) {
                 // make sure all resource data are open projects
                 // can paste open projects regardless of selection
-                if (resourceData[i].getType() != IResource.PROJECT || !((IProject) resourceData[i]).isOpen()) {
+                if (resourceData[i].getType() != IResource.PROJECT
+                        || !((IProject) resourceData[i]).isOpen()) {
                     return false;
                 }
             }
@@ -225,7 +235,8 @@ public class PooslPasteAction extends SelectionListenerAction {
         }
         if (resourceData != null) {
             // linked resources can only be pasted into projects
-            if (isLinked(resourceData) && targetResource.getType() != IResource.PROJECT && targetResource.getType() != IResource.FOLDER) {
+            if (isLinked(resourceData) && targetResource.getType() != IResource.PROJECT
+                    && targetResource.getType() != IResource.FOLDER) {
                 return false;
             }
 

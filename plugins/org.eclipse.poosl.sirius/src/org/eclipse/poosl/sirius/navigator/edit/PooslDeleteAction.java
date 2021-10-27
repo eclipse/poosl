@@ -15,8 +15,8 @@ package org.eclipse.poosl.sirius.navigator.edit;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.internal.runtime.AdapterManager;
@@ -89,7 +89,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
     /** Unique identifier for this action. */
     public static final String ID = "org.eclipse.poosl.sirius.edit.delete"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(PooslDeleteAction.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslDeleteAction.class);
 
     private static final String DELETING_RESOURCES = "Deleting resources";
 
@@ -144,7 +144,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
                     PooslDiagramDeleteHelper.closeAndDeleteDiagrams(shellProvider.getShell(), session, allDiagrams);
                 }
             } catch (Exception e) {
-                LOGGER.log(Level.WARNING, "Diagram deletion failed", e);
+                LOGGER.warn("Diagram deletion failed", e);
                 return Status.CANCEL_STATUS;
             }
             return Status.OK_STATUS;
@@ -173,7 +173,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
                     getResources(iResource, pooslFiles);
                 }
             } catch (CoreException e) {
-                LOGGER.log(Level.WARNING, WARNING_RESOURCES, e);
+                LOGGER.warn(WARNING_RESOURCES, e);
             }
         }
 

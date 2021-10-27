@@ -13,10 +13,9 @@
  *******************************************************************************/
 package org.eclipse.poosl.pooslproject;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -33,7 +32,7 @@ import org.eclipse.ui.ide.IDE;
  *
  */
 public abstract class AbstractPooslModelWizard extends Wizard implements INewWizard {
-    private static final Logger LOGGER = Logger.getLogger(AbstractPooslModelWizard.class.getName());
+    private static final ILog LOGGER = Platform.getLog(AbstractPooslModelWizard.class);
 
     private static final String WIZARD_NAME = "New Poosl model with system";
 
@@ -61,14 +60,15 @@ public abstract class AbstractPooslModelWizard extends Wizard implements INewWiz
             try {
                 IDE.openEditor(workbench.getActiveWorkbenchWindow().getActivePage(), file);
             } catch (PartInitException e) {
-                LOGGER.log(Level.SEVERE, "Could not open new editor.", e);
+                LOGGER.error("Could not open new editor.", e);
             }
             IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
             if (window != null) {
                 try {
-                    workbench.showPerspective(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE, window);
+                    workbench.showPerspective(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE,
+                            window);
                 } catch (WorkbenchException e) {
-                    LOGGER.log(Level.SEVERE, "Could not switch to poosl perspective.", e);
+                    LOGGER.error("Could not switch to poosl perspective.", e);
                 }
             }
         }

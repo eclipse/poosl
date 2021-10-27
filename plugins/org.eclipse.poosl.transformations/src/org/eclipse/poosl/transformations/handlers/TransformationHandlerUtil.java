@@ -13,12 +13,13 @@
  *******************************************************************************/
 package org.eclipse.poosl.transformations.handlers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.MessageFormat;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 
 /**
  * The TransformationHandlerUtil.
@@ -27,7 +28,9 @@ import org.eclipse.core.runtime.CoreException;
  *
  */
 public final class TransformationHandlerUtil {
-    private static final Logger LOGGER = Logger.getLogger(TransformationHandlerUtil.class.getName());
+    private static final ILog LOGGER = Platform.getLog(TransformationHandlerUtil.class);
+
+    private static final String REFRESH_FAILURE = "Document generation could not refresh project \"{0}\" after generation.";
 
     private TransformationHandlerUtil() {
         throw new IllegalStateException("Utility class");
@@ -37,7 +40,7 @@ public final class TransformationHandlerUtil {
         try {
             project.refreshLocal(IResource.DEPTH_INFINITE, null);
         } catch (CoreException e) {
-            LOGGER.log(Level.WARNING, "Document generation could not refresh project \"" + project.getName() + "\" after generation.", e);
+            LOGGER.warn(MessageFormat.format(REFRESH_FAILURE, project.getName()), e);
         }
     }
 }

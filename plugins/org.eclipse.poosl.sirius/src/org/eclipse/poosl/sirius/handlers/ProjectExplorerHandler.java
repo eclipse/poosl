@@ -13,8 +13,8 @@
  *******************************************************************************/
 package org.eclipse.poosl.sirius.handlers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -34,7 +34,7 @@ import org.eclipse.ui.ide.IDE;
  *
  */
 public class ProjectExplorerHandler extends AbstractHandler {
-    private static final Logger LOGGER = Logger.getLogger(ProjectExplorerHandler.class.getName());
+    private static final ILog LOGGER = Platform.getLog(ProjectExplorerHandler.class);
 
     private static final String COMMAND_EXPLORER_OPEN_SYSTEM = "org.eclipse.poosl.commands.sirius.explorer.opensystemdiagram"; //$NON-NLS-1$
 
@@ -55,10 +55,10 @@ public class ProjectExplorerHandler extends AbstractHandler {
                 IWorkbenchSite site = HandlerUtil.getActiveSite(event);
                 IDE.openEditor(site.getPage(), ConvertHelper.convertISelectionToIFile(selection));
             } catch (PartInitException e) {
-                LOGGER.log(Level.WARNING, "Could not open the texual editor of the selected file: " + e.getMessage());
+                LOGGER.warn("Could not open the texual editor of the selected file: " + e.getMessage());
             }
         } else {
-            LOGGER.log(Level.WARNING, "Command id is unknown, opening default diagram.");
+            LOGGER.warn("Command id is unknown, opening default diagram.");
             GraphicalEditorHelper.openGraphicalEditorFromSelection(selection, true);
         }
         return null;

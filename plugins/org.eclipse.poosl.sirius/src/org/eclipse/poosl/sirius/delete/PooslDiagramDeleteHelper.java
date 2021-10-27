@@ -20,8 +20,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -41,7 +41,7 @@ import org.eclipse.ui.PlatformUI;
 public final class PooslDiagramDeleteHelper {
     private static final String DELETE_DIAGRAMS_FAILED = "Could not delete the diagrams.";
 
-    private static final Logger LOGGER = Logger.getLogger(PooslDiagramDeleteHelper.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslDiagramDeleteHelper.class);
 
     private PooslDiagramDeleteHelper() {
     }
@@ -76,7 +76,7 @@ public final class PooslDiagramDeleteHelper {
                 PlatformUI.getWorkbench().getProgressService().runInUI(context, new DeleteDiagramRunnable(session2Descriptors), scheduler);
             }
         } catch (InvocationTargetException | InterruptedException e) {
-            LOGGER.log(Level.WARNING, DELETE_DIAGRAMS_FAILED, e);
+            LOGGER.warn(DELETE_DIAGRAMS_FAILED, e);
         }
     }
 

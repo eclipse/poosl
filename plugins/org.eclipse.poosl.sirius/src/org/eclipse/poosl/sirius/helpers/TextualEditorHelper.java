@@ -14,8 +14,8 @@
 package org.eclipse.poosl.sirius.helpers;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -61,7 +61,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
  *
  */
 public final class TextualEditorHelper {
-    private static final Logger LOGGER = Logger.getLogger(TextualEditorHelper.class.getName());
+    private static final ILog LOGGER = Platform.getLog(TextualEditorHelper.class);
 
     private TextualEditorHelper() {
         throw new IllegalStateException("Utility class");
@@ -110,7 +110,7 @@ public final class TextualEditorHelper {
                 return true;
             }
         } catch (PartInitException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         return false;
     }

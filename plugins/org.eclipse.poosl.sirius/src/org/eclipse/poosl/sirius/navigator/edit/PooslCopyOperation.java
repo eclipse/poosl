@@ -18,8 +18,8 @@ import java.net.URI;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,7 +74,7 @@ import org.eclipse.ui.internal.ide.dialogs.IDEResourceInfoUtils;
 @SuppressWarnings("restriction")
 public class PooslCopyOperation {
 
-    private static final Logger LOGGER = Logger.getLogger(PooslCopyOperation.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslCopyOperation.class);
 
     private static final IResource[] EMPTY_RESOURCE_ARRAY = new IResource[0];
 
@@ -313,7 +313,7 @@ public class PooslCopyOperation {
     }
 
     private void display(InvocationTargetException e) {
-        LOGGER.log(Level.WARNING, MessageFormat.format("Exception in {0}.performCopy(): {1}", getClass().getName(), e.getTargetException()), e.getCause());
+        LOGGER.warn(MessageFormat.format("Exception in {0}.performCopy(): {1}", getClass().getName(), e.getTargetException()), e.getCause());
         displayError(NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_internalError, e.getTargetException().getMessage()));
     }
 

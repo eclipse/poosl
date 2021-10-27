@@ -13,14 +13,13 @@
  *******************************************************************************/
 package org.eclipse.poosl.sirius.handlers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.BadLocationException;
@@ -52,7 +51,7 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
  *
  */
 public class GraphicalEditorHandler extends AbstractHandler {
-    private static final Logger LOGGER = Logger.getLogger(GraphicalEditorHandler.class.getName());
+    private static final ILog LOGGER = Platform.getLog(GraphicalEditorHandler.class);
 
     private static final String COMMAND_EDITOR_CLASS_DIAGRAM = "org.eclipse.poosl.commands.sirius.editor.openclassdiagram"; //$NON-NLS-1$
 
@@ -76,7 +75,8 @@ public class GraphicalEditorHandler extends AbstractHandler {
 
             if (commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM)) {
                 Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
-                GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, poosl, commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
+                GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, poosl,
+                        commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
             } else {
                 ISelection selection = HandlerUtil.getCurrentSelection(event);
                 TextSelection text = (TextSelection) selection;
@@ -94,21 +94,27 @@ public class GraphicalEditorHandler extends AbstractHandler {
                         // If none is selected find the main cluster (project
                         // explorer behavior)
                         if (target instanceof ClusterClass) {
-                            GraphicalEditorHelper.openGraphicalEditor(target, edit, file.getProject());
+                            GraphicalEditorHelper.openGraphicalEditor(target, edit,
+                                    file.getProject());
                         } else {
                             if (target instanceof Poosl) {
-                                GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, (Poosl) target, commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
+                                GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit,
+                                        (Poosl) target,
+                                        commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
                             } else {
-                                LOGGER.log(Level.WARNING, "Could find target for opening the graphical editor, from command " + commandId);
+                                LOGGER.warn(
+                                        "Could find target for opening the graphical editor, from command "
+                                                + commandId);
                             }
                         }
                     } else {
-                        LOGGER.log(Level.WARNING, "Command id unknown: " + commandId);
+                        LOGGER.warn("Command id unknown: " + commandId);
                     }
                 }
             }
         } else {
-            LOGGER.log(Level.WARNING, "Could not get file to open the graphical editor, from command " + commandId);
+            LOGGER.warn(
+                    "Could not get file to open the graphical editor, from command " + commandId);
         }
         return null;
     }
@@ -116,7 +122,8 @@ public class GraphicalEditorHandler extends AbstractHandler {
     private EObject getEObject(IWorkbenchPart part, ISelection selection, IEditorPart edit) {
         if (edit instanceof XtextEditor) {
             XtextEditor xtextEditor = (XtextEditor) edit;
-            IXtextDocument document = (IXtextDocument) xtextEditor.getDocumentProvider().getDocument(xtextEditor.getEditorInput());
+            IXtextDocument document = (IXtextDocument) xtextEditor.getDocumentProvider()
+                    .getDocument(xtextEditor.getEditorInput());
             int cursorposition = getCursorPosition(part);
             int lineOffset = -1;
 
@@ -129,13 +136,13 @@ public class GraphicalEditorHandler extends AbstractHandler {
                         TextSelection text = (TextSelection) selection;
                         lineNumber = text.getStartLine();
                     } else {
-                        LOGGER.log(Level.SEVERE, WARNING_SELECTION_CAST_FAILED);
+                        LOGGER.error(WARNING_SELECTION_CAST_FAILED);
                         return null;
                     }
                 }
                 lineOffset = document.getLineInformation(lineNumber).getOffset();
             } catch (BadLocationException e) {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
+                LOGGER.warn(e.getMessage(), e);
             }
 
             IResource resource = xtextEditor.getEditorInput().getAdapter(IResource.class);
@@ -148,19 +155,21 @@ public class GraphicalEditorHandler extends AbstractHandler {
         try {
             return ((StyledText) part.getAdapter(Control.class)).getCaretOffset();
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, WARNING_CURSOR_POSITION_UNKNOWN, e.getMessage());
+            LOGGER.warn(WARNING_CURSOR_POSITION_UNKNOWN, e);
             return -1;
         }
     }
 
     private EObject getSemanticObject(IResource resource, int lineOffset) {
         XtextResourceSet resourceSet = new XtextResourceSet();
-        resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(), org.eclipse.poosl.PooslPackage.eINSTANCE);
+        resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(),
+                org.eclipse.poosl.PooslPackage.eINSTANCE);
 
         URI uri = URI.createPlatformResourceURI(resource.toString().substring(2), true);
         XtextResource xtextResource = (XtextResource) resourceSet.getResource(uri, true);
 
-        ILeafNode leafNode = NodeModelUtils.findLeafNodeAtOffset(xtextResource.getParseResult().getRootNode(), lineOffset);
+        ILeafNode leafNode = NodeModelUtils
+                .findLeafNodeAtOffset(xtextResource.getParseResult().getRootNode(), lineOffset);
         EObject actualSemanticObject = NodeModelUtils.findActualSemanticObjectFor(leafNode);
 
         if (actualSemanticObject == null) {
@@ -171,7 +180,8 @@ public class GraphicalEditorHandler extends AbstractHandler {
     }
 
     /**
-     * Search from bottom to top to the first object that can be used to create a diagram
+     * Search from bottom to top to the first object that can be used to create
+     * a diagram
      * 
      * @param target
      * @return

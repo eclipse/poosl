@@ -14,8 +14,8 @@
 package org.eclipse.poosl.sirius.navigator.rename;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -40,7 +40,7 @@ import org.eclipse.sirius.business.api.session.Session;
 public class PooslFileChange extends Change {
     private static final String NAME = "PooslFileChange"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(PooslFileChange.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslFileChange.class);
 
     private IFile fFile;
 
@@ -130,7 +130,7 @@ public class PooslFileChange extends Change {
                 oldResource.delete(null);
             }
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Error unloading old resource after rename.", e);
+            LOGGER.warn("Error unloading old resource after rename.", e);
         }
         fFile = null;
         fFolder = null;

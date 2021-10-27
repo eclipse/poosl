@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -28,8 +26,10 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 
 /**
  * The PooslProjectSupport.
@@ -44,14 +44,15 @@ public final class PooslProjectSupport {
      */
     public static final String NATURE_ID = "org.eclipse.xtext.ui.shared.xtextNature"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(PooslProjectSupport.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslProjectSupport.class);
 
     private PooslProjectSupport() {
         throw new IllegalStateException("Utility class");
     }
 
     /**
-     * For this marvelous project we need to: - create the default Eclipse project - add the custom project nature -
+     * For this marvelous project we need to: - create the default Eclipse
+     * project - add the custom project nature -
      * create the folder structure.
      * 
      * @param projectName
@@ -78,14 +79,17 @@ public final class PooslProjectSupport {
      * @return the created project
      * @throws CoreException
      */
-    private static IProject createBaseProject(String projectName, URI location) throws CoreException {
+    private static IProject createBaseProject(String projectName, URI location)
+            throws CoreException {
         // it is acceptable to use the ResourcesPlugin class
         IProject newProject = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 
         if (newProject != null && !newProject.exists()) {
             URI projectLocation = location;
-            IProjectDescription desc = newProject.getWorkspace().newProjectDescription(newProject.getName());
-            if (location != null && ResourcesPlugin.getWorkspace().getRoot().getLocationURI().equals(location)) {
+            IProjectDescription desc = newProject.getWorkspace()
+                    .newProjectDescription(newProject.getName());
+            if (location != null
+                    && ResourcesPlugin.getWorkspace().getRoot().getLocationURI().equals(location)) {
                 projectLocation = null;
             }
 
@@ -94,7 +98,8 @@ public final class PooslProjectSupport {
             if (!newProject.isOpen()) {
                 newProject.open(null);
             }
-            newProject.setDefaultCharset(PooslProjectConstant.SUPPORTED_CHARSET.name(), new NullProgressMonitor());
+            newProject.setDefaultCharset(PooslProjectConstant.SUPPORTED_CHARSET.name(),
+                    new NullProgressMonitor());
         }
 
         return newProject;
@@ -111,7 +116,8 @@ public final class PooslProjectSupport {
     }
 
     /**
-     * Create a folder structure with a parent root, overlay, and a few child folders.
+     * Create a folder structure with a parent root, overlay, and a few child
+     * folders.
      * 
      * @param newProject
      * @throws CoreException
@@ -127,10 +133,11 @@ public final class PooslProjectSupport {
         URL url;
         InputStream inputStream = null;
         try {
-            url = new URL("platform:/plugin/org.eclipse.poosl.pooslproject/templates/" + file.getName()); //$NON-NLS-1$
+            url = new URL(
+                    "platform:/plugin/org.eclipse.poosl.pooslproject/templates/" + file.getName()); //$NON-NLS-1$
             inputStream = url.openConnection().getInputStream();
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         file.create(inputStream, true, null);
     }

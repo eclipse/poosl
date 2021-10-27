@@ -14,12 +14,12 @@
 package org.eclipse.poosl.pooslproject;
 
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IResourceStatus;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -40,7 +40,7 @@ public class PooslNewProjectWizard extends Wizard implements INewWizard {
     /** Declared ID. */ // Use PooslProjectConstant to reference
     static final String ID = "org.eclipse.poosl.pooslproject.projectwizard"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(PooslNewProjectWizard.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslNewProjectWizard.class);
 
     private static final String WIZARD_NAME = "New Poosl project";
 
@@ -79,17 +79,19 @@ public class PooslNewProjectWizard extends Wizard implements INewWizard {
             IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
             if (window != null) {
                 try {
-                    workbench.showPerspective(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE, window);
+                    workbench.showPerspective(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE,
+                            window);
                 } catch (WorkbenchException e) {
-                    LOGGER.log(Level.WARNING, "Could switch to poosl perspective.", e);
+                    LOGGER.error("Could switch to poosl perspective.", e);
                 }
             }
             return true;
         } catch (CoreException e) {
             if (e.getStatus().getCode() == IResourceStatus.CASE_VARIANT_EXISTS) {
-                pageOne.setErrorMessage("A project with that name but different capitalization already exists in the workspace.");
+                pageOne.setErrorMessage(
+                        "A project with that name but different capitalization already exists in the workspace.");
             }
-            LOGGER.log(Level.SEVERE, "Error trying to create project.", e);
+            LOGGER.error("Error trying to create project.", e);
             return false;
         }
     }
