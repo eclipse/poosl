@@ -13,17 +13,17 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.importing;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -46,11 +46,17 @@ import org.osgi.service.prefs.Preferences;
  *
  */
 public final class ImportingHelper {
+
+    private static final ILog LOGGER = Platform.getLog(ImportingHelper.class);
+
     private static final String BASIC_CLASSES_JAR_PATH = "org/eclipse/poosl/xtext/BasicClasses.poosl"; //$NON-NLS-1$
 
-    private static final String BASIC_CLASSES_PATH = Thread.currentThread().getContextClassLoader().getResource(BASIC_CLASSES_JAR_PATH).toString();
+    private static final String BASIC_CLASSES_PATH = Thread.currentThread().getContextClassLoader()
+            .getResource(BASIC_CLASSES_JAR_PATH).toString();
 
-    private static final char[] HEX_CHARS = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F' };
+    private static final String ILLEGAL_ESCAPE = "Unsupported escape sequence on character {0} of string {1}.";
+
+    private static final char[] HEX_CHARS = "abcdefABCDEF".toCharArray(); //$NON-NLS-1$
 
     private ImportingHelper() {
         throw new IllegalStateException("Utility class");
@@ -75,7 +81,8 @@ public final class ImportingHelper {
     }
 
     private static boolean isValidUri(Resource base, URI importURI) {
-        if (GlobalConstants.FILE_EXTENSION.equals(importURI.fileExtension()) && (importURI.isRelative() || importURI.isFile())) {
+        if (GlobalConstants.FILE_EXTENSION.equals(importURI.fileExtension())
+                && (importURI.isRelative() || importURI.isFile())) {
             URI location = resolveImportUri(base.getURI(), importURI);
             return base.getResourceSet().getURIConverter().exists(location, Collections.emptyMap());
         }
@@ -83,10 +90,13 @@ public final class ImportingHelper {
     }
 
     private static boolean isValidLibUri(Resource base, URI importURI) {
-        if (GlobalConstants.FILE_EXTENSION.equals(importURI.fileExtension()) && importURI.isRelative()) {
+        if (GlobalConstants.FILE_EXTENSION.equals(importURI.fileExtension())
+                && importURI.isRelative()) {
             List<String> segments = importURI.segmentsList();
             String firstSegment = segments.get(0);
-            if (!segments.contains("..") && firstSegment != null && !firstSegment.startsWith("~")) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (!segments.contains("..") //$NON-NLS-1$ relative
+                    && firstSegment != null //
+                    && !firstSegment.startsWith("~")) { //$NON-NLS-2$ home
                 URI location = resolveImportLibUri(base, importURI);
                 return location != null;
             }
@@ -104,7 +114,8 @@ public final class ImportingHelper {
                 URI resolved = importURI.resolve(baseURI);
                 if (resolved.isPlatformResource()) {
                     try {
-                        IFile basicFile = workspaceRoot.getFile(new Path(resolved.toPlatformString(true)));
+                        IFile basicFile = workspaceRoot
+                                .getFile(new Path(resolved.toPlatformString(true)));
                         if (basicFile.exists()) {
                             return resolved;
                         }
@@ -129,15 +140,19 @@ public final class ImportingHelper {
     public static URI resolveImportLibUri(Resource base, URI importUri) {
         if (base.getURI().isPlatform() && !importUri.isEmpty()) {
             Path pPath = new Path(base.getURI().toPlatformString(true));
-            IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(pPath.segment(0));
+            IProject project = ResourcesPlugin.getWorkspace().getRoot()
+                    .getProject(pPath.segment(0));
 
             List<String> includes = getIncludes(project);
             for (String include : includes) {
                 IPath path = new Path(include).addTrailingSeparator();
-                URI baseURI = (path.isAbsolute()) ? URI.createFileURI(path.toString()) : URI.createPlatformResourceURI(path.toString(), true);
+                URI baseURI = (path.isAbsolute())
+                    ? URI.createFileURI(path.toString())
+                    : URI.createPlatformResourceURI(path.toString(), true);
                 URI resolved = resolveImportUri(baseURI, importUri);
                 boolean inIncludePath = resolved.toString().startsWith(baseURI.toString());
-                if (inIncludePath && base.getResourceSet().getURIConverter().exists(resolved, Collections.emptyMap())) {
+                if (inIncludePath && base.getResourceSet().getURIConverter().exists(resolved,
+                        Collections.emptyMap())) {
                     return resolved;
                 }
             }
@@ -150,7 +165,8 @@ public final class ImportingHelper {
         String importString = importToString(imp);
         if (importString != null) {
             URI importURI = URI.createURI(importString);
-            if ((!importlib && isValidUri(resource, importURI)) || (importlib && isValidLibUri(resource, importURI))) {
+            if ((!importlib && isValidUri(resource, importURI))
+                    || (importlib && isValidLibUri(resource, importURI))) {
                 return resolveImport(imp.eResource(), importURI, importlib);
             }
         }
@@ -161,7 +177,9 @@ public final class ImportingHelper {
         if (base != null) {
             Resource importedResource = null;
             try {
-                URI resolvedURI = !importlib ? resolveImportUri(base.getURI(), importURI) : resolveImportLibUri(base, importURI);
+                URI resolvedURI = !importlib
+                    ? resolveImportUri(base.getURI(), importURI)
+                    : resolveImportLibUri(base, importURI);
                 if (resolvedURI == null) {
                     return null;
                 }
@@ -194,9 +212,12 @@ public final class ImportingHelper {
     }
 
     /**
-     * This function will try to read the preferencestore for the basic classes settings and return either the default
-     * value or the user supplied value. If the preferenceStore cannot be accessed (usually in case of running this
-     * function from commandline) the function will return the relative path to the basicClasses file inside the
+     * This function will try to read the preferencestore for the basic classes
+     * settings and return either the default
+     * value or the user supplied value. If the preferenceStore cannot be
+     * accessed (usually in case of running this
+     * function from commandline) the function will return the relative path to
+     * the basicClasses file inside the
      * poosl2xml.jar
      * 
      * @return The basic classes path
@@ -205,7 +226,8 @@ public final class ImportingHelper {
         String basicClassesLocation = BASIC_CLASSES_PATH;
         IPreferencesService preferencesService = Platform.getPreferencesService();
         if (preferencesService != null && !useDefaultBasicclasses()) {
-            String path = preferencesService.getString(GlobalConstants.PREFERENCE_PLUGIN_ID, GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH, BASIC_CLASSES_PATH, null);
+            String path = preferencesService.getString(GlobalConstants.PREFERENCE_PLUGIN_ID,
+                    GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH, BASIC_CLASSES_PATH, null);
             if (!path.startsWith("platform")) { //$NON-NLS-1$
                 return URI.createFileURI(path);
             }
@@ -226,7 +248,8 @@ public final class ImportingHelper {
 
     public static boolean useDefaultBasicclasses() {
         IPreferencesService preferencesService = Platform.getPreferencesService();
-        String useBasicClasses = preferencesService.getString(GlobalConstants.PREFERENCE_PLUGIN_ID, GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS,
+        String useBasicClasses = preferencesService.getString(GlobalConstants.PREFERENCE_PLUGIN_ID,
+                GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS,
                 GlobalConstants.PREFERENCES_BASIC_CLASSES_DEFAULT, null);
         return useBasicClasses.equals(GlobalConstants.PREFERENCES_BASIC_CLASSES_DEFAULT);
     }
@@ -241,7 +264,7 @@ public final class ImportingHelper {
             }
             dependencies.add(basicResource);
         } catch (Exception e) {
-            Logger.getGlobal().log(Level.WARNING, "Runtime Exception when computing all dependencies import", e);
+            LOGGER.warn("Runtime Exception when computing all dependencies import", e);
         }
         computeAllDependencies(resource, dependencies);
         return dependencies;
@@ -266,7 +289,8 @@ public final class ImportingHelper {
         List<String> includes = new ArrayList<>();
         if (project != null) {
             IPreferencesService service = Platform.getPreferencesService();
-            Preferences[] prefs = new Preferences[] { new ProjectScope(project).getNode("org.eclipse.poosl.xtext.Poosl") }; //$NON-NLS-1$
+            Preferences[] prefs = new Preferences[] {
+                    new ProjectScope(project).getNode("org.eclipse.poosl.xtext.Poosl") }; //$NON-NLS-1$
             String version = service.get(GlobalConstants.PREFERENCES_INCLUDE_VERSION, "0", prefs); //$NON-NLS-1$
             String key = getIncludeKey(Integer.parseInt(version), project);
             int i = 0;
@@ -281,7 +305,8 @@ public final class ImportingHelper {
     }
 
     public static String getIncludeKey(Integer version, IProject project) {
-        return version > 0 ? GlobalConstants.PREFERENCES_INCLUDE_KEY : project.getName() + ".include"; //$NON-NLS-1$
+        return version > 0
+            ? GlobalConstants.PREFERENCES_INCLUDE_KEY : project.getName() + ".include"; //$NON-NLS-1$
     }
 
     public static String importToString(Import pImport) {
@@ -369,7 +394,7 @@ public final class ImportingHelper {
                         }
                         break;
                     default:
-                        Logger.getGlobal().log(Level.WARNING, "Unsupported escape sequence on character " + index + " " + "of string " + importString + ".");
+                        LOGGER.warn(MessageFormat.format(ILLEGAL_ESCAPE, index, importString));
                         break;
                     }
                 } else {
@@ -383,13 +408,12 @@ public final class ImportingHelper {
     private static boolean isHexDigit(char c) {
         if (Character.isDigit(c)) {
             return true;
-        } else {
-            for (int i = 0; i < HEX_CHARS.length; i++) {
-                if (c == HEX_CHARS[i]) {
-                    return true;
-                }
-            }
-            return false;
         }
+        for (int i = 0; i < HEX_CHARS.length; i++) {
+            if (c == HEX_CHARS[i]) {
+                return true;
+            }
+        }
+        return false;
     }
 }

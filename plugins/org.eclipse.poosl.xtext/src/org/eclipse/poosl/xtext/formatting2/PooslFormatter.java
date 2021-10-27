@@ -15,8 +15,9 @@ package org.eclipse.poosl.xtext.formatting2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.poosl.AbortStatement;
@@ -103,7 +104,10 @@ import com.google.inject.Inject;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
+@SuppressWarnings("restriction") // AbstractFormatter2 is public in newer version
 public class PooslFormatter extends AbstractFormatter2 {
+
+    private static final ILog LOGGER = Platform.getLog(PooslFormatter.class);
 
     private static final String KEYWORD_OD = "od"; //$NON-NLS-1$
 
@@ -192,7 +196,7 @@ public class PooslFormatter extends AbstractFormatter2 {
                 format(model, document);
             }
         } else {
-            Logger.getGlobal().fine("Format not specific handled : " + obj.getClass().getName());
+            LOGGER.warn("Format not specific handled : " + obj.getClass().getName());
         }
     }
 

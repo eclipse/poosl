@@ -18,9 +18,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.poosl.Channel;
 import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.Instance;
@@ -28,6 +28,7 @@ import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 import org.eclipse.poosl.xtext.helpers.PooslChannelHelper;
 import org.eclipse.poosl.xtext.helpers.PooslValidationHelper;
+import org.eclipse.poosl.xtext.importing.ImportingHelper;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 /**
@@ -37,6 +38,9 @@ import org.eclipse.xtext.resource.IEObjectDescription;
  *
  */
 public final class PooslClusterClassDescription {
+
+    private static final ILog LOGGER = Platform.getLog(ImportingHelper.class);
+
     private static final String SEMICOLON = ";"; //$NON-NLS-1$
 
     private static final String STR_CHANNELS = "Channels";
@@ -92,7 +96,7 @@ public final class PooslClusterClassDescription {
                 if (instClass.length == 2) {
                     allInstances.put(instClass[0], instClass[1]);
                 } else {
-                    Logger.getGlobal().log(Level.WARNING, "Could not add description of instance : " + instanceDescription);
+                    LOGGER.warn("Could not add description of instance : " + instanceDescription);
                 }
             }
         }
@@ -100,7 +104,8 @@ public final class PooslClusterClassDescription {
         return allInstances;
     }
 
-    public static PooslChannelHelper getChannelDescription(IEObjectDescription descr, String externalPortName) {
+    public static PooslChannelHelper getChannelDescription(
+            IEObjectDescription descr, String externalPortName) {
         if (!checkValidity(descr))
             return null;
 
@@ -109,7 +114,8 @@ public final class PooslClusterClassDescription {
         Map<String, String> instances = getInstancesMap(descr);
 
         for (String stringDescription : channelDescriptions) {
-            PooslChannelHelper ch = new PooslChannelHelper(clusterName, stringDescription, instances);
+            PooslChannelHelper ch = new PooslChannelHelper(clusterName, stringDescription,
+                    instances);
             if (externalPortName.equals(ch.getExternalPortName())) {
                 return ch;
             }
@@ -118,8 +124,9 @@ public final class PooslClusterClassDescription {
     }
 
     public static List<PooslChannelHelper> getChannelDescriptions(IEObjectDescription descr) {
-        if (!checkValidity(descr))
+        if (!checkValidity(descr)) {
             return null;
+        }
 
         String clusterName = HelperFunctions.getName(descr);
         String[] channelDescriptions = getSplittedChannels(descr);

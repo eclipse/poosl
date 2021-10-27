@@ -13,9 +13,8 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.helpers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.poosl.MessageSignature;
 import org.eclipse.poosl.PortReference;
 import org.eclipse.poosl.ReceiveStatement;
@@ -31,6 +30,9 @@ import org.eclipse.xtext.resource.IEObjectDescription;
  *
  */
 public class PooslMessageSignatureCallHelper {
+
+    private static final ILog LOGGER = Platform.getLog(PooslMessageSignatureCallHelper.class);
+
     private static final String COLON = ":"; //$NON-NLS-1$
 
     private static final String STR_MESSAGETYPE_SEND = "Send"; //$NON-NLS-1$
@@ -54,7 +56,7 @@ public class PooslMessageSignatureCallHelper {
             if (result.length == 4)
                 type = result[3];
         } else {
-            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " : " + stringDescription); //$NON-NLS-1$
+            LOGGER.warn(this.getClass().getName() + " : " + stringDescription); //$NON-NLS-1$
         }
     }
 
@@ -101,17 +103,23 @@ public class PooslMessageSignatureCallHelper {
         return lPort + COLON + lName + COLON + lParamCount;
     }
 
-    public static String getSignatureID(MessageSignature messageSignature, PooslMessageType messageType) {
-        String type = messageType == PooslMessageType.RECEIVE ? STR_MESSAGETYPE_RECEIVE : STR_MESSAGETYPE_SEND;
-        return getID(messageSignature.getPort().getPort(), messageSignature.getName(), messageSignature.getParameters().size(), type);
+    public static String getSignatureID(
+            MessageSignature messageSignature, PooslMessageType messageType) {
+        String type = messageType == PooslMessageType.RECEIVE
+            ? STR_MESSAGETYPE_RECEIVE : STR_MESSAGETYPE_SEND;
+        return getID(messageSignature.getPort().getPort(), messageSignature.getName(),
+                messageSignature.getParameters().size(), type);
     }
 
     public static String getSignatureID(MessageSignature messageSignature) {
-        return getID(messageSignature.getPort().getPort(), messageSignature.getName(), messageSignature.getParameters().size());
+        return getID(messageSignature.getPort().getPort(), messageSignature.getName(),
+                messageSignature.getParameters().size());
     }
 
     public static String getSignatureID(IEObjectDescription description) {
-        return getID(PooslMessageSignatureDescription.getPort(description), HelperFunctions.getName(description), PooslMessageSignatureDescription.getParameterTypes(description).size());
+        return getID(PooslMessageSignatureDescription.getPort(description),
+                HelperFunctions.getName(description),
+                PooslMessageSignatureDescription.getParameterTypes(description).size());
     }
 
     public static String getSignatureID(ReceiveStatement stat) {

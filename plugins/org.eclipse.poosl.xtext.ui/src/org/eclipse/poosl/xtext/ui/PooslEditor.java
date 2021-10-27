@@ -13,9 +13,7 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.ui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
@@ -41,25 +39,28 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
  *
  */
 public class PooslEditor extends XtextEditor {
-    private static final Logger LOGGER = Logger.getLogger(PooslEditor.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslEditor.class);
 
     private static final String POOSL_BREAKPOINT_ACTION = "RulerDoubleClick";
 
     PooslEditor() {
-        super();
         setHelpContextId("org.eclipse.poosl.help.help_editor"); //$NON-NLS-1$
         checkPerspective();
     }
 
     /**
-     * Overrides the normal save action to apply formatting before the save, if the user has set it as preference. To
-     * avoid only formatting a selection, the selection is set to 0. The cursor will the stay at the start of the
-     * selection if there was any and formatting will be applied to the whole file
+     * Overrides the normal save action to apply formatting before the save, if
+     * the user has set it as preference. To
+     * avoid only formatting a selection, the selection is set to 0. The cursor
+     * will the stay at the start of the
+     * selection if there was any and formatting will be applied to the whole
+     * file
      */
     @Override
     public void doSave(IProgressMonitor progressMonitor) {
         IPreferencesService preferencesService = Platform.getPreferencesService();
-        boolean format = preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID, GlobalConstants.PREFERENCES_FORMAT_ON_SAVE, false, null);
+        boolean format = preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID,
+                GlobalConstants.PREFERENCES_FORMAT_ON_SAVE, false, null);
 
         if (format) {
             ITextOperationTarget target = getSourceViewer().getTextOperationTarget();
@@ -75,16 +76,21 @@ public class PooslEditor extends XtextEditor {
         IWorkbench workbench = PlatformUI.getWorkbench();
         IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
         IPerspectiveDescriptor perspective = window.getActivePage().getPerspective();
-        if (!perspective.getId().equals("org.eclipse.poosl.normalperspective") && !perspective.getId().equals("org.eclipse.poosl.debugperspective")) { //$NON-NLS-1$ //$NON-NLS-2$
+        if (!perspective.getId().equals("org.eclipse.poosl.normalperspective") //$NON-NLS-1$
+                && !perspective.getId().equals("org.eclipse.poosl.debugperspective")) { //$NON-NLS-1$
             IPreferencesService preferencesService = Platform.getPreferencesService();
-            boolean dontask = preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID, GlobalConstants.PREFERENCES_DONT_ASK_EDIT_PERSPECTIVE, false, null);
+            boolean dontask = preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID,
+                    GlobalConstants.PREFERENCES_DONT_ASK_EDIT_PERSPECTIVE, false, null);
             if (dontask) {
-                boolean usepersp = preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID, GlobalConstants.PREFERENCES_OPEN_EDIT_PERSPECTIVE, false, null);
+                boolean usepersp = preferencesService.getBoolean(
+                        GlobalConstants.PREFERENCE_PLUGIN_ID,
+                        GlobalConstants.PREFERENCES_OPEN_EDIT_PERSPECTIVE, false, null);
                 if (usepersp) {
                     openPerspective(workbench, window);
                 }
             } else {
-                PerspectiveDialog dialog = new PerspectiveDialog(Display.getDefault().getActiveShell());
+                PerspectiveDialog dialog = new PerspectiveDialog(
+                        Display.getDefault().getActiveShell());
                 if (dialog.open() == Window.OK) {
                     openPerspective(workbench, window);
                 }
@@ -96,13 +102,14 @@ public class PooslEditor extends XtextEditor {
         try {
             workbench.showPerspective("org.eclipse.poosl.normalperspective", window); //$NON-NLS-1$
         } catch (WorkbenchException e) {
-            LOGGER.log(Level.WARNING, "Could not open perspective", e);
+            LOGGER.warn("Could not open perspective", e);
         }
     }
 
     @Override
     protected void createActions() {
-        ToggleBreakpointAction action = new ToggleBreakpointAction(this, getDocument(), getVerticalRuler());
+        ToggleBreakpointAction action = new ToggleBreakpointAction(this, getDocument(),
+                getVerticalRuler());
         setAction(POOSL_BREAKPOINT_ACTION, action);
         super.createActions();
     }

@@ -14,9 +14,9 @@
 package org.eclipse.poosl.xtext.helpers;
 
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstancePort;
@@ -29,6 +29,9 @@ import org.eclipse.poosl.xtext.GlobalConstants;
  *
  */
 public class PooslInstancePortHelper {
+
+    private static final ILog LOGGER = Platform.getLog(PooslInstancePortHelper.class);
+
     private PooslInstanceHelper instanceHelper;
 
     private String port;
@@ -37,7 +40,8 @@ public class PooslInstancePortHelper {
 
     public PooslInstancePortHelper(InstancePort iPort) {
         ClusterClass arch = (ClusterClass) iPort.eContainer().eContainer();
-        String aClassName = (arch.getName() != null) ? arch.getName() : GlobalConstants.POOSL_SYSTEM;
+        String aClassName = (arch.getName() != null)
+            ? arch.getName() : GlobalConstants.POOSL_SYSTEM;
         String instanceName = (iPort.getInstance() != null) ? iPort.getInstance().getName() : ""; //$NON-NLS-1$
 
         instanceHelper = new PooslInstanceHelper(aClassName, instanceName);
@@ -45,14 +49,15 @@ public class PooslInstancePortHelper {
         instantiableClass = getClassDefinition(instanceName, arch);
     }
 
-    public PooslInstancePortHelper(String aClassName, String description, Map<String, String> instances) {
+    public PooslInstancePortHelper(String aClassName, String description,
+            Map<String, String> instances) {
         String[] portDescr = description.split(":"); //$NON-NLS-1$
         if (portDescr.length == 2) {
             instanceHelper = new PooslInstanceHelper(aClassName, portDescr[0]);
             port = portDescr[1];
             instantiableClass = instances.get(portDescr[0]);
         } else {
-            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + description);
+            LOGGER.warn(this.getClass().getName() + description);
         }
     }
 

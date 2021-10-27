@@ -14,8 +14,8 @@
 package org.eclipse.poosl.xtext.ui.preferences;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
@@ -81,7 +81,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
 
     private static final String WORKSPACE_SUBSTRING = "platform:/resource"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(BasicClassesPreferencePage.class.getName());
+    private static final ILog LOGGER = Platform.getLog(BasicClassesPreferencePage.class);
 
     /**
      * Parent Layout which owns the other elements
@@ -110,7 +110,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
                 try {
                     ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.CLEAN_BUILD, null);
                 } catch (CoreException e) {
-                    LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                    LOGGER.error(e.getMessage(), e);
                 }
             }
         }

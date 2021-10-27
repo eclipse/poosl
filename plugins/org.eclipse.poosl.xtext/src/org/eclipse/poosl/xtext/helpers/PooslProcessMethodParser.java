@@ -13,9 +13,8 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.helpers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.ProcessMethodCall;
@@ -29,6 +28,9 @@ import org.eclipse.xtext.resource.IEObjectDescription;
  *
  */
 public class PooslProcessMethodParser {
+
+    private static final ILog LOGGER = Platform.getLog(PooslMessageSignatureCallHelper.class);
+
     private static final String PARSER_METHOD_PARAM_SEPARATOR = "|"; //$NON-NLS-1$
 
     private String calledMethod;
@@ -44,7 +46,7 @@ public class PooslProcessMethodParser {
             this.numberOfInputs = Integer.parseInt(properties[1]);
             this.numberOfOutputs = Integer.parseInt(properties[2]);
         } else {
-            Logger.getGlobal().log(Level.WARNING, this.getClass().getName() + " " + stringDescription); //$NON-NLS-1$
+            LOGGER.warn(getClass().getName() + ":" + stringDescription); //$NON-NLS-1$
         }
     }
 
@@ -55,18 +57,22 @@ public class PooslProcessMethodParser {
     }
 
     private static String getID(String name, int input, int output) {
-        return name + PARSER_METHOD_PARAM_SEPARATOR + String.valueOf(input) + PARSER_METHOD_PARAM_SEPARATOR + String.valueOf(output);
+        return name + PARSER_METHOD_PARAM_SEPARATOR + String.valueOf(input)
+                + PARSER_METHOD_PARAM_SEPARATOR + String.valueOf(output);
     }
 
     public static String getProcessMethodID(ProcessMethodCall methodCall) {
         if (methodCall != null) {
-            return getID(methodCall.getMethod(), methodCall.getInputArguments().size(), methodCall.getOutputVariables().size());
+            return getID(methodCall.getMethod(), methodCall.getInputArguments().size(),
+                    methodCall.getOutputVariables().size());
         }
         return null;
     }
 
     public static String getProcessMethodID(ProcessMethod pMethod) {
-        return getID(pMethod.getName(), HelperFunctions.computeNumberOfVariables(pMethod.getInputParameters()), HelperFunctions.computeNumberOfVariables(pMethod.getOutputParameters()));
+        return getID(pMethod.getName(),
+                HelperFunctions.computeNumberOfVariables(pMethod.getInputParameters()),
+                HelperFunctions.computeNumberOfVariables(pMethod.getOutputParameters()));
     }
 
     public static String getProcessMethodIDWithClassName(ProcessMethod pMethod) {
@@ -75,7 +81,9 @@ public class PooslProcessMethodParser {
     }
 
     public IEObjectDescription getCalledMethod(ProcessClass pClass) {
-        return PooslCache.get(pClass.eResource()).getProcessMethods(pClass.getName(), numberOfInputs, numberOfOutputs).get(calledMethod);
+        return PooslCache.get(pClass.eResource())
+                .getProcessMethods(pClass.getName(), numberOfInputs, numberOfOutputs)
+                .get(calledMethod);
     }
 
     @Override

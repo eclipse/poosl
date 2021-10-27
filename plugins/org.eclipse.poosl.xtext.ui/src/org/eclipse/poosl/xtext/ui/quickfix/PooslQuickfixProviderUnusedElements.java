@@ -13,16 +13,17 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.ui.quickfix;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -66,9 +67,12 @@ import org.eclipse.xtext.validation.Issue;
  *
  */
 public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider {
+
+    private static final String TEXT_CHANGE_FAILURE = "Could not apply textchange in doc: {0}, of object: {1}";
+
     private static final String QUICKFIX_FAILED = "Quickfix Failed";
 
-    private static final Logger LOGGER = Logger.getLogger(PooslQuickfixProviderUnusedElements.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslQuickfixProviderUnusedElements.class);
 
     @Fix(PooslIssueCodes.ERROR_UNUSED_CHANNEL)
     public void unusedChannel(final Issue issue, IssueResolutionAcceptor acceptor) {
@@ -85,15 +89,14 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
         acceptor.accept(issue, "Remove this unused channel", // label
                 null, // description
                 null, // icon
-                new ISemanticModification() {
-                    public void apply(EObject element, IModificationContext context) {
-                        try {
-                            IXtextDocument xtextDocument = context.getXtextDocument();
-                            xtextDocument.replace(issue.getOffset(), issue.getLength(), ""); //$NON-NLS-1$
-                        } catch (BadLocationException e) {
-                            LOGGER.log(Level.SEVERE, "Could not apply textchange in doc: " + context.getXtextDocument() + ", of object: " + element, e);
-                            showWarning("Could not remove the channel.");
-                        }
+                (element, context) -> {
+                    try {
+                        IXtextDocument xtextDocument = context.getXtextDocument();
+                        xtextDocument.replace(issue.getOffset(), issue.getLength(), ""); //$NON-NLS-1$
+                    } catch (BadLocationException e) {
+                        LOGGER.error(MessageFormat.format(TEXT_CHANGE_FAILURE,
+                                context.getXtextDocument(), element), e);
+                        showWarning("Could not remove the channel.");
                     }
                 });
     }
@@ -105,12 +108,14 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         try {
                             IXtextDocument xtextDocument = context.getXtextDocument();
                             xtextDocument.replace(issue.getOffset(), issue.getLength(), ""); //$NON-NLS-1$
                         } catch (BadLocationException e) {
-                            LOGGER.log(Level.SEVERE, "Could not apply textchange in doc: " + context.getXtextDocument() + ", of object: " + element, e);
+                            LOGGER.error(MessageFormat.format(TEXT_CHANGE_FAILURE,
+                                    context.getXtextDocument(), element), e);
                             showWarning("Could not remove the port.");
                         }
                     }
@@ -124,23 +129,28 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         MessageSignature signature = (MessageSignature) element;
                         ProcessClass pClass = (ProcessClass) signature.eContainer();
 
                         List<TextChange> changes = new ArrayList<>();
-                        Set<String> usedSendMessages = HelperFunctions.getUsedMessages(pClass, PooslMessageType.SEND);
-                        Set<String> usedReceiveMessages = HelperFunctions.getUsedMessages(pClass, PooslMessageType.RECEIVE);
+                        Set<String> usedSendMessages = HelperFunctions.getUsedMessages(pClass,
+                                PooslMessageType.SEND);
+                        Set<String> usedReceiveMessages = HelperFunctions.getUsedMessages(pClass,
+                                PooslMessageType.RECEIVE);
 
                         // Send statements
                         for (MessageSignature msg : pClass.getSendMessages()) {
-                            if (!usedSendMessages.contains(PooslMessageSignatureCallHelper.getSignatureID(msg, PooslMessageType.SEND)))
+                            if (!usedSendMessages.contains(PooslMessageSignatureCallHelper
+                                    .getSignatureID(msg, PooslMessageType.SEND)))
                                 changes.add(new TextChange(msg, "")); //$NON-NLS-1$
                         }
                         // Receive statements
                         for (MessageSignature msg : pClass.getReceiveMessages()) {
-                            if (!usedReceiveMessages.contains(PooslMessageSignatureCallHelper.getSignatureID(msg, PooslMessageType.RECEIVE)))
+                            if (!usedReceiveMessages.contains(PooslMessageSignatureCallHelper
+                                    .getSignatureID(msg, PooslMessageType.RECEIVE)))
                                 changes.add(new TextChange(msg, "")); //$NON-NLS-1$
                         }
 
@@ -156,11 +166,9 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
         acceptor.accept(issue, "Remove this unused method", // label
                 null, // description
                 null, // icon
-                new ISemanticModification() {
-                    public void apply(EObject element, IModificationContext context) {
-                        applyTextChange(context.getXtextDocument(), element.eResource(), element, null, ""); //$NON-NLS-1$
-                    }
-                });
+                (element, context) -> applyTextChange(context.getXtextDocument(),
+                        element.eResource(), element, null, "") //$NON-NLS-1$
+        );
     }
 
     @Fix(PooslIssueCodes.UNUSED_VARIABLE)
@@ -169,31 +177,34 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
         acceptor.accept(issue, "Remove this unused variable", // label
                 null, // description
                 null, // icon
-                new ISemanticModification() {
-                    public void apply(EObject element, IModificationContext context) {
-                        Variable var = (Variable) element;
-                        Resource resource = var.eResource();
-                        Declaration dec = (Declaration) var.eContainer();
+                (element, context) -> {
+                    Variable var = (Variable) element;
+                    Resource resource = var.eResource();
+                    Declaration dec = (Declaration) var.eContainer();
 
-                        if (dec.getVariables().size() == 1) {
-                            applyTextChange(context.getXtextDocument(), resource, dec, null, ""); //$NON-NLS-1$
+                    if (dec.getVariables().size() == 1) {
+                        applyTextChange(context.getXtextDocument(), resource, dec, null, ""); //$NON-NLS-1$
+                    } else {
+                        ICompositeNode node = NodeModelUtils.getNode(var);
+                        INode prev = getPreviousVisibleNode(node);
+
+                        if (prev.getText().equals(",")) { //$NON-NLS-1$
+                            applyTextChange(context.getXtextDocument(), resource, dec,
+                                    prev.getOffset(), node.getTotalEndOffset() - prev.getOffset(),
+                                    ""); //$NON-NLS-1$
                         } else {
-                            ICompositeNode node = NodeModelUtils.getNode(var);
-                            INode prev = getPreviousVisibleNode(node);
-
-                            if (prev.getText().equals(",")) { //$NON-NLS-1$
-                                applyTextChange(context.getXtextDocument(), resource, dec, prev.getOffset(), node.getTotalEndOffset() - prev.getOffset(), ""); //$NON-NLS-1$
+                            INode next = getNextVisibleNode(node);
+                            if (next.getText().equals(",")) { //$NON-NLS-1$
+                                applyTextChange(context.getXtextDocument(), resource, dec,
+                                        node.getOffset(),
+                                        next.getTotalEndOffset() - node.getOffset(), ""); //$NON-NLS-1$
                             } else {
-                                INode next = getNextVisibleNode(node);
-                                if (next.getText().equals(",")) { //$NON-NLS-1$
-                                    applyTextChange(context.getXtextDocument(), resource, dec, node.getOffset(), next.getTotalEndOffset() - node.getOffset(), ""); //$NON-NLS-1$
-                                } else {
-                                    applyTextChange(context.getXtextDocument(), resource, dec, null, ""); //$NON-NLS-1$
-                                }
+                                applyTextChange(context.getXtextDocument(), resource, dec, null,
+                                        ""); //$NON-NLS-1$
                             }
                         }
-
                     }
+
                 });
     }
 
@@ -270,7 +281,7 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                 if (editor != null)
                     editor.selectAndReveal(textChange.offSet, textChange.text.length());
             } catch (BadLocationException e) {
-                LOGGER.log(Level.SEVERE, "Could not open editor when performing quickfix.", e);
+                LOGGER.error("Could not open editor when performing quickfix.", e);
                 return false;
             }
         }
@@ -280,20 +291,25 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
     private XtextEditor openEditor(Resource changedResource) {
         if (changedResource.getURI().isPlatformResource()) {
             String platformString = changedResource.getURI().toPlatformString(true);
-            IFile file = (IFile) ResourcesPlugin.getWorkspace().getRoot().findMember(platformString);
+            IFile file = (IFile) ResourcesPlugin.getWorkspace().getRoot()
+                    .findMember(platformString);
             try {
-                IEditorPart openedEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), "org.eclipse.poosl.xtext.Poosl"); //$NON-NLS-1$
+                IEditorPart openedEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getActivePage()
+                        .openEditor(new FileEditorInput(file), "org.eclipse.poosl.xtext.Poosl"); //$NON-NLS-1$
                 if (openedEditor instanceof XtextEditor) {
                     return (XtextEditor) openedEditor;
                 }
             } catch (PartInitException e) {
-                LOGGER.log(Level.SEVERE, "Could not open editor when performing quickfix.", e);
+                LOGGER.error("Could not open editor when performing quickfix.", e);
             }
         }
         return null;
     }
 
-    protected boolean applyTextChange(IXtextDocument doc, Resource res, EObject object, int offset, int length, String tekst) {
+    protected boolean applyTextChange(
+            IXtextDocument doc, Resource res, EObject object, int offset, int length,
+            String tekst) {
         IXtextDocument correctDoc = doc;
         XtextEditor editor = null;
         if (res != object.eResource()) {
@@ -309,13 +325,15 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
             if (editor != null)
                 editor.selectAndReveal(offset, tekst.length());
         } catch (BadLocationException e) {
-            LOGGER.log(Level.SEVERE, "Could not apply textchange in doc: " + doc + ", of object: " + object, e);
+            LOGGER.error(MessageFormat.format(TEXT_CHANGE_FAILURE, doc, object), e);
             return false;
         }
         return true;
     }
 
-    protected boolean applyTextChange(IXtextDocument doc, Resource res, EObject object, EStructuralFeature ref, String tekst) {
+    protected boolean applyTextChange(
+            IXtextDocument doc, Resource res, EObject object, EStructuralFeature ref,
+            String tekst) {
         IXtextDocument correctDoc = doc;
         XtextEditor editor = null;
         if (res != object.eResource()) {
@@ -340,33 +358,38 @@ public class PooslQuickfixProviderUnusedElements extends DefaultQuickfixProvider
                 }
             }
         } catch (BadLocationException e) {
-            LOGGER.log(Level.SEVERE, "Could not apply textchange in doc: " + doc + ", of object: " + object, e);
+            LOGGER.error(MessageFormat.format(TEXT_CHANGE_FAILURE, doc, object), e);
             return false;
         }
         return true;
     }
 
     protected void showWarning(final String message) {
-        LOGGER.log(Level.WARNING, QUICKFIX_FAILED + "  " + message); //$NON-NLS-1$
-        Logger.getLogger(PooslQuickfixProviderUnresolved.class.getName());
-        Display.getDefault().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                MessageDialog.openWarning(Display.getDefault().getActiveShell(), QUICKFIX_FAILED, message);
-            }
-        });
+        LOGGER.warn(QUICKFIX_FAILED + "  " + message); //$NON-NLS-1$
+        Display.getDefault().asyncExec(() -> MessageDialog
+                .openWarning(Display.getDefault().getActiveShell(), QUICKFIX_FAILED, message));
     }
 
-    protected void addSuppressWarning(final Issue issue, IssueResolutionAcceptor acceptor, final WarningType type) {
-        acceptor.accept(issue, "Add @" + PooslJavaValidatorSuppress.ANNOTATION_SUPPRESSWARNINGS + "(" + type.toString() + ")", // label //$NON-NLS-2$ //$NON-NLS-3$
+    protected void addSuppressWarning(
+            final Issue issue, IssueResolutionAcceptor acceptor, final WarningType type) {
+        acceptor.accept(issue,
+                "Add @" + PooslJavaValidatorSuppress.ANNOTATION_SUPPRESSWARNINGS + "(" //$NON-NLS-2$
+                        + type.toString() + ")", // label  //$NON-NLS-1$
                 null, // description
                 null, // icon
                 new ISemanticModification() {
+                    @Override
                     public void apply(EObject element, IModificationContext context) {
-                        Annotable annotable = EcoreUtil2.getContainerOfType(element, Annotable.class);
+                        Annotable annotable = EcoreUtil2.getContainerOfType(element,
+                                Annotable.class);
                         if (annotable != null) {
-                            String text = "@" + PooslJavaValidatorSuppress.ANNOTATION_SUPPRESSWARNINGS + "(" + type.toString() + ")" + System.lineSeparator() + getIndent(annotable); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                            if (!applyTextChange(context.getXtextDocument(), element.eResource(), annotable, NodeModelUtils.getNode(annotable).getOffset(), 0, text))
+                            String text = "@" //$NON-NLS-1$
+                                    + PooslJavaValidatorSuppress.ANNOTATION_SUPPRESSWARNINGS + "(" //$NON-NLS-1$
+                                    + type.toString() + ")" + System.lineSeparator() //$NON-NLS-1$
+                                    + getIndent(annotable);
+                            if (!applyTextChange(context.getXtextDocument(), element.eResource(),
+                                    annotable, NodeModelUtils.getNode(annotable).getOffset(), 0,
+                                    text))
                                 showWarning("Could not add SuppressWarnings Annotation.");
                         }
                     }

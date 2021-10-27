@@ -45,10 +45,7 @@ public final class PooslPortDescription {
     // --- Get -------
 
     public static String getClassName(IEObjectDescription descr) {
-        if (!checkValidity(descr))
-            return null;
-
-        return descr.getUserData(STR_CLASS);
+        return checkValidity(descr) ? descr.getUserData(STR_CLASS) : null;
     }
 
     private static boolean checkValidity(IEObjectDescription descr) {
@@ -58,22 +55,16 @@ public final class PooslPortDescription {
     // --- Predicates -------
 
     public static Predicate<IEObjectDescription> predicatePort(final List<String> classes) {
-        return new Predicate<IEObjectDescription>() {
-            @Override
-            public boolean apply(IEObjectDescription input) {
-                String cName = getClassName(input);
-                return cName != null && classes.contains(cName);
-            }
+        return input -> {
+            String cName = getClassName(input);
+            return cName != null && classes.contains(cName);
         };
     }
 
     public static Predicate<IEObjectDescription> predicatePort(final String className) {
-        return new Predicate<IEObjectDescription>() {
-            @Override
-            public boolean apply(IEObjectDescription input) {
-                String cName = getClassName(input);
-                return cName != null && cName.equals(className);
-            }
+        return input -> {
+            String cName = getClassName(input);
+            return cName != null && cName.equals(className);
         };
     }
 }

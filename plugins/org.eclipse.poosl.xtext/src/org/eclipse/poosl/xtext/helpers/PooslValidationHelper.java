@@ -14,8 +14,9 @@
 package org.eclipse.poosl.xtext.helpers;
 
 import java.text.MessageFormat;
-import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
@@ -31,9 +32,10 @@ public final class PooslValidationHelper {
 
     private static final String DESCRIPTION_SIMPLE_WARNING = "Description validation failed"; //$NON-NLS-1$
 
-    private static final String DESCRIPTION_VALIDATION_WARNING = DESCRIPTION_SIMPLE_WARNING + ", description of {0} was not of the class {1}"; //$NON-NLS-1$
+    private static final String DESCRIPTION_VALIDATION_WARNING = DESCRIPTION_SIMPLE_WARNING
+            + ", description of {0} was not of the class {1}"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(PooslValidationHelper.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslValidationHelper.class);
 
     private PooslValidationHelper() {
         throw new IllegalStateException("Utility class");
@@ -44,7 +46,8 @@ public final class PooslValidationHelper {
         if (DO_CHECK) {
             isValid = checkClass(descr.getEClass(), classes);
             if (!isValid) {
-                LOGGER.warning(MessageFormat.format(DESCRIPTION_VALIDATION_WARNING, descr.getEClass().getName(), classesToString(classes)));
+                LOGGER.warn(MessageFormat.format(DESCRIPTION_VALIDATION_WARNING,
+                        descr.getEClass().getName(), classesToString(classes)));
             }
             assert isValid : DESCRIPTION_SIMPLE_WARNING;
         }
