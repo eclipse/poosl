@@ -24,7 +24,7 @@ include "runtime-public.tpd"
 
 
 // Feature to run simulations.
-location rotalumis "http://update.obeo.fr/livraisonsClients/TNO/mirror/rotalumis/release/" {
+location rotalumis "file:/C:/dev/etc/mirrors.p2/rotalumis.int/" {
 	nl.tue.rotalumis.sdk.feature.group
 }
 
