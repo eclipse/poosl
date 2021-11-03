@@ -51,8 +51,10 @@ public final class ImportingHelper {
 
     private static final String BASIC_CLASSES_JAR_PATH = "org/eclipse/poosl/xtext/BasicClasses.poosl"; //$NON-NLS-1$
 
-    private static final String BASIC_CLASSES_PATH = Thread.currentThread().getContextClassLoader()
-            .getResource(BASIC_CLASSES_JAR_PATH).toString();
+    private static final URI BASIC_CLASSES_URI = URI
+            .createPlatformPluginURI("/org.eclipse.poosl.xtext/" + BASIC_CLASSES_JAR_PATH
+
+                    , true);
 
     private static final String ILLEGAL_ESCAPE = "Unsupported escape sequence on character {0} of string {1}.";
 
@@ -223,17 +225,19 @@ public final class ImportingHelper {
      * @return The basic classes path
      */
     public static URI getBasicClassesURI() {
-        String basicClassesLocation = BASIC_CLASSES_PATH;
         IPreferencesService preferencesService = Platform.getPreferencesService();
-        if (preferencesService != null && !useDefaultBasicclasses()) {
+        if (!useDefaultBasicclasses(preferencesService)) {
             String path = preferencesService.getString(GlobalConstants.PREFERENCE_PLUGIN_ID,
-                    GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH, BASIC_CLASSES_PATH, null);
-            if (!path.startsWith("platform")) { //$NON-NLS-1$
-                return URI.createFileURI(path);
+                    GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH, null, null);
+            if (path != null) {
+                try {
+                    return URI.createFileURI(path);
+                } catch (IllegalArgumentException e) {
+                    LOGGER.warn("Illegal basic classes path, fallback to default.", e);
+                }
             }
-            basicClassesLocation = path;
         }
-        return URI.createURI(basicClassesLocation);
+        return BASIC_CLASSES_URI;
     }
 
     public static String getBasicAbsoluteString() {
@@ -247,7 +251,13 @@ public final class ImportingHelper {
     }
 
     public static boolean useDefaultBasicclasses() {
-        IPreferencesService preferencesService = Platform.getPreferencesService();
+        return useDefaultBasicclasses(Platform.getPreferencesService());
+    }
+
+    public static boolean useDefaultBasicclasses(IPreferencesService preferencesService) {
+        if (preferencesService == null) {
+            return true; // no path pref
+        }
         String useBasicClasses = preferencesService.getString(GlobalConstants.PREFERENCE_PLUGIN_ID,
                 GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS,
                 GlobalConstants.PREFERENCES_BASIC_CLASSES_DEFAULT, null);
