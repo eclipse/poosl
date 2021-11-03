@@ -52,7 +52,19 @@ Workflow {
 				encoding = "UTF-8"
 				lineDelimiter = "\r\n"
 				fileHeader =
-				"/*******************************************************************************\r\n * Copyright (c) 2021 TNO/ESI.\r\n * This program and the accompanying materials\r\n * are made available under the terms of the Eclipse Public License 2.0\r\n * which accompanies this distribution, and is available at\r\n * https://www.eclipse.org/legal/epl-2.0/\r\n *\r\n * SPDX-License-Identifier: EPL-2.0\r\n *\r\n * Contributors:\r\n *    TNO/ESI - initial API and implementation\r\n *    Obeo - refactoring\r\n *******************************************************************************/"
+"/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI.
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/"
 			}
 		}
 		language = XtextGeneratorLanguage {
