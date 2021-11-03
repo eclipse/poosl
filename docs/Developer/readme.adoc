@@ -225,6 +225,13 @@ When editing Sirius Design, following must be apply to improve code readability.
 * Replace Acceleo syntax by AQL
 * Replace Java External Call with AQL
 
+=== I18n in Design
+
+Using id mechanism, i18n labels are automatically set in ODesign. +
+_org.eclipse.poosl.sirius/plugin.properties_ must be updated accordingly.
+
+
+
 == RCPTT guideline
 
 * All tests must be listed in suites 
