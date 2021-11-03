@@ -47,9 +47,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.poosl.xtext.importing.ImportingHelper;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -80,8 +78,10 @@ import com.google.inject.Inject;
  *
  */
 public class IncludePropertyPage extends PreferencePage implements IWorkbenchPropertyPage {
-    private static final String PAGE_RECOMMENDATION = "For include paths within the workspace, use the \"Add\" button to ensure that change propagation works.\n"
-            + "For include paths outside the workspace, use the \"Add External\" button although change propagation will not work.\n" + "See Help (F1) for more information.";
+    private static final String PAGE_RECOMMENDATION = //
+            "To include paths within the workspace, use the \"Add\" button to ensure that change propagation works.\n" //
+                    + "For include paths outside the workspace, use the \"Add External\" button although change propagation will not work.\n" //
+                    + "See Help (F1) for more information.";
 
     private static final String DIALOG_EXTERNAL_WARNING = "Warning: When using absolute paths change propogation will not happen automatically.";
 
@@ -98,9 +98,6 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
 
     private Map<String, String> currentValues = new HashMap<>();
 
-    public IncludePropertyPage() {
-    }
-
     @Override
     public void createControl(Composite parent) {
         preferenceStore = preferenceStoreAccess.getWritablePreferenceStore(project);
@@ -110,7 +107,8 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
 
     @Override
     protected Control createContents(Composite composite) {
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_properties_includepaths");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(),
+                "org.eclipse.poosl.help.help_properties_includepaths"); //$NON-NLS-1$
 
         Composite mainComp = new Composite(composite, SWT.FILL);
         mainComp.setFont(composite.getFont());
@@ -139,143 +137,90 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
         locationColumn.setWidth(table.getSize().x);
         locationColumn.setText("Location");
 
-        table.addControlListener(new ControlListener() {
-            @Override
-            public void controlResized(ControlEvent e) {
-                locationColumn.setWidth(table.getSize().x);
-            }
-
-            @Override
-            public void controlMoved(ControlEvent e) {
-                // do nothing
-            }
-        });
+        table.addControlListener(ControlListener
+                .controlResizedAdapter(evt -> locationColumn.setWidth(table.getSize().x)));
 
         Button btnAdd = new Button(mainComp, SWT.NONE);
         btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         btnAdd.setText("Add");
 
-        btnAdd.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
-                IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-                dialog.setInput(root);
-                dialog.setTitle("Select Folder to include");
-                dialog.setAllowMultiple(false);
-                dialog.addFilter(new ViewerFilter() {
-                    @Override
-                    public boolean select(Viewer viewer, Object parentElement, Object element) {
-                        return element instanceof IFolder || element instanceof IProject;
-                    }
-                });
-                dialog.setBlockOnOpen(true);
-                if (dialog.open() == ElementTreeSelectionDialog.OK) {
-                    Object result = dialog.getFirstResult();
-                    if (result instanceof IResource) {
-                        IPath path = ((IResource) result).getFullPath().makeRelative();
-                        addLocation(path.toOSString());
-                    }
+        btnAdd.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
+            ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
+                    new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+            dialog.setInput(root);
+            dialog.setTitle("Select Folder to include");
+            dialog.setAllowMultiple(false);
+            dialog.addFilter(new ViewerFilter() {
+                @Override
+                public boolean select(Viewer viewer, Object parentElement, Object element) {
+                    return element instanceof IFolder || element instanceof IProject;
+                }
+            });
+            dialog.setBlockOnOpen(true);
+            if (dialog.open() == ElementTreeSelectionDialog.OK) {
+                Object result = dialog.getFirstResult();
+                if (result instanceof IResource) {
+                    IPath path = ((IResource) result).getFullPath().makeRelative();
+                    addLocation(path.toOSString());
                 }
             }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // do nothing
-            }
-        });
+        }));
 
         Button btnExternal = new Button(mainComp, SWT.NONE);
         btnExternal.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         btnExternal.setText("Add External");
-        btnExternal.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                DirectoryDialog dialog = new DirectoryDialog(getShell());
-                dialog.setFilterPath(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
-                dialog.setText("Select path to include");
-                dialog.setMessage(DIALOG_EXTERNAL_WARNING);
-                String path = dialog.open();
+        btnExternal.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
+            DirectoryDialog dialog = new DirectoryDialog(getShell());
+            dialog.setFilterPath(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
+            dialog.setText("Select path to include");
+            dialog.setMessage(DIALOG_EXTERNAL_WARNING);
+            String path = dialog.open();
 
-                if (path != null) {
-                    addLocation(path);
-                }
+            if (path != null) {
+                addLocation(path);
             }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // do nothing
-            }
-        });
+        }));
 
         Button btnRemove = new Button(mainComp, SWT.NONE);
         btnRemove.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         btnRemove.setText("Remove");
-        btnRemove.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                int index = table.getSelectionIndex();
-                locations.remove(table.getSelectionIndex());
-                updateTable();
-                table.setSelection((index > locations.size() - 1) ? locations.size() - 1 : index);
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // do nothing
-            }
-        });
+        btnRemove.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
+            int index = table.getSelectionIndex();
+            locations.remove(table.getSelectionIndex());
+            updateTable();
+            table.setSelection((index > locations.size() - 1) ? locations.size() - 1 : index);
+        }));
 
         Button btnUp = new Button(mainComp, SWT.NONE);
         btnUp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         btnUp.setText("Up");
-        btnUp.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                int index = table.getSelectionIndex();
-                if (index != 0) {
-                    String oldLocation = locations.get(index - 1);
-                    String location = locations.get(index);
-                    locations.set(index - 1, location);
-                    locations.set(index, oldLocation);
-                    updateTable();
-                    table.setSelection(index - 1);
-                }
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // do nothing
-            }
-        });
+        btnUp.addSelectionListener(
+                SelectionListener.widgetSelectedAdapter(evt -> moveTableSelection(false)));
 
         Button btnDown = new Button(mainComp, SWT.NONE);
         btnDown.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
         btnDown.setText("Down");
-        btnDown.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                int index = table.getSelectionIndex();
-                if (index != locations.size()) {
-                    String oldLocation = locations.get(index + 1);
-                    String location = locations.get(index);
-                    locations.set(index + 1, location);
-                    locations.set(index, oldLocation);
-                    updateTable();
-                    table.setSelection(index + 1);
-                }
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // do nothing
-            }
-        });
+        btnDown.addSelectionListener(
+                SelectionListener.widgetSelectedAdapter(evt -> moveTableSelection(true)));
         updateTable();
 
         Label labelRecommendation = new Label(mainComp, SWT.WRAP);
         labelRecommendation.setText(PAGE_RECOMMENDATION);
         return mainComp;
+    }
+
+    private void moveTableSelection(boolean down) {
+        int index = table.getSelectionIndex();
+        int newIndex = index + (down ? 1 : -1);
+        if (0 <= newIndex && newIndex < locations.size()) {
+            String oldLocation = locations.get(newIndex);
+            String location = locations.get(index);
+            locations.set(newIndex, location);
+            locations.set(index, oldLocation);
+            updateTable();
+            table.setSelection(newIndex);
+        }
     }
 
     private void addLocation(String path) {
@@ -315,8 +260,13 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
 
     private void checkRebuild() {
         MessageDialog dialog = new MessageDialog(getShell(), "Include changed", null,
-                "The Building settings have changed. A rebuild of all workspace projects is required for changes to take effect. Build now?", MessageDialog.QUESTION,
-                new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 2);
+                "The Building settings have changed. A rebuild of all workspace projects is required for changes to take effect. Build now?",
+                MessageDialog.QUESTION,
+                new String[] {
+                        IDialogConstants.YES_LABEL,
+                        IDialogConstants.NO_LABEL,
+                        IDialogConstants.CANCEL_LABEL },
+                2);
         int res = dialog.open();
         if (res == 0) {
             getBuildJob().schedule();
@@ -329,9 +279,10 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
 
     private MapDifference<String, String> saveLocations() {
         Map<String, String> newValues = new HashMap<>();
-        newValues.put(GlobalConstants.PREFERENCES_INCLUDE_VERSION, GlobalConstants.PREFERENCES_VERSION);
+        newValues.put(GlobalConstants.PREFERENCES_INCLUDE_VERSION,
+                GlobalConstants.PREFERENCES_VERSION);
 
-        for (ListIterator<String> it = locations.listIterator(); it.hasNext(); ) {
+        for (ListIterator<String> it = locations.listIterator(); it.hasNext(); /**/) {
             int i = it.nextIndex();
             String location = it.next();
             newValues.put(GlobalConstants.PREFERENCES_INCLUDE_KEY + i, location);
@@ -385,15 +336,15 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
         return buildJob;
     }
 
-    public static final class BuildJob extends Job {
+    private static final class BuildJob extends Job {
 
-        public BuildJob(String name) {
+        private BuildJob(String name) {
             super(name);
         }
 
         @Override
         protected IStatus run(IProgressMonitor monitor) {
-            synchronized (getClass()) {
+            synchronized (BuildJob.class) {
                 if (monitor.isCanceled()) {
                     return Status.CANCEL_STATUS;
                 }
@@ -406,7 +357,8 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
             }
             try {
                 monitor.beginTask("Build all...", 2);
-                ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD, SubMonitor.convert(monitor, 2));
+                ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.FULL_BUILD,
+                        SubMonitor.convert(monitor, 2));
 
             } catch (CoreException e) {
                 return e.getStatus();

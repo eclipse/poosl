@@ -14,27 +14,23 @@
 package org.eclipse.poosl.xtext.ui.preferences;
 
 import java.io.File;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.ILog;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.poosl.xtext.ui.internal.PooslActivator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -48,7 +44,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
-import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
@@ -58,10 +53,9 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
+// CHECKSTYLE.OFF: ClassDataAbstractionCoupling{ Eclipse classes }
 public class BasicClassesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
     private static final String HELP_ID = "org.eclipse.poosl.help.help_preferences_basic_classes"; //$NON-NLS-1$
-
-    private static final String FILE_EXTENSION = "poosl"; //$NON-NLS-1$
 
     private static final String LABEL_FILE_LOCATION = "File Location:";
 
@@ -89,12 +83,14 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
     private Composite composite;
 
     /**
-     * The element that contains the location of the file as string. It is disabled when the default file is used.
+     * The element that contains the location of the file as string. It is
+     * disabled when the default file is used.
      */
     private Text basicClassesControl;
 
     /**
-     * The selection button. If selected the standard basic classes file will be used. (selected by default)
+     * The selection button. If selected the standard basic classes file will be
+     * used. (selected by default)
      */
     private Button basicClassesButton;
 
@@ -102,45 +98,45 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
      * Listener thats called when information is changed in the store. Also see
      * {@link IPreferenceStore #addPropertyChangeListener(IPropertyChangeListener)}
      */
-    IPropertyChangeListener changeListener = new IPropertyChangeListener() {
-
-        @Override
-        public void propertyChange(PropertyChangeEvent event) {
-            if (event.getProperty() == GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH || event.getProperty() == GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS) {
-                try {
-                    ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.CLEAN_BUILD, null);
-                } catch (CoreException e) {
-                    LOGGER.error(e.getMessage(), e);
-                }
+    IPropertyChangeListener changeListener = event -> {
+        if (event.getProperty() == GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH
+                || event.getProperty() == GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS) {
+            try {
+                ResourcesPlugin.getWorkspace().build(IncrementalProjectBuilder.CLEAN_BUILD, null);
+            } catch (CoreException e) {
+                LOGGER.error(e.getMessage(), e);
             }
         }
+
     };
 
     /**
-     * Selection listener when browsing for the custom basic classes file. It has its build in validator and filter.
+     * Selection listener when browsing for the custom basic classes file. It
+     * has its build in validator and filter.
      */
     SelectionListener basicPathListener = new SelectionListener() {
 
         @Override
         public void widgetSelected(SelectionEvent e) {
-            ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(composite.getShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+            ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(composite.getShell(),
+                    new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
             dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
             dialog.setTitle(LABEL_POOSL_FILE);
             dialog.setAllowMultiple(false);
-            dialog.setValidator(new ISelectionStatusValidator() {
-                @Override
-                public IStatus validate(Object[] selection) {
-                    if (selection.length > 0 && selection[0] instanceof IFile && FILE_EXTENSION.equals(((IFile) selection[0]).getFileExtension())) {
-                        return new Status(Status.OK, GlobalConstants.PREFERENCE_PLUGIN_ID, ""); //$NON-NLS-1$
-                    }
-                    return new Status(Status.ERROR, GlobalConstants.PREFERENCE_PLUGIN_ID, LABEL_POOSL_FILE);
+            dialog.setValidator(selection -> {
+                if (selection.length > 0 && selection[0] instanceof IFile
+                        && isPooslFile((IFile) selection[0])) {
+                    return Status.OK_STATUS;
                 }
+                return new Status(Status.ERROR, GlobalConstants.PREFERENCE_PLUGIN_ID,
+                        LABEL_POOSL_FILE);
             });
             dialog.setBlockOnOpen(true);
             dialog.addFilter(new ViewerFilter() {
                 @Override
                 public boolean select(Viewer viewer, Object parentElement, Object element) {
-                    return !(element instanceof IFile) || FILE_EXTENSION.equals(((IFile) element).getFileExtension());
+                    return !(element instanceof IFile) // any container
+                            || isPooslFile((IFile) element);
                 }
             });
             if (dialog.open() == ElementTreeSelectionDialog.OK) {
@@ -165,8 +161,10 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
     }
 
     /**
-     * Adds a description {@link Label}, location {@link #basicClassesControl}, browse {@link Button} and use default
-     * selection {@link BasicClassesPreferencePage#basicClassesButton} to the parent {@link #composite}.
+     * Adds a description {@link Label}, location {@link #basicClassesControl},
+     * browse {@link Button} and use default
+     * selection {@link BasicClassesPreferencePage#basicClassesButton} to the
+     * parent {@link #composite}.
      */
     @Override
     protected Control createContents(Composite parent) {
@@ -189,11 +187,18 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
         return parent;
     }
 
+    @Override
+    public void dispose() {
+        getPreferenceStore().removePropertyChangeListener(changeListener);
+        super.dispose();
+    }
+
     /**
-     * Adds a composite group which holds a label, a textcontrol and a browse button.
+     * Adds a composite group which holds a label, a textcontrol and a browse
+     * button.
      * 
      * @param parent
-     *            a {@link Composite} which the group will be added to
+     *     a {@link Composite} which the group will be added to
      * @return the composite group
      */
     private Composite addBrowseFileGroup(Composite parent) {
@@ -210,14 +215,9 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
 
         basicClassesControl = new Text(fileGroup, SWT.BORDER);
         basicClassesControl.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-        basicClassesControl.setText(getPreferenceStore().getString(GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH));
-        basicClassesControl.addModifyListener(new ModifyListener() {
-
-            @Override
-            public void modifyText(ModifyEvent e) {
-                validate();
-            }
-        });
+        basicClassesControl.setText(getPreferenceStore()
+                .getString(GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH));
+        basicClassesControl.addModifyListener(evt -> validate());
 
         Button basicBrowseButton = new Button(fileGroup, SWT.PUSH);
         basicBrowseButton.setText(LABEL_BUTTON);
@@ -231,84 +231,74 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
      * Adds the selection button to the parent
      * 
      * @param parent
-     *            The {@link Composite} which the button will be added
+     *     The {@link Composite} which the button will be added
      * @return Return the created button
      */
     private Button addUseDefaultButton(Composite parent) {
         basicClassesButton = new Button(parent, SWT.CHECK);
         basicClassesButton.setText(LABEL_USE_DEFAULT);
         basicClassesButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));
-        basicClassesButton.setSelection(!getPreferenceStore().getString(GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS).equals(GlobalConstants.PREFERENCES_BASIC_CLASSES_CUSTOM));
-        basicClassesButton.addSelectionListener(new SelectionListener() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                validate();
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // do nothing
-            }
-        });
+        basicClassesButton.setSelection(
+                !getPreferenceStore().getString(GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS)
+                        .equals(GlobalConstants.PREFERENCES_BASIC_CLASSES_CUSTOM));
+        basicClassesButton
+                .addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> validate()));
         return basicClassesButton;
     }
 
     /**
-     * Will validate the the supplied file when the the default basic classes is not used.
+     * Will validate the the supplied file when the the default basic classes is
+     * not used.
      */
     public void validate() {
+        String detectedError = null;
         setErrorMessage(null);
-        basicClassesControl.setEnabled(!basicClassesButton.getSelection());
-        if (!basicClassesButton.getSelection()) {
-            if (!basicClassesControl.getText().isEmpty()) {
-                if (basicClassesControl.getText().startsWith(WORKSPACE_SUBSTRING)) {
-                    String platformString = basicClassesControl.getText();
-                    String relative = platformString.substring(WORKSPACE_SUBSTRING.length());
-                    IFile basicFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(relative));
-                    if (!basicFile.exists()) {
-                        setErrorMessage(WARNING_DOES_NOT_EXIST);
-                        setValid(false);
-                    } else if (!isPooslFile(basicFile.getName())) {
-                        setErrorMessage(WARNING_NOT_A_POOSL_FILE);
-                        setValid(false);
-                    } else {
-                        setValid(true);
-                    }
-                } else {
-                    File basicFile = new File(basicClassesControl.getText());
-                    if (basicFile.isDirectory() || !basicFile.exists()) {
-                        setErrorMessage(WARNING_DOES_NOT_EXIST);
-                        setValid(false);
-                    } else if (!isPooslFile(basicFile.getName())) {
-                        setErrorMessage(WARNING_NOT_A_POOSL_FILE);
-                        setValid(false);
-                    } else {
-                        setValid(true);
-                    }
-                }
+        boolean useBasic = basicClassesButton.getSelection();
+
+        basicClassesControl.setEnabled(!useBasic);
+        if (!useBasic) { // evaluate path
+            if (basicClassesControl.getText().isEmpty()) {
+                detectedError = WARNING_EMPTY;
+            } else if (basicClassesControl.getText().startsWith(WORKSPACE_SUBSTRING)) {
+                String platformString = basicClassesControl.getText();
+                String relative = platformString.substring(WORKSPACE_SUBSTRING.length());
+                IFile basicFile = ResourcesPlugin.getWorkspace().getRoot()
+                        .getFile(new Path(relative));
+                if (!basicFile.exists()) {
+                    detectedError = WARNING_DOES_NOT_EXIST;
+                } else if (!isPooslFile(basicFile)) {
+                    detectedError = WARNING_NOT_A_POOSL_FILE;
+                } // else valid
             } else {
-                setErrorMessage(WARNING_EMPTY);
-                setValid(false);
+                File basicFile = new File(basicClassesControl.getText());
+                if (basicFile.isDirectory() || !basicFile.exists()) {
+                    detectedError = WARNING_DOES_NOT_EXIST;
+                } else if (!isPooslFile(basicFile.getName())) {
+                    detectedError = WARNING_NOT_A_POOSL_FILE;
+                } // else valid
             }
-        } else {
-            setValid(true);
         }
+        setErrorMessage(detectedError);
+        setValid(detectedError == null);
+    }
+
+    private boolean isPooslFile(IFile location) {
+        return isPooslFile(location.getName());
     }
 
     /**
      * Verifies if the file is a poosl file.
      * 
      * @param location
-     *            file location as {@link String}
+     *     file location as {@link String}
      * @return true is it is a poosl file
      */
     private boolean isPooslFile(String location) {
         if (location.isEmpty() || !location.contains(".")) { //$NON-NLS-1$
             return false;
         } else {
-            String extension = location.substring(location.lastIndexOf('.'));
-            return extension.equals("." + FILE_EXTENSION); //$NON-NLS-1$
+            String extension = location.substring(location.lastIndexOf('.') + 1);
+            return extension.equals("." + GlobalConstants.FILE_EXTENSION); //$NON-NLS-1$
         }
     }
 
@@ -320,27 +310,25 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
         super.performDefaults();
     }
 
-    @Override
-    protected void performApply() {
-        saveState();
-        super.performApply();
-    }
-
     /**
-     * Saves information to the {@link IPreferenceStore}. The {@link #basicClassesButton} selection variable is saved as
+     * Saves information to the {@link IPreferenceStore}. The
+     * {@link #basicClassesButton} selection variable is saved as
      * a String because of a bug for retrieving booleans.
      */
     private void saveState() {
-
-        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH, basicClassesControl.getText());
+        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH,
+                basicClassesControl.getText());
 
         getPreferenceStore().setValue(GlobalConstants.PREFERENCES_USE_DEFAULT_BASIC_CLASS,
-                (basicClassesButton.getSelection()) ? GlobalConstants.PREFERENCES_BASIC_CLASSES_DEFAULT : GlobalConstants.PREFERENCES_BASIC_CLASSES_CUSTOM);
+                (basicClassesButton.getSelection())
+                    ? GlobalConstants.PREFERENCES_BASIC_CLASSES_DEFAULT
+                    : GlobalConstants.PREFERENCES_BASIC_CLASSES_CUSTOM);
 
     }
 
     @Override
     public boolean performOk() {
+        // Also call by performApply.
         saveState();
         return super.performOk();
     }
