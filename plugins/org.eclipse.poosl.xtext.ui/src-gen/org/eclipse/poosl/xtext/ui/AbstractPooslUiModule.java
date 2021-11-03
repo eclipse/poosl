@@ -93,17 +93,22 @@ public abstract class AbstractPooslUiModule extends DefaultUiModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
     public void configureContentAssistLexer(Binder binder) {
-        binder.bind(Lexer.class).annotatedWith(Names.named(LexerIdeBindings.CONTENT_ASSIST)).to(InternalPooslLexer.class);
+        binder.bind(Lexer.class).annotatedWith(Names.named(LexerIdeBindings.CONTENT_ASSIST))
+                .to(InternalPooslLexer.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
     public void configureHighlightingLexer(Binder binder) {
-        binder.bind(org.eclipse.xtext.parser.antlr.Lexer.class).annotatedWith(Names.named(LexerIdeBindings.HIGHLIGHTING)).to(org.eclipse.poosl.xtext.parser.antlr.internal.InternalPooslLexer.class);
+        binder.bind(org.eclipse.xtext.parser.antlr.Lexer.class)
+                .annotatedWith(Names.named(LexerIdeBindings.HIGHLIGHTING))
+                .to(org.eclipse.poosl.xtext.parser.antlr.internal.InternalPooslLexer.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
     public void configureHighlightingTokenDefProvider(Binder binder) {
-        binder.bind(ITokenDefProvider.class).annotatedWith(Names.named(LexerIdeBindings.HIGHLIGHTING)).to(AntlrTokenDefProvider.class);
+        binder.bind(ITokenDefProvider.class)
+                .annotatedWith(Names.named(LexerIdeBindings.HIGHLIGHTING))
+                .to(AntlrTokenDefProvider.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
@@ -118,7 +123,8 @@ public abstract class AbstractPooslUiModule extends DefaultUiModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
     public void configureContentAssistLexerProvider(Binder binder) {
-        binder.bind(InternalPooslLexer.class).toProvider(LexerProvider.create(InternalPooslLexer.class));
+        binder.bind(InternalPooslLexer.class)
+                .toProvider(LexerProvider.create(InternalPooslLexer.class));
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.exporting.SimpleNamesFragment2
@@ -128,7 +134,9 @@ public abstract class AbstractPooslUiModule extends DefaultUiModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
     public void configureIResourceDescriptionsBuilderScope(Binder binder) {
-        binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.NAMED_BUILDER_SCOPE)).to(CurrentDescriptions.ResourceSetAware.class);
+        binder.bind(IResourceDescriptions.class)
+                .annotatedWith(Names.named(ResourceDescriptionsProvider.NAMED_BUILDER_SCOPE))
+                .to(CurrentDescriptions.ResourceSetAware.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
@@ -143,7 +151,9 @@ public abstract class AbstractPooslUiModule extends DefaultUiModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
     public void configureIResourceDescriptionsPersisted(Binder binder) {
-        binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(IBuilderState.class);
+        binder.bind(IResourceDescriptions.class)
+                .annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS))
+                .to(IBuilderState.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
@@ -163,7 +173,9 @@ public abstract class AbstractPooslUiModule extends DefaultUiModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.ui.labeling.LabelProviderFragment2
     public void configureResourceUIServiceLabelProvider(Binder binder) {
-        binder.bind(ILabelProvider.class).annotatedWith(ResourceServiceDescriptionLabelProvider.class).to(PooslDescriptionLabelProvider.class);
+        binder.bind(ILabelProvider.class)
+                .annotatedWith(ResourceServiceDescriptionLabelProvider.class)
+                .to(PooslDescriptionLabelProvider.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.ui.outline.OutlineTreeProviderFragment2
@@ -188,7 +200,9 @@ public abstract class AbstractPooslUiModule extends DefaultUiModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
     public void configureIPreferenceStoreInitializer(Binder binder) {
-        binder.bind(IPreferenceStoreInitializer.class).annotatedWith(Names.named("RefactoringPreferences")).to(RefactoringPreferences.Initializer.class);
+        binder.bind(IPreferenceStoreInitializer.class)
+                .annotatedWith(Names.named("RefactoringPreferences"))
+                .to(RefactoringPreferences.Initializer.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
@@ -218,7 +232,8 @@ public abstract class AbstractPooslUiModule extends DefaultUiModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.ui.compare.CompareFragment2
     public void configureCompareViewerTitle(Binder binder) {
-        binder.bind(String.class).annotatedWith(Names.named(UIBindings.COMPARE_VIEWER_TITLE)).toInstance("Poosl Compare");
+        binder.bind(String.class).annotatedWith(Names.named(UIBindings.COMPARE_VIEWER_TITLE))
+                .toInstance("Poosl Compare");
     }
 
 }

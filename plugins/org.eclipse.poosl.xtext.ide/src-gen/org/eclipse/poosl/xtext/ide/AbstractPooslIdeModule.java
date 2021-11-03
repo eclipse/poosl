@@ -35,7 +35,8 @@ public abstract class AbstractPooslIdeModule extends DefaultIdeModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
     public void configureContentAssistLexer(Binder binder) {
-        binder.bind(Lexer.class).annotatedWith(Names.named(LexerIdeBindings.CONTENT_ASSIST)).to(InternalPooslLexer.class);
+        binder.bind(Lexer.class).annotatedWith(Names.named(LexerIdeBindings.CONTENT_ASSIST))
+                .to(InternalPooslLexer.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2

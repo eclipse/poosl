@@ -27,7 +27,8 @@ import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
 /**
- * This class was generated. Customizations should only happen in a newly introduced subclass.
+ * This class was generated. Customizations should only happen in a newly
+ * introduced subclass.
  */
 public class PooslActivator extends AbstractUIPlugin {
 
@@ -39,7 +40,8 @@ public class PooslActivator extends AbstractUIPlugin {
 
     private static PooslActivator INSTANCE;
 
-    private Map<String, Injector> injectors = Collections.synchronizedMap(Maps.<String, Injector> newHashMapWithExpectedSize(1));
+    private Map<String, Injector> injectors = Collections
+            .synchronizedMap(Maps.<String, Injector> newHashMapWithExpectedSize(1));
 
     @Override
     public void start(BundleContext context) throws Exception {
@@ -73,7 +75,8 @@ public class PooslActivator extends AbstractUIPlugin {
             com.google.inject.Module runtimeModule = getRuntimeModule(language);
             com.google.inject.Module sharedStateModule = getSharedStateModule();
             com.google.inject.Module uiModule = getUiModule(language);
-            com.google.inject.Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule, uiModule);
+            com.google.inject.Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule,
+                    uiModule);
             return Guice.createInjector(mergedModule);
         } catch (Exception e) {
             logger.error("Failed to create injector for " + language);

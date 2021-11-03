@@ -80,12 +80,14 @@ public abstract class AbstractPooslRuntimeModule extends DefaultRuntimeModule {
     }
 
     public void configureLanguageName(Binder binder) {
-        binder.bind(String.class).annotatedWith(Names.named(Constants.LANGUAGE_NAME)).toInstance("org.eclipse.poosl.xtext.Poosl");
+        binder.bind(String.class).annotatedWith(Names.named(Constants.LANGUAGE_NAME))
+                .toInstance("org.eclipse.poosl.xtext.Poosl");
     }
 
     public void configureFileExtensions(Binder binder) {
         if (properties == null || properties.getProperty(Constants.FILE_EXTENSIONS) == null)
-            binder.bind(String.class).annotatedWith(Names.named(Constants.FILE_EXTENSIONS)).toInstance("poosl");
+            binder.bind(String.class).annotatedWith(Names.named(Constants.FILE_EXTENSIONS))
+                    .toInstance("poosl");
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
@@ -150,7 +152,8 @@ public abstract class AbstractPooslRuntimeModule extends DefaultRuntimeModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
     public void configureRuntimeLexer(Binder binder) {
-        binder.bind(Lexer.class).annotatedWith(Names.named(LexerBindings.RUNTIME)).to(InternalPooslLexer.class);
+        binder.bind(Lexer.class).annotatedWith(Names.named(LexerBindings.RUNTIME))
+                .to(InternalPooslLexer.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
@@ -166,7 +169,9 @@ public abstract class AbstractPooslRuntimeModule extends DefaultRuntimeModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
     public void configureIScopeProviderDelegate(Binder binder) {
-        binder.bind(IScopeProvider.class).annotatedWith(Names.named(AbstractDeclarativeScopeProvider.NAMED_DELEGATE)).to(ImportedNamespaceAwareLocalScopeProvider.class);
+        binder.bind(IScopeProvider.class)
+                .annotatedWith(Names.named(AbstractDeclarativeScopeProvider.NAMED_DELEGATE))
+                .to(ImportedNamespaceAwareLocalScopeProvider.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
@@ -201,7 +206,9 @@ public abstract class AbstractPooslRuntimeModule extends DefaultRuntimeModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
     public void configureIResourceDescriptionsPersisted(Binder binder) {
-        binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
+        binder.bind(IResourceDescriptions.class)
+                .annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS))
+                .to(ResourceSetBasedResourceDescriptions.class);
     }
 
     // contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
@@ -211,7 +218,8 @@ public abstract class AbstractPooslRuntimeModule extends DefaultRuntimeModule {
 
     // contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
     public void configureFormatterPreferences(Binder binder) {
-        binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
+        binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class)
+                .to(FormatterPreferenceValuesProvider.class);
     }
 
 }

@@ -20,7 +20,8 @@ import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
 /**
- * This class was generated. Customizations should only happen in a newly introduced subclass.
+ * This class was generated. Customizations should only happen in a newly
+ * introduced subclass.
  */
 public class PooslExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -32,7 +33,8 @@ public class PooslExecutableExtensionFactory extends AbstractGuiceAwareExecutabl
     @Override
     protected Injector getInjector() {
         PooslActivator activator = PooslActivator.getInstance();
-        return activator != null ? activator.getInjector(PooslActivator.ORG_ECLIPSE_POOSL_XTEXT_POOSL) : null;
+        return activator != null
+            ? activator.getInjector(PooslActivator.ORG_ECLIPSE_POOSL_XTEXT_POOSL) : null;
     }
 
 }
