@@ -148,7 +148,7 @@ public class PooslEditorPreferenceDialog extends MessageDialog {
 
     private void loadPreferences() {
         IPreferencesService preferencesService = Platform.getPreferencesService();
-        String pref = preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER,
+        String pref = preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PROJECT_EXPLORER,
                 IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL, null);
         btnTextual.setSelection(pref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL));
         btnGraphical.setSelection(pref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_GRAPHICAL));
@@ -169,15 +169,15 @@ public class PooslEditorPreferenceDialog extends MessageDialog {
         if (pStore != null) {
             if (btnTextual.getSelection()) {
                 pStore.setValue(IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR, IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR_TEXTUAL);
-                pStore.setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL);
+                pStore.setValue(IPreferenceConstants.PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL);
                 pStore.setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_NO_SYSTEM, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL);
             } else {
                 pStore.setValue(IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR, IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR_GRAPHICAL);
                 pStore.setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_NO_SYSTEM, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM);
                 if (btnGraphical.getSelection()) {
-                    pStore.setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_GRAPHICAL);
+                    pStore.setValue(IPreferenceConstants.PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_GRAPHICAL);
                 } else {
-                    pStore.setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM);
+                    pStore.setValue(IPreferenceConstants.PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM);
                 }
             }
             pStore.setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK, btnRememberMyDecision.getSelection());

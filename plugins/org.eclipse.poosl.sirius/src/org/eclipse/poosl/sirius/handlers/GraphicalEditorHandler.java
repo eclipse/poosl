@@ -69,53 +69,53 @@ public class GraphicalEditorHandler extends AbstractHandler {
 
         IEditorPart edit = HandlerUtil.getActiveEditor(event);
         IEditorInput input = edit.getEditorInput();
-        IFile file = null;
-        if (input instanceof FileEditorInput) {
-            file = ((FileEditorInput) input).getFile();
-
-            if (commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM)) {
-                Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
-                GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, poosl,
-                        commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
-            } else {
-                ISelection selection = HandlerUtil.getCurrentSelection(event);
-                TextSelection text = (TextSelection) selection;
-                IWorkbenchPart part = HandlerUtil.getActivePart(event);
-                EObject target = null;
-                EObject result = getEObject(part, text, edit);
-
-                if (result != null) {
-                    target = getDiagramTarget(result);
-                    if (commandId.equals(COMMAND_EDITOR_GRAPHICAL)) {
-                        GraphicalEditorHelper.openGraphicalEditor(target, edit, file.getProject());
-
-                    } else if (commandId.equals(COMMAND_EDITOR_STRUCTURE_DIAGRAM)) {
-                        // Open structure diagram of selected system or cluster.
-                        // If none is selected find the main cluster (project
-                        // explorer behavior)
-                        if (target instanceof ClusterClass) {
-                            GraphicalEditorHelper.openGraphicalEditor(target, edit,
-                                    file.getProject());
-                        } else {
-                            if (target instanceof Poosl) {
-                                GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit,
-                                        (Poosl) target,
-                                        commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM));
-                            } else {
-                                LOGGER.warn(
-                                        "Could find target for opening the graphical editor, from command "
-                                                + commandId);
-                            }
-                        }
-                    } else {
-                        LOGGER.warn("Command id unknown: " + commandId);
-                    }
-                }
-            }
-        } else {
-            LOGGER.warn(
-                    "Could not get file to open the graphical editor, from command " + commandId);
+        if (!(input instanceof FileEditorInput)) {
+            LOGGER.warn("Unsupported input " + input //$NON-NLS-1$ unexpected
+                    + " for command " + commandId); //$NON-NLS-1$
+            return null;
         }
+        IFile file = ((FileEditorInput) input).getFile();
+
+        if (commandId.equals(COMMAND_EDITOR_CLASS_DIAGRAM)) {
+            // unique by file
+            Poosl poosl = ConvertHelper.convertIFileToPoosl(file);
+            GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, poosl, true);
+        } else {
+            ISelection selection = HandlerUtil.getCurrentSelection(event);
+            TextSelection text = (TextSelection) selection;
+            IWorkbenchPart part = HandlerUtil.getActivePart(event);
+            EObject target = null;
+            EObject result = getEObject(part, text, edit);
+
+            if (result == null) {
+                // unlikely
+                return null;
+            }
+
+            target = getDiagramTarget(result);
+            if (commandId.equals(COMMAND_EDITOR_GRAPHICAL)) {
+                GraphicalEditorHelper.openGraphicalEditor(target, edit, file.getProject());
+
+            } else if (commandId.equals(COMMAND_EDITOR_STRUCTURE_DIAGRAM)) {
+                // Open structure diagram of selected system or cluster.
+                // If none is selected find the main cluster (project
+                // explorer behavior)
+                if (target instanceof ClusterClass) {
+                    GraphicalEditorHelper.openGraphicalEditor(target, edit, file.getProject());
+                } else if (target instanceof Poosl) {
+                    GraphicalEditorHelper.openGraphicalEditorFromFile(file, edit, (Poosl) target,
+                            false);
+                } else {
+                    LOGGER.warn("Unexpected target for structural diagram: " //$NON-NLS-1$
+                            + target.getClass().getName());
+                }
+
+            } else {
+                LOGGER.warn("Unknown Command id: " + commandId); //$NON-NLS-1$
+            }
+
+        }
+
         return null;
     }
 
@@ -180,14 +180,15 @@ public class GraphicalEditorHandler extends AbstractHandler {
     }
 
     /**
-     * Search from bottom to top to the first object that can be used to create
-     * a diagram
+     * Searches from bottom to top to the first object that can be used to
+     * create a diagram.
      * 
-     * @param target
-     * @return
+     * @param origin
+     *     to search from
+     * @return found target
      */
-    private EObject getDiagramTarget(EObject target) {
-        EObject object = target;
+    private EObject getDiagramTarget(EObject origin) {
+        EObject object = origin;
         while (object != null && !(object instanceof ClusterClass) && !(object instanceof Poosl)) {
             object = object.eContainer();
         }

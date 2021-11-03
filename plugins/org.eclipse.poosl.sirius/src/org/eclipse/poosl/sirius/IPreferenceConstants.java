@@ -20,24 +20,35 @@ package org.eclipse.poosl.sirius;
  *
  */
 public final class IPreferenceConstants {
-    public static final String PREFERENCE_PLUGIN_ID = "org.eclipse.poosl.sirius"; //$NON-NLS-1$
 
-    public static final String PREFERENCE_PROJECT_EXPLORER = "PrefProjectExplorerDiagram"; //$NON-NLS-1$
+    /** Plugin id. */
+    public static final String PREFERENCE_PLUGIN_ID = Activator.PLUGIN_ID;
 
+    /** Project explorer. */
+    public static final String PROJECT_EXPLORER = "PrefProjectExplorerDiagram"; //$NON-NLS-1$
+
+    /** textual from Project explorer. */
     public static final String PREFERENCE_PROJECT_EXPLORER_TEXTUAL = "PrefPETextual"; //$NON-NLS-1$
 
+    /** graphical from Project explorer. */
     public static final String PREFERENCE_PROJECT_EXPLORER_GRAPHICAL = "PrefPEGraphical"; //$NON-NLS-1$
 
+    /** graphical from Project explorer for CD. */
     public static final String PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM = "PrefPEClassDiagram"; //$NON-NLS-1$
 
+    /** graphical from Project explorer for no diagram. */
     public static final String PREFERENCE_PROJECT_EXPLORER_NO_SYSTEM = "PrefProjectExplorerNoDiagram"; //$NON-NLS-1$
 
+    /** graphical from diagram. */
     public static final String PREFERENCE_GRAPHICAL_EDITOR_GRAPHICAL = "PrefGEClassDiagram"; //$NON-NLS-1$
 
+    /** text from diagram. */
     public static final String PREFERENCE_GRAPHICAL_EDITOR_TEXTUAL = "PrefGETextual"; //$NON-NLS-1$
 
+    /** Preference from diagram. */
     public static final String PREFERENCE_GRAPHICAL_EDITOR = "PrefGraphicalEditor"; //$NON-NLS-1$
 
+    /** Answer memory. */
     public static final String PREFERENCE_PROJECT_EXPLORER_DONT_ASK = "PrefProjectExplorerDontAsk"; //$NON-NLS-1$
 
     private IPreferenceConstants() {

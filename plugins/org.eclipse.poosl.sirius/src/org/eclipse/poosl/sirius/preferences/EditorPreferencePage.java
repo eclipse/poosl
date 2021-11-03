@@ -130,7 +130,7 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
         compProjectExplorer.setLayoutData(fdPojectExplorerContainer);
         compProjectExplorer.setLayout(new GridLayout());
 
-        rgrProjectExplorer = new RadioGroupFieldEditor(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER, TEXT_RADIO_EXPLORER_TITLE, 1,
+        rgrProjectExplorer = new RadioGroupFieldEditor(IPreferenceConstants.PROJECT_EXPLORER, TEXT_RADIO_EXPLORER_TITLE, 1,
                 new String[][] { { TEXT_RADIO_OPTION_TEXTUAL, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL },
                         { TEXT_RADIO_OPTION_GRAPHICAL, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_GRAPHICAL },
                         { TEXT_RADIO_OPTION_CLASS, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM } },

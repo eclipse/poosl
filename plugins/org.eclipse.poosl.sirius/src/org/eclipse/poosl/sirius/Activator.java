@@ -45,12 +45,6 @@ public class Activator extends AbstractUIPlugin {
 
     private static GraphicalDebugUpdater updaterInstance;
 
-    /**
-     * The constructor.
-     */
-    public Activator() {
-    }
-
     private static GraphicalDebugUpdater getUpdaterInstance() {
         if (updaterInstance == null) {
             updaterInstance = new GraphicalDebugUpdater();

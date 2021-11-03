@@ -25,8 +25,6 @@ import org.eclipse.poosl.sirius.navigator.PooslEditorPreferenceDialog.OpenStrate
  *
  */
 public class GraphicalPreferenceManager extends OpenPreferenceManager {
-    private static final String GRAPHICAL_DIALOG_LABEL = "Which type of editor would you like to use?";
-
     // Used from Graphical views
     public GraphicalPreferenceManager() {
         diagramDescription = PooslEditorPreferenceDialog.COMPOSITE_STRUCTURE_DIAGRAM;
@@ -34,19 +32,18 @@ public class GraphicalPreferenceManager extends OpenPreferenceManager {
 
     public String getEditorPreference() {
         IPreferencesService preferencesService = Platform.getPreferencesService();
-        Boolean dontask = preferencesService.getBoolean(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK, false, null);
+        Boolean dontask = preferencesService.getBoolean(IPreferenceConstants.PREFERENCE_PLUGIN_ID,
+                IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK, false, null);
         String currentPref = getCurrentPreference(preferencesService);
 
-        if (dontask) {
-            return currentPref;
-        } else {
-            return askPreference();
-        }
+        return dontask ? currentPref : askPreference();
+
     }
 
     private String getCurrentPreference(IPreferencesService preferencesService) {
-        return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR, IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR_TEXTUAL,
-                null);
+        return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID,
+                IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR,
+                IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR_TEXTUAL, null);
     }
 
     private String askPreference() {
@@ -65,6 +62,6 @@ public class GraphicalPreferenceManager extends OpenPreferenceManager {
 
     @Override
     protected String getDialogLabel() {
-        return GRAPHICAL_DIALOG_LABEL;
+        return Messages.GPM_DIALOG_LABEL;
     }
 }

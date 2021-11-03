@@ -75,7 +75,6 @@ class ClusterDiagramDiagram extends PooslDiagram {
 	
 	override initContent(DiagramDescription it) {
 		super.initContent(it)
-
 		name = "Cluster diagram" // force name as label
 		titleExpression = "aql:self.name"
 
@@ -142,7 +141,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			// Why is Xtext cache cleared on refresh ?
 			synchronizationLock = true
 			domainClass = ClusterClass
-			pasteDescriptions += PasteDescription.ref(ReusedDiagramDiagram, Ns.operation, "Copy Instance")
+			pasteDescriptions += PasteDescription.ref(ReusedDiagramDiagram, Ns.operation, "copyInstance")
 			
 			// TODO
 			// For conditional style, only icon seems different.
@@ -174,7 +173,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				semanticCandidatesExpression = '''self.ports'''.trimAql
 				synchronizationLock = true
 				domainClass = Port
-				deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Extern Port")
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "externalPort")
 				style = createNodePortStyle
 			]
 			subNodeMappings += NodeMapping.createAs(Ns.node, "ChannelCluster") [
@@ -198,8 +197,8 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				semanticCandidatesExpression = "feature:instances"
 				synchronizationLock = true
 				domainClass = Instance
-				navigationDescriptions += DiagramNavigationDescription.localRef(Ns.operation, "NavigateInstance")
-				deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete instance")
+				navigationDescriptions += DiagramNavigationDescription.localRef(Ns.operation, "navigateInstance")
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "instance")
 
 				val defaultInstanceStyle = [SquareDescription it | 
 					labelExpression = "aql:self.getInstanceName()"
@@ -248,7 +247,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					semanticCandidatesExpression = "aql:self.getDeclaredInstancePorts()"
 					synchronizationLock = true
 					domainClass = "EObject" // InstancePort + Port
-					deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Port From Instance")
+					deletionDescription = DeleteElementDescription.localRef(Ns.del, "instancePort")
 //					style = SquareDescription.createStyle [
 //						sizeComputationExpression="3" // default value; probably to large
 //						showIcon = false
@@ -283,7 +282,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				'''.trimAql // view.target
 			
 			// Delete: delete channel
-			deletionDescription = DeleteElementDescription.ref(ReusedDiagramDiagram, Ns.del, "Delete Poosl Element")
+			deletionDescription = DeleteElementDescription.ref(ReusedDiagramDiagram, Ns.del, "pooslElement")
 			
 			sourceMapping += NodeMapping.localRef(Ns.node, "InstancePort")
 			sourceMapping += NodeMapping.localRef(Ns.node, "ExternalPort")
@@ -292,7 +291,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			targetMapping += NodeMapping.localRef(Ns.node, "InstancePort")
 			targetFinderExpression = "aql:self.getSimpleChannelEnd(true)"
 
-			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
+			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "channel")
 			style = [
 				endsCentering = CenteringStyle.BOTH
 			]
@@ -302,7 +301,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			synchronizationLock = true
 	
 			// TODO test
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "Delete Connection End")
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "channelEnd")
 			
 			sourceMapping += NodeMapping.localRef(Ns.node, "ChannelCluster")
 			// sourceMapping += EdgeMapping.localRef(Ns.edge, "SimpleChannel") // This is a trick for creation
@@ -316,7 +315,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				source.isInstanceConnected(targetView)
 				'''.trimAql // view.target
 
-			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "Reconnect Channel")
+			reconnections += ReconnectEdgeDescription.localRef(Ns.reconnect, "channel")
 			style = [
 				endsCentering = CenteringStyle.BOTH
 			]
@@ -344,18 +343,15 @@ class ClusterDiagramDiagram extends PooslDiagram {
 			EdgeMapping.localRef(Ns.edge, "SimpleChannel")
 		)
 		
-		
 		toolSections += createNavigationTools()
 		toolSections += createNodesTools()
 		toolSections += createRelationsTools()
 	}
 	
 	protected def createNodesTools() {
-		ToolSection.create [
-			name = "Nodes"
-			reusedTools += PasteDescription.ref(ReusedDiagramDiagram, Ns.operation, "Copy Instance")
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete instance") [
-				name = "Delete instance"
+		ToolSection.createAs(Ns.operation, "nodes") [
+			reusedTools += PasteDescription.ref(ReusedDiagramDiagram, Ns.operation, "copyInstance")
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "Instance") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -367,9 +363,8 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += ToolDescription.create [
-				name = "Create Instance"
-				label = "Instance"
+			ownedTools += ToolDescription.createAs(Ns.creation, "instance") [
+				// label = "instance"
 				precondition = "service:canCreateInstance()"
 				forceRefresh = true
 				iconPath = DEFAULT_ICON_PATH + "Instance.gif"
@@ -380,9 +375,8 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					"view" -> "[elementView/]"
 				)
 			]
-			ownedTools += ToolDescription.create [
-				name = "Create Port"
-				label = "Port"
+			ownedTools += ToolDescription.createAs(Ns.creation, "port") [
+				// label = "Port"
 				precondition = "service:canCreatePort()"
 				forceRefresh = true
 				iconPath = DEFAULT_ICON_PATH + "Port.gif"
@@ -394,7 +388,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				)
 			]
 
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Port From Instance") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "instancePort") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -406,7 +400,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Extern Port") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "externalPort") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -422,10 +416,10 @@ class ClusterDiagramDiagram extends PooslDiagram {
 	}
 	
 	protected def ToolSection createNavigationTools() {
-		ToolSection.create [
-			name = "Navigation"
-			label = "Navigation"
-			ownedTools += OperationAction.createAs(Ns.operation, "Channel Color") [
+		ToolSection.createAs(Ns.operation, "navigations") [
+			// label = "Navigation"
+			ownedTools += OperationAction.createAs(Ns.operation, "ChannelColor") [
+				// label = Channel Color
 				precondition = "aql:self.showMenuChangeColor()"
 				forceRefresh = true
 				view = ContainerViewVariable.named("views")
@@ -433,11 +427,11 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					"view" -> "[views/]"
 				)
 			]
-			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Open Textual Editor")
-			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Open Class Diagram")
-			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "StructureDiagramFromStructure")
-			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Show/Hide Communication Elements")
-			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "Open Instance in Textual Editor")
+			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "openText")
+			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "openClassDiagram")
+			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "openStructureDiagram")
+			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "toggleSimComm")
+			reusedTools += OperationAction.ref(ReusedDiagramDiagram, Ns.operation, "openInstanceText")
 			ownedTools += DoubleClickDescription.create [
 				name = "Open Textual Editor"
 				mappings += ContainerMapping.localRef(Ns.node, "ClusterClass")
@@ -448,9 +442,11 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					"elementView" -> "aql:elementView"
 				)
 			]
-			ownedTools += DiagramNavigationDescription.createAs(Ns.operation, "NavigateInstance") [
-				navigationNameExpression = "aql:'Navigate to instance'"
-				diagramDescription = DiagramDescription.ref("ClusterDiagramDiagram")
+			ownedTools += DiagramNavigationDescription.createAs(Ns.operation, "navigateInstance") [
+				// expression is used instead of diagram name
+				navigationNameExpression = "aql:'Navigate to instance'" // XXX should it be external ?
+				// navigationNameExpression = "aql:'VP_operation^ClusterDiagram.navigateInstance'.getPooslI10nLabel()"
+				diagramDescription = DiagramDescription.ref(contentAlias)
 				containerViewVariable = ContainerViewVariable.named("containerView")
 				containerVariable = ElementSelectVariable.named("container")
 				representationNameVariable = NameVariable.named("diagramName")
@@ -491,11 +487,8 @@ class ClusterDiagramDiagram extends PooslDiagram {
 	}
 	
 	protected def createRelationsTools() {
-		ToolSection.create [
-			name = "Relations"
-			ownedTools += EdgeCreationDescription.create [
-				name = "Create Channel"
-				label = "Channel"
+		ToolSection.createAs(Ns.operation, "relations") [
+			ownedTools += EdgeCreationDescription.createAs(Ns.creation, "channel") [
 				precondition = '''self.isClusterConnectableEnd()'''.trimAql
 				forceRefresh = true
 				connectionStartPrecondition = '''self.isClusterConnectableEnd()'''.trimAql
@@ -511,7 +504,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 				targetViewVariable = TargetEdgeViewCreationVariable.named("targetView")
 				operation = '''source.createConnection(sourceView, targetView)'''.trimAql.toOperation
 			]
-			ownedTools += ReconnectEdgeDescription.createAs(Ns.reconnect, "Reconnect Channel") [
+			ownedTools += ReconnectEdgeDescription.createAs(Ns.reconnect, "channel") [
 				reconnectionKind = ReconnectionKind.RECONNECT_BOTH_LITERAL
 				
 				source = SourceEdgeCreationVariable.named("source")
@@ -524,7 +517,7 @@ class ClusterDiagramDiagram extends PooslDiagram {
 					element.reconnectConnection(sourceView, targetView)
 					'''.trimAql.toOperation
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Connection End") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "channelEnd") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element") // DEdge.source:Channel

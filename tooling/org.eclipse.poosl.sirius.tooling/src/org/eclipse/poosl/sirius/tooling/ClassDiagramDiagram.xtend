@@ -29,12 +29,9 @@ import org.eclipse.sirius.diagram.EdgeArrows
 import org.eclipse.sirius.diagram.ResizeKind
 import org.eclipse.sirius.diagram.description.CenteringStyle
 import org.eclipse.sirius.diagram.description.ContainerMapping
-import org.eclipse.sirius.diagram.description.CustomLayoutConfiguration
 import org.eclipse.sirius.diagram.description.DiagramDescription
-import org.eclipse.sirius.diagram.description.DoubleLayoutOption
 import org.eclipse.sirius.diagram.description.EdgeMapping
 import org.eclipse.sirius.diagram.description.Layer
-import org.eclipse.sirius.diagram.description.LayoutOptionTarget
 import org.eclipse.sirius.diagram.description.NodeMapping
 import org.eclipse.sirius.diagram.description.concern.ConcernDescription
 import org.eclipse.sirius.diagram.description.concern.ConcernSet
@@ -84,7 +81,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 	override initDefaultEdgeStyle(EdgeStyleDescription it) {
 		super.initDefaultEdgeStyle(it)
 		
-		// TODO No label, thus it should be removed.
+		// TODO No label, thus it should be removed ?
 		centerLabelStyleDescription = CenterLabelStyleDescription.create [
 			labelColor = SystemColor.extraRef("color:black")
 		]
@@ -93,17 +90,19 @@ class ClassDiagramDiagram extends PooslDiagram {
 	override initContent(DiagramDescription it) {
 		super.initContent(it)
 		name = "Class diagram" // force name as label
+
 		enablePopupBars = true
 		
-		pasteDescriptions += PasteDescription.localRef(Ns.operation, "Copy Classes")
-		filters += CompositeFilterDescription.createAs(Ns.show, "Hide Basic Classes") [
-			documentation = "This filter will collapse dataclasses called Array, Boolean, Char, Integer, Nil, Object, Real and String."
+		pasteDescriptions += PasteDescription.localRef(Ns.operation, "copyClasses")
+		filters += CompositeFilterDescription.createAs(Ns.show, "hideBasicClasses") [
+			documentation = "This filter will collapse dataclasses called "
+				+ "Array, Boolean, Char, Integer, Nil, Object, Real and String."
 			filters += MappingFilter.create [
 				semanticConditionExpression = '''self.isBasicClass()'''.trimAql
 				mappings += ContainerMapping.localRef(Ns.node, "CLA_Data")
 			]
 		]
-		filters += CompositeFilterDescription.createAs(Ns.show, "Hide Imports") [
+		filters += CompositeFilterDescription.createAs(Ns.show, "hideImports") [
 			filters += MappingFilter.create [
 				viewConditionExpression = "service:isImportedClass()"
 				mappings += ContainerMapping.localRef(Ns.node, "CLA_Cluster")
@@ -113,17 +112,19 @@ class ClassDiagramDiagram extends PooslDiagram {
 			]
 		]
 		concerns = ConcernSet.create [
-			ownedConcernDescriptions += ConcernDescription.createAs(Ns.show, "DefaultConcern") [
+			ownedConcernDescriptions += ConcernDescription.createAs(Ns.show, "defaultConcern") [
 				name = "Default" // Override name for compatibility reason
-				filters += CompositeFilterDescription.localRef(Ns.show, "Hide Basic Classes")
-				filters += CompositeFilterDescription.localRef(Ns.show, "Hide Imports")
+				filters += CompositeFilterDescription.localRef(Ns.show, "hideBasicClasses")
+				filters += CompositeFilterDescription.localRef(Ns.show, "hideImports")
 			]
 		]
 		
 		
-		// Seen with Williams:
-		// As ELK layout adds as many issue as improvement.
-		// We keep TNO layout (== null)
+		// Seen with William Piers:
+		// As ELK layout adds as many issues as improvements.
+		// We keep previousTNO layout (== null)
+		
+		// XXX We keep this code for later evaluation (ELK > 0.7)
 //		layout = CustomLayoutConfiguration.create [
 //			id = "org.eclipse.elk.mrtree"
 //			label = "ELK Mr. Tree"
@@ -136,7 +137,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 //			]
 //		]
 			
-		defaultConcern = ConcernDescription.localRef(Ns.show, "DefaultConcern")
+		defaultConcern = ConcernDescription.localRef(Ns.show, "defaultConcern")
 	}
 
 	protected def void setClassStyle(ContainerMapping it, (FlatContainerStyleDescription)=>void init) {
@@ -165,7 +166,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 			semanticCandidatesExpression = "service:getSystemSpecification()"
 			domainClass = ClusterClass
 			childrenPresentation = ContainerLayout.LIST
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelSystem")
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "system")
 
 			classStyle = [
 
@@ -186,12 +187,12 @@ class ClassDiagramDiagram extends PooslDiagram {
 				borderColor = UserFixedColor.ref("color:ClusterBorder")
 				foregroundColor = UserFixedColor.ref("color:ClusterBkg")
 			]
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelCluster")
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "cluster")
 			subNodeMappings += NodeMapping.createAs(Ns.node, "CLA_Clus_Parameters") [
 				semanticCandidatesExpression = "service:getParameters"
 				synchronizationLock = true
 				domainClass = Variable
-				deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelParameter")
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "parameter")
 				memberStyle = [
 					labelExpression = "service:getVariableDescription"
 					iconPath = EXTRA_ICON_PATH + "ProcessParam.gif"
@@ -201,7 +202,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 				semanticCandidatesExpression = '''self.ports'''.trimAql
 				synchronizationLock = true
 				domainClass = Port
-				deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelPort")
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "port")
 				memberStyle = [
 					labelExpression = '''self.name'''.trimAql
 					iconPath = DEFAULT_ICON_PATH + "Port.gif"
@@ -213,7 +214,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 			domainClass = ProcessClass
 			semanticCandidatesExpression = "service:getAllProcessClasses()"
 			childrenPresentation = ContainerLayout.LIST
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelProcess")
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "process")
 			classStyle = [
 				iconPath = DEFAULT_ICON_PATH + "ProcessClass.png"
 				borderColor = UserFixedColor.ref("color:ProcessBorder")
@@ -223,7 +224,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 				semanticCandidatesExpression = "service:getParameters"
 				synchronizationLock = true
 				domainClass = Variable
-				deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelParameter")
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "parameter")
 				memberStyle = [
 					labelExpression = "service:getVariableDescription"
 					iconPath = EXTRA_ICON_PATH + "ProcessParam.gif"
@@ -233,7 +234,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 				semanticCandidatesExpression = '''self.ports'''.trimAql
 				synchronizationLock = true
 				domainClass = Port
-				deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelPort")
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "port")
 				memberStyle = [
 					labelExpression = '''self.name'''.trimAql
 					iconPath = DEFAULT_ICON_PATH + "Port.gif"
@@ -253,7 +254,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 				semanticCandidatesExpression = '''self.methods'''.trimAql
 				synchronizationLock = true
 				domainClass = ProcessMethod
-				deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelMethod")
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "method")
 				memberStyle = [
 					labelExpression = '''self.getProcessMethodLabel()'''.trimAql
 					iconPath = DEFAULT_ICON_PATH + "ProcessMethod.gif"
@@ -272,7 +273,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 				borderColor = UserFixedColor.ref("color:DataBorder")
 				foregroundColor = UserFixedColor.ref("color:DataBkg")
 			]
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelData")
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "data")
 			subNodeMappings += NodeMapping.createAs(Ns.node, "CLA_Data_InstanceVariables") [
 				semanticCandidatesExpression = "service:getVariables"
 				synchronizationLock = true
@@ -288,7 +289,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 				semanticCandidatesExpression = "aql:self.dataMethodsNamed"
 				synchronizationLock = true
 				domainClass = DataMethodNamed
-				deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelMethod")
+				deletionDescription = DeleteElementDescription.localRef(Ns.del, "method")
 				memberStyle = [
 					labelExpression = '''self.getDataMethodLabel()'''.trimAql
 					iconPath = DEFAULT_ICON_PATH + "DataMethodNamed.gif"
@@ -316,7 +317,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 		
 		edgeMappings += EdgeMapping.createAs(Ns.edge, "CLA_Containment") [
 			targetFinderExpression = "[thisEObject.getSystemInstances()/]"
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelContainment")
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "containment")
 			sourceMapping += ContainerMapping.localRef(Ns.node, "CLA_System")
 			sourceMapping += ContainerMapping.localRef(Ns.node, "CLA_Cluster")
 			targetMapping += ContainerMapping.localRef(Ns.node, "CLA_Cluster")
@@ -333,7 +334,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 		]
 		edgeMappings += EdgeMapping.createAs(Ns.edge, "CLA_ProcessInheritance") [
 			targetFinderExpression = "[thisEObject.getInheritance()/]"
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelInheritance")
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "inheritance")
 			sourceMapping += ContainerMapping.localRef(Ns.node, "CLA_Process")
 			targetMapping += ContainerMapping.localRef(Ns.node, "CLA_Process")
 			style = [
@@ -343,7 +344,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 		]
 		edgeMappings += EdgeMapping.createAs(Ns.edge, "CLA_DataInheritance") [
 			targetFinderExpression = "[thisEObject.getInheritance()/]"
-			deletionDescription = DeleteElementDescription.localRef(Ns.del, "DelInheritance")
+			deletionDescription = DeleteElementDescription.localRef(Ns.del, "inheritance")
 			sourceMapping += ContainerMapping.localRef(Ns.node, "CLA_Data")
 			targetMapping += ContainerMapping.localRef(Ns.node, "CLA_Data")
 			style = [
@@ -362,9 +363,9 @@ class ClassDiagramDiagram extends PooslDiagram {
 	}
 	
 	protected def createCommonTools() {
-		ToolSection.create [
+		ToolSection.createAs(Ns.operation, "commons") [
 			ownedTools += DoubleClickDescription.create [
-				name = "Variable"
+				name = "Variable" // no display
 				mappings += NodeMapping.localRef(Ns.node, "CLA_Clus_Parameters")
 				mappings += NodeMapping.localRef(Ns.node, "CLA_Data_InstanceVariables")
 				mappings += NodeMapping.localRef(Ns.node, "CLA_Proc_Parameters")
@@ -384,47 +385,42 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"elementView" -> "aql:elementView"
 				)
 			]
-			ownedTools += OperationAction.create [
-				name = "Edit Method"
+			ownedTools += OperationAction.createAs(Ns.operation, "editMethod") [
 				precondition = "service:isMethod"
 				view = ContainerViewVariable.named("views")
 				operation = "Edit Method".callJavaAction("editmethod", 
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += OperationAction.create [
-				name = "Edit Variable"
+			ownedTools += OperationAction.createAs(Ns.operation, "editVariable") [
 				precondition = "service:isVariable"
 				view = ContainerViewVariable.named("views")
 				operation = "Edit Variable".callJavaAction("editvariable", 
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += OperationAction.create [
-				name = "Edit Parameter"
+			ownedTools += OperationAction.createAs(Ns.operation, "editParameter") [
 				precondition = "service:isParameter"
 				view = ContainerViewVariable.named("views")
 				operation = "Edit Parameter".callJavaAction("editparameter", 
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += OperationAction.create [
-				name = "Open Textual Editor"
+			ownedTools += OperationAction.createAs(Ns.operation, "openTextualEditor") [
 				precondition = "[thisEObject.showMenuOpenTextualEditor()/]"
 				view = ContainerViewVariable.named("views")
 				operation = "OpenTextualEditor".callJavaAction("opentextualeditor", 
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += OperationAction.create [
-				name = "Open Composite Structure Diagram"
+			ownedTools += OperationAction.createAs(Ns.operation, "openCompositeDiagram") [
 				precondition = "[thisEObject.showMenuOpenGraphicalEditor()/]"
 				view = ContainerViewVariable.named("views")
 				operation = "OpenGraphicalEditor".callJavaAction("opengraphicaleditor", 
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelParameter") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "parameter") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -436,7 +432,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelPort") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "port") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -449,7 +445,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 				)
 			]
 			
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelMethod") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "method") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -461,7 +457,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelVariable") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "variable") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -473,7 +469,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelInheritance") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "inheritance") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -485,7 +481,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelCluster") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "cluster") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -497,7 +493,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelData") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "data") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -509,7 +505,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelProcess") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "process") [
 				name = "DelProcess"
 				precondition = "true"
 				forceRefresh = true
@@ -523,7 +519,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelSystem") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "system") [
 				precondition = "aql:false" // no delete
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -532,7 +528,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 				
 				initialOperation = InitialOperation.create
 			]
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "DelContainment") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "containment") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -544,7 +540,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"containerView" -> "[containerView/]"
 				)
 			]
-			ownedTools += PasteDescription.createAs(Ns.operation, "Copy Classes") [
+			ownedTools += PasteDescription.createAs(Ns.operation, "copyClasses") [
 				forceRefresh = true
 				container = DropContainerVariable.named("container")
 				containerView = ContainerViewVariable.named("containerView")
@@ -615,12 +611,10 @@ class ClassDiagramDiagram extends PooslDiagram {
 	
 	
 	protected def createNodesTools() {
-		ToolSection.create [
-			name = "Nodes"
-			ownedTools += ToolDescription.create [
-				name = "Create Data Class"
-				label = "Data Class"
-				precondition = "[container.oclIsKindOf(Poosl)/]"
+		ToolSection.createAs(Ns.operation, "nodes") [
+			val isPooslContainerExpression = '''container.oclIsKindOf(«Poosl.asAql»)'''.trimAql
+			ownedTools += ToolDescription.createAs(Ns.creation, "dataClass") [
+				precondition = isPooslContainerExpression
 				forceRefresh = true
 				iconPath = DEFAULT_ICON_PATH + "DataClass.gif"
 				element = ElementVariable.named("element")
@@ -630,10 +624,8 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"view" -> "[elementView/]"
 				)
 			]
-			ownedTools += ToolDescription.create [
-				name = "Create Process Class"
-				label = "Process Class"
-				precondition = "[container.oclIsKindOf(Poosl)/]"
+			ownedTools += ToolDescription.createAs(Ns.creation, "processClass") [
+				precondition = isPooslContainerExpression
 				forceRefresh = true
 				iconPath = DEFAULT_ICON_PATH + "ProcessClass.png"
 				element = ElementVariable.named("element")
@@ -643,10 +635,8 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"view" -> "[elementView/]"
 				)
 			]
-			ownedTools += ToolDescription.create [
-				name = "Create Cluster Class"
-				label = "Cluster Class"
-				precondition = "[container.oclIsKindOf(Poosl)/]"
+			ownedTools += ToolDescription.createAs(Ns.creation, "clusterClass") [
+				precondition = isPooslContainerExpression
 				forceRefresh = true
 				iconPath = DEFAULT_ICON_PATH + "ClusterClass.png"
 				element = ElementVariable.named("element")
@@ -656,9 +646,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"view" -> "[elementView/]"
 				)
 			]
-			ownedTools += ToolDescription.create [
-				name = "Create System"
-				label = "System"
+			ownedTools += ToolDescription.createAs(Ns.creation, "system") [
 				precondition = "service:canCreateSystem"
 				forceRefresh = true
 				iconPath = EXTRA_ICON_PATH + "System.gif"
@@ -673,11 +661,8 @@ class ClassDiagramDiagram extends PooslDiagram {
 	}
 	
 	protected def createAttributesTools() {
-		ToolSection.create [
-			name = "Attributes"
-			ownedTools += ToolDescription.create [
-				name = "Create Parameter"
-				label = "Parameter"
+		ToolSection.createAs(Ns.operation, "attributes") [
+			ownedTools += ToolDescription.createAs(Ns.creation, "parameter") [
 				precondition = "service:hasParameters"
 				forceRefresh = true
 				iconPath = EXTRA_ICON_PATH + "ProcessParam.gif"
@@ -688,9 +673,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"view" -> "[elementView/]"
 				)
 			]
-			ownedTools += ToolDescription.create [
-				name = "Create Variable"
-				label = "Variable"
+			ownedTools += ToolDescription.createAs(Ns.creation, "variable") [
 				precondition = "service:hasVariables"
 				forceRefresh = true
 				iconPath = EXTRA_ICON_PATH + "ProcessVariable.gif"
@@ -701,10 +684,8 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"view" -> "[elementView/]"
 				)
 			]
-			ownedTools += ToolDescription.create [
-				name = "Create Port"
-				label = "Port"
-				precondition = "service:canCreatePort()"
+			ownedTools += ToolDescription.createAs(Ns.creation, "port") [
+				precondition = "service:canCreatePort"
 				forceRefresh = true
 				iconPath = DEFAULT_ICON_PATH + "Port.gif"
 				element = ElementVariable.named("element")
@@ -714,9 +695,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"view" -> "[elementView/]"
 				)
 			]
-			ownedTools += ToolDescription.create [
-				name = "Create Method"
-				label = "Method"
+			ownedTools += ToolDescription.createAs(Ns.creation, "method") [
 				precondition = "service:hasMethods"
 				forceRefresh = true
 				iconPath = DEFAULT_ICON_PATH + "ProcessMethod.gif"
@@ -731,11 +710,8 @@ class ClassDiagramDiagram extends PooslDiagram {
 	}
 	
 	protected def createRelationsTools() {
-		ToolSection.create [
-			name = "Relations"
-			ownedTools += EdgeCreationDescription.create [
-				name = "Create Inheritance"
-				label = "Inheritance"
+		ToolSection.createAs(Ns.operation, "relations") [
+			ownedTools += EdgeCreationDescription.createAs(Ns.creation, "inheritance") [
 				precondition = "[preTarget.oclIsKindOf(ProcessClass) or  preTarget.oclIsKindOf(DataClass)/]"
 				iconPath = EXTRA_ICON_PATH + "Generalization.gif"
 				connectionStartPrecondition = "service:canInherit"
@@ -752,9 +728,7 @@ class ClassDiagramDiagram extends PooslDiagram {
 					"target" -> "[target/]"
 				)
 			]
-			ownedTools += EdgeCreationDescription.create [
-				name = "Create Containment"
-				label = "Containment"
+			ownedTools += EdgeCreationDescription.createAs(Ns.creation, "containment") [
 				precondition = "service:canBeContained()"
 				iconPath = EXTRA_ICON_PATH + "Composition.gif"
 				connectionStartPrecondition = "[preSource.oclIsKindOf(ClusterClass)/]"

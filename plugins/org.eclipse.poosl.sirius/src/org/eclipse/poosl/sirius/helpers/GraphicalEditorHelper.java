@@ -206,6 +206,7 @@ public final class GraphicalEditorHelper {
      */
     private static RepresentationDescription getDescription(
             EObject object, Collection<Viewpoint> vps) {
+        // Using precondition to detect applicable description
         Collection<RepresentationDescription> possiblediagrams = DialectManager.INSTANCE
                 .getAvailableRepresentationDescriptions(vps, object);
         if (!possiblediagrams.isEmpty()) {
@@ -432,13 +433,10 @@ public final class GraphicalEditorHelper {
             if (mainTarget != null) {
                 openGraphicalEditor(mainTarget, editor, file.getProject());
             } else {
-                Display.getDefault().asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        MessageDialog.openError(Display.getDefault().getActiveShell(),
-                                Messages.ERROR_MISSING_SYSTEM_AND_CLUSTER_TITLE,
-                                Messages.ERROR_MISSING_SYSTEM_AND_CLUSTER_MESSAGE);
-                    }
+                Display.getDefault().asyncExec(() -> {
+                    MessageDialog.openError(Display.getDefault().getActiveShell(),
+                            Messages.ERROR_MISSING_SYSTEM_AND_CLUSTER_TITLE,
+                            Messages.ERROR_MISSING_SYSTEM_AND_CLUSTER_MESSAGE);
                 });
             }
         }
@@ -455,20 +453,17 @@ public final class GraphicalEditorHelper {
      */
     public static void openGraphicalEditor(
             final EObject target, final IEditorPart editor, final IProject activeProject) {
+        if (target == null) {
+            LOGGER.warn(WARNING_TARGET_UNKNOWN);
+        }
+
         try {
             PlatformUI.getWorkbench().getProgressService().run(false, false, monitor -> {
-                if (target != null) {
-                    Session session = getSession(target, activeProject, editor, true, true,
-                            monitor);
-                    if (session != null) {
-                        openGraphicalEditor(target, session, monitor);
-                    }
-                } else {
-                    LOGGER.warn(WARNING_TARGET_UNKNOWN);
-                }
+                Session session = getSession(target, activeProject, editor, true, true, monitor);
+                openGraphicalEditor(target, session, monitor);
             });
         } catch (InvocationTargetException | InterruptedException e) {
-            LOGGER.warn("Could not open Graphical editor", e);
+            LOGGER.warn("Could not open Graphical editor", e); //$NON-NLS-1$ unexpected
         }
     }
 

@@ -14,11 +14,14 @@
 package org.eclipse.poosl.sirius.tooling
 
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.sirius.diagram.description.DiagramDescription
 import org.eclipse.sirius.diagram.description.style.EdgeStyleDescription
 import org.eclipse.sirius.diagram.description.style.SquareDescription
 import org.eclipse.sirius.diagram.description.tool.DeleteElementDescription
 import org.eclipse.sirius.diagram.description.tool.DoubleClickDescription
 import org.eclipse.sirius.viewpoint.description.AbstractVariable
+import org.eclipse.sirius.viewpoint.description.IdentifiedElement
+import org.eclipse.sirius.viewpoint.description.RepresentationElementMapping
 import org.eclipse.sirius.viewpoint.description.SystemColor
 import org.eclipse.sirius.viewpoint.description.style.BasicLabelStyleDescription
 import org.eclipse.sirius.viewpoint.description.tool.AbstractToolDescription
@@ -30,7 +33,6 @@ import org.eclipse.sirius.viewpoint.description.tool.OperationAction
 import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
 import org.eclipse.sirius.viewpoint.description.tool.SetValue
 import org.mypsycho.modit.emf.sirius.api.AbstractDiagram
-import org.mypsycho.modit.emf.sirius.api.AbstractGroup
 
 import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
 
@@ -58,7 +60,7 @@ abstract class PooslDiagram extends AbstractDiagram {
 	 * 
 	 * @param parent of diagram
 	 */
-	new(AbstractGroup parent, String dLabel, Class<? extends EObject> dClass) {
+	new(PooslDesign parent, String dLabel, Class<? extends EObject> dClass) {
 		super(parent, dLabel, dClass)
 	}
 	
@@ -87,6 +89,11 @@ abstract class PooslDiagram extends AbstractDiagram {
 			value = paramValue
 		]
 	}
+	
+	override initContent(DiagramDescription it) {
+		super.initContent(it)
+		i18n = "def".id("name")
+	}
 
 
 	def <R extends AbstractVariable> R named(Class<R> type, String varName) {
@@ -94,6 +101,34 @@ abstract class PooslDiagram extends AbstractDiagram {
 			name = varName
 		]
 	}
+	
+		
+	/**
+	 * Creates an {@link IdentifiedElement} and initializes it.
+	 * 
+	 * @param type of IdentifiedElement to instantiate
+	 * @param cat category of element
+	 * @param eName name of element
+	 * @param initializer of the given {@link EObject}
+	 */
+	override <R extends IdentifiedElement> R createAs(Class<R> type, Enum<?> cat, String eName, (R)=>void init) {
+		super.createAs(type, cat, eName) [
+			i18n = cat.id(eName)
+			name = cat.name + "_" + eName
+			init?.apply(it)
+		]
+	}
+	
+	override protected id(String category, String path) {
+		super.id(category, path)
+	}
+	
+	def protected setI18n(IdentifiedElement it, String key) {
+		if (!(it instanceof RepresentationElementMapping)) {
+			(context as PooslDesign).i18n(it, key)	
+		} // else mapping are passive, no need have displayed text
+	}
+	
 	
 	def setValue(ContainerModelOperation it, String feat, String aqlExpr) {
 		subModelOperations += SetValue.create [
@@ -114,6 +149,11 @@ abstract class PooslDiagram extends AbstractDiagram {
 		}	
 	}
 	
+	
+	// TODO: update to AbstractEdition
+	def asAql(Class<? extends EObject> type) {
+		context.asEClass(type).asAql
+	}
 		
 	def callJavaAction(String actionName, String actionCall, Pair<String, String>... params) {
 		ExternalJavaAction.create [

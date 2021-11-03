@@ -20,6 +20,7 @@ import org.eclipse.poosl.sirius.services.CompositeStructureDiagramServices
 import org.eclipse.poosl.sirius.services.CompositeStructureEditServices
 import org.eclipse.poosl.xtext.GlobalConstants
 import org.eclipse.sirius.viewpoint.description.Group
+import org.eclipse.sirius.viewpoint.description.IdentifiedElement
 import org.eclipse.sirius.viewpoint.description.UserColorsPalette
 import org.eclipse.sirius.viewpoint.description.Viewpoint
 import org.mypsycho.modit.emf.sirius.api.AbstractGroup
@@ -35,6 +36,8 @@ class PooslDesign extends AbstractGroup {
 		version = "10.1.0.201507271600"
 		ownedViewpoints += Viewpoint.create [
 			name = "POOSL viewpoint"
+			i18n("name")
+			//label = value
 			modelFileExtension = GlobalConstants.FILE_EXTENSION
 			
 			use(AbstractServices)
@@ -61,9 +64,25 @@ class PooslDesign extends AbstractGroup {
 			entries += "DataBorder".color(123,105,79) // brown
 			
 			// entries += "SystemBg".color(150,177,218) // System is grey
-			
 		]
 		
 	}
+
+	protected def <R extends IdentifiedElement> R i18n(R it, String key) {
+		// ':' is key separator in properties
+		// '%' is ODesign convention for substitution
+		label = "%VP_" + key.replace(":", "^")
+		it
+	}
+	
+	override getContentAlias(Class<?> context) {
+		// Remove annoying double name
+		val result = super.getContentAlias(context)
+		if (result.endsWith("DiagramDiagram")) 
+			result.substring(0, result.length - 7)
+		else 
+			result
+	}
+	
 
 }

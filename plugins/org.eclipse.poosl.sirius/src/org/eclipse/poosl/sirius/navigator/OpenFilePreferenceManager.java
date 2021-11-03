@@ -100,7 +100,7 @@ public class OpenFilePreferenceManager extends OpenPreferenceManager {
 
     private String getCurrentPreference(IPreferencesService preferencesService) {
         if (hasMainClass) {
-            return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL,
+            return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL,
                     null);
         } else {
             return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_NO_SYSTEM,

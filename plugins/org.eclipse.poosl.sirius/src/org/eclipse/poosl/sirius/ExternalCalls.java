@@ -16,9 +16,9 @@ package org.eclipse.poosl.sirius;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.ILog;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.poosl.Channel;
 import org.eclipse.poosl.ClusterClass;
@@ -48,14 +48,17 @@ import org.eclipse.sirius.diagram.DSemanticDiagram;
 import org.eclipse.sirius.diagram.EdgeStyle;
 import org.eclipse.sirius.diagram.EdgeTarget;
 import org.eclipse.sirius.tools.api.ui.IExternalJavaAction;
-import org.eclipse.sirius.viewpoint.impl.DRepresentationElementImpl;
+import org.eclipse.sirius.viewpoint.DRepresentationElement;
 
 /**
- * This class is used by the poosl.odesign file to have more advanced queries on the model that are called by Acceleo3
+ * This class is used by the poosl.odesign file to have more advanced queries on
+ * the model that are called by Acceleo3
  * expressions.
  * 
- * According to sirius documentation this class needs to be stateless and have a constructor without any arguments.
- * There is no guarantee that the same instance will be used when a function is called twice.
+ * According to sirius documentation this class needs to be stateless and have a
+ * constructor without any arguments.
+ * There is no guarantee that the same instance will be used when a function is
+ * called twice.
  * 
  * @author Koen Staal
  */
@@ -280,7 +283,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void showHideDebugElements(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void showHideDebugElements(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         Object view = parameters.get(PARAMETER_VIEW);
 
         if (view instanceof ArrayList<?>) {
@@ -320,10 +324,12 @@ public class ExternalCalls implements IExternalJavaAction {
         note.setVisible(true);
         for (DEdge dEdge : diagram.getEdges()) {
             if (!isChannelConnection(dEdge.getTargetNode())) {
-                dEdge.getOwnedStyle().getEndLabelStyle().getDescription().setLabelExpression(DEFAULT_DEBUG_LABEL);
+                dEdge.getOwnedStyle().getEndLabelStyle().getDescription()
+                        .setLabelExpression(DEFAULT_DEBUG_LABEL);
             }
             if (!isChannelConnection(dEdge.getSourceNode())) {
-                dEdge.getOwnedStyle().getBeginLabelStyle().getDescription().setLabelExpression(DEFAULT_DEBUG_LABEL);
+                dEdge.getOwnedStyle().getBeginLabelStyle().getDescription()
+                        .setLabelExpression(DEFAULT_DEBUG_LABEL);
             }
         }
     }
@@ -343,20 +349,24 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void deleteContainment(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void deleteContainment(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         Object view = parameters.get(PARAMETER_VIEW);
 
         if (view instanceof DEdge) {
             DEdge edge = (DEdge) view;
 
-            if (edge.getSourceNode() instanceof DNodeList && edge.getTargetNode() instanceof DNodeList) {
-                CreationHelper.deleteContainment(((DNodeList) edge.getSourceNode()).getTarget(), ((DNodeList) edge.getTargetNode()).getTarget());
+            if (edge.getSourceNode() instanceof DNodeList
+                    && edge.getTargetNode() instanceof DNodeList) {
+                CreationHelper.deleteContainment(((DNodeList) edge.getSourceNode()).getTarget(),
+                        ((DNodeList) edge.getTargetNode()).getTarget());
                 doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
             }
         }
     }
 
-    private void createContainment(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void createContainment(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject source = (EObject) parameters.get(PARAMETER_SOURCE);
         EObject target = (EObject) parameters.get(PARAMETER_TARGET);
         CreationHelper.createContainment(source, target);
@@ -364,7 +374,8 @@ public class ExternalCalls implements IExternalJavaAction {
 
     }
 
-    private void createSystem(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void createSystem(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (container instanceof Poosl) {
@@ -374,7 +385,8 @@ public class ExternalCalls implements IExternalJavaAction {
 
     }
 
-    private void deleteCluster(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void deleteCluster(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject element = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (element instanceof ClusterClass) {
@@ -383,7 +395,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void deleteData(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void deleteData(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject element = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (element instanceof DataClass) {
@@ -392,7 +405,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void deleteProcess(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void deleteProcess(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject element = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (element instanceof ProcessClass) {
@@ -402,7 +416,8 @@ public class ExternalCalls implements IExternalJavaAction {
 
     }
 
-    private void createCluster(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void createCluster(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (container instanceof Poosl) {
@@ -411,7 +426,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void createData(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void createData(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (container instanceof Poosl) {
@@ -420,7 +436,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void createProcess(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void createProcess(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (container instanceof Poosl) {
@@ -429,20 +446,23 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void createInheritance(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
+    private void createInheritance(
+            Collection<? extends EObject> arg0, Map<String, Object> parameters) {
         EObject source = (EObject) parameters.get(PARAMETER_SOURCE);
         EObject target = (EObject) parameters.get(PARAMETER_TARGET);
         CreationHelper.createInheritance(source, target);
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
-    private void deleteInheritance(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void deleteInheritance(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject element = (EObject) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteInheritance(element);
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
-    private void deleteExternPort(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
+    private void deleteExternPort(
+            Collection<? extends EObject> arg0, Map<String, Object> parameters) {
         EObject eobject = (EObject) parameters.get(PARAMETER_ELEMENT);
 
         if (eobject instanceof Port) {
@@ -462,7 +482,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void editVariable(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void editVariable(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         if (!eobjects.isEmpty()) {
             EObject target = eobjects.iterator().next();
             if (target instanceof Variable) {
@@ -472,7 +493,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void editParameter(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void editParameter(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         if (!eobjects.isEmpty()) {
             EObject target = eobjects.iterator().next();
             if (target instanceof Variable) {
@@ -482,7 +504,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void editMethod(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void editMethod(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         if (!eobjects.isEmpty()) {
             EObject target = eobjects.iterator().next();
             if (target instanceof ProcessMethod) {
@@ -498,18 +521,21 @@ public class ExternalCalls implements IExternalJavaAction {
     }
 
     /**
-     * remove variable from the declaration or the whole declaration if it contains only 1 variable
+     * remove variable from the declaration or the whole declaration if it
+     * contains only 1 variable
      * 
      * @param arg0
      * @param parameters
      */
-    private void deleteParameter(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
+    private void deleteParameter(
+            Collection<? extends EObject> arg0, Map<String, Object> parameters) {
         Variable var = (Variable) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteParameter(var);
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
-    private void deleteInstanceVariable(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
+    private void deleteInstanceVariable(
+            Collection<? extends EObject> arg0, Map<String, Object> parameters) {
         Variable var = (Variable) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteInstanceVariable(var);
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
@@ -526,7 +552,8 @@ public class ExternalCalls implements IExternalJavaAction {
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
-    private void createParameter(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
+    private void createParameter(
+            Collection<? extends EObject> arg0, Map<String, Object> parameters) {
         EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
         if (container instanceof ProcessMethod) {
             container = container.eContainer();
@@ -541,7 +568,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void createInstanceVariable(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
+    private void createInstanceVariable(
+            Collection<? extends EObject> arg0, Map<String, Object> parameters) {
         EObject container = (EObject) parameters.get(PARAMETER_ELEMENT);
         if (container instanceof ProcessMethod || container instanceof DataMethod) {
             container = container.eContainer();
@@ -561,7 +589,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void deletePortFromInstance(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void deletePortFromInstance(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
 
         EObject eobject = (EObject) parameters.get(PARAMETER_ELEMENT);
 
@@ -577,7 +606,8 @@ public class ExternalCalls implements IExternalJavaAction {
 
     }
 
-    private void createPort(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void createPort(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject object = (EObject) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.createNewPort(object);
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
@@ -592,19 +622,22 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void deleteInstance(Collection<? extends EObject> arg0, Map<String, Object> parameters) {
+    private void deleteInstance(
+            Collection<? extends EObject> arg0, Map<String, Object> parameters) {
         Instance instance = (Instance) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.deleteInstance(instance);
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
-    private void createInstance(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void createInstance(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         ClusterClass container = (ClusterClass) parameters.get(PARAMETER_ELEMENT);
         CreationHelper.createNewInstance(container);
         doValidate(parameters.get(PARAMETER_ELEMENT), parameters.get(PARAMETER_VIEW));
     }
 
-    private void openGraphicalEditor(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void openGraphicalEditor(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         Object diagramObject = parameters.get(PARAMETER_VIEW);
         if (diagramObject instanceof ArrayList<?>) {
             diagramObject = ((ArrayList<?>) diagramObject).get(0);
@@ -628,18 +661,21 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void openTextualEditor(Collection<? extends EObject> eobjects, Map<String, Object> parameters, boolean instance) {
+    private void openTextualEditor(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters,
+            boolean instance) {
         if (!eobjects.isEmpty()) {
             EObject obj = eobjects.iterator().next();
-            if (obj instanceof DRepresentationElementImpl) {
-                DRepresentationElementImpl repElement = (DRepresentationElementImpl) obj;
+            if (obj instanceof DRepresentationElement) {
+                DRepresentationElement repElement = (DRepresentationElement) obj;
                 obj = repElement.getTarget();
             }
             TextualEditorHelper.openTextualEditor(obj, true, instance);
         }
     }
 
-    private void openClassDiagram(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void openClassDiagram(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         EObject object = eobjects.iterator().next();
         if (object != null) {
             Poosl poosl = HelperFunctions.getContainingPoosl(object);
@@ -647,7 +683,8 @@ public class ExternalCalls implements IExternalJavaAction {
         }
     }
 
-    private void handleDoubleClickOpenEditor(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    private void handleDoubleClickOpenEditor(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         for (EObject eObject : eobjects) {
             if (eObject instanceof DDiagramElement) {
                 DDiagramElement element = (DDiagramElement) eObject;
@@ -681,7 +718,8 @@ public class ExternalCalls implements IExternalJavaAction {
     }
 
     private void openEditor(EObject target, String documentation) {
-        if (target instanceof ClusterClass || (target instanceof Instance && HelperFunctions.isClusterInstance((Instance) target))) {
+        if (target instanceof ClusterClass || (target instanceof Instance
+                && HelperFunctions.isClusterInstance((Instance) target))) {
             GraphicalPreferenceManager prefManager = new GraphicalPreferenceManager();
             String pref = prefManager.getEditorPreference();
 

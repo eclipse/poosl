@@ -24,11 +24,8 @@ import org.eclipse.sirius.viewpoint.description.tool.DropContainerVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementDeleteVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementViewVariable
-import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaAction
-import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaActionParameter
 import org.eclipse.sirius.viewpoint.description.tool.OperationAction
 import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
-import org.eclipse.sirius.viewpoint.description.tool.SetValue
 
 import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
 
@@ -46,8 +43,8 @@ class ReusedDiagramDiagram extends PooslDiagram {
 	
 	override initContent(Layer it) {
 
-		toolSections += ToolSection.create [
-			ownedTools += DeleteElementDescription.createAs(Ns.del, "Delete Poosl Element") [
+		toolSections += ToolSection.createAs(Ns.operation, "reuses") [
+			ownedTools += DeleteElementDescription.createAs(Ns.del, "pooslElement") [
 				precondition = "true"
 				forceRefresh = true
 				element = ElementDeleteVariable.named("element")
@@ -55,21 +52,21 @@ class ReusedDiagramDiagram extends PooslDiagram {
 				containerView = ContainerViewVariable.named("containerView")
 				operation = '''element.deletePooslObject(elementView)'''.trimAql.toOperation
 			]
-			ownedTools += OperationAction.createAs(Ns.operation, "Open Textual Editor") [
+			ownedTools += OperationAction.createAs(Ns.operation, "openText") [
 				precondition = '''self.showMenuOpenTextualEditor()'''.trimAql
 				view = ContainerViewVariable.named("views")
 				operation = "OpenTextualEditor".callJavaAction("opentextualeditor", 
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += OperationAction.createAs(Ns.operation, "Open Class Diagram") [
+			ownedTools += OperationAction.createAs(Ns.operation, "openClassDiagram") [
 				precondition = "true"
 				view = ContainerViewVariable.named("views")
 				operation = "OpenClassDiagram".callJavaAction("openclassdiagram", 
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += PasteDescription.createAs(Ns.operation, "Copy Instance") [
+			ownedTools += PasteDescription.createAs(Ns.operation, "copyInstance") [
 				forceRefresh = true
 				container = DropContainerVariable.named("container")
 				containerView = ContainerViewVariable.named("containerView")
@@ -102,7 +99,7 @@ class ReusedDiagramDiagram extends PooslDiagram {
 						))
 				]
 			]
-			ownedTools += OperationAction.createAs(Ns.operation, "Show/Hide Communication Elements") [
+			ownedTools += OperationAction.createAs(Ns.operation, "toggleSimComm") [
 				precondition = "true"
 				forceRefresh = true
 				view = ContainerViewVariable.named("views")
@@ -110,15 +107,14 @@ class ReusedDiagramDiagram extends PooslDiagram {
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += OperationAction.createAs(Ns.operation, "StructureDiagramFromStructure") [
-				label = "Open Composite Structure Diagram"
+			ownedTools += OperationAction.createAs(Ns.operation, "openStructureDiagram") [
 				precondition = '''self.showMenuInstanceOpenStructureDiagram()'''.trimAql
 				view = ContainerViewVariable.named("views")
 				operation = "OpenGraphicalEditor".callJavaAction("opengraphicaleditor", 
 					"view" -> "[views/]"
 				)
 			]
-			ownedTools += OperationAction.createAs(Ns.operation, "Open Instance in Textual Editor") [
+			ownedTools += OperationAction.createAs(Ns.operation, "openInstanceText") [
 				precondition = '''self.showMenuOpenTextualEditorInstance()'''.trimAql
 				view = ContainerViewVariable.named("views")
 				operation = "OpenTextualEditor".callJavaAction("openinstancetextualeditor", 
