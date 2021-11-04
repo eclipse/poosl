@@ -52,12 +52,18 @@ import com.google.inject.Provider;
 
 /**
  * The RefererFinderRunnable.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 @SuppressWarnings("restriction")
 public class RefererFinderRunnable implements IRunnableWithProgress {
+
+    // About static usage:
+    // pooslRefererFinder, resourceDescriptions and targetUriConverter
+    // are unique for Poosl language in Eclipse,
+    // this class is used only for Poosl purpose.
+    // => no memory leak issued.
     private static PooslReferenceFinder pooslRefererFinder;
 
     private static IResourceDescriptions resourceDescriptions;
@@ -80,34 +86,39 @@ public class RefererFinderRunnable implements IRunnableWithProgress {
 
     private static PooslReferenceFinder getPooslReferenceFinder(Resource resource) {
         if (pooslRefererFinder == null) {
-            pooslRefererFinder = (PooslReferenceFinder) IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(resource.getURI()).get(IReferenceFinder.class);
+            pooslRefererFinder = (PooslReferenceFinder) IResourceServiceProvider.Registry.INSTANCE
+                    .getResourceServiceProvider(resource.getURI()).get(IReferenceFinder.class);
         }
         return pooslRefererFinder;
     }
 
     private static IResourceDescriptions getIResourceDescriptions(Resource resource) {
         if (resourceDescriptions == null) {
-            resourceDescriptions = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(resource.getURI()).get(IResourceDescriptions.class);
+            resourceDescriptions = IResourceServiceProvider.Registry.INSTANCE
+                    .getResourceServiceProvider(resource.getURI()).get(IResourceDescriptions.class);
         }
         return resourceDescriptions;
     }
 
     private static TargetURIConverter getTargetURIConverter(Resource resource) {
         if (targetUriConverter == null) {
-            targetUriConverter = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(resource.getURI()).get(TargetURIConverter.class);
+            targetUriConverter = IResourceServiceProvider.Registry.INSTANCE
+                    .getResourceServiceProvider(resource.getURI()).get(TargetURIConverter.class);
         }
         return targetUriConverter;
     }
 
     private static Provider<ResourceAccess> getResourceAccessProvider(Resource resource) {
         if (resourceAccesProvider == null) {
-            resourceAccesProvider = PooslActivator.getInstance().getInjector("org.eclipse.poosl.xtext.Poosl").getProvider(ResourceAccess.class); //$NON-NLS-1$
+            resourceAccesProvider = PooslActivator.getInstance()
+                    .getInjector("org.eclipse.poosl.xtext.Poosl").getProvider(ResourceAccess.class); //$NON-NLS-1$
         }
         return resourceAccesProvider;
     }
 
     @Override
-    public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+    public void run(IProgressMonitor monitor)
+            throws InvocationTargetException, InterruptedException {
         final URI uri = EcoreUtil.getURI(element);
         Predicate<URI> targetURIs = createURIPredicate(uri);
 
@@ -131,7 +142,8 @@ public class RefererFinderRunnable implements IRunnableWithProgress {
         ResourceSet resourceSet = resource.getResourceSet();
         Set<URI> uriSet = Collections.singleton(uri);
 
-        finder.findAllReferences(targetURIConverter.fromIterable(uriSet), resourceAccess.get(), indexData, acceptor, progress.newChild(80));
+        finder.findAllReferences(targetURIConverter.fromIterable(uriSet), resourceAccess.get(),
+                indexData, acceptor, progress.newChild(80));
 
         Iterator<URI> externIt = externReferers.iterator();
         if (externIt.hasNext()) {
@@ -145,18 +157,28 @@ public class RefererFinderRunnable implements IRunnableWithProgress {
 
     private static EObject findContainer(EObject originalObject) {
         EObject object = originalObject;
-        while (object != null && !(object instanceof Instance) && !(object instanceof DataMethod) && !(object instanceof ProcessMethod)
-                && !(object instanceof ProcessMethodCall && object.eContainingFeature() == Literals.PROCESS_CLASS__INITIAL_METHOD_CALL) && !(object instanceof Channel)
-                && !(object instanceof DataClass) && !(object instanceof ProcessClass) && !(object instanceof ClusterClass)) {
+        while (object != null //
+                && !(object instanceof Instance) //
+                && !(object instanceof DataMethod) //
+                && !(object instanceof ProcessMethod) //
+                && !(object instanceof ProcessMethodCall && object.eContainingFeature()
+                        == Literals.PROCESS_CLASS__INITIAL_METHOD_CALL) //
+                && !(object instanceof Channel) //
+                && !(object instanceof DataClass) //
+                && !(object instanceof ProcessClass) //
+                && !(object instanceof ClusterClass)) {
             object = object.eContainer();
         }
         return object;
     }
 
-    private static Acceptor createReferenceAcceptor(final Set<EObject> referers, final Set<URI> externReferers) {
+    private static Acceptor createReferenceAcceptor(
+            final Set<EObject> referers, final Set<URI> externReferers) {
         return new Acceptor() {
             @Override
-            public void accept(EObject source, URI sourceURI, EReference eReference, int index, EObject targetOrProxy, URI targetURI) {
+            public void accept(
+                    EObject source, URI sourceURI, EReference eReference, int index,
+                    EObject targetOrProxy, URI targetURI) {
                 referers.add(source);
             }
 
@@ -168,11 +190,6 @@ public class RefererFinderRunnable implements IRunnableWithProgress {
     }
 
     private static Predicate<URI> createURIPredicate(final URI uri) {
-        return new Predicate<URI>() {
-            @Override
-            public boolean apply(URI input) {
-                return uri.equals(input);
-            }
-        };
+        return input -> uri.equals(input);
     }
 }

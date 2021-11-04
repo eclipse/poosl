@@ -67,7 +67,7 @@ import com.google.common.collect.Lists;
 
 /**
  * The HelperFunctions.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -107,23 +107,24 @@ public final class HelperFunctions {
     public static final String CLASS_NAME_OBSERVER = "Observer"; //$NON-NLS-1$
 
     public static final List<String> PRIMITIVE_DATA_CLASSES = Collections
-            .unmodifiableList(Arrays.asList(CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL));
+            .unmodifiableList(Arrays.asList(CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT,
+                    CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL));
 
-    public static final List<String> PERMANENT_DATA_CLASSES = Collections.unmodifiableList(
-            Arrays.asList(CLASS_NAME_OBJECT, CLASS_NAME_ARRAY, CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL, CLASS_NAME_STRING));
+    public static final List<String> PERMANENT_DATA_CLASSES = Collections
+            .unmodifiableList(Arrays.asList(CLASS_NAME_OBJECT, CLASS_NAME_ARRAY, CLASS_NAME_BOOLEAN,
+                    CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL,
+                    CLASS_NAME_REAL, CLASS_NAME_STRING));
 
     public static final List<String> DEFAULT_DATA_CLASSES = Collections
-            .unmodifiableList(Arrays.asList(CLASS_NAME_OBJECT, CLASS_NAME_ARRAY, CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL,
-                    CLASS_NAME_STRING, CLASS_NAME_FILEIN, CLASS_NAME_FILEOUT, CLASS_NAME_RANDOMGENERATOR, CLASS_NAME_SOCKET, CLASS_NAME_CONSOLE, CLASS_NAME_OBSERVER));
+            .unmodifiableList(Arrays.asList(CLASS_NAME_OBJECT, CLASS_NAME_ARRAY, CLASS_NAME_BOOLEAN,
+                    CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL,
+                    CLASS_NAME_REAL, CLASS_NAME_STRING, CLASS_NAME_FILEIN, CLASS_NAME_FILEOUT,
+                    CLASS_NAME_RANDOMGENERATOR, CLASS_NAME_SOCKET, CLASS_NAME_CONSOLE,
+                    CLASS_NAME_OBSERVER));
 
     // === GetName =======
 
-    private static final Function<IEObjectDescription, String> GET_NAME = new Function<IEObjectDescription, String>() {
-        @Override
-        public String apply(IEObjectDescription descr) {
-            return getName(descr);
-        }
-    };
+    private static final Function<IEObjectDescription, String> GET_NAME = HelperFunctions::getName;
 
     // === IGlobalScopeProvider =======
 
@@ -141,17 +142,23 @@ public final class HelperFunctions {
     // http://koehnlein.blogspot.nl/2012/11/xtext-tip-how-do-i-get-guice-injector.html
     private static PooslImportUriGlobalScopeProvider getGlobalScopeProvider(Resource resource) {
         if (globalScopeProvider == null) {
-            // FIXME This static cache is dangerous
-            globalScopeProvider = (PooslImportUriGlobalScopeProvider) IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(resource.getURI()).get(IGlobalScopeProvider.class);
+            // About static usage:
+            // globalScopeProvider is unique for Poosl language in Eclipse,
+            // this class is used only for Poosl purpose.
+            // => no memory leak issued.
+            globalScopeProvider = (PooslImportUriGlobalScopeProvider) IResourceServiceProvider.Registry.INSTANCE
+                    .getResourceServiceProvider(resource.getURI()).get(IGlobalScopeProvider.class);
         }
         return globalScopeProvider;
     }
 
-    public static IScope getGlobalScope(Resource resource, EReference reference, Predicate<IEObjectDescription> filter) {
+    public static IScope getGlobalScope(
+            Resource resource, EReference reference, Predicate<IEObjectDescription> filter) {
         return getGlobalScopeProvider(resource).getScope(resource, reference, filter);
     }
 
-    public static IScope getGlobalScope(Resource resource, EClass eClass, Predicate<IEObjectDescription> filter) {
+    public static IScope getGlobalScope(
+            Resource resource, EClass eClass, Predicate<IEObjectDescription> filter) {
         return getGlobalScopeProvider(resource).getScope(resource, eClass, filter);
     }
 
@@ -211,9 +218,11 @@ public final class HelperFunctions {
         return pooslCacheEntry.getClusterClass(cClassName);
     }
 
-    public static Iterable<IEObjectDescription> getAllRelevantInstantiableClasses(Resource resource) {
+    public static Iterable<IEObjectDescription> getAllRelevantInstantiableClasses(
+            Resource resource) {
         PooslCacheEntry pooslCacheEntry = PooslCache.get(resource);
-        return Iterables.concat(pooslCacheEntry.getAllRelevantProcessClasses(), pooslCacheEntry.getAllRelevantClusterClasses());
+        return Iterables.concat(pooslCacheEntry.getAllRelevantProcessClasses(),
+                pooslCacheEntry.getAllRelevantClusterClasses());
     }
 
     // === CorrectedDataClassExtends =======
@@ -222,40 +231,37 @@ public final class HelperFunctions {
         String className = getName(dClass);
         if (CLASS_NAME_OBJECT.equals(className)) {
             return null;
+        }
+        String superClass = PooslDataClassDescription.getSuperClass(dClass);
+        if (superClass != null) {
+            return superClass;
         } else {
-            String superClass = PooslDataClassDescription.getSuperClass(dClass);
-            if (superClass != null) {
-                return superClass;
-            } else {
-                return CLASS_NAME_OBJECT;
-            }
+            return CLASS_NAME_OBJECT;
         }
     }
 
     public static String getCorrectedDataClassExtendsAsString(Resource resource, String className) {
         if (CLASS_NAME_OBJECT.equals(className)) {
             return null;
+        }
+        IEObjectDescription dClass = PooslCache.get(resource).getDataClassMap().get(className);
+        String superClass = PooslDataClassDescription.getSuperClass(dClass);
+        if (superClass != null) {
+            return superClass;
         } else {
-            IEObjectDescription dClass = PooslCache.get(resource).getDataClassMap().get(className);
-            String superClass = PooslDataClassDescription.getSuperClass(dClass);
-            if (superClass != null) {
-                return superClass;
-            } else {
-                return CLASS_NAME_OBJECT;
-            }
+            return CLASS_NAME_OBJECT;
         }
     }
 
     public static String getCorrectedDataClassExtendsAsString(DataClass dClass) {
         if (CLASS_NAME_OBJECT.equals(dClass.getName())) {
             return null;
+        }
+        String superClass = dClass.getSuperClass();
+        if (superClass != null) {
+            return superClass;
         } else {
-            String superClass = dClass.getSuperClass();
-            if (superClass != null) {
-                return superClass;
-            } else {
-                return CLASS_NAME_OBJECT;
-            }
+            return CLASS_NAME_OBJECT;
         }
     }
 
@@ -271,8 +277,10 @@ public final class HelperFunctions {
         return superClasses;
     }
 
-    public static boolean isReflexiveAncestorData(Resource resource, String ancestor, String dClass) {
-        return ancestor.equals(dClass) || Iterables.contains(computeDataSuperClasses(resource, dClass), ancestor);
+    public static boolean isReflexiveAncestorData(
+            Resource resource, String ancestor, String dClass) {
+        return ancestor.equals(dClass)
+                || Iterables.contains(computeDataSuperClasses(resource, dClass), ancestor);
     }
 
     public static boolean isReflexiveAncestorData(DataClass ancestor, DataClass dClass) {
@@ -282,18 +290,22 @@ public final class HelperFunctions {
 
     // === ProcessClass =======
 
-    public static Iterable<String> computeProcessSuperClasses(Resource resource, String processName) {
+    public static Iterable<String> computeProcessSuperClasses(
+            Resource resource, String processName) {
         return getNames(PooslCache.get(resource).getProcessAncestors(processName));
     }
 
     public static List<String> computeProcessClassChain(Resource resource, String pClass) {
-        List<String> superClasses = Lists.newArrayList(computeProcessSuperClasses(resource, pClass));
+        List<String> superClasses = Lists
+                .newArrayList(computeProcessSuperClasses(resource, pClass));
         superClasses.add(0, pClass);
         return superClasses;
     }
 
-    public static boolean isReflexiveAncestorProcess(Resource resource, String ancestor, String pClass) {
-        return ancestor.equals(pClass) || Iterables.contains(computeProcessSuperClasses(resource, pClass), ancestor);
+    public static boolean isReflexiveAncestorProcess(
+            Resource resource, String ancestor, String pClass) {
+        return ancestor.equals(pClass)
+                || Iterables.contains(computeProcessSuperClasses(resource, pClass), ancestor);
     }
 
     public static boolean isReflexiveAncestorProcess(ProcessClass ancestor, ProcessClass pClass) {
@@ -306,10 +318,12 @@ public final class HelperFunctions {
     public static Set<String> getUsedMessages(ProcessClass pClass, PooslMessageType messageType) {
         Resource resource = pClass.eResource();
         Set<String> usedMessages = new HashSet<>();
-        List<IEObjectDescription> pClasses = PooslCache.get(resource).getProcessReflexiveChildren(pClass.getName());
+        List<IEObjectDescription> pClasses = PooslCache.get(resource)
+                .getProcessReflexiveChildren(pClass.getName());
         for (IEObjectDescription pDescr : pClasses) {
-            List<String> pMessages = messageType.equals(PooslMessageType.RECEIVE) ? PooslProcessClassDescription.getUsedReceiveStatements(pDescr)
-                    : PooslProcessClassDescription.getUsedSendStatements(pDescr);
+            List<String> pMessages = messageType.equals(PooslMessageType.RECEIVE)
+                ? PooslProcessClassDescription.getUsedReceiveStatements(pDescr)
+                : PooslProcessClassDescription.getUsedSendStatements(pDescr);
             usedMessages.addAll(pMessages);
         }
         return usedMessages;
@@ -359,16 +373,20 @@ public final class HelperFunctions {
                         @SuppressWarnings("unchecked")
                         InternalEList<EObject> values = (InternalEList<EObject>) value;
                         for (int i = 0; i < values.size(); ++i) {
-                            EObject instanceOrProxy = toValidInstanceOrNull(sourceCandidate.eResource(), values.basicGet(i));
+                            EObject instanceOrProxy = toValidInstanceOrNull(
+                                    sourceCandidate.eResource(), values.basicGet(i));
                             if (instanceOrProxy != null) {
-                                URI refURI = EcoreUtil2.getPlatformResourceOrNormalizedURI(instanceOrProxy);
+                                URI refURI = EcoreUtil2
+                                        .getPlatformResourceOrNormalizedURI(instanceOrProxy);
                                 usedURIs.add(refURI);
                             }
                         }
                     } else {
-                        EObject instanceOrProxy = toValidInstanceOrNull(sourceCandidate.eResource(), (EObject) value);
+                        EObject instanceOrProxy = toValidInstanceOrNull(sourceCandidate.eResource(),
+                                (EObject) value);
                         if (instanceOrProxy != null) {
-                            URI refURI = EcoreUtil2.getPlatformResourceOrNormalizedURI(instanceOrProxy);
+                            URI refURI = EcoreUtil2
+                                    .getPlatformResourceOrNormalizedURI(instanceOrProxy);
                             usedURIs.add(refURI);
                         }
                     }
@@ -379,71 +397,87 @@ public final class HelperFunctions {
 
     // TOOD code duplication with PooslReferenceFinder?
 
-    private static void addPooslReference(Resource localResource, EObject sourceCandidate, Set<URI> usedURIs) {
+    private static void addPooslReference(
+            Resource localResource, EObject sourceCandidate, Set<URI> usedURIs) {
 
         // --- Message References -------
 
         if (sourceCandidate instanceof SendStatement) {
             SendStatement statement = (SendStatement) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getSendSignatureDescription(statement));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getSendSignatureDescription(statement));
         } else if (sourceCandidate instanceof ReceiveStatement) {
             ReceiveStatement statement = (ReceiveStatement) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getReceiveSignatureDescription(statement));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getReceiveSignatureDescription(statement));
 
             // --- Process Method References -------
 
         } else if (sourceCandidate instanceof ProcessMethodCall) {
             ProcessMethodCall call = (ProcessMethodCall) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getProcessMethodDescription(call));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getProcessMethodDescription(call));
 
             // --- Port References -------
 
         } else if (sourceCandidate instanceof PortReference) {
             PortReference port = (PortReference) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getPortDescription(port));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getPortDescription(port));
 
             // --- Class References -------
 
         } else if (sourceCandidate instanceof ProcessClass) {
             ProcessClass pClass = (ProcessClass) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getProcessClassDescription(pClass));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getProcessClassDescription(pClass));
         } else if (sourceCandidate instanceof DataClass) {
             DataClass dClass = (DataClass) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getDataClassDescription(dClass));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getDataClassDescription(dClass));
         } else if (sourceCandidate instanceof Instance) {
             Instance instance = (Instance) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getInstantiableClassDescription(instance));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getInstantiableClassDescription(instance));
         } else if (sourceCandidate instanceof NewExpression) {
             NewExpression newExpr = (NewExpression) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getDataClassDescription(newExpr));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getDataClassDescription(newExpr));
         } else if (sourceCandidate instanceof DataMethod) {
             DataMethod dataMethod = (DataMethod) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getDataClassDescription(dataMethod));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getDataClassDescription(dataMethod));
         } else if (sourceCandidate instanceof Declaration) {
             Declaration declaration = (Declaration) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getDataClassDescription(declaration));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getDataClassDescription(declaration));
         } else if (sourceCandidate instanceof MessageParameter) {
             MessageParameter msgParam = (MessageParameter) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getDataClassDescription(msgParam));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getDataClassDescription(msgParam));
 
             // --- Variable References -------
 
         } else if (sourceCandidate instanceof AssignmentExpression) {
             AssignmentExpression assignExpr = (AssignmentExpression) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getVariableDescription(assignExpr));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getVariableDescription(assignExpr));
         } else if (sourceCandidate instanceof VariableExpression) {
             VariableExpression varExpr = (VariableExpression) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getVariableDescription(varExpr));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getVariableDescription(varExpr));
         } else if (sourceCandidate instanceof OutputVariable) {
             OutputVariable outVar = (OutputVariable) sourceCandidate;
-            validateAndAccept(localResource, usedURIs, PooslReferenceHelper.getVariableDescription(outVar));
+            validateAndAccept(localResource, usedURIs,
+                    PooslReferenceHelper.getVariableDescription(outVar));
         }
         // Instance Parameter does not need to be added because it doesn't
         // determine if the parameter is used inside the class.
 
     }
 
-    private static void validateAndAccept(Resource localResource, Set<URI> usedURIs, IEObjectDescription descr) {
+    private static void validateAndAccept(
+            Resource localResource, Set<URI> usedURIs, IEObjectDescription descr) {
         if (descr != null) {
             EObject instance = toValidInstanceOrNull(localResource, descr.getEObjectOrProxy());
             if (instance != null) {
@@ -458,7 +492,8 @@ public final class HelperFunctions {
     }
 
     private static EObject resolveInternalProxy(EObject elementOrProxy, Resource resource) {
-        if (elementOrProxy.eIsProxy() && ((InternalEObject) elementOrProxy).eProxyURI().trimFragment().equals(resource.getURI())) {
+        if (elementOrProxy.eIsProxy() && ((InternalEObject) elementOrProxy).eProxyURI()
+                .trimFragment().equals(resource.getURI())) {
             return EcoreUtil.resolve(elementOrProxy, resource);
         } else {
             return elementOrProxy;
