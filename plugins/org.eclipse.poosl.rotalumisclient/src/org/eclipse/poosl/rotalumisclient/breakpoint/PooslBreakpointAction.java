@@ -13,10 +13,9 @@
  *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.breakpoint;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
@@ -24,12 +23,12 @@ import org.eclipse.ui.IEditorPart;
 
 /**
  * The PooslBreakpointAction.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslBreakpointAction implements IEditorActionDelegate {
-    private static final Logger LOGGER = Logger.getLogger(PooslBreakpointAction.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslBreakpointAction.class);
 
     IEditorPart editorPart;
 
@@ -41,18 +40,18 @@ public class PooslBreakpointAction implements IEditorActionDelegate {
         try {
             adapter.toggleLineBreakpoints(editorPart, selection);
         } catch (CoreException e) {
-            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            LOGGER.warn(e.getMessage(), e);
         }
     }
 
     @Override
     public void selectionChanged(IAction action, ISelection sel) {
-        this.selection = sel;
+        selection = sel;
     }
 
     @Override
     public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-        this.editorPart = targetEditor;
+        editorPart = targetEditor;
     }
 
 }

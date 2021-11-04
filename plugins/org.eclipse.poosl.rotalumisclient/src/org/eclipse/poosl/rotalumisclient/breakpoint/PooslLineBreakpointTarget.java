@@ -13,11 +13,10 @@
  *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.breakpoint;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.ILineBreakpoint;
@@ -38,6 +37,7 @@ import org.eclipse.poosl.SwitchStatementCase;
 import org.eclipse.poosl.rotalumisclient.Messages;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.poosl.rotalumisclient.debug.PooslDebugHelper;
+import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.texteditor.IDocumentProvider;
@@ -50,15 +50,14 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 
 /**
  * The PooslLineBreakpointTarget.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslLineBreakpointTarget implements
         IToggleBreakpointsTarget,
         IToggleBreakpointsTargetExtension {
-    private static final Logger LOGGER = Logger
-            .getLogger(PooslLineBreakpointTarget.class.getName());
+    private static final ILog LOGGER = Platform.getLog(PooslLineBreakpointTarget.class);
 
     @Override
     public boolean canToggleLineBreakpoints(IWorkbenchPart part, ISelection selection) {
@@ -115,8 +114,7 @@ public class PooslLineBreakpointTarget implements
             throws CoreException {
         IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager()
                 .getBreakpoints(PooslConstants.DEBUG_MODEL_ID);
-        for (int i = 0; i < breakpoints.length; i++) {
-            IBreakpoint breakpoint = breakpoints[i];
+        for (IBreakpoint breakpoint : breakpoints) {
             if (resource.equals(breakpoint.getMarker().getResource())
                     && ((ILineBreakpoint) breakpoint).getLineNumber() == (lineNumber + 1)) {
                 // existing breakpoint; delete
@@ -133,7 +131,7 @@ public class PooslLineBreakpointTarget implements
         try {
             lineOffset = document.getLineInformation(lineNumber).getOffset();
         } catch (BadLocationException e) {
-            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            LOGGER.warn("Unexpected lineNumber in:" + resource, e); //$NON-NLS-1$
         }
         EObject actualSemanticObject = getSemanticObject(resource, lineOffset);
         if (actualSemanticObject instanceof ProcessMethod) {
@@ -167,10 +165,13 @@ public class PooslLineBreakpointTarget implements
         return NodeModelUtils.findActualSemanticObjectFor(leafNode);
     }
 
-    /*
-     * Returns the editor being used to edit a Poosl file, associated with the given part, or <code>null</code> if none.
-     * @param part workbench part
-     * @return the editor being used to edit a Poosl file, associated with the given part, or <code>null</code> if none
+    /**
+     * Returns the editor being used to edit a Poosl file, associated with the
+     * given part, or <code>null</code> if none.
+     *
+     * @param part
+     *     workbench part
+     * @return the editor being used to edit a Poosl file
      */
     private XtextEditor getEditor(IWorkbenchPart part) {
         if (part instanceof XtextEditor) {
@@ -178,7 +179,7 @@ public class PooslLineBreakpointTarget implements
             IResource resource = editorPart.getEditorInput().getAdapter(IResource.class);
             if (resource != null) {
                 String extension = resource.getFileExtension();
-                if (extension != null && "poosl".equals(extension)) { //$NON-NLS-1$
+                if (extension != null && GlobalConstants.FILE_EXTENSION.equals(extension)) {
                     return editorPart;
                 }
             }
@@ -202,7 +203,7 @@ public class PooslLineBreakpointTarget implements
     @Override
     public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection)
             throws CoreException {
-        throw new UnsupportedOperationException("toggleMethodBreakpoints() not supported");
+        throw new UnsupportedOperationException("toggleMethodBreakpoints() not supported"); //$NON-NLS-1$
     }
 
     @Override
@@ -212,7 +213,7 @@ public class PooslLineBreakpointTarget implements
 
     @Override
     public void toggleWatchpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
-        throw new UnsupportedOperationException("toggleWatchpoints() not supported");
+        throw new UnsupportedOperationException("toggleWatchpoints() not supported"); //$NON-NLS-1$
     }
 
     @Override
