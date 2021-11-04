@@ -22,17 +22,20 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 
 /**
  * The PooslProposalProviderTerminals.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslProposalProviderTerminals extends PooslProposalProviderTypes {
 
-    private void completeID(EObject model, final ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    private void completeID(
+            EObject model, final ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         // Based on org.eclipse.xtext.common.ui.contentassist.TerminalsProposalProvider
-        String proposalText = "someName";
-        String displayText = "someName - Identifier";
-        ICompletionProposal proposal = createCompletionProposal(proposalText, displayText, null, context);
+        String proposalText = "someName"; //$NON-NLS-1$
+        String displayText = "someName - Identifier"; //$NON-NLS-1$
+        ICompletionProposal proposal = createCompletionProposal(proposalText, displayText, null,
+                context);
         if (proposal instanceof ConfigurableCompletionProposal) {
             ConfigurableCompletionProposal configurable = (ConfigurableCompletionProposal) proposal;
             configurable.setPriority(300);
@@ -45,52 +48,72 @@ public class PooslProposalProviderTerminals extends PooslProposalProviderTypes {
     }
 
     @Override
-    public void completeClusterClass_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeClusterClass_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completeProcessClass_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeProcessClass_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completeDataClass_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeDataClass_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completePort_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completePort_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completeMessageReceiveSignature_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeMessageReceiveSignature_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completeMessageSendSignature_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeMessageSendSignature_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completeVariable_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeVariable_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completeProcessMethod_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeProcessMethod_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completeDataMethodNamed_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeDataMethodNamed_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 
     @Override
-    public void completeInstance_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeInstance_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         completeID(model, context, acceptor);
     }
 }

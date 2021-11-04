@@ -44,6 +44,7 @@ import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.poosl.xtext.importing.ImportingHelper;
 import org.eclipse.swt.SWT;
@@ -73,7 +74,7 @@ import com.google.inject.Inject;
 
 /**
  * The IncludePropertyPage.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -158,7 +159,7 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
                 }
             });
             dialog.setBlockOnOpen(true);
-            if (dialog.open() == ElementTreeSelectionDialog.OK) {
+            if (dialog.open() == Window.OK) {
                 Object result = dialog.getFirstResult();
                 if (result instanceof IResource) {
                     IPath path = ((IResource) result).getFullPath().makeRelative();
@@ -260,7 +261,7 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
 
     private void checkRebuild() {
         MessageDialog dialog = new MessageDialog(getShell(), "Include changed", null,
-                "The Building settings have changed. A rebuild of all workspace projects is required for changes to take effect. Build now?",
+                "The Building settings have changed. A rebuild of all workspace projects is required for changes to take effect. Build now ?",
                 MessageDialog.QUESTION,
                 new String[] {
                         IDialogConstants.YES_LABEL,
@@ -349,9 +350,9 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
                     return Status.CANCEL_STATUS;
                 }
                 Job[] buildJobs = Job.getJobManager().find(ResourcesPlugin.FAMILY_MANUAL_BUILD);
-                for (int i = 0; i < buildJobs.length; i++) {
-                    if (buildJobs[i] != this && buildJobs[i] instanceof BuildJob) {
-                        buildJobs[i].cancel();
+                for (Job buildJob : buildJobs) {
+                    if (buildJob != this && buildJob instanceof BuildJob) {
+                        buildJob.cancel();
                     }
                 }
             }

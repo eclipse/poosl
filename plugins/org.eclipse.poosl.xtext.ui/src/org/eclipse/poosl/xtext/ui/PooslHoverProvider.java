@@ -13,6 +13,10 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.ui;
 
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.poosl.Annotation;
 import org.eclipse.poosl.ClusterClass;
@@ -23,33 +27,66 @@ import org.eclipse.poosl.PooslPackage.Literals;
 import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ProcessMethod;
 import org.eclipse.poosl.Variable;
+import org.eclipse.poosl.xtext.annotation.AnnotationType;
 import org.eclipse.xtext.ui.editor.hover.html.DefaultEObjectHoverProvider;
 
 /**
  * The PooslHoverProvider.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslHoverProvider extends DefaultEObjectHoverProvider {
-    public static final String TEST_HELP_DOCUMENTATION = "\nSee Help(F1), \"Syntax of Test Primitives\" for more info.";
 
-    public static final String TEST_DOCUMENTATION = "This annotation indicates that the data method must be executed as test by the test framework. "
+    private static final String ANNOTATION_MESSAGE = "{0}\nSee Help(F1), \"{1}\" for more info.";
+
+    private static final String PRIMITIVE_HELP = "Syntax of Test Primitives";
+
+    private static final String INIT_HELP = "Initialization Data Methods";
+
+    private static final String SUPPRESSWARNINGS_HELP = "Initialization Data Methods";
+
+    private static final String TEST_DOCUMENTATION = "This annotation indicates that the data method must be executed as test by the test framework. "
             + "By default the test succeeds if no exception occurs.";
 
-    public static final String SKIP_DOCUMENTATION = "This annotation should be combined with \"@Test\", and is used to skip the test.";
+    private static final String SKIP_DOCUMENTATION = "This annotation should be combined with \"@Test\", and is used to skip the test.";
 
-    public static final String ERROR_DOCUMENTATION = "This annotation should be combined with \"@Test\", and modifies the default behavior such that the test succeeds if any exception occurs. "
+    private static final String ERROR_DOCUMENTATION = "This annotation should be combined with \"@Test\", and modifies the default behavior such that the test succeeds if any exception occurs. "
             + "A parameter can be added to indicate a specific expected exception, e.g., \"@Error(\"string\")\".";
 
-    public static final String INIT_DOCUMENTATION = "This annotation indicates that the data method is an initialization method. "
+    private static final String INIT_DOCUMENTATION = "This annotation indicates that the data method is an initialization method. "
             + "If a data class has initialization methods, one of these initialization methods has to be called directly after creating an instance of the data clas (using the \"new\" construct). "
-            + "The \"@Init\" annotation is not inherited by subclasses." + "\nSee Help(F1), \"Initialization Data Methods\" for more information.";
+            + "The \"@Init\" annotation is not inherited by subclasses.";
 
-    public static final String SUPPRESSWARNINGS_DOCUMENTATION = "This annotation hides the warnings of the provided type in the following class, method, instance or channel. "
+    private static final String SUPPRESSWARNINGS_DOCUMENTATION = "This annotation hides the warnings of the provided type in the following class, method, instance or channel. "
             + "The warning types that can be passed are \"unused\", \"unconnected\", \"typecheck\" and \"return\". "
-            + "Multiple types can be provided with one annotation by seperating the types with a comma (e.g. @SuppressWarnings(\"unused\", \"typecheck\")."
-            + "\nSee Help(F1), \"Suppress Warnings\" for more information.";
+            + "Multiple types can be provided with one annotation by seperating the types with a comma (e.g. @SuppressWarnings(\"unused\", \"typecheck\").";
+
+    private static final Map<AnnotationType, String> ANNOTATION_DOCS = new HashMap<>();
+
+    private static void setAnnotationDoc(AnnotationType type, String doc, String helpChapter) {
+        ANNOTATION_DOCS.put(type, MessageFormat.format(ANNOTATION_MESSAGE, doc, helpChapter));
+    }
+
+    static {
+        setAnnotationDoc(AnnotationType.TEST, TEST_DOCUMENTATION, PRIMITIVE_HELP);
+        setAnnotationDoc(AnnotationType.ERROR, ERROR_DOCUMENTATION, PRIMITIVE_HELP);
+        setAnnotationDoc(AnnotationType.SKIP, SKIP_DOCUMENTATION, PRIMITIVE_HELP);
+        setAnnotationDoc(AnnotationType.INIT, INIT_DOCUMENTATION, INIT_HELP);
+        setAnnotationDoc(AnnotationType.SUPPRESSWARNINGS, SUPPRESSWARNINGS_DOCUMENTATION,
+                SUPPRESSWARNINGS_HELP);
+    }
+
+    /**
+     * Returns the documentation of the type.
+     *
+     * @param it
+     *     annotation type
+     * @return documentation
+     */
+    public static String getDocumentation(AnnotationType it) {
+        return ANNOTATION_DOCS.get(it);
+    }
 
     @Override
     protected String getFirstLine(EObject o) {
@@ -66,21 +103,29 @@ public class PooslHoverProvider extends DefaultEObjectHoverProvider {
             objectType = "Process class";
         } else if (o instanceof ProcessMethod) {
             objectType = "Process method";
-        } else if (o instanceof Variable && o.eContainer().eContainingFeature() == Literals.DATA_CLASS__INSTANCE_VARIABLES) {
+        } else if (o instanceof Variable
+                && o.eContainer().eContainingFeature() == Literals.DATA_CLASS__INSTANCE_VARIABLES) {
             objectType = "Class variable";
-        } else if (o instanceof Variable && o.eContainer().eContainingFeature() == Literals.DATA_METHOD__PARAMETERS) {
+        } else if (o instanceof Variable
+                && o.eContainer().eContainingFeature() == Literals.DATA_METHOD__PARAMETERS) {
             objectType = "Input parameter";
-        } else if (o instanceof Variable && o.eContainer().eContainingFeature() == Literals.DATA_METHOD__LOCAL_VARIABLES) {
+        } else if (o instanceof Variable
+                && o.eContainer().eContainingFeature() == Literals.DATA_METHOD__LOCAL_VARIABLES) {
             objectType = "Local variable";
-        } else if (o instanceof Variable && o.eContainer().eContainingFeature() == Literals.INSTANTIABLE_CLASS__PARAMETERS) {
+        } else if (o instanceof Variable
+                && o.eContainer().eContainingFeature() == Literals.INSTANTIABLE_CLASS__PARAMETERS) {
             objectType = "Class parameter";
-        } else if (o instanceof Variable && o.eContainer().eContainingFeature() == Literals.PROCESS_CLASS__INSTANCE_VARIABLES) {
+        } else if (o instanceof Variable && o.eContainer().eContainingFeature()
+                == Literals.PROCESS_CLASS__INSTANCE_VARIABLES) {
             objectType = "Class variable";
-        } else if (o instanceof Variable && o.eContainer().eContainingFeature() == Literals.PROCESS_METHOD__INPUT_PARAMETERS) {
+        } else if (o instanceof Variable && o.eContainer().eContainingFeature()
+                == Literals.PROCESS_METHOD__INPUT_PARAMETERS) {
             objectType = "Input parameter";
-        } else if (o instanceof Variable && o.eContainer().eContainingFeature() == Literals.PROCESS_METHOD__OUTPUT_PARAMETERS) {
+        } else if (o instanceof Variable && o.eContainer().eContainingFeature()
+                == Literals.PROCESS_METHOD__OUTPUT_PARAMETERS) {
             objectType = "Output parameter";
-        } else if (o instanceof Variable && o.eContainer().eContainingFeature() == Literals.PROCESS_METHOD__LOCAL_VARIABLES) {
+        } else if (o instanceof Variable && o.eContainer().eContainingFeature()
+                == Literals.PROCESS_METHOD__LOCAL_VARIABLES) {
             objectType = "Local variable";
         } else {
             objectType = o.eClass().getName();
@@ -93,17 +138,9 @@ public class PooslHoverProvider extends DefaultEObjectHoverProvider {
     @Override
     protected String getDocumentation(EObject o) {
         if (o instanceof Annotation) {
-            String annotation = ((Annotation) o).getName();
-            if (annotation.equalsIgnoreCase("test")) { //$NON-NLS-1$
-                return TEST_DOCUMENTATION + TEST_HELP_DOCUMENTATION;
-            } else if (annotation.equalsIgnoreCase("error")) { //$NON-NLS-1$
-                return ERROR_DOCUMENTATION + TEST_HELP_DOCUMENTATION;
-            } else if (annotation.equalsIgnoreCase("skip")) { //$NON-NLS-1$
-                return SKIP_DOCUMENTATION + TEST_HELP_DOCUMENTATION;
-            } else if (annotation.equalsIgnoreCase("init")) { //$NON-NLS-1$
-                return INIT_DOCUMENTATION;
-            } else if (annotation.equalsIgnoreCase("suppresswarnings")) { //$NON-NLS-1$
-                return SUPPRESSWARNINGS_DOCUMENTATION;
+            String result = ANNOTATION_DOCS.get(AnnotationType.getValue((Annotation) o));
+            if (result != null) {
+                return result;
             }
         }
         return super.getDocumentation(o);

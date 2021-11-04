@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.ui;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -40,7 +41,6 @@ import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkAcceptor;
 import org.eclipse.xtext.ui.editor.hyperlinking.XtextHyperlink;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.util.ITextRegion;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -49,11 +49,13 @@ import com.google.inject.Provider;
 
 /**
  * The PooslHyperlinkDetector.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslHyperlinkDetector extends DefaultHyperlinkDetector {
+
+    private static final String TEXT = "Open '{0}' in a Poosl editor.";
 
     private static class HyperlinkAcceptor implements IHyperlinkAcceptor {
         private final List<IHyperlink> links;
@@ -62,6 +64,7 @@ public class PooslHyperlinkDetector extends DefaultHyperlinkDetector {
             this.links = links;
         }
 
+        @Override
         public void accept(IHyperlink hyperlink) {
             if (hyperlink != null) {
                 links.add(hyperlink);
@@ -73,8 +76,10 @@ public class PooslHyperlinkDetector extends DefaultHyperlinkDetector {
     private Provider<XtextHyperlink> hyperlinkProvider;
 
     @Override
-    public IHyperlink[] detectHyperlinks(ITextViewer textViewer, final IRegion region, boolean canShowMultipleHyperlinks) {
-        IHyperlink[] hyperlinks = super.detectHyperlinks(textViewer, region, canShowMultipleHyperlinks);
+    public IHyperlink[] detectHyperlinks(
+            ITextViewer textViewer, final IRegion region, boolean canShowMultipleHyperlinks) {
+        IHyperlink[] hyperlinks = super.detectHyperlinks(textViewer, region,
+                canShowMultipleHyperlinks);
         if (hyperlinks == null) {
             return createHyperLinks(textViewer, region);
         }
@@ -82,22 +87,22 @@ public class PooslHyperlinkDetector extends DefaultHyperlinkDetector {
     }
 
     private IHyperlink[] createHyperLinks(ITextViewer textViewer, final IRegion region) {
-        return ((IXtextDocument) textViewer.getDocument()).priorityReadOnly(new IUnitOfWork<IHyperlink[], XtextResource>() {
-            public IHyperlink[] exec(XtextResource resource) throws Exception {
-                IParseResult parseResult = resource.getParseResult();
-                ILeafNode leaf = NodeModelUtils.findLeafNodeAtOffset(parseResult.getRootNode(), region.getOffset());
-                if (leaf != null && leaf.getSemanticElement() instanceof Import && leaf.getGrammarElement() instanceof RuleCall) {
-                    Import imp = (Import) leaf.getSemanticElement();
-                    Resource res = ImportingHelper.resolveImport(imp, isImportLib(leaf));
-                    Poosl importedPoosl = ImportingHelper.toPoosl(res);
-                    if (importedPoosl != null) {
-                        // Create a hyperlink for the root object
-                        // (poosl) of the imported resource
-                        return createHyperLinksFor((XtextResource) res, leaf, res.getContents().get(0));
-                    }
+        return ((IXtextDocument) textViewer.getDocument()).priorityReadOnly(resource -> {
+            IParseResult parseResult = resource.getParseResult();
+            ILeafNode leaf = NodeModelUtils.findLeafNodeAtOffset(parseResult.getRootNode(),
+                    region.getOffset());
+            if (leaf != null && leaf.getSemanticElement() instanceof Import
+                    && leaf.getGrammarElement() instanceof RuleCall) {
+                Import imp = (Import) leaf.getSemanticElement();
+                Resource res = ImportingHelper.resolveImport(imp, isImportLib(leaf));
+                Poosl importedPoosl = ImportingHelper.toPoosl(res);
+                if (importedPoosl != null) {
+                    // Create a hyperlink for the root object
+                    // (poosl) of the imported resource
+                    return createHyperLinksFor((XtextResource) res, leaf, res.getContents().get(0));
                 }
-                return null;
             }
+            return null;
         });
     }
 
@@ -106,27 +111,28 @@ public class PooslHyperlinkDetector extends DefaultHyperlinkDetector {
         for (ILeafNode iLeafNode : parent.getLeafNodes()) {
             Object grammar = iLeafNode.getGrammarElement();
             if (grammar instanceof Keyword) {
-                return ((Keyword) grammar).getValue().equals("importlib");
+                return ((Keyword) grammar).getValue().equals("importlib"); //$NON-NLS-1$
             }
         }
         return false;
     }
 
-    private IHyperlink[] createHyperLinksFor(XtextResource resource, ILeafNode sourceNode, EObject targetObject) {
+    private IHyperlink[] createHyperLinksFor(
+            XtextResource resource, ILeafNode sourceNode, EObject targetObject) {
         // The code in this method is based on the
         // org.eclipse.xtext.ui.editor.hyperlinking.HyperlinkHelper
         ITextRegion textRegion = sourceNode.getTextRegion();
         IRegion region = new Region(textRegion.getOffset(), textRegion.getLength());
-        PooslLabelProvider labelProvider = new PooslLabelProvider(null);
+
         URIConverter uriConverter = resource.getResourceSet().getURIConverter();
-        String hyperlinkText = "Open '" + labelProvider.getText(targetObject) + "' in a Poosl editor.";
         URI uri = EcoreUtil.getURI(targetObject);
         URI normalized = uri.isPlatformResource() ? uri : uriConverter.normalize(uri);
 
         XtextHyperlink result = hyperlinkProvider.get();
         result.setHyperlinkRegion(region);
         result.setURI(normalized);
-        result.setHyperlinkText(hyperlinkText);
+        PooslLabelProvider labelProvider = new PooslLabelProvider(null);
+        result.setHyperlinkText(MessageFormat.format(TEXT, labelProvider.getText(targetObject)));
         return addHyperLink(result);
     }
 

@@ -44,7 +44,7 @@ public class PooslJavaValidatorSuppress extends AbstractPooslValidator {
         RETURN("\"return\"", true), //$NON-NLS-1$ 
         ANNOTATION("\"annotation\"", true), //$NON-NLS-1$
         IMPORT("\"import\"", false), //$NON-NLS-1$
-        ASSIGNMENT("\"assignment\"", false), //$NON-NLS-1$//$NON-NLS-2$
+        ASSIGNMENT("\"assignment\"", false), //$NON-NLS-1$
         UNGUARDED_LOOP("\"unguardedloop\"", false); //$NON-NLS-1$
 
         private final String text;

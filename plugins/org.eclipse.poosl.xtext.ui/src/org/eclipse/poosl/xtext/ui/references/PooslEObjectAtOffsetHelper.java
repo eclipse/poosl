@@ -15,6 +15,7 @@ package org.eclipse.poosl.xtext.ui.references;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.poosl.AssignmentExpression;
 import org.eclipse.poosl.BinaryOperatorExpression;
 import org.eclipse.poosl.DataClass;
@@ -39,7 +40,6 @@ import org.eclipse.poosl.xtext.custom.PooslTypeSystem;
 import org.eclipse.poosl.xtext.helpers.PooslReferenceHelper;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
-import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.EObjectAtOffsetHelper;
@@ -47,7 +47,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 
 /**
  * The PooslEObjectAtOffsetHelper.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -67,17 +67,20 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
         // --- Message References -------
 
         if (semanticElement instanceof SendStatement) {
-            descr = PooslReferenceHelper.getSendSignatureDescription((SendStatement) semanticElement);
+            descr = PooslReferenceHelper
+                    .getSendSignatureDescription((SendStatement) semanticElement);
             return resolvedReferencedDescription(descr, semanticElement);
         } else if (semanticElement instanceof ReceiveStatement) {
-            descr = PooslReferenceHelper.getReceiveSignatureDescription((ReceiveStatement) semanticElement);
+            descr = PooslReferenceHelper
+                    .getReceiveSignatureDescription((ReceiveStatement) semanticElement);
             return resolvedReferencedDescription(descr, semanticElement);
         }
 
         // --- Process Method References -------
 
         else if (semanticElement instanceof ProcessMethodCall) {
-            descr = PooslReferenceHelper.getProcessMethodDescription((ProcessMethodCall) semanticElement);
+            descr = PooslReferenceHelper
+                    .getProcessMethodDescription((ProcessMethodCall) semanticElement);
             return resolvedReferencedDescription(descr, semanticElement);
         }
 
@@ -93,25 +96,29 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
         else if (semanticElement instanceof ProcessClass) {
             INode pNode = getAssignmentNode(node, Literals.PROCESS_CLASS__SUPER_CLASS);
             if (pNode != null) {
-                descr = PooslCache.get(semanticElement.eResource()).getProcessClass(pNode.getText().trim());
+                descr = PooslCache.get(semanticElement.eResource())
+                        .getProcessClass(pNode.getText().trim());
                 return resolvedReferencedDescription(descr, semanticElement);
             }
         } else if (semanticElement instanceof DataClass) {
             INode pNode = getAssignmentNode(node, Literals.DATA_CLASS__SUPER_CLASS);
             if (pNode != null) {
-                descr = PooslCache.get(semanticElement.eResource()).getDataClass(pNode.getText().trim());
+                descr = PooslCache.get(semanticElement.eResource())
+                        .getDataClass(pNode.getText().trim());
                 return resolvedReferencedDescription(descr, semanticElement);
             }
         } else if (semanticElement instanceof Instance) {
             INode pNode = getAssignmentNode(node, Literals.INSTANCE__CLASS_DEFINITION);
             if (pNode != null) {
-                descr = PooslReferenceHelper.getInstantiableClassDescription((Instance) semanticElement);
+                descr = PooslReferenceHelper
+                        .getInstantiableClassDescription((Instance) semanticElement);
                 return resolvedReferencedDescription(descr, semanticElement);
             }
         } else if (semanticElement instanceof NewExpression) {
             INode pNode = getAssignmentNode(node, Literals.NEW_EXPRESSION__DATA_CLASS);
             if (pNode != null) {
-                descr = PooslReferenceHelper.getDataClassDescription((NewExpression) semanticElement);
+                descr = PooslReferenceHelper
+                        .getDataClassDescription((NewExpression) semanticElement);
                 return resolvedReferencedDescription(descr, semanticElement);
             }
         } else if (semanticElement instanceof DataMethod) {
@@ -127,7 +134,8 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
                 return resolvedReferencedDescription(descr, semanticElement);
             }
         } else if (semanticElement instanceof MessageParameter) {
-            descr = PooslReferenceHelper.getDataClassDescription((MessageParameter) semanticElement);
+            descr = PooslReferenceHelper
+                    .getDataClassDescription((MessageParameter) semanticElement);
             return resolvedReferencedDescription(descr, semanticElement);
         }
 
@@ -137,18 +145,21 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
             descr = PooslReferenceHelper.getVariableDescription((OutputVariable) semanticElement);
             return resolvedReferencedDescription(descr, semanticElement);
         } else if (semanticElement instanceof VariableExpression) {
-            descr = PooslReferenceHelper.getVariableDescription((VariableExpression) semanticElement);
+            descr = PooslReferenceHelper
+                    .getVariableDescription((VariableExpression) semanticElement);
             return resolvedReferencedDescription(descr, semanticElement);
         } else if (semanticElement instanceof AssignmentExpression) {
             INode pNode = getAssignmentNode(node, Literals.ASSIGNMENT_EXPRESSION__VARIABLE);
             if (pNode != null) {
-                descr = PooslReferenceHelper.getVariableDescription((AssignmentExpression) semanticElement);
+                descr = PooslReferenceHelper
+                        .getVariableDescription((AssignmentExpression) semanticElement);
                 return resolvedReferencedDescription(descr, semanticElement);
             }
         } else if (semanticElement instanceof InstanceParameter) {
             INode pNode = getAssignmentNode(node, Literals.INSTANCE_PARAMETER__PARAMETER);
             if (pNode != null) {
-                descr = PooslReferenceHelper.getVariableDescription((InstanceParameter) semanticElement);
+                descr = PooslReferenceHelper
+                        .getVariableDescription((InstanceParameter) semanticElement);
                 return resolvedReferencedDescription(descr, semanticElement);
             }
         }
@@ -156,13 +167,16 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
         // --- Data Method References -------
 
         else if (semanticElement instanceof DataMethodCallExpression) {
-            descr = PooslReferenceHelper.getDataMethodNamedDescription((DataMethodCallExpression) semanticElement, pooslTypeSystem);
+            descr = PooslReferenceHelper.getDataMethodNamedDescription(
+                    (DataMethodCallExpression) semanticElement, pooslTypeSystem);
             return resolvedReferencedDescription(descr, semanticElement);
         } else if (semanticElement instanceof BinaryOperatorExpression) {
-            descr = PooslReferenceHelper.getDataMethodBinaryDescription((BinaryOperatorExpression) semanticElement, pooslTypeSystem);
+            descr = PooslReferenceHelper.getDataMethodBinaryDescription(
+                    (BinaryOperatorExpression) semanticElement, pooslTypeSystem);
             return resolvedReferencedDescription(descr, semanticElement);
         } else if (semanticElement instanceof UnaryOperatorExpression) {
-            descr = PooslReferenceHelper.getDataMethodUnaryDescription((UnaryOperatorExpression) semanticElement, pooslTypeSystem);
+            descr = PooslReferenceHelper.getDataMethodUnaryDescription(
+                    (UnaryOperatorExpression) semanticElement, pooslTypeSystem);
             return resolvedReferencedDescription(descr, semanticElement);
         }
 
@@ -176,8 +190,9 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
      */
     @Override
     public EObject getCrossReferencedElement(INode node) {
-        if (!(node.getGrammarElement() instanceof CrossReference) && !hasPooslReference(node))
-            throw new IllegalArgumentException("Passed node not a cross reference node.");
+        if (!(node.getGrammarElement() instanceof CrossReference) && !hasPooslReference(node)) {
+            throw new IllegalArgumentException("Passed node not a cross reference node."); //$NON-NLS-1$
+        }
         return resolveCrossReferencedElement(node);
     }
 
@@ -196,7 +211,8 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
             return node;
         }
 
-        while (node.getGrammarElement() != null && isElementOfDatatypeRule(node.getGrammarElement())) {
+        while (node.getGrammarElement() != null
+                && isElementOfDatatypeRule(node.getGrammarElement())) {
             node = node.getParent();
             if (node.getGrammarElement() instanceof CrossReference || hasPooslReference(node)) {
                 return node;
@@ -207,8 +223,13 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
 
     private boolean hasPooslReference(INode node) {
         EObject semanticElement = node.getSemanticElement();
-        return semanticElement instanceof SendStatement || semanticElement instanceof ReceiveStatement || semanticElement instanceof ProcessMethodCall || semanticElement instanceof PortReference
-                || isClassReference(node, semanticElement) || isVariableReference(node, semanticElement) || isDataMethodReference(semanticElement);
+        return semanticElement instanceof SendStatement
+                || semanticElement instanceof ReceiveStatement
+                || semanticElement instanceof ProcessMethodCall
+                || semanticElement instanceof PortReference
+                || isClassReference(node, semanticElement)
+                || isVariableReference(node, semanticElement)
+                || isDataMethodReference(semanticElement);
     }
 
     private boolean isClassReference(INode node, EObject semanticElement) {
@@ -245,7 +266,9 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
     }
 
     private boolean isDataMethodReference(EObject semanticElement) {
-        return semanticElement instanceof DataMethodCallExpression || semanticElement instanceof BinaryOperatorExpression || semanticElement instanceof UnaryOperatorExpression;
+        return semanticElement instanceof DataMethodCallExpression
+                || semanticElement instanceof BinaryOperatorExpression
+                || semanticElement instanceof UnaryOperatorExpression;
 
     }
 
@@ -265,12 +288,15 @@ public class PooslEObjectAtOffsetHelper extends EObjectAtOffsetHelper {
         }
     }
 
-    private EObject resolvedReferencedDescription(IEObjectDescription descr, EObject semanticElement) {
-        if (descr == null)
+    private EObject resolvedReferencedDescription(
+            IEObjectDescription descr, EObject semanticElement) {
+        if (descr == null) {
             return null;
+        }
         EObject referencedElement = descr.getEObjectOrProxy();
-        if (referencedElement.eIsProxy())
-            referencedElement = EcoreUtil2.resolve(referencedElement, semanticElement);
+        if (referencedElement.eIsProxy()) {
+            referencedElement = EcoreUtil.resolve(referencedElement, semanticElement);
+        }
         return referencedElement;
     }
 

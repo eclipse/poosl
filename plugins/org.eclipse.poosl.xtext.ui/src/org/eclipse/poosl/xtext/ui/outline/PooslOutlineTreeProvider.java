@@ -38,15 +38,15 @@ import org.eclipse.xtext.ui.editor.outline.impl.EStructuralFeatureNode;
 
 /**
  * The PooslOutlineTreeProvider.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
-// CHECKSTYLE:OFF Naming inherited from XText generation
+// CHECKSTYLE:OFF method naming required and inherited by XText framework
 public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
-    private static final String LABEL_DATA_CLASSES = "Data classes"; //$NON-NLS-1$
+    private static final String LABEL_DATA_CLASSES = "Data classes";
 
-    private static final String LABEL_PROCESS_CLASSES = "Process classes"; //$NON-NLS-1$
+    private static final String LABEL_PROCESS_CLASSES = "Process classes";
 
     private static final String LABEL_CLUSTER_CLASSES = "Cluster classes";
 
@@ -71,18 +71,22 @@ public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
     // --- POOSL -------
 
     protected void _createChildren(DocumentRootNode parentNode, Poosl poosl) {
-        IOutlineNode nodeDataClasses = createEStructuralFeatureNode(parentNode, poosl, PooslPackage.Literals.POOSL__DATA_CLASSES, _image(null), LABEL_DATA_CLASSES, poosl.getDataClasses().isEmpty());
+        IOutlineNode nodeDataClasses = createEStructuralFeatureNode(parentNode, poosl,
+                PooslPackage.Literals.POOSL__DATA_CLASSES, _image(null), LABEL_DATA_CLASSES,
+                poosl.getDataClasses().isEmpty());
         for (DataClass dClass : poosl.getDataClasses()) {
             createNode(nodeDataClasses, dClass);
         }
 
-        IOutlineNode processDataClasses = createEStructuralFeatureNode(parentNode, poosl, PooslPackage.Literals.POOSL__PROCESS_CLASSES, _image(null), LABEL_PROCESS_CLASSES,
+        IOutlineNode processDataClasses = createEStructuralFeatureNode(parentNode, poosl,
+                PooslPackage.Literals.POOSL__PROCESS_CLASSES, _image(null), LABEL_PROCESS_CLASSES,
                 poosl.getProcessClasses().isEmpty());
         for (ProcessClass pClass : poosl.getProcessClasses()) {
             createNode(processDataClasses, pClass);
         }
 
-        IOutlineNode clusterDataClasses = createEStructuralFeatureNode(parentNode, poosl, PooslPackage.Literals.POOSL__CLUSTER_CLASSES, _image(null), LABEL_CLUSTER_CLASSES,
+        IOutlineNode clusterDataClasses = createEStructuralFeatureNode(parentNode, poosl,
+                PooslPackage.Literals.POOSL__CLUSTER_CLASSES, _image(null), LABEL_CLUSTER_CLASSES,
                 poosl.getClusterClasses().isEmpty());
         for (ClusterClass cClass : poosl.getClusterClasses()) {
             if (cClass.getName() != null) {
@@ -171,8 +175,8 @@ public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
     }
 
     String _text(ProcessMethod pMethod) {
-        StringBuilder buf = new StringBuilder();
-        buf.append(PREFIX_PROCESS_METHOD);
+        StringBuilder buf = new StringBuilder(PREFIX_PROCESS_METHOD);
+
         FormattingHelper.formatProcessMethod(buf, pMethod, false);
         return buf.toString();
     }
@@ -189,7 +193,6 @@ public class PooslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 
     String _text(ClusterClass cClass) {
         StringBuilder buf = new StringBuilder();
-
         if (cClass.getName() != null) {
             buf.append(PREFIX_CLUSTER_CLASS);
             buf.append(cClass.getName());

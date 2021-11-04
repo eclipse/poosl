@@ -30,9 +30,9 @@ public class Perf {
     @Deprecated
     public static final Perf DEFAULT = new Perf(true);
 
-    private static final DateTimeFormatter DATE_FORMATER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final DateTimeFormatter DATE_FORMATER = DateTimeFormatter.ofPattern("HH:mm:ss"); //$NON-NLS-1$
 
-    private static final PrintStream LOG_OUTPUT = Boolean.getBoolean("perf.highlight")
+    private static final PrintStream LOG_OUTPUT = Boolean.getBoolean("perf.highlight") //$NON-NLS-1$
         ? System.err : System.out;
 
     private final boolean enable;
@@ -58,7 +58,7 @@ public class Perf {
      *     of logging
      */
     public Perf(String header, boolean enable) {
-        this.header = header != null ? " [" + header + "] " : " ";
+        this.header = header != null ? " [" + header + "] " : " "; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         this.enable = enable;
     }
 
@@ -88,10 +88,13 @@ public class Perf {
         }
 
         LocalDateTime end = LocalDateTime.now();
-        String duration = "";
+        String duration = ""; //$NON-NLS-1$ 
         if (start != null) {
             float seconds = Duration.between(start, end).toMillis() / 1000f;
-            duration = " (" + (seconds < 60 ? seconds + "s" : seconds / 60f + "min") + ")";
+            duration = " (" + (seconds < 60 //$NON-NLS-1$ 
+                ? seconds + "s" //$NON-NLS-1$ 
+                : seconds / 60f + "min") //$NON-NLS-1$ 
+                    + ")"; //$NON-NLS-1$ 
         }
         LOG_OUTPUT.println(end.format(DATE_FORMATER) + header + message + duration);
         return end;
@@ -128,9 +131,9 @@ public class Perf {
      * @return result of the task
      */
     public <R> R benchmark(String message, Supplier<R> task) {
-        LocalDateTime start = trace("Begin:" + message);
+        LocalDateTime start = trace("{begin:" + message + "}"); //$NON-NLS-1$ //$NON-NLS-2$
         R result = task.get();
-        traceDuration("{end}" + message, start);
+        traceDuration("{end:" + message + "}", start); //$NON-NLS-1$ //$NON-NLS-2$
         return result;
     }
 

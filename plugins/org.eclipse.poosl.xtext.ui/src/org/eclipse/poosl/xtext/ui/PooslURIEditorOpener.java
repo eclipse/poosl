@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.ui;
 
+import java.text.MessageFormat;
+
 import org.apache.log4j.Logger;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
@@ -31,12 +33,14 @@ import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 
 /**
  * The PooslURIEditorOpener.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslURIEditorOpener extends LanguageSpecificURIEditorOpener {
     private static final Logger LOGGER = Logger.getLogger(PooslURIEditorOpener.class);
+
+    private static final String FAILURE = "Error while opening editor part for EMF URI '{0}'";
 
     @Override
     public IEditorPart open(URI uri, EReference crossReference, int indexInList, boolean select) {
@@ -48,7 +52,8 @@ public class PooslURIEditorOpener extends LanguageSpecificURIEditorOpener {
                     if (path.isAbsolute()) {
                         IFileStore fileStore = EFS.getLocalFileSystem().getStore(path);
                         if (fileStore != null) {
-                            IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+                            IWorkbenchPage activePage = PlatformUI.getWorkbench()
+                                    .getActiveWorkbenchWindow().getActivePage();
                             IEditorPart editor = IDE.openEditorOnFileStore(activePage, fileStore);
                             selectAndReveal(editor, uri, crossReference, indexInList, select);
                             return EditorUtils.getXtextEditor(editor);
@@ -57,9 +62,9 @@ public class PooslURIEditorOpener extends LanguageSpecificURIEditorOpener {
                 }
 
             } catch (WrappedException e) {
-                LOGGER.error("Error while opening editor part for EMF URI '" + uri + "'", e.getCause());
+                LOGGER.error(MessageFormat.format(FAILURE, uri), e.getCause());
             } catch (PartInitException partInitException) {
-                LOGGER.error("Error while opening editor part for EMF URI '" + uri + "'", partInitException);
+                LOGGER.error(MessageFormat.format(FAILURE, uri), partInitException);
             }
         }
         return part;

@@ -31,7 +31,8 @@ Export-Package: org.eclipse.poosl.xtext,
  org.eclipse.poosl.xtext.scoping,
  org.eclipse.poosl.xtext.serializer,
  org.eclipse.poosl.xtext.services,
- org.eclipse.poosl.xtext.validation
+ org.eclipse.poosl.xtext.validation,
+ org.eclipse.poosl.xtext.annotation
 Automatic-Module-Name: org.eclipse.poosl.xtext
 Bundle-Localization: plugin
 

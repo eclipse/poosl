@@ -27,15 +27,16 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * The PerspectiveDialog.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PerspectiveDialog extends Dialog {
     private static final String TITLE = "Confirm Perspective Switch";
 
-    private static final String TEXT_OPEN_EDIT_PERSPECTIVE = "You are opening a POOSL file; it is recomended that you use the POOSL Edit perspective.\n"
-            + "Do you want to switch to the POOSL Edit perspective now?";
+    private static final String TEXT_OPEN_EDIT_PERSPECTIVE = //
+            "You are opening a POOSL file; it is recomended that you use the POOSL Edit perspective.\n"
+                    + "Do you want to switch to the POOSL Edit perspective now?";
 
     private static final String TEXT_REMEMBER_CHOICE = "Remember my decision";
 

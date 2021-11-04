@@ -34,13 +34,14 @@ import org.eclipse.poosl.ProcessClass;
 import org.eclipse.poosl.ReturnExpression;
 import org.eclipse.poosl.SelfExpression;
 import org.eclipse.poosl.StringConstant;
+import org.eclipse.poosl.xtext.annotation.AnnotationType;
 import org.eclipse.poosl.xtext.helpers.HelperFunctions;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 
 /**
  * The PooslJavaValidatorGrammar.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -81,35 +82,14 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
 
     private static final String DATA_BINARY_1_PARAMETER = "Data methods for binary operators should have exactly 1 parameter";
 
-    // Annotation text has no l10n: used as technical tokens.
-    private enum Annotations {
-        TEST("Test"), //$NON-NLS-1$
-        SKIP("Skip"), //$NON-NLS-1$
-        ERROR("Error"), //$NON-NLS-1$
-        INIT("Init"), //$NON-NLS-1$
-        SUPPRESSWARNINGS("SuppressWarnings"); //$NON-NLS-1$
-
-        private final String text;
-
-        Annotations(final String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return text;
-        }
-    }
-
-    private static final String ANNOTATION_NAMES = asTextualList(Annotations.values());
+    private static final String ANNOTATION_NAMES = asTextualList(AnnotationType.values());
 
     private static final String WARNING_TYPE_NAMES = asTextualList(
             // XXX: confirm the subset for message
             WarningType.UNUSED, WarningType.UNCONNECTED, WarningType.TYPECHECK, WarningType.RETURN);
 
     private static String asTextualList(Enum<?>... values) {
-        return Stream.of(values).map(it -> it.toString())
-                .collect(Collectors.joining(VALUES_SEPARATOR));
+        return Stream.of(values).map(Enum::toString).collect(Collectors.joining(VALUES_SEPARATOR));
     }
 
     @Check(CheckType.FAST)
@@ -201,7 +181,7 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
 
     @Check(CheckType.FAST)
     public void warningAnnotationGrammar(Annotation annotation) {
-        Annotations eAnnotation = getEnumAnnotation(annotation);
+        AnnotationType eAnnotation = getEnumAnnotation(annotation);
 
         if (eAnnotation == null) {
             warning(MessageFormat.format(UNKNOWN_ANNOTATION, ANNOTATION_NAMES), annotation,
@@ -248,8 +228,8 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
         }
     }
 
-    private Annotations getEnumAnnotation(Annotation annotation) {
-        for (Annotations c : Annotations.values()) {
+    private AnnotationType getEnumAnnotation(Annotation annotation) {
+        for (AnnotationType c : AnnotationType.values()) {
             if (c.name().equalsIgnoreCase(annotation.getName())) {
                 return c;
             }
@@ -268,7 +248,7 @@ public class PooslJavaValidatorGrammar extends PooslJavaValidatorTypes {
     public void errorTestDataMethod(DataMethod dMethod) {
         if (!dMethod.getParameters().isEmpty()) {
             for (Annotation annotation : dMethod.getAnnotations()) {
-                if (annotation.getName().equalsIgnoreCase(Annotations.TEST.toString())) {
+                if (annotation.getName().equalsIgnoreCase(AnnotationType.TEST.toString())) {
                     error(ILLEGAL_TEST_DATA_METHOD, annotation, null);
                 }
             }

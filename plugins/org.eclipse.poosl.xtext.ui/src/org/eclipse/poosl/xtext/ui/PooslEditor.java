@@ -23,6 +23,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.window.Window;
+import org.eclipse.poosl.pooslproject.PooslProjectConstant;
 import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
@@ -34,14 +35,14 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 
 /**
  * The PooslEditor.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslEditor extends XtextEditor {
     private static final ILog LOGGER = Platform.getLog(PooslEditor.class);
 
-    private static final String POOSL_BREAKPOINT_ACTION = "RulerDoubleClick";
+    private static final String POOSL_BREAKPOINT_ACTION = "RulerDoubleClick"; //$NON-NLS-1$
 
     PooslEditor() {
         setHelpContextId("org.eclipse.poosl.help.help_editor"); //$NON-NLS-1$
@@ -76,7 +77,8 @@ public class PooslEditor extends XtextEditor {
         IWorkbench workbench = PlatformUI.getWorkbench();
         IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
         IPerspectiveDescriptor perspective = window.getActivePage().getPerspective();
-        if (!perspective.getId().equals("org.eclipse.poosl.normalperspective") //$NON-NLS-1$
+        if (!perspective.getId().equals(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE)
+                // XXX should be dynamically provided (extension point)
                 && !perspective.getId().equals("org.eclipse.poosl.debugperspective")) { //$NON-NLS-1$
             IPreferencesService preferencesService = Platform.getPreferencesService();
             boolean dontask = preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID,
@@ -100,9 +102,9 @@ public class PooslEditor extends XtextEditor {
 
     private void openPerspective(IWorkbench workbench, IWorkbenchWindow window) {
         try {
-            workbench.showPerspective("org.eclipse.poosl.normalperspective", window); //$NON-NLS-1$
+            workbench.showPerspective(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE, window);
         } catch (WorkbenchException e) {
-            LOGGER.warn("Could not open perspective", e);
+            LOGGER.warn("Could not open perspective", e); //$NON-NLS-1$
         }
     }
 

@@ -15,7 +15,7 @@ package org.eclipse.poosl.xtext.validation;
 
 /**
  * The PooslIssueCodes.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -104,7 +104,6 @@ public final class PooslIssueCodes {
     // Grammar
     public static final String UNKNOWN_ANNOTATION = "UNKNOWN_ANNOTATION"; //$NON-NLS-1$
 
-    private PooslIssueCodes() {
-        throw new IllegalStateException("Utility class");
+    private PooslIssueCodes() { // Utility class
     }
 }
