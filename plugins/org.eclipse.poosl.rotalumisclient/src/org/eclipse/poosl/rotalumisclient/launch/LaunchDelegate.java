@@ -272,16 +272,14 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
         ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
         for (final ILaunch launch : launchManager.getLaunches()) {
             String launchMode = launch.getLaunchMode();
-            if (myLaunch != launch && !launch.isTerminated() && launchMode != null && launchMode.equals(ILaunchManager.DEBUG_MODE)) {
+            IDebugTarget debugTarget = launch.getDebugTarget();
+            if (myLaunch != launch && !launch.isTerminated() && launchMode != null && launchMode.equals(ILaunchManager.DEBUG_MODE) && debugTarget instanceof PooslDebugTarget) {
                 String activePort = launch.getLaunchConfiguration().getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
                 if (activePort.equals(serverPort)) {
                     String inuse = "(by possibly by another model)";
-                    IDebugTarget debugTarget = launch.getDebugTarget();
-                    if (debugTarget != null) {
-                        String name = debugTarget.getName();
-                        if (name != null) {
-                            inuse = "by " + name;
-                        }
+                    String name = debugTarget.getName();
+                    if (name != null) {
+                        inuse = "by " + name;
                     }
                     final String message = MessageFormat.format(Messages.DIALOG_NOTSTART_TEXT, serverPort, inuse);
                     LOGGER.info(message);
