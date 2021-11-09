@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -28,6 +29,7 @@ import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.poosl.xtext.ui.internal.PooslActivator;
 import org.eclipse.swt.SWT;
@@ -49,13 +51,15 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * The BasicClassesPreferencePage.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 // CHECKSTYLE.OFF: ClassDataAbstractionCoupling{ Eclipse classes }
 public class BasicClassesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
-    private static final String HELP_ID = "org.eclipse.poosl.help.help_preferences_basic_classes"; //$NON-NLS-1$
+
+    /** Help id. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_preferences_basic_classes"; //$NON-NLS-1$
 
     private static final String LABEL_FILE_LOCATION = "File Location:";
 
@@ -128,7 +132,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
                         && isPooslFile((IFile) selection[0])) {
                     return Status.OK_STATUS;
                 }
-                return new Status(Status.ERROR, GlobalConstants.PREFERENCE_PLUGIN_ID,
+                return new Status(IStatus.ERROR, GlobalConstants.PREFERENCE_PLUGIN_ID,
                         LABEL_POOSL_FILE);
             });
             dialog.setBlockOnOpen(true);
@@ -139,7 +143,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
                             || isPooslFile((IFile) element);
                 }
             });
-            if (dialog.open() == ElementTreeSelectionDialog.OK) {
+            if (dialog.open() == Window.OK) {
                 for (Object result : dialog.getResult()) {
                     String platformString = WORKSPACE_SUBSTRING + result.toString().substring(1);
                     basicClassesControl.setText(platformString);
@@ -196,7 +200,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
     /**
      * Adds a composite group which holds a label, a textcontrol and a browse
      * button.
-     * 
+     *
      * @param parent
      *     a {@link Composite} which the group will be added to
      * @return the composite group
@@ -229,7 +233,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
 
     /**
      * Adds the selection button to the parent
-     * 
+     *
      * @param parent
      *     The {@link Composite} which the button will be added
      * @return Return the created button
@@ -288,7 +292,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
 
     /**
      * Verifies if the file is a poosl file.
-     * 
+     *
      * @param location
      *     file location as {@link String}
      * @return true is it is a poosl file

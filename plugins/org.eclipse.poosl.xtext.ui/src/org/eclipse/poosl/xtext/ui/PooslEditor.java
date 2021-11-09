@@ -40,12 +40,20 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
  *
  */
 public class PooslEditor extends XtextEditor {
+
+    /** Help id. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_editor"; //$NON-NLS-1$
+
+    /** Tag to identify a Poosl-compatible perspective */
+    // As efficient and simpler than an extension point
+    private static final String PERSPECTIVE_TAG = ".poosl."; //$NON-NLS-1$
+
     private static final ILog LOGGER = Platform.getLog(PooslEditor.class);
 
     private static final String POOSL_BREAKPOINT_ACTION = "RulerDoubleClick"; //$NON-NLS-1$
 
     PooslEditor() {
-        setHelpContextId("org.eclipse.poosl.help.help_editor"); //$NON-NLS-1$
+        setHelpContextId(HELP_ID);
         checkPerspective();
     }
 
@@ -77,9 +85,7 @@ public class PooslEditor extends XtextEditor {
         IWorkbench workbench = PlatformUI.getWorkbench();
         IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
         IPerspectiveDescriptor perspective = window.getActivePage().getPerspective();
-        if (!perspective.getId().equals(PooslProjectConstant.ID_POOSL_EDIT_PERSPECTIVE)
-                // XXX should be dynamically provided (extension point)
-                && !perspective.getId().equals("org.eclipse.poosl.debugperspective")) { //$NON-NLS-1$
+        if (!isSupportedPerspective(perspective.getId())) {
             IPreferencesService preferencesService = Platform.getPreferencesService();
             boolean dontask = preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID,
                     GlobalConstants.PREFERENCES_DONT_ASK_EDIT_PERSPECTIVE, false, null);
@@ -98,6 +104,10 @@ public class PooslEditor extends XtextEditor {
                 }
             }
         }
+    }
+
+    public static boolean isSupportedPerspective(String perspectiveName) {
+        return perspectiveName.contains(PERSPECTIVE_TAG);
     }
 
     private void openPerspective(IWorkbench workbench, IWorkbenchWindow window) {

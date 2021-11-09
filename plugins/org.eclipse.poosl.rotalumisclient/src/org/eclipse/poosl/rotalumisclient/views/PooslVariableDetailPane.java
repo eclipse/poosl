@@ -35,11 +35,14 @@ import org.eclipse.ui.help.IWorkbenchHelpSystem;
 
 /**
  * The PooslVariableDetailPane.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslVariableDetailPane implements IDetailPane {
+    /** The HELP_ID. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_variables"; //$NON-NLS-1$
+
     private static final Logger LOGGER = Logger.getLogger(PooslVariableDetailPane.class.getName());
 
     private Text detailPaneLabel;
@@ -67,7 +70,7 @@ public class PooslVariableDetailPane implements IDetailPane {
         if (workbench != null) {
             IWorkbenchHelpSystem helpSystem = workbench.getHelpSystem();
             if (helpSystem != null) {
-                helpSystem.setHelp(detailPaneLabel, "org.eclipse.poosl.help.help_variables"); //$NON-NLS-1$
+                helpSystem.setHelp(detailPaneLabel, HELP_ID);
             }
         }
 

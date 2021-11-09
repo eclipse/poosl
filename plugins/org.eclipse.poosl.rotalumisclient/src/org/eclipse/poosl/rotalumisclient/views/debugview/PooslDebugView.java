@@ -17,10 +17,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.DebugEvent;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
@@ -36,11 +36,10 @@ import org.eclipse.debug.ui.contexts.IDebugContextProvider;
 import org.eclipse.debug.ui.contexts.IDebugContextService;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.poosl.rotalumisclient.Activator;
 import org.eclipse.poosl.rotalumisclient.Messages;
 import org.eclipse.poosl.rotalumisclient.PooslConstants;
 import org.eclipse.poosl.rotalumisclient.debug.PooslDebugElement;
@@ -52,10 +51,10 @@ import org.eclipse.poosl.rotalumisclient.views.ViewHelper;
 import org.eclipse.poosl.rotalumisclient.views.WindowCreater;
 import org.eclipse.poosl.xtext.GlobalConstants;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MenuAdapter;
-import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -63,116 +62,32 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * The Debug view is used when debugging a POOSL model. It shows all models that you are debugging and the containing
- * poosl processes. Every launched debugtarget represents a model and every thread in the debugtarget represents a poosl
- * process. When selecting a node in the Debug view, the Execution Tree view is updated. When double clicking on a
- * process instance (a leaf of the tree), a process step is performed, which advances the simulation to the next
+ * The Debug view is used when debugging a POOSL model. It shows all models that
+ * you are debugging and the containing
+ * poosl processes. Every launched debugtarget represents a model and every
+ * thread in the debugtarget represents a poosl
+ * process. When selecting a node in the Debug view, the Execution Tree view is
+ * updated. When double clicking on a
+ * process instance (a leaf of the tree), a process step is performed, which
+ * advances the simulation to the next
  * transition of the process, and executes a single next transition.
- * 
+ *
  * @author Koen Staal
  */
-public class PooslDebugView extends ViewPart implements IDebugContextProvider, IDebugContextListener {
-    private static final Logger LOGGER = Logger.getLogger(PooslDebugView.class.getName());
+public class PooslDebugView extends ViewPart implements
+        IDebugContextProvider,
+        IDebugContextListener {
+    /** The HELP_ID. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_debug"; //$NON-NLS-1$
+
+    private static final ILog LOGGER = Platform.getLog(PooslDebugView.class);
 
     private static final int TREE_EXPANSION = 3;
-
-    ILaunchListener launchListener = new ILaunchListener() {
-        @Override
-        public void launchRemoved(ILaunch launch) {
-            IDebugTarget target = launch.getDebugTarget();
-            if (target instanceof PooslDebugTarget) {
-                PooslDebugTarget pooslTarget = (PooslDebugTarget) target;
-                pooslTarget.extentensionsInformStop();
-            }
-
-            IProcess[] processes = launch.getProcesses();
-            DebugPlugin plugin = DebugPlugin.getDefault();
-            if (plugin != null) {
-                ILaunchManager launchManager = plugin.getLaunchManager();
-                if (launchManager != null && launchManager.getLaunches().length == 0) {
-                    PlatformUI.getWorkbench().getDisplay().asyncExec(new ResetListenersRunnable());
-                }
-            }
-
-            IWorkbench workbench = PlatformUI.getWorkbench();
-            if (workbench != null) {
-                workbench.getDisplay().asyncExec(new InputChangedRunnable());
-            }
-
-            for (int i = 0; i < processes.length; i++) {
-                try {
-                    processes[i].terminate();
-                } catch (DebugException e) {
-                    LOGGER.log(Level.WARNING, "Process could not be terminated" + processes[i].getLabel(), e.getSuppressed());
-                }
-            }
-        }
-
-        @Override
-        public void launchChanged(ILaunch launch) {
-            if (launch.getDebugTarget() != null) {
-                IWorkbench workbench = PlatformUI.getWorkbench();
-                if (workbench != null) {
-                    workbench.getDisplay().asyncExec(new InputChangedRunnable());
-                }
-            }
-        }
-
-        @Override
-        public void launchAdded(ILaunch launch) {
-            IWorkbench workbench = PlatformUI.getWorkbench();
-            if (workbench != null) {
-                workbench.getDisplay().asyncExec(new InputChangedRunnable());
-            }
-        }
-    };
-
-    IDebugEventSetListener debugEventListener = new IDebugEventSetListener() {
-        @Override
-        public void handleDebugEvents(DebugEvent[] events) {
-            for (DebugEvent debugEvent : events) {
-                final Object source = debugEvent.getSource();
-                if (source instanceof PooslDebugTarget) {
-                    // POOSL Model
-                    if (debugEvent.getKind() == DebugEvent.SUSPEND || debugEvent.getKind() == DebugEvent.RESUME || debugEvent.getKind() == DebugEvent.TERMINATE
-                            || (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.STOPPED_STATE)) {
-                        PlatformUI.getWorkbench().getDisplay().asyncExec(new NotifyListenersRunnable());
-                        PlatformUI.getWorkbench().getDisplay().asyncExec(new UpdateRunnable());
-                    } else if (debugEvent.getKind() == DebugEvent.CHANGE) {
-                        PlatformUI.getWorkbench().getDisplay().asyncExec(new UpdateRunnable());
-                    }
-                } else if (source instanceof PooslThread) {
-                    // POOSL Process
-                    if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && (debugEvent.getDetail() == PooslConstants.BREAKPOINT_HIT || debugEvent.getDetail() == PooslConstants.ERROR_STATE)) {
-                        PlatformUI.getWorkbench().getDisplay().asyncExec(new SelectThreadRunnable((PooslThread) source));
-                    }
-                } else {
-                    // do nothing
-                }
-            }
-        }
-    };
-
-    /**
-     * Sets the selection variable and notifies listeners unless update tree is false. This method will set updatetree
-     * always to true
-     */
-    ISelectionChangedListener treeSelectionChangedListener = new ISelectionChangedListener() {
-        @Override
-        public void selectionChanged(SelectionChangedEvent event) {
-            if (!event.getSelection().isEmpty()) {
-                selection = event.getSelection();
-                if (update) {
-                    notifyListeners();
-                }
-                update = true;
-            }
-        }
-    };
 
     private ISelection selection;
 
@@ -182,13 +97,80 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
 
     private boolean update;
 
+    final ILaunchListener launchListener = new ILaunchListener() {
+        @Override
+        public void launchRemoved(ILaunch launch) {
+            handleLaunchRemoved(launch);
+        }
+
+        @Override
+        public void launchChanged(ILaunch launch) {
+            if (launch.getDebugTarget() != null) {
+                handleInputChanged();
+            }
+        }
+
+        @Override
+        public void launchAdded(ILaunch launch) {
+            handleInputChanged();
+        }
+    };
+
+    final IDebugEventSetListener debugEventListener = events -> {
+        for (DebugEvent debugEvent : events) {
+            final Object source = debugEvent.getSource();
+            if (source instanceof PooslDebugTarget) {
+                // POOSL Model
+                if (debugEvent.getKind() == DebugEvent.SUSPEND
+                        || debugEvent.getKind() == DebugEvent.RESUME
+                        || debugEvent.getKind() == DebugEvent.TERMINATE
+                        || (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC
+                                && debugEvent.getDetail() == PooslConstants.STOPPED_STATE)) {
+                    PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+                        notifyListeners();
+                        treeViewer.refresh();
+                    });
+                } else if (debugEvent.getKind() == DebugEvent.CHANGE) {
+                    PlatformUI.getWorkbench().getDisplay().asyncExec(() -> treeViewer.refresh());
+                }
+            } else if (source instanceof PooslThread) {
+                // POOSL Process
+                if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC
+                        && (debugEvent.getDetail() == PooslConstants.BREAKPOINT_HIT
+                                || debugEvent.getDetail() == PooslConstants.ERROR_STATE)) {
+                    PlatformUI.getWorkbench().getDisplay()
+                            .asyncExec(new SelectThreadRunnable((PooslThread) source));
+                }
+            } else {
+                // do nothing
+            }
+        }
+    };
+
     @Override
     public void createPartControl(Composite parent) {
         treeViewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         treeViewer.setContentProvider(new PooslDebugContentProvider());
         treeViewer.setLabelProvider(new PooslDebugLabelProvider());
-        treeViewer.addSelectionChangedListener(treeSelectionChangedListener);
-        treeViewer.addDoubleClickListener(PooslProcessStep.DOUBLE_CLICK_LISTENER);
+        /*
+         * Sets the selection variable and notifies listeners unless update tree is
+         * false. This method will set updatetree always to true
+         */
+        treeViewer.addSelectionChangedListener(event -> {
+            if (!event.getSelection().isEmpty()) {
+                selection = event.getSelection();
+                if (update) {
+                    notifyListeners();
+                }
+                update = true;
+            }
+        });
+        treeViewer.addDoubleClickListener(evt -> {
+            Object obj = ((TreeSelection) evt.getSelection()).getFirstElement();
+            if (obj instanceof PooslThread) {
+                PooslProcessStep.doProcessStep((PooslThread) obj);
+            }
+        });
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (plugin != null) {
             ILaunchManager launchManager = plugin.getLaunchManager();
@@ -209,10 +191,55 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
         treeViewer.refresh();
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_debug"); //$NON-NLS-1$
-            workbench.getDisplay().asyncExec(new NotifyListenersRunnable());
+            workbench.getHelpSystem().setHelp(parent, HELP_ID);
+            // Suspicious: createPartControl is always in Display thread.
+            workbench.getDisplay().asyncExec(this::notifyListeners);
         }
         updateContextMenu();
+    }
+
+    /**
+     * Handles when launch is removed.
+     * <p>
+     * On debug, launch stop on target. <br/>
+     * Update tree viewer and terminate process
+     * </p>
+     *
+     * @param launch
+     *     removed
+     */
+    protected void handleLaunchRemoved(ILaunch launch) {
+        IDebugTarget target = launch.getDebugTarget();
+        if (target instanceof PooslDebugTarget) {
+            PooslDebugTarget pooslTarget = (PooslDebugTarget) target;
+            pooslTarget.extentensionsInformStop();
+        }
+
+        IProcess[] processes = launch.getProcesses();
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        if (plugin != null) {
+            ILaunchManager launchManager = plugin.getLaunchManager();
+            if (launchManager != null && launchManager.getLaunches().length == 0) {
+                PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+                    for (Object listener : listenerList.getListeners()) {
+                        DebugContextEvent event = new DebugContextEvent(PooslDebugView.this,
+                                new TreeSelection(), DebugContextEvent.STATE);
+                        ((IDebugContextListener) listener).debugContextChanged(event);
+                    }
+                });
+            }
+        }
+
+        handleInputChanged();
+
+        for (IProcess element : processes) {
+            try {
+                element.terminate();
+            } catch (DebugException e) {
+                LOGGER.warn("Process could not be terminated" + element.getLabel(), e);
+            }
+        }
+
     }
 
     @Override
@@ -234,14 +261,15 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
     }
 
     /**
-     * Find and select thread in the debugview treeviewer
-     * 
+     * Finds and selects thread in the debugview treeviewer
+     *
      * @param thread
-     *            The thread to be selected
+     *     The thread to be selected
      */
     private void selectThread(PooslThread thread) {
         try {
-            Object[] segments = ((PooslDebugContentProvider) treeViewer.getContentProvider()).getTreeSegments(thread);
+            Object[] segments = ((PooslDebugContentProvider) treeViewer.getContentProvider())
+                    .getTreeSegments(thread);
             selection = new TreeSelection(new TreePath(segments));
             for (int i = 0; i < segments.length - 1; i++) {
                 // setExpandedState calls the selectionlistener
@@ -252,19 +280,13 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
             treeViewer.setSelection(selection, true);
             treeViewer.refresh();
         } catch (DebugException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e.getSuppressed());
-        }
-    }
-
-    class NotifyListenersRunnable implements Runnable {
-        @Override
-        public void run() {
-            notifyListeners();
+            LOGGER.error("Fail to select thread", e);
         }
     }
 
     /**
-     * Fires an event to IDebugContextListener with the selection in the debugview treeviewer. if selection is null
+     * Fires an event to IDebugContextListener with the selection in the
+     * debugview treeviewer. if selection is null
      * select the debugtarget (root)
      */
     private void notifyListeners() {
@@ -273,17 +295,8 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
         }
         if (selection != null) {
             for (Object listener : listenerList.getListeners()) {
-                DebugContextEvent event = new DebugContextEvent(this, selection, DebugContextEvent.ACTIVATED);
-                ((IDebugContextListener) listener).debugContextChanged(event);
-            }
-        }
-    }
-
-    class ResetListenersRunnable implements Runnable {
-        @Override
-        public void run() {
-            for (Object listener : listenerList.getListeners()) {
-                DebugContextEvent event = new DebugContextEvent(PooslDebugView.this, new TreeSelection(), DebugContextEvent.STATE);
+                DebugContextEvent event = new DebugContextEvent(this, selection,
+                        DebugContextEvent.ACTIVATED);
                 ((IDebugContextListener) listener).debugContextChanged(event);
             }
         }
@@ -325,9 +338,14 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
         }
     }
 
-    class InputChangedRunnable implements Runnable {
-        @Override
-        public void run() {
+    private void handleInputChanged() {
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        if (workbench == null) {
+            return; // unexpected
+        }
+
+        workbench.getDisplay().asyncExec(() -> {
+
             Object[] expanded = treeViewer.getExpandedElements();
             DebugPlugin plugin = DebugPlugin.getDefault();
             if (plugin != null) {
@@ -339,22 +357,20 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
                 update = true;
 
                 List<IDebugTarget> targets = Arrays.asList(launchManager.getDebugTargets());
-                if (selection instanceof TreeSelection) {
-                    Object element = ((TreeSelection) selection).getFirstElement();
-                    if (element instanceof IDebugTarget) {
-                        if (!targets.contains(element)) {
-                            selectRoot();
-                        }
-                    } else if (element instanceof PooslDebugElement) {
-                        IDebugTarget debugTarget = ((PooslDebugElement) element).getDebugTarget();
-                        if (!targets.contains(debugTarget)) {
-                            selectRoot();
-                        }
-                    }
+                Object selectionTarget = selection instanceof TreeSelection
+                    ? ((TreeSelection) selection).getFirstElement() : null;
+
+                if (selectionTarget instanceof PooslDebugElement) {
+                    selectionTarget = ((PooslDebugElement) selectionTarget).getDebugTarget();
+                }
+
+                if (selectionTarget instanceof IDebugTarget && !targets.contains(selectionTarget)) {
+                    selectRoot();
                 }
                 treeViewer.refresh();
             }
-        }
+        });
+
     }
 
     @Override
@@ -365,89 +381,90 @@ public class PooslDebugView extends ViewPart implements IDebugContextProvider, I
     private void updateContextMenu() {
         final Tree tree = treeViewer.getTree();
         final Menu menu = new Menu(tree);
-        menu.addMenuListener(menuAdapter(tree, menu));
+        menu.addMenuListener(MenuListener.menuShownAdapter(evt -> {
+            MenuItem[] items = menu.getItems();
+            for (MenuItem item : items) {
+                item.dispose();
+            }
+
+            TreeItem[] selected = tree.getSelection();
+            if (selected != null && selected.length > 0 && selected[0] instanceof TreeItem) {
+
+                Object data = selected[0].getData();
+
+                if (data instanceof PooslThread) {
+                    final PooslThread thread = (PooslThread) data;
+                    addProcessStepMenuItem(menu, thread);
+                    addThreadWindowMenuItem(menu, thread);
+                } else if (data instanceof PooslDebugTreeItem) {
+                    PooslDebugTreeItem treeItem = (PooslDebugTreeItem) data;
+                    // dont show on <adapters>
+                    if (!(treeItem.getLevel() == 2
+                            && !treeItem.getName().equals(GlobalConstants.POOSL_SYSTEM))) {
+                        addDebugDiagramMenuItem(menu, treeItem);
+                    }
+
+                }
+            }
+        }));
+
         tree.setMenu(menu);
     }
 
-    private MenuAdapter menuAdapter(final Tree tree, final Menu menu) {
-        return new MenuAdapter() {
-            @Override
-            public void menuShown(MenuEvent e) {
-                MenuItem[] items = menu.getItems();
-                for (int i = 0; i < items.length; i++) {
-                    items[i].dispose();
-                }
+    private void addProcessStepMenuItem(final Menu menu, final PooslThread thread) {
+        addMenuItem(menu, Messages.ACTION_MENU_PROCESS_STEP, "icon_process_step.png", //$NON-NLS-1$
+                () -> PooslProcessStep.doProcessStep(thread));
 
-                if (tree.getSelection() != null && tree.getSelectionCount() > 0 && tree.getSelection()[0] instanceof TreeItem) {
+    }
 
-                    TreeItem item = tree.getSelection()[0];
-                    Object data = item.getData();
+    private void addDebugDiagramMenuItem(Menu menu, final Object treeItem) {
+        addMenuItem(menu, Messages.ACTION_MENU_OPEN_DEBUG_DIAGRAM,
+                "icon_open_communication_diagram.png", //$NON-NLS-1$
+                () -> (new ExternSelectionInformer()).executeInformDebugSelection(treeItem));
+    }
 
-                    if (data instanceof PooslThread) {
-                        final PooslThread thread = (PooslThread) data;
-                        PooslProcessStep.addMenuItemProcessStep(menu, thread);
-                        addMenuItemThreadWindow(menu, thread);
-                    } else if (data instanceof PooslDebugTreeItem) {
-                        PooslDebugTreeItem treeItem = (PooslDebugTreeItem) data;
-                        // dont show on <adapters>
-                        if (!(treeItem.getLevel() == 2 && !treeItem.getName().equals(GlobalConstants.POOSL_SYSTEM))) {
-                            addMenuItemDebugDiagram(menu, treeItem);
-                        }
-
+    public void addThreadWindowMenuItem(final Menu menu, final PooslThread thread) {
+        addMenuItem(menu, Messages.ACTION_MENU_NEW_WINDOW, "icon_open_process_window.png", //$NON-NLS-1$
+                () -> {
+                    try {
+                        WindowCreater.getWindowForThread(getSite(), thread);
+                        selectThread(thread);
+                    } catch (DebugException | PartInitException e) {
+                        LOGGER.warn("Thread window could not be created.", e);
                     }
-                }
-            }
-        };
+                });
+
     }
 
-    private void addMenuItemDebugDiagram(Menu menu, final Object treeItem) {
-        MenuItem menuNewWindow = new MenuItem(menu, SWT.NONE);
-        menuNewWindow.setText(Messages.ACTION_MENU_OPEN_DEBUG_DIAGRAM);
-
-        ImageDescriptor stepIcon = null;
-        try {
-            stepIcon = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.poosl.rotalumisclient/icons/icon_open_communication_diagram.png")); //$NON-NLS-1$
-            menuNewWindow.setImage(stepIcon.createImage());
-        } catch (MalformedURLException e) {
-            LOGGER.log(Level.FINE, "Could not find diagram icon");
+    private static Image getPluginIcon(String iconName) {
+        if (iconName == null) {
+            return null;
         }
+        try {
+            return ImageDescriptor.createFromURL(new URL(//
+                    "platform:/plugin/" + //$NON-NLS-1$
+                            Activator.PLUGIN_ID + //
+                            "/icons/" + iconName)) //$NON-NLS-1$
+                    .createImage();
+        } catch (MalformedURLException e) {
+            LOGGER.info("Illegal path for icon: " + iconName, e); //$NON-NLS-1$
+        }
+        return null;
+    }
+
+    private static void addMenuItem(final Menu menu, String text, String icon, Runnable action) {
+        MenuItem menuNewWindow = new MenuItem(menu, SWT.NONE);
+        menuNewWindow.setText(text);
+        menuNewWindow.setImage(getPluginIcon(icon));
         menuNewWindow.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
+                action.run();
             }
 
             @Override
             public void widgetSelected(SelectionEvent arg0) {
-                (new ExternSelectionInformer()).executeInformDebugSelection(treeItem);
-            }
-        });
-    }
-
-    public void addMenuItemThreadWindow(final Menu menu, final PooslThread thread) {
-        MenuItem menuNewWindow = new MenuItem(menu, SWT.NONE);
-        menuNewWindow.setText(Messages.ACTION_MENU_NEW_WINDOW);
-        ImageDescriptor stepIcon = null;
-        try {
-            stepIcon = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.poosl.rotalumisclient/icons/icon_open_process_window.png")); //$NON-NLS-1$
-            menuNewWindow.setImage(stepIcon.createImage());
-        } catch (MalformedURLException e) {
-            LOGGER.log(Level.FINE, "Could not find step icon");
-        }
-        menuNewWindow.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
-            @Override
-            public void widgetSelected(SelectionEvent arg0) {
-                try {
-                    WindowCreater.getWindowForThread(getSite(), thread);
-                    selectThread(thread);
-                } catch (Exception e) {
-                    LOGGER.log(Level.WARNING, "Thread window could not be created.", e.getMessage());
-                }
+                action.run();
             }
         });
     }

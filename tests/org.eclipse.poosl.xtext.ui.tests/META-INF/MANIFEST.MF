@@ -1,17 +1,23 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.eclipse.poosl.xtext.tests;singleton:=true
-Automatic-Module-Name: org.eclipse.poosl.xtext.tests
+Bundle-SymbolicName: org.eclipse.poosl.xtext.ui.tests;singleton:=true
+Automatic-Module-Name: org.eclipse.poosl.xtext.ui.tests
 Bundle-Version: 0.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Bundle-Name: POOSL Xtext tests
+Bundle-Name: POOSL Xtext UI tests
 Bundle-Vendor: TNO ESI
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.poosl.xtext,
- org.eclipse.poosl.model,
- org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+Require-Bundle: org.eclipse.poosl.xtext.ui,
+ org.eclipse.poosl.pooslproject,
+ org.eclipse.poosl.rotalumisclient,
+ org.eclipse.poosl.sirius,
+ org.eclipse.poosl.help,
+ org.eclipse.xtext.xbase.lib,
  org.eclipse.xtext.testing,
- org.eclipse.xtext.xbase.testing
+ org.eclipse.xtext.xbase.testing,
+ org.eclipse.ui.workbench,
+ org.eclipse.core.runtime,
+ org.eclipse.help
 Import-Package: org.apache.log4j,
  org.junit;version="4.5.0",
  org.junit.runner;version="4.5.0",
@@ -20,4 +26,3 @@ Import-Package: org.apache.log4j,
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
-Export-Package: org.eclipse.poosl.xtext.tests;x-internal=true

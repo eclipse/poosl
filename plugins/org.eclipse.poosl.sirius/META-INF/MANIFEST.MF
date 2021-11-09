@@ -1,10 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.poosl.sirius;singleton:=true
+Automatic-Module-Name: org.eclipse.poosl.sirius
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: org.eclipse.poosl.sirius.Activator
-Require-Bundle: org.eclipse.core.resources,
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Require-Bundle: 
+ org.eclipse.core.resources,
  org.eclipse.core.runtime,
  org.eclipse.emf.common,
  org.eclipse.emf.common.ui,
@@ -44,10 +50,7 @@ Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.filesystem,
  org.eclipse.poosl.xtext.ui,
  javax.annotation
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: org.apache.commons.lang,
  org.eclipse.debug.ui.contexts
-Automatic-Module-Name: org.eclipse.poosl.sirius
-Bundle-Vendor: %providerName
-Bundle-Localization: plugin
+Export-Package: 
+ org.eclipse.poosl.sirius.preferences;x-friends:="org.eclipse.poosl.xtext.ui.tests"

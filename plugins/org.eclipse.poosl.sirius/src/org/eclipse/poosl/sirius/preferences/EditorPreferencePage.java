@@ -33,11 +33,15 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * The EditorPreferencePage.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class EditorPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
+
+    /** Help id. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_preferences_graphical_behavior"; //$NON-NLS-1$
+
     private static final String TEXT_LABEL_DONT_ASK = "Don't ask which editor to use every time a POOSL file or model is opened.";
 
     private static final String TEXT_LABEL_SYSTEM_OR_CLUSTER = "Only files that contain a System or a single Cluster Class can be opened directly as Composite Structure Diagram.";
@@ -82,7 +86,7 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
 
     /**
      * Create contents of the preference page.
-     * 
+     *
      * @param parent
      */
     @Override
@@ -92,7 +96,7 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
 
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_preferences_graphical_behavior"); //$NON-NLS-1$
+            workbench.getHelpSystem().setHelp(getControl(), HELP_ID);
         }
 
         createProjectGroup();
@@ -130,10 +134,18 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
         compProjectExplorer.setLayoutData(fdPojectExplorerContainer);
         compProjectExplorer.setLayout(new GridLayout());
 
-        rgrProjectExplorer = new RadioGroupFieldEditor(IPreferenceConstants.PROJECT_EXPLORER, TEXT_RADIO_EXPLORER_TITLE, 1,
-                new String[][] { { TEXT_RADIO_OPTION_TEXTUAL, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL },
-                        { TEXT_RADIO_OPTION_GRAPHICAL, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_GRAPHICAL },
-                        { TEXT_RADIO_OPTION_CLASS, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM } },
+        rgrProjectExplorer = new RadioGroupFieldEditor(IPreferenceConstants.PROJECT_EXPLORER,
+                TEXT_RADIO_EXPLORER_TITLE, 1,
+                new String[][] {
+                        {
+                                TEXT_RADIO_OPTION_TEXTUAL,
+                                IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL },
+                        {
+                                TEXT_RADIO_OPTION_GRAPHICAL,
+                                IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_GRAPHICAL },
+                        {
+                                TEXT_RADIO_OPTION_CLASS,
+                                IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM } },
                 compProjectExplorer, true);
 
         Composite compProjectExplorerNoSystem = new Composite(grpProjectExplorer, SWT.NONE);
@@ -144,8 +156,16 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
         compProjectExplorerNoSystem.setLayoutData(fdComposite);
         compProjectExplorerNoSystem.setLayout(new GridLayout());
 
-        rgrProjectExplorerNoSystem = new RadioGroupFieldEditor(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_NO_SYSTEM, TEXT_RADIO_EXPLORER_NOSYSTEM_TITLE, 1, new String[][] {
-                { TEXT_RADIO_OPTION_TEXTUAL, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL }, { TEXT_RADIO_OPTION_CLASS, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM } },
+        rgrProjectExplorerNoSystem = new RadioGroupFieldEditor(
+                IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_NO_SYSTEM,
+                TEXT_RADIO_EXPLORER_NOSYSTEM_TITLE, 1,
+                new String[][] {
+                        {
+                                TEXT_RADIO_OPTION_TEXTUAL,
+                                IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL },
+                        {
+                                TEXT_RADIO_OPTION_CLASS,
+                                IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM } },
                 compProjectExplorer, true);
 
         rgrProjectExplorer.setPage(this);
@@ -166,8 +186,15 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
         compGraphical.setLayoutData(fdComposite);
         compGraphical.setLayout(new GridLayout());
 
-        rgrGraphicalBehavior = new RadioGroupFieldEditor(IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR, TEXT_RADIO_GRAPHICAL_TITLE, 1, new String[][] {
-                { TEXT_RADIO_OPTION_TEXTUAL, IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR_TEXTUAL }, { TEXT_RADIO_OPTION_GRAPHICAL, IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR_GRAPHICAL } },
+        rgrGraphicalBehavior = new RadioGroupFieldEditor(
+                IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR, TEXT_RADIO_GRAPHICAL_TITLE, 1,
+                new String[][] {
+                        {
+                                TEXT_RADIO_OPTION_TEXTUAL,
+                                IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR_TEXTUAL },
+                        {
+                                TEXT_RADIO_OPTION_GRAPHICAL,
+                                IPreferenceConstants.PREFERENCE_GRAPHICAL_EDITOR_GRAPHICAL } },
                 compGraphical, true);
 
         rgrGraphicalBehavior.setPage(this);
@@ -206,10 +233,12 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
         // Don't ask which view to use every time a POOSL file or model is
         // opened.
 
-        boolean ask = getPreferenceStore().getBoolean(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK);
+        boolean ask = getPreferenceStore()
+                .getBoolean(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK);
         btnAsk.setSelection(ask);
     }
 
+    @Override
     public void init(IWorkbench workbench) {
         // do nothing
     }
@@ -219,7 +248,8 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
         rgrProjectExplorer.loadDefault();
         rgrProjectExplorerNoSystem.loadDefault();
         rgrGraphicalBehavior.loadDefault();
-        btnAsk.setSelection(getPreferenceStore().getDefaultBoolean(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK));
+        btnAsk.setSelection(getPreferenceStore()
+                .getDefaultBoolean(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK));
         super.performDefaults();
     }
 
@@ -228,7 +258,8 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
         rgrProjectExplorer.store();
         rgrProjectExplorerNoSystem.store();
         rgrGraphicalBehavior.store();
-        getPreferenceStore().setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK, btnAsk.getSelection());
+        getPreferenceStore().setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK,
+                btnAsk.getSelection());
         super.performApply();
     }
 
@@ -237,7 +268,8 @@ public class EditorPreferencePage extends PreferencePage implements IWorkbenchPr
         rgrProjectExplorer.store();
         rgrProjectExplorerNoSystem.store();
         rgrGraphicalBehavior.store();
-        getPreferenceStore().setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK, btnAsk.getSelection());
+        getPreferenceStore().setValue(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK,
+                btnAsk.getSelection());
 
         return super.performOk();
     }

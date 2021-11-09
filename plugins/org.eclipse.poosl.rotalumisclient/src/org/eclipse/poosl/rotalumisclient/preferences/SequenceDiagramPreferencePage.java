@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.poosl.rotalumisclient.preferences;
 
+import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -26,11 +27,15 @@ import org.eclipse.xtext.ui.editor.preferences.fields.LabelFieldEditor;
 
 /**
  * The SequenceDiagramPreferencePage.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
-public class SequenceDiagramPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class SequenceDiagramPreferencePage extends FieldEditorPreferencePage implements
+        IWorkbenchPreferencePage {
+    /** The HELP_ID. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_preferences_sequence_diagram"; //$NON-NLS-1$
+
     IntegerFieldEditor messageBufferField;
 
     @Override
@@ -41,18 +46,23 @@ public class SequenceDiagramPreferencePage extends FieldEditorPreferencePage imp
     @Override
     public void createControl(Composite parent) {
         super.createControl(parent);
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), "org.eclipse.poosl.help.help_preferences_sequence_diagram"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), HELP_ID);
     }
 
     @Override
     protected void createFieldEditors() {
-        messageBufferField = new IntegerFieldEditor(PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE, "&Maximum message buffer size: ", getFieldEditorParent());
-        int messageBufferSize = getPreferenceStore().getInt(PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE);
+        messageBufferField = new IntegerFieldEditor(PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE,
+                "&Maximum message buffer size: ", getFieldEditorParent());
+        int messageBufferSize = getPreferenceStore()
+                .getInt(PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE);
         if (messageBufferSize == 0) {
-            getPreferenceStore().setValue(PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE, PooslConstants.DEFAULT_MESSAGE_BUFFER_SIZE);
+            getPreferenceStore().setValue(PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE,
+                    PooslConstants.DEFAULT_MESSAGE_BUFFER_SIZE);
         }
         addField(messageBufferField);
-        addField(new LabelFieldEditor("Warning: setting the maximum too high may lead to an out of memory exception.", getFieldEditorParent()));
+        addField(new LabelFieldEditor(
+                "Warning: setting the maximum too high may lead to an out of memory exception.",
+                getFieldEditorParent()));
     }
 
     @Override
@@ -70,7 +80,7 @@ public class SequenceDiagramPreferencePage extends FieldEditorPreferencePage imp
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         super.propertyChange(event);
-        if (event.getProperty().equals(IntegerFieldEditor.VALUE)) {
+        if (event.getProperty().equals(FieldEditor.VALUE)) {
             checkState();
         }
     }
@@ -78,6 +88,7 @@ public class SequenceDiagramPreferencePage extends FieldEditorPreferencePage imp
     @Override
     protected void performDefaults() {
         super.performDefaults();
-        messageBufferField.setStringValue(String.valueOf(PooslConstants.DEFAULT_MESSAGE_BUFFER_SIZE));
+        messageBufferField
+                .setStringValue(String.valueOf(PooslConstants.DEFAULT_MESSAGE_BUFFER_SIZE));
     }
 }

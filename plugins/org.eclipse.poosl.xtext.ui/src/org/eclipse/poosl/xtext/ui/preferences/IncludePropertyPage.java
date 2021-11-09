@@ -79,6 +79,9 @@ import com.google.inject.Inject;
  *
  */
 public class IncludePropertyPage extends PreferencePage implements IWorkbenchPropertyPage {
+    /** The HELP_ID. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_properties_includepaths"; //$NON-NLS-1$
+
     private static final String PAGE_RECOMMENDATION = //
             "To include paths within the workspace, use the \"Add\" button to ensure that change propagation works.\n" //
                     + "For include paths outside the workspace, use the \"Add External\" button although change propagation will not work.\n" //
@@ -108,8 +111,7 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
 
     @Override
     protected Control createContents(Composite composite) {
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(),
-                "org.eclipse.poosl.help.help_properties_includepaths"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), HELP_ID);
 
         Composite mainComp = new Composite(composite, SWT.FILL);
         mainComp.setFont(composite.getFont());

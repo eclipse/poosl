@@ -26,7 +26,7 @@ import org.eclipse.poosl.rotalumisclient.PooslConstants;
 
 /**
  * The ExternLaunchStopInformer.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -37,27 +37,25 @@ public class ExternLaunchStopInformer {
     public void executeInformLaunchStopped(ILaunch launch) {
         ILaunchConfiguration launchConfiguration = launch.getLaunchConfiguration();
         try {
-            String id = launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""); //$NON-NLS-1$
+            final String id = launchConfiguration
+                    .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""); //$NON-NLS-1$
             for (IPooslDebugInformer extension : ExtensionHelper.getExtensions()) {
-                executeExtensionLaunch(extension, id);
+                SafeRunner.run(new ISafeRunnable() {
+
+                    @Override
+                    public void run() throws Exception {
+                        extension.launchStopped(id);
+                    }
+
+                    @Override
+                    public void handleException(Throwable e) {
+                        LOGGER.log(Level.FINE, "Exception in client" + e.getMessage());
+                    }
+                });
             }
         } catch (CoreException e) {
             LOGGER.log(Level.WARNING, e.getMessage(), e);
         }
     }
 
-    private void executeExtensionLaunch(final IPooslDebugInformer o, final String launchID) {
-        ISafeRunnable runnable = new ISafeRunnable() {
-            @Override
-            public void handleException(Throwable e) {
-                LOGGER.log(Level.FINE, "Exception in client" + e.getMessage());
-            }
-
-            @Override
-            public void run() throws Exception {
-                o.launchStopped(launchID);
-            }
-        };
-        SafeRunner.run(runnable);
-    }
 }

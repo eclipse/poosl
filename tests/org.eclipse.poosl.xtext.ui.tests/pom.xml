@@ -19,8 +19,23 @@
 		<version>0.2.0-SNAPSHOT</version>
 		<relativePath>../../parent</relativePath>
 	</parent>
-	<artifactId>org.eclipse.poosl.xtext.tests</artifactId>
+	<artifactId>org.eclipse.poosl.xtext.ui.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
-	<name>POOSL Xtext tests</name>
+	<name>POOSL Xtext UI tests</name>
 
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<configuration>
+					<!-- 
+					Tests require workbench
+					-->
+					<useUIHarness>true</useUIHarness>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

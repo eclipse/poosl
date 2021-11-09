@@ -27,12 +27,15 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * The StackTraceVariableView.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 @SuppressWarnings("restriction")
 public class StackTraceVariableView extends VariablesView {
+
+    /** The HELP_ID. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_stacktrace_variables"; //$NON-NLS-1$
 
     private final IDebugEventSetListener debugEventSetListener = events -> {
         final Viewer viewer = getViewer();
@@ -64,8 +67,7 @@ public class StackTraceVariableView extends VariablesView {
 
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, //
-                    "org.eclipse.poosl.help.help_stacktrace_variables"); //$NON-NLS-1$
+            workbench.getHelpSystem().setHelp(parent, HELP_ID);
         }
     }
 
@@ -84,7 +86,8 @@ public class StackTraceVariableView extends VariablesView {
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (plugin != null) {
             plugin.fireDebugEventSet(new DebugEvent[] { //
-                    new DebugEvent(source, DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_REQUEST) });
+                    new DebugEvent(source, DebugEvent.MODEL_SPECIFIC,
+                            PooslConstants.INSPECT_REQUEST) });
         }
     }
 
@@ -95,6 +98,7 @@ public class StackTraceVariableView extends VariablesView {
 
         // Rotalumis does not support change here
         // but PooslVariable does not know the context from Execution Tree.
+        // VariablesView sets the cell modifier when input is defined
         ((TreeViewer) getViewer()).setCellModifier(null);
     }
 

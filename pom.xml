@@ -88,6 +88,7 @@ org.eclipse.poosl.xtext.util
 			</activation>
 			<modules>
 				<module>tests/org.eclipse.poosl.xtext.tests</module>
+				<module>tests/org.eclipse.poosl.xtext.ui.tests</module>
 				<module>tests/org.eclipse.poosl.xpect</module>
 			</modules>
 		</profile>

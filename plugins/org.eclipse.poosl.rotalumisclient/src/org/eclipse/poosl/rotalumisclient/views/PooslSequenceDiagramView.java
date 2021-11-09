@@ -30,7 +30,6 @@ import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchListener;
 import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.ui.contexts.DebugContextEvent;
 import org.eclipse.debug.ui.contexts.IDebugContextListener;
 import org.eclipse.debug.ui.contexts.IDebugContextService;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -40,6 +39,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.poosl.generatedxmlclasses.TInstanceType;
 import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
 import org.eclipse.poosl.rotalumisclient.debug.PooslSequenceDiagramMessageProvider;
@@ -68,7 +68,6 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -82,11 +81,14 @@ import org.eclipse.ui.part.ViewPart;
 
 /**
  * The PooslSequenceDiagramView.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslSequenceDiagramView extends ViewPart implements ISelectionProvider {
+    /** The HELP_ID. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_sequence_diagram"; //$NON-NLS-1$
+
     private static final String CLEAR_MESSAGES = "Clear messages";
 
     private static final String COULD_NOT_SET_MESSAGE_FILTER_ON_SELECTION = "Could not set message filter on selection.";
@@ -150,12 +152,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
     // an inch.
     private double textPointSize;
 
-    private final Listener scrollbarListener = new Listener() {
-        @Override
-        public void handleEvent(Event e) {
-            update();
-        }
-    };
+    private final Listener scrollbarListener = e -> update();
 
     private final SelectionListener menuSelectionListener = new SelectionListener() {
         @Override
@@ -166,32 +163,46 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 target = (PooslDebugTarget) lastDebugContext;
             }
             if ("Save as image...".equals(pressedMenuItem.getText())) {
-                Image image = new Image(canvas.getDisplay(), canvas.getSize().x - canvas.getVerticalBar().getSize().x, canvas.getSize().y - canvas.getHorizontalBar().getSize().y);
+                Image image = new Image(canvas.getDisplay(),
+                        canvas.getSize().x - canvas.getVerticalBar().getSize().x,
+                        canvas.getSize().y - canvas.getHorizontalBar().getSize().y);
                 GC gc = new GC(canvas);
                 gc.copyArea(image, 0, 0);
                 gc.dispose();
                 FileDialog fileDialog = new FileDialog(canvas.getShell(), SWT.SAVE);
                 fileDialog.setText("Get Device File");
-                fileDialog.setFilterExtensions(new String[] { "*.bmp", "*.jpg;*.jpeg", "*.png", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                fileDialog.setFilterNames(new String[] { "Bitmap (*.bmp)", "JPEG (*.jpg;*.jpeg)", "PNG (*.png)", "All Files (*.*)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                fileDialog.setFilterExtensions(
+                        new String[] { "*.bmp", "*.jpg;*.jpeg", "*.png", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                fileDialog.setFilterNames(new String[] {
+                        "Bitmap (*.bmp)", //$NON-NLS-1$
+                        "JPEG (*.jpg;*.jpeg)", //$NON-NLS-1$
+                        "PNG (*.png)", //$NON-NLS-1$
+                        "All Files (*.*)" });
                 String fileName = fileDialog.open();
                 if (fileName != null) {
                     int format = SWT.IMAGE_BMP;
-                    if (fileName.toLowerCase().endsWith(".jpg")) //$NON-NLS-1$
+                    if (fileName.toLowerCase().endsWith(".jpg")) {
                         format = SWT.IMAGE_JPEG;
-                    if (fileName.toLowerCase().endsWith(".jpeg")) //$NON-NLS-1$
+                    }
+                    if (fileName.toLowerCase().endsWith(".jpeg")) {
                         format = SWT.IMAGE_JPEG;
-                    if (fileName.toLowerCase().endsWith(".png")) //$NON-NLS-1$
+                    }
+                    if (fileName.toLowerCase().endsWith(".png")) {
                         format = SWT.IMAGE_PNG;
+                    }
                     ImageLoader loader = new ImageLoader();
                     loader.data = new ImageData[] { image.getImageData() };
                     loader.save(fileName, format);
                 }
             } else if ("Hide".equals(pressedMenuItem.getText())) {
-                if (target.getPooslSequenceDiagramMessageProvider().isFilterSettingEnabled() && target.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber() > 0) {
-                    MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(), CLEAR_MESSAGES, null,
-                            "Hiding this lifeline will remove all messages from and to the lifeline.\nAre you sure you want to continue?", MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
-                    if (dialog.open() != MessageDialog.OK) {
+                if (target.getPooslSequenceDiagramMessageProvider().isFilterSettingEnabled()
+                        && target.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber()
+                                > 0) {
+                    MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(),
+                            CLEAR_MESSAGES, null,
+                            "Hiding this lifeline will remove all messages from and to the lifeline.\nAre you sure you want to continue?",
+                            MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
+                    if (dialog.open() != Window.OK) {
                         return;
                     }
                 }
@@ -209,10 +220,14 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                     LOGGER.log(Level.WARNING, COULD_NOT_SET_MESSAGE_FILTER_ON_SELECTION, e1);
                 }
             } else if ("Collapse".equals(pressedMenuItem.getText())) {
-                if (target.getPooslSequenceDiagramMessageProvider().isFilterSettingEnabled() && target.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber() > 0) {
-                    MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(), CLEAR_MESSAGES, null,
-                            "Collapsing this lifeline will clear all messages.\nAre you sure you want to continue?", MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
-                    if (dialog.open() != MessageDialog.OK) {
+                if (target.getPooslSequenceDiagramMessageProvider().isFilterSettingEnabled()
+                        && target.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber()
+                                > 0) {
+                    MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(),
+                            CLEAR_MESSAGES, null,
+                            "Collapsing this lifeline will clear all messages.\nAre you sure you want to continue?",
+                            MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
+                    if (dialog.open() != Window.OK) {
                         return;
                     }
                 }
@@ -223,7 +238,9 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 Entry<?, ?>[] newFilter = new Entry<?, ?>[allInstances.size()];
                 int i = 0;
                 for (Entry<String, TInstanceType> entry : allInstances.entrySet()) {
-                    if (entry.getKey().equals(cluster) || (visibleLifeLines.containsKey(entry.getKey()) && !entry.getKey().startsWith(cluster))) {
+                    if (entry.getKey().equals(cluster)
+                            || (visibleLifeLines.containsKey(entry.getKey())
+                                    && !entry.getKey().startsWith(cluster))) {
                         newFilter[i] = entry;
                         i++;
                     }
@@ -237,10 +254,14 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                     target.getPooslSequenceDiagramMessageProvider().clearMessages();
                 }
             } else if ("Expand".equals(pressedMenuItem.getText())) {
-                if (target.getPooslSequenceDiagramMessageProvider().isFilterSettingEnabled() && target.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber() > 0) {
-                    MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(), CLEAR_MESSAGES, null,
-                            "Expanding this lifeline will clear all messages.\nAre you sure you want to continue?", MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
-                    if (dialog.open() != MessageDialog.OK) {
+                if (target.getPooslSequenceDiagramMessageProvider().isFilterSettingEnabled()
+                        && target.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber()
+                                > 0) {
+                    MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(),
+                            CLEAR_MESSAGES, null,
+                            "Expanding this lifeline will clear all messages.\nAre you sure you want to continue?",
+                            MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
+                    if (dialog.open() != Window.OK) {
                         return;
                     }
                 }
@@ -249,12 +270,14 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 Entry<?, ?>[] newFilter = new Entry<?, ?>[allInstances.size()];
                 int i = 0;
                 for (Entry<String, TInstanceType> entry : allInstances.entrySet()) {
-                    if (entry.getKey().startsWith(instanceName) && !entry.getKey().equals(instanceName)) {
+                    if (entry.getKey().startsWith(instanceName)
+                            && !entry.getKey().equals(instanceName)) {
                         if (!entry.getKey().substring(instanceName.length() + 1).contains("/")) { //$NON-NLS-1$
                             newFilter[i] = entry;
                             i++;
                         }
-                    } else if (visibleLifeLines.containsKey(entry.getKey()) && !entry.getKey().equals(instanceName)) {
+                    } else if (visibleLifeLines.containsKey(entry.getKey())
+                            && !entry.getKey().equals(instanceName)) {
                         newFilter[i] = entry;
                         i++;
                     }
@@ -284,7 +307,8 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 if (firstElement instanceof PooslDiagramMessage) {
                     notifySelectionListeners();
                     try {
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                                .showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
                     } catch (PartInitException e1) {
                         LOGGER.log(Level.WARNING, "Could not open propertySheet", e1);
                     }
@@ -306,7 +330,8 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                         tracker.setRectangles(new Rectangle[] { rect, });
                         if (tracker.open()) {
                             Rectangle trackerRect = tracker.getRectangles()[0];
-                            int lifelineMod = (int) ((trackerRect.x - rect.x) / (LIFELINE_WIDTH + scaledLifelineMargin));
+                            int lifelineMod = (int) ((trackerRect.x - rect.x)
+                                    / (LIFELINE_WIDTH + scaledLifelineMargin));
                             if (Math.abs(lifelineMod) > 0) {
                                 reorder(mouseMapEntry.getValue(), lifelineMod);
                             }
@@ -354,39 +379,34 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         }
     };
 
-    private final MouseMoveListener mouseMoveListener = new MouseMoveListener() {
-        @Override
-        public void mouseMove(MouseEvent e) {
-            for (Entry<Rectangle, Object> mouseMapEntry : mouseMap.entrySet()) {
-                Rectangle rect = mouseMapEntry.getKey();
-                if (rect.contains(e.x, e.y)) {
-                    Object value = mouseMapEntry.getValue();
-                    if (value instanceof PooslDiagramMessage) {
-                        canvas.setToolTipText(((PooslDiagramMessage) mouseMapEntry.getValue()).getFormattedPayLoad());
-                    } else if (value instanceof String) {
-                        if (visibleLifeLines.containsKey(value.toString())) {
-                            if (visibleLifeLines.get(value) == TInstanceType.PROCESS) {
-                                canvas.setToolTipText("<<process>>\n" + value.toString()); //$NON-NLS-1$
-                            } else if (visibleLifeLines.get(value) == TInstanceType.CLUSTER) {
-                                canvas.setToolTipText("<<cluster>>\n" + value.toString()); //$NON-NLS-1$
-                            }
+    private final MouseMoveListener mouseMoveListener = e -> {
+        for (Entry<Rectangle, Object> mouseMapEntry : mouseMap.entrySet()) {
+            Rectangle rect = mouseMapEntry.getKey();
+            if (rect.contains(e.x, e.y)) {
+                Object value = mouseMapEntry.getValue();
+                if (value instanceof PooslDiagramMessage) {
+                    canvas.setToolTipText(
+                            ((PooslDiagramMessage) mouseMapEntry.getValue()).getFormattedPayLoad());
+                } else if (value instanceof String) {
+                    if (visibleLifeLines.containsKey(value.toString())) {
+                        if (visibleLifeLines.get(value) == TInstanceType.PROCESS) {
+                            canvas.setToolTipText("<<process>>\n" + value.toString()); //$NON-NLS-1$
+                        } else if (visibleLifeLines.get(value) == TInstanceType.CLUSTER) {
+                            canvas.setToolTipText("<<cluster>>\n" + value.toString()); //$NON-NLS-1$
                         }
-                    } else if (value instanceof BigDecimal) {
-                        canvas.setToolTipText(value.toString());
                     }
-                    return;
+                } else if (value instanceof BigDecimal) {
+                    canvas.setToolTipText(value.toString());
                 }
+                return;
             }
-            canvas.setToolTipText(null);
         }
+        canvas.setToolTipText(null);
     };
 
-    private final MouseWheelListener mouseWheelListener = new MouseWheelListener() {
-        @Override
-        public void mouseScrolled(MouseEvent e) {
-            mouseMoveListener.mouseMove(e);
-            update();
-        }
+    private final MouseWheelListener mouseWheelListener = e -> {
+        mouseMoveListener.mouseMove(e);
+        update();
     };
 
     private final KeyListener keyListener = new KeyListener() {
@@ -479,21 +499,18 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         }
     };
 
-    private final IDebugContextListener sequenceDiagramDebugContextListener = new IDebugContextListener() {
-        @Override
-        public void debugContextChanged(DebugContextEvent event) {
-            ISelection eventContext = event.getContext();
-            if (eventContext instanceof TreeSelection) {
-                TreeSelection treeSelection = (TreeSelection) eventContext;
-                PooslDebugTarget target = null;
-                if (treeSelection.getFirstElement() instanceof PooslThread) {
-                    PooslThread thread = (PooslThread) treeSelection.getFirstElement();
-                    target = (PooslDebugTarget) thread.getDebugTarget();
-                } else if (treeSelection.getFirstElement() instanceof PooslDebugTarget) {
-                    target = (PooslDebugTarget) treeSelection.getFirstElement();
-                }
-                setDebugTarget(target);
+    private final IDebugContextListener sequenceDiagramDebugContextListener = event -> {
+        ISelection eventContext = event.getContext();
+        if (eventContext instanceof TreeSelection) {
+            TreeSelection treeSelection = (TreeSelection) eventContext;
+            PooslDebugTarget target = null;
+            if (treeSelection.getFirstElement() instanceof PooslThread) {
+                PooslThread thread = (PooslThread) treeSelection.getFirstElement();
+                target = (PooslDebugTarget) thread.getDebugTarget();
+            } else if (treeSelection.getFirstElement() instanceof PooslDebugTarget) {
+                target = (PooslDebugTarget) treeSelection.getFirstElement();
             }
+            setDebugTarget(target);
         }
     };
 
@@ -508,12 +525,12 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 }
             }
         }
-    
+
         @Override
         public void launchChanged(ILaunch launch) {
             // do nothing
         }
-    
+
         @Override
         public void launchAdded(ILaunch launch) {
             // do nothing
@@ -529,14 +546,16 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 // Reload the messageBufferMaximumSize to make sure it
                 // is in sync with the debugtarget
 
-                PooslSequenceDiagramMessageProvider messageProvider = target.getPooslSequenceDiagramMessageProvider();
+                PooslSequenceDiagramMessageProvider messageProvider = target
+                        .getPooslSequenceDiagramMessageProvider();
 
                 lastProcessedSerialNumber = 0;
                 drawMessages.clear();
 
                 setOrder(messageProvider.getMessageOrder());
                 setFilter(messageProvider.getMessageFilter());
-                update(messageProvider.getMessages(), false, target.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber());
+                update(messageProvider.getMessages(), false,
+                        target.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber());
                 messageProvider.updateSequenceDiagramViewEventSetting();
                 canvas.redraw();
             }
@@ -582,7 +601,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
 
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(canvas, "org.eclipse.poosl.help.help_sequence_diagram"); //$NON-NLS-1$
+            workbench.getHelpSystem().setHelp(canvas, HELP_ID);
         }
 
         DebugPlugin plugin = DebugPlugin.getDefault();
@@ -610,9 +629,12 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         verticalScrollBar.setMaximum(1);
         horizontalScrollBar.setMaximum(1);
         // After the clear get the ordering and filter from the debugTarget
-        if (lastDebugContext instanceof PooslDebugTarget && !((PooslDebugTarget) lastDebugContext).isTerminated()) {
-            setOrder(((PooslDebugTarget) lastDebugContext).getPooslSequenceDiagramMessageProvider().getMessageOrder());
-            setFilter(((PooslDebugTarget) lastDebugContext).getPooslSequenceDiagramMessageProvider().getMessageFilter());
+        if (lastDebugContext instanceof PooslDebugTarget
+                && !((PooslDebugTarget) lastDebugContext).isTerminated()) {
+            setOrder(((PooslDebugTarget) lastDebugContext).getPooslSequenceDiagramMessageProvider()
+                    .getMessageOrder());
+            setFilter(((PooslDebugTarget) lastDebugContext).getPooslSequenceDiagramMessageProvider()
+                    .getMessageFilter());
         } else {
             lastDebugContext = null;
         }
@@ -629,11 +651,13 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         update(messageArray, true, lastProcessedSerialNumber);
     }
 
-    public void update(PooslDiagramMessage[] pMessageArray, boolean pInternalUpdate, int pSerialNumber) {
-        if (pMessageArray == null)
+    public void update(
+            PooslDiagramMessage[] pMessageArray, boolean pInternalUpdate, int pSerialNumber) {
+        if (pMessageArray == null) {
             return;
+        }
         if (!pInternalUpdate) {
-            this.messageArray = pMessageArray.clone();
+            messageArray = pMessageArray.clone();
         }
         int startIndex = Math.max(lastProcessedSerialNumber, pSerialNumber - pMessageArray.length);
         boolean messageAdded = false;
@@ -666,12 +690,15 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 verticalScrollBar.setSelection(newSelection);
                 canvas.redraw();
             } else {
-                verticalScrollBar.setSelection(verticalScrollBar.getSelection() - (pSerialNumber - lastProcessedSerialNumber));
+                verticalScrollBar.setSelection(verticalScrollBar.getSelection()
+                        - (pSerialNumber - lastProcessedSerialNumber));
             }
             horizontalScrollBar.setMaximum(drawLifeLines.size());
         }
 
-        if (previousVerticalSelect != verticalScrollBar.getSelection() || drawMessages.size() <= verticalScrollBar.getSelection() + nrOfMessages && messageAdded) {
+        if (previousVerticalSelect != verticalScrollBar.getSelection()
+                || drawMessages.size() <= verticalScrollBar.getSelection() + nrOfMessages
+                        && messageAdded) {
             canvas.redraw();
             previousVerticalSelect = verticalScrollBar.getSelection();
         }
@@ -693,7 +720,8 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         if (!fromProcessName.isEmpty()) {
             String toProcessName = getVisibleLifeLineName(msg.getReceiveProcess());
             if (!toProcessName.isEmpty() && !fromProcessName.equals(toProcessName)) {
-                return new PooslDrawableDiagramMessage(msg, getLifelineIndexByName(fromProcessName), getLifelineIndexByName(toProcessName));
+                return new PooslDrawableDiagramMessage(msg, getLifelineIndexByName(fromProcessName),
+                        getLifelineIndexByName(toProcessName));
             }
         }
         return null;
@@ -780,11 +808,15 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 // Calculate # of messages and lifelines that will fit the
                 // screen
                 double topMargin = LIFELINE_VERTICAL_MARGIN + LIFELINE_HEIGHT;
-                nrOfMessages = (int) ((drawableArea.height - topMargin) / (MESSAGE_LINE_HEIGHT + MESSAGE_LINE_MARGIN));
-                nrOfLifeLines = (int) ((drawableArea.width - LEFT_MARGIN) / (LIFELINE_WIDTH + LIFELINE_HORIZONTAL_MARGIN));
+                nrOfMessages = (int) ((drawableArea.height - topMargin)
+                        / (MESSAGE_LINE_HEIGHT + MESSAGE_LINE_MARGIN));
+                nrOfLifeLines = (int) ((drawableArea.width - LEFT_MARGIN)
+                        / (LIFELINE_WIDTH + LIFELINE_HORIZONTAL_MARGIN));
                 if (nrOfLifeLines >= drawLifeLines.size()) {
                     nrOfLifeLines = drawLifeLines.size();
-                    scaledLifelineMargin = (int) ((drawableArea.width - LEFT_MARGIN - nrOfLifeLines * LIFELINE_WIDTH - LIFELINE_HORIZONTAL_MARGIN) / (nrOfLifeLines - 1));
+                    scaledLifelineMargin = (int) ((drawableArea.width - LEFT_MARGIN
+                            - nrOfLifeLines * LIFELINE_WIDTH - LIFELINE_HORIZONTAL_MARGIN)
+                            / (nrOfLifeLines - 1));
                 } else {
                     scaledLifelineMargin = LIFELINE_HORIZONTAL_MARGIN;
                 }
@@ -800,12 +832,15 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
                 }
                 // Draw the messages based on the vertical scroll bar position
                 int messageIndex = 0;
-                for (int i = verticalScrollBar.getSelection(); i < verticalScrollBar.getSelection() + verticalScrollBar.getThumb(); i++) {
+                for (int i = verticalScrollBar.getSelection(); i
+                        < verticalScrollBar.getSelection() + verticalScrollBar.getThumb(); i++) {
                     if (drawMessages.size() <= i) {
                         break;
                     }
                     PooslDrawableDiagramMessage msg = drawMessages.get(i);
-                    drawMessage(gc, messageIndex, msg.getFrom() - horizontalScrollBar.getSelection(), msg.getTo() - horizontalScrollBar.getSelection(), msg, i);
+                    drawMessage(gc, messageIndex,
+                            msg.getFrom() - horizontalScrollBar.getSelection(),
+                            msg.getTo() - horizontalScrollBar.getSelection(), msg, i);
                     messageIndex++;
                 }
             }
@@ -827,7 +862,8 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             // Calculate the size and position for the rectangle of the lifeline
             double rectX = (position * (LIFELINE_WIDTH + scaledLifelineMargin)) + LEFT_MARGIN;
             double rectY = LIFELINE_VERTICAL_MARGIN;
-            Rectangle rect = new Rectangle((int) rectX, (int) rectY, (int) LIFELINE_WIDTH, (int) LIFELINE_HEIGHT);
+            Rectangle rect = new Rectangle((int) rectX, (int) rectY, (int) LIFELINE_WIDTH,
+                    (int) LIFELINE_HEIGHT);
             // Draw the rectangle of the lifeline and store as clickable element
             gc.setLineStyle(SWT.LINE_SOLID);
             gc.drawRectangle(rect);
@@ -841,7 +877,8 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             } else if (inspectType.equals(TInstanceType.CLUSTER)) {
                 type = "<<cluster>>"; //$NON-NLS-1$
             }
-            gc.drawText(type, (int) (rect.x + (LIFELINE_WIDTH - gc.stringExtent(type).x) / 2), (int) rectY + 2, true);
+            gc.drawText(type, (int) (rect.x + (LIFELINE_WIDTH - gc.stringExtent(type).x) / 2),
+                    (int) rectY + 2, true);
             // Draw the class name with a larger font
             gc.setFont(largeFont);
             // Split the process name on hierarchy and only get the last part
@@ -865,12 +902,18 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             gc.drawLine(lineX, lineY, lineX, 1000);
         }
 
-        private void drawMessage(GC gc, int messagePosition, int fromposition, int toposition, PooslDrawableDiagramMessage msg, int realMessagePosition) {
+        private void drawMessage(
+                GC gc, int messagePosition, int fromposition, int toposition,
+                PooslDrawableDiagramMessage msg, int realMessagePosition) {
             // Draw line
-            double lineX1 = fromposition * (LIFELINE_WIDTH + scaledLifelineMargin) + LEFT_MARGIN + LIFELINE_WIDTH / 2;
-            double lineX2 = toposition * (LIFELINE_WIDTH + scaledLifelineMargin) + LEFT_MARGIN + LIFELINE_WIDTH / 2;
+            double lineX1 = fromposition * (LIFELINE_WIDTH + scaledLifelineMargin) + LEFT_MARGIN
+                    + LIFELINE_WIDTH / 2;
+            double lineX2 = toposition * (LIFELINE_WIDTH + scaledLifelineMargin) + LEFT_MARGIN
+                    + LIFELINE_WIDTH / 2;
             double heightOffset = LIFELINE_VERTICAL_MARGIN + LIFELINE_HEIGHT;
-            double lineY = heightOffset + (messagePosition * (MESSAGE_LINE_HEIGHT + MESSAGE_LINE_MARGIN)) + MESSAGE_LINE_MARGIN + MESSAGE_LINE_HEIGHT / 2;
+            double lineY = heightOffset
+                    + (messagePosition * (MESSAGE_LINE_HEIGHT + MESSAGE_LINE_MARGIN))
+                    + MESSAGE_LINE_MARGIN + MESSAGE_LINE_HEIGHT / 2;
             gc.setLineStyle(SWT.LINE_SOLID);
             gc.drawLine((int) lineX1, (int) lineY, (int) lineX2, (int) lineY);
             // Draw arrow
@@ -890,7 +933,9 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             String text = msg.getContent();
             text = text.replaceAll("[\r\n\t]+", " "); //$NON-NLS-1$ //$NON-NLS-2$
             Point stringSize = gc.stringExtent(text);
-            int maxTextLength = (int) (Math.abs((fromposition - toposition) * (LIFELINE_WIDTH + scaledLifelineMargin)) - ARROW_SIZE - MESSAGE_LINE_MARGIN);
+            int maxTextLength = (int) (Math
+                    .abs((fromposition - toposition) * (LIFELINE_WIDTH + scaledLifelineMargin))
+                    - ARROW_SIZE - MESSAGE_LINE_MARGIN);
             while (stringSize.x >= maxTextLength) {
                 text = text.substring(0, text.length() - 4) + "..."; //$NON-NLS-1$
                 stringSize = gc.stringExtent(text);
@@ -905,9 +950,13 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             textX = textX + (maxTextLength / 2.0) - (stringSize.x / 2.0);
             gc.drawText(text, (int) textX, (int) textY);
             Point stringExtend = gc.stringExtent(text);
-            mouseMap.put(new Rectangle((int) textX, (int) textY, stringExtend.x, stringExtend.y), msg.getSourceMessage());
+            mouseMap.put(new Rectangle((int) textX, (int) textY, stringExtend.x, stringExtend.y),
+                    msg.getSourceMessage());
             // Draw timestamp
-            gc.fillRectangle(0, (int) (heightOffset + (messagePosition * (MESSAGE_LINE_HEIGHT + MESSAGE_LINE_MARGIN))), (int) LEFT_MARGIN, (int) (MESSAGE_LINE_HEIGHT + MESSAGE_LINE_MARGIN));
+            gc.fillRectangle(0,
+                    (int) (heightOffset
+                            + (messagePosition * (MESSAGE_LINE_HEIGHT + MESSAGE_LINE_MARGIN))),
+                    (int) LEFT_MARGIN, (int) (MESSAGE_LINE_HEIGHT + MESSAGE_LINE_MARGIN));
             String simulatedTimeString = msg.getSourceMessage().getSimulatedTime().toString();
             Double simulatedTime = Double.parseDouble(simulatedTimeString);
             if (simulatedTimeString.length() > 7) {
@@ -917,13 +966,16 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
             }
             Point textExtend = gc.textExtent(simulatedTimeString);
             if (messagePosition >= 1) {
-                if (!drawMessages.get(realMessagePosition - 1).getSourceMessage().getSimulatedTime().equals(msg.getSourceMessage().getSimulatedTime())) {
+                if (!drawMessages.get(realMessagePosition - 1).getSourceMessage().getSimulatedTime()
+                        .equals(msg.getSourceMessage().getSimulatedTime())) {
                     gc.drawText(simulatedTimeString, 5, (int) lineY - textExtend.y / 2);
-                    mouseMap.put(new Rectangle(5, (int) lineY - textExtend.y / 2, textExtend.x, textExtend.y), msg.getSourceMessage().getSimulatedTime());
+                    mouseMap.put(new Rectangle(5, (int) lineY - textExtend.y / 2, textExtend.x,
+                            textExtend.y), msg.getSourceMessage().getSimulatedTime());
                 }
             } else {
                 gc.drawText(simulatedTimeString, 5, (int) lineY - textExtend.y / 2);
-                mouseMap.put(new Rectangle(5, (int) lineY - textExtend.y / 2, textExtend.x, textExtend.y), msg.getSourceMessage().getSimulatedTime());
+                mouseMap.put(new Rectangle(5, (int) lineY - textExtend.y / 2, textExtend.x,
+                        textExtend.y), msg.getSourceMessage().getSimulatedTime());
             }
         }
     }
@@ -945,7 +997,8 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
         }
         if (lastDebugContext instanceof PooslDebugTarget) {
             try {
-                ((PooslDebugTarget) lastDebugContext).getPooslSequenceDiagramMessageProvider().setMessageOrder(drawLifeLines);
+                ((PooslDebugTarget) lastDebugContext).getPooslSequenceDiagramMessageProvider()
+                        .setMessageOrder(drawLifeLines);
             } catch (CoreException e) {
                 LOGGER.log(Level.WARNING, "Could not set message order when reordering.", e);
             }
@@ -985,7 +1038,7 @@ public class PooslSequenceDiagramView extends ViewPart implements ISelectionProv
 
     private void notifySelectionListeners() {
         for (ISelectionChangedListener selectionListener : selectionListeners) {
-            selectionListener.selectionChanged(new SelectionChangedEvent(this, this.selection));
+            selectionListener.selectionChanged(new SelectionChangedEvent(this, selection));
         }
     }
 

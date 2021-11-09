@@ -28,9 +28,7 @@ import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.internal.ui.viewers.model.TreeModelContentProvider;
 import org.eclipse.debug.internal.ui.viewers.model.provisional.TreeModelViewer;
 import org.eclipse.debug.internal.ui.views.variables.VariablesView;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeViewerListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -46,7 +44,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * The PooslVariablesView.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -54,6 +52,9 @@ import org.eclipse.ui.PlatformUI;
 // This warning is here because of the reuse of certain internal debugging
 // classes of eclipse
 public class PooslVariablesView extends VariablesView {
+    /** The HELP_ID. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_variables"; //$NON-NLS-1$
+
     private static final Logger LOGGER = Logger.getLogger(PooslVariablesView.class.getName());
 
     private PooslThread input;
@@ -87,18 +88,20 @@ public class PooslVariablesView extends VariablesView {
             handleThreadEvent(debugEvent);
         } else if (debugEvent.getSource() instanceof PooslDebugTarget) {
             handleTargetEvent(debugEvent);
-        } else if (debugEvent.getSource() == null || debugEvent.getSource() instanceof PooslDebugTreeItem) {
+        } else if (debugEvent.getSource() == null
+                || debugEvent.getSource() instanceof PooslDebugTreeItem) {
             String secondaryId = getViewSite().getSecondaryId();
             if (secondaryId == null) {
-                Display.getDefault().asyncExec(() -> clearViewerInput());
+                Display.getDefault().asyncExec(this::clearViewerInput);
             }
         } // else do nothing
     }
 
     private void handleTargetEvent(DebugEvent debugEvent) {
         try {
-            if (debugEvent.getKind() == DebugEvent.RESUME || debugEvent.getKind() == DebugEvent.TERMINATE) {
-                Display.getDefault().asyncExec(() -> clearViewerInput());
+            if (debugEvent.getKind() == DebugEvent.RESUME
+                    || debugEvent.getKind() == DebugEvent.TERMINATE) {
+                Display.getDefault().asyncExec(this::clearViewerInput);
             } else {
                 String secondaryId = getViewSite().getSecondaryId();
                 // Clear default variables View when debugtarget is selected
@@ -110,12 +113,14 @@ public class PooslVariablesView extends VariablesView {
                             && ((PooslDebugTarget) source).getName().equals(debugTargetName) //
                             && (debugEvent.getKind() == DebugEvent.SUSPEND //
                                     || debugEvent.getKind() == DebugEvent.CHANGE)) {
-                        Display.getDefault().asyncExec(() -> setViewerInput(ViewHelper.getThreadFromEvent(null, debugEvent, secondaryId)));
+                        Display.getDefault().asyncExec(() -> setViewerInput(
+                                ViewHelper.getThreadFromEvent(null, debugEvent, secondaryId)));
                     }
                 }
             }
         } catch (DebugException e) {
-            LOGGER.log(Level.WARNING, "Could not get the name of the debug target past by a debug event.", e);
+            LOGGER.log(Level.WARNING,
+                    "Could not get the name of the debug target past by a debug event.", e);
         }
     }
 
@@ -134,7 +139,7 @@ public class PooslVariablesView extends VariablesView {
         super.createPartControl(parent);
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_variables"); //$NON-NLS-1$
+            workbench.getHelpSystem().setHelp(parent, HELP_ID);
         }
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (plugin != null) {
@@ -158,7 +163,8 @@ public class PooslVariablesView extends VariablesView {
                             && stackframe.getDebugTarget() == debugTarget;
                 }
             } else {
-                clear = ViewHelper.isTargetID(launch.getDebugTarget(), getViewSite().getSecondaryId());
+                clear = ViewHelper.isTargetID(launch.getDebugTarget(),
+                        getViewSite().getSecondaryId());
             }
         }
         if (clear) {
@@ -182,12 +188,7 @@ public class PooslVariablesView extends VariablesView {
     @Override
     public Viewer createViewer(Composite parent) {
         TreeModelViewer viewer = (TreeModelViewer) super.createViewer(parent);
-        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                sendInspectDebugEvent(event.getSelection());
-            }
-        });
+        viewer.addSelectionChangedListener(event -> sendInspectDebugEvent(event.getSelection()));
         viewer.addTreeListener(new ITreeViewerListener() {
             @Override
             public void treeExpanded(TreeExpansionEvent event) {
@@ -207,7 +208,8 @@ public class PooslVariablesView extends VariablesView {
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (plugin != null) {
             plugin.fireDebugEventSet(new DebugEvent[] { //
-                    new DebugEvent(source, DebugEvent.MODEL_SPECIFIC, PooslConstants.INSPECT_REQUEST) });
+                    new DebugEvent(source, DebugEvent.MODEL_SPECIFIC,
+                            PooslConstants.INSPECT_REQUEST) });
         }
     }
 

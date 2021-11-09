@@ -27,18 +27,14 @@ import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.IDebugEventSetListener;
 import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IStackFrame;
-import org.eclipse.debug.ui.contexts.DebugContextEvent;
 import org.eclipse.debug.ui.contexts.IDebugContextListener;
 import org.eclipse.debug.ui.contexts.IDebugContextService;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.poosl.generatedxmlclasses.TEengineEventErrorResponse;
 import org.eclipse.poosl.generatedxmlclasses.TErrorStackframe;
@@ -65,61 +61,44 @@ import org.eclipse.ui.part.ViewPart;
 
 /**
  * The StackTraceView.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class StackTraceView extends ViewPart {
+
+    /** The HELP_ID. */
+    public static final String HELP_ID = "org.eclipse.poosl.help.help_stacktrace"; //$NON-NLS-1$
+
     private static final String SPACE = " "; //$NON-NLS-1$
 
     private static final String EOL = "\r\n"; //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(StackTraceView.class.getName());
 
-    private static final Comparator<StackFrameMapping> STACK_FRAME_COMPARATOR = new Comparator<StackFrameMapping>() {
-        @Override
-        public int compare(StackFrameMapping frame1, StackFrameMapping frame2) {
-            if (frame1 == null || frame1.getFrame() == null) {
-                return 1;
-            } else if (frame2 == null || frame2.getFrame() == null) {
-                return 0;
-            } else {
-                return frame1.getFrame().getId().compareTo(frame2.getFrame().getId());
-            }
+    private static final Comparator<StackFrameMapping> STACK_FRAME_COMPARATOR = (
+            frame1, frame2) -> {
+        if (frame1 == null || frame1.getFrame() == null) {
+            return 1;
+        } else if (frame2 == null || frame2.getFrame() == null) {
+            return 0;
+        } else {
+            return frame1.getFrame().getId().compareTo(frame2.getFrame().getId());
         }
     };
 
-    IDebugEventSetListener debugEventSetListener = new IDebugEventSetListener() {
-        @Override
-        public void handleDebugEvents(DebugEvent[] debugEvents) {
-            for (int i = 0; i < debugEvents.length; i++) {
-                DebugEvent debugEvent = debugEvents[i];
-                if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC && debugEvent.getDetail() == PooslConstants.ENGINE_ERROR && debugEvent.getSource() instanceof PooslDebugTarget) {
-
-                    final PooslDebugTarget debugTarget = (PooslDebugTarget) debugEvent.getSource();
-                    if (debugContext == null || debugContext != debugTarget) {
-                        setDebugContext(debugTarget);
-                    }
+    private final IDebugContextListener debugContextListener = event -> {
+        if (event.getContext() instanceof IStructuredSelection) {
+            Object element = ((IStructuredSelection) event.getContext()).getFirstElement();
+            if (element instanceof PooslDebugElement) {
+                IDebugTarget target = ((PooslDebugElement) element).getDebugTarget();
+                if (target instanceof PooslDebugTarget) {
+                    setDebugContext((PooslDebugTarget) target);
+                    return;
                 }
             }
         }
-    };
-
-    IDebugContextListener debugContextListener = new IDebugContextListener() {
-        @Override
-        public void debugContextChanged(DebugContextEvent event) {
-            if (event.getContext() instanceof IStructuredSelection) {
-                Object element = ((IStructuredSelection) event.getContext()).getFirstElement();
-                if (element instanceof PooslDebugElement) {
-                    IDebugTarget target = ((PooslDebugElement) element).getDebugTarget();
-                    if (target instanceof PooslDebugTarget) {
-                        setDebugContext((PooslDebugTarget) target);
-                        return;
-                    }
-                }
-            }
-            clear();
-        }
+        clear();
     };
 
     private PooslDebugTarget debugContext;
@@ -138,9 +117,23 @@ public class StackTraceView extends ViewPart {
 
     private Action copyTraceAction;
 
+    private final IDebugEventSetListener debugEventSetListener = debugEvents -> {
+        for (DebugEvent debugEvent : debugEvents) {
+            if (debugEvent.getKind() == DebugEvent.MODEL_SPECIFIC
+                    && debugEvent.getDetail() == PooslConstants.ENGINE_ERROR
+                    && debugEvent.getSource() instanceof PooslDebugTarget) {
+
+                final PooslDebugTarget debugTarget = (PooslDebugTarget) debugEvent.getSource();
+                if (debugContext == null || debugContext != debugTarget) {
+                    setDebugContext(debugTarget);
+                }
+            }
+        }
+    };
+
     /**
      * Create contents of the view part.
-     * 
+     *
      * @param parent
      */
     @Override
@@ -161,7 +154,8 @@ public class StackTraceView extends ViewPart {
         formToolkit.adapt(lblTitleErrorMessage, true, true);
         lblTitleErrorMessage.setText("Error Message:");
 
-        txtErrorMessage = new Text(compInfo, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+        txtErrorMessage = new Text(compInfo,
+                SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 
         GridData gdTxtErrorMessage = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         gdTxtErrorMessage.heightHint = 55;
@@ -185,7 +179,7 @@ public class StackTraceView extends ViewPart {
         listViewer.setLabelProvider(new StackTraceLabelProvider());
         IWorkbench workbench = PlatformUI.getWorkbench();
         if (workbench != null) {
-            workbench.getHelpSystem().setHelp(parent, "org.eclipse.poosl.help.help_stacktrace"); //$NON-NLS-1$
+            workbench.getHelpSystem().setHelp(parent, HELP_ID);
         }
         org.eclipse.swt.widgets.List list = listViewer.getList();
         list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -218,30 +212,36 @@ public class StackTraceView extends ViewPart {
             lblProcessName.setText(trace.getProcessPath());
             if (modelMapping != null) {
                 for (final TErrorStackframe frame : trace.getStacktrace().getStackframe()) {
-                    modelMapping.getSourceMapping(Integer.valueOf(frame.getStmtHandle()), new PooslSourceMappingListener(true) {
-                        @Override
-                        public void requestedSourceMapping(PooslSourceMapping mapping) {
-                            frameMapping.add(new StackFrameMapping(frame, mapping));
-                            frameMapping.sort(STACK_FRAME_COMPARATOR);
-                            listViewer.setInput(frameMapping);
-                            if (frameMapping.size() == total) {
-                                Object firstElement = listViewer.getElementAt(getFirstMappedElementIndex(frameMapping));
-                                if (firstElement != null) {
-                                    listViewer.setSelection(new StructuredSelection(firstElement), true);
+                    modelMapping.getSourceMapping(Integer.valueOf(frame.getStmtHandle()),
+                            new PooslSourceMappingListener(true) {
+                                @Override
+                                public void requestedSourceMapping(PooslSourceMapping mapping) {
+                                    frameMapping.add(new StackFrameMapping(frame, mapping));
+                                    frameMapping.sort(STACK_FRAME_COMPARATOR);
+                                    listViewer.setInput(frameMapping);
+                                    if (frameMapping.size() == total) {
+                                        Object firstElement = listViewer.getElementAt(
+                                                getFirstMappedElementIndex(frameMapping));
+                                        if (firstElement != null) {
+                                            listViewer.setSelection(
+                                                    new StructuredSelection(firstElement), true);
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    });
+                            });
                 }
             }
         }
         if (trace.getStacktrace() == null && trace.getStmtHandle() != 0 && modelMapping != null) {
-            modelMapping.getSourceMapping(trace.getStmtHandle(), new PooslSourceMappingListener(true) {
-                @Override
-                public void requestedSourceMapping(PooslSourceMapping mapping) {
-                    txtErrorMessage.setText(trace.getError() + "\n\'" + mapping.getSourceText() + "\'\n\"" + mapping.getFilePath() + ":" + mapping.getLineNumber() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                }
-            });
+            modelMapping.getSourceMapping(trace.getStmtHandle(),
+                    new PooslSourceMappingListener(true) {
+                        @Override
+                        public void requestedSourceMapping(PooslSourceMapping mapping) {
+                            txtErrorMessage.setText(trace.getError() + "\n\'" //$NON-NLS-1$
+                                    + mapping.getSourceText() + "\'\n\"" + mapping.getFilePath() //$NON-NLS-1$
+                                    + ":" + mapping.getLineNumber() + "\""); //$NON-NLS-1$ //$NON-NLS-2$
+                        }
+                    });
         }
     }
 
@@ -256,26 +256,24 @@ public class StackTraceView extends ViewPart {
             service.addDebugContextListener(debugContextListener);
         }
 
-        listViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent selectionEvent) {
-                ISelection selection = selectionEvent.getSelection();
-                if (selection instanceof IStructuredSelection) {
-                    Object element = ((IStructuredSelection) selection).getFirstElement();
-                    if (element instanceof StackFrameMapping) {
-                        TErrorStackframe tFrame = ((StackFrameMapping) element).getFrame();
-                        IStackFrame frame = debugContext.getErrorStackFrame(tFrame.getId());
-                        if (frame != null) {
-                            PooslSourceMapping mapping = ((StackFrameMapping) element).getMapping();
-                            try {
-                                if (mapping != null && frame.getThread() != null) {
-                                    PooslDebugHelper.setDebugInstructionPointer(frame, mapping, debugContext, getSite().getWorkbenchWindow());
-                                }
-                            } catch (Exception e) {
-                                LOGGER.log(Level.WARNING, "Could not point to error.", e.getMessage());
+        listViewer.addSelectionChangedListener(selectionEvent -> {
+            ISelection selection = selectionEvent.getSelection();
+            if (selection instanceof IStructuredSelection) {
+                Object element = ((IStructuredSelection) selection).getFirstElement();
+                if (element instanceof StackFrameMapping) {
+                    TErrorStackframe tFrame = ((StackFrameMapping) element).getFrame();
+                    IStackFrame frame = debugContext.getErrorStackFrame(tFrame.getId());
+                    if (frame != null) {
+                        PooslSourceMapping mapping = ((StackFrameMapping) element).getMapping();
+                        try {
+                            if (mapping != null && frame.getThread() != null) {
+                                PooslDebugHelper.setDebugInstructionPointer(frame, mapping,
+                                        debugContext, getSite().getWorkbenchWindow());
                             }
-                            fireSelectionEvent(frame);
+                        } catch (Exception e) {
+                            LOGGER.log(Level.WARNING, "Could not point to error.", e.getMessage());
                         }
+                        fireSelectionEvent(frame);
                     }
                 }
             }
@@ -285,19 +283,18 @@ public class StackTraceView extends ViewPart {
     private void fireSelectionEvent(Object data) {
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (plugin != null) {
-            DebugEvent event = new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.STACKFRAME_INSPECT);
+            DebugEvent event = new DebugEvent(this, DebugEvent.MODEL_SPECIFIC,
+                    PooslConstants.STACKFRAME_INSPECT);
             event.setData(data);
             plugin.fireDebugEventSet(new DebugEvent[] { event });
         }
     }
 
     private void clear() {
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                txtErrorMessage.setText(""); //$NON-NLS-1$
-                lblProcessName.setText(""); //$NON-NLS-1$
-                listViewer.setInput(null);
-            }
+        Display.getDefault().asyncExec(() -> {
+            txtErrorMessage.setText(""); //$NON-NLS-1$
+            lblProcessName.setText(""); //$NON-NLS-1$
+            listViewer.setInput(null);
         });
         fireSelectionEvent(null);
     }
@@ -325,14 +322,7 @@ public class StackTraceView extends ViewPart {
         // Create menu manager.
         MenuManager menuMgr = new MenuManager();
         menuMgr.setRemoveAllWhenShown(true);
-        menuMgr.addMenuListener(new IMenuListener() {
-
-            @Override
-            public void menuAboutToShow(IMenuManager mgr) {
-                fillContextMenu(mgr);
-
-            }
-        });
+        menuMgr.addMenuListener(this::fillContextMenu);
 
         // Create menu.
         Menu menu = menuMgr.createContextMenu(listViewer.getControl());
@@ -374,7 +364,8 @@ public class StackTraceView extends ViewPart {
     private int getFirstMappedElementIndex(List<StackFrameMapping> mapping) {
         for (int i = 0; i < mapping.size(); i++) {
             PooslSourceMapping source = mapping.get(i).getMapping();
-            if (source != null && (source != PooslSourceMap.EMPTY_MAPPING || source.getOffset() != -1 && source.getLength() != 0)) {
+            if (source != null && (source != PooslSourceMap.EMPTY_MAPPING
+                    || source.getOffset() != -1 && source.getLength() != 0)) {
                 return i;
             }
         }
