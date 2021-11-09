@@ -250,9 +250,11 @@
     <module name="SuperFinalize">
       <property name="severity" value="error"/>
     </module>
+    <!-- Disable: not compatible with eclipse formatting, + inconsistent with '...' syntax.
     <module name="ArrayTrailingComma">
       <property name="severity" value="error"/>
     </module>
+     -->
     <module name="UnnecessaryParentheses">
       <property name="severity" value="error"/>
       <property name="tokens" value="EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN"/>
