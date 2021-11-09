@@ -88,10 +88,7 @@ org.eclipse.poosl.xtext.util
 			</activation>
 			<modules>
 				<module>tests/org.eclipse.poosl.xtext.tests</module>
-				<!-- Xpect tests need complete rework
-				Maybe it was made in XPect 1.0
 				<module>tests/org.eclipse.poosl.xpect</module>
-				 -->
 			</modules>
 		</profile>
 		
