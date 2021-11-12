@@ -964,11 +964,9 @@ public class PooslFormatter extends AbstractFormatter2 {
             SendStatement statement, IFormattableDocument document,
             ISemanticRegionsFinder regionFinder, Procedure1<IHiddenRegionFormatter> oneSpaceWrapper,
             boolean singleLine) {
-        document.append(regionFinder.feature(Literals.SEND_STATEMENT__NAME), NO_SPACE);
         bracketPairSpacing(regionFinder, document);
         commaSpacing(regionFinder, oneSpaceWrapper, document);
         exclamationSpacing(regionFinder, document);
-
         formatCurlyBracketsMultiOrSingle(statement.getPostCommunicationExpression(), document,
                 regionFinder, singleLine, oneSpaceWrapper, true);
         for (Expression expression : statement.getArguments()) {
