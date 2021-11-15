@@ -1,5 +1,5 @@
-[link=https://github.com/ObeoNetwork/POOSL/actions/workflows/maven.yml]
-image::https://github.com/ObeoNetwork/POOSL/workflows/Java%20CI/badge.svg[gh-actions status]
+[link=https://github.com/eclipse/poosl/actions/workflows/maven.yml]
+image::https://github.com/eclipse/poosl/workflows/Java%20CI/badge.svg[gh-actions status]
 
 This is a temporary repository to prepare POOSL IDE to go to the Eclipse Foundation. 
 Be aware this repository as it will soon disappear.
@@ -14,7 +14,7 @@ simulated with the Rotalumis simulator.
 This project provides an Eclipse-based tool for editing and debugging POOSL models.
 
 == How to install
-https://raw.githubusercontent.com/ObeoNetwork/POOSL/main/docs/User/InstallationManual.pdf[Installation guide] 
+https://raw.githubusercontent.com/eclipse/poosl/main/docs/User/InstallationManual.pdf[Installation guide] 
 helps you to install Eclipse and POOSL features.
 
 
@@ -54,7 +54,7 @@ Product are available at __${POOSL_SRC}/releng/org.eclipse.poosl.product/target/
 
 == Developing
 
-Development guidelines are described at https://github.com/ObeoNetwork/POOSL/tree/main/docs/Developer[org.eclipse.poosl.docs/Developer/readme.adoc]
+Development guidelines are described at https://github.com/eclipse/poosl/tree/main/docs/Developer[org.eclipse.poosl.docs/Developer/readme.adoc]
 
 === Development environment
 
@@ -62,7 +62,7 @@ With Eclipse instal, use following Oomph setup to have a proper tool set (in Adv
 
 [source]
 ----
-https://raw.githubusercontent.com/ObeoNetwork/POOSL/main/parent/oomph/org.eclipse.setup
+https://raw.githubusercontent.com/eclipse/poosl/main/parent/oomph/org.eclipse.setup
 ----
 
 Once the repository is cloned, following preferences should be set:
