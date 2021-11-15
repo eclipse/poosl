@@ -17,24 +17,15 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.sirius.diagram.description.DiagramDescription
 import org.eclipse.sirius.diagram.description.style.EdgeStyleDescription
 import org.eclipse.sirius.diagram.description.style.SquareDescription
-import org.eclipse.sirius.diagram.description.tool.DeleteElementDescription
-import org.eclipse.sirius.diagram.description.tool.DoubleClickDescription
 import org.eclipse.sirius.viewpoint.description.AbstractVariable
 import org.eclipse.sirius.viewpoint.description.IdentifiedElement
 import org.eclipse.sirius.viewpoint.description.RepresentationElementMapping
 import org.eclipse.sirius.viewpoint.description.SystemColor
 import org.eclipse.sirius.viewpoint.description.style.BasicLabelStyleDescription
-import org.eclipse.sirius.viewpoint.description.tool.AbstractToolDescription
 import org.eclipse.sirius.viewpoint.description.tool.ContainerModelOperation
 import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaAction
 import org.eclipse.sirius.viewpoint.description.tool.ExternalJavaActionParameter
-import org.eclipse.sirius.viewpoint.description.tool.ModelOperation
-import org.eclipse.sirius.viewpoint.description.tool.OperationAction
-import org.eclipse.sirius.viewpoint.description.tool.PasteDescription
-import org.eclipse.sirius.viewpoint.description.tool.SetValue
 import org.mypsycho.modit.emf.sirius.api.AbstractDiagram
-
-import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
 
 /**
  * Abstract class for all default value for POOSL diagrams.
@@ -131,29 +122,9 @@ abstract class PooslDiagram extends AbstractDiagram {
 	
 	
 	def setValue(ContainerModelOperation it, String feat, String aqlExpr) {
-		subModelOperations += SetValue.create [
-			featureName = feat
-			valueExpression = aqlExpr.trimAql
-		]
+		subModelOperations += feat.setter(aqlExpr)
 	}
 
-    
-	// TODO: update AbstractDiagram
-	override setOperation(AbstractToolDescription it, ModelOperation value) {
-		switch(it) {
-			OperationAction: initialOperation = value.toTool
-			DeleteElementDescription: initialOperation = value.toTool
-			DoubleClickDescription: initialOperation = value.toTool
-			PasteDescription: initialOperation = value.toTool
-			default: super.setOperation(it, value)
-		}	
-	}
-	
-	
-	// TODO: update to AbstractEdition
-	def asAql(Class<? extends EObject> type) {
-		context.asEClass(type).asAql
-	}
 		
 	def callJavaAction(String actionName, String actionCall, Pair<String, String>... params) {
 		ExternalJavaAction.create [
