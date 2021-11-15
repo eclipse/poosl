@@ -6,8 +6,15 @@ Element-Type: context
 Element-Version: 2.0
 Id: _hmR-AOgJEeSUFO5-NwwB0Q
 Runtime-Version: 2.5.1.M3
-Save-Time: 7/30/21, 12:05 AM
+Save-Time: 11/10/21, 10:59 AM
 
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Edition perspective with 'producer_consumer' Model.
+This Context must be loaded after workspace containing a version of 'Example'.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
 ------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
 Content-Type: q7/binary
 Entry-Name: .q7.content
