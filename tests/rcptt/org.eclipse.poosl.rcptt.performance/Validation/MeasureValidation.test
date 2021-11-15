@@ -1,0 +1,28 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _swFOgEIQEey3EcdiCKbr8A,_bbsQoEGDEey4erS6SCpOOw
+Element-Name: MeasureValidation
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _PaSPoEIEEeyAKedpOVCq6g
+Runtime-Version: 2.5.1.M3
+Save-Time: 11/15/21, 10:40 AM
+Testcase-Type: ecl
+Verifications: _n0OFQEXxEeyVdbI5QHTcCQ
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+This test checks the loading (+ build) time for model with large content.
+It may fails if the host is burdened.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// no statement:
+// Script ends when models is loaded and built.
+// It is the measured time.
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

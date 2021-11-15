@@ -1,0 +1,577 @@
+importlib "performance.poosl"
+import "task.poosl"
+
+data class ApplicationStatus extends Object
+variables
+	NextDeadline : Real,
+	DesiredThroughput : Real,
+	NumberOfFirings : Integer,
+	NumberOfDeadlineMisses : Integer,
+	TimeOfLastFiring : Real,
+	Throughput : LongRunRateAverage
+methods
+	fired(CurrentTime : Real) : ApplicationStatus
+		NumberOfFirings := NumberOfFirings + 1;
+		Throughput rewardBM(1.0, CurrentTime);
+		if CurrentTime > NextDeadline then
+			NumberOfDeadlineMisses := NumberOfDeadlineMisses + 1
+		fi;
+		NextDeadline := NextDeadline + 1.0 / DesiredThroughput;
+		TimeOfLastFiring := CurrentTime;
+		return self
+
+	@Init
+	init(DL, DT : Real) : ApplicationStatus
+		NumberOfFirings := 0;
+		NumberOfDeadlineMisses := 0;
+		NextDeadline := DL;
+		DesiredThroughput := DT;
+		TimeOfLastFiring := 0.0;
+		Throughput := new(LongRunRateAverage) withParameters(0.95, 0.95) setBatchSize(1000);
+		return self
+
+	printString : String
+		if NumberOfFirings > 0 then
+			if NumberOfFirings = 1 then
+				return "Throughput Results: " cr + Throughput logStatistics cr cr + (100.0 * (NumberOfDeadlineMisses
+					asReal / NumberOfFirings asReal)) printString + "% Deadline Misses" cr cr + "Latency: " +
+					TimeOfLastFiring printString
+			else
+				return "Throughput Results: " cr + Throughput printString cr cr + (100.0 * (NumberOfDeadlineMisses
+					asReal / NumberOfFirings asReal)) printString + "% Deadline Misses"
+			fi
+		else
+			return "Waiting for first frame"
+		fi
+
+	log : ApplicationStatus | LogFile : FileOut |
+		LogFile := new(FileOut) destination("Application.log") open;
+		if NumberOfFirings = 1 then
+			LogFile write("Throughput Results: " cr + Throughput logStatistics cr cr + (100.0 * (NumberOfDeadlineMisses
+				asReal / NumberOfFirings asReal)) printString + "% Deadline Misses" cr cr + "Latency: " +
+				TimeOfLastFiring printString)
+		else
+			LogFile write("Throughput Results: " cr + Throughput logStatistics cr cr + (100.0 * (NumberOfDeadlineMisses
+				asReal / NumberOfFirings asReal)) printString + "% Deadline Misses")
+		fi;
+		LogFile close;
+		return self
+
+	accurate : Boolean
+		return Throughput accurate
+
+@SuppressWarnings("unused")
+process class TaskLast(DesiredLatency : Real, DesiredThroughput : Real, Iterate : Boolean) extends Task
+ports
+	In1
+	In2
+	In3
+	In4
+	In5
+	In6
+	In7
+	In8
+	In9
+	In10
+	In11
+	In12
+	In13
+	In14
+	In15
+	Out
+	Monitor
+messages
+	Control!MappedTo(String),
+	In1!InspectTokenAvailability(Integer),
+	In1!MappedTo(String),
+	In1!ReleaseRoom(),
+	In1?TokensAvailable(),
+	In2!InspectTokenAvailability(Integer),
+	In2!MappedTo(String),
+	In2!ReleaseRoom(),
+	In2?TokensAvailable(),
+	In3!InspectTokenAvailability(Integer),
+	In3!MappedTo(String),
+	In3!ReleaseRoom(),
+	In3?TokensAvailable(),
+	In4!InspectTokenAvailability(Integer),
+	In4!MappedTo(String),
+	In4!ReleaseRoom(),
+	In4?TokensAvailable(),
+	In5!InspectTokenAvailability(Integer),
+	In5!MappedTo(String),
+	In5!ReleaseRoom(),
+	In5?TokensAvailable(),
+	In6!InspectTokenAvailability(Integer),
+	In6!MappedTo(String),
+	In6!ReleaseRoom(),
+	In6?TokensAvailable(),
+	In7!InspectTokenAvailability(Integer),
+	In7!MappedTo(String),
+	In7!ReleaseRoom(),
+	In7?TokensAvailable(),
+	In8!InspectTokenAvailability(Integer),
+	In8!MappedTo(String),
+	In8!ReleaseRoom(),
+	In8?TokensAvailable(),
+	In9!InspectTokenAvailability(Integer),
+	In9!MappedTo(String),
+	In9!ReleaseRoom(),
+	In9?TokensAvailable(),
+	In10!InspectTokenAvailability(Integer),
+	In10!MappedTo(String),
+	In10!ReleaseRoom(),
+	In10?TokensAvailable(),
+	In11!InspectTokenAvailability(Integer),
+	In11!MappedTo(String),
+	In11!ReleaseRoom(),
+	In11?TokensAvailable(),
+	In12!InspectTokenAvailability(Integer),
+	In12!MappedTo(String),
+	In12!ReleaseRoom(),
+	In12?TokensAvailable(),
+	In13!InspectTokenAvailability(Integer),
+	In13!MappedTo(String),
+	In13!ReleaseRoom(),
+	In13?TokensAvailable(),
+	In14!InspectTokenAvailability(Integer),
+	In14!MappedTo(String),
+	In14!ReleaseRoom(),
+	In14?TokensAvailable(),
+	In15!InspectTokenAvailability(Integer),
+	In15!MappedTo(String),
+	In15!ReleaseRoom(),
+	In15?TokensAvailable(),
+	Out!MappedTo(String),
+	Out!ReserveRoom(Integer),
+	Out!WriteTokens(),
+	Out?ReservationSuccessful(),
+	Monitor!ApplicationAccuracyStatus(Boolean),
+	Monitor!Iterate(Boolean),
+	Monitor?ApplicationStatus(),
+	Monitor?StopSimulation()
+variables
+	Status : ApplicationStatus
+init
+	Initialise()()
+methods
+	Initialise()()
+		NotifyBuffersAboutMapping()();
+		NotifyPlatformAboutMapping()();
+		Status := new(ApplicationStatus) init(DesiredLatency, DesiredThroughput);
+		Monitor!Iterate(Iterate);
+		abort
+			par
+				Fire()()
+			and
+				CheckAccuracyStatus()()
+			rap
+		with Monitor?StopSimulation {Status log}
+
+	CheckAccuracyStatus()()
+		Monitor?ApplicationStatus;
+		Monitor!ApplicationAccuracyStatus(Status accurate);
+		CheckAccuracyStatus()()
+
+	Fire()() | Scenario : String |
+		Control!InspectTokenAvailability;
+		Control?TokenAvailable(Scenario);
+		CheckTokenAvailabilityForReads(Scenario)();
+		ReserveSpaceForWrites(Scenario)();
+		Execute(Scenario)();
+		ReleaseSpaceForReads(Scenario)();
+		PerformWrites(Scenario)();
+		Control!ReleaseRoom;
+		Status fired(currentTime);
+		Fire()()
+
+	NotifyBuffersAboutMapping()()
+		par
+			In1!MappedTo(MapTo)
+		and
+			In2!MappedTo(MapTo)
+		and
+			In3!MappedTo(MapTo)
+		and
+			In4!MappedTo(MapTo)
+		and
+			In5!MappedTo(MapTo)
+		and
+			In6!MappedTo(MapTo)
+		and
+			In7!MappedTo(MapTo)
+		and
+			In8!MappedTo(MapTo)
+		and
+			In9!MappedTo(MapTo)
+		and
+			In10!MappedTo(MapTo)
+		and
+			In11!MappedTo(MapTo)
+		and
+			In12!MappedTo(MapTo)
+		and
+			In13!MappedTo(MapTo)
+		and
+			In14!MappedTo(MapTo)
+		and
+			In15!MappedTo(MapTo)
+		and
+			Out!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		switch Scenario do
+			case "S1" then
+				In2!InspectTokenAvailability(2048);
+				In2?TokensAvailable;
+				In3!InspectTokenAvailability(2048);
+				In3?TokensAvailable;
+				In4!InspectTokenAvailability(1024);
+				In4?TokensAvailable;
+				In6!InspectTokenAvailability(1024);
+				In6?TokensAvailable;
+				In7!InspectTokenAvailability(4096);
+				In7?TokensAvailable;
+				In8!InspectTokenAvailability(2048);
+				In8?TokensAvailable;
+				In10!InspectTokenAvailability(2048);
+				In10?TokensAvailable;
+				In11!InspectTokenAvailability(4096);
+				In11?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In15!InspectTokenAvailability(1024);
+				In15?TokensAvailable;
+				skip
+			case "S2" then
+				In2!InspectTokenAvailability(2048);
+				In2?TokensAvailable;
+				In3!InspectTokenAvailability(2048);
+				In3?TokensAvailable;
+				In4!InspectTokenAvailability(1024);
+				In4?TokensAvailable;
+				In5!InspectTokenAvailability(1024);
+				In5?TokensAvailable;
+				In6!InspectTokenAvailability(1024);
+				In6?TokensAvailable;
+				In7!InspectTokenAvailability(4096);
+				In7?TokensAvailable;
+				In9!InspectTokenAvailability(2048);
+				In9?TokensAvailable;
+				In10!InspectTokenAvailability(2048);
+				In10?TokensAvailable;
+				In14!InspectTokenAvailability(1024);
+				In14?TokensAvailable;
+				In15!InspectTokenAvailability(1024);
+				In15?TokensAvailable;
+				skip
+			case "S3" then
+				In3!InspectTokenAvailability(2048);
+				In3?TokensAvailable;
+				In4!InspectTokenAvailability(1024);
+				In4?TokensAvailable;
+				In5!InspectTokenAvailability(1024);
+				In5?TokensAvailable;
+				In7!InspectTokenAvailability(4096);
+				In7?TokensAvailable;
+				In8!InspectTokenAvailability(2048);
+				In8?TokensAvailable;
+				In11!InspectTokenAvailability(4096);
+				In11?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In14!InspectTokenAvailability(1024);
+				In14?TokensAvailable;
+				In15!InspectTokenAvailability(1024);
+				In15?TokensAvailable;
+				skip
+			case "S4" then
+				In1!InspectTokenAvailability(4096);
+				In1?TokensAvailable;
+				In5!InspectTokenAvailability(1024);
+				In5?TokensAvailable;
+				In6!InspectTokenAvailability(1024);
+				In6?TokensAvailable;
+				In7!InspectTokenAvailability(4096);
+				In7?TokensAvailable;
+				In8!InspectTokenAvailability(2048);
+				In8?TokensAvailable;
+				In9!InspectTokenAvailability(2048);
+				In9?TokensAvailable;
+				In10!InspectTokenAvailability(2048);
+				In10?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In13!InspectTokenAvailability(4096);
+				In13?TokensAvailable;
+				skip
+			case "S5" then
+				In1!InspectTokenAvailability(4096);
+				In1?TokensAvailable;
+				In3!InspectTokenAvailability(2048);
+				In3?TokensAvailable;
+				In5!InspectTokenAvailability(1024);
+				In5?TokensAvailable;
+				In6!InspectTokenAvailability(1024);
+				In6?TokensAvailable;
+				In8!InspectTokenAvailability(2048);
+				In8?TokensAvailable;
+				In10!InspectTokenAvailability(2048);
+				In10?TokensAvailable;
+				In11!InspectTokenAvailability(4096);
+				In11?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In13!InspectTokenAvailability(4096);
+				In13?TokensAvailable;
+				In15!InspectTokenAvailability(1024);
+				In15?TokensAvailable;
+				skip
+			case "S6" then
+				In2!InspectTokenAvailability(2048);
+				In2?TokensAvailable;
+				In3!InspectTokenAvailability(2048);
+				In3?TokensAvailable;
+				In4!InspectTokenAvailability(1024);
+				In4?TokensAvailable;
+				In5!InspectTokenAvailability(1024);
+				In5?TokensAvailable;
+				In6!InspectTokenAvailability(1024);
+				In6?TokensAvailable;
+				In8!InspectTokenAvailability(2048);
+				In8?TokensAvailable;
+				In9!InspectTokenAvailability(2048);
+				In9?TokensAvailable;
+				In10!InspectTokenAvailability(2048);
+				In10?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In14!InspectTokenAvailability(1024);
+				In14?TokensAvailable;
+				skip
+			case "S7" then
+				In1!InspectTokenAvailability(4096);
+				In1?TokensAvailable;
+				In2!InspectTokenAvailability(2048);
+				In2?TokensAvailable;
+				In4!InspectTokenAvailability(1024);
+				In4?TokensAvailable;
+				In5!InspectTokenAvailability(1024);
+				In5?TokensAvailable;
+				In7!InspectTokenAvailability(4096);
+				In7?TokensAvailable;
+				In8!InspectTokenAvailability(2048);
+				In8?TokensAvailable;
+				In11!InspectTokenAvailability(4096);
+				In11?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In15!InspectTokenAvailability(1024);
+				In15?TokensAvailable;
+				skip
+			case "S8" then
+				In1!InspectTokenAvailability(4096);
+				In1?TokensAvailable;
+				In6!InspectTokenAvailability(1024);
+				In6?TokensAvailable;
+				In7!InspectTokenAvailability(4096);
+				In7?TokensAvailable;
+				In9!InspectTokenAvailability(2048);
+				In9?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In13!InspectTokenAvailability(4096);
+				In13?TokensAvailable;
+				In14!InspectTokenAvailability(1024);
+				In14?TokensAvailable;
+				In15!InspectTokenAvailability(1024);
+				In15?TokensAvailable;
+				skip
+			case "S9" then
+				In1!InspectTokenAvailability(4096);
+				In1?TokensAvailable;
+				In2!InspectTokenAvailability(2048);
+				In2?TokensAvailable;
+				In3!InspectTokenAvailability(2048);
+				In3?TokensAvailable;
+				In4!InspectTokenAvailability(1024);
+				In4?TokensAvailable;
+				In5!InspectTokenAvailability(1024);
+				In5?TokensAvailable;
+				In6!InspectTokenAvailability(1024);
+				In6?TokensAvailable;
+				In8!InspectTokenAvailability(2048);
+				In8?TokensAvailable;
+				In9!InspectTokenAvailability(2048);
+				In9?TokensAvailable;
+				In11!InspectTokenAvailability(4096);
+				In11?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In13!InspectTokenAvailability(4096);
+				In13?TokensAvailable;
+				In14!InspectTokenAvailability(1024);
+				In14?TokensAvailable;
+				skip
+			case "S10" then
+				In2!InspectTokenAvailability(2048);
+				In2?TokensAvailable;
+				In3!InspectTokenAvailability(2048);
+				In3?TokensAvailable;
+				In4!InspectTokenAvailability(1024);
+				In4?TokensAvailable;
+				In5!InspectTokenAvailability(1024);
+				In5?TokensAvailable;
+				In6!InspectTokenAvailability(1024);
+				In6?TokensAvailable;
+				In7!InspectTokenAvailability(4096);
+				In7?TokensAvailable;
+				In8!InspectTokenAvailability(2048);
+				In8?TokensAvailable;
+				In9!InspectTokenAvailability(2048);
+				In9?TokensAvailable;
+				In10!InspectTokenAvailability(2048);
+				In10?TokensAvailable;
+				In12!InspectTokenAvailability(1024);
+				In12?TokensAvailable;
+				In13!InspectTokenAvailability(4096);
+				In13?TokensAvailable;
+				In14!InspectTokenAvailability(1024);
+				In14?TokensAvailable;
+				skip
+		od
+
+	ReleaseSpaceForReads(Scenario : String)()
+		switch Scenario do
+			case "S1" then
+				In2!ReleaseRoom;
+				In3!ReleaseRoom;
+				In4!ReleaseRoom;
+				In6!ReleaseRoom;
+				In7!ReleaseRoom;
+				In8!ReleaseRoom;
+				In10!ReleaseRoom;
+				In11!ReleaseRoom;
+				In12!ReleaseRoom;
+				In15!ReleaseRoom;
+				skip
+			case "S2" then
+				In2!ReleaseRoom;
+				In3!ReleaseRoom;
+				In4!ReleaseRoom;
+				In5!ReleaseRoom;
+				In6!ReleaseRoom;
+				In7!ReleaseRoom;
+				In9!ReleaseRoom;
+				In10!ReleaseRoom;
+				In14!ReleaseRoom;
+				In15!ReleaseRoom;
+				skip
+			case "S3" then
+				In3!ReleaseRoom;
+				In4!ReleaseRoom;
+				In5!ReleaseRoom;
+				In7!ReleaseRoom;
+				In8!ReleaseRoom;
+				In11!ReleaseRoom;
+				In12!ReleaseRoom;
+				In14!ReleaseRoom;
+				In15!ReleaseRoom;
+				skip
+			case "S4" then
+				In1!ReleaseRoom;
+				In5!ReleaseRoom;
+				In6!ReleaseRoom;
+				In7!ReleaseRoom;
+				In8!ReleaseRoom;
+				In9!ReleaseRoom;
+				In10!ReleaseRoom;
+				In12!ReleaseRoom;
+				In13!ReleaseRoom;
+				skip
+			case "S5" then
+				In1!ReleaseRoom;
+				In3!ReleaseRoom;
+				In5!ReleaseRoom;
+				In6!ReleaseRoom;
+				In8!ReleaseRoom;
+				In10!ReleaseRoom;
+				In11!ReleaseRoom;
+				In12!ReleaseRoom;
+				In13!ReleaseRoom;
+				In15!ReleaseRoom;
+				skip
+			case "S6" then
+				In2!ReleaseRoom;
+				In3!ReleaseRoom;
+				In4!ReleaseRoom;
+				In5!ReleaseRoom;
+				In6!ReleaseRoom;
+				In8!ReleaseRoom;
+				In9!ReleaseRoom;
+				In10!ReleaseRoom;
+				In12!ReleaseRoom;
+				In14!ReleaseRoom;
+				skip
+			case "S7" then
+				In1!ReleaseRoom;
+				In2!ReleaseRoom;
+				In4!ReleaseRoom;
+				In5!ReleaseRoom;
+				In7!ReleaseRoom;
+				In8!ReleaseRoom;
+				In11!ReleaseRoom;
+				In12!ReleaseRoom;
+				In15!ReleaseRoom;
+				skip
+			case "S8" then
+				In1!ReleaseRoom;
+				In6!ReleaseRoom;
+				In7!ReleaseRoom;
+				In9!ReleaseRoom;
+				In12!ReleaseRoom;
+				In13!ReleaseRoom;
+				In14!ReleaseRoom;
+				In15!ReleaseRoom;
+				skip
+			case "S9" then
+				In1!ReleaseRoom;
+				In2!ReleaseRoom;
+				In3!ReleaseRoom;
+				In4!ReleaseRoom;
+				In5!ReleaseRoom;
+				In6!ReleaseRoom;
+				In8!ReleaseRoom;
+				In9!ReleaseRoom;
+				In11!ReleaseRoom;
+				In12!ReleaseRoom;
+				In13!ReleaseRoom;
+				In14!ReleaseRoom;
+				skip
+			case "S10" then
+				In2!ReleaseRoom;
+				In3!ReleaseRoom;
+				In4!ReleaseRoom;
+				In5!ReleaseRoom;
+				In6!ReleaseRoom;
+				In7!ReleaseRoom;
+				In8!ReleaseRoom;
+				In9!ReleaseRoom;
+				In10!ReleaseRoom;
+				In12!ReleaseRoom;
+				In13!ReleaseRoom;
+				In14!ReleaseRoom;
+				skip
+		od
+
+	@SuppressWarnings("unused")
+	ReserveSpaceForWrites(Scenario : String)()
+		Out!ReserveRoom(1);
+		Out?ReservationSuccessful
+
+	@SuppressWarnings("unused")
+	PerformWrites(Scenario : String)()
+		Out!WriteTokens

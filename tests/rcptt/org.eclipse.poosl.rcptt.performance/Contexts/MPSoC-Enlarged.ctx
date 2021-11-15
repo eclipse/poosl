@@ -1,0 +1,29 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: MPSoC-Enlarged
+Element-Type: context
+Element-Version: 2.0
+Id: _bbsQoEGDEey4erS6SCpOOw
+Runtime-Version: 2.5.1.M3
+Save-Time: 11/10/21, 10:40 AM
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+This project contains a very large file 'application/task_others.poosl' which takes several second to validate. 
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVkk9LxDAQxe+C3yHk
+vomKiJTWPdQigssqPehN0nS2GzdNQhJt/famf5VFKt4y4TfvvZkkXre1RB9gndAqwefkDCNQXJdCVQl+
+97vVNV7fnJ7E2lYEuBTGAbHceE+4b0mj7cEZxiF6nk6pVh5aj9paRLPuRacbnJSLwn2C996biNKmaYiu
+KxLE6cvmfkL+8JrbJ6Zr7zkaODpzGClWB3rzmOt0lSnJbAUlRqJM8GtRuCed3d1m8HkJNr/KU7PdNjiM
+ilDMuxmU74tQGqvfgPsHoQ5u1PwZ0WjtJJGisMwKcBiN/G+UKIFAy2oje5D5fYJHN7qkSReyHM+3YD9s
+04DdaVsz1e1oyDC+mqNHYoNvTL83EtP/foXQ9AVQSwcIXckUlBoBAABnAgAAUEsBAhQAFAAICAgAAAAh
+AF3JFJQaAQAAZwIAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEA
+PwAAAFkBAAAAAA==
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--

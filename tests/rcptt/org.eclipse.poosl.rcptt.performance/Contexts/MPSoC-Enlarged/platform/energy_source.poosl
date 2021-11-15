@@ -1,0 +1,115 @@
+importlib "performance.poosl"
+
+data class BatteryStatus extends Object
+variables
+	NumberOfSamples : Integer,
+	Power : Real,
+	AveragePower : LongRunTimeAverage,
+	PreviousUpdateTime : Real,
+	PeakPower : Real,
+	ObservedAverageTime : Real,
+	ObservedAveragePower : Real
+methods
+	stopConsumption(P, CurrentTime : Real) : BatteryStatus | Factor : Real |
+		NumberOfSamples := NumberOfSamples + 1;
+		Factor := (NumberOfSamples - 1) asReal / NumberOfSamples asReal;
+		ObservedAveragePower := (Factor * ObservedAveragePower) + (Power * (CurrentTime - PreviousUpdateTime)) /
+			NumberOfSamples asReal;
+		ObservedAverageTime := (Factor * ObservedAverageTime) + (CurrentTime - PreviousUpdateTime) / NumberOfSamples
+			asReal;
+		PreviousUpdateTime := CurrentTime;
+		Power := Power - P;
+		AveragePower rewardBM(Power, CurrentTime);
+		return self
+
+	startConsumption(P, CurrentTime : Real) : BatteryStatus | Factor : Real |
+		NumberOfSamples := NumberOfSamples + 1;
+		Factor := (NumberOfSamples - 1) asReal / NumberOfSamples asReal;
+		ObservedAveragePower := (Factor * ObservedAveragePower) + (Power * (CurrentTime - PreviousUpdateTime)) /
+			NumberOfSamples asReal;
+		ObservedAverageTime := (Factor * ObservedAverageTime) + (CurrentTime - PreviousUpdateTime) / NumberOfSamples
+			asReal;
+		PreviousUpdateTime := CurrentTime;
+		Power := Power + P;
+		if Power > PeakPower then
+			PeakPower := Power
+		fi;
+		AveragePower rewardBM(Power, CurrentTime);
+		return self
+
+	@Init
+	init : BatteryStatus
+		Power := 0.0;
+		PeakPower := 0.0;
+		AveragePower := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+		NumberOfSamples := 0;
+		ObservedAveragePower := 0.0;
+		ObservedAverageTime := 0.0;
+		PreviousUpdateTime := 0.0;
+		return self
+
+	log : BatteryStatus | LogFile : FileOut |
+		LogFile := new(FileOut) destination("Battery.log") open;
+		LogFile write("Peak Power Consumption: " + PeakPower printString + " Watts" cr cr);
+		if (NumberOfSamples < 20000) then
+			LogFile write("Observed Average Power: " + (ObservedAveragePower / ObservedAverageTime) printString +
+				" Watts")
+		else
+			LogFile write("Statistics for Average Power Consumption:" cr + AveragePower logStatistics)
+		fi;
+		LogFile close;
+		return self
+
+	printString : String | PrintString : String |
+		PrintString := "Current Power Consumption: " + Power printString + " Watts" cr cr + "Peak Power Consumption: " +
+			PeakPower printString + " Watts" cr cr;
+		if (NumberOfSamples < 20000) then
+			PrintString := PrintString + "Observed Average Power: " + (ObservedAveragePower / ObservedAverageTime)
+				printString + " Watts"
+		else
+			PrintString := PrintString + "Statistics for Average Power Consumption:" cr + AveragePower printStatistics
+		fi;
+		return PrintString
+
+	accurate : Boolean
+		return AveragePower accurate
+
+process class EnergySource()
+ports
+	Power,
+	Monitor
+messages
+	Monitor!AccuracyStatus(Boolean),
+	Monitor!InitialiseMonitor(String),
+	Monitor?Status(String),
+	Monitor?StopSimulation(),
+	Power?StartConsumption(Real),
+	Power?StopConsumption(Real)
+variables
+	Status : BatteryStatus
+init
+	Initialise()()
+methods
+	Initialise()()
+		Status := new(BatteryStatus) init;
+		Monitor!InitialiseMonitor("Battery");
+		abort
+			par
+				HandleConsumptions()()
+			and
+				CheckAccuracyStatus()()
+			rap
+		with Monitor?StopSimulation {Status log}
+
+	HandleConsumptions()() | Power : Real |
+		sel
+			Power?StartConsumption(Power) {Status startConsumption(Power, currentTime)}
+		or
+			Power?StopConsumption(Power) {Status stopConsumption(Power, currentTime)}
+		les;
+		HandleConsumptions()()
+
+	CheckAccuracyStatus()() | ID : String |
+		Monitor?Status(ID | ID = "Battery");
+		Monitor!AccuracyStatus(Status accurate);
+		CheckAccuracyStatus()()

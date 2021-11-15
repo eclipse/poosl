@@ -1,0 +1,72 @@
+import "application/application.poosl"
+import "platform/platform.poosl"
+
+/* Process Classes */
+process class SimulationController(AccuracyCheckInterval : Real, MaximumSimulationTime : Real)
+ports
+	Monitor
+messages
+	Monitor!ApplicationStatus(),
+	Monitor!PlatformStatus(),
+	Monitor!StopSimulation(),
+	Monitor?ApplicationAccuracyStatus(Boolean),
+	Monitor?Iterate(Boolean),
+	Monitor?PlatformAccuracyStatus(Boolean)
+variables
+	Status : Array
+init
+	Initialise()()
+methods
+	CheckAccuracyStatus()() | Accurate : Boolean |
+		delay (AccuracyCheckInterval);
+		Monitor!ApplicationStatus;
+		Monitor?ApplicationAccuracyStatus(Accurate) {Status putAt(1, Accurate)};
+		Monitor!PlatformStatus;
+		Monitor?PlatformAccuracyStatus(Accurate) {Status putAt(2, Accurate)};
+		if (Status at(1) & Status at(2)) not then
+			CheckAccuracyStatus()()
+		fi
+
+	Initialise()() | Iterate : Boolean |
+		Monitor?Iterate(Iterate);
+		Status := new(Array) resize(2);
+		if Iterate then
+			abort
+				CheckAccuracyStatus()()
+			with delay (MaximumSimulationTime)
+		else
+			delay (MaximumSimulationTime)
+		fi;
+		abort
+			while true do
+				Monitor!StopSimulation
+			od
+		with delay (1.0e-12)
+
+/* System Specification */
+system
+instances
+	Application : Application(DesiredLatency := 1.0 / 500.0, DesiredThroughput := 800.0, Iterate := true, MapTask1To :=
+		"Node12", MapTask2To := "Node18", MapTask3To := "Node8", MapTask4To := "Node2", MapTask5To := "Node13",
+		MapTask6To := "Node9", MapTask7To := "Node12", MapTask8To := "Node8", MapTask9To := "Node12", MapTask10To :=
+		"Node15", MapTask11To := "Node1", MapTask12To := "Node2", MapTask13To := "Node4", MapTask14To := "Node15",
+		MapTask15To := "Node16", MapTask16To := "Node17", MapTask17To := "Node3", MapTask18To := "Node9", MapTask19To :=
+		"Node4", MapTask20To := "Node11", MapTask21To := "Node4", MapTask22To := "Node8", MapTask23To := "Node14",
+		MapTask24To := "Node13", MapTask25To := "Node4", MapTask26To := "Node12", MapTask27To := "Node19", MapTask28To
+		:= "Node16", MapTask29To := "Node18", MapTask30To := "Node7", MapTask31To := "Node15", MapTask32To := "Node7",
+		MapTask33To := "Node9", MapTask34To := "Node11", MapTask35To := "Node1", PriorityTask1 := 1, PriorityTask2 := 2,
+		PriorityTask3 := 3, PriorityTask4 := 4, PriorityTask5 := 5, PriorityTask6 := 6, PriorityTask7 := 7,
+		PriorityTask8 := 8, PriorityTask9 := 9, PriorityTask10 := 10, PriorityTask11 := 11, PriorityTask12 := 12,
+		PriorityTask13 := 13, PriorityTask14 := 14, PriorityTask15 := 15, PriorityTask16 := 16, PriorityTask17 := 17,
+		PriorityTask18 := 18, PriorityTask19 := 19, PriorityTask20 := 20, PriorityTask21 := 21, PriorityTask22 := 22,
+		PriorityTask23 := 23, PriorityTask24 := 24, PriorityTask25 := 25, PriorityTask26 := 26, PriorityTask27 := 27,
+		PriorityTask28 := 28, PriorityTask29 := 29, PriorityTask30 := 30, PriorityTask31 := 31, PriorityTask32 := 32,
+		PriorityTask33 := 33, PriorityTask34 := 34, PriorityTask35 := 35)
+	MPSoC : Platform(NoC_BandwidthPerConnection := 200000000.0, NoC_ConnectionSetUpLatency := 0.00002,
+		Node_InternalBandwidth := 400000000.0, Node_InternalConnectionSetUpLatency := 0.00001, PowerPerCommunicatedByte
+		:= 0.0000005, PowerPerStoredByte := 0.000001)
+	SimulationController : SimulationController(AccuracyCheckInterval := 0.003, MaximumSimulationTime := 50.0)
+channels
+	{ Application.Tasks, MPSoC.ComputationResources }
+	{ Application.Buffers, MPSoC.CommunicationResources }
+	{ Application.SimulationController, MPSoC.SimulationController, SimulationController.Monitor }

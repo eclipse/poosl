@@ -1,0 +1,157 @@
+import "operating_system.poosl"
+import "processing_unit.poosl"
+import "storage_unit.poosl"
+import "communication_unit.poosl"
+import "energy_source.poosl"
+import "platform_monitor.poosl"
+
+cluster class NetworkOnChip(BandwidthPerConnection : Real, ConnectionSetUpLatency : Real, NetworkName : String,
+	PowerPerCommunicatedByte : Real, PowerPerStoredByte : Real)
+ports
+	Power,
+	Communications,
+	Monitor
+instances
+	BufferMemory : StorageUnit(PowerPerByte := PowerPerStoredByte)
+	RouterNetwork : CommunicationUnit(BandwidthPerConnection := BandwidthPerConnection, ConnectionSetUpLatency :=
+		ConnectionSetUpLatency, NodeName := NetworkName, PowerPerByte := PowerPerCommunicatedByte)
+channels
+	{ BufferMemory.Access, RouterNetwork.Memory }
+	{ Power, BufferMemory.Power, RouterNetwork.Power }
+	{ Monitor, BufferMemory.Monitor, RouterNetwork.Monitor }
+	{ Communications, RouterNetwork.Communications }
+
+cluster class ProcessorNode(
+		CommunicationBandwidth : Real,
+		ConnectionSetUpLatency : Real,
+		NodeName : String,
+		OSPolicy : String,
+		PowerPerCommunicatedByte : Real,
+		PowerPerStoredByte : Real,
+		ProcessorType : String,
+		VoltageScaleFactor : Real)
+ports
+	Power,
+	Communications,
+	Computations,
+	Monitor
+instances
+	InterConnect : CommunicationUnit(BandwidthPerConnection := CommunicationBandwidth, ConnectionSetUpLatency :=
+		ConnectionSetUpLatency, NodeName := NodeName, PowerPerByte := PowerPerCommunicatedByte)
+	DataMemory : StorageUnit(PowerPerByte := PowerPerStoredByte)
+	BufferMemory : StorageUnit(PowerPerByte := PowerPerStoredByte)
+	OperatingSystem : OperatingSystem(NodeName := NodeName, Policy := OSPolicy)
+	Processor : ProcessingUnit(NodeName := NodeName, Type := ProcessorType, VoltageScaleFactor := VoltageScaleFactor)
+channels
+	{ OperatingSystem.Processor, Processor.OS }
+	{ InterConnect.Memory, BufferMemory.Access }
+	{ Processor.Memory, DataMemory.Access }
+	{ Computations, OperatingSystem.Task }
+	{ Communications, InterConnect.Communications }
+	{ Power, InterConnect.Power, DataMemory.Power, BufferMemory.Power, Processor.Power }
+	{ Monitor, InterConnect.Monitor, DataMemory.Monitor, BufferMemory.Monitor, Processor.Monitor }
+
+cluster class Platform(
+		NoC_BandwidthPerConnection : Real,
+		NoC_ConnectionSetUpLatency : Real,
+		Node_InternalBandwidth : Real,
+		Node_InternalConnectionSetUpLatency : Real,
+		PowerPerCommunicatedByte : Real,
+		PowerPerStoredByte : Real)
+ports
+	SimulationController,
+	CommunicationResources,
+	ComputationResources
+instances
+	Node1 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node1", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node2 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node2", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "ARM", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node3 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node3", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "TriMedia", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node4 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node4", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node5 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node5", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "ARM", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node6 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node6", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "TriMedia", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node7 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node7", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node8 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node8", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "ARM", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node9 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node9", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "TriMedia", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node10 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node10", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node11 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node11", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "ARM", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node12 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node12", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "TriMedia", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node13 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node13", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node14 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node14", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "ARM", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node15 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node15", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "TriMedia", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node16 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node16", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node17 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node17", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "ARM", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node18 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node18", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "TriMedia", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node19 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node19", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "MIPS", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	Node20 : ProcessorNode(CommunicationBandwidth := Node_InternalBandwidth, ConnectionSetUpLatency :=
+		Node_InternalConnectionSetUpLatency, NodeName := "Node20", OSPolicy := "PB", PowerPerCommunicatedByte :=
+		PowerPerCommunicatedByte, PowerPerStoredByte := PowerPerStoredByte, ProcessorType := "ARM", VoltageScaleFactor
+		:= 1.0 / 1.0)
+	NoC : NetworkOnChip(BandwidthPerConnection := NoC_BandwidthPerConnection, ConnectionSetUpLatency :=
+		NoC_ConnectionSetUpLatency, NetworkName := "NoC", PowerPerCommunicatedByte := PowerPerCommunicatedByte,
+		PowerPerStoredByte := PowerPerStoredByte)
+	Battery : EnergySource()
+	PlatformMonitor : PlatformMonitor()
+channels
+	{ Node1.Power, Node2.Power, Node3.Power, Node4.Power, Node5.Power, Node6.Power, Node7.Power, Node8.Power, Node9.Power, Node10.Power, Node11.Power, Node12.Power, Node13.Power, Node14.Power, Node15.Power, Node16.Power, Node17.Power, Node18.Power, Node19.Power, Node20.Power, NoC.Power, Battery.Power }
+	{ Node1.Monitor, Node2.Monitor, Node3.Monitor, Node4.Monitor, Node5.Monitor, Node6.Monitor, Node7.Monitor, Node8.Monitor, Node9.Monitor, Node10.Monitor, Node11.Monitor, Node12.Monitor, Node13.Monitor, Node14.Monitor, Node15.Monitor, Node16.Monitor, Node17.Monitor, Node18.Monitor, Node19.Monitor, Node20.Monitor, NoC.Monitor, PlatformMonitor.Monitor }
+	{ ComputationResources, Node1.Computations, Node2.Computations, Node3.Computations, Node4.Computations, Node5.Computations, Node6.Computations, Node7.Computations, Node8.Computations, Node9.Computations, Node10.Computations, Node11.Computations, Node12.Computations, Node13.Computations, Node14.Computations, Node15.Computations, Node16.Computations, Node17.Computations, Node18.Computations, Node19.Computations, Node20.Computations }
+	{ CommunicationResources, Node1.Communications, Node2.Communications, Node3.Communications, Node4.Communications, Node5.Communications, Node6.Communications, Node7.Communications, Node8.Communications, Node9.Communications, Node10.Communications, Node11.Communications, Node12.Communications, Node13.Communications, Node14.Communications, Node15.Communications, Node16.Communications, Node17.Communications, Node18.Communications, Node19.Communications, Node20.Communications, NoC.Communications }
+	{ SimulationController, PlatformMonitor.SimulationController }
+

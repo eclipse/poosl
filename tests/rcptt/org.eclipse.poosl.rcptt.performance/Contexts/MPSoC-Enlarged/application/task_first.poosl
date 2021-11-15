@@ -1,0 +1,1230 @@
+importlib "distributions.poosl"
+
+data class MarkovChain extends Object
+variables
+	NumberOfStates : Integer,
+	Random : Uniform,
+	Transitions : Array,
+	StateSpace : Array,
+	CurrentState : String
+methods
+	@Init
+	init : MarkovChain
+		NumberOfStates := 0;
+		StateSpace := new(Array);
+		Transitions := new(Array);
+		Random := new(Uniform) withParameters(0.0, 1.0);
+		return self
+
+	addTransition(State : String, NextState : String, LowerBound : Real, UpperBound : Real) : MarkovChain | i,
+			StateNumber : Integer, T, A : Array |
+		i := 1;
+		while i <= StateSpace size do
+			if StateSpace at(i) = State then
+				StateNumber := i
+			fi;
+			i := i + 1
+		od;
+		T := Transitions at(StateNumber);
+		A := new(Array) resize(3);
+		A putAt(1, NextState) putAt(2, LowerBound) putAt(3, UpperBound);
+		T resize(T size + 1);
+		T putAt(T size, A);
+		return self
+
+	setInitialState(State : String) : MarkovChain
+		CurrentState := State;
+		return self
+
+	getNextScenario : String | NextState : String, i, StateNumber : Integer, T : Array, Sample : Real |
+		i := 1;
+		while i <= StateSpace size do
+			if StateSpace at(i) = CurrentState then
+				StateNumber := i
+			fi;
+			i := i + 1
+		od;
+		T := Transitions at(StateNumber);
+		Sample := Random sample;
+		i := 1;
+		while i <= T size do
+			if ((Sample > T at(i) at(2)) & (Sample <= T at(i) at(3))) then
+				NextState := T at(i) at(1)
+			fi;
+			i := i + 1
+		od;
+		CurrentState := NextState;
+		return NextState
+
+	addState(State : String) : MarkovChain
+		NumberOfStates := NumberOfStates + 1;
+		StateSpace resize(NumberOfStates);
+		StateSpace putAt(NumberOfStates, State);
+		Transitions resize(NumberOfStates);
+		Transitions putAt(NumberOfStates, new(Array));
+		return self
+
+process class TaskFirst(Iterate : Boolean, MapTo : String, Name : String, Priority : Integer)
+ports
+	In
+	Out1
+	Out2
+	Out3
+	Out4
+	Out5
+	Out6
+	Out7
+	Out8
+	Out9
+	Out10
+	Out11
+	Out12
+	Out13
+	Out14
+	Out15
+	Out16
+	Out17
+	Out18
+	Out19
+	Out20
+	Out21
+	Out22
+	Computation
+	Control2,
+	Control3,
+	Control4,
+	Control5,
+	Control6,
+	Control7,
+	Control8,
+	Control9,
+	Control10,
+	Control11,
+	Control12,
+	Control13,
+	Control14,
+	Control15,
+	Control16,
+	Control17,
+	Control18,
+	Control19,
+	Control20,
+	Control21,
+	Control22,
+	Control23,
+	Control24,
+	Control25,
+	Control26,
+	Control27,
+	Control28,
+	Control29,
+	Control30,
+	Control31,
+	Control32,
+	Control33,
+	Control34,
+	Control35,
+	Monitor
+messages
+	Computation!Execute(String, String, Integer, String),
+	Computation!Use(String),
+	Computation?ExecutionCompleted(String),
+	Control2!MappedTo(String),
+	Control2!ReserveRoom(Integer),
+	Control2!WriteTokens(String),
+	Control2?ReservationSuccessful(),
+	Control3!MappedTo(String),
+	Control3!ReserveRoom(Integer),
+	Control3!WriteTokens(String),
+	Control3?ReservationSuccessful(),
+	Control4!MappedTo(String),
+	Control4!ReserveRoom(Integer),
+	Control4!WriteTokens(String),
+	Control4?ReservationSuccessful(),
+	Control5!MappedTo(String),
+	Control5!ReserveRoom(Integer),
+	Control5!WriteTokens(String),
+	Control5?ReservationSuccessful(),
+	Control6!MappedTo(String),
+	Control6!ReserveRoom(Integer),
+	Control6!WriteTokens(String),
+	Control6?ReservationSuccessful(),
+	Control7!MappedTo(String),
+	Control7!ReserveRoom(Integer),
+	Control7!WriteTokens(String),
+	Control7?ReservationSuccessful(),
+	Control8!MappedTo(String),
+	Control8!ReserveRoom(Integer),
+	Control8!WriteTokens(String),
+	Control8?ReservationSuccessful(),
+	Control9!MappedTo(String),
+	Control9!ReserveRoom(Integer),
+	Control9!WriteTokens(String),
+	Control9?ReservationSuccessful(),
+	Control10!MappedTo(String),
+	Control10!ReserveRoom(Integer),
+	Control10!WriteTokens(String),
+	Control10?ReservationSuccessful(),
+	Control11!MappedTo(String),
+	Control11!ReserveRoom(Integer),
+	Control11!WriteTokens(String),
+	Control11?ReservationSuccessful(),
+	Control12!MappedTo(String),
+	Control12!ReserveRoom(Integer),
+	Control12!WriteTokens(String),
+	Control12?ReservationSuccessful(),
+	Control13!MappedTo(String),
+	Control13!ReserveRoom(Integer),
+	Control13!WriteTokens(String),
+	Control13?ReservationSuccessful(),
+	Control14!MappedTo(String),
+	Control14!ReserveRoom(Integer),
+	Control14!WriteTokens(String),
+	Control14?ReservationSuccessful(),
+	Control15!MappedTo(String),
+	Control15!ReserveRoom(Integer),
+	Control15!WriteTokens(String),
+	Control15?ReservationSuccessful(),
+	Control16!MappedTo(String),
+	Control16!ReserveRoom(Integer),
+	Control16!WriteTokens(String),
+	Control16?ReservationSuccessful(),
+	Control17!MappedTo(String),
+	Control17!ReserveRoom(Integer),
+	Control17!WriteTokens(String),
+	Control17?ReservationSuccessful(),
+	Control18!MappedTo(String),
+	Control18!ReserveRoom(Integer),
+	Control18!WriteTokens(String),
+	Control18?ReservationSuccessful(),
+	Control19!MappedTo(String),
+	Control19!ReserveRoom(Integer),
+	Control19!WriteTokens(String),
+	Control19?ReservationSuccessful(),
+	Control20!MappedTo(String),
+	Control20!ReserveRoom(Integer),
+	Control20!WriteTokens(String),
+	Control20?ReservationSuccessful(),
+	Control21!MappedTo(String),
+	Control21!ReserveRoom(Integer),
+	Control21!WriteTokens(String),
+	Control21?ReservationSuccessful(),
+	Control22!MappedTo(String),
+	Control22!ReserveRoom(Integer),
+	Control22!WriteTokens(String),
+	Control22?ReservationSuccessful(),
+	Control23!MappedTo(String),
+	Control23!ReserveRoom(Integer),
+	Control23!WriteTokens(String),
+	Control23?ReservationSuccessful(),
+	Control24!MappedTo(String),
+	Control24!ReserveRoom(Integer),
+	Control24!WriteTokens(String),
+	Control24?ReservationSuccessful(),
+	Control25!MappedTo(String),
+	Control25!ReserveRoom(Integer),
+	Control25!WriteTokens(String),
+	Control25?ReservationSuccessful(),
+	Control26!MappedTo(String),
+	Control26!ReserveRoom(Integer),
+	Control26!WriteTokens(String),
+	Control26?ReservationSuccessful(),
+	Control27!MappedTo(String),
+	Control27!ReserveRoom(Integer),
+	Control27!WriteTokens(String),
+	Control27?ReservationSuccessful(),
+	Control28!MappedTo(String),
+	Control28!ReserveRoom(Integer),
+	Control28!WriteTokens(String),
+	Control28?ReservationSuccessful(),
+	Control29!MappedTo(String),
+	Control29!ReserveRoom(Integer),
+	Control29!WriteTokens(String),
+	Control29?ReservationSuccessful(),
+	Control30!MappedTo(String),
+	Control30!ReserveRoom(Integer),
+	Control30!WriteTokens(String),
+	Control30?ReservationSuccessful(),
+	Control31!MappedTo(String),
+	Control31!ReserveRoom(Integer),
+	Control31!WriteTokens(String),
+	Control31?ReservationSuccessful(),
+	Control32!MappedTo(String),
+	Control32!ReserveRoom(Integer),
+	Control32!WriteTokens(String),
+	Control32?ReservationSuccessful(),
+	Control33!MappedTo(String),
+	Control33!ReserveRoom(Integer),
+	Control33!WriteTokens(String),
+	Control33?ReservationSuccessful(),
+	Control34!MappedTo(String),
+	Control34!ReserveRoom(Integer),
+	Control34!WriteTokens(String),
+	Control34?ReservationSuccessful(),
+	Control35!MappedTo(String),
+	Control35!ReserveRoom(Integer),
+	Control35!WriteTokens(String),
+	Control35?ReservationSuccessful(),
+	In!InspectTokenAvailability(Integer),
+	In!MappedTo(String),
+	In!ReleaseRoom(),
+	In?TokensAvailable(),
+	Out1!MappedTo(String),
+	Out1!ReserveRoom(Integer),
+	Out1!WriteTokens(),
+	Out1?ReservationSuccessful(),
+	Out2!MappedTo(String),
+	Out2!ReserveRoom(Integer),
+	Out2!WriteTokens(),
+	Out2?ReservationSuccessful(),
+	Out3!MappedTo(String),
+	Out3!ReserveRoom(Integer),
+	Out3!WriteTokens(),
+	Out3?ReservationSuccessful(),
+	Out4!MappedTo(String),
+	Out4!ReserveRoom(Integer),
+	Out4!WriteTokens(),
+	Out4?ReservationSuccessful(),
+	Out5!MappedTo(String),
+	Out5!ReserveRoom(Integer),
+	Out5!WriteTokens(),
+	Out5?ReservationSuccessful(),
+	Out6!MappedTo(String),
+	Out6!ReserveRoom(Integer),
+	Out6!WriteTokens(),
+	Out6?ReservationSuccessful(),
+	Out7!MappedTo(String),
+	Out7!ReserveRoom(Integer),
+	Out7!WriteTokens(),
+	Out7?ReservationSuccessful(),
+	Out8!MappedTo(String),
+	Out8!ReserveRoom(Integer),
+	Out8!WriteTokens(),
+	Out8?ReservationSuccessful(),
+	Out9!MappedTo(String),
+	Out9!ReserveRoom(Integer),
+	Out9!WriteTokens(),
+	Out9?ReservationSuccessful(),
+	Out10!MappedTo(String),
+	Out10!ReserveRoom(Integer),
+	Out10!WriteTokens(),
+	Out10?ReservationSuccessful(),
+	Out11!MappedTo(String),
+	Out11!ReserveRoom(Integer),
+	Out11!WriteTokens(),
+	Out11?ReservationSuccessful(),
+	Out12!MappedTo(String),
+	Out12!ReserveRoom(Integer),
+	Out12!WriteTokens(),
+	Out12?ReservationSuccessful(),
+	Out13!MappedTo(String),
+	Out13!ReserveRoom(Integer),
+	Out13!WriteTokens(),
+	Out13?ReservationSuccessful(),
+	Out14!MappedTo(String),
+	Out14!ReserveRoom(Integer),
+	Out14!WriteTokens(),
+	Out14?ReservationSuccessful(),
+	Out15!MappedTo(String),
+	Out15!ReserveRoom(Integer),
+	Out15!WriteTokens(),
+	Out15?ReservationSuccessful(),
+	Out16!MappedTo(String),
+	Out16!ReserveRoom(Integer),
+	Out16!WriteTokens(),
+	Out16?ReservationSuccessful(),
+	Out17!MappedTo(String),
+	Out17!ReserveRoom(Integer),
+	Out17!WriteTokens(),
+	Out17?ReservationSuccessful(),
+	Out18!MappedTo(String),
+	Out18!ReserveRoom(Integer),
+	Out18!WriteTokens(),
+	Out18?ReservationSuccessful(),
+	Out19!MappedTo(String),
+	Out19!ReserveRoom(Integer),
+	Out19!WriteTokens(),
+	Out19?ReservationSuccessful(),
+	Out20!MappedTo(String),
+	Out20!ReserveRoom(Integer),
+	Out20!WriteTokens(),
+	Out20?ReservationSuccessful(),
+	Out21!MappedTo(String),
+	Out21!ReserveRoom(Integer),
+	Out21!WriteTokens(),
+	Out21?ReservationSuccessful(),
+	Out22!MappedTo(String),
+	Out22!ReserveRoom(Integer),
+	Out22!WriteTokens(),
+	Out22?ReservationSuccessful(),
+	Monitor?StopSimulation()
+variables
+	MarkovChain : MarkovChain
+init
+	Initialise()()
+methods
+	Initialise()()
+		NotifyBuffersAboutMapping()();
+		NotifyPlatformAboutMapping()();
+		{
+			MarkovChain := new(MarkovChain) init;
+			MarkovChain addState("S1");
+			MarkovChain addTransition("S1", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S1", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S2");
+			MarkovChain addTransition("S2", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S2", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S3");
+			MarkovChain addTransition("S3", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S3", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S4");
+			MarkovChain addTransition("S4", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S4", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S5");
+			MarkovChain addTransition("S5", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S5", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S6");
+			MarkovChain addTransition("S6", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S6", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S7");
+			MarkovChain addTransition("S7", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S7", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S8");
+			MarkovChain addTransition("S8", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S8", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S9");
+			MarkovChain addTransition("S9", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S9", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain addState("S10");
+			MarkovChain addTransition("S10", "S1", 0.0 * (1.0 / 10.0), 1.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S2", 1.0 * (1.0 / 10.0), 2.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S3", 2.0 * (1.0 / 10.0), 3.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S4", 3.0 * (1.0 / 10.0), 4.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S5", 4.0 * (1.0 / 10.0), 5.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S6", 5.0 * (1.0 / 10.0), 6.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S7", 6.0 * (1.0 / 10.0), 7.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S8", 7.0 * (1.0 / 10.0), 8.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S9", 8.0 * (1.0 / 10.0), 9.0 * (1.0 / 10.0));
+			MarkovChain addTransition("S10", "S10", 9.0 * (1.0 / 10.0), 10.0 * (1.0 / 10.0));
+			MarkovChain setInitialState("S1")
+		};
+		abort
+			Fire()()
+		with Monitor?StopSimulation
+
+	NotifyBuffersAboutMapping()()
+		par
+			In!MappedTo(MapTo)
+		and
+			Out1!MappedTo(MapTo)
+		and
+			Out2!MappedTo(MapTo)
+		and
+			Out3!MappedTo(MapTo)
+		and
+			Out4!MappedTo(MapTo)
+		and
+			Out5!MappedTo(MapTo)
+		and
+			Out6!MappedTo(MapTo)
+		and
+			Out7!MappedTo(MapTo)
+		and
+			Out8!MappedTo(MapTo)
+		and
+			Out9!MappedTo(MapTo)
+		and
+			Out10!MappedTo(MapTo)
+		and
+			Out11!MappedTo(MapTo)
+		and
+			Out12!MappedTo(MapTo)
+		and
+			Out13!MappedTo(MapTo)
+		and
+			Out14!MappedTo(MapTo)
+		and
+			Out15!MappedTo(MapTo)
+		and
+			Out16!MappedTo(MapTo)
+		and
+			Out17!MappedTo(MapTo)
+		and
+			Out18!MappedTo(MapTo)
+		and
+			Out19!MappedTo(MapTo)
+		and
+			Out20!MappedTo(MapTo)
+		and
+			Out21!MappedTo(MapTo)
+		and
+			Out22!MappedTo(MapTo)
+		and
+			Control2!MappedTo(MapTo)
+		and
+			Control3!MappedTo(MapTo)
+		and
+			Control4!MappedTo(MapTo)
+		and
+			Control5!MappedTo(MapTo)
+		and
+			Control6!MappedTo(MapTo)
+		and
+			Control7!MappedTo(MapTo)
+		and
+			Control8!MappedTo(MapTo)
+		and
+			Control9!MappedTo(MapTo)
+		and
+			Control10!MappedTo(MapTo)
+		and
+			Control11!MappedTo(MapTo)
+		and
+			Control12!MappedTo(MapTo)
+		and
+			Control13!MappedTo(MapTo)
+		and
+			Control14!MappedTo(MapTo)
+		and
+			Control15!MappedTo(MapTo)
+		and
+			Control16!MappedTo(MapTo)
+		and
+			Control17!MappedTo(MapTo)
+		and
+			Control18!MappedTo(MapTo)
+		and
+			Control19!MappedTo(MapTo)
+		and
+			Control20!MappedTo(MapTo)
+		and
+			Control21!MappedTo(MapTo)
+		and
+			Control22!MappedTo(MapTo)
+		and
+			Control23!MappedTo(MapTo)
+		and
+			Control24!MappedTo(MapTo)
+		and
+			Control25!MappedTo(MapTo)
+		and
+			Control26!MappedTo(MapTo)
+		and
+			Control27!MappedTo(MapTo)
+		and
+			Control28!MappedTo(MapTo)
+		and
+			Control29!MappedTo(MapTo)
+		and
+			Control30!MappedTo(MapTo)
+		and
+			Control31!MappedTo(MapTo)
+		and
+			Control32!MappedTo(MapTo)
+		and
+			Control33!MappedTo(MapTo)
+		and
+			Control34!MappedTo(MapTo)
+		and
+			Control35!MappedTo(MapTo)
+		rap
+
+	NotifyPlatformAboutMapping()()
+		Computation!Use(MapTo)
+
+	Fire()() | Scenario : String |
+		if Iterate then
+			Scenario := MarkovChain getNextScenario
+		else
+			Scenario := "S1"
+		fi;
+		CheckTokenAvailabilityForReads(Scenario)();
+		ReserveSpaceForWrites(Scenario)();
+		Execute(Scenario)();
+		ReleaseSpaceForReads(Scenario)();
+		PerformWrites(Scenario)();
+		if Iterate then
+			Fire()()
+		fi
+
+	Execute(Scenario : String)() | N : String |
+		Computation!Execute(Name, Scenario, Priority, MapTo);
+		Computation?ExecutionCompleted(N | N = Name)
+
+	@SuppressWarnings("unused")
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		In!InspectTokenAvailability(1);
+		In?TokensAvailable
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		In!ReleaseRoom
+
+	ReserveSpaceForWrites(Scenario : String)()
+		Control2!ReserveRoom(1);
+		Control2?ReservationSuccessful;
+		Control3!ReserveRoom(1);
+		Control3?ReservationSuccessful;
+		Control4!ReserveRoom(1);
+		Control4?ReservationSuccessful;
+		Control5!ReserveRoom(1);
+		Control5?ReservationSuccessful;
+		Control6!ReserveRoom(1);
+		Control6?ReservationSuccessful;
+		Control7!ReserveRoom(1);
+		Control7?ReservationSuccessful;
+		Control8!ReserveRoom(1);
+		Control8?ReservationSuccessful;
+		Control9!ReserveRoom(1);
+		Control9?ReservationSuccessful;
+		Control10!ReserveRoom(1);
+		Control10?ReservationSuccessful;
+		Control11!ReserveRoom(1);
+		Control11?ReservationSuccessful;
+		Control12!ReserveRoom(1);
+		Control12?ReservationSuccessful;
+		Control13!ReserveRoom(1);
+		Control13?ReservationSuccessful;
+		Control14!ReserveRoom(1);
+		Control14?ReservationSuccessful;
+		Control15!ReserveRoom(1);
+		Control15?ReservationSuccessful;
+		Control16!ReserveRoom(1);
+		Control16?ReservationSuccessful;
+		Control17!ReserveRoom(1);
+		Control17?ReservationSuccessful;
+		Control18!ReserveRoom(1);
+		Control18?ReservationSuccessful;
+		Control19!ReserveRoom(1);
+		Control19?ReservationSuccessful;
+		Control20!ReserveRoom(1);
+		Control20?ReservationSuccessful;
+		Control21!ReserveRoom(1);
+		Control21?ReservationSuccessful;
+		Control22!ReserveRoom(1);
+		Control22?ReservationSuccessful;
+		Control23!ReserveRoom(1);
+		Control23?ReservationSuccessful;
+		Control24!ReserveRoom(1);
+		Control24?ReservationSuccessful;
+		Control25!ReserveRoom(1);
+		Control25?ReservationSuccessful;
+		Control26!ReserveRoom(1);
+		Control26?ReservationSuccessful;
+		Control27!ReserveRoom(1);
+		Control27?ReservationSuccessful;
+		Control28!ReserveRoom(1);
+		Control28?ReservationSuccessful;
+		Control29!ReserveRoom(1);
+		Control29?ReservationSuccessful;
+		Control30!ReserveRoom(1);
+		Control30?ReservationSuccessful;
+		Control31!ReserveRoom(1);
+		Control31?ReservationSuccessful;
+		Control32!ReserveRoom(1);
+		Control32?ReservationSuccessful;
+		Control33!ReserveRoom(1);
+		Control33?ReservationSuccessful;
+		Control34!ReserveRoom(1);
+		Control34?ReservationSuccessful;
+		Control35!ReserveRoom(1);
+		Control35?ReservationSuccessful;
+		switch Scenario do
+			case "S1" then
+				Out1!ReserveRoom(4096);
+				Out1?ReservationSuccessful;
+				Out2!ReserveRoom(1024);
+				Out2?ReservationSuccessful;
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out5!ReserveRoom(2048);
+				Out5?ReservationSuccessful;
+				Out6!ReserveRoom(2048);
+				Out6?ReservationSuccessful;
+				Out7!ReserveRoom(4096);
+				Out7?ReservationSuccessful;
+				Out8!ReserveRoom(4096);
+				Out8?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out11!ReserveRoom(1024);
+				Out11?ReservationSuccessful;
+				Out12!ReserveRoom(2048);
+				Out12?ReservationSuccessful;
+				Out13!ReserveRoom(4096);
+				Out13?ReservationSuccessful;
+				Out15!ReserveRoom(4096);
+				Out15?ReservationSuccessful;
+				Out16!ReserveRoom(2048);
+				Out16?ReservationSuccessful;
+				Out20!ReserveRoom(4096);
+				Out20?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+			case "S2" then
+				Out3!ReserveRoom(4096);
+				Out3?ReservationSuccessful;
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out5!ReserveRoom(2048);
+				Out5?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out11!ReserveRoom(1024);
+				Out11?ReservationSuccessful;
+				Out12!ReserveRoom(2048);
+				Out12?ReservationSuccessful;
+				Out13!ReserveRoom(4096);
+				Out13?ReservationSuccessful;
+				Out14!ReserveRoom(1024);
+				Out14?ReservationSuccessful;
+				Out15!ReserveRoom(4096);
+				Out15?ReservationSuccessful;
+				Out16!ReserveRoom(2048);
+				Out16?ReservationSuccessful;
+				Out17!ReserveRoom(4096);
+				Out17?ReservationSuccessful;
+				Out19!ReserveRoom(1024);
+				Out19?ReservationSuccessful;
+				Out20!ReserveRoom(4096);
+				Out20?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+			case "S3" then
+				Out1!ReserveRoom(4096);
+				Out1?ReservationSuccessful;
+				Out2!ReserveRoom(1024);
+				Out2?ReservationSuccessful;
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out5!ReserveRoom(2048);
+				Out5?ReservationSuccessful;
+				Out8!ReserveRoom(4096);
+				Out8?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out11!ReserveRoom(1024);
+				Out11?ReservationSuccessful;
+				Out12!ReserveRoom(2048);
+				Out12?ReservationSuccessful;
+				Out14!ReserveRoom(1024);
+				Out14?ReservationSuccessful;
+				Out15!ReserveRoom(4096);
+				Out15?ReservationSuccessful;
+				Out17!ReserveRoom(4096);
+				Out17?ReservationSuccessful;
+				Out18!ReserveRoom(4096);
+				Out18?ReservationSuccessful;
+				Out20!ReserveRoom(4096);
+				Out20?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+			case "S4" then
+				Out1!ReserveRoom(4096);
+				Out1?ReservationSuccessful;
+				Out2!ReserveRoom(1024);
+				Out2?ReservationSuccessful;
+				Out6!ReserveRoom(2048);
+				Out6?ReservationSuccessful;
+				Out8!ReserveRoom(4096);
+				Out8?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out11!ReserveRoom(1024);
+				Out11?ReservationSuccessful;
+				Out12!ReserveRoom(2048);
+				Out12?ReservationSuccessful;
+				Out16!ReserveRoom(2048);
+				Out16?ReservationSuccessful;
+				Out17!ReserveRoom(4096);
+				Out17?ReservationSuccessful;
+				Out19!ReserveRoom(1024);
+				Out19?ReservationSuccessful;
+				Out20!ReserveRoom(4096);
+				Out20?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+			case "S5" then
+				Out2!ReserveRoom(1024);
+				Out2?ReservationSuccessful;
+				Out3!ReserveRoom(4096);
+				Out3?ReservationSuccessful;
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out6!ReserveRoom(2048);
+				Out6?ReservationSuccessful;
+				Out8!ReserveRoom(4096);
+				Out8?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out11!ReserveRoom(1024);
+				Out11?ReservationSuccessful;
+				Out12!ReserveRoom(2048);
+				Out12?ReservationSuccessful;
+				Out13!ReserveRoom(4096);
+				Out13?ReservationSuccessful;
+				Out14!ReserveRoom(1024);
+				Out14?ReservationSuccessful;
+				Out16!ReserveRoom(2048);
+				Out16?ReservationSuccessful;
+				Out17!ReserveRoom(4096);
+				Out17?ReservationSuccessful;
+				Out18!ReserveRoom(4096);
+				Out18?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+			case "S6" then
+				Out2!ReserveRoom(1024);
+				Out2?ReservationSuccessful;
+				Out3!ReserveRoom(4096);
+				Out3?ReservationSuccessful;
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out8!ReserveRoom(4096);
+				Out8?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out13!ReserveRoom(4096);
+				Out13?ReservationSuccessful;
+				Out15!ReserveRoom(4096);
+				Out15?ReservationSuccessful;
+				Out17!ReserveRoom(4096);
+				Out17?ReservationSuccessful;
+				Out19!ReserveRoom(1024);
+				Out19?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+			case "S7" then
+				Out1!ReserveRoom(4096);
+				Out1?ReservationSuccessful;
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out6!ReserveRoom(2048);
+				Out6?ReservationSuccessful;
+				Out7!ReserveRoom(4096);
+				Out7?ReservationSuccessful;
+				Out8!ReserveRoom(4096);
+				Out8?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out11!ReserveRoom(1024);
+				Out11?ReservationSuccessful;
+				Out13!ReserveRoom(4096);
+				Out13?ReservationSuccessful;
+				Out14!ReserveRoom(1024);
+				Out14?ReservationSuccessful;
+				Out15!ReserveRoom(4096);
+				Out15?ReservationSuccessful;
+				Out16!ReserveRoom(2048);
+				Out16?ReservationSuccessful;
+				Out17!ReserveRoom(4096);
+				Out17?ReservationSuccessful;
+				Out18!ReserveRoom(4096);
+				Out18?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+			case "S8" then
+				Out1!ReserveRoom(4096);
+				Out1?ReservationSuccessful;
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out6!ReserveRoom(2048);
+				Out6?ReservationSuccessful;
+				Out7!ReserveRoom(4096);
+				Out7?ReservationSuccessful;
+				Out8!ReserveRoom(4096);
+				Out8?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out11!ReserveRoom(1024);
+				Out11?ReservationSuccessful;
+				Out13!ReserveRoom(4096);
+				Out13?ReservationSuccessful;
+				Out14!ReserveRoom(1024);
+				Out14?ReservationSuccessful;
+				Out15!ReserveRoom(4096);
+				Out15?ReservationSuccessful;
+				Out19!ReserveRoom(1024);
+				Out19?ReservationSuccessful;
+				Out20!ReserveRoom(4096);
+				Out20?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				skip
+			case "S9" then
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out5!ReserveRoom(2048);
+				Out5?ReservationSuccessful;
+				Out6!ReserveRoom(2048);
+				Out6?ReservationSuccessful;
+				Out7!ReserveRoom(4096);
+				Out7?ReservationSuccessful;
+				Out8!ReserveRoom(4096);
+				Out8?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out11!ReserveRoom(1024);
+				Out11?ReservationSuccessful;
+				Out12!ReserveRoom(2048);
+				Out12?ReservationSuccessful;
+				Out13!ReserveRoom(4096);
+				Out13?ReservationSuccessful;
+				Out14!ReserveRoom(1024);
+				Out14?ReservationSuccessful;
+				Out15!ReserveRoom(4096);
+				Out15?ReservationSuccessful;
+				Out17!ReserveRoom(4096);
+				Out17?ReservationSuccessful;
+				Out19!ReserveRoom(1024);
+				Out19?ReservationSuccessful;
+				Out20!ReserveRoom(4096);
+				Out20?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+			case "S10" then
+				Out1!ReserveRoom(4096);
+				Out1?ReservationSuccessful;
+				Out2!ReserveRoom(1024);
+				Out2?ReservationSuccessful;
+				Out3!ReserveRoom(4096);
+				Out3?ReservationSuccessful;
+				Out4!ReserveRoom(2048);
+				Out4?ReservationSuccessful;
+				Out5!ReserveRoom(2048);
+				Out5?ReservationSuccessful;
+				Out6!ReserveRoom(2048);
+				Out6?ReservationSuccessful;
+				Out9!ReserveRoom(1024);
+				Out9?ReservationSuccessful;
+				Out10!ReserveRoom(2048);
+				Out10?ReservationSuccessful;
+				Out13!ReserveRoom(4096);
+				Out13?ReservationSuccessful;
+				Out15!ReserveRoom(4096);
+				Out15?ReservationSuccessful;
+				Out16!ReserveRoom(2048);
+				Out16?ReservationSuccessful;
+				Out18!ReserveRoom(4096);
+				Out18?ReservationSuccessful;
+				Out21!ReserveRoom(1024);
+				Out21?ReservationSuccessful;
+				Out22!ReserveRoom(4096);
+				Out22?ReservationSuccessful;
+				skip
+		od
+
+	PerformWrites(Scenario : String)()
+		Control2!WriteTokens(Scenario);
+		Control3!WriteTokens(Scenario);
+		Control4!WriteTokens(Scenario);
+		Control5!WriteTokens(Scenario);
+		Control6!WriteTokens(Scenario);
+		Control7!WriteTokens(Scenario);
+		Control8!WriteTokens(Scenario);
+		Control9!WriteTokens(Scenario);
+		Control10!WriteTokens(Scenario);
+		Control11!WriteTokens(Scenario);
+		Control12!WriteTokens(Scenario);
+		Control13!WriteTokens(Scenario);
+		Control14!WriteTokens(Scenario);
+		Control15!WriteTokens(Scenario);
+		Control16!WriteTokens(Scenario);
+		Control17!WriteTokens(Scenario);
+		Control18!WriteTokens(Scenario);
+		Control19!WriteTokens(Scenario);
+		Control20!WriteTokens(Scenario);
+		Control21!WriteTokens(Scenario);
+		Control22!WriteTokens(Scenario);
+		Control23!WriteTokens(Scenario);
+		Control24!WriteTokens(Scenario);
+		Control25!WriteTokens(Scenario);
+		Control26!WriteTokens(Scenario);
+		Control27!WriteTokens(Scenario);
+		Control28!WriteTokens(Scenario);
+		Control29!WriteTokens(Scenario);
+		Control30!WriteTokens(Scenario);
+		Control31!WriteTokens(Scenario);
+		Control32!WriteTokens(Scenario);
+		Control33!WriteTokens(Scenario);
+		Control34!WriteTokens(Scenario);
+		Control35!WriteTokens(Scenario);
+		switch Scenario do
+			case "S1" then
+				Out1!WriteTokens;
+				Out2!WriteTokens;
+				Out4!WriteTokens;
+				Out5!WriteTokens;
+				Out6!WriteTokens;
+				Out7!WriteTokens;
+				Out8!WriteTokens;
+				Out9!WriteTokens;
+				Out10!WriteTokens;
+				Out11!WriteTokens;
+				Out12!WriteTokens;
+				Out13!WriteTokens;
+				Out15!WriteTokens;
+				Out16!WriteTokens;
+				Out20!WriteTokens;
+				Out21!WriteTokens;
+				Out22!WriteTokens;
+				skip
+			case "S2" then
+				Out3!WriteTokens;
+				Out4!WriteTokens;
+				Out5!WriteTokens;
+				Out9!WriteTokens;
+				Out11!WriteTokens;
+				Out12!WriteTokens;
+				Out13!WriteTokens;
+				Out14!WriteTokens;
+				Out15!WriteTokens;
+				Out16!WriteTokens;
+				Out17!WriteTokens;
+				Out19!WriteTokens;
+				Out20!WriteTokens;
+				Out21!WriteTokens;
+				Out22!WriteTokens;
+				skip
+			case "S3" then
+				Out1!WriteTokens;
+				Out2!WriteTokens;
+				Out4!WriteTokens;
+				Out5!WriteTokens;
+				Out8!WriteTokens;
+				Out9!WriteTokens;
+				Out10!WriteTokens;
+				Out11!WriteTokens;
+				Out12!WriteTokens;
+				Out14!WriteTokens;
+				Out15!WriteTokens;
+				Out17!WriteTokens;
+				Out18!WriteTokens;
+				Out20!WriteTokens;
+				Out21!WriteTokens;
+				Out22!WriteTokens;
+				skip
+			case "S4" then
+				Out1!WriteTokens;
+				Out2!WriteTokens;
+				Out6!WriteTokens;
+				Out8!WriteTokens;
+				Out9!WriteTokens;
+				Out10!WriteTokens;
+				Out11!WriteTokens;
+				Out12!WriteTokens;
+				Out16!WriteTokens;
+				Out17!WriteTokens;
+				Out19!WriteTokens;
+				Out20!WriteTokens;
+				Out21!WriteTokens;
+				Out22!WriteTokens;
+				skip
+			case "S5" then
+				Out2!WriteTokens;
+				Out3!WriteTokens;
+				Out4!WriteTokens;
+				Out6!WriteTokens;
+				Out8!WriteTokens;
+				Out9!WriteTokens;
+				Out10!WriteTokens;
+				Out11!WriteTokens;
+				Out12!WriteTokens;
+				Out13!WriteTokens;
+				Out14!WriteTokens;
+				Out16!WriteTokens;
+				Out17!WriteTokens;
+				Out18!WriteTokens;
+				Out22!WriteTokens;
+				skip
+			case "S6" then
+				Out2!WriteTokens;
+				Out3!WriteTokens;
+				Out4!WriteTokens;
+				Out8!WriteTokens;
+				Out9!WriteTokens;
+				Out10!WriteTokens;
+				Out13!WriteTokens;
+				Out15!WriteTokens;
+				Out17!WriteTokens;
+				Out19!WriteTokens;
+				Out21!WriteTokens;
+				Out22!WriteTokens;
+				skip
+			case "S7" then
+				Out1!WriteTokens;
+				Out4!WriteTokens;
+				Out6!WriteTokens;
+				Out7!WriteTokens;
+				Out8!WriteTokens;
+				Out9!WriteTokens;
+				Out10!WriteTokens;
+				Out11!WriteTokens;
+				Out13!WriteTokens;
+				Out14!WriteTokens;
+				Out15!WriteTokens;
+				Out16!WriteTokens;
+				Out17!WriteTokens;
+				Out18!WriteTokens;
+				Out21!WriteTokens;
+				Out22!WriteTokens;
+				skip
+			case "S8" then
+				Out1!WriteTokens;
+				Out4!WriteTokens;
+				Out6!WriteTokens;
+				Out7!WriteTokens;
+				Out8!WriteTokens;
+				Out9!WriteTokens;
+				Out10!WriteTokens;
+				Out11!WriteTokens;
+				Out13!WriteTokens;
+				Out14!WriteTokens;
+				Out15!WriteTokens;
+				Out19!WriteTokens;
+				Out20!WriteTokens;
+				Out21!WriteTokens;
+				skip
+			case "S9" then
+				Out4!WriteTokens;
+				Out5!WriteTokens;
+				Out6!WriteTokens;
+				Out7!WriteTokens;
+				Out8!WriteTokens;
+				Out10!WriteTokens;
+				Out11!WriteTokens;
+				Out12!WriteTokens;
+				Out13!WriteTokens;
+				Out14!WriteTokens;
+				Out15!WriteTokens;
+				Out17!WriteTokens;
+				Out19!WriteTokens;
+				Out20!WriteTokens;
+				Out21!WriteTokens;
+				Out22!WriteTokens;
+				skip
+			case "S10" then
+				Out1!WriteTokens;
+				Out2!WriteTokens;
+				Out3!WriteTokens;
+				Out4!WriteTokens;
+				Out5!WriteTokens;
+				Out6!WriteTokens;
+				Out9!WriteTokens;
+				Out10!WriteTokens;
+				Out13!WriteTokens;
+				Out15!WriteTokens;
+				Out16!WriteTokens;
+				Out18!WriteTokens;
+				Out21!WriteTokens;
+				Out22!WriteTokens;
+				skip
+		od
