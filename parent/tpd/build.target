@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Poosl Build" sequenceNumber="1635258501">
+<target name="Poosl Build" sequenceNumber="1636562062">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.persistence.moxy.feature.group" version="2.7.7.v20200504-69f2c2b80d"/>
@@ -25,7 +25,7 @@
       <repository id="EPL" location="http://download.eclipse.org/cbi/updates/license"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.202110251214"/>
+      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.2.0.202111101327"/>
       <repository id="rotalumis" location="http://www.es.ele.tue.nl/rotalumis/repository/integration/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
