@@ -14,6 +14,7 @@
 package org.eclipse.poosl.sirius.debug;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,6 +30,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.poosl.rotalumisclient.extension.ExternDebugMessage;
 import org.eclipse.poosl.sirius.helpers.GraphicalEditorHelper;
@@ -41,8 +43,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
 
 /**
- * The GraphicalDebugUpdater.
- * 
+ * This class colors representation with debug information.
+ * <p>
+ * It is meant to be a singleton accessed by the activator.
+ * </p>
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -113,12 +118,7 @@ public class GraphicalDebugUpdater {
     }
 
     private void drawMessages() {
-        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                updateJob.schedule(200);
-            }
-        });
+        PlatformUI.getWorkbench().getDisplay().asyncExec(() -> updateJob.schedule(200));
     }
 
     public void launchStopped(String launchID) {
@@ -145,70 +145,71 @@ public class GraphicalDebugUpdater {
         }
     }
 
+    /**
+     * Colors the representation with debug information.
+     *
+     * @param session
+     *     to update
+     * @param descriptor
+     *     of representation
+     */
     public void draw(Session session, DRepresentationDescriptor descriptor) {
         if (descriptor != null) {
-            final UpdateSingleDiagramViewJob singleUpdateJob = new UpdateSingleDiagramViewJob(
-                    session, descriptor);
-            UpdateHelper.getPooslShell().getDisplay().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    singleUpdateJob.schedule();
-                }
-            });
+            Job singleUpdateJob = new UpdateSingleDiagramViewJob(session, descriptor);
+            UpdateHelper.getPooslShell().getDisplay().asyncExec(() -> singleUpdateJob.schedule());
         } else {
             LOGGER.warn("No debug representation found to show.");
         }
     }
 
-    class UpdateAllDiagramsViewJob extends UIJob {
+    private class UpdateAllDiagramsViewJob extends UIJob {
         UpdateAllDiagramsViewJob() {
             super("Updating All Diagrams");
         }
 
         @Override
         public IStatus runInUIThread(IProgressMonitor monitor) {
-            Map<String, PooslDrawMessage> currentDrawMessages = new HashMap<>();
+            Map<String, PooslDrawMessage> messages = new HashMap<>();
 
             Iterator<String> iterator = drawMessages.keySet().iterator();
             while (iterator.hasNext()) {
                 PooslDrawMessage drawMessage = drawMessages.remove(iterator.next());
-                currentDrawMessages.put(drawMessage.getMessage().getLaunch(), drawMessage);
+                messages.put(drawMessage.getMessage().getLaunch(), drawMessage);
             }
 
             Map<Session, Set<DRepresentationDescriptor>> session2Descriptors = UpdateHelper
-                    .getLaunchRepresentations(currentDrawMessages.keySet());
-            try {
-                for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors
-                        .entrySet()) {
-                    Session session = entry.getKey();
-                    Set<DRepresentationDescriptor> descriptors = entry.getValue();
+                    .getLaunchRepresentations(messages.keySet());
 
-                    ArrayList<DRepresentationDescriptor> diagrams2Color = new ArrayList<>();
+            for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors
+                    .entrySet()) {
+                Session session = entry.getKey();
+                Set<DRepresentationDescriptor> descriptors = entry.getValue();
 
-                    IEditingSession editingSession = SessionUIManager.INSTANCE
-                            .getUISession(session);
-                    if (editingSession != null) {
-                        for (DRepresentationDescriptor descriptor : descriptors) {
-                            DialectEditor editor = editingSession
-                                    .getEditor(descriptor.getRepresentation());
-                            if (editor != null) {
-                                diagrams2Color.add(descriptor);
-                            }
+                ArrayList<DRepresentationDescriptor> diagrams2Color = new ArrayList<>();
+
+                IEditingSession editingSession = SessionUIManager.INSTANCE.getUISession(session);
+                if (editingSession != null) {
+                    for (DRepresentationDescriptor descriptor : descriptors) {
+                        DialectEditor editor = editingSession
+                                .getEditor(descriptor.getRepresentation());
+                        if (editor != null) {
+                            diagrams2Color.add(descriptor);
                         }
                     }
-
-                    session.getTransactionalEditingDomain().getCommandStack()
-                            .execute(new ColorChannelCommand(session, diagrams2Color,
-                                    currentDrawMessages, pathCalculators));
                 }
-            } catch (RuntimeException e) {
-                return Status.CANCEL_STATUS;
+
+                IStatus result = colorChannel(session, diagrams2Color, messages, pathCalculators);
+                if (result.getSeverity() > IStatus.WARNING) {
+                    return result;
+                }
+
             }
+
             return Status.OK_STATUS;
         }
     }
 
-    class UpdateSingleDiagramViewJob extends UIJob {
+    private class UpdateSingleDiagramViewJob extends UIJob {
         private DRepresentationDescriptor descriptor;
 
         private Session session;
@@ -226,21 +227,29 @@ public class GraphicalDebugUpdater {
             PooslDrawMessage toDrawMessage = lastMessages.get(launchID);
             Map<String, PooslDrawMessage> messages = new HashMap<>();
             messages.put(launchID, toDrawMessage);
-            try {
-                session.getTransactionalEditingDomain().getCommandStack().execute(
-                        new ColorChannelCommand(session, descriptor, messages, pathCalculators));
-
-            } catch (Exception e) {
-                return Status.CANCEL_STATUS;
-            }
-            return Status.OK_STATUS;
+            return colorChannel(session, Arrays.asList(descriptor), messages, pathCalculators);
         }
+    }
+
+    private static IStatus colorChannel(
+            Session session, List<DRepresentationDescriptor> descriptors,
+            Map<String, PooslDrawMessage> messages, Map<String, PathCalculator> pathCalculators) {
+        try {
+            session.getTransactionalEditingDomain().getCommandStack().execute(
+                    new ColorChannelCommand(session, descriptors, messages, pathCalculators));
+            // CHECKSTYLE.OFF: IllegalCatch // EDT command stack is not explicit
+        } catch (Exception e) {
+            // CHECKSTYLE.ON: IllegalCatch
+            return Status.CANCEL_STATUS;
+
+        }
+        return Status.OK_STATUS;
     }
 
     public void launchStarted(
             String launchID, Map<String, String> instancePortMap, List<URI> files) {
         notSetupLaunches.add(launchID);
-        this.instancePortMappings.put(launchID, instancePortMap);
+        instancePortMappings.put(launchID, instancePortMap);
         LOCKED_FILES.put(launchID, files);
     }
 
