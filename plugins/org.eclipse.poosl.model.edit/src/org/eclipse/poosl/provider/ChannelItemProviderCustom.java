@@ -30,16 +30,16 @@ import org.eclipse.poosl.Port;
  * <p>
  * Name is conform to generation gap pattern of MWE2.
  * </p>
- * 
+ *
  * @author <a href="nicolas.peransin@obeo.fr">Nicolas PERANSIN</a>
  */
 public class ChannelItemProviderCustom extends ChannelItemProvider {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param adapterFactory
-     *            factory
+     *     factory
      */
     public ChannelItemProviderCustom(AdapterFactory adapterFactory) {
         super(adapterFactory);
@@ -47,12 +47,16 @@ public class ChannelItemProviderCustom extends ChannelItemProvider {
 
     @Override
     protected void addExternalPortPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_Channel_externalPort_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Channel_externalPort_feature", "_UI_Channel_type"),
+        itemPropertyDescriptors.add(new ItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Channel_externalPort_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_Channel_externalPort_feature", //$NON-NLS-1$
+                        "_UI_Channel_type"), //$NON-NLS-1$
                 PooslPackage.Literals.CHANNEL__EXTERNAL_PORT, true, false, true, null, null, null) {
             @Override
             public Collection<?> getChoiceOfValues(Object object) {
-                List<Port> list = new ArrayList<Port>();
+                List<Port> list = new ArrayList<>();
                 if (object instanceof EObject) {
                     EObject eObject = (EObject) object;
                     while ((eObject.eContainer() != null) && !(eObject instanceof ClusterClass)) {

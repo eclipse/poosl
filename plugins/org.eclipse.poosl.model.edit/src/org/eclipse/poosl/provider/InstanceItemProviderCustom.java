@@ -12,7 +12,7 @@
  *    Obeo - refactoring
  *******************************************************************************/
 /**
- * 
+ *
  */
 package org.eclipse.poosl.provider;
 
@@ -35,16 +35,16 @@ import org.eclipse.poosl.xtext.importing.ImportingHelper;
  * <p>
  * Name is conform to generation gap pattern of MWE2.
  * </p>
- * 
+ *
  * @author <a href="nicolas.peransin@obeo.fr">Nicolas PERANSIN</a>
  */
 public class InstanceItemProviderCustom extends InstanceItemProvider {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param adapterFactory
-     *            factory
+     *     factory
      */
     public InstanceItemProviderCustom(AdapterFactory adapterFactory) {
         super(adapterFactory);
@@ -52,16 +52,22 @@ public class InstanceItemProviderCustom extends InstanceItemProvider {
 
     @Override
     protected void addClassDefinitionPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-                getString("_UI_Instance_classDefinition_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Instance_classDefinition_feature", "_UI_Instance_type"),
-                PooslPackage.Literals.INSTANCE__CLASS_DEFINITION, true, false, true, null, null, null) {
+        itemPropertyDescriptors.add(new ItemPropertyDescriptor(
+                ((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Instance_classDefinition_feature"), //$NON-NLS-1$
+                getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+                        "_UI_Instance_classDefinition_feature", //$NON-NLS-1$
+                        "_UI_Instance_type"), //$NON-NLS-1$
+                PooslPackage.Literals.INSTANCE__CLASS_DEFINITION, true, false, true, null, null,
+                null) {
 
             @Override
             public Collection<?> getChoiceOfValues(Object object) {
-                List<InstantiableClass> scopedClasses = new ArrayList<InstantiableClass>();
+                List<InstantiableClass> scopedClasses = new ArrayList<>();
                 if (object instanceof Instance) {
                     Instance instance = (Instance) object;
-                    List<Resource> resources = ImportingHelper.computeAllDependencies(instance.eResource());
+                    List<Resource> resources = ImportingHelper
+                            .computeAllDependencies(instance.eResource());
                     for (Resource resource : resources) {
                         Poosl poosl = ImportingHelper.toPoosl(resource);
                         scopedClasses.addAll(poosl.getClusterClasses());
