@@ -59,7 +59,8 @@ public class PooslOpenAction extends Action {
             fileAction.selectionChanged(selection);
             fileAction.run();
         } else {
-            GraphicalEditorHelper.openGraphicalEditor(prefManager.getDiagramTarget(), null, file.getProject());
+            GraphicalEditorHelper.openGraphicalEditor(prefManager.getDiagramTarget(), null,
+                    file.getProject());
         }
     }
 }

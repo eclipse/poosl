@@ -80,7 +80,8 @@ public class PooslTypeSystemStatement {
         } else {
             String typeOfElseClauseName = getExpressionType(ifStatement.getElseClause());
             if (typeOfThenClauseName != null && typeOfElseClauseName != null) {
-                return TypingHelper.greatestCommonAncestor(resource, typeOfThenClauseName, typeOfElseClauseName);
+                return TypingHelper.greatestCommonAncestor(resource, typeOfThenClauseName,
+                        typeOfElseClauseName);
             }
         }
         return null;

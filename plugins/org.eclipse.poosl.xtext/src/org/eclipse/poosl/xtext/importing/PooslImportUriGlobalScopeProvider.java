@@ -56,15 +56,19 @@ public class PooslImportUriGlobalScopeProvider extends AbstractGlobalScopeProvid
         this.cache = cache;
     }
 
-    public IResourceDescriptions getResourceDescriptions(Resource resource, Collection<URI> importUris) {
+    public IResourceDescriptions getResourceDescriptions(
+            Resource resource, Collection<URI> importUris) {
         IResourceDescriptions result = getResourceDescriptions(resource);
-        LoadOnDemandResourceDescriptions demandResourceDescriptions = loadOnDemandDescriptions.get();
+        LoadOnDemandResourceDescriptions demandResourceDescriptions = loadOnDemandDescriptions
+                .get();
         demandResourceDescriptions.initialize(result, importUris, resource);
         return demandResourceDescriptions;
     }
 
     @Override
-    protected IScope getScope(Resource resource, boolean ignoreCase, EClass type, Predicate<IEObjectDescription> filter) {
+    protected IScope getScope(
+            Resource resource, boolean ignoreCase, EClass type,
+            Predicate<IEObjectDescription> filter) {
 
         Set<URI> uniqueImportURIs = getImportedUris(resource);
         IResourceDescriptions descriptions = getResourceDescriptions(resource, uniqueImportURIs);
@@ -83,24 +87,30 @@ public class PooslImportUriGlobalScopeProvider extends AbstractGlobalScopeProvid
     }
 
     public Set<URI> getImportedUris(final Resource resource) {
-        return cache.get(PooslImportUriGlobalScopeProvider.class.getName(), resource, new Provider<Set<URI>>() {
-            public Set<URI> get() {
-                IResourceDescriptions context = getResourceDescriptions(resource);
-                IResourceDescription candidate = resourceDescriptionManager.getResourceDescription(resource);
-                Set<URI> uniqueImportURIs = ((PooslResourceDescriptionManager) resourceDescriptionManager).computeAllDependencies(candidate, context);
-                // Required for local scoping!
-                uniqueImportURIs.add(resource.getURI());
-                return uniqueImportURIs;
-            }
-        });
+        return cache.get(PooslImportUriGlobalScopeProvider.class.getName(), resource,
+                new Provider<Set<URI>>() {
+                    public Set<URI> get() {
+                        IResourceDescriptions context = getResourceDescriptions(resource);
+                        IResourceDescription candidate = resourceDescriptionManager
+                                .getResourceDescription(resource);
+                        Set<URI> uniqueImportURIs = ((PooslResourceDescriptionManager) resourceDescriptionManager)
+                                .computeAllDependencies(candidate, context);
+                        // Required for local scoping!
+                        uniqueImportURIs.add(resource.getURI());
+                        return uniqueImportURIs;
+                    }
+                });
     }
 
-    private IScope createLazyResourceScope(IScope parent, URI uri, IResourceDescriptions descriptions, EClass type, Predicate<IEObjectDescription> filter, boolean ignoreCase) {
+    private IScope createLazyResourceScope(
+            IScope parent, URI uri, IResourceDescriptions descriptions, EClass type,
+            Predicate<IEObjectDescription> filter, boolean ignoreCase) {
         IResourceDescription description = descriptions.getResourceDescription(uri);
         return PooslSelectableBasedScope.createScope(parent, description, filter, type, ignoreCase);
     }
 
-    public void setLoadOnDemandDescriptions(Provider<LoadOnDemandResourceDescriptions> loadOnDemandDescriptions) {
+    public void setLoadOnDemandDescriptions(
+            Provider<LoadOnDemandResourceDescriptions> loadOnDemandDescriptions) {
         this.loadOnDemandDescriptions = loadOnDemandDescriptions;
     }
 

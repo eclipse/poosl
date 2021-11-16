@@ -71,7 +71,8 @@ public class PooslAutoEditStrategyProvider extends DefaultAutoEditStrategyProvid
     private Boolean isCloseAutoCompleteActivated() {
         IPreferencesService preferencesService = Platform.getPreferencesService();
         if (preferencesService != null) {
-            return preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID, GlobalConstants.PREFERENCES_AUTOCOMPLETE_BRACKETS_AND_QUOTES, false, null);
+            return preferencesService.getBoolean(GlobalConstants.PREFERENCE_PLUGIN_ID,
+                    GlobalConstants.PREFERENCES_AUTOCOMPLETE_BRACKETS_AND_QUOTES, false, null);
         } else {
             return false;
         }

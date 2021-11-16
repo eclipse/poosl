@@ -56,17 +56,19 @@ public class CreateRepresentationCommand extends RecordingCommand {
      * Construct a new instance with {@link IProgressMonitor}.
      * 
      * @param session
-     *            the session
+     *     the session
      * @param description
-     *            the representation description
+     *     the representation description
      * @param eObject
-     *            the semantic element on which to create the representation
+     *     the semantic element on which to create the representation
      * @param launchID
-     *            if lauchID is not null or empty provided it will make a communication diagram
+     *     if lauchID is not null or empty provided it will make a communication
+     *     diagram
      * @param instance
      * @param monitor
      */
-    public CreateRepresentationCommand(Session session, RepresentationDescription description, EObject eObject, String launchID, String instance, IProgressMonitor monitor) {
+    public CreateRepresentationCommand(Session session, RepresentationDescription description,
+            EObject eObject, String launchID, String instance, IProgressMonitor monitor) {
         super(session.getTransactionalEditingDomain(), "Create Representation");
         this.session = session;
         this.description = description;
@@ -97,7 +99,8 @@ public class CreateRepresentationCommand extends RecordingCommand {
     protected void doExecute() {
         addResource(semantic, session);
         EObject target = GraphicalEditorHelper.getSiriusObject(semantic, session);
-        DRepresentation representation = DialectManager.INSTANCE.createRepresentation(getDiagramName(target), target, description, session, monitor);
+        DRepresentation representation = DialectManager.INSTANCE.createRepresentation(
+                getDiagramName(target), target, description, session, monitor);
         descriptor = new DRepresentationQuery(representation).getRepresentationDescriptor();
 
         if (isDebugDiagram()) {

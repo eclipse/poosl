@@ -25,9 +25,9 @@ public interface IPooslDebugInformer {
      * Notifies the extension that it has been activated.
      * 
      * @param object
-     *            the selected object in the debug tree.
+     *     the selected object in the debug tree.
      * @param message
-     *            the debug event message
+     *     the debug event message
      */
     void debugSelectionChanged(ExternDebugItem object, ExternDebugMessage message);
 
@@ -35,7 +35,7 @@ public interface IPooslDebugInformer {
      * Notifies that a debugging session ended.
      * 
      * @param launchID
-     *            the session ID
+     *     the session ID
      */
     void launchStopped(String launchID);
 
@@ -43,7 +43,7 @@ public interface IPooslDebugInformer {
      * Notifies of an event during a debugging session.
      * 
      * @param lastMessage
-     *            the debug event message
+     *     the debug event message
      */
     void lastMessageChanged(ExternDebugMessage lastMessage);
 
@@ -51,7 +51,7 @@ public interface IPooslDebugInformer {
      * Notifies that a debugging session started.
      * 
      * @param object
-     *            the start message
+     *     the start message
      */
     void launchStart(ExternLaunchStartMessage object);
 }

@@ -56,7 +56,8 @@ public final class PooslLogger {
             LOGGER.removeHandler(handler);
         }
         // Get the log level value from the preferences
-        String logLevel = Platform.getPreferencesService().getString(Activator.PLUGIN_ID, PooslConstants.PREFERENCES_LOG_LEVEL, PooslConstants.DEFAULT_LOG_LEVEL, null);
+        String logLevel = Platform.getPreferencesService().getString(Activator.PLUGIN_ID,
+                PooslConstants.PREFERENCES_LOG_LEVEL, PooslConstants.DEFAULT_LOG_LEVEL, null);
         LOGGER.setLevel(Level.parse(logLevel));
 
         // try to remove listener, avoiding duplicate

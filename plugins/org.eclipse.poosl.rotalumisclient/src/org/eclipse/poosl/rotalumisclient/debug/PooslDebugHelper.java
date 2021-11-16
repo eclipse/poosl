@@ -68,13 +68,15 @@ public final class PooslDebugHelper {
      * Get the named thread from the array of threads by it's name.
      * 
      * @param threads
-     *            The array of threads to search
+     *     The array of threads to search
      * @param name
-     *            The name of the thread to search for
-     * @return The PooslThread that was found or null if it does not exist in the give threads.
+     *     The name of the thread to search for
+     * @return The PooslThread that was found or null if it does not exist in
+     *     the give threads.
      * @throws DebugException
      */
-    public static PooslThread getThreadByName(IThread[] threads, String name) throws DebugException {
+    public static PooslThread getThreadByName(IThread[] threads, String name)
+            throws DebugException {
         if (threads != null) {
             for (int i = 0; i < threads.length; i++) {
                 if (name.equals(threads[i].getName())) {
@@ -89,8 +91,9 @@ public final class PooslDebugHelper {
      * Checks if the given debugTarget is the current debug context.
      * 
      * @param target
-     *            The debugTarget to check
-     * @return True if the debugTarget is the current debug context. False otherwise.
+     *     The debugTarget to check
+     * @return True if the debugTarget is the current debug context. False
+     *     otherwise.
      */
     public static boolean isActiveDebugTarget(final PooslDebugTarget target) {
         PooslDebugTarget currentTarget = getCurrentDebugTarget();
@@ -98,8 +101,10 @@ public final class PooslDebugHelper {
     }
 
     /**
-     * Get's the current PooslDebugTarget if any from the DebugContextManager. <br>
-     * <strong>(This function should always be called from the UIThread!)</strong>
+     * Get's the current PooslDebugTarget if any from the DebugContextManager.
+     * <br>
+     * <strong>(This function should always be called from the
+     * UIThread!)</strong>
      * 
      * @return The current PooslDebugTarget or null if there is none.
      */
@@ -118,7 +123,8 @@ public final class PooslDebugHelper {
                     } else if (context instanceof PooslDebugTarget) {
                         return (PooslDebugTarget) context;
                     } else if (context instanceof PooslDebugTreeItem) {
-                        return (PooslDebugTarget) ((PooslDebugTreeItem) context).getThreadsList().get(0).getDebugTarget();
+                        return (PooslDebugTarget) ((PooslDebugTreeItem) context).getThreadsList()
+                                .get(0).getDebugTarget();
                     }
                 }
             }
@@ -127,7 +133,8 @@ public final class PooslDebugHelper {
     }
 
     /**
-     * Show an error message to the user with the supplied title and message. This function will work when called from a
+     * Show an error message to the user with the supplied title and message.
+     * This function will work when called from a
      * non UI thread.
      * 
      * @param title
@@ -146,12 +153,14 @@ public final class PooslDebugHelper {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
-                MessageDialog.openInformation(Display.getDefault().getActiveShell(), title, message);
+                MessageDialog.openInformation(Display.getDefault().getActiveShell(), title,
+                        message);
             }
         });
     }
 
-    public static Map<IStackFrame, List<PooslValue>> getPooslValuesByObjectHandle(List<IStackFrame> frames, BigInteger statementHandle) throws DebugException {
+    public static Map<IStackFrame, List<PooslValue>> getPooslValuesByObjectHandle(
+            List<IStackFrame> frames, BigInteger statementHandle) throws DebugException {
         Map<IStackFrame, List<PooslValue>> frameValues = new HashMap<>();
 
         for (IStackFrame stackframe : frames) {
@@ -179,7 +188,8 @@ public final class PooslDebugHelper {
     }
 
     // Recursive function to help the above function
-    private static List<PooslValue> getSubValuesByObjectHandle(BigInteger statementHandle, PooslValue value) throws DebugException {
+    private static List<PooslValue> getSubValuesByObjectHandle(
+            BigInteger statementHandle, PooslValue value) throws DebugException {
         List<PooslValue> values = new ArrayList<>();
         for (int i = 0; i < value.getVariables().length; i++) {
             PooslValue v = (PooslValue) value.getVariables()[i].getValue();
@@ -204,8 +214,11 @@ public final class PooslDebugHelper {
         return frames;
     }
 
-    public static void setDebugInstructionPointer(IStackFrame stackframe, PooslSourceMapping sourceMapping, PooslDebugTarget target, IWorkbenchWindow window) throws DebugException, PartInitException {
-        if ((target != null) && (sourceMapping != PooslSourceMap.EMPTY_MAPPING) && (stackframe instanceof PooslStackFrame)) {
+    public static void setDebugInstructionPointer(
+            IStackFrame stackframe, PooslSourceMapping sourceMapping, PooslDebugTarget target,
+            IWorkbenchWindow window) throws DebugException, PartInitException {
+        if ((target != null) && (sourceMapping != PooslSourceMap.EMPTY_MAPPING)
+                && (stackframe instanceof PooslStackFrame)) {
             PooslStackFrame frame = (PooslStackFrame) stackframe;
             frame.setSourceMapping(sourceMapping);
             Object sourceElement = getSourceElement(frame, target);
@@ -215,17 +228,23 @@ public final class PooslDebugHelper {
         }
     }
 
-    private static void setEditorHighlight(PooslStackFrame stackframe, Object sourceElement, IWorkbenchWindow window) throws DebugException, PartInitException {
-        IDebugModelPresentation presentation = ((DelegatingModelPresentation) DebugUIPlugin.getModelPresentation()).getPresentation(PooslConstants.DEBUG_MODEL_ID);
+    private static void setEditorHighlight(
+            PooslStackFrame stackframe, Object sourceElement, IWorkbenchWindow window)
+            throws DebugException, PartInitException {
+        IDebugModelPresentation presentation = ((DelegatingModelPresentation) DebugUIPlugin
+                .getModelPresentation()).getPresentation(PooslConstants.DEBUG_MODEL_ID);
         IEditorInput editor = presentation.getEditorInput(sourceElement);
-        ITextEditor textEditor = (ITextEditor) window.getActivePage().openEditor(editor, presentation.getEditorId(editor, sourceElement), false);
-        InstructionPointerAnnotation annotation = new InstructionPointerAnnotation(stackframe, "org.eclipse.debug.ui.currentIP", "POOSL Instruction pointer", null); //$NON-NLS-1$
+        ITextEditor textEditor = (ITextEditor) window.getActivePage().openEditor(editor,
+                presentation.getEditorId(editor, sourceElement), false);
+        InstructionPointerAnnotation annotation = new InstructionPointerAnnotation(stackframe,
+                "org.eclipse.debug.ui.currentIP", "POOSL Instruction pointer", null); //$NON-NLS-1$
         InstructionPointerManager pointerManager = InstructionPointerManager.getDefault();
         if (pointerManager != null) {
             pointerManager.removeAnnotations(textEditor);
             pointerManager.addAnnotation(textEditor, stackframe, annotation);
         }
-        textEditor.selectAndReveal(stackframe.getCharStart(), stackframe.getCharEnd() - stackframe.getCharStart());
+        textEditor.selectAndReveal(stackframe.getCharStart(),
+                stackframe.getCharEnd() - stackframe.getCharStart());
     }
 
     private static Object getSourceElement(PooslStackFrame stackframe, PooslDebugTarget target) {
@@ -233,13 +252,16 @@ public final class PooslDebugHelper {
         if (locator.getSourceContainers().length == 0) {
             Display display = Display.getDefault();
             if (display != null) {
-                MessageDialog dialog = new MessageDialog(display.getActiveShell(), "No source found", null,
-                        "The source for this element could not be found because no source containers are specified in the launch configuration.", MessageDialog.INFORMATION,
-                        new String[] { "OK", "Add Source Container" }, 0);
+                MessageDialog dialog = new MessageDialog(display.getActiveShell(),
+                        "No source found", null,
+                        "The source for this element could not be found because no source containers are specified in the launch configuration.",
+                        MessageDialog.INFORMATION, new String[] { "OK", "Add Source Container" },
+                        0);
 
                 int result = dialog.open();
                 if (result == 1) {
-                    SourceLookupDialog sDialog = new SourceLookupDialog(display.getActiveShell(), locator);
+                    SourceLookupDialog sDialog = new SourceLookupDialog(display.getActiveShell(),
+                            locator);
                     sDialog.open();
                 }
             }
@@ -252,7 +274,8 @@ public final class PooslDebugHelper {
             TExecutiontree executiontree = threads[i].getExecutiontree();
 
             if (executiontree != null) {
-                TExecutiontreeBase containingTreeBase = findTreeBaseWithListHandle(executiontree, listHandle);
+                TExecutiontreeBase containingTreeBase = findTreeBaseWithListHandle(executiontree,
+                        listHandle);
 
                 if (containingTreeBase == null) {
                     // listhandle not found in the execution tree maybe its a
@@ -263,7 +286,8 @@ public final class PooslDebugHelper {
                         try {
                             topHandle = findTopVariableListHandle(frame.getVariables(), listHandle);
                             if (topHandle != null) {
-                                containingTreeBase = findTreeBaseWithListHandle(executiontree, topHandle);
+                                containingTreeBase = findTreeBaseWithListHandle(executiontree,
+                                        topHandle);
                             }
                         } catch (DebugException e) {
                             // do nothing
@@ -279,8 +303,10 @@ public final class PooslDebugHelper {
         return null;
     }
 
-    private static TExecutiontreeBase findTreeBaseWithListHandle(TExecutiontree executionTree, BigInteger listHandle) {
-        for (JAXBElement<? extends TExecutiontreeBase> tempElement : executionTree.getSequentialOrMethodCallOrParallel()) {
+    private static TExecutiontreeBase findTreeBaseWithListHandle(
+            TExecutiontree executionTree, BigInteger listHandle) {
+        for (JAXBElement<? extends TExecutiontreeBase> tempElement : executionTree
+                .getSequentialOrMethodCallOrParallel()) {
             TExecutiontreeBase base = tempElement.getValue();
             if (base.getGlobal().equals(listHandle) || base.getLocal().equals(listHandle)) {
                 return base;
@@ -289,7 +315,8 @@ public final class PooslDebugHelper {
         return null;
     }
 
-    private static BigInteger findTopVariableListHandle(IVariable[] vars, BigInteger listHandle) throws DebugException {
+    private static BigInteger findTopVariableListHandle(IVariable[] vars, BigInteger listHandle)
+            throws DebugException {
         for (IVariable iVariable : vars) {
             IValue value = iVariable.getValue();
             if (value instanceof PooslValue) {
@@ -298,7 +325,8 @@ public final class PooslDebugHelper {
 
                 // return listhandle when this variable OR a subvariable has the
                 // listhandle
-                if (listHandle.compareTo(valSubHandle) == 0 || findTopVariableListHandle(value.getVariables(), listHandle) != null) {
+                if (listHandle.compareTo(valSubHandle) == 0
+                        || findTopVariableListHandle(value.getVariables(), listHandle) != null) {
                     return valListHandle;
                 }
             }

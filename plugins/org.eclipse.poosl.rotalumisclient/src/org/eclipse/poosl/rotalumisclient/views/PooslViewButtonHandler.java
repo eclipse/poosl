@@ -54,9 +54,11 @@ public class PooslViewButtonHandler implements IHandler {
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         DebugPlugin plugin = DebugPlugin.getDefault();
         if (event.getCommand().getId().equals(PooslConstants.COMMAND_DIAGRAM_VIEW)) {
-            String action = event.getParameter("org.eclipse.poosl.rotalumisclient.views.diagramviewaction"); //$NON-NLS-1$
+            String action = event
+                    .getParameter("org.eclipse.poosl.rotalumisclient.views.diagramviewaction"); //$NON-NLS-1$
             if (action.equals(PooslConstants.COMMAND_DIAGRAM_VIEW_CLEAR_VIEW)) {
-                DebugEvent debugEvent = new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.CLEAR_COMM_EVENTS);
+                DebugEvent debugEvent = new DebugEvent(this, DebugEvent.MODEL_SPECIFIC,
+                        PooslConstants.CLEAR_COMM_EVENTS);
                 if (plugin != null) {
                     plugin.fireDebugEventSet(new DebugEvent[] { debugEvent });
                 }
@@ -65,7 +67,8 @@ public class PooslViewButtonHandler implements IHandler {
                 workbench.getDisplay().asyncExec(new Runnable() {
                     @Override
                     public void run() {
-                        IViewPart view = workbench.getActiveWorkbenchWindow().getActivePage().findView(PooslConstants.ID_POOSL_SEQUENCEDIAGRAMVIEW);
+                        IViewPart view = workbench.getActiveWorkbenchWindow().getActivePage()
+                                .findView(PooslConstants.ID_POOSL_SEQUENCEDIAGRAMVIEW);
                         if (view != null) {
                             PooslSequenceDiagramView sequenceDiagramView = (PooslSequenceDiagramView) view;
                             Command command = event.getCommand();
@@ -83,30 +86,39 @@ public class PooslViewButtonHandler implements IHandler {
                 Object[] instances = getInstances().entrySet().toArray();
                 ILabelProvider lp = new PooslTreeLabelProvider();
                 ITreeContentProvider cp = new PooslTreeContentProvider(instances);
-                PooslSequenceDiagramConfigurationView dialog = new PooslSequenceDiagramConfigurationView(Display.getDefault().getActiveShell(), lp, cp);
+                PooslSequenceDiagramConfigurationView dialog = new PooslSequenceDiagramConfigurationView(
+                        Display.getDefault().getActiveShell(), lp, cp);
                 dialog.setTitle("Sequence diagram settings");
-                dialog.setMessage("Uncheck instances to filter them out.\nCheck clusters to hide the containing instances.");
+                dialog.setMessage(
+                        "Uncheck instances to filter them out.\nCheck clusters to hide the containing instances.");
                 dialog.setInput(instances);
                 PooslDebugTarget debugTarget = PooslDebugHelper.getCurrentDebugTarget();
-                dialog.setInitialSelections(debugTarget.getPooslSequenceDiagramMessageProvider().getMessageFilter().entrySet().toArray());
-                dialog.setInitialFilterSetting(debugTarget.getPooslSequenceDiagramMessageProvider().isFilterSettingEnabled());
-                dialog.setMessageCount(debugTarget.getPooslSequenceDiagramMessageProvider().getMessageSerialNumber());
+                dialog.setInitialSelections(debugTarget.getPooslSequenceDiagramMessageProvider()
+                        .getMessageFilter().entrySet().toArray());
+                dialog.setInitialFilterSetting(debugTarget.getPooslSequenceDiagramMessageProvider()
+                        .isFilterSettingEnabled());
+                dialog.setMessageCount(debugTarget.getPooslSequenceDiagramMessageProvider()
+                        .getMessageSerialNumber());
                 int buttonPressed = dialog.open();
                 if (buttonPressed == Window.OK) {
                     Object[] result = dialog.getResult();
                     boolean filterSetting = dialog.isFilterSettingEnabled();
                     try {
-                        if (filterSetting != debugTarget.getPooslSequenceDiagramMessageProvider().isFilterSettingEnabled() || filterSetting) {
-                            debugTarget.getPooslSequenceDiagramMessageProvider().setFilterSetting(filterSetting);
+                        if (filterSetting != debugTarget.getPooslSequenceDiagramMessageProvider()
+                                .isFilterSettingEnabled() || filterSetting) {
+                            debugTarget.getPooslSequenceDiagramMessageProvider()
+                                    .setFilterSetting(filterSetting);
                         }
-                        debugTarget.getPooslSequenceDiagramMessageProvider().setMessageFilter(result);
+                        debugTarget.getPooslSequenceDiagramMessageProvider()
+                                .setMessageFilter(result);
                     } catch (CoreException e) {
                         LOGGER.log(Level.WARNING, "Could not set message filter settings.", e);
                     }
                 }
             }
         } else if (event.getCommand().getId().equals(PooslConstants.COMMAND_DIAGRAM_SETUP)) {
-            DebugEvent debugEvent = new DebugEvent(this, DebugEvent.MODEL_SPECIFIC, PooslConstants.COMM_EVENTS_CHANGE);
+            DebugEvent debugEvent = new DebugEvent(this, DebugEvent.MODEL_SPECIFIC,
+                    PooslConstants.COMM_EVENTS_CHANGE);
             debugEvent.setData(!HandlerUtil.toggleCommandState(event.getCommand()));
             if (plugin != null) {
                 plugin.fireDebugEventSet(new DebugEvent[] { debugEvent });

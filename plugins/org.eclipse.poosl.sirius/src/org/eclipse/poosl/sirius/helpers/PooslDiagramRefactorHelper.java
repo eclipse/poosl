@@ -73,11 +73,14 @@ public final class PooslDiagramRefactorHelper {
 
     public static void copy(IResource resource, IPath destinationPath, IProgressMonitor monitor) {
         String sourceProjectName = resource.getFullPath().segment(0);
-        IProject sourceProject = ResourcesPlugin.getWorkspace().getRoot().getProject(sourceProjectName);
-        Session session = GraphicalEditorHelper.getSession(sourceProject, null, false, true, monitor);
+        IProject sourceProject = ResourcesPlugin.getWorkspace().getRoot()
+                .getProject(sourceProjectName);
+        Session session = GraphicalEditorHelper.getSession(sourceProject, null, false, true,
+                monitor);
         if (session != null) {
             String destinationProjectName = destinationPath.segment(0);
-            Session destinationSession = getDestinationSession(sourceProjectName, session, destinationProjectName, monitor);
+            Session destinationSession = getDestinationSession(sourceProjectName, session,
+                    destinationProjectName, monitor);
             if (destinationSession != null) {
                 IResource destination = convertIPathToIResource(resource, destinationPath);
                 if (destination != null) {
@@ -101,7 +104,9 @@ public final class PooslDiagramRefactorHelper {
         return destination;
     }
 
-    public static void copyIResource(final Session resSession, final Session destSession, IResource source, IResource destination, IProgressMonitor monitor) {
+    public static void copyIResource(
+            final Session resSession, final Session destSession, IResource source,
+            IResource destination, IProgressMonitor monitor) {
         Resource oldResource = ConvertHelper.convertIPathToResource(source.getFullPath());
         if (oldResource == null)
             return;
@@ -109,36 +114,47 @@ public final class PooslDiagramRefactorHelper {
         copyResource(resSession, destSession, oldResource, newResource, monitor);
     }
 
-    public static List<DRepresentationDescriptor> copyResource(final Session resSession, final Session destSession, Resource oldResource, Resource newResource, IProgressMonitor monitor) {
-        AddSemanticResourceCommand command = new AddSemanticResourceCommand(destSession, newResource.getURI(), monitor);
+    public static List<DRepresentationDescriptor> copyResource(
+            final Session resSession, final Session destSession, Resource oldResource,
+            Resource newResource, IProgressMonitor monitor) {
+        AddSemanticResourceCommand command = new AddSemanticResourceCommand(destSession,
+                newResource.getURI(), monitor);
         destSession.getTransactionalEditingDomain().getCommandStack().execute(command);
 
-        List<DRepresentationDescriptor> descriptors = getAllResourceDiagrams(resSession, oldResource);
+        List<DRepresentationDescriptor> descriptors = getAllResourceDiagrams(resSession,
+                oldResource);
         if (!descriptors.isEmpty()) {
             GraphicalEditorHelper.checkViewPoint(newResource, destSession, monitor);
-            RecordingCommand copy = new CopyFileRepresentationsCommand(destSession.getTransactionalEditingDomain(), destSession, newResource, descriptors, monitor);
+            RecordingCommand copy = new CopyFileRepresentationsCommand(
+                    destSession.getTransactionalEditingDomain(), destSession, newResource,
+                    descriptors, monitor);
             destSession.getTransactionalEditingDomain().getCommandStack().execute(copy);
             copy.dispose();
         }
         return descriptors;
     }
 
-    public static void renameResource(Session session, Resource oldResource, Resource newResource, IProgressMonitor monitor) {
-        AddSemanticResourceCommand command = new AddSemanticResourceCommand(session, newResource.getURI(), monitor);
+    public static void renameResource(
+            Session session, Resource oldResource, Resource newResource, IProgressMonitor monitor) {
+        AddSemanticResourceCommand command = new AddSemanticResourceCommand(session,
+                newResource.getURI(), monitor);
         session.getTransactionalEditingDomain().getCommandStack().execute(command);
 
         List<DRepresentationDescriptor> descriptors = getAllResourceDiagrams(session, oldResource);
         if (!descriptors.isEmpty()) {
             GraphicalEditorHelper.checkViewPoint(newResource, session, monitor);
-            RenameFileRepresentationsCommand renameCommand = new RenameFileRepresentationsCommand(session, newResource, descriptors);
+            RenameFileRepresentationsCommand renameCommand = new RenameFileRepresentationsCommand(
+                    session, newResource, descriptors);
             session.getTransactionalEditingDomain().getCommandStack().execute(renameCommand);
-            RemoveSemanticResourceCommand removeCommand = new RemoveSemanticResourceCommand(session, oldResource, monitor, true);
+            RemoveSemanticResourceCommand removeCommand = new RemoveSemanticResourceCommand(session,
+                    oldResource, monitor, true);
             session.getTransactionalEditingDomain().getCommandStack().execute(removeCommand);
             removeCommand.dispose();
         }
     }
 
-    public static List<DRepresentationDescriptor> getAllResourceDiagrams(Session session, Resource resource) {
+    public static List<DRepresentationDescriptor> getAllResourceDiagrams(
+            Session session, Resource resource) {
         Poosl poosl = ImportingHelper.toPoosl(resource);
         Set<EObject> dOwners = new HashSet<>();
         dOwners.add(poosl);
@@ -149,25 +165,33 @@ public final class PooslDiagramRefactorHelper {
         dOwners.addAll(poosl.getClusterClasses());
         List<DRepresentationDescriptor> descriptors = new ArrayList<>();
         for (EObject eObject : dOwners) {
-            Collection<DRepresentationDescriptor> allObjectDescriptors = GraphicalEditorHelper.getAllObjectDescriptors(session, eObject);
+            Collection<DRepresentationDescriptor> allObjectDescriptors = GraphicalEditorHelper
+                    .getAllObjectDescriptors(session, eObject);
             descriptors.addAll(allObjectDescriptors);
         }
         return descriptors;
     }
 
-    private static Session getDestinationSession(String sourceProjectName, final Session session, String destinationProjectName, IProgressMonitor monitor) {
+    private static Session getDestinationSession(
+            String sourceProjectName, final Session session, String destinationProjectName,
+            IProgressMonitor monitor) {
         Session destinationSession;
         if (destinationProjectName.equals(sourceProjectName)) {
             destinationSession = session;
         } else {
-            IProject destinationProject = ResourcesPlugin.getWorkspace().getRoot().getProject(destinationProjectName);
-            destinationSession = GraphicalEditorHelper.getSession(destinationProject, null, true, true, monitor);
+            IProject destinationProject = ResourcesPlugin.getWorkspace().getRoot()
+                    .getProject(destinationProjectName);
+            destinationSession = GraphicalEditorHelper.getSession(destinationProject, null, true,
+                    true, monitor);
         }
         return destinationSession;
     }
 
-    private static void copyResource(Session session, Session destSession, IResource source, IResource destination, IProgressMonitor monitor) {
-        if (source.getType() == IResource.FILE && GlobalConstants.FILE_EXTENSION.equals(source.getFileExtension())) {
+    private static void copyResource(
+            Session session, Session destSession, IResource source, IResource destination,
+            IProgressMonitor monitor) {
+        if (source.getType() == IResource.FILE
+                && GlobalConstants.FILE_EXTENSION.equals(source.getFileExtension())) {
             copyIResource(session, destSession, source, destination, monitor);
         }
 
@@ -176,7 +200,8 @@ public final class PooslDiagramRefactorHelper {
             Map<String, IResource> membersMap = getMembersMap(destination);
             try {
                 for (IResource iResource : folder.members()) {
-                    copyResource(session, destSession, iResource, membersMap.get(iResource.getName()), monitor);
+                    copyResource(session, destSession, iResource,
+                            membersMap.get(iResource.getName()), monitor);
                 }
             } catch (CoreException e) {
                 LOGGER.warn(COPY_FOLDER_FAILED, e);
@@ -204,8 +229,10 @@ public final class PooslDiagramRefactorHelper {
         return map;
     }
 
-    public static void copyDiagramElements(DRepresentation newRepresentation, URI oldUri, EObject newDiagramTarget) {
-        newRepresentation.eSet(ViewpointPackage.Literals.DSEMANTIC_DECORATOR__TARGET, newDiagramTarget);
+    public static void copyDiagramElements(
+            DRepresentation newRepresentation, URI oldUri, EObject newDiagramTarget) {
+        newRepresentation.eSet(ViewpointPackage.Literals.DSEMANTIC_DECORATOR__TARGET,
+                newDiagramTarget);
 
         for (DRepresentationElement elements : newRepresentation.getRepresentationElements()) {
             EObject oldDiagramSem = elements.getTarget();

@@ -110,7 +110,8 @@ public final class PooslProcessMethodDescription {
         return descr.getUserData(STR_OUTPUT_PARAMETERS);
     }
 
-    public static List<PooslProcessMethodParser> getUnguardedCallDescriptions(IEObjectDescription descr) {
+    public static List<PooslProcessMethodParser> getUnguardedCallDescriptions(
+            IEObjectDescription descr) {
         if (!checkValidity(descr))
             return Collections.emptyList();
 
@@ -136,7 +137,8 @@ public final class PooslProcessMethodDescription {
     }
 
     public static List<String> getOutputParameterTypeNames(IEObjectDescription descr) {
-        return FormattingHelper.unformatDeclarationsToTypeNames(getFormattedOutputParameters(descr));
+        return FormattingHelper
+                .unformatDeclarationsToTypeNames(getFormattedOutputParameters(descr));
     }
 
     public static int getNumberOfInputParameters(IEObjectDescription input) {
@@ -168,11 +170,14 @@ public final class PooslProcessMethodDescription {
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateMethod(final int inputParams, final int outputParams, final String className) {
+    public static Predicate<IEObjectDescription> predicateMethod(
+            final int inputParams, final int outputParams, final String className) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
-                return className.equals(getClassName(input)) && inputParams == getNumberOfInputParameters(input) && outputParams == getNumberOfOutputParameters(input);
+                return className.equals(getClassName(input))
+                        && inputParams == getNumberOfInputParameters(input)
+                        && outputParams == getNumberOfOutputParameters(input);
             }
         };
     }
@@ -182,7 +187,8 @@ public final class PooslProcessMethodDescription {
     private static void computeUnguardedMethodCalls(Set<String> methodCalls, Statement statement) {
         if (statement instanceof ProcessMethodCall) {
             ProcessMethodCall call = (ProcessMethodCall) statement;
-            PooslProcessMethodParser unguardedMethodCallDescription = new PooslProcessMethodParser(call);
+            PooslProcessMethodParser unguardedMethodCallDescription = new PooslProcessMethodParser(
+                    call);
             methodCalls.add(unguardedMethodCallDescription.toString());
             return;
         }
@@ -192,13 +198,17 @@ public final class PooslProcessMethodDescription {
                 computeUnguardedMethodCalls(methodCalls, sequence.get(0));
             }
         } else if (statement instanceof AbortStatement) {
-            computeUnguardedMethodCalls(methodCalls, ((AbortStatement) statement).getNormalClause());
-            computeUnguardedMethodCalls(methodCalls, ((AbortStatement) statement).getAbortingClause());
+            computeUnguardedMethodCalls(methodCalls,
+                    ((AbortStatement) statement).getNormalClause());
+            computeUnguardedMethodCalls(methodCalls,
+                    ((AbortStatement) statement).getAbortingClause());
         } else if (statement instanceof GuardedStatement) {
             computeUnguardedMethodCalls(methodCalls, ((GuardedStatement) statement).getStatement());
         } else if (statement instanceof InterruptStatement) {
-            computeUnguardedMethodCalls(methodCalls, ((InterruptStatement) statement).getNormalClause());
-            computeUnguardedMethodCalls(methodCalls, ((InterruptStatement) statement).getInterruptingClause());
+            computeUnguardedMethodCalls(methodCalls,
+                    ((InterruptStatement) statement).getNormalClause());
+            computeUnguardedMethodCalls(methodCalls,
+                    ((InterruptStatement) statement).getInterruptingClause());
         } else if (statement instanceof ParStatement) {
             for (Statement clause : ((ParStatement) statement).getClauses()) {
                 computeUnguardedMethodCalls(methodCalls, clause);

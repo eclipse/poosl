@@ -33,18 +33,22 @@ import org.eclipse.sirius.viewpoint.impl.DRepresentationElementImpl;
  */
 public class CompositeStructureEditServices {
 
-    public void createConnection(EObject source, DDiagramElement sourceView, DDiagramElement targetView) {
-        CreationHelper.createConnection(getModelElement(sourceView.getTarget(), sourceView), targetView, //
+    public void createConnection(
+            EObject source, DDiagramElement sourceView, DDiagramElement targetView) {
+        CreationHelper.createConnection(getModelElement(sourceView.getTarget(), sourceView),
+                targetView, //
                 getModelElement(targetView.getTarget(), targetView));
         AbstractServices.validateRepresentation(source, targetView);
     }
 
-    public void deleteConnectionEnd(Channel element, EObject view, EObject port, EObject portParent) {
+    public void deleteConnectionEnd(
+            Channel element, EObject view, EObject port, EObject portParent) {
         CreationHelper.deleteChannelConnection(element, port, portParent);
         AbstractServices.validateRepresentation(element, view);
     }
 
-    public void reconnectConnection(Channel self, AbstractDNode sourceView, AbstractDNode targetView) {
+    public void reconnectConnection(
+            Channel self, AbstractDNode sourceView, AbstractDNode targetView) {
         CreationHelper.reconnectConnection(self, targetView, //
                 sourceView.getTarget(), ((AbstractDNode) sourceView.eContainer()).getTarget(), //
                 targetView.getTarget(), ((AbstractDNode) targetView.eContainer()).getTarget());

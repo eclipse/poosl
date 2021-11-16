@@ -58,10 +58,10 @@ final class PooslSuperClassDescription {
      * Adds the name of object to usedElements if interested.
      * 
      * @param used
-     *            container created with {@link #initUsedElements()}
+     *     container created with {@link #initUsedElements()}
      * @param local
      * @param object
-     *            element to add to the usedelements
+     *     element to add to the usedelements
      */
     public static void addUsedVariables(Set<String> used, Set<String> local, EObject object) {
         if (object instanceof VariableExpression) {

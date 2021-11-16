@@ -30,7 +30,8 @@ public final class Messages {
     public static final String DIALOG_RELAUNCH_TITLE = "Save during debug session";
 
     public static final String DIALOG_RELAUNCH_TEXT = "Saving the file ''{0}'' during a debug session does not update the running session.\n"
-            + "When continuing to save the file the communication diagrams of this model will be closed.\n" + "Do you want to terminate and relaunch the debug session {1}. ";
+            + "When continuing to save the file the communication diagrams of this model will be closed.\n"
+            + "Do you want to terminate and relaunch the debug session {1}. ";
 
     public static final String DIALOG_RELAUNCH_BT_CONTINUE = "Continue debugging";
 

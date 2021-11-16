@@ -66,7 +66,9 @@ public class PooslEditGroup extends ActionGroup {
     public void fillContextMenu(IMenuManager menu) {
         IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
 
-        boolean anyResourceSelected = !selection.isEmpty() && ResourceSelectionUtil.allResourcesAreOfType(selection, IResource.PROJECT | IResource.FOLDER | IResource.FILE);
+        boolean anyResourceSelected = !selection.isEmpty()
+                && ResourceSelectionUtil.allResourcesAreOfType(selection,
+                        IResource.PROJECT | IResource.FOLDER | IResource.FILE);
 
         copyAction.selectionChanged(selection);
         menu.appendToGroup(ICommonMenuConstants.GROUP_EDIT, copyAction);
@@ -97,7 +99,7 @@ public class PooslEditGroup extends ActionGroup {
      * Handles a key pressed event by invoking the appropriate action.
      *
      * @param event
-     *            The Key Event
+     *     The Key Event
      */
     public void handleKeyPressed(KeyEvent event) {
         if (event.character == SWT.DEL && event.stateMask == 0) {
@@ -115,7 +117,8 @@ public class PooslEditGroup extends ActionGroup {
 
         pasteAction = new PooslPasteAction(shell, clipboard);
         ISharedImages images = PlatformUI.getWorkbench().getSharedImages();
-        pasteAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE_DISABLED));
+        pasteAction.setDisabledImageDescriptor(
+                images.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE_DISABLED));
         pasteAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
         pasteAction.setActionDefinitionId(PooslPasteAction.ID);
 
@@ -127,12 +130,14 @@ public class PooslEditGroup extends ActionGroup {
         };
 
         copyAction = new PooslCopyAction(shell, clipboard, pasteAction);
-        copyAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY_DISABLED));
+        copyAction.setDisabledImageDescriptor(
+                images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY_DISABLED));
         copyAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
         copyAction.setActionDefinitionId(PooslCopyAction.ID);
 
         deleteAction = new PooslDeleteAction(sp);
-        deleteAction.setDisabledImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE_DISABLED));
+        deleteAction.setDisabledImageDescriptor(
+                images.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE_DISABLED));
         deleteAction.setImageDescriptor(images.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
         deleteAction.setActionDefinitionId(PooslDeleteAction.ID);
     }

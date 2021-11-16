@@ -64,8 +64,9 @@ public final class PooslVariableTypeHelper {
 
     private static EObject getContainer(EObject originalObject) {
         EObject object = originalObject;
-        while (object != null
-                && !(object instanceof DataClass || object instanceof ProcessClass || object instanceof ClusterClass || object instanceof DataMethod || object instanceof ProcessMethod)) {
+        while (object != null && !(object instanceof DataClass || object instanceof ProcessClass
+                || object instanceof ClusterClass || object instanceof DataMethod
+                || object instanceof ProcessMethod)) {
             object = object.eContainer();
         }
         return object;
@@ -76,12 +77,14 @@ public final class PooslVariableTypeHelper {
     private static String getTypeDataClassVariable(DataClass dClass, String name) {
         String superClass = HelperFunctions.getCorrectedDataClassExtendsAsString(dClass);
         if (superClass != null) {
-            IEObjectDescription declarationDescr = PooslCache.get(dClass.eResource()).getDataClassVariables(superClass).get(name);
+            IEObjectDescription declarationDescr = PooslCache.get(dClass.eResource())
+                    .getDataClassVariables(superClass).get(name);
             if (declarationDescr != null) {
                 return PooslDeclarationDescription.getType(declarationDescr);
             }
         }
-        Variable var = getVariableFromIterable(PooslScopeProvider.getLocalScopeVariables(dClass), name);
+        Variable var = getVariableFromIterable(PooslScopeProvider.getLocalScopeVariables(dClass),
+                name);
         if (var != null) {
             return ((Declaration) var.eContainer()).getType();
         }
@@ -92,7 +95,8 @@ public final class PooslVariableTypeHelper {
         DataClass dClass = (DataClass) dMethod.eContainer();
         String result = getTypeDataClassVariable(dClass, name);
         if (result == null) {
-            Variable var = getVariableFromIterable(PooslScopeProvider.getLocalScopeVariables(dMethod), name);
+            Variable var = getVariableFromIterable(
+                    PooslScopeProvider.getLocalScopeVariables(dMethod), name);
             if (var != null) {
                 return ((Declaration) var.eContainer()).getType();
             }
@@ -101,7 +105,8 @@ public final class PooslVariableTypeHelper {
     }
 
     private static String getTypeClusterClassParameter(ClusterClass cClass, String name) {
-        Variable var = getVariableFromIterable(PooslScopeProvider.getLocalScopeParameters(cClass), name);
+        Variable var = getVariableFromIterable(PooslScopeProvider.getLocalScopeParameters(cClass),
+                name);
         if (var != null) {
             return ((Declaration) var.eContainer()).getType();
         }
@@ -111,24 +116,28 @@ public final class PooslVariableTypeHelper {
     private static String getTypeProcessClassParameterOrVariable(ProcessClass pClass, String name) {
 
         if (pClass.getSuperClass() != null) {
-            IEObjectDescription descr = PooslCache.get(pClass.eResource()).getProcessClassParametersAndVariables(pClass.getSuperClass()).get(name);
+            IEObjectDescription descr = PooslCache.get(pClass.eResource())
+                    .getProcessClassParametersAndVariables(pClass.getSuperClass()).get(name);
             if (descr != null) {
                 return PooslDeclarationDescription.getType(descr);
             }
         }
 
-        Variable var = getVariableFromIterable(PooslScopeProvider.getLocalScopeVariables(pClass), name);
+        Variable var = getVariableFromIterable(PooslScopeProvider.getLocalScopeVariables(pClass),
+                name);
         if (var != null) {
             return ((Declaration) var.eContainer()).getType();
         }
         return null;
     }
 
-    private static String getTypeProcessMethodParameterOrVariable(ProcessMethod pMethod, String name) {
+    private static String getTypeProcessMethodParameterOrVariable(
+            ProcessMethod pMethod, String name) {
         ProcessClass pClass = (ProcessClass) pMethod.eContainer();
         String result = getTypeProcessClassParameterOrVariable(pClass, name);
         if (result == null) {
-            Variable var = getVariableFromIterable(PooslScopeProvider.getLocalScopeVariables(pMethod), name);
+            Variable var = getVariableFromIterable(
+                    PooslScopeProvider.getLocalScopeVariables(pMethod), name);
             if (var != null) {
                 return ((Declaration) var.eContainer()).getType();
             }

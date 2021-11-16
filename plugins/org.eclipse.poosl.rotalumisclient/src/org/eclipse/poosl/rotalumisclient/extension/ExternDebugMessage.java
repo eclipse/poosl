@@ -47,8 +47,9 @@ public class ExternDebugMessage {
 
     private final Map<String, String> parameters = new HashMap<>();
 
-    private ExternDebugMessage(String launchID, BigDecimal simTime, String relativeModelPath, String sendProcess, String sendPort, String receiveProcess, String receivePort, String messageName,
-            List<Parameter> parameters) throws InstantiationException {
+    private ExternDebugMessage(String launchID, BigDecimal simTime, String relativeModelPath,
+            String sendProcess, String sendPort, String receiveProcess, String receivePort,
+            String messageName, List<Parameter> parameters) throws InstantiationException {
         this.simTime = simTime.toString();
         this.sendProcess = sendProcess;
         this.sendPort = sendPort;
@@ -61,19 +62,26 @@ public class ExternDebugMessage {
             this.parameters.put(parameter.getType(), parameter.getValue());
         }
 
-        if (sendProcess == null || sendPort == null || receiveProcess == null || receivePort == null || launchID == null) {
+        if (sendProcess == null || sendPort == null || receiveProcess == null || receivePort == null
+                || launchID == null) {
             throw new InstantiationException();
         }
     }
 
-    public ExternDebugMessage(String launch, String modelPath, TCommunicationEvent commEvent) throws InstantiationException {
-        this(launch, commEvent.getSimulationTime(), modelPath, commEvent.getSender().getProcessPath(), commEvent.getSender().getPortName(), commEvent.getReceiver().getProcessPath(),
-                commEvent.getReceiver().getPortName(), commEvent.getMessage().getName(), commEvent.getMessage().getParameters().getParameter());
+    public ExternDebugMessage(String launch, String modelPath, TCommunicationEvent commEvent)
+            throws InstantiationException {
+        this(launch, commEvent.getSimulationTime(), modelPath,
+                commEvent.getSender().getProcessPath(), commEvent.getSender().getPortName(),
+                commEvent.getReceiver().getProcessPath(), commEvent.getReceiver().getPortName(),
+                commEvent.getMessage().getName(),
+                commEvent.getMessage().getParameters().getParameter());
     }
 
-    public ExternDebugMessage(String launch, String modelPath, PooslDiagramMessage message) throws InstantiationException {
-        this(launch, message.getSimulatedTime(), modelPath, message.getSendProcess(), message.getSendPort(), message.getReceiveProcess(), message.getReceivePort(), message.getMessageName(),
-                message.getParamters());
+    public ExternDebugMessage(String launch, String modelPath, PooslDiagramMessage message)
+            throws InstantiationException {
+        this(launch, message.getSimulatedTime(), modelPath, message.getSendProcess(),
+                message.getSendPort(), message.getReceiveProcess(), message.getReceivePort(),
+                message.getMessageName(), message.getParamters());
     }
 
     public String getSimTime() {

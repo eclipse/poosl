@@ -68,7 +68,8 @@ public interface IBundleInfo {
         }
 
         @Override
-        public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
+        public List<URI> find(
+                Context context, String path, Predicate<String> matcher, String... fileExtensions) {
             return getInfo().find(context, path, matcher, fileExtensions);
         }
 
@@ -129,7 +130,8 @@ public interface IBundleInfo {
     }
 
     public interface Registry {
-        Registry INSTANCE = EcorePlugin.IS_ECLIPSE_RUNNING ? new Delegate() : new StandaloneBundleRegistry();
+        Registry INSTANCE = EcorePlugin.IS_ECLIPSE_RUNNING
+            ? new Delegate() : new StandaloneBundleRegistry();
 
         Collection<String> getAllBundleNames();
 
@@ -155,7 +157,8 @@ public interface IBundleInfo {
                 try {
                     name = ClasspathUtil.getSymbolicName(url);
                     if (name != null) {
-                        URI location = URI.createURI(url.toString()).trimSegments(2).appendSegment(""); //$NON-NLS-1$
+                        URI location = URI.createURI(url.toString()).trimSegments(2)
+                                .appendSegment(""); //$NON-NLS-1$
                         BundleInfo info = createBundleInfo(name, location);
                         symbolicNameToBundle.put(name, info);
                         locationToBundle.put(location, info);
@@ -196,7 +199,8 @@ public interface IBundleInfo {
             String fileName = Joiner.on('/').join(segments) + ".class"; //$NON-NLS-1$
             URL resource = clazz.getClassLoader().getResource(fileName);
             if ("jar".equals(resource.getProtocol())) { //$NON-NLS-1$
-                return URI.createURI(resource.toString()).trimSegments(segments.length).appendSegment(""); //$NON-NLS-1$
+                return URI.createURI(resource.toString()).trimSegments(segments.length)
+                        .appendSegment(""); //$NON-NLS-1$
             } else {
                 File classFile;
                 try {
@@ -205,7 +209,8 @@ public interface IBundleInfo {
                     for (int i = 0; i < segments.length; i++) {
                         packageRootFolder = packageRootFolder.getParentFile();
                         if (packageRootFolder == null)
-                            throw new RuntimeException("Could not determine package root for " + clazz);
+                            throw new RuntimeException(
+                                    "Could not determine package root for " + clazz);
                     }
                     File current = packageRootFolder;
                     while (current != null) {
@@ -213,7 +218,8 @@ public interface IBundleInfo {
                             return URI.createFileURI(current.toString()).appendSegment(""); //$NON-NLS-1$
                         current = current.getParentFile();
                     }
-                    throw new RuntimeException("Could not find .project file in super-folder of " + packageRootFolder);
+                    throw new RuntimeException(
+                            "Could not find .project file in super-folder of " + packageRootFolder);
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
                 }
@@ -236,18 +242,20 @@ public interface IBundleInfo {
     /**
      * Provides a URI for provided filename.
      * <p>
-     * Depending to the implementation, uri maybe null if resource does not exit but there is no warranty.
+     * Depending to the implementation, uri maybe null if resource does not exit
+     * but there is no warranty.
      * </p>
      * 
      * @param context
-     *            to search in
+     *     to search in
      * @param fileName
-     *            of resource
+     *     of resource
      * @return URI or null if path is
      */
     URI find(Context context, String fileName);
 
-    List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions);
+    List<URI> find(
+            Context context, String path, Predicate<String> matcher, String... fileExtensions);
 
     URI getRootURI();
 

@@ -79,9 +79,11 @@ import org.eclipse.xtext.validation.Issue;
 
 public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdentifiers {
 
-    private boolean applyConversionMethod(Issue issue, Expression element, IModificationContext context) {
+    private boolean applyConversionMethod(
+            Issue issue, Expression element, IModificationContext context) {
         if (issue.getData().length >= 2) {
-            List<TextChange> changes = getConversionChanges(element, issue.getData()[0], issue.getData()[1]);
+            List<TextChange> changes = getConversionChanges(element, issue.getData()[0],
+                    issue.getData()[1]);
             if (changes == null)
                 return false;
             if (!applyTextChanges(context.getXtextDocument(), element.eResource(), changes)) {
@@ -101,19 +103,23 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
 
     @Fix(PooslIssueCodes.MISSING_MESSAGE_DECLARATION)
     public void missingMessageDeclarationAll(final Issue issue, IssueResolutionAcceptor acceptor) {
-        acceptor.accept(issue, "Extend the message declarations based on all statements in this process", // label
+        acceptor.accept(issue,
+                "Extend the message declarations based on all statements in this process", // label
                 null, // description
                 null, // icon
                 new ISemanticModification() {
                     @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
-                        ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
+                        ProcessClass pClass = HelperFunctions
+                                .getContainingProcessClass(issueStatement);
                         List<ReceiveStatement> usedReceiveMessages = new ArrayList<>();
                         List<SendStatement> usedSendMessages = new ArrayList<>();
                         getUsedMessagesFromProcess(pClass, usedSendMessages, usedReceiveMessages);
-                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(), usedReceiveMessages, usedSendMessages)) {
-                            showWarning("Message declarations could not be extended based on all statements.");
+                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(),
+                                usedReceiveMessages, usedSendMessages)) {
+                            showWarning(
+                                    "Message declarations could not be extended based on all statements.");
                         }
                     }
                 });
@@ -128,7 +134,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                     @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
-                        ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
+                        ProcessClass pClass = HelperFunctions
+                                .getContainingProcessClass(issueStatement);
                         List<ReceiveStatement> usedReceiveMessages = new LinkedList<>();
                         List<SendStatement> usedSendMessages = new LinkedList<>();
                         if (issueStatement instanceof ReceiveStatement) {
@@ -137,36 +144,44 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         if (issueStatement instanceof SendStatement) {
                             usedSendMessages.add((SendStatement) issueStatement);
                         }
-                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(), usedReceiveMessages, usedSendMessages)) {
-                            showWarning("Message declarations could not be extended based on this statement.");
+                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(),
+                                usedReceiveMessages, usedSendMessages)) {
+                            showWarning(
+                                    "Message declarations could not be extended based on this statement.");
                         }
                     }
                 });
     }
 
     @Fix(PooslIssueCodes.INVALID_TYPES_RECEIVE_STATEMENT)
-    public void invalidTypesReceiveStatementAll(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidTypesReceiveStatementAll(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         addSuppressWarning(issue, acceptor, WarningType.TYPECHECK);
-        acceptor.accept(issue, "Extend the message declarations based on all statements in this process", // label
+        acceptor.accept(issue,
+                "Extend the message declarations based on all statements in this process", // label
                 null, // description
                 null, // icon
                 new ISemanticModification() {
                     @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
-                        ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
+                        ProcessClass pClass = HelperFunctions
+                                .getContainingProcessClass(issueStatement);
                         List<ReceiveStatement> usedReceiveMessages = new ArrayList<>();
                         List<SendStatement> usedSendMessages = new ArrayList<>();
                         getUsedMessagesFromProcess(pClass, usedSendMessages, usedReceiveMessages);
-                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(), usedReceiveMessages, usedSendMessages)) {
-                            showWarning("Message declarations could not be extended based on all statements.");
+                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(),
+                                usedReceiveMessages, usedSendMessages)) {
+                            showWarning(
+                                    "Message declarations could not be extended based on all statements.");
                         }
                     }
                 });
     }
 
     @Fix(PooslIssueCodes.INVALID_TYPES_RECEIVE_STATEMENT)
-    public void invalidTypesReceiveStatementOne(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidTypesReceiveStatementOne(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         acceptor.accept(issue, "Extend the message declarations based on this statement", // label
                 null, // description
                 null, // icon
@@ -174,7 +189,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                     @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
-                        ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
+                        ProcessClass pClass = HelperFunctions
+                                .getContainingProcessClass(issueStatement);
                         List<ReceiveStatement> usedReceiveMessages = new LinkedList<>();
                         List<SendStatement> usedSendMessages = new LinkedList<>();
                         if (issueStatement instanceof ReceiveStatement) {
@@ -183,8 +199,10 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         if (issueStatement instanceof SendStatement) {
                             usedSendMessages.add((SendStatement) issueStatement);
                         }
-                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(), usedReceiveMessages, usedSendMessages)) {
-                            showWarning("Message declarations could not be extended based on this statement.");
+                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(),
+                                usedReceiveMessages, usedSendMessages)) {
+                            showWarning(
+                                    "Message declarations could not be extended based on this statement.");
                         }
                     }
                 });
@@ -193,19 +211,23 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
     @Fix(PooslIssueCodes.INVALID_TYPES_SEND_STATEMENT)
     public void invalidTypesSendStatementAll(final Issue issue, IssueResolutionAcceptor acceptor) {
         addSuppressWarning(issue, acceptor, WarningType.TYPECHECK);
-        acceptor.accept(issue, "Extend the message declarations based on all statements in this process", // label
+        acceptor.accept(issue,
+                "Extend the message declarations based on all statements in this process", // label
                 null, // description
                 null, // icon
                 new ISemanticModification() {
                     @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
-                        ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
+                        ProcessClass pClass = HelperFunctions
+                                .getContainingProcessClass(issueStatement);
                         List<ReceiveStatement> usedReceiveMessages = new ArrayList<>();
                         List<SendStatement> usedSendMessages = new ArrayList<>();
                         getUsedMessagesFromProcess(pClass, usedSendMessages, usedReceiveMessages);
-                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(), usedReceiveMessages, usedSendMessages)) {
-                            showWarning("Message declarations could not be extended based on all statements.");
+                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(),
+                                usedReceiveMessages, usedSendMessages)) {
+                            showWarning(
+                                    "Message declarations could not be extended based on all statements.");
                         }
                     }
                 });
@@ -221,7 +243,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                     @Override
                     public void apply(EObject element, IModificationContext context) {
                         Statement issueStatement = (Statement) element;
-                        ProcessClass pClass = HelperFunctions.getContainingProcessClass(issueStatement);
+                        ProcessClass pClass = HelperFunctions
+                                .getContainingProcessClass(issueStatement);
                         List<ReceiveStatement> usedReceiveMessages = new LinkedList<>();
                         List<SendStatement> usedSendMessages = new LinkedList<>();
                         if (issueStatement instanceof ReceiveStatement) {
@@ -230,18 +253,23 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         if (issueStatement instanceof SendStatement) {
                             usedSendMessages.add((SendStatement) issueStatement);
                         }
-                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(), usedReceiveMessages, usedSendMessages)) {
-                            showWarning("Message declarations could not be extended based on this statement.");
+                        if (!updateMessageDeclarations(pClass, context.getXtextDocument(),
+                                usedReceiveMessages, usedSendMessages)) {
+                            showWarning(
+                                    "Message declarations could not be extended based on this statement.");
                         }
                     }
                 });
     }
 
-    private boolean updateMessageDeclarations(ProcessClass pClass, IXtextDocument doc, List<ReceiveStatement> usedReceiveMessages, List<SendStatement> usedSendMessages) {
+    private boolean updateMessageDeclarations(
+            ProcessClass pClass, IXtextDocument doc, List<ReceiveStatement> usedReceiveMessages,
+            List<SendStatement> usedSendMessages) {
         Resource resource = pClass.eResource();
 
         Map<String, MessageChange> recMessageChanges = new HashMap<>();
-        for (MessageSignature messageSignature : getScopeMessageSignatureObjects(pClass, PooslMessageType.RECEIVE)) {
+        for (MessageSignature messageSignature : getScopeMessageSignatureObjects(pClass,
+                PooslMessageType.RECEIVE)) {
             MessageChange change = new MessageChange(messageSignature);
             recMessageChanges.put(change.getID(), change);
         }
@@ -252,7 +280,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 if (sigId != null) {
                     List<String> types = new ArrayList<>();
                     for (OutputVariable outVar : statement.getVariables()) {
-                        types.add(PooslVariableTypeHelper.getVariableType(statement, outVar.getVariable()));
+                        types.add(PooslVariableTypeHelper.getVariableType(statement,
+                                outVar.getVariable()));
                     }
                     MessageChange messageChange = recMessageChanges.get(sigId);
                     if (messageChange != null) {
@@ -265,7 +294,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
         }
 
         Map<String, MessageChange> sendMessageChanges = new HashMap<>();
-        for (MessageSignature messageSignature : getScopeMessageSignatureObjects(pClass, PooslMessageType.SEND)) {
+        for (MessageSignature messageSignature : getScopeMessageSignatureObjects(pClass,
+                PooslMessageType.SEND)) {
             MessageChange change = new MessageChange(messageSignature);
             sendMessageChanges.put(change.getID(), change);
         }
@@ -274,7 +304,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
             if (statement.getPortDescriptor() instanceof PortReference) {
                 String sigId = PooslMessageSignatureCallHelper.getSignatureID(statement);
                 if (sigId != null) {
-                    List<String> types = pooslTypeSystem.getAndCheckExpressionsType(statement.getArguments());
+                    List<String> types = pooslTypeSystem
+                            .getAndCheckExpressionsType(statement.getArguments());
                     MessageChange messageChange = sendMessageChanges.get(sigId);
                     if (messageChange != null) {
                         messageChange.updateTypes(resource, types);
@@ -290,7 +321,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
         StringBuilder messages = new StringBuilder();
         createNewMessageText(messages, sendMessageChanges.values(), "!"); //$NON-NLS-1$
         createNewMessageText(messages, recMessageChanges.values(), "?"); //$NON-NLS-1$
-        changes.add(new TextChange(resource, getLastMessageNode(pClass).getTotalEndOffset(), 0, messages.toString()));
+        changes.add(new TextChange(resource, getLastMessageNode(pClass).getTotalEndOffset(), 0,
+                messages.toString()));
 
         updateExistingMessageText(recMessageChanges.values(), changes);
         updateExistingMessageText(sendMessageChanges.values(), changes);
@@ -305,7 +337,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // icon
                 new ISemanticModification() {
                     @Override
-                    public void apply(EObject element, IModificationContext context) throws BadLocationException {
+                    public void apply(EObject element, IModificationContext context)
+                            throws BadLocationException {
                         if (element instanceof Expression) {
                             applyConversionMethod(issue, (Expression) element, context);
                         }
@@ -314,7 +347,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
     }
 
     @Fix(PooslIssueCodes.INVALID_TYPES_RECEIVE_STATEMENT)
-    public void invalidTypesReceiveStatementVariables(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidTypesReceiveStatementVariables(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         acceptor.accept(issue, "Change types of variables used in this receive statement", // label
                 null, // description
                 null, // icon
@@ -323,20 +357,25 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                     public void apply(EObject element, IModificationContext context) {
                         ReceiveStatement statement = (ReceiveStatement) element;
 
-                        IEObjectDescription receiveSign = PooslReferenceHelper.getReceiveSignatureDescription(statement);
+                        IEObjectDescription receiveSign = PooslReferenceHelper
+                                .getReceiveSignatureDescription(statement);
                         if (receiveSign != null) {
-                            List<String> sigTypes = PooslMessageSignatureDescription.getParameterTypes(receiveSign);
-                            if (changeOutputVariableTypes(element, statement.getVariables(), sigTypes, context)) {
+                            List<String> sigTypes = PooslMessageSignatureDescription
+                                    .getParameterTypes(receiveSign);
+                            if (changeOutputVariableTypes(element, statement.getVariables(),
+                                    sigTypes, context)) {
                                 return;
                             }
                         }
-                        showWarning("Could not change types of variables used in this receive statement");
+                        showWarning(
+                                "Could not change types of variables used in this receive statement");
                     }
                 });
     }
 
     @Fix(PooslIssueCodes.INVALID_INPUT_TYPES_PROCESS_METHOD_CALL)
-    public void invalidInputTypesProcessMethodCall(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidInputTypesProcessMethodCall(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         addSuppressWarning(issue, acceptor, WarningType.TYPECHECK);
         acceptor.accept(issue, "Change types of input parameter declared in process method", // label
                 null, // description
@@ -346,36 +385,44 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         ProcessMethodCall pMethodCall = (ProcessMethodCall) element.eContainer();
-                        IEObjectDescription descr = PooslReferenceHelper.getProcessMethodDescription(pMethodCall);
+                        IEObjectDescription descr = PooslReferenceHelper
+                                .getProcessMethodDescription(pMethodCall);
                         if (descr != null) {
                             EObject pMethod = descr.getEObjectOrProxy();
                             if (pMethod.eIsProxy())
                                 pMethod = EcoreUtil2.resolve(pMethod, element);
 
-                            List<String> callTypes = pooslTypeSystem.getAndCheckExpressionsType(pMethodCall.getInputArguments());
-                            List<String> methodTypes = PooslProcessMethodDescription.getInputParameterTypeNames(descr);
+                            List<String> callTypes = pooslTypeSystem
+                                    .getAndCheckExpressionsType(pMethodCall.getInputArguments());
+                            List<String> methodTypes = PooslProcessMethodDescription
+                                    .getInputParameterTypeNames(descr);
                             List<TextChange> changes = new ArrayList<>();
                             for (int i = 0; i < callTypes.size(); i++) {
-                                String gca = TypingHelper.greatestCommonAncestor(resource, callTypes.get(i), methodTypes.get(i));
-                                Declaration decl = findDeclarationIndex(((ProcessMethod) pMethod).getInputParameters(), i);
+                                String gca = TypingHelper.greatestCommonAncestor(resource,
+                                        callTypes.get(i), methodTypes.get(i));
+                                Declaration decl = findDeclarationIndex(
+                                        ((ProcessMethod) pMethod).getInputParameters(), i);
                                 changes.add(new TextChange(decl, Literals.DECLARATION__TYPE, gca));
                             }
                             if (applyTextChanges(context.getXtextDocument(), resource, changes))
                                 return;
                         }
-                        showWarning("The input parameters of the process method could not be changed.");
+                        showWarning(
+                                "The input parameters of the process method could not be changed.");
                     }
                 });
     }
 
     @Fix(PooslIssueCodes.INVALID_INPUT_TYPES_PROCESS_METHOD_CALL)
-    public void invalidInputTypesProcessMethodCall2(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidInputTypesProcessMethodCall2(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         acceptor.accept(issue, "Apply conversion method", // label
                 null, // description
                 null, // icon
                 new ISemanticModification() {
                     @Override
-                    public void apply(EObject element, IModificationContext context) throws BadLocationException {
+                    public void apply(EObject element, IModificationContext context)
+                            throws BadLocationException {
                         if (element instanceof Expression) {
                             applyConversionMethod(issue, (Expression) element, context);
                         }
@@ -384,7 +431,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
     }
 
     @Fix(PooslIssueCodes.INVALID_OUTPUT_TYPES_PROCESS_METHOD_CALL)
-    public void invalidOutputTypesProcessMethodCall(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidOutputTypesProcessMethodCall(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         addSuppressWarning(issue, acceptor, WarningType.TYPECHECK);
         acceptor.accept(issue, "Change types of output parameters declared in process method", // label
                 null, // description
@@ -395,33 +443,42 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         Resource resource = element.eResource();
                         ProcessMethodCall pMethodCall = (ProcessMethodCall) element;
 
-                        IEObjectDescription descr = PooslReferenceHelper.getProcessMethodDescription(pMethodCall);
+                        IEObjectDescription descr = PooslReferenceHelper
+                                .getProcessMethodDescription(pMethodCall);
                         if (descr != null) {
-                            List<String> methodTypes = PooslProcessMethodDescription.getOutputParameterTypeNames(descr);
+                            List<String> methodTypes = PooslProcessMethodDescription
+                                    .getOutputParameterTypeNames(descr);
                             EObject pMethod = descr.getEObjectOrProxy();
                             if (pMethod.eIsProxy())
                                 pMethod = EcoreUtil2.resolve(pMethod, element);
 
                             List<TextChange> changes = new ArrayList<>();
                             for (int i = 0; i < methodTypes.size(); i++) {
-                                OutputVariable outputVariable = pMethodCall.getOutputVariables().get(i);
-                                String callType = PooslVariableTypeHelper.getVariableType(outputVariable, outputVariable.getVariable());
-                                String gca = TypingHelper.greatestCommonAncestor(resource, callType, methodTypes.get(i));
-                                Declaration decl = findDeclarationIndex(((ProcessMethod) pMethod).getOutputParameters(), i);
+                                OutputVariable outputVariable = pMethodCall.getOutputVariables()
+                                        .get(i);
+                                String callType = PooslVariableTypeHelper.getVariableType(
+                                        outputVariable, outputVariable.getVariable());
+                                String gca = TypingHelper.greatestCommonAncestor(resource, callType,
+                                        methodTypes.get(i));
+                                Declaration decl = findDeclarationIndex(
+                                        ((ProcessMethod) pMethod).getOutputParameters(), i);
                                 if (decl != null) {
-                                    changes.add(new TextChange(decl, Literals.DECLARATION__TYPE, gca));
+                                    changes.add(
+                                            new TextChange(decl, Literals.DECLARATION__TYPE, gca));
                                 }
                             }
                             if (applyTextChanges(context.getXtextDocument(), resource, changes))
                                 return;
                         }
-                        showWarning("The output parameters of the process method could not be changed.");
+                        showWarning(
+                                "The output parameters of the process method could not be changed.");
                     }
                 });
     }
 
     @Fix(PooslIssueCodes.INVALID_OUTPUT_TYPES_PROCESS_METHOD_CALL)
-    public void invalidOutputTypesProcessMethodCall2(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidOutputTypesProcessMethodCall2(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         acceptor.accept(issue, "Change types of output variables used in process method call", // label
                 null, // description
                 null, // icon
@@ -430,10 +487,13 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                     public void apply(EObject element, IModificationContext context) {
 
                         ProcessMethodCall pMethodCall = (ProcessMethodCall) element;
-                        IEObjectDescription descr = PooslReferenceHelper.getProcessMethodDescription(pMethodCall);
+                        IEObjectDescription descr = PooslReferenceHelper
+                                .getProcessMethodDescription(pMethodCall);
                         if (descr != null) {
-                            List<String> methodTypes = PooslProcessMethodDescription.getOutputParameterTypeNames(descr);
-                            if (changeOutputVariableTypes(element, pMethodCall.getOutputVariables(), methodTypes, context)) {
+                            List<String> methodTypes = PooslProcessMethodDescription
+                                    .getOutputParameterTypeNames(descr);
+                            if (changeOutputVariableTypes(element, pMethodCall.getOutputVariables(),
+                                    methodTypes, context)) {
                                 return;
                             }
                         }
@@ -442,7 +502,9 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 });
     }
 
-    private boolean changeOutputVariableTypes(EObject element, EList<OutputVariable> outputVariables, List<String> actualTypes, IModificationContext context) {
+    private boolean changeOutputVariableTypes(
+            EObject element, EList<OutputVariable> outputVariables, List<String> actualTypes,
+            IModificationContext context) {
         Resource resource = element.eResource();
         List<String> callTypes = new ArrayList<>();
         for (OutputVariable outVar : outputVariables) {
@@ -453,7 +515,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
         for (int i = actualTypes.size() - 1; i >= 0; i--) {
             String varName = outputVariables.get(i).getVariable();
             String newType = varChanges.get(varName);
-            String varType = (newType != null) ? newType : PooslVariableTypeHelper.getVariableType(element, varName);
+            String varType = (newType != null)
+                ? newType : PooslVariableTypeHelper.getVariableType(element, varName);
             String sigType = actualTypes.get(i);
 
             String gca = TypingHelper.greatestCommonAncestor(resource, varType, sigType);
@@ -470,7 +533,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 if (obj.eIsProxy()) {
                     obj = EcoreUtil.resolve(obj, element);
                 }
-                changes.add(new TextChange(((Variable) obj).eContainer(), Literals.DECLARATION__TYPE, varChanges.get(varName)));
+                changes.add(new TextChange(((Variable) obj).eContainer(),
+                        Literals.DECLARATION__TYPE, varChanges.get(varName)));
             }
         }
         return applyTextChanges(context.getXtextDocument(), resource, changes);
@@ -490,22 +554,28 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         Instance instance = (Instance) currentIParameter.eContainer();
 
                         String iClass = instance.getClassDefinition();
-                        Map<String, IEObjectDescription> expectedParams = PooslCache.get(resource).getInstantiableClassParameters(iClass);
+                        Map<String, IEObjectDescription> expectedParams = PooslCache.get(resource)
+                                .getInstantiableClassParameters(iClass);
                         List<TextChange> changes = new ArrayList<>();
 
-                        for (InstanceParameter instanceParameter : instance.getInstanceParameters()) {
-                            String actualType = pooslTypeSystem.getAndCheckExpressionType(instanceParameter.getExpression());
+                        for (InstanceParameter instanceParameter : instance
+                                .getInstanceParameters()) {
+                            String actualType = pooslTypeSystem
+                                    .getAndCheckExpressionType(instanceParameter.getExpression());
                             if (instanceParameter.getParameter() != null) {
-                                IEObjectDescription descr = expectedParams.get(instanceParameter.getParameter());
+                                IEObjectDescription descr = expectedParams
+                                        .get(instanceParameter.getParameter());
                                 if (descr != null) {
                                     String expType = PooslDeclarationDescription.getType(descr);
                                     if (!TypingHelper.isSubtype(resource, expType, actualType)) {
-                                        String gca = TypingHelper.greatestCommonAncestor(resource, expType, actualType);
+                                        String gca = TypingHelper.greatestCommonAncestor(resource,
+                                                expType, actualType);
                                         EObject var = descr.getEObjectOrProxy();
                                         if (var.eIsProxy()) {
                                             var = EcoreUtil.resolve(var, element);
                                         }
-                                        changes.add(new TextChange(var.eContainer(), Literals.DECLARATION__TYPE, gca));
+                                        changes.add(new TextChange(var.eContainer(),
+                                                Literals.DECLARATION__TYPE, gca));
                                     }
                                 }
                             }
@@ -524,9 +594,11 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // icon
                 new ISemanticModification() {
                     @Override
-                    public void apply(EObject element, IModificationContext context) throws BadLocationException {
+                    public void apply(EObject element, IModificationContext context)
+                            throws BadLocationException {
                         if (element instanceof InstanceParameter) {
-                            applyConversionMethod(issue, ((InstanceParameter) element).getExpression(), context);
+                            applyConversionMethod(issue,
+                                    ((InstanceParameter) element).getExpression(), context);
                         }
                     }
                 });
@@ -540,7 +612,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // icon
                 new ISemanticModification() {
                     @Override
-                    public void apply(EObject element, IModificationContext context) throws BadLocationException {
+                    public void apply(EObject element, IModificationContext context)
+                            throws BadLocationException {
                         if (element instanceof Expression) {
                             applyConversionMethod(issue, (Expression) element, context);
                         }
@@ -562,11 +635,14 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                             Resource eResource = dataMethod.eResource();
 
                             String returnType = dataMethod.getReturnType();
-                            String bodyType = pooslTypeSystem.getAndCheckExpressionType(dataMethod.getBody());
+                            String bodyType = pooslTypeSystem
+                                    .getAndCheckExpressionType(dataMethod.getBody());
 
                             if (returnType != null && bodyType != null) {
-                                String gca = TypingHelper.greatestCommonAncestor(eResource, returnType, bodyType);
-                                applyTextChange(context.getXtextDocument(), eResource, dataMethod, Literals.DATA_METHOD__RETURN_TYPE, gca);
+                                String gca = TypingHelper.greatestCommonAncestor(eResource,
+                                        returnType, bodyType);
+                                applyTextChange(context.getXtextDocument(), eResource, dataMethod,
+                                        Literals.DATA_METHOD__RETURN_TYPE, gca);
                             }
                         }
                     }
@@ -580,9 +656,11 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // icon
                 new ISemanticModification() {
                     @Override
-                    public void apply(EObject element, IModificationContext context) throws BadLocationException {
+                    public void apply(EObject element, IModificationContext context)
+                            throws BadLocationException {
                         if (element instanceof DataMethodNamed) {
-                            applyConversionMethod(issue, ((DataMethodNamed) element).getBody(), context);
+                            applyConversionMethod(issue, ((DataMethodNamed) element).getBody(),
+                                    context);
                         }
                     }
                 });
@@ -603,21 +681,26 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         String outputType = dataMethod.getReturnType();
 
                         // Get parent Method
-                        int args = HelperFunctions.computeNumberOfVariables(dataMethod.getParameters());
-                        String dClassName = HelperFunctions.getCorrectedDataClassExtendsAsString(resource, dClass.getName());
+                        int args = HelperFunctions
+                                .computeNumberOfVariables(dataMethod.getParameters());
+                        String dClassName = HelperFunctions
+                                .getCorrectedDataClassExtendsAsString(resource, dClass.getName());
                         EReference ref = null;
                         String dMethodName = ""; //$NON-NLS-1$
                         if (dataMethod instanceof DataMethodUnaryOperator) {
-                            dMethodName = ((DataMethodUnaryOperator) dataMethod).getName().getLiteral();
+                            dMethodName = ((DataMethodUnaryOperator) dataMethod).getName()
+                                    .getLiteral();
                             ref = Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR;
                         } else if (dataMethod instanceof DataMethodBinaryOperator) {
-                            dMethodName = ((DataMethodBinaryOperator) dataMethod).getName().getLiteral();
+                            dMethodName = ((DataMethodBinaryOperator) dataMethod).getName()
+                                    .getLiteral();
                             ref = Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR;
                         } else {
                             dMethodName = ((DataMethodNamed) dataMethod).getName();
                             ref = Literals.DATA_CLASS__DATA_METHODS_NAMED;
                         }
-                        IEObjectDescription method = PooslReferenceHelper.getDataMethod(resource, dClassName, dMethodName, args, ref);
+                        IEObjectDescription method = PooslReferenceHelper.getDataMethod(resource,
+                                dClassName, dMethodName, args, ref);
 
                         String outputTypeP = PooslDataMethodDescription.getReturnType(method);
                         if (method != null) {
@@ -625,8 +708,10 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                             if (dataMethodP.eIsProxy()) {
                                 dataMethodP = EcoreUtil2.resolve(dataMethodP, element);
                             }
-                            if (applyTextChange(context.getXtextDocument(), resource, dataMethodP, Literals.DATA_METHOD__RETURN_TYPE,
-                                    TypingHelper.greatestCommonAncestor(resource, outputType, outputTypeP)))
+                            if (applyTextChange(context.getXtextDocument(), resource, dataMethodP,
+                                    Literals.DATA_METHOD__RETURN_TYPE,
+                                    TypingHelper.greatestCommonAncestor(resource, outputType,
+                                            outputTypeP)))
                                 return;
                         }
                         showWarning("Failed to change the return type in the super class.");
@@ -645,14 +730,19 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                     public void apply(EObject element, IModificationContext context) {
                         Resource resource = element.eResource();
                         DataMethod dataMethod = (DataMethod) element;
-                        List<String> inputTypes = TypingHelper.getDeclarationTypeNames(dataMethod.getParameters());
-                        String[] inputTypesP = FormattingHelper.unformatTypeNames(issue.getData()[0]);
+                        List<String> inputTypes = TypingHelper
+                                .getDeclarationTypeNames(dataMethod.getParameters());
+                        String[] inputTypesP = FormattingHelper
+                                .unformatTypeNames(issue.getData()[0]);
 
                         List<TextChange> changes = new ArrayList<>();
                         for (int i = 0; i < inputTypesP.length; i++) {
-                            if (!TypingHelper.isSubtype(resource, inputTypes.get(i), inputTypesP[i])) {
-                                changes.add(new TextChange(dataMethod.getParameters().get(i), Literals.DECLARATION__TYPE,
-                                        TypingHelper.greatestCommonAncestor(resource, inputTypes.get(i), inputTypesP[i])));
+                            if (!TypingHelper.isSubtype(resource, inputTypes.get(i),
+                                    inputTypesP[i])) {
+                                changes.add(new TextChange(dataMethod.getParameters().get(i),
+                                        Literals.DECLARATION__TYPE,
+                                        TypingHelper.greatestCommonAncestor(resource,
+                                                inputTypes.get(i), inputTypesP[i])));
                             }
                             if (applyTextChanges(context.getXtextDocument(), resource, changes))
                                 return;
@@ -663,7 +753,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
     }
 
     @Fix(PooslIssueCodes.INVALID_OVERRIDE_INPUT_PARAMETER_TYPE)
-    public void invalidOverrideInputParameterType(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidOverrideInputParameterType(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         addSuppressWarning(issue, acceptor, WarningType.TYPECHECK);
         acceptor.accept(issue, "Change input types", // label
                 null, // description
@@ -674,13 +765,17 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         Resource resource = element.eResource();
                         ProcessMethod pMethod = (ProcessMethod) element;
 
-                        List<String> inputTypes = TypingHelper.getDeclarationTypeNames(pMethod.getInputParameters());
-                        String[] inputTypesP = FormattingHelper.unformatTypeNames(issue.getData()[0]);
+                        List<String> inputTypes = TypingHelper
+                                .getDeclarationTypeNames(pMethod.getInputParameters());
+                        String[] inputTypesP = FormattingHelper
+                                .unformatTypeNames(issue.getData()[0]);
                         List<TextChange> changes = new ArrayList<>();
 
                         for (int i = 0; i < inputTypesP.length; i++) {
-                            String gca = TypingHelper.greatestCommonAncestor(resource, inputTypesP[i], inputTypes.get(i));
-                            changes.add(new TextChange(pMethod.getInputParameters().get(i), Literals.DECLARATION__TYPE, gca));
+                            String gca = TypingHelper.greatestCommonAncestor(resource,
+                                    inputTypesP[i], inputTypes.get(i));
+                            changes.add(new TextChange(pMethod.getInputParameters().get(i),
+                                    Literals.DECLARATION__TYPE, gca));
                         }
                         if (!applyTextChanges(context.getXtextDocument(), resource, changes)) {
                             showWarning("Input types could not be changed.");
@@ -690,7 +785,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
     }
 
     @Fix(PooslIssueCodes.INVALID_OVERRIDE_OUTPUT_PARAMETER_TYPE)
-    public void invalidOverrideOutputParameterType(final Issue issue, IssueResolutionAcceptor acceptor) {
+    public void invalidOverrideOutputParameterType(
+            final Issue issue, IssueResolutionAcceptor acceptor) {
         addSuppressWarning(issue, acceptor, WarningType.TYPECHECK);
         acceptor.accept(issue, "Change output types of super class method", // label
                 null, // description
@@ -702,13 +798,19 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         Resource resource = pMethod.eResource();
 
                         ProcessClass pClass = HelperFunctions.getContainingProcessClass(pMethod);
-                        int nrInput = HelperFunctions.computeNumberOfVariables(pMethod.getInputParameters());
-                        int nrOutput = HelperFunctions.computeNumberOfVariables(pMethod.getOutputParameters());
-                        IEObjectDescription superMethod = PooslCache.get(resource).getProcessMethods(pClass.getSuperClass(), nrInput, nrOutput).get(pMethod.getName());
+                        int nrInput = HelperFunctions
+                                .computeNumberOfVariables(pMethod.getInputParameters());
+                        int nrOutput = HelperFunctions
+                                .computeNumberOfVariables(pMethod.getOutputParameters());
+                        IEObjectDescription superMethod = PooslCache.get(resource)
+                                .getProcessMethods(pClass.getSuperClass(), nrInput, nrOutput)
+                                .get(pMethod.getName());
 
                         if (superMethod != null) {
-                            List<String> outputTypesP = PooslProcessMethodDescription.getOutputParameterTypeNames(superMethod);
-                            List<String> outputTypes = TypingHelper.getDeclarationTypeNames(pMethod.getOutputParameters());
+                            List<String> outputTypesP = PooslProcessMethodDescription
+                                    .getOutputParameterTypeNames(superMethod);
+                            List<String> outputTypes = TypingHelper
+                                    .getDeclarationTypeNames(pMethod.getOutputParameters());
 
                             EObject obj = superMethod.getEObjectOrProxy();
                             if (obj.eIsProxy()) {
@@ -717,8 +819,10 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                             ProcessMethod pMethodP = (ProcessMethod) obj;
                             List<TextChange> changes = new ArrayList<>();
                             for (int i = 0; i < outputTypesP.size(); i++) {
-                                String gca = TypingHelper.greatestCommonAncestor(resource, outputTypesP.get(i), outputTypes.get(i));
-                                changes.add(new TextChange(pMethodP.getOutputParameters().get(i), Literals.DECLARATION__TYPE, gca));
+                                String gca = TypingHelper.greatestCommonAncestor(resource,
+                                        outputTypesP.get(i), outputTypes.get(i));
+                                changes.add(new TextChange(pMethodP.getOutputParameters().get(i),
+                                        Literals.DECLARATION__TYPE, gca));
                             }
                             if (applyTextChanges(context.getXtextDocument(), resource, changes)) {
                                 return;
@@ -741,14 +845,17 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                         AssignmentExpression assignmentExpression = (AssignmentExpression) element;
                         Resource resource = assignmentExpression.eResource();
 
-                        String gca = TypingHelper.greatestCommonAncestor(resource, issue.getData()[1], issue.getData()[0]);
-                        IEObjectDescription descr = PooslReferenceHelper.getVariableDescription(assignmentExpression);
+                        String gca = TypingHelper.greatestCommonAncestor(resource,
+                                issue.getData()[1], issue.getData()[0]);
+                        IEObjectDescription descr = PooslReferenceHelper
+                                .getVariableDescription(assignmentExpression);
                         if (descr != null) {
                             EObject obj = descr.getEObjectOrProxy();
                             if (obj.eIsProxy()) {
                                 obj = EcoreUtil.resolve(obj, element);
                             }
-                            applyTextChange(context.getXtextDocument(), resource, ((Variable) obj).eContainer(), Literals.DECLARATION__TYPE, gca);
+                            applyTextChange(context.getXtextDocument(), resource,
+                                    ((Variable) obj).eContainer(), Literals.DECLARATION__TYPE, gca);
                         }
                     }
                 });
@@ -761,9 +868,11 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 null, // icon
                 new ISemanticModification() {
                     @Override
-                    public void apply(EObject element, IModificationContext context) throws BadLocationException {
+                    public void apply(EObject element, IModificationContext context)
+                            throws BadLocationException {
                         if (element instanceof AssignmentExpression) {
-                            applyConversionMethod(issue, ((AssignmentExpression) element).getExpression(), context);
+                            applyConversionMethod(issue,
+                                    ((AssignmentExpression) element).getExpression(), context);
                         }
                     }
                 });
@@ -771,10 +880,12 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
 
     // --- Helper -------
 
-    private void createNewMessageText(StringBuilder messages, Collection<MessageChange> changes, String messageType) {
+    private void createNewMessageText(
+            StringBuilder messages, Collection<MessageChange> changes, String messageType) {
         for (MessageChange mChange : changes) {
             if (mChange.isNewMessage()) {
-                PooslMessageSignatureCallHelper message = new PooslMessageSignatureCallHelper(mChange.id);
+                PooslMessageSignatureCallHelper message = new PooslMessageSignatureCallHelper(
+                        mChange.id);
                 messages.append("\n\t" + message.getPort() + messageType + message.getName() + "("); //$NON-NLS-1$ //$NON-NLS-2$
 
                 for (int i = 0; i < mChange.changedTypes.length; i++) {
@@ -788,13 +899,15 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
         }
     }
 
-    private void updateExistingMessageText(Collection<MessageChange> recChanges, List<TextChange> changes) {
+    private void updateExistingMessageText(
+            Collection<MessageChange> recChanges, List<TextChange> changes) {
         for (MessageChange messageChange : recChanges) {
             if (!messageChange.isNewMessage()) {
                 for (int i = 0; i < messageChange.changedTypes.length; i++) {
                     String type = messageChange.changedTypes[i];
                     if (type != null) {
-                        changes.add(new TextChange(messageChange.signature.getParameters().get(i), type));
+                        changes.add(new TextChange(messageChange.signature.getParameters().get(i),
+                                type));
                     }
                 }
             }
@@ -853,7 +966,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
         return null;
     }
 
-    private static Iterable<MessageSignature> getScopeMessageSignatureObjects(ProcessClass pClass, PooslMessageType type) {
+    private static Iterable<MessageSignature> getScopeMessageSignatureObjects(
+            ProcessClass pClass, PooslMessageType type) {
         List<MessageSignature> signs = new ArrayList<>();
         for (IEObjectDescription description : PooslScopeProvider.getScopeMessages(pClass, type)) {
             EObject obj = description.getEObjectOrProxy();
@@ -872,7 +986,9 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
      * @param usedSendMessages
      * @param usedReceiveMessages
      */
-    public static void getUsedMessagesFromProcess(ProcessClass pClass, List<SendStatement> usedSendMessages, List<ReceiveStatement> usedReceiveMessages) {
+    public static void getUsedMessagesFromProcess(
+            ProcessClass pClass, List<SendStatement> usedSendMessages,
+            List<ReceiveStatement> usedReceiveMessages) {
         for (ProcessMethod pMethod : pClass.getMethods()) {
             if (pMethod instanceof ProcessMethod) {
                 TreeIterator<EObject> ti = pMethod.eAllContents();
@@ -941,7 +1057,8 @@ public class PooslQuickfixProviderTypes extends PooslQuickfixProviderUniqueIdent
                 String useType = types.get(i);
                 String declarationType = getType(i);
                 if (!TypingHelper.isCompatible(resource, useType, declarationType)) {
-                    changedTypes[i] = TypingHelper.greatestCommonAncestor(resource, useType, declarationType);
+                    changedTypes[i] = TypingHelper.greatestCommonAncestor(resource, useType,
+                            declarationType);
                 }
             }
         }

@@ -47,7 +47,8 @@ import org.eclipse.ui.progress.UIJob;
 /**
  * Verification of edited model.
  * <p>
- * Verification is only direct project and ignore inclusion. This is only best effort to avoid user-surprise on simple
+ * Verification is only direct project and ignore inclusion. This is only best
+ * effort to avoid user-surprise on simple
  * cases.
  * </p>
  * 
@@ -63,7 +64,8 @@ public class ExecutableResourceVerification {
                     + "(You can turn off this warning in Execution Configuration)\n"//
                     + "Continue execution ?";
 
-    private static final Logger LOGGER = Logger.getLogger(ExecutableResourceVerification.class.getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(ExecutableResourceVerification.class.getName());
 
     private final IFile model;
 
@@ -75,9 +77,9 @@ public class ExecutableResourceVerification {
      * Default constructor.
      * 
      * @param model
-     *            to verify
+     *     to verify
      * @param forceCharset
-     *            assume compatible and ignore charset setting
+     *     assume compatible and ignore charset setting
      */
     public ExecutableResourceVerification(IFile model, boolean forceCharset) {
         this.project = model.getProject();
@@ -90,14 +92,16 @@ public class ExecutableResourceVerification {
     }
 
     private boolean isCharsetSupported() throws CoreException {
-        if (forceCharset || PooslProjectConstant.SUPPORTED_CHARSET.name().equals(model.getCharset())) {
+        if (forceCharset
+                || PooslProjectConstant.SUPPORTED_CHARSET.name().equals(model.getCharset())) {
             return true;
         }
         AtomicBoolean confirm = new AtomicBoolean(false);
 
         Display display = Display.getDefault();
         display.syncExec(() -> {
-            confirm.set(MessageDialog.openConfirm(display.getActiveShell(), CHARSET_FORCE_TITLE, CHARSET_FORCE_MESSAGE));
+            confirm.set(MessageDialog.openConfirm(display.getActiveShell(), CHARSET_FORCE_TITLE,
+                    CHARSET_FORCE_MESSAGE));
         });
         return confirm.get();
     }
@@ -119,8 +123,10 @@ public class ExecutableResourceVerification {
         UIJob uiJob = new UIJob("") { //$NON-NLS-1$
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
-                ListSelectionDialog resourceSelectionDialog = new ListSelectionDialog(Display.getDefault().getActiveShell(), dirtyEditorParts, new ArrayContentProvider(),
-                        new WorkbenchPartLabelProvider(), "The following file(s) contain unsaved changes.\nSelect files to save.");
+                ListSelectionDialog resourceSelectionDialog = new ListSelectionDialog(
+                        Display.getDefault().getActiveShell(), dirtyEditorParts,
+                        new ArrayContentProvider(), new WorkbenchPartLabelProvider(),
+                        "The following file(s) contain unsaved changes.\nSelect files to save.");
                 resourceSelectionDialog.setInitialSelections((Object[]) dirtyEditorParts);
                 if (resourceSelectionDialog.open() != SelectionDialog.OK) {
                     return new Status(IStatus.CANCEL, Activator.PLUGIN_ID, ""); //$NON-NLS-1$
@@ -138,14 +144,16 @@ public class ExecutableResourceVerification {
         try {
             uiJob.join();
         } catch (InterruptedException e1) {
-            LOGGER.log(Level.WARNING, "LaunchDelegate could not join UIJob for unsaved model dialog", e1);
+            LOGGER.log(Level.WARNING,
+                    "LaunchDelegate could not join UIJob for unsaved model dialog", e1);
             throw e1;
         }
 
         return uiJob.getResult().getSeverity() == IStatus.CANCEL;
     }
 
-    private Map<IEditorPart, IWorkbenchPage> getDirtyResources() throws PartInitException, CoreException {
+    private Map<IEditorPart, IWorkbenchPage> getDirtyResources()
+            throws PartInitException, CoreException {
         final Map<IEditorPart, IWorkbenchPage> dirtyResources = new HashMap<>();
 
         IWorkbench workbench = PlatformUI.getWorkbench();
@@ -157,9 +165,11 @@ public class ExecutableResourceVerification {
                             IEditorInput editorInput = editorReference.getEditorInput();
                             if (editorInput instanceof IFileEditorInput) {
                                 IFileEditorInput fileEditorInput = (IFileEditorInput) editorInput;
-                                String filePath = fileEditorInput.getStorage().getFullPath().toString();
+                                String filePath = fileEditorInput.getStorage().getFullPath()
+                                        .toString();
                                 if (filePath.startsWith("/" + project.getName() + "/")) { //$NON-NLS-1$ //$NON-NLS-2$
-                                    dirtyResources.put(editorReference.getEditor(true), workbenchPage);
+                                    dirtyResources.put(editorReference.getEditor(true),
+                                            workbenchPage);
                                 }
                             }
                         }

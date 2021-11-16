@@ -18,8 +18,10 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
 
 /**
- * Provides labels for a IEObjectDescriptions and IResourceDescriptions. This PooslDescriptionLabelProvider is used to
- * create better label text for References in System. Other text representations are retrieved by
+ * Provides labels for a IEObjectDescriptions and IResourceDescriptions. This
+ * PooslDescriptionLabelProvider is used to
+ * create better label text for References in System. Other text representations
+ * are retrieved by
  * {@link DefaultDescriptionLabelProvider}
  * 
  * see http://www.eclipse.org/Xtext/documentation.html#labelProvider

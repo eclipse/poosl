@@ -43,7 +43,8 @@ public final class ExtensionHelper {
     public static List<IPooslDebugInformer> getExtensions() {
         List<IPooslDebugInformer> extensions = new ArrayList<>();
         IExtensionRegistry registry = Platform.getExtensionRegistry();
-        IConfigurationElement[] config = registry.getConfigurationElementsFor(IPOOSLDEBUGINFORMER_ID);
+        IConfigurationElement[] config = registry
+                .getConfigurationElementsFor(IPOOSLDEBUGINFORMER_ID);
         try {
             for (IConfigurationElement e : config) {
                 final Object o = e.createExecutableExtension(POOSL_DEUBUG_ATTRIBUTE);

@@ -88,7 +88,8 @@ abstract class NewMethodDialog extends TitleAreaDialog {
         super(parentShell);
         existingmethods = getExistingMethods(container);
         existingVariables = CreationHelper.getExistingVariablesFromClass(container);
-        dataclasses = PooslCache.get(container.eResource()).getDataClassMap().keySet().toArray(new String[0]);
+        dataclasses = PooslCache.get(container.eResource()).getDataClassMap().keySet()
+                .toArray(new String[0]);
     }
 
     protected void setMethod(String pName, EList<Declaration> declarations) {
@@ -200,13 +201,16 @@ abstract class NewMethodDialog extends TitleAreaDialog {
         lblInput.setLayoutData(getLabelGrid());
         lblInput.setText("Input Parameters:");
 
-        inputTable = new Table(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+        inputTable = new Table(composite,
+                SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
         createTable(inputTable, composite, inputVariables);
     }
 
     protected abstract void addOutputField(Composite composite);
 
-    protected void createTable(final Table table, final Composite composite, final Map<TextDeclaration, Declaration> variables) {
+    protected void createTable(
+            final Table table, final Composite composite,
+            final Map<TextDeclaration, Declaration> variables) {
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
 
@@ -291,9 +295,12 @@ abstract class NewMethodDialog extends TitleAreaDialog {
         btnAdd.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), dataclasses, "Variable", getVariableNames());
+                NewVariableDialog variableDialog = new NewVariableDialog(
+                        Display.getDefault().getActiveShell(), dataclasses, "Variable",
+                        getVariableNames());
                 if (variableDialog.open() == Window.OK) {
-                    variables.put(new TextDeclaration(variableDialog.getName(), variableDialog.getSelectedClass()), null);
+                    variables.put(new TextDeclaration(variableDialog.getName(),
+                            variableDialog.getSelectedClass()), null);
                     reloadDeclarations();
                 }
             }
@@ -308,10 +315,13 @@ abstract class NewMethodDialog extends TitleAreaDialog {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 if (table.getSelectionCount() != 0) {
-                    TextDeclaration declaration = getVariableFromIndex(table.getSelectionIndices()[0], variables.keySet());
+                    TextDeclaration declaration = getVariableFromIndex(
+                            table.getSelectionIndices()[0], variables.keySet());
                     if (declaration != null) {
                         ArrayList<String> varnames = getVariableNames();
-                        NewVariableDialog variableDialog = new NewVariableDialog(Display.getDefault().getActiveShell(), dataclasses, "Variable", varnames);
+                        NewVariableDialog variableDialog = new NewVariableDialog(
+                                Display.getDefault().getActiveShell(), dataclasses, "Variable",
+                                varnames);
 
                         variableDialog.setVariable(declaration);
                         if (variableDialog.open() == Window.OK) {
@@ -416,20 +426,24 @@ abstract class NewMethodDialog extends TitleAreaDialog {
             Declaration declaration = inputVariables.get(textDeclaration);
             if (declaration == null) {
                 if (!textDeclaration.getVariables().isEmpty()) {
-                    declaration = CreationHelper.createDeclaration(textDeclaration.getVariables(), textDeclaration.getType());
+                    declaration = CreationHelper.createDeclaration(textDeclaration.getVariables(),
+                            textDeclaration.getType());
                     inputVariables.put(textDeclaration, declaration);
                 }
             } else {
                 List<Variable> used = CreationHelper.getUsedMethodVariables(declaration);
                 if (!textDeclaration.getType().equals(declaration.getType())) {
                     if (!used.isEmpty()) {
-                        MessageDialog.openError(Display.getDefault().getActiveShell(), "Variable has reference", "Can not change the type of the variable because it has a reference.");
+                        MessageDialog.openError(Display.getDefault().getActiveShell(),
+                                "Variable has reference",
+                                "Can not change the type of the variable because it has a reference.");
                         break;
                     } else {
                         declaration.setType(textDeclaration.getType());
                     }
                 }
-                CreationHelper.editDeclarationVariables(declaration, textDeclaration.getVariables());
+                CreationHelper.editDeclarationVariables(declaration,
+                        textDeclaration.getVariables());
             }
         }
         saveReturnValues();
@@ -441,7 +455,8 @@ abstract class NewMethodDialog extends TitleAreaDialog {
     protected void okPressed() {
         saveInput();
         if (getName().isEmpty() || !methodNameAvailable(getName())) {
-            MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE_INSTANCE, ERROR_MESSAGE_INSTANCE);
+            MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE_INSTANCE,
+                    ERROR_MESSAGE_INSTANCE);
             return;
         }
         super.okPressed();

@@ -54,7 +54,9 @@ public final class RotalumisRunner {
                 return new File(customRotalumis);
             }
         } catch (SecurityException exception) {
-            LOGGER.log(Level.WARNING, "Access to system variables was denied when trying to get custom Rotalumis location.", exception.getCause());
+            LOGGER.log(Level.WARNING,
+                    "Access to system variables was denied when trying to get custom Rotalumis location.",
+                    exception.getCause());
         }
         return getPluginRotalumis();
     }
@@ -67,17 +69,20 @@ public final class RotalumisRunner {
         String exePath = getOsSegment() + SEGMENT_SEPARATOR //
                 + getArchSegment() + SEGMENT_SEPARATOR //
                 + getFilename();
-        IBundleInfo bundle = IBundleInfo.Registry.INSTANCE.getBundle(PooslConstants.PLUGIN_ID_ROTALUMIS_EXECUTABLES);
+        IBundleInfo bundle = IBundleInfo.Registry.INSTANCE
+                .getBundle(PooslConstants.PLUGIN_ID_ROTALUMIS_EXECUTABLES);
         URI rotLocation = bundle.find(Context.SOURCE, exePath);
         if (rotLocation == null || !rotLocation.isFile()) {
-            String detail = rotLocation != null ? rotLocation.toString() //
-                    : PooslConstants.PLUGIN_ID_ROTALUMIS_EXECUTABLES + SEGMENT_SEPARATOR + exePath;
+            String detail = rotLocation != null
+                ? rotLocation.toString() //
+                : PooslConstants.PLUGIN_ID_ROTALUMIS_EXECUTABLES + SEGMENT_SEPARATOR + exePath;
             throw new IOException(MessageFormat.format(Messages.RUNNER_NO_ENGINE_ERROR, detail));
         }
         File result = new File(rotLocation.toFileString());
         if (!result.canExecute() && !result.setExecutable(true)) {
             // FIXME: PLUGIN_ID_ROTALUMIS_EXECUTABLES should set the file as executable
-            throw new IOException(MessageFormat.format(Messages.RUNNER_NOT_EXECUTABLE_ERROR, rotLocation));
+            throw new IOException(
+                    MessageFormat.format(Messages.RUNNER_NOT_EXECUTABLE_ERROR, rotLocation));
         }
         return result;
 

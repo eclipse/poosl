@@ -66,7 +66,8 @@ import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.internal.ide.dialogs.IDEResourceInfoUtils;
 
 /**
- * Operation that also copies Poosl/Sirius Diagrams This class is based on {@link CopyFilesAndFoldersOperation}.
+ * Operation that also copies Poosl/Sirius Diagrams This class is based on
+ * {@link CopyFilesAndFoldersOperation}.
  * 
  * @author Koen Staal
  *
@@ -79,7 +80,8 @@ public class PooslCopyOperation {
     private static final IResource[] EMPTY_RESOURCE_ARRAY = new IResource[0];
 
     /**
-     * Status containing the errors detected when running the operation or <code>null</code> if no errors detected.
+     * Status containing the errors detected when running the operation or
+     * <code>null</code> if no errors detected.
      */
     private MultiStatus errorStatus;
 
@@ -94,7 +96,8 @@ public class PooslCopyOperation {
     private boolean canceled;
 
     /**
-     * Whether or not the operation creates virtual folders and links instead of folders and files.
+     * Whether or not the operation creates virtual folders and links instead of
+     * folders and files.
      */
     private boolean createVirtualFoldersAndLinks;
 
@@ -113,20 +116,21 @@ public class PooslCopyOperation {
      * Creates a new operation initialized with a shell.
      *
      * @param shell
-     *            parent shell for error dialogs
+     *     parent shell for error dialogs
      */
     public PooslCopyOperation(Shell shell) {
         messageShell = shell;
     }
 
     /**
-     * Returns a new name for a copy of the resource at the given path in the given workspace. This name is determined
+     * Returns a new name for a copy of the resource at the given path in the
+     * given workspace. This name is determined
      * automatically.
      *
      * @param originalName
-     *            the full path of the resource
+     *     the full path of the resource
      * @param workspace
-     *            the workspace
+     *     the workspace
      * @return the new full path for the copy
      */
     static IPath getAutoNewNameFor(IPath originalName, IWorkspace workspace) {
@@ -167,11 +171,12 @@ public class PooslCopyOperation {
      * Checks whether the resources with the given names exist.
      *
      * @param resources
-     *            IResources to checl
+     *     IResources to checl
      * @return Multi status with one error message for each missing file.
      */
     private IStatus checkExist(IResource[] resources) {
-        MultiStatus multiStatus = new MultiStatus(PlatformUI.PLUGIN_ID, IStatus.OK, getProblemsMessage(), null);
+        MultiStatus multiStatus = new MultiStatus(PlatformUI.PLUGIN_ID, IStatus.OK,
+                getProblemsMessage(), null);
 
         for (int i = 0; i < resources.length; i++) {
             IResource resource = resources[i];
@@ -182,14 +187,19 @@ public class PooslCopyOperation {
                     IFileInfo info = IDEResourceInfoUtils.getFileInfo(location);
                     if (info == null || !info.exists()) {
                         if (resource.isLinked()) {
-                            message = NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_missingLinkTarget, resource.getName());
+                            message = NLS.bind(
+                                    IDEWorkbenchMessages.CopyFilesAndFoldersOperation_missingLinkTarget,
+                                    resource.getName());
                         } else {
-                            message = NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_resourceDeleted, resource.getName());
+                            message = NLS.bind(
+                                    IDEWorkbenchMessages.CopyFilesAndFoldersOperation_resourceDeleted,
+                                    resource.getName());
                         }
                     }
                 }
                 if (message != null) {
-                    IStatus status = new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, IStatus.OK, message, null);
+                    IStatus status = new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, IStatus.OK,
+                            message, null);
                     multiStatus.add(status);
                 }
             }
@@ -198,20 +208,24 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Check if the user wishes to overwrite the supplied resource or all resources.
+     * Check if the user wishes to overwrite the supplied resource or all
+     * resources.
      *
      * @param source
-     *            the source resource
+     *     the source resource
      * @param destination
-     *            the resource to be overwritten
-     * @return one of IDialogConstants.YES_ID, IDialogConstants.YES_TO_ALL_ID, IDialogConstants.NO_ID,
-     *         IDialogConstants.CANCEL_ID indicating whether the current resource or all resources can be overwritten,
-     *         or if the operation should be canceled.
+     *     the resource to be overwritten
+     * @return one of IDialogConstants.YES_ID, IDialogConstants.YES_TO_ALL_ID,
+     *     IDialogConstants.NO_ID,
+     *     IDialogConstants.CANCEL_ID indicating whether the current resource or
+     *     all resources can be overwritten,
+     *     or if the operation should be canceled.
      */
     private int checkOverwrite(final IResource source, final IResource destination) {
 
         // Dialogs need to be created and opened in the UI thread
-        PooslOverwriteRunnable query = new PooslOverwriteRunnable(source, destination, messageShell);
+        PooslOverwriteRunnable query = new PooslOverwriteRunnable(source, destination,
+                messageShell);
         messageShell.getDisplay().syncExec(query);
         return query.getResult();
     }
@@ -220,13 +234,14 @@ public class PooslCopyOperation {
      * Recursively collects existing files in the specified destination path.
      *
      * @param destinationPath
-     *            destination path to check for existing files
+     *     destination path to check for existing files
      * @param copyResources
-     *            resources that may exist in the destination
+     *     resources that may exist in the destination
      * @param existing
-     *            holds the collected existing files
+     *     holds the collected existing files
      */
-    private void collectExistingReadonlyFiles(IPath destinationPath, IResource[] copyResources, ArrayList<IFile> existing) {
+    private void collectExistingReadonlyFiles(
+            IPath destinationPath, IResource[] copyResources, ArrayList<IFile> existing) {
         IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
         for (int i = 0; i < copyResources.length; i++) {
@@ -244,7 +259,8 @@ public class PooslCopyOperation {
 
                 if (sourceFolder != null) {
                     try {
-                        collectExistingReadonlyFiles(newDestinationPath, sourceFolder.members(), existing);
+                        collectExistingReadonlyFiles(newDestinationPath, sourceFolder.members(),
+                                existing);
                     } catch (CoreException exception) {
                         recordError(exception);
                     }
@@ -259,20 +275,23 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Copies the given resources to the destination. The current Thread is halted while the resources are copied using
-     * a WorkspaceModifyOperation. This method should be called from the UIThread.
+     * Copies the given resources to the destination. The current Thread is
+     * halted while the resources are copied using
+     * a WorkspaceModifyOperation. This method should be called from the
+     * UIThread.
      *
      * @param resources
-     *            the resources to copy
+     *     the resources to copy
      * @param destination
-     *            destination to which resources will be copied
+     *     destination to which resources will be copied
      * @return the resources which actually got copied
      * @throws InterruptedException
      * @see WorkspaceModifyOperation
      * @see Display#getThread()
      * @see Thread#currentThread()
      */
-    public IResource[] copyResources(final IResource[] resources, IContainer destination) throws InterruptedException {
+    public IResource[] copyResources(final IResource[] resources, IContainer destination)
+            throws InterruptedException {
         final IPath destinationPath = destination.getFullPath();
         final IResource[][] copiedResources = new IResource[1][0];
 
@@ -298,7 +317,8 @@ public class PooslCopyOperation {
         };
 
         try {
-            PlatformUI.getWorkbench().getProgressService().runInUI(new ProgressMonitorDialog(messageShell), op, null);
+            PlatformUI.getWorkbench().getProgressService()
+                    .runInUI(new ProgressMonitorDialog(messageShell), op, null);
         } catch (InvocationTargetException e) {
             display(e);
         }
@@ -313,15 +333,17 @@ public class PooslCopyOperation {
     }
 
     private void display(InvocationTargetException e) {
-        LOGGER.warn(MessageFormat.format("Exception in {0}.performCopy(): {1}", getClass().getName(), e.getTargetException()), e.getCause());
-        displayError(NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_internalError, e.getTargetException().getMessage()));
+        LOGGER.warn(MessageFormat.format("Exception in {0}.performCopy(): {1}",
+                getClass().getName(), e.getTargetException()), e.getCause());
+        displayError(NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_internalError,
+                e.getTargetException().getMessage()));
     }
 
     /**
      * Display the supplied status in an error dialog.
      *
      * @param status
-     *            The status to display
+     *     The status to display
      */
     private void displayError(final IStatus status) {
         messageShell.getDisplay().syncExec(new Runnable() {
@@ -333,12 +355,13 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Creates a file or folder handle for the source resource as if it were to be created in the destination container.
+     * Creates a file or folder handle for the source resource as if it were to
+     * be created in the destination container.
      *
      * @param destination
-     *            destination container
+     *     destination container
      * @param source
-     *            source resource
+     *     source resource
      * @return IResource file or folder handle, depending on the source type.
      */
     IResource createLinkedResourceHandle(IContainer destination, IResource source) {
@@ -359,7 +382,7 @@ public class PooslCopyOperation {
      * Opens an error dialog to display the given message.
      *
      * @param message
-     *            the error message to show
+     *     the error message to show
      */
     private void displayError(final String message) {
         messageShell.getDisplay().syncExec(new Runnable() {
@@ -374,9 +397,10 @@ public class PooslCopyOperation {
      * Returns the resource either casted to or adapted to an IFile.
      *
      * @param resource
-     *            resource to cast/adapt
-     * @return the resource either casted to or adapted to an IFile. <code>null</code> if the resource does not adapt to
-     *         IFile
+     *     resource to cast/adapt
+     * @return the resource either casted to or adapted to an IFile.
+     *     <code>null</code> if the resource does not adapt to
+     *     IFile
      */
     private IFile getFile(IResource resource) {
         if (resource instanceof IFile) {
@@ -389,9 +413,10 @@ public class PooslCopyOperation {
      * Returns the resource either casted to or adapted to an IFolder.
      *
      * @param resource
-     *            resource to cast/adapt
-     * @return the resource either casted to or adapted to an IFolder. <code>null</code> if the resource does not adapt
-     *         to IFolder
+     *     resource to cast/adapt
+     * @return the resource either casted to or adapted to an IFolder.
+     *     <code>null</code> if the resource does not adapt
+     *     to IFolder
      */
     private IFolder getFolder(IResource resource) {
         if (resource instanceof IFolder) {
@@ -401,13 +426,15 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Returns a new name for a copy of the resource at the given path in the given workspace.
+     * Returns a new name for a copy of the resource at the given path in the
+     * given workspace.
      *
      * @param originalName
-     *            the full path of the resource
+     *     the full path of the resource
      * @param workspace
-     *            the workspace
-     * @return the new full path for the copy, or <code>null</code> if the resource should not be copied
+     *     the workspace
+     * @return the new full path for the copy, or <code>null</code> if the
+     *     resource should not be copied
      */
     private IPath getNewNameFor(final IPath originalName, final IWorkspace workspace) {
         final IResource resource = workspace.getRoot().findMember(originalName);
@@ -435,8 +462,12 @@ public class PooslCopyOperation {
                 };
 
                 final String initial = getAutoNewNameFor(originalName, workspace).lastSegment();
-                InputDialog dialog = new InputDialog(messageShell, IDEWorkbenchMessages.CopyFilesAndFoldersOperation_inputDialogTitle,
-                        NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_inputDialogMessage, resource.getName()), initial, validator) {
+                InputDialog dialog = new InputDialog(messageShell,
+                        IDEWorkbenchMessages.CopyFilesAndFoldersOperation_inputDialogTitle,
+                        NLS.bind(
+                                IDEWorkbenchMessages.CopyFilesAndFoldersOperation_inputDialogMessage,
+                                resource.getName()),
+                        initial, validator) {
 
                     @Override
                     protected Control createContents(Composite parent) {
@@ -491,12 +522,14 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Returns whether the given resource is accessible. Files and folders are always considered accessible and a
+     * Returns whether the given resource is accessible. Files and folders are
+     * always considered accessible and a
      * project is accessible if it is open.
      *
      * @param resource
-     *            the resource
-     * @return <code>true</code> if the resource is accessible, and <code>false</code> if it is not
+     *     the resource
+     * @return <code>true</code> if the resource is accessible, and
+     *     <code>false</code> if it is not
      */
     private boolean isAccessible(IResource resource) {
         switch (resource.getType()) {
@@ -512,14 +545,16 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Returns whether any of the given source resources are being recopied to their current container.
+     * Returns whether any of the given source resources are being recopied to
+     * their current container.
      *
      * @param sourceResources
-     *            the source resources
+     *     the source resources
      * @param destination
-     *            the destination container
-     * @return <code>true</code> if at least one of the given source resource's parent container is the same as the
-     *         destination
+     *     the destination container
+     * @return <code>true</code> if at least one of the given source resource's
+     *     parent container is the same as the
+     *     destination
      */
     boolean isDestinationSameAsSource(IResource[] sourceResources, IContainer destination) {
         IPath destinationLocation = destination.getLocation();
@@ -541,20 +576,23 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Copies the given resources to the destination container with the given name.
+     * Copies the given resources to the destination container with the given
+     * name.
      * <p>
-     * Note: the destination container may need to be created prior to copying the resources.
+     * Note: the destination container may need to be created prior to copying
+     * the resources.
      * </p>
      *
      * @param resources
-     *            the resources to copy
+     *     the resources to copy
      * @param destination
-     *            the path of the destination container
+     *     the path of the destination container
      * @param monitor
-     *            a progress monitor for showing progress and for cancelation
+     *     a progress monitor for showing progress and for cancelation
      * @return <code>true</code> if the copy operation completed without errors
      */
-    private boolean performCopy(IResource[] resources, IPath destination, IProgressMonitor monitor) {
+    private boolean performCopy(
+            IResource[] resources, IPath destination, IProgressMonitor monitor) {
 
         IPath[] destinationPaths = new IPath[resources.length];
         try {
@@ -566,9 +604,11 @@ public class PooslCopyOperation {
                 }
 
             }
-            CopyResourcesOperation op = new CopyResourcesOperation(resources, destinationPaths, IDEWorkbenchMessages.CopyFilesAndFoldersOperation_copyTitle);
+            CopyResourcesOperation op = new CopyResourcesOperation(resources, destinationPaths,
+                    IDEWorkbenchMessages.CopyFilesAndFoldersOperation_copyTitle);
             op.setModelProviderIds(getModelProviderIds());
-            PlatformUI.getWorkbench().getOperationSupport().getOperationHistory().execute(op, monitor, WorkspaceUndoUtil.getUIInfoAdapter(messageShell));
+            PlatformUI.getWorkbench().getOperationSupport().getOperationHistory().execute(op,
+                    monitor, WorkspaceUndoUtil.getUIInfoAdapter(messageShell));
 
             copyDiagrams(resources, destinationPaths, monitor);
 
@@ -585,20 +625,23 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Individually copies the given resources to the specified destination container checking for name collisions. If a
+     * Individually copies the given resources to the specified destination
+     * container checking for name collisions. If a
      * collision is detected, it is saved with a new name.
      * <p>
-     * Note: the destination container may need to be created prior to copying the resources.
+     * Note: the destination container may need to be created prior to copying
+     * the resources.
      * </p>
      *
      * @param resources
-     *            the resources to copy
+     *     the resources to copy
      * @param destination
-     *            the path of the destination container
+     *     the path of the destination container
      * @param monitor
      * @return <code>true</code> if the copy operation completed without errors.
      */
-    private boolean performCopyWithAutoRename(IResource[] resources, IPath destination, IProgressMonitor monitor) {
+    private boolean performCopyWithAutoRename(
+            IResource[] resources, IPath destination, IProgressMonitor monitor) {
         IWorkspace workspace = resources[0].getWorkspace();
         IPath[] destinationPaths = new IPath[resources.length];
         try {
@@ -613,9 +656,11 @@ public class PooslCopyOperation {
                     destinationPaths[i] = getNewNameFor(destinationPaths[i], workspace);
                 }
             }
-            CopyResourcesOperation op = new CopyResourcesOperation(resources, destinationPaths, IDEWorkbenchMessages.CopyFilesAndFoldersOperation_copyTitle);
+            CopyResourcesOperation op = new CopyResourcesOperation(resources, destinationPaths,
+                    IDEWorkbenchMessages.CopyFilesAndFoldersOperation_copyTitle);
             op.setModelProviderIds(getModelProviderIds());
-            PlatformUI.getWorkbench().getOperationSupport().getOperationHistory().execute(op, monitor, WorkspaceUndoUtil.getUIInfoAdapter(messageShell));
+            PlatformUI.getWorkbench().getOperationSupport().getOperationHistory().execute(op,
+                    monitor, WorkspaceUndoUtil.getUIInfoAdapter(messageShell));
 
             copyDiagrams(resources, destinationPaths, monitor);
         } catch (ExecutionException e) {
@@ -631,14 +676,16 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Records the core exception to be displayed to the user once the action is finished.
+     * Records the core exception to be displayed to the user once the action is
+     * finished.
      *
      * @param error
-     *            a <code>CoreException</code>
+     *     a <code>CoreException</code>
      */
     private void recordError(CoreException error) {
         if (errorStatus == null) {
-            errorStatus = new MultiStatus(PlatformUI.PLUGIN_ID, IStatus.ERROR, getProblemsMessage(), error);
+            errorStatus = new MultiStatus(PlatformUI.PLUGIN_ID, IStatus.ERROR, getProblemsMessage(),
+                    error);
         }
 
         errorStatus.merge(error.getStatus());
@@ -651,9 +698,9 @@ public class PooslCopyOperation {
      * </p>
      *
      * @param destination
-     *            the destination container
+     *     the destination container
      * @param sourceResources
-     *            the source resources
+     *     the source resources
      * @return an error message, or <code>null</code> if the path is valid
      */
     public String validateDestination(IContainer destination, IResource[] sourceResources) {
@@ -673,25 +720,34 @@ public class PooslCopyOperation {
 
             // verify that if the destination is a virtual folder, the resource must be
             // either a link or another virtual folder
-            if (destination.isVirtual() && !sourceResource.isLinked() && !sourceResource.isVirtual() && !createLinks && !createVirtualFoldersAndLinks) {
-                return NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_sourceCannotBeCopiedIntoAVirtualFolder, sourceResource.getName());
+            if (destination.isVirtual() && !sourceResource.isLinked() && !sourceResource.isVirtual()
+                    && !createLinks && !createVirtualFoldersAndLinks) {
+                return NLS.bind(
+                        IDEWorkbenchMessages.CopyFilesAndFoldersOperation_sourceCannotBeCopiedIntoAVirtualFolder,
+                        sourceResource.getName());
             }
             URI sourceLocation = sourceResource.getLocationURI();
             if (sourceLocation == null) {
                 if (sourceResource.isLinked()) {
                     // Don't allow copying linked resources with undefined path
                     // variables. See bug 28754.
-                    return NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_missingPathVariable, sourceResource.getName());
+                    return NLS.bind(
+                            IDEWorkbenchMessages.CopyFilesAndFoldersOperation_missingPathVariable,
+                            sourceResource.getName());
                 }
-                return NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_resourceDeleted, sourceResource.getName());
+                return NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_resourceDeleted,
+                        sourceResource.getName());
 
             }
             if (!destination.isVirtual()) {
                 if (sourceLocation.equals(destinationLocation)) {
-                    return NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_sameSourceAndDest, sourceResource.getName());
+                    return NLS.bind(
+                            IDEWorkbenchMessages.CopyFilesAndFoldersOperation_sameSourceAndDest,
+                            sourceResource.getName());
                 }
                 // is the source a parent of the destination?
-                if (new Path(sourceLocation.toString()).isPrefixOf(new Path(destinationLocation.toString()))) {
+                if (new Path(sourceLocation.toString())
+                        .isPrefixOf(new Path(destinationLocation.toString()))) {
                     return IDEWorkbenchMessages.CopyFilesAndFoldersOperation_destinationDescendentError;
                 }
             }
@@ -705,14 +761,16 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Validates that the given source resources can be copied to the destination as decided by the VCM provider.
+     * Validates that the given source resources can be copied to the
+     * destination as decided by the VCM provider.
      *
      * @param destination
-     *            copy destination
+     *     copy destination
      * @param sourceResources
-     *            source resources
-     * @return <code>true</code> all files passed validation or there were no files to validate. <code>false</code> one
-     *         or more files did not pass validation.
+     *     source resources
+     * @return <code>true</code> all files passed validation or there were no
+     *     files to validate. <code>false</code> one
+     *     or more files did not pass validation.
      */
     private boolean validateEdit(IContainer destination, IResource[] sourceResources) {
         ArrayList<IFile> copyFiles = new ArrayList<>();
@@ -733,9 +791,9 @@ public class PooslCopyOperation {
      * Check if the destination is valid for the given source resource.
      *
      * @param destination
-     *            destination container of the operation
+     *     destination container of the operation
      * @param source
-     *            source resource
+     *     source resource
      * @return String error message or null if the destination is valid
      */
     private String validateLinkedResource(IContainer destination, IResource source) {
@@ -744,40 +802,50 @@ public class PooslCopyOperation {
         }
         IWorkspace workspace = destination.getWorkspace();
         IResource linkHandle = createLinkedResourceHandle(destination, source);
-        IStatus locationStatus = workspace.validateLinkLocationURI(linkHandle, source.getRawLocationURI());
+        IStatus locationStatus = workspace.validateLinkLocationURI(linkHandle,
+                source.getRawLocationURI());
 
         if (locationStatus.getSeverity() == IStatus.ERROR) {
             return locationStatus.getMessage();
         }
         IPath sourceLocation = source.getLocation();
-        if (!source.getProject().equals(destination.getProject()) && source.getType() == IResource.FOLDER && sourceLocation != null) {
+        if (!source.getProject().equals(destination.getProject())
+                && source.getType() == IResource.FOLDER && sourceLocation != null) {
             // prevent merging linked folders that point to the same
             // file system folder
             try {
                 IResource[] members = destination.members();
                 for (int j = 0; j < members.length; j++) {
-                    if (sourceLocation.equals(members[j].getLocation()) && source.getName().equals(members[j].getName())) {
-                        return NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_sameSourceAndDest, source.getName());
+                    if (sourceLocation.equals(members[j].getLocation())
+                            && source.getName().equals(members[j].getName())) {
+                        return NLS.bind(
+                                IDEWorkbenchMessages.CopyFilesAndFoldersOperation_sameSourceAndDest,
+                                source.getName());
                     }
                 }
             } catch (CoreException exception) {
-                displayError(NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_internalError, exception.getMessage()));
+                displayError(
+                        NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_internalError,
+                                exception.getMessage()));
             }
         }
         return null;
     }
 
     /**
-     * Returns whether moving all of the given source resources to the given destination container could be done without
+     * Returns whether moving all of the given source resources to the given
+     * destination container could be done without
      * causing name collisions.
      *
      * @param destination
-     *            the destination container
+     *     the destination container
      * @param sourceResources
-     *            the list of resources
-     * @return <code>true</code> if there would be no name collisions, and <code>false</code> if there would
+     *     the list of resources
+     * @return <code>true</code> if there would be no name collisions, and
+     *     <code>false</code> if there would
      */
-    private IResource[] validateNoNameCollisions(IContainer destination, IResource[] sourceResources) {
+    private IResource[] validateNoNameCollisions(
+            IContainer destination, IResource[] sourceResources) {
         List<IResource> copyItems = new ArrayList<>();
         IWorkspaceRoot workspaceRoot = destination.getWorkspace().getRoot();
         int overwrite = IDialogConstants.NO_ID;
@@ -786,12 +854,15 @@ public class PooslCopyOperation {
         // Cancel entire copy operation if we do.
         for (int i = 0; i < sourceResources.length; i++) {
             final IResource sourceResource = sourceResources[i];
-            final IPath destinationPath = destination.getFullPath().append(sourceResource.getName());
+            final IPath destinationPath = destination.getFullPath()
+                    .append(sourceResource.getName());
             final IPath sourcePath = sourceResource.getFullPath();
 
             IResource newResource = workspaceRoot.findMember(destinationPath);
             if (newResource != null && destinationPath.isPrefixOf(sourcePath)) {
-                displayError(NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteProblem, destinationPath, sourcePath));
+                displayError(
+                        NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteProblem,
+                                destinationPath, sourcePath));
 
                 canceled = true;
                 return EMPTY_RESOURCE_ARRAY;
@@ -804,10 +875,13 @@ public class PooslCopyOperation {
 
             IResource newResource = workspaceRoot.findMember(destinationPath);
             if (newResource != null) {
-                if (overwrite != IDialogConstants.YES_TO_ALL_ID || (newResource.getType() == IResource.FOLDER && !PooslOverwriteRunnable.homogenousResources(source, destination))) {
+                if (overwrite != IDialogConstants.YES_TO_ALL_ID || (newResource.getType()
+                        == IResource.FOLDER
+                        && !PooslOverwriteRunnable.homogenousResources(source, destination))) {
                     overwrite = checkOverwrite(source, newResource);
                 }
-                if (overwrite == IDialogConstants.YES_ID || overwrite == IDialogConstants.YES_TO_ALL_ID) {
+                if (overwrite == IDialogConstants.YES_ID
+                        || overwrite == IDialogConstants.YES_TO_ALL_ID) {
                     copyItems.add(source);
                 } else if (overwrite == IDialogConstants.CANCEL_ID) {
                     canceled = true;
@@ -820,7 +894,9 @@ public class PooslCopyOperation {
         return copyItems.toArray(new IResource[copyItems.size()]);
     }
 
-    private void copyResources(final IResource[] resources, final IPath destinationPath, final IResource[][] copiedResources, IProgressMonitor monitor) {
+    private void copyResources(
+            final IResource[] resources, final IPath destinationPath,
+            final IResource[][] copiedResources, IProgressMonitor monitor) {
         IResource[] copyResources = resources;
 
         // Fix for bug 31116. Do not provide a task name when
@@ -859,7 +935,8 @@ public class PooslCopyOperation {
         if (copyResources.length > 0) {
             if (copyWithAutoRename) {
 
-                performCopyWithAutoRename(copyResources, destinationPath, SubMonitor.convert(monitor, 90));
+                performCopyWithAutoRename(copyResources, destinationPath,
+                        SubMonitor.convert(monitor, 90));
             } else {
                 performCopy(copyResources, destinationPath, SubMonitor.convert(monitor, 90));
             }
@@ -869,16 +946,19 @@ public class PooslCopyOperation {
     }
 
     /**
-     * Returns the model provider ids that are known to the client that instantiated this operation.
+     * Returns the model provider ids that are known to the client that
+     * instantiated this operation.
      *
-     * @return the model provider ids that are known to the client that instantiated this operation.
+     * @return the model provider ids that are known to the client that
+     *     instantiated this operation.
      * 
      */
     public String[] getModelProviderIds() {
         return modelProviderIds;
     }
 
-    private void copyDiagrams(IResource[] resources, IPath[] destinationPaths, IProgressMonitor monitor) {
+    private void copyDiagrams(
+            IResource[] resources, IPath[] destinationPaths, IProgressMonitor monitor) {
 
         for (int i = 0; i < resources.length; i++) {
             PooslDiagramRefactorHelper.copy(resources[i], destinationPaths[i], monitor);

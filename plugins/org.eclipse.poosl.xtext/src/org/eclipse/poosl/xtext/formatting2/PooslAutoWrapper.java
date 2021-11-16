@@ -41,7 +41,8 @@ public class PooslAutoWrapper implements IAutowrapFormatter {
     }
 
     @Override
-    public void format(ITextSegment region, IHiddenRegionFormatting wrapped, IFormattableDocument document) {
+    public void format(
+            ITextSegment region, IHiddenRegionFormatting wrapped, IFormattableDocument document) {
         if (!hasWrapped) {
             IHiddenRegion hiddenRegion = null;
             if (region instanceof IHiddenRegion) {

@@ -49,15 +49,17 @@ public class CopyRepresentationCommand extends RecordingCommand {
      * Specific command to copy the given representations.
      * 
      * @param domain
-     *            the current editing domain.
+     *     the current editing domain.
      * @param descriptors
-     *            the representations to copy.
+     *     the representations to copy.
      * @param session
-     *            the current session.
+     *     the current session.
      * @param instance
      * @param launch
      */
-    public CopyRepresentationCommand(TransactionalEditingDomain domain, Collection<DRepresentationDescriptor> descriptors, Session session, String launch, String instance) {
+    public CopyRepresentationCommand(TransactionalEditingDomain domain,
+            Collection<DRepresentationDescriptor> descriptors, Session session, String launch,
+            String instance) {
         super(domain, COMMAND_LABEL);
         this.descriptors = descriptors;
         this.launch = launch;
@@ -75,9 +77,12 @@ public class CopyRepresentationCommand extends RecordingCommand {
         }
 
         for (DRepresentationDescriptor descriptor : descriptors) {
-            DRepresentation createdRepresentation = DialectManager.INSTANCE.copyRepresentation(descriptor, DiagramNameHelper.getCommunicationDiagramNameFromOriginal(descriptor.getName(), instance),
+            DRepresentation createdRepresentation = DialectManager.INSTANCE.copyRepresentation(
+                    descriptor, DiagramNameHelper.getCommunicationDiagramNameFromOriginal(
+                            descriptor.getName(), instance),
                     session, null);
-            DRepresentationDescriptor createdDescriptor = new DRepresentationQuery(createdRepresentation).getRepresentationDescriptor();
+            DRepresentationDescriptor createdDescriptor = new DRepresentationQuery(
+                    createdRepresentation).getRepresentationDescriptor();
             String documentation = launch + "," + instance; //$NON-NLS-1$
             createdDescriptor.setDocumentation(documentation);
             createdDescriptors.add(createdDescriptor);

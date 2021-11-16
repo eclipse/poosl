@@ -35,7 +35,8 @@ public final class PooslProjectConstant {
     /**
      * Charset supported for interpretation.
      * <p>
-     * Currently simulation only support one charset for reading model for any platform host.
+     * Currently simulation only support one charset for reading model for any
+     * platform host.
      * </p>
      */
     public static final Charset SUPPORTED_CHARSET = StandardCharsets.ISO_8859_1;

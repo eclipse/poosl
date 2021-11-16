@@ -56,7 +56,8 @@ public class UIBundleInfoRegistry implements IBundleInfo.Registry {
             return getInfo().find(context, fileName);
         }
 
-        public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
+        public List<URI> find(
+                Context context, String path, Predicate<String> matcher, String... fileExtensions) {
             return getInfo().find(context, path, matcher, fileExtensions);
         }
 
@@ -85,7 +86,8 @@ public class UIBundleInfoRegistry implements IBundleInfo.Registry {
 
     public Collection<String> getAllBundleNames() {
         Set<String> result = Sets.newLinkedHashSet();
-        for (Bundle bundle : org.eclipse.poosl.rotalumisclient.Activator.getDefault().getBundle().getBundleContext().getBundles())
+        for (Bundle bundle : org.eclipse.poosl.rotalumisclient.Activator.getDefault().getBundle()
+                .getBundleContext().getBundles())
             result.add(bundle.getSymbolicName());
         return result;
     }
@@ -136,7 +138,8 @@ public class UIBundleInfoRegistry implements IBundleInfo.Registry {
 
     private URI getClassURI(Class<?> clazz) {
         try {
-            URL resource = clazz.getClassLoader().getResource("/" + clazz.getName().replace('.', '/') + ".class"); //$NON-NLS-1$ //$NON-NLS-2$
+            URL resource = clazz.getClassLoader()
+                    .getResource("/" + clazz.getName().replace('.', '/') + ".class"); //$NON-NLS-1$ //$NON-NLS-2$
             URL url = FileLocator.resolve(resource);
             return URI.createURI(url.toString());
         } catch (IOException e) {

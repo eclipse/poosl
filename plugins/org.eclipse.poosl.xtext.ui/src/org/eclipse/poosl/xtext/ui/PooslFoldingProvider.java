@@ -36,7 +36,9 @@ import org.eclipse.xtext.util.ITextRegion;
 public class PooslFoldingProvider extends DefaultFoldingRegionProvider {
 
     @Override
-    protected void computeObjectFolding(XtextResource xtextResource, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
+    protected void computeObjectFolding(
+            XtextResource xtextResource,
+            IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
         super.computeObjectFolding(xtextResource, foldingRegionAcceptor);
 
         IParseResult parseResult = xtextResource.getParseResult();
@@ -59,7 +61,8 @@ public class PooslFoldingProvider extends DefaultFoldingRegionProvider {
 
     }
 
-    private void foldDataClassVariables(DataClass dClass, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
+    private void foldDataClassVariables(
+            DataClass dClass, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
         INode iNodeClass = NodeModelUtils.getNode(dClass);
         int begin = iNodeClass.getOffset() + iNodeClass.getLength();
         int end = iNodeClass.getOffset();
@@ -73,7 +76,8 @@ public class PooslFoldingProvider extends DefaultFoldingRegionProvider {
         foldingRegionAcceptor.accept(begin, end - begin);
     }
 
-    private void foldProcessClassVariables(ProcessClass pClass, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
+    private void foldProcessClassVariables(
+            ProcessClass pClass, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
         INode iNodeClass = NodeModelUtils.getNode(pClass);
         int begin = iNodeClass.getOffset() + iNodeClass.getLength();
         int end = iNodeClass.getOffset();
@@ -87,7 +91,8 @@ public class PooslFoldingProvider extends DefaultFoldingRegionProvider {
         foldingRegionAcceptor.accept(begin, end - begin);
     }
 
-    private void foldInstantiableClassPorts(InstantiableClass iClass, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
+    private void foldInstantiableClassPorts(
+            InstantiableClass iClass, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
         INode iNodeClass = NodeModelUtils.getNode(iClass);
         int begin = iNodeClass.getOffset() + iNodeClass.getLength();
         int end = iNodeClass.getOffset();
@@ -101,7 +106,8 @@ public class PooslFoldingProvider extends DefaultFoldingRegionProvider {
         foldingRegionAcceptor.accept(begin, end - begin);
     }
 
-    private void foldProcessClassMessages(ProcessClass pClass, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
+    private void foldProcessClassMessages(
+            ProcessClass pClass, IFoldingRegionAcceptor<ITextRegion> foldingRegionAcceptor) {
         INode iNodeClass = NodeModelUtils.getNode(pClass);
         int begin = iNodeClass.getOffset() + iNodeClass.getLength();
         int end = iNodeClass.getOffset();

@@ -85,7 +85,8 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private static final String LABEL_PORT = "Server port:";
 
-    private static final String LABEL_FORCE_CHARSET = "Avoid charset verification (Assuming " + PooslProjectConstant.SUPPORTED_CHARSET.displayName() + " compatible)";
+    private static final String LABEL_FORCE_CHARSET = "Avoid charset verification (Assuming "
+            + PooslProjectConstant.SUPPORTED_CHARSET.displayName() + " compatible)";
 
     private static final String LABEL_QUIET = "Quiet mode:";
 
@@ -120,7 +121,8 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private static final String VALIDATION_PORT_INVALID = "Simulator port cannot be < 1";
 
-    private static final Logger LOGGER = Logger.getLogger(LaunchConfigurationPooslTab.class.getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(LaunchConfigurationPooslTab.class.getName());
 
     // UI components
     private Composite control;
@@ -148,7 +150,8 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private void browseModel() {
 
-        ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+        ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
+                new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
         dialog.addFilter(new ViewerFilter() {
 
             @Override
@@ -180,7 +183,8 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
     private void browseExternPath() {
         FileDialog fDialog = new FileDialog(getShell());
-        fDialog.setFilterExtensions(new String[] { FILE_NAME_FILTER + PooslConstants.EXTERN_CONFIG_EXTENSION });
+        fDialog.setFilterExtensions(
+                new String[] { FILE_NAME_FILTER + PooslConstants.EXTERN_CONFIG_EXTENSION });
         fDialog.setFilterPath(getFileSelectPath(externPathTextControl));
         fDialog.setText(EXTERN_CONFIG_DIALOG_TITLE);
         String filePath = fDialog.open();
@@ -223,8 +227,10 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
         forceCharsetControl = new Button(control, SWT.CHECK);
         forceCharsetControl.setText(LABEL_FORCE_CHARSET);
         forceCharsetControl.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        forceCharsetControl.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> scheduleUpdateJob()));
-        externPathTextControl = createBrowsableText(control, EXTERN_CFG_GROUP, evt -> scheduleUpdateJob(), evt -> browseExternPath());
+        forceCharsetControl.addSelectionListener(
+                SelectionListener.widgetSelectedAdapter(evt -> scheduleUpdateJob()));
+        externPathTextControl = createBrowsableText(control, EXTERN_CFG_GROUP,
+                evt -> scheduleUpdateJob(), evt -> browseExternPath());
         createSimulatorSettings();
 
         Label portInfoLabel = new Label(control, SWT.NONE);
@@ -275,11 +281,14 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
         quietLabel.setText(LABEL_QUIET);
 
         quietButton = new Button(serverGroup, SWT.CHECK);
-        quietButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> scheduleUpdateJob()));
+        quietButton.addSelectionListener(
+                SelectionListener.widgetSelectedAdapter(evt -> scheduleUpdateJob()));
 
     }
 
-    private Text createBrowsableText(Composite container, String label, ModifyListener onEdit, Consumer<SelectionEvent> browse) {
+    private Text createBrowsableText(
+            Composite container, String label, ModifyListener onEdit,
+            Consumer<SelectionEvent> browse) {
         Group group = new Group(control, SWT.SHADOW_OUT);
         group.setText(label);
         group.setLayout(new GridLayout(2, false));
@@ -300,11 +309,16 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     @Override
     public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET, false);
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT,
+                PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED,
+                PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED,
+                PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET,
+                PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE,
+                PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
     }
 
     @Override
@@ -313,26 +327,39 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
             return;
         }
         try {
-            projectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
-            relativePath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
+            projectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT,
+                    ""); //$NON-NLS-1$
+            relativePath = configuration
+                    .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
             setModelPathText(relativePath);
 
-            String externalConfigPath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
+            String externalConfigPath = configuration
+                    .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, ""); //$NON-NLS-1$
             if (!externalConfigPath.isEmpty()) {
                 externPathTextControl.setText(externalConfigPath);
             }
 
-            forceCharsetControl.setSelection(configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET, false));
+            forceCharsetControl.setSelection(configuration
+                    .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET, false));
 
-            String serverPort = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+            String serverPort = configuration.getAttribute(
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT,
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
             portTextControl.setText(serverPort);
-            String stackSize = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
+            String stackSize = configuration.getAttribute(
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE,
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_MAX_STACKSIZE_BYTES);
             stackSizeTextControl.setText(stackSize);
-            String seed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
+            String seed = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED,
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SEED);
             seedTextControl.setText(seed);
-            boolean boolAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
+            boolean boolAttribute = configuration.getAttribute(
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED,
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_RANDOM_SEED);
             randomSeedButton.setSelection(boolAttribute);
-            boolean quietAttribute = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
+            boolean quietAttribute = configuration.getAttribute(
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET,
+                    PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_IS_QUIET);
             quietButton.setSelection(quietAttribute);
             seedTextControl.setEnabled(!boolAttribute);
         } catch (CoreException e) {
@@ -344,14 +371,22 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     @Override
     public void performApply(ILaunchConfigurationWorkingCopy configuration) {
         configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, projectName);
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, relativePath);
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, externPathTextControl.getText());
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET, forceCharsetControl.getSelection());
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, portTextControl.getText());
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE, stackSizeTextControl.getText());
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED, seedTextControl.getText());
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED, randomSeedButton.getSelection());
-        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET, quietButton.getSelection());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH,
+                relativePath);
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH,
+                externPathTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_FORCE_CHARSET,
+                forceCharsetControl.getSelection());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT,
+                portTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_MAX_STACKSIZE,
+                stackSizeTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEED,
+                seedTextControl.getText());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_RANDOM_SEED,
+                randomSeedButton.getSelection());
+        configuration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_IS_QUIET,
+                quietButton.getSelection());
     }
 
     @Override
@@ -403,9 +438,11 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
         if (!text.isEmpty()) {
             IPath ePath;
             try {
-                ePath = ResourcesPlugin.getWorkspace().getRoot().getFile(Path.fromPortableString(IPath.SEPARATOR + text)).getLocation();
+                ePath = ResourcesPlugin.getWorkspace().getRoot()
+                        .getFile(Path.fromPortableString(IPath.SEPARATOR + text)).getLocation();
             } catch (IllegalArgumentException invalidPath) {
-                return MessageFormat.format(VALIDATION_FILE_NOT_EXIST, MODEL_GROUP, GlobalConstants.FILE_EXTENSION);
+                return MessageFormat.format(VALIDATION_FILE_NOT_EXIST, MODEL_GROUP,
+                        GlobalConstants.FILE_EXTENSION);
             }
             if (ePath != null) {
                 realPath = ePath.toOSString();
@@ -417,8 +454,8 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
     private String validateExternConfiguration() {
         String text = externPathTextControl.getText();
         return text.isEmpty() //
-                ? null //
-                : validateExistingFile(EXTERN_CFG_GROUP, text, PooslConstants.EXTERN_CONFIG_EXTENSION);
+            ? null //
+            : validateExistingFile(EXTERN_CFG_GROUP, text, PooslConstants.EXTERN_CONFIG_EXTENSION);
     }
 
     private static String validateExistingFile(String role, String path, String extension) {
@@ -493,7 +530,7 @@ public class LaunchConfigurationPooslTab extends AbstractLaunchConfigurationTab 
 
         int index = modelLocation.indexOf(IPath.SEPARATOR);
         projectName = (index > -1) //
-                ? modelLocation.substring(0, index) //
-                : modelLocation;
+            ? modelLocation.substring(0, index) //
+            : modelLocation;
     }
 }

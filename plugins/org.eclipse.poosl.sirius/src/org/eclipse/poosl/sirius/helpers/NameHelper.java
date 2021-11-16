@@ -126,7 +126,8 @@ public final class NameHelper {
 
     public static Iterable<String> getAllInstantiableNames(EObject container) {
         Resource resource = container.eResource();
-        return HelperFunctions.getNames(HelperFunctions.getAllRelevantInstantiableClasses(resource));
+        return HelperFunctions
+                .getNames(HelperFunctions.getAllRelevantInstantiableClasses(resource));
     }
 
     public static Iterable<String> getAllProcessNames(EObject object) {

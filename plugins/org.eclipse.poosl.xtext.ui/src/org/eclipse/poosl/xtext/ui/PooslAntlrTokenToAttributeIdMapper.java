@@ -30,7 +30,9 @@ public class PooslAntlrTokenToAttributeIdMapper extends DefaultAntlrTokenToAttri
             return DefaultHighlightingConfiguration.STRING_ID;
         }
 
-        if ("RULE_BINARY".equals(tokenName) || "RULE_OCTAL".equals(tokenName) || "RULE_HEXADECIMAL".equals(tokenName) || "RULE_DECIMAL_CORE".equals(tokenName) || "RULE_REAL_CORE".equals(tokenName)) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+        if ("RULE_BINARY".equals(tokenName) || "RULE_OCTAL".equals(tokenName) //$NON-NLS-1$//$NON-NLS-2$
+                || "RULE_HEXADECIMAL".equals(tokenName) || "RULE_DECIMAL_CORE".equals(tokenName) //$NON-NLS-1$//$NON-NLS-2$
+                || "RULE_REAL_CORE".equals(tokenName)) { //$NON-NLS-1$
             return DefaultHighlightingConfiguration.NUMBER_ID;
         }
         return super.calculateId(tokenName, tokenType);

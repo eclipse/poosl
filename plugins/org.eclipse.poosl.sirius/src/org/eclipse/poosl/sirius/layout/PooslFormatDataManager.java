@@ -23,7 +23,8 @@ import org.eclipse.sirius.diagram.ui.tools.internal.format.semantic.SemanticNode
 import org.eclipse.sirius.viewpoint.DSemanticDecorator;
 
 /**
- * PooslFormatDataManager drives by the semantic elements (EObject). Use for layout duplication:
+ * PooslFormatDataManager drives by the semantic elements (EObject). Use for
+ * layout duplication:
  * <ul>
  * <li>Right-mouse click -> Edit -> Copy format</li>
  * <li>Right-mouse click -> Edit -> Paste format/layout/style</li>
@@ -48,7 +49,8 @@ public class PooslFormatDataManager extends SiriusFormatDataManagerForSemanticEl
     }
 
     /**
-     * Creates {@link SemanticNodeFormatDataKey} for {@link AbstractDNode} and {@link DDiagram}, and creates
+     * Creates {@link SemanticNodeFormatDataKey} for {@link AbstractDNode} and
+     * {@link DDiagram}, and creates
      * {@link PooslEdgeFormatDataKey} for {@link DEdge}.
      */
     @Override
@@ -57,7 +59,8 @@ public class PooslFormatDataManager extends SiriusFormatDataManagerForSemanticEl
         final EObject realSemanticElement = semanticDecorator.getTarget();
         if (semanticDecorator instanceof DEdge) {
             result = new PooslEdgeFormatDataKey((DEdge) semanticDecorator);
-        } else if (semanticDecorator instanceof AbstractDNode || semanticDecorator instanceof DDiagram) {
+        } else if (semanticDecorator instanceof AbstractDNode
+                || semanticDecorator instanceof DDiagram) {
             result = new SemanticNodeFormatDataKey(realSemanticElement);
         }
         return result;

@@ -43,15 +43,19 @@ public class DeleteDiagramRunnable implements IRunnableWithProgress {
     }
 
     @Override
-    public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+    public void run(IProgressMonitor monitor)
+            throws InvocationTargetException, InterruptedException {
         try {
             String taskName = session2Descriptors.size() > 1 ? DELETE_DIAGRAM : DELETE_DIAGRAMS;
             monitor.beginTask(taskName, session2Descriptors.size());
-            for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors.entrySet()) {
+            for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors
+                    .entrySet()) {
                 Session session = entry.getKey();
                 Set<DRepresentationDescriptor> descriptors = entry.getValue();
-                Command deleteDRepresentationsCmd = new DeleteRepresentationCommand(session, descriptors);
-                session.getTransactionalEditingDomain().getCommandStack().execute(deleteDRepresentationsCmd);
+                Command deleteDRepresentationsCmd = new DeleteRepresentationCommand(session,
+                        descriptors);
+                session.getTransactionalEditingDomain().getCommandStack()
+                        .execute(deleteDRepresentationsCmd);
             }
         } finally {
             monitor.done();

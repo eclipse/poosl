@@ -152,12 +152,15 @@ public class PooslCacheEntry {
             for (ProcessClass pClass : ImportingHelper.toPoosl(resource).getProcessClasses()) {
                 String pName = pClass.getName();
                 if (pName != null) {
-                    allRelevantProcessClasses.add(EObjectDescription.create(pName, pClass, PooslProcessClassDescription.createUserData(pClass)));
+                    allRelevantProcessClasses.add(EObjectDescription.create(pName, pClass,
+                            PooslProcessClassDescription.createUserData(pClass)));
                 }
             }
 
             // Classes in other resources (based on globalScope)
-            for (IEObjectDescription ieObjectDescription : HelperFunctions.getGlobalScope(resource, Literals.POOSL__PROCESS_CLASSES, null).getAllElements()) {
+            for (IEObjectDescription ieObjectDescription : HelperFunctions
+                    .getGlobalScope(resource, Literals.POOSL__PROCESS_CLASSES, null)
+                    .getAllElements()) {
                 URI resURI = ieObjectDescription.getEObjectURI().trimFragment();
                 if (!resURI.equals(resource.getURI())) {
                     allRelevantProcessClasses.add(ieObjectDescription);
@@ -199,12 +202,15 @@ public class PooslCacheEntry {
             for (ClusterClass cClass : ImportingHelper.toPoosl(resource).getClusterClasses()) {
                 String cName = cClass.getName();
                 if (cName != null) {
-                    allRelevantClusterClasses.add(EObjectDescription.create(cName, cClass, PooslClusterClassDescription.createUserData(cClass)));
+                    allRelevantClusterClasses.add(EObjectDescription.create(cName, cClass,
+                            PooslClusterClassDescription.createUserData(cClass)));
                 }
             }
 
             // Classes in other resources (based on globalScope)
-            for (IEObjectDescription ieObjectDescription : HelperFunctions.getGlobalScope(resource, Literals.POOSL__CLUSTER_CLASSES, null).getAllElements()) {
+            for (IEObjectDescription ieObjectDescription : HelperFunctions
+                    .getGlobalScope(resource, Literals.POOSL__CLUSTER_CLASSES, null)
+                    .getAllElements()) {
                 URI resURI = ieObjectDescription.getEObjectURI().trimFragment();
                 if (!resURI.equals(resource.getURI())) {
                     allRelevantClusterClasses.add(ieObjectDescription);
@@ -216,7 +222,9 @@ public class PooslCacheEntry {
         return allRelevantClusterClasses;
     }
 
-    private void mapDescriptionToImport(IEObjectDescription ieObjectDescription, URI resURI, Map<Import, List<IEObjectDescription>> importClasses) {
+    private void mapDescriptionToImport(
+            IEObjectDescription ieObjectDescription, URI resURI,
+            Map<Import, List<IEObjectDescription>> importClasses) {
         for (Import importing : getImportsUsingUri(resURI)) {
             List<IEObjectDescription> list = importClasses.get(importing);
             if (list == null) {
@@ -263,12 +271,15 @@ public class PooslCacheEntry {
             for (DataClass dClass : poosl.getDataClasses()) {
                 String dName = dClass.getName();
                 if (dName != null) {
-                    allRelevantDataClasses.add(EObjectDescription.create(dName, dClass, PooslDataClassDescription.createUserData(dClass)));
+                    allRelevantDataClasses.add(EObjectDescription.create(dName, dClass,
+                            PooslDataClassDescription.createUserData(dClass)));
                 }
             }
 
             // Classes in other resources (based on globalScope)
-            for (IEObjectDescription ieObjectDescription : HelperFunctions.getGlobalScope(resource, Literals.POOSL__DATA_CLASSES, null).getAllElements()) {
+            for (IEObjectDescription ieObjectDescription : HelperFunctions
+                    .getGlobalScope(resource, Literals.POOSL__DATA_CLASSES, null)
+                    .getAllElements()) {
                 URI resURI = ieObjectDescription.getEObjectURI().trimFragment();
                 if (!resURI.equals(resource.getURI())) {
                     allRelevantDataClasses.add(ieObjectDescription);
@@ -342,7 +353,8 @@ public class PooslCacheEntry {
         return results;
     }
 
-    private IEObjectDescription getCorrectedDataClassExtends(Resource r, IEObjectDescription dClass) {
+    private IEObjectDescription getCorrectedDataClassExtends(
+            Resource r, IEObjectDescription dClass) {
         String resultAsString = HelperFunctions.getCorrectedDataClassExtendsAsString(dClass);
         if (resultAsString == null) {
             return null;
@@ -352,7 +364,8 @@ public class PooslCacheEntry {
     }
 
     public Iterable<String> getDataReflexiveAncestorsAndChildren(String dClassName) {
-        return Iterables.concat(HelperFunctions.getNames(getDataReflexiveChildren(dClassName)), HelperFunctions.getNames(getDataAncestors(dClassName)));
+        return Iterables.concat(HelperFunctions.getNames(getDataReflexiveChildren(dClassName)),
+                HelperFunctions.getNames(getDataAncestors(dClassName)));
     }
 
     private Map<String, DataClass> getLocalDataClasses() {
@@ -417,7 +430,8 @@ public class PooslCacheEntry {
 
             IEObjectDescription pClass = getProcessClass(pClassName);
             if (pClass != null) {
-                IEObjectDescription parent = getProcessClass(PooslProcessClassDescription.getSuperClass(pClass));
+                IEObjectDescription parent = getProcessClass(
+                        PooslProcessClassDescription.getSuperClass(pClass));
                 while (parent != null && !results.contains(parent) && parent != pClass) {
                     results.add(parent);
                     parent = getProcessClass(PooslProcessClassDescription.getSuperClass(parent));
@@ -474,15 +488,19 @@ public class PooslCacheEntry {
             for (Entry<String, DataClass> localEntry : getLocalDataAncestors(dClass).entrySet()) {
                 String className = localEntry.getKey();
                 DataClass localClass = localEntry.getValue();
-                PooslResourceDescription.computeExportedDeclarations(localClassVariableDeclarations, localClass.getInstanceVariables(), className, true, false);
+                PooslResourceDescription.computeExportedDeclarations(localClassVariableDeclarations,
+                        localClass.getInstanceVariables(), className, true, false);
                 classChain.remove(className);
             }
 
             // Classes in other resources (based on globalScope)
-            IScope globalClassVariableDeclartions = HelperFunctions.getGlobalScope(resource, Literals.VARIABLE, PooslDeclarationDescription.predicateVariableFromDataClass(classChain));
+            IScope globalClassVariableDeclartions = HelperFunctions.getGlobalScope(resource,
+                    Literals.VARIABLE,
+                    PooslDeclarationDescription.predicateVariableFromDataClass(classChain));
 
             map = createEObjectDescriptionMapSupportDuplicateNames(localClassVariableDeclarations);
-            map.putAll(createEObjectDescriptionMap(globalClassVariableDeclartions.getAllElements()));
+            map.putAll(
+                    createEObjectDescriptionMap(globalClassVariableDeclartions.getAllElements()));
             dataClassVariables.put(dClass, map);
         }
         return map;
@@ -493,27 +511,32 @@ public class PooslCacheEntry {
         if (map == null) {
             IEObjectDescription pClass = getProcessClass(iClass);
             if (pClass != null) {
-                List<String> classChain = HelperFunctions.computeProcessClassChain(resource, iClass);
+                List<String> classChain = HelperFunctions.computeProcessClassChain(resource,
+                        iClass);
 
                 // Classes in the current resource (globalScope cannot be used)
                 List<IEObjectDescription> localPortDeclarations = new ArrayList<>();
                 for (ProcessClass localClass : getLocalProcessAncestors(iClass).values()) {
                     String localClassName = localClass.getName();
-                    Iterables.addAll(localPortDeclarations, PooslResourceDescription.computeExportedPorts(localClass.getPorts(), localClassName));
+                    Iterables.addAll(localPortDeclarations, PooslResourceDescription
+                            .computeExportedPorts(localClass.getPorts(), localClassName));
                     classChain.remove(localClassName);
                 }
 
                 // Classes in other resources (based on globalScope)
-                IScope globalPortDeclarations = HelperFunctions.getGlobalScope(resource, Literals.PORT, PooslPortDescription.predicatePort(classChain));
+                IScope globalPortDeclarations = HelperFunctions.getGlobalScope(resource,
+                        Literals.PORT, PooslPortDescription.predicatePort(classChain));
 
                 map = createEObjectDescriptionMapSupportDuplicateNames(localPortDeclarations);
                 map.putAll(createEObjectDescriptionMap(globalPortDeclarations.getAllElements()));
             } else {
                 ClusterClass localClass = getLocalClusterClasses().get(iClass);
                 if (localClass != null) {
-                    map = createEObjectDescriptionMapSupportDuplicateNames(PooslResourceDescription.computeExportedPorts(localClass.getPorts(), iClass));
+                    map = createEObjectDescriptionMapSupportDuplicateNames(PooslResourceDescription
+                            .computeExportedPorts(localClass.getPorts(), iClass));
                 } else {
-                    IScope globalPortDeclarations = HelperFunctions.getGlobalScope(resource, Literals.PORT, PooslPortDescription.predicatePort(iClass));
+                    IScope globalPortDeclarations = HelperFunctions.getGlobalScope(resource,
+                            Literals.PORT, PooslPortDescription.predicatePort(iClass));
                     map = createEObjectDescriptionMap(globalPortDeclarations.getAllElements());
                 }
             }
@@ -530,13 +553,17 @@ public class PooslCacheEntry {
             // Classes in the current resource (globalScope cannot be used)
             List<IEObjectDescription> localObjects = new ArrayList<>();
             for (ProcessClass localClass : getLocalProcessAncestors(pClass).values()) {
-                PooslResourceDescription.computeExportedDeclarations(localObjects, localClass.getParameters(), localClass.getName(), false, true);
-                PooslResourceDescription.computeExportedDeclarations(localObjects, localClass.getInstanceVariables(), localClass.getName(), false, false);
+                PooslResourceDescription.computeExportedDeclarations(localObjects,
+                        localClass.getParameters(), localClass.getName(), false, true);
+                PooslResourceDescription.computeExportedDeclarations(localObjects,
+                        localClass.getInstanceVariables(), localClass.getName(), false, false);
                 classChain.remove(localClass.getName());
             }
 
             // Classes in other resources (based on globalScope)
-            IScope globalObjects = HelperFunctions.getGlobalScope(resource, Literals.VARIABLE, PooslDeclarationDescription.predicateParameterAndVariableFromNonDataClass(classChain));
+            IScope globalObjects = HelperFunctions.getGlobalScope(resource, Literals.VARIABLE,
+                    PooslDeclarationDescription
+                            .predicateParameterAndVariableFromNonDataClass(classChain));
 
             map = createEObjectDescriptionMapSupportDuplicateNames(localObjects);
             map.putAll(createEObjectDescriptionMap(globalObjects.getAllElements()));
@@ -550,28 +577,37 @@ public class PooslCacheEntry {
         if (map == null) {
             IEObjectDescription processClass = getProcessClass(iClass);
             if (processClass != null) {
-                List<String> classChain = HelperFunctions.computeProcessClassChain(resource, iClass);
+                List<String> classChain = HelperFunctions.computeProcessClassChain(resource,
+                        iClass);
 
                 // Classes in the current resource (globalScope cannot be used)
                 List<IEObjectDescription> localParameterDeclarations = new ArrayList<>();
                 for (ProcessClass localClass : getLocalProcessAncestors(iClass).values()) {
-                    PooslResourceDescription.computeExportedDeclarations(localParameterDeclarations, localClass.getParameters(), localClass.getName(), false, true);
+                    PooslResourceDescription.computeExportedDeclarations(localParameterDeclarations,
+                            localClass.getParameters(), localClass.getName(), false, true);
                     classChain.remove(localClass.getName());
                 }
 
                 // Classes in other resources (based on globalScope)
-                IScope globalParameterDeclarations = HelperFunctions.getGlobalScope(resource, Literals.VARIABLE, PooslDeclarationDescription.predicateParameterFromNonDataClass(classChain));
+                IScope globalParameterDeclarations = HelperFunctions.getGlobalScope(resource,
+                        Literals.VARIABLE,
+                        PooslDeclarationDescription.predicateParameterFromNonDataClass(classChain));
 
                 map = createEObjectDescriptionMapSupportDuplicateNames(localParameterDeclarations);
-                map.putAll(createEObjectDescriptionMap(globalParameterDeclarations.getAllElements()));
+                map.putAll(
+                        createEObjectDescriptionMap(globalParameterDeclarations.getAllElements()));
             } else {
                 ClusterClass localClass = getLocalClusterClasses().get(iClass);
                 if (localClass != null) {
                     List<IEObjectDescription> localParameterDeclarations = new ArrayList<>();
-                    PooslResourceDescription.computeExportedDeclarations(localParameterDeclarations, localClass.getParameters(), localClass.getName(), false, true);
-                    map = createEObjectDescriptionMapSupportDuplicateNames(localParameterDeclarations);
+                    PooslResourceDescription.computeExportedDeclarations(localParameterDeclarations,
+                            localClass.getParameters(), localClass.getName(), false, true);
+                    map = createEObjectDescriptionMapSupportDuplicateNames(
+                            localParameterDeclarations);
                 } else {
-                    IScope globalParameterDeclarations = HelperFunctions.getGlobalScope(resource, Literals.VARIABLE, PooslDeclarationDescription.predicateParameterFromNonDataClass(iClass));
+                    IScope globalParameterDeclarations = HelperFunctions.getGlobalScope(resource,
+                            Literals.VARIABLE,
+                            PooslDeclarationDescription.predicateParameterFromNonDataClass(iClass));
                     map = createEObjectDescriptionMap(globalParameterDeclarations.getAllElements());
                 }
             }
@@ -580,7 +616,8 @@ public class PooslCacheEntry {
         return map;
     }
 
-    public Map<String, IEObjectDescription> getProcessMethods(String pClass, int args, int outputVar) {
+    public Map<String, IEObjectDescription> getProcessMethods(
+            String pClass, int args, int outputVar) {
         String id = pClass + ID_SEPARATOR + args + ID_SEPARATOR + outputVar;
         Map<String, IEObjectDescription> map = processMethodsByCall.get(id);
 
@@ -598,20 +635,30 @@ public class PooslCacheEntry {
                     for (ProcessMethod pMethod : localAncestor.getMethods()) {
                         String pName = pMethod.getName();
                         boolean containsKey = map.containsKey(pName);
-                        if (HelperFunctions.computeNumberOfVariables(pMethod.getInputParameters()) == args && HelperFunctions.computeNumberOfVariables(pMethod.getOutputParameters()) == outputVar
+                        if (HelperFunctions.computeNumberOfVariables(pMethod.getInputParameters())
+                                == args
+                                && HelperFunctions.computeNumberOfVariables(
+                                        pMethod.getOutputParameters()) == outputVar
                                 && (!containsKey || addedNames.contains(pName))) {
-                            IEObjectDescription descr = getLocalProcessMethodDescription(pMethod, localAncestor.getName());
+                            IEObjectDescription descr = getLocalProcessMethodDescription(pMethod,
+                                    localAncestor.getName());
                             // add methods with the same name,
                             if (descr != null) {
-                                String descrID = getDescriptionIDWithDouble(containsKey, map, pName);
+                                String descrID = getDescriptionIDWithDouble(containsKey, map,
+                                        pName);
                                 addedNames.add(pName);
-                                map.put(descrID, EObjectDescription.create(pName, pMethod, PooslProcessMethodDescription.createUserData(pClass, pMethod)));
+                                map.put(descrID,
+                                        EObjectDescription.create(pName, pMethod,
+                                                PooslProcessMethodDescription.createUserData(pClass,
+                                                        pMethod)));
                             }
                         }
                     }
 
                 } else {
-                    IScope localMethods = HelperFunctions.getGlobalScope(resource, Literals.PROCESS_CLASS__METHODS, PooslProcessMethodDescription.predicateMethod(args, outputVar, className));
+                    IScope localMethods = HelperFunctions.getGlobalScope(resource,
+                            Literals.PROCESS_CLASS__METHODS, PooslProcessMethodDescription
+                                    .predicateMethod(args, outputVar, className));
                     for (IEObjectDescription pMethod : localMethods.getAllElements()) {
                         String pMethodName = HelperFunctions.getName(pMethod);
                         if (!map.containsKey(pMethodName)) {
@@ -626,14 +673,16 @@ public class PooslCacheEntry {
     }
 
     /**
-     * If process method is already stored add an integer to the process method name
+     * If process method is already stored add an integer to the process method
+     * name
      * 
      * @param containsKey
      * @param map
      * @param pName
      * @return the description id
      */
-    private String getDescriptionIDWithDouble(boolean containsKey, Map<String, IEObjectDescription> map, String pName) {
+    private String getDescriptionIDWithDouble(
+            boolean containsKey, Map<String, IEObjectDescription> map, String pName) {
         if (containsKey) {
             int i = 0;
             String descrID;
@@ -658,14 +707,17 @@ public class PooslCacheEntry {
                 if (localAncestor != null) {
                     for (ProcessMethod pMethod : localAncestor.getMethods()) {
                         if (filteredNames.add(pMethod.getName())) {
-                            IEObjectDescription descr = getLocalProcessMethodDescription(pMethod, localAncestor.getName());
+                            IEObjectDescription descr = getLocalProcessMethodDescription(pMethod,
+                                    localAncestor.getName());
                             if (descr != null) {
                                 list.add(descr);
                             }
                         }
                     }
                 } else {
-                    IScope localMethods = HelperFunctions.getGlobalScope(resource, Literals.PROCESS_METHOD, PooslProcessMethodDescription.predicateMethod(className));
+                    IScope localMethods = HelperFunctions.getGlobalScope(resource,
+                            Literals.PROCESS_METHOD,
+                            PooslProcessMethodDescription.predicateMethod(className));
                     for (IEObjectDescription pMethod : localMethods.getAllElements()) {
                         if (filteredNames.add(HelperFunctions.getName(pMethod))) {
                             list.add(pMethod);
@@ -683,7 +735,8 @@ public class PooslCacheEntry {
         List<IEObjectDescription> list = reflexiveChildrenProcessMethods.get(pClass);
         if (list == null) {
             list = new ArrayList<>();
-            Iterable<IEObjectDescription> listProcessClasses = PooslCache.get(resource).getProcessReflexiveChildren(pClass);
+            Iterable<IEObjectDescription> listProcessClasses = PooslCache.get(resource)
+                    .getProcessReflexiveChildren(pClass);
             List<String> names = Lists.newArrayList(HelperFunctions.getNames(listProcessClasses));
 
             // Iterate directly over reflexive children because the local
@@ -697,7 +750,8 @@ public class PooslCacheEntry {
                 ProcessClass localClass = local.get(pName);
                 if (localClass != null) {
                     for (ProcessMethod pMethod : localClass.getMethods()) {
-                        IEObjectDescription descr = getLocalProcessMethodDescription(pMethod, localClass.getName());
+                        IEObjectDescription descr = getLocalProcessMethodDescription(pMethod,
+                                localClass.getName());
                         if (descr != null) {
                             list.add(descr);
                         }
@@ -707,7 +761,11 @@ public class PooslCacheEntry {
             }
 
             // Classes in other resources (based on globalScope)
-            Iterables.addAll(list, HelperFunctions.getGlobalScope(resource, Literals.PROCESS_CLASS__METHODS, PooslProcessMethodDescription.predicateMethod(names)).getAllElements());
+            Iterables.addAll(list,
+                    HelperFunctions
+                            .getGlobalScope(resource, Literals.PROCESS_CLASS__METHODS,
+                                    PooslProcessMethodDescription.predicateMethod(names))
+                            .getAllElements());
 
             reflexiveChildrenProcessMethods.put(pClass, list);
         }
@@ -718,21 +776,27 @@ public class PooslCacheEntry {
         String id = pClassName + ID_SEPARATOR + type.toString();
         List<IEObjectDescription> descriptions = messages.get(id);
         if (descriptions == null) {
-            List<String> classChain = HelperFunctions.computeProcessClassChain(resource, pClassName);
+            List<String> classChain = HelperFunctions.computeProcessClassChain(resource,
+                    pClassName);
             List<IEObjectDescription> receive = new ArrayList<>();
             List<IEObjectDescription> send = new ArrayList<>();
 
             // Classes in the current resource (globalScope cannot be used)
             for (ProcessClass localClass : getLocalProcessAncestors(pClassName).values()) {
-                PooslResourceDescription.computeExportedMessages(receive, localClass.getReceiveMessages(), pClassName);
-                PooslResourceDescription.computeExportedMessages(send, localClass.getSendMessages(), pClassName);
+                PooslResourceDescription.computeExportedMessages(receive,
+                        localClass.getReceiveMessages(), pClassName);
+                PooslResourceDescription.computeExportedMessages(send, localClass.getSendMessages(),
+                        pClassName);
                 classChain.remove(localClass.getName());
             }
 
             // Classes in other resources (based on globalScope)
-            IScope globalMessages = HelperFunctions.getGlobalScope(resource, Literals.PROCESS_CLASS__SEND_MESSAGES, PooslMessageSignatureDescription.predicateMessage(classChain));
+            IScope globalMessages = HelperFunctions.getGlobalScope(resource,
+                    Literals.PROCESS_CLASS__SEND_MESSAGES,
+                    PooslMessageSignatureDescription.predicateMessage(classChain));
             for (IEObjectDescription descr : globalMessages.getAllElements()) {
-                if (PooslMessageSignatureDescription.getMessageType(descr).equals(PooslMessageType.RECEIVE)) {
+                if (PooslMessageSignatureDescription.getMessageType(descr)
+                        .equals(PooslMessageType.RECEIVE)) {
                     receive.add(descr);
                 } else {
                     send.add(descr);
@@ -746,7 +810,8 @@ public class PooslCacheEntry {
         return descriptions;
     }
 
-    public List<IEObjectDescription> getDataMethods(String dClassName, String dMethodName, int args, EReference literal) {
+    public List<IEObjectDescription> getDataMethods(
+            String dClassName, String dMethodName, int args, EReference literal) {
         String classMethodParam = dClassName + ID_SEPARATOR + dMethodName + ID_SEPARATOR + args;
         List<IEObjectDescription> methods = datamethods.get(classMethodParam);
         if (methods == null) {
@@ -754,31 +819,43 @@ public class PooslCacheEntry {
             List<String> classChain = HelperFunctions.computeDataClassChain(resource, dClassName);
 
             // Classes in the current resource (globalScope cannot be used)
-            for (Entry<String, DataClass> localEntry : getLocalDataAncestors(dClassName).entrySet()) {
+            for (Entry<String, DataClass> localEntry : getLocalDataAncestors(dClassName)
+                    .entrySet()) {
                 String className = localEntry.getKey();
                 DataClass localClass = localEntry.getValue();
 
                 if (literal == Literals.DATA_CLASS__DATA_METHODS_NAMED) {
                     for (DataMethodNamed dMethod : localClass.getDataMethodsNamed()) {
                         String localName = dMethod.getName();
-                        if (dMethodName.equals(localName) && HelperFunctions.computeNumberOfVariables(dMethod.getParameters()) == args) {
-                            methods.add(getLocalDataMethodDescription(localName, dMethod, className));
+                        if (dMethodName.equals(localName)
+                                && HelperFunctions.computeNumberOfVariables(dMethod.getParameters())
+                                        == args) {
+                            methods.add(
+                                    getLocalDataMethodDescription(localName, dMethod, className));
                         }
                     }
                 }
                 if (literal == Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR) {
-                    for (DataMethodBinaryOperator dMethod : localClass.getDataMethodsBinaryOperator()) {
+                    for (DataMethodBinaryOperator dMethod : localClass
+                            .getDataMethodsBinaryOperator()) {
                         String localName = dMethod.getName().getLiteral();
-                        if (dMethodName.equals(localName) && HelperFunctions.computeNumberOfVariables(dMethod.getParameters()) == args) {
-                            methods.add(getLocalDataMethodDescription(localName, dMethod, className));
+                        if (dMethodName.equals(localName)
+                                && HelperFunctions.computeNumberOfVariables(dMethod.getParameters())
+                                        == args) {
+                            methods.add(
+                                    getLocalDataMethodDescription(localName, dMethod, className));
                         }
                     }
                 }
                 if (literal == Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR) {
-                    for (DataMethodUnaryOperator dMethod : localClass.getDataMethodsUnaryOperator()) {
+                    for (DataMethodUnaryOperator dMethod : localClass
+                            .getDataMethodsUnaryOperator()) {
                         String localName = dMethod.getName().getLiteral();
-                        if (dMethodName.equals(localName) && HelperFunctions.computeNumberOfVariables(dMethod.getParameters()) == args) {
-                            methods.add(getLocalDataMethodDescription(localName, dMethod, className));
+                        if (dMethodName.equals(localName)
+                                && HelperFunctions.computeNumberOfVariables(dMethod.getParameters())
+                                        == args) {
+                            methods.add(
+                                    getLocalDataMethodDescription(localName, dMethod, className));
                         }
                     }
                 }
@@ -787,7 +864,8 @@ public class PooslCacheEntry {
             }
 
             // Classes in other resources (based on globalScope)
-            IScope scope = HelperFunctions.getGlobalScope(resource, literal, PooslDataMethodDescription.predicateDataMethod(dMethodName, classChain, args));
+            IScope scope = HelperFunctions.getGlobalScope(resource, literal,
+                    PooslDataMethodDescription.predicateDataMethod(dMethodName, classChain, args));
             methods.addAll(Lists.newArrayList(scope.getAllElements()));
             datamethods.put(classMethodParam, methods);
 
@@ -797,7 +875,8 @@ public class PooslCacheEntry {
 
     public List<IEObjectDescription> getDataMethods(String dMethodName, int args, EReference ref) {
         String nameAndNumberOfArguments = dMethodName + ID_SEPARATOR + args;
-        List<IEObjectDescription> methods = dataMethodsByNameAndNumberOfArguments.get(nameAndNumberOfArguments);
+        List<IEObjectDescription> methods = dataMethodsByNameAndNumberOfArguments
+                .get(nameAndNumberOfArguments);
         if (methods == null) {
             methods = new ArrayList<>();
 
@@ -808,23 +887,29 @@ public class PooslCacheEntry {
                     if (ref.equals(Literals.DATA_CLASS__DATA_METHODS_NAMED)) {
                         for (DataMethodNamed dMethod : dataClass.getDataMethodsNamed()) {
                             String localName = dMethod.getName();
-                            if (localName.equals(dMethodName) && HelperFunctions.computeNumberOfVariables(dMethod.getParameters()) == args) {
-                                methods.add(getLocalDataMethodDescription(localName, dMethod, dName));
+                            if (localName.equals(dMethodName) && HelperFunctions
+                                    .computeNumberOfVariables(dMethod.getParameters()) == args) {
+                                methods.add(
+                                        getLocalDataMethodDescription(localName, dMethod, dName));
                             }
                         }
                     } else if (ref.equals(Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR)) {
-                        for (DataMethodBinaryOperator dMethod : dataClass.getDataMethodsBinaryOperator()) {
+                        for (DataMethodBinaryOperator dMethod : dataClass
+                                .getDataMethodsBinaryOperator()) {
                             String localName = dMethod.getName().getLiteral();
                             if (localName.equals(dMethodName)) {
-                                methods.add(getLocalDataMethodDescription(localName, dMethod, dName));
+                                methods.add(
+                                        getLocalDataMethodDescription(localName, dMethod, dName));
                             }
                         }
                     } else if (ref.equals(Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR)) {
 
-                        for (DataMethodUnaryOperator dMethod : dataClass.getDataMethodsUnaryOperator()) {
+                        for (DataMethodUnaryOperator dMethod : dataClass
+                                .getDataMethodsUnaryOperator()) {
                             String localName = dMethod.getName().getLiteral();
                             if (localName.equals(dMethodName)) {
-                                methods.add(getLocalDataMethodDescription(localName, dMethod, dName));
+                                methods.add(
+                                        getLocalDataMethodDescription(localName, dMethod, dName));
                             }
                         }
                     }
@@ -832,7 +917,8 @@ public class PooslCacheEntry {
             }
 
             // Classes in other resources (based on globalScope)
-            IScope total = HelperFunctions.getGlobalScope(resource, ref, PooslDataMethodDescription.predicateDataMethod(dMethodName, args, getLocalDataClasses().keySet()));
+            IScope total = HelperFunctions.getGlobalScope(resource, ref, PooslDataMethodDescription
+                    .predicateDataMethod(dMethodName, args, getLocalDataClasses().keySet()));
 
             methods.addAll(Lists.newArrayList(total.getAllElements()));
             dataMethodsByNameAndNumberOfArguments.put(nameAndNumberOfArguments, methods);
@@ -841,7 +927,8 @@ public class PooslCacheEntry {
     }
 
     /**
-     * Returns the data methods based on number of arguments and return type. It allows for computing conversion
+     * Returns the data methods based on number of arguments and return type. It
+     * allows for computing conversion
      * methods.
      * 
      * @param dClassName
@@ -849,7 +936,8 @@ public class PooslCacheEntry {
      * @param returnType
      * @return Map with the data method descriptions
      */
-    public Map<String, IEObjectDescription> getDataMethodsNamed(String dClassName, int args, String returnType) {
+    public Map<String, IEObjectDescription> getDataMethodsNamed(
+            String dClassName, int args, String returnType) {
         String id = dClassName + ID_SEPARATOR + args + ID_SEPARATOR + returnType;
         Map<String, IEObjectDescription> map = dataConversionMethods.get(id);
         if (map == null) {
@@ -864,15 +952,20 @@ public class PooslCacheEntry {
                 for (DataMethodNamed dMethod : localClass.getDataMethodsNamed()) {
                     String dMethodName = dMethod.getName();
                     String dReturnType = dMethod.getReturnType();
-                    if (dMethodName != null && dReturnType != null && dReturnType.equals(returnType) && HelperFunctions.computeNumberOfVariables(dMethod.getParameters()) == args) {
-                        map.put(dMethodName, getLocalDataMethodDescription(dMethodName, dMethod, className));
+                    if (dMethodName != null && dReturnType != null && dReturnType.equals(returnType)
+                            && HelperFunctions.computeNumberOfVariables(dMethod.getParameters())
+                                    == args) {
+                        map.put(dMethodName,
+                                getLocalDataMethodDescription(dMethodName, dMethod, className));
                     }
                 }
                 classChain.remove(className);
             }
 
             // Classes in other resources (based on globalScope)
-            IScope scope = HelperFunctions.getGlobalScope(resource, Literals.DATA_CLASS__DATA_METHODS_NAMED, PooslDataMethodDescription.predicateDataMethod(args, returnType, classChain));
+            IScope scope = HelperFunctions.getGlobalScope(resource,
+                    Literals.DATA_CLASS__DATA_METHODS_NAMED,
+                    PooslDataMethodDescription.predicateDataMethod(args, returnType, classChain));
             for (IEObjectDescription description : scope.getAllElements()) {
                 map.put(HelperFunctions.getName(description), description);
             }
@@ -900,13 +993,17 @@ public class PooslCacheEntry {
         importLibsPerImport = new HashMap<>();
 
         Map<String, IEObjectDescription> fileString2PooslDescription = new HashMap<>();
-        for (IEObjectDescription pooslDescr : HelperFunctions.getGlobalScope(resource, Literals.POOSL, null).getAllElements()) {
-            fileString2PooslDescription.put(pooslDescr.getEObjectURI().trimFragment().toString(), pooslDescr);
+        for (IEObjectDescription pooslDescr : HelperFunctions
+                .getGlobalScope(resource, Literals.POOSL, null).getAllElements()) {
+            fileString2PooslDescription.put(pooslDescr.getEObjectURI().trimFragment().toString(),
+                    pooslDescr);
         }
 
         Poosl poosl = ImportingHelper.toPoosl(resource);
-        addImportMappings(poosl.getImports(), fileString2PooslDescription, resolvedImportsPerImport, importLibsPerImport, false);
-        addImportMappings(poosl.getImportLibs(), fileString2PooslDescription, resolvedImportsPerImport, importLibsPerImport, true);
+        addImportMappings(poosl.getImports(), fileString2PooslDescription, resolvedImportsPerImport,
+                importLibsPerImport, false);
+        addImportMappings(poosl.getImportLibs(), fileString2PooslDescription,
+                resolvedImportsPerImport, importLibsPerImport, true);
     }
 
     private List<Import> getImportsUsingUri(URI importedFile) {
@@ -921,7 +1018,9 @@ public class PooslCacheEntry {
         return imports;
     }
 
-    private static void addImportMappings(List<Import> imports, Map<String, IEObjectDescription> fileString2PooslDescription, Map<Import, Set<String>> resolvedImportsPerImport,
+    private static void addImportMappings(
+            List<Import> imports, Map<String, IEObjectDescription> fileString2PooslDescription,
+            Map<Import, Set<String>> resolvedImportsPerImport,
             Map<Import, Map<Pair<String, String>, URI>> importLibsPerImport, boolean importlib) {
         for (Import pImport : imports) {
             String importString = ImportingHelper.importToString(pImport);
@@ -929,15 +1028,18 @@ public class PooslCacheEntry {
                 URI importUri = URI.createURI(importString);
                 URI resolvedURI;
                 if (importlib) {
-                    resolvedURI = ImportingHelper.resolveImportLibUri(pImport.eResource(), importUri);
+                    resolvedURI = ImportingHelper.resolveImportLibUri(pImport.eResource(),
+                            importUri);
                 } else {
-                    resolvedURI = ImportingHelper.resolveImportUri(pImport.eResource().getURI(), importUri);
+                    resolvedURI = ImportingHelper.resolveImportUri(pImport.eResource().getURI(),
+                            importUri);
                 }
 
                 if (resolvedURI != null) {
                     Set<String> resolvedImports = new HashSet<>();
                     Map<Pair<String, String>, URI> importLibs = new HashMap<>();
-                    getImportedfiles(resolvedURI.toString(), resolvedImports, importLibs, fileString2PooslDescription);
+                    getImportedfiles(resolvedURI.toString(), resolvedImports, importLibs,
+                            fileString2PooslDescription);
                     resolvedImportsPerImport.put(pImport, resolvedImports);
                     importLibsPerImport.put(pImport, importLibs);
                 }
@@ -945,46 +1047,57 @@ public class PooslCacheEntry {
         }
     }
 
-    private static void getImportedfiles(String resolvedFile, Set<String> resolvedImports, Map<Pair<String, String>, URI> importLibs, Map<String, IEObjectDescription> pooslDescriptions) {
-        if (resolvedFile != null && !resolvedFile.isEmpty() && !resolvedImports.contains(resolvedFile)) {
+    private static void getImportedfiles(
+            String resolvedFile, Set<String> resolvedImports,
+            Map<Pair<String, String>, URI> importLibs,
+            Map<String, IEObjectDescription> pooslDescriptions) {
+        if (resolvedFile != null && !resolvedFile.isEmpty()
+                && !resolvedImports.contains(resolvedFile)) {
             resolvedImports.add(resolvedFile);
             IEObjectDescription pooslDescription = pooslDescriptions.get(resolvedFile);
             if (pooslDescription != null) {
                 for (String importString : PooslDescription.getImports(pooslDescription)) {
                     getImportedfiles(importString, resolvedImports, importLibs, pooslDescriptions);
                 }
-                for (Pair<String, String> pair : PooslDescription.getImportLibRaw(pooslDescription)) {
+                for (Pair<String, String> pair : PooslDescription
+                        .getImportLibRaw(pooslDescription)) {
                     String resolvedImportString = pair.getFirst();
                     URI sourceFileOfImportLib = pooslDescription.getEObjectURI();
                     importLibs.put(pair, sourceFileOfImportLib);
-                    getImportedfiles(resolvedImportString, resolvedImports, importLibs, pooslDescriptions);
+                    getImportedfiles(resolvedImportString, resolvedImports, importLibs,
+                            pooslDescriptions);
                 }
             }
         }
     }
 
-    private IEObjectDescription getLocalDataMethodDescription(String dMethodName, DataMethod dMethod, String dClass) {
+    private IEObjectDescription getLocalDataMethodDescription(
+            String dMethodName, DataMethod dMethod, String dClass) {
         IEObjectDescription localDescription = localDataMethodDescriptions.get(dMethod);
         if (localDescription == null && dMethodName != null) {
-            localDescription = EObjectDescription.create(dMethodName, dMethod, PooslDataMethodDescription.createUserData(dClass, dMethod));
+            localDescription = EObjectDescription.create(dMethodName, dMethod,
+                    PooslDataMethodDescription.createUserData(dClass, dMethod));
             localDataMethodDescriptions.put(dMethod, localDescription);
         }
         return localDescription;
     }
 
-    private IEObjectDescription getLocalProcessMethodDescription(ProcessMethod pMethod, String pClass) {
+    private IEObjectDescription getLocalProcessMethodDescription(
+            ProcessMethod pMethod, String pClass) {
         IEObjectDescription localDescription = localProcessMethodDescriptions.get(pMethod);
         if (localDescription == null && pClass != null) {
             String pName = pMethod.getName();
             if (pName != null) {
-                localDescription = EObjectDescription.create(pName, pMethod, PooslProcessMethodDescription.createUserData(pClass, pMethod));
+                localDescription = EObjectDescription.create(pName, pMethod,
+                        PooslProcessMethodDescription.createUserData(pClass, pMethod));
                 localProcessMethodDescriptions.put(pMethod, localDescription);
             }
         }
         return localDescription;
     }
 
-    private static Map<String, IEObjectDescription> createEObjectDescriptionMap(Iterable<IEObjectDescription> iterable) {
+    private static Map<String, IEObjectDescription> createEObjectDescriptionMap(
+            Iterable<IEObjectDescription> iterable) {
         Map<String, IEObjectDescription> map = new HashMap<>();
         for (IEObjectDescription descr : iterable) {
             map.put(HelperFunctions.getName(descr), descr);
@@ -992,7 +1105,8 @@ public class PooslCacheEntry {
         return map;
     }
 
-    private Map<String, IEObjectDescription> createEObjectDescriptionMapSupportDuplicateNames(Iterable<IEObjectDescription> iterable) {
+    private Map<String, IEObjectDescription> createEObjectDescriptionMapSupportDuplicateNames(
+            Iterable<IEObjectDescription> iterable) {
         Map<String, IEObjectDescription> map = new HashMap<>();
         for (IEObjectDescription descr : iterable) {
             String name = HelperFunctions.getName(descr);
@@ -1002,7 +1116,9 @@ public class PooslCacheEntry {
         return map;
     }
 
-    private static void findAllChildren(Resource resource, Map<String, Set<IEObjectDescription>> directChildren, IEObjectDescription descr, List<IEObjectDescription> results) {
+    private static void findAllChildren(
+            Resource resource, Map<String, Set<IEObjectDescription>> directChildren,
+            IEObjectDescription descr, List<IEObjectDescription> results) {
         String name = HelperFunctions.getName(descr);
         Set<IEObjectDescription> childDescrs = directChildren.get(name);
         if (childDescrs != null) {

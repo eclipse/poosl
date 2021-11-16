@@ -56,8 +56,10 @@ public class PerspectivePreferencePage extends PreferencePage implements IWorkbe
     }
 
     /**
-     * Adds a description {@link Label}, location {@link #basicClassesControl}, browse {@link Button} and use default
-     * selection {@link PerspectivePreferencePage#useEditPerspectiveButton} to the parent {@link #composite}.
+     * Adds a description {@link Label}, location {@link #basicClassesControl},
+     * browse {@link Button} and use default
+     * selection {@link PerspectivePreferencePage#useEditPerspectiveButton} to
+     * the parent {@link #composite}.
      */
     @Override
     protected Control createContents(Composite parent) {
@@ -74,13 +76,16 @@ public class PerspectivePreferencePage extends PreferencePage implements IWorkbe
      * Adds the selection button to the parent
      * 
      * @param parent
-     *            The {@link Composite} which the button will be added
+     *     The {@link Composite} which the button will be added
      */
     private void addEditPerspectiveButton(Composite parent) {
         dontaskEditPerspectiveButton = new Button(parent, SWT.CHECK);
-        dontaskEditPerspectiveButton.setText("Don't ask for a perspective switch every time a POOSL file is opened from a non-POOSL perspective.");
-        dontaskEditPerspectiveButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));
-        boolean dontask = getPreferenceStore().getBoolean(GlobalConstants.PREFERENCES_DONT_ASK_EDIT_PERSPECTIVE);
+        dontaskEditPerspectiveButton.setText(
+                "Don't ask for a perspective switch every time a POOSL file is opened from a non-POOSL perspective.");
+        dontaskEditPerspectiveButton
+                .setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));
+        boolean dontask = getPreferenceStore()
+                .getBoolean(GlobalConstants.PREFERENCES_DONT_ASK_EDIT_PERSPECTIVE);
         dontaskEditPerspectiveButton.setSelection(dontask);
 
         Composite comp = new Composite(parent, SWT.NONE);
@@ -90,10 +95,12 @@ public class PerspectivePreferencePage extends PreferencePage implements IWorkbe
 
         useEditPerspectiveButton = new Button(comp, SWT.CHECK);
         useEditPerspectiveButton.setText(EDIT_PERSPECTIVE_BUTTON_TEXT);
-        useEditPerspectiveButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, true));
+        useEditPerspectiveButton
+                .setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, true));
         useEditPerspectiveButton.setEnabled(dontask);
 
-        useEditPerspectiveButton.setSelection(getPreferenceStore().getBoolean(GlobalConstants.PREFERENCES_OPEN_EDIT_PERSPECTIVE));
+        useEditPerspectiveButton.setSelection(
+                getPreferenceStore().getBoolean(GlobalConstants.PREFERENCES_OPEN_EDIT_PERSPECTIVE));
 
         dontaskEditPerspectiveButton.addSelectionListener(new SelectionListener() {
             @Override
@@ -111,8 +118,10 @@ public class PerspectivePreferencePage extends PreferencePage implements IWorkbe
     private void addClosingBracketsQuotesButton(Composite parent) {
         autoCloseBracketQuoteButton = new Button(parent, SWT.CHECK);
         autoCloseBracketQuoteButton.setText(BRACKETQUOTE_TEXT);
-        autoCloseBracketQuoteButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));
-        boolean autoclose = getPreferenceStore().getBoolean(GlobalConstants.PREFERENCES_AUTOCOMPLETE_BRACKETS_AND_QUOTES);
+        autoCloseBracketQuoteButton
+                .setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));
+        boolean autoclose = getPreferenceStore()
+                .getBoolean(GlobalConstants.PREFERENCES_AUTOCOMPLETE_BRACKETS_AND_QUOTES);
         autoCloseBracketQuoteButton.setSelection(autoclose);
     }
 
@@ -120,7 +129,8 @@ public class PerspectivePreferencePage extends PreferencePage implements IWorkbe
         formatOnSaveButton = new Button(parent, SWT.CHECK);
         formatOnSaveButton.setText(FORMAT_ON_SAVE_TEXT);
         formatOnSaveButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));
-        boolean format = getPreferenceStore().getBoolean(GlobalConstants.PREFERENCES_FORMAT_ON_SAVE);
+        boolean format = getPreferenceStore()
+                .getBoolean(GlobalConstants.PREFERENCES_FORMAT_ON_SAVE);
         formatOnSaveButton.setSelection(format);
     }
 
@@ -139,14 +149,19 @@ public class PerspectivePreferencePage extends PreferencePage implements IWorkbe
     }
 
     /**
-     * Saves information to the {@link IPreferenceStore}. The {@link #useEditPerspectiveButton} selection variable is
+     * Saves information to the {@link IPreferenceStore}. The
+     * {@link #useEditPerspectiveButton} selection variable is
      * saved as a String because of a bug for retrieving booleans.
      */
     private void saveState() {
-        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_DONT_ASK_EDIT_PERSPECTIVE, dontaskEditPerspectiveButton.getSelection());
-        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_OPEN_EDIT_PERSPECTIVE, useEditPerspectiveButton.getSelection());
-        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_AUTOCOMPLETE_BRACKETS_AND_QUOTES, autoCloseBracketQuoteButton.getSelection());
-        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_FORMAT_ON_SAVE, formatOnSaveButton.getSelection());
+        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_DONT_ASK_EDIT_PERSPECTIVE,
+                dontaskEditPerspectiveButton.getSelection());
+        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_OPEN_EDIT_PERSPECTIVE,
+                useEditPerspectiveButton.getSelection());
+        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_AUTOCOMPLETE_BRACKETS_AND_QUOTES,
+                autoCloseBracketQuoteButton.getSelection());
+        getPreferenceStore().setValue(GlobalConstants.PREFERENCES_FORMAT_ON_SAVE,
+                formatOnSaveButton.getSelection());
     }
 
     @Override

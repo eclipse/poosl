@@ -35,7 +35,8 @@ public final class CompositeStructureDiagram {
     }
 
     /**
-     * Returns the main target for a composite structure diagram in the poosl model.
+     * Returns the main target for a composite structure diagram in the poosl
+     * model.
      * 
      * @param poosl
      * @return null if not appropriate target is found

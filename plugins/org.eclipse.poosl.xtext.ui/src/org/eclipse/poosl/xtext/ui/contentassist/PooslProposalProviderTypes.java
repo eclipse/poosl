@@ -75,102 +75,156 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
 
     private final PooslTypeSystem pooslTypeSystem = new PooslTypeSystem(null);
 
-    private final PooslTypeSystemStatement pooslTypeSystemStatement = new PooslTypeSystemStatement(pooslTypeSystem);
+    private final PooslTypeSystemStatement pooslTypeSystemStatement = new PooslTypeSystemStatement(
+            pooslTypeSystem);
 
     private final Image proposalImage;
 
     public PooslProposalProviderTypes() {
         super();
-        proposalImage = ImageDescriptor.createFromURL(getClass().getResource("/icons/poosl_proposal.png")).createImage(); //$NON-NLS-1$
+        proposalImage = ImageDescriptor
+                .createFromURL(getClass().getResource("/icons/poosl_proposal.png")).createImage(); //$NON-NLS-1$
     }
 
     // =============----------- Variable References -----------=============
 
     @Override
-    public void completeOutputVariable_Variable(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        Iterable<IEObjectDescription> descriptions = PooslScopeProvider.getScopeOutputVariableVariable(model).getAllElements();
+    public void completeOutputVariable_Variable(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        Iterable<IEObjectDescription> descriptions = PooslScopeProvider
+                .getScopeOutputVariableVariable(model).getAllElements();
         addDefaultIEObjectDescriptionProposals(descriptions, context, acceptor, model);
     }
 
     @Override
-    public void completeVariableExpression_Variable(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        Iterable<IEObjectDescription> descriptions = PooslScopeProvider.getScopeExpressionVariable(model).getAllElements();
+    public void completeVariableExpression_Variable(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        Iterable<IEObjectDescription> descriptions = PooslScopeProvider
+                .getScopeExpressionVariable(model).getAllElements();
         addDefaultIEObjectDescriptionProposals(descriptions, context, acceptor, model);
     }
 
     @Override
-    public void completeInstanceParameter_Parameter(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        Iterable<IEObjectDescription> descriptions = PooslScopeProvider.getScopeInstanceParameterParameter(model).getAllElements();
+    public void completeInstanceParameter_Parameter(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        Iterable<IEObjectDescription> descriptions = PooslScopeProvider
+                .getScopeInstanceParameterParameter(model).getAllElements();
         addDefaultIEObjectDescriptionProposals(descriptions, context, acceptor, model);
     }
 
     // =============----------- Class References -----------=============
 
     @Override
-    public void completeProcessClass_SuperClass(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        addDefaultIEObjectDescriptionProposals(PooslCache.get(model.eResource()).getAllRelevantProcessClasses(), context, acceptor, model);
+    public void completeProcessClass_SuperClass(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        addDefaultIEObjectDescriptionProposals(
+                PooslCache.get(model.eResource()).getAllRelevantProcessClasses(), context, acceptor,
+                model);
     }
 
     @Override
-    public void completeDataClass_SuperClass(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        Iterable<IEObjectDescription> allowedSuperClasses = Iterables.filter(PooslCache.get(model.eResource()).getAllRelevantDataClasses(), new Predicate<IEObjectDescription>() {
-            @Override
-            public boolean apply(IEObjectDescription input) {
-                return !HelperFunctions.PRIMITIVE_DATA_CLASSES.contains(HelperFunctions.getName(input));
-            }
+    public void completeDataClass_SuperClass(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        Iterable<IEObjectDescription> allowedSuperClasses = Iterables.filter(
+                PooslCache.get(model.eResource()).getAllRelevantDataClasses(),
+                new Predicate<IEObjectDescription>() {
+                    @Override
+                    public boolean apply(IEObjectDescription input) {
+                        return !HelperFunctions.PRIMITIVE_DATA_CLASSES
+                                .contains(HelperFunctions.getName(input));
+                    }
 
-        });
+                });
         addDefaultIEObjectDescriptionProposals(allowedSuperClasses, context, acceptor, model);
     }
 
     @Override
-    public void completeInstance_ClassDefinition(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        PooslProposalAccepterForInstance myAcceptor = new PooslProposalAccepterForInstance(acceptor);
-        addDefaultIEObjectDescriptionProposals(HelperFunctions.getAllRelevantInstantiableClasses(model.eResource()), context, myAcceptor, model);
+    public void completeInstance_ClassDefinition(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        PooslProposalAccepterForInstance myAcceptor = new PooslProposalAccepterForInstance(
+                acceptor);
+        addDefaultIEObjectDescriptionProposals(
+                HelperFunctions.getAllRelevantInstantiableClasses(model.eResource()), context,
+                myAcceptor, model);
     }
 
     @Override
-    public void completeNewExpression_DataClass(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        addDefaultIEObjectDescriptionProposals(PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor, model);
+    public void completeNewExpression_DataClass(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        addDefaultIEObjectDescriptionProposals(
+                PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor,
+                model);
     }
 
     @Override
-    public void completeDeclaration_Type(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        addDefaultIEObjectDescriptionProposals(PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor, model);
+    public void completeDeclaration_Type(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        addDefaultIEObjectDescriptionProposals(
+                PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor,
+                model);
     }
 
     @Override
-    public void completeMessageParameter_Type(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        addDefaultIEObjectDescriptionProposals(PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor, model);
+    public void completeMessageParameter_Type(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        addDefaultIEObjectDescriptionProposals(
+                PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor,
+                model);
     }
 
     @Override
-    public void completeDataMethodNamed_ReturnType(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        addDefaultIEObjectDescriptionProposals(PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor, model);
+    public void completeDataMethodNamed_ReturnType(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        addDefaultIEObjectDescriptionProposals(
+                PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor,
+                model);
     }
 
     @Override
-    public void completeDataMethodBinaryOperator_ReturnType(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        addDefaultIEObjectDescriptionProposals(PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor, model);
+    public void completeDataMethodBinaryOperator_ReturnType(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        addDefaultIEObjectDescriptionProposals(
+                PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor,
+                model);
     }
 
     @Override
-    public void completeDataMethodUnaryOperator_ReturnType(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        addDefaultIEObjectDescriptionProposals(PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor, model);
+    public void completeDataMethodUnaryOperator_ReturnType(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        addDefaultIEObjectDescriptionProposals(
+                PooslCache.get(model.eResource()).getAllRelevantDataClasses(), context, acceptor,
+                model);
     }
 
     // =============----------- Process Method call -----------=============
 
     @Override
-    public void complete_ProcessMethodCall(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void complete_ProcessMethodCall(
+            EObject model, RuleCall ruleCall, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         ProcessClass pClass = HelperFunctions.getContainingProcessClass(context.getCurrentModel());
-        List<IEObjectDescription> methods = PooslCache.get(pClass.eResource()).getProcessMethods(pClass.getName());
+        List<IEObjectDescription> methods = PooslCache.get(pClass.eResource())
+                .getProcessMethods(pClass.getName());
 
         for (IEObjectDescription mDescr : methods) {
             StringBuilder propBuf = new StringBuilder();
             propBuf.append(HelperFunctions.getName(mDescr));
-            propBuf.append(createDefaultParameterList(PooslProcessMethodDescription.getNumberOfInputParameters(mDescr)));
-            propBuf.append(createDefaultVariableList(PooslProcessMethodDescription.getNumberOfOutputParameters(mDescr)));
+            propBuf.append(createDefaultParameterList(
+                    PooslProcessMethodDescription.getNumberOfInputParameters(mDescr)));
+            propBuf.append(createDefaultVariableList(
+                    PooslProcessMethodDescription.getNumberOfOutputParameters(mDescr)));
             acceptor.accept(createDescriptionProposal(propBuf.toString(), mDescr, context));
         }
 
@@ -179,101 +233,140 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
     // =============-----------Port References -----------=============
 
     @Override
-    public void complete_PortReference(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void complete_PortReference(
+            EObject model, RuleCall ruleCall, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         EObject prevModel = context.getPreviousModel();
-        addDefaultIEObjectDescriptionProposals(PooslScopeProvider.getScopePortDescriptions(prevModel), context, acceptor, model);
+        addDefaultIEObjectDescriptionProposals(
+                PooslScopeProvider.getScopePortDescriptions(prevModel), context, acceptor, model);
 
     }
 
     @Override
-    public void complete_Port(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void complete_Port(
+            EObject model, RuleCall ruleCall, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         EObject prevModel = context.getPreviousModel();
 
-        addDefaultIEObjectDescriptionProposals(PooslScopeProvider.getScopePort(prevModel).getAllElements(), context, acceptor, prevModel);
+        addDefaultIEObjectDescriptionProposals(
+                PooslScopeProvider.getScopePort(prevModel).getAllElements(), context, acceptor,
+                prevModel);
     }
 
     @Override
-    public void complete_PortDescriptor(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void complete_PortDescriptor(
+            EObject model, RuleCall ruleCall, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         EObject prevModel = context.getPreviousModel();
-        addDefaultIEObjectDescriptionProposals(PooslScopeProvider.getScopePort(prevModel).getAllElements(), context, acceptor, prevModel);
+        addDefaultIEObjectDescriptionProposals(
+                PooslScopeProvider.getScopePort(prevModel).getAllElements(), context, acceptor,
+                prevModel);
     }
 
     @Override
 
-    public void completePortReference_Port(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completePortReference_Port(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         EObject prevModel = context.getPreviousModel();
-        addDefaultIEObjectDescriptionProposals(PooslScopeProvider.getScopePort(prevModel).getAllElements(), context, acceptor, prevModel);
+        addDefaultIEObjectDescriptionProposals(
+                PooslScopeProvider.getScopePort(prevModel).getAllElements(), context, acceptor,
+                prevModel);
     }
 
     // =============----------- Message References -----------=============
 
     @Override
-    public void completeReceiveStatement_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeReceiveStatement_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
 
         EObject previousModel = context.getPreviousModel();
-        Iterable<IEObjectDescription> signatures = PooslScopeProvider.getScopeMessages(previousModel, PooslMessageType.RECEIVE);
+        Iterable<IEObjectDescription> signatures = PooslScopeProvider
+                .getScopeMessages(previousModel, PooslMessageType.RECEIVE);
 
         if (previousModel instanceof ReceiveStatement) {
             ReceiveStatement rcvMsg = (ReceiveStatement) previousModel;
             if (rcvMsg.getPortDescriptor() instanceof PortReference) {
                 String port = ((PortReference) rcvMsg.getPortDescriptor()).getPort();
                 if (port != null && !port.isEmpty()) {
-                    signatures = Iterables.filter(signatures, PooslMessageSignatureDescription.predicateMessage(port));
+                    signatures = Iterables.filter(signatures,
+                            PooslMessageSignatureDescription.predicateMessage(port));
                 }
             }
         }
 
         for (IEObjectDescription descr : signatures) {
-            acceptor.accept(createDescriptionProposal(HelperFunctions.getName(descr) + createDefaultMessageParameterList(descr), descr, context));
+            acceptor.accept(createDescriptionProposal(
+                    HelperFunctions.getName(descr) + createDefaultMessageParameterList(descr),
+                    descr, context));
         }
     }
 
     @Override
-    public void completeSendStatement_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeSendStatement_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
 
         EObject previousModel = context.getPreviousModel();
-        Iterable<IEObjectDescription> signatures = PooslScopeProvider.getScopeMessages(previousModel, PooslMessageType.SEND);
+        Iterable<IEObjectDescription> signatures = PooslScopeProvider
+                .getScopeMessages(previousModel, PooslMessageType.SEND);
 
         if (previousModel instanceof SendStatement) {
             SendStatement sendMsg = (SendStatement) previousModel;
             if (sendMsg.getPortDescriptor() instanceof PortReference) {
                 String port = ((PortReference) sendMsg.getPortDescriptor()).getPort();
                 if (port != null && !port.isEmpty()) {
-                    signatures = Iterables.filter(signatures, PooslMessageSignatureDescription.predicateMessage(port));
+                    signatures = Iterables.filter(signatures,
+                            PooslMessageSignatureDescription.predicateMessage(port));
                 }
             }
         }
 
         for (IEObjectDescription descr : signatures) {
-            acceptor.accept(createDescriptionProposal(HelperFunctions.getName(descr) + createDefaultMessageParameterList(descr), descr, context));
+            acceptor.accept(createDescriptionProposal(
+                    HelperFunctions.getName(descr) + createDefaultMessageParameterList(descr),
+                    descr, context));
         }
     }
 
     @Override
-    public void completeExpressionLevel5_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeExpressionLevel5_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         super.completeExpressionLevel5_Name(model, assignment, context, acceptor);
         completeDataMethodCall_Name(model, context, acceptor);
     }
 
     @Override
-    public void completeIDStartWithinStatementExpressionLevel5_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        super.completeIDStartWithinStatementExpressionLevel5_Name(model, assignment, context, acceptor);
+    public void completeIDStartWithinStatementExpressionLevel5_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        super.completeIDStartWithinStatementExpressionLevel5_Name(model, assignment, context,
+                acceptor);
         completeDataMethodCall_Name(model, context, acceptor);
     }
 
     @Override
-    public void completeNonIDStartWithinStatementExpressionLevel5_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        super.completeNonIDStartWithinStatementExpressionLevel5_Name(model, assignment, context, acceptor);
+    public void completeNonIDStartWithinStatementExpressionLevel5_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        super.completeNonIDStartWithinStatementExpressionLevel5_Name(model, assignment, context,
+                acceptor);
         completeDataMethodCall_Name(model, context, acceptor);
     }
 
     @Override
-    public void completeBracketedArgumentStartExpressionLevel5_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        super.completeBracketedArgumentStartExpressionLevel5_Name(model, assignment, context, acceptor);
+    public void completeBracketedArgumentStartExpressionLevel5_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        super.completeBracketedArgumentStartExpressionLevel5_Name(model, assignment, context,
+                acceptor);
         completeDataMethodCall_Name(model, context, acceptor);
     }
 
-    private void completeDataMethodCall_Name(EObject model, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    private void completeDataMethodCall_Name(
+            EObject model, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         EObject previousModel = context.getPreviousModel();
         Resource resource = model.eResource();
 
@@ -286,7 +379,8 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
 
                 runningClass = pooslTypeSystem.getAndCheckExpressionType(target);
                 if (onSuperClass) {
-                    String correctedExtendsClass = HelperFunctions.getCorrectedDataClassExtendsAsString(resource, runningClass);
+                    String correctedExtendsClass = HelperFunctions
+                            .getCorrectedDataClassExtendsAsString(resource, runningClass);
                     if (correctedExtendsClass != null) {
                         runningClass = correctedExtendsClass;
                     }
@@ -318,16 +412,23 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
         }
 
         if (runningClass != null) {
-            Iterable<String> allClassNames = PooslCache.get(resource).getDataReflexiveAncestorsAndChildren(runningClass);
+            Iterable<String> allClassNames = PooslCache.get(resource)
+                    .getDataReflexiveAncestorsAndChildren(runningClass);
             Iterable<IEObjectDescription> listNamedMethods = HelperFunctions
-                    .getGlobalScope(resource, Literals.DATA_CLASS__DATA_METHODS_NAMED, PooslDataMethodDescription.predicateDataMethod(allClassNames, Literals.DATA_METHOD_NAMED)).getAllElements();
+                    .getGlobalScope(resource, Literals.DATA_CLASS__DATA_METHODS_NAMED,
+                            PooslDataMethodDescription.predicateDataMethod(allClassNames,
+                                    Literals.DATA_METHOD_NAMED))
+                    .getAllElements();
 
             for (IEObjectDescription dMethod : listNamedMethods) {
                 addDataMethodProposal(dMethod, context, acceptor);
             }
             if (allowBinaryOperators) {
-                Iterable<IEObjectDescription> listBinaryMethods = HelperFunctions.getGlobalScope(resource, Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR,
-                        PooslDataMethodDescription.predicateDataMethod(allClassNames, Literals.DATA_METHOD_BINARY_OPERATOR)).getAllElements();
+                Iterable<IEObjectDescription> listBinaryMethods = HelperFunctions
+                        .getGlobalScope(resource, Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR,
+                                PooslDataMethodDescription.predicateDataMethod(allClassNames,
+                                        Literals.DATA_METHOD_BINARY_OPERATOR))
+                        .getAllElements();
                 for (IEObjectDescription dMethod : listBinaryMethods) {
                     addDataMethodProposal(dMethod, context, acceptor);
                 }
@@ -335,8 +436,11 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
         }
     }
 
-    private boolean completeInitMethodCall(NewExpression expression, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        IScope initMethods = HelperFunctions.getGlobalScope(expression.eResource(), Literals.DATA_CLASS__DATA_METHODS_NAMED,
+    private boolean completeInitMethodCall(
+            NewExpression expression, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        IScope initMethods = HelperFunctions.getGlobalScope(expression.eResource(),
+                Literals.DATA_CLASS__DATA_METHODS_NAMED,
                 PooslDataMethodDescription.predicateDataMethodInit(expression.getDataClass()));
 
         if (!initMethods.getAllElements().iterator().hasNext()) {
@@ -350,13 +454,17 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
     }
 
     @Override
-    public void completeUnaryOperatorExpression_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    public void completeUnaryOperatorExpression_Name(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         super.completeUnaryOperatorExpression_Name(model, assignment, context, acceptor);
         Resource resource = model.eResource();
 
-        Iterable<String> allClassNames = PooslCache.get(resource).getDataReflexiveAncestorsAndChildren(HelperFunctions.CLASS_NAME_OBJECT);
-        Iterable<IEObjectDescription> listUnaryMethods = HelperFunctions
-                .getGlobalScope(resource, Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR, PooslDataMethodDescription.predicateDataMethod(allClassNames, Literals.DATA_METHOD_UNARY_OPERATOR))
+        Iterable<String> allClassNames = PooslCache.get(resource)
+                .getDataReflexiveAncestorsAndChildren(HelperFunctions.CLASS_NAME_OBJECT);
+        Iterable<IEObjectDescription> listUnaryMethods = HelperFunctions.getGlobalScope(resource,
+                Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR, PooslDataMethodDescription
+                        .predicateDataMethod(allClassNames, Literals.DATA_METHOD_UNARY_OPERATOR))
                 .getAllElements();
         for (IEObjectDescription dMethod : listUnaryMethods) {
             String methodName = HelperFunctions.getName(dMethod);
@@ -365,8 +473,11 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
     }
 
     @Override
-    public void completeProcessMethodCall_Method(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        PooslProposalAccepterForProcessMethod myAcceptor = new PooslProposalAccepterForProcessMethod(acceptor);
+    public void completeProcessMethodCall_Method(
+            EObject model, Assignment assignment, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
+        PooslProposalAccepterForProcessMethod myAcceptor = new PooslProposalAccepterForProcessMethod(
+                acceptor);
         super.completeProcessMethodCall_Method(model, assignment, context, myAcceptor);
     }
 
@@ -379,32 +490,43 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
      * @param acceptor
      * @param model
      */
-    private void addDefaultIEObjectDescriptionProposals(Iterable<IEObjectDescription> descriptions, ContentAssistContext context, ICompletionProposalAcceptor acceptor, EObject model) {
+    private void addDefaultIEObjectDescriptionProposals(
+            Iterable<IEObjectDescription> descriptions, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor, EObject model) {
         for (IEObjectDescription descr : descriptions) {
             String dName = HelperFunctions.getName(descr);
             acceptor.accept(createDescriptionProposal(dName, descr, context));
         }
     }
 
-    private void addDataMethodProposal(IEObjectDescription dMethod, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+    private void addDataMethodProposal(
+            IEObjectDescription dMethod, ContentAssistContext context,
+            ICompletionProposalAcceptor acceptor) {
         String methodName = HelperFunctions.getName(dMethod);
-        String parameters = createDefaultParameterList(PooslDataMethodDescription.getParameterTypeNames(dMethod).size());
+        String parameters = createDefaultParameterList(
+                PooslDataMethodDescription.getParameterTypeNames(dMethod).size());
         acceptor.accept(createDescriptionProposal(methodName + parameters, dMethod, context));
     }
 
-    private ICompletionProposal createDescriptionProposal(String proposalString, IEObjectDescription descr, ContentAssistContext context) {
+    private ICompletionProposal createDescriptionProposal(
+            String proposalString, IEObjectDescription descr, ContentAssistContext context) {
         int priority;
-        if (descr.getEClass() == Literals.DATA_METHOD_BINARY_OPERATOR || descr.getEClass() == Literals.DATA_METHOD_UNARY_OPERATOR) {
+        if (descr.getEClass() == Literals.DATA_METHOD_BINARY_OPERATOR
+                || descr.getEClass() == Literals.DATA_METHOD_UNARY_OPERATOR) {
             priority = OPERATOR_METHOD_PRIORITY;
         } else {
             priority = DEFAULT_PRIORITY;
         }
 
-        ICompletionProposal proposal = createCompletionProposal(proposalString, getStyledDisplayString(descr), proposalImage, priority, context.getPrefix(), context);
+        ICompletionProposal proposal = createCompletionProposal(proposalString,
+                getStyledDisplayString(descr), proposalImage, priority, context.getPrefix(),
+                context);
         if (proposal instanceof ConfigurableCompletionProposal) {
-            ((ConfigurableCompletionProposal) proposal).setAdditionalProposalInfo(descr.getEObjectOrProxy());
+            ((ConfigurableCompletionProposal) proposal)
+                    .setAdditionalProposalInfo(descr.getEObjectOrProxy());
             ((ConfigurableCompletionProposal) proposal).setHover(hover);
-            ((ConfigurableCompletionProposal) proposal).setProposalContextResource(context.getResource());
+            ((ConfigurableCompletionProposal) proposal)
+                    .setProposalContextResource(context.getResource());
         }
         return proposal;
     }
@@ -474,14 +596,19 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
         @Override
         public void accept(ICompletionProposal proposal) {
             if (proposal instanceof ConfigurableCompletionProposal) {
-                Object obj = ((ConfigurableCompletionProposal) proposal).getAdditionalProposalInfo(monitor);
+                Object obj = ((ConfigurableCompletionProposal) proposal)
+                        .getAdditionalProposalInfo(monitor);
                 if (obj instanceof XtextBrowserInformationControlInput) {
                     EObject eobj = ((XtextBrowserInformationControlInput) obj).getElement();
                     if (eobj instanceof ProcessMethod) {
-                        String replacementString = ((ConfigurableCompletionProposal) proposal).getReplacementString();
+                        String replacementString = ((ConfigurableCompletionProposal) proposal)
+                                .getReplacementString();
                         ((ConfigurableCompletionProposal) proposal)
-                                .setReplacementString(replacementString + PooslProposalProviderTypes.createDefaultParameterList(((ProcessMethod) eobj).getInputParameters())
-                                        + PooslProposalProviderTypes.createDefaultVariableList(((ProcessMethod) eobj).getOutputParameters()));
+                                .setReplacementString(replacementString
+                                        + PooslProposalProviderTypes.createDefaultParameterList(
+                                                ((ProcessMethod) eobj).getInputParameters())
+                                        + PooslProposalProviderTypes.createDefaultVariableList(
+                                                ((ProcessMethod) eobj).getOutputParameters()));
                     }
                 }
             }
@@ -506,13 +633,17 @@ public class PooslProposalProviderTypes extends PooslProposalProviderLabel {
         @Override
         public void accept(ICompletionProposal proposal) {
             if (proposal instanceof ConfigurableCompletionProposal) {
-                Object obj = ((ConfigurableCompletionProposal) proposal).getAdditionalProposalInfo(monitor);
+                Object obj = ((ConfigurableCompletionProposal) proposal)
+                        .getAdditionalProposalInfo(monitor);
                 if (obj instanceof XtextBrowserInformationControlInput) {
                     EObject eobj = ((XtextBrowserInformationControlInput) obj).getElement();
                     if (eobj instanceof InstantiableClass) {
-                        String replacementString = ((ConfigurableCompletionProposal) proposal).getReplacementString();
+                        String replacementString = ((ConfigurableCompletionProposal) proposal)
+                                .getReplacementString();
                         ((ConfigurableCompletionProposal) proposal)
-                                .setReplacementString(replacementString + PooslProposalProviderTypes.createDefaultInstanceParameterList(((InstantiableClass) eobj).getParameters()));
+                                .setReplacementString(replacementString + PooslProposalProviderTypes
+                                        .createDefaultInstanceParameterList(
+                                                ((InstantiableClass) eobj).getParameters()));
                     }
                 }
             }

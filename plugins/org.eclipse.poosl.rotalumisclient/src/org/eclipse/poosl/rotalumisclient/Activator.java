@@ -41,7 +41,8 @@ public class Activator extends AbstractUIPlugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
-        ((IBundleInfo.Delegate) IBundleInfo.Registry.INSTANCE).setDelegate(new UIBundleInfoRegistry());
+        ((IBundleInfo.Delegate) IBundleInfo.Registry.INSTANCE)
+                .setDelegate(new UIBundleInfoRegistry());
     }
 
     /**

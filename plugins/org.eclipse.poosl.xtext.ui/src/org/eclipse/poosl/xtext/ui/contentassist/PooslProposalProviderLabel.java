@@ -46,9 +46,11 @@ public class PooslProposalProviderLabel extends AbstractPooslProposalProvider {
         } else if (candidate.getEClass() == PooslPackage.Literals.VARIABLE) {
             first = candidate.getName().toString();
             second = PooslDeclarationDescription.getClassName(candidate);
-        } else if (candidate.getEClass() == PooslPackage.Literals.CLUSTER_CLASS || candidate.getEClass() == PooslPackage.Literals.PROCESS_CLASS) {
+        } else if (candidate.getEClass() == PooslPackage.Literals.CLUSTER_CLASS
+                || candidate.getEClass() == PooslPackage.Literals.PROCESS_CLASS) {
             first = candidate.getName().toString();
-        } else if (candidate.getEClass() == PooslPackage.Literals.DATA_METHOD_NAMED || candidate.getEClass() == PooslPackage.Literals.DATA_METHOD_BINARY_OPERATOR
+        } else if (candidate.getEClass() == PooslPackage.Literals.DATA_METHOD_NAMED
+                || candidate.getEClass() == PooslPackage.Literals.DATA_METHOD_BINARY_OPERATOR
                 || candidate.getEClass() == PooslPackage.Literals.DATA_METHOD_UNARY_OPERATOR) {
             StringBuilder buf = new StringBuilder();
             FormattingHelper.formatDataMethod(buf, candidate, false);
@@ -57,7 +59,8 @@ public class PooslProposalProviderLabel extends AbstractPooslProposalProvider {
         } else if (candidate.getEClass() == PooslPackage.Literals.MESSAGE_SIGNATURE) {
             StringBuilder buf = new StringBuilder();
             buf.append(candidate.getName());
-            FormattingHelper.formatTypes(buf, PooslMessageSignatureDescription.getParameterTypes(candidate));
+            FormattingHelper.formatTypes(buf,
+                    PooslMessageSignatureDescription.getParameterTypes(candidate));
             first = buf.toString();
             String className = PooslMessageSignatureDescription.getClassName(candidate);
             String portName = PooslMessageSignatureDescription.getPort(candidate);
@@ -73,7 +76,8 @@ public class PooslProposalProviderLabel extends AbstractPooslProposalProvider {
                 buf.append(" - "); //$NON-NLS-1$
                 buf.append(second);
                 StyledString styledString = new StyledString(buf.toString());
-                styledString.setStyle(first.length(), second.length() + 3, StyledString.DECORATIONS_STYLER);
+                styledString.setStyle(first.length(), second.length() + 3,
+                        StyledString.DECORATIONS_STYLER);
                 return styledString;
             } else {
                 return new StyledString(buf.toString());

@@ -25,7 +25,8 @@ import org.eclipse.poosl.rotalumisclient.views.WindowCreater;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Button handler for the buttons that are shown at the top of the {@link PooslDebugView}.
+ * Button handler for the buttons that are shown at the top of the
+ * {@link PooslDebugView}.
  * 
  * @author Koen Staal
  *
@@ -42,7 +43,8 @@ public class PooslDebugButtonHandler implements IHandler {
                 }
             }
         } else if (event.getCommand().getId().equals(PooslConstants.COMMAND_CLOSE_THREAD_WINDOWS)) {
-            WindowCreater.closeAllThreadWindows(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage());
+            WindowCreater.closeAllThreadWindows(
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage());
         }
         return null;
     }

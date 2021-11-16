@@ -28,7 +28,9 @@ import org.eclipse.poosl.rotalumisclient.PooslConstants;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
-public abstract class PooslDebugElement extends PlatformObject implements IDebugElement, ITerminate {
+public abstract class PooslDebugElement extends PlatformObject implements
+        IDebugElement,
+        ITerminate {
     /**
      * The debug target of the element.
      */

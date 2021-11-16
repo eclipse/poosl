@@ -69,8 +69,9 @@ import org.eclipse.xtext.util.ITextRegion;
 public class PooslReferenceUpdater extends DefaultReferenceUpdater {
 
     @Override
-    protected void createReferenceUpdate(EObject referringElement, URI referringResourceURI, EReference reference, int indexInList, EObject newTargetElement,
-            IRefactoringUpdateAcceptor updateAcceptor) {
+    protected void createReferenceUpdate(
+            EObject referringElement, URI referringResourceURI, EReference reference,
+            int indexInList, EObject newTargetElement, IRefactoringUpdateAcceptor updateAcceptor) {
 
         if (reference == null) {
 
@@ -78,104 +79,161 @@ public class PooslReferenceUpdater extends DefaultReferenceUpdater {
 
             if (referringElement instanceof SendStatement) {
                 String newReferenceText = ((MessageSignature) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getExistingSendSignatureNamesByPortAndNumberOfParameters((SendStatement) referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.SEND_STATEMENT__NAME, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper
+                        .getExistingSendSignatureNamesByPortAndNumberOfParameters(
+                                (SendStatement) referringElement,
+                                EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.SEND_STATEMENT__NAME, newReferenceText, usedNames);
 
             } else if (referringElement instanceof ReceiveStatement) {
                 String newReferenceText = ((MessageSignature) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getExistingReceiveSignatureNamesByPortAndNumberOfParameters((ReceiveStatement) referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.RECEIVE_STATEMENT__NAME, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper
+                        .getExistingReceiveSignatureNamesByPortAndNumberOfParameters(
+                                (ReceiveStatement) referringElement,
+                                EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.RECEIVE_STATEMENT__NAME, newReferenceText,
+                        usedNames);
 
                 // --- Process Method References -------
 
             } else if (referringElement instanceof ProcessMethodCall) {
                 String newReferenceText = ((ProcessMethod) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getProcessMethodNamesByNumberOfInputAndOutputArguments((ProcessMethodCall) referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.PROCESS_METHOD_CALL__METHOD, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper
+                        .getProcessMethodNamesByNumberOfInputAndOutputArguments(
+                                (ProcessMethodCall) referringElement,
+                                EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.PROCESS_METHOD_CALL__METHOD, newReferenceText,
+                        usedNames);
 
                 // --- Port References -------
 
             } else if (referringElement instanceof PortReference) {
                 String newReferenceText = ((Port) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getPortNames(referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.PORT_REFERENCE__PORT, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper.getPortNames(referringElement,
+                        EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.PORT_REFERENCE__PORT, newReferenceText, usedNames);
 
                 // --- Class References -------
 
             } else if (referringElement instanceof ProcessClass) {
                 String newReferenceText = ((ProcessClass) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getInstantiableClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.PROCESS_CLASS__SUPER_CLASS, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper.getInstantiableClassNames(
+                        referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.PROCESS_CLASS__SUPER_CLASS, newReferenceText,
+                        usedNames);
 
             } else if (referringElement instanceof DataClass) {
                 String newReferenceText = ((DataClass) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.DATA_CLASS__SUPER_CLASS, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper
+                        .getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.DATA_CLASS__SUPER_CLASS, newReferenceText,
+                        usedNames);
 
             } else if (referringElement instanceof Instance) {
                 String newReferenceText = ((InstantiableClass) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getInstantiableClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.INSTANCE__CLASS_DEFINITION, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper.getInstantiableClassNames(
+                        referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.INSTANCE__CLASS_DEFINITION, newReferenceText,
+                        usedNames);
 
             } else if (referringElement instanceof NewExpression) {
                 String newReferenceText = ((DataClass) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.NEW_EXPRESSION__DATA_CLASS, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper
+                        .getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.NEW_EXPRESSION__DATA_CLASS, newReferenceText,
+                        usedNames);
 
             } else if (referringElement instanceof DataMethod) {
                 String newReferenceText = ((DataClass) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.DATA_METHOD__RETURN_TYPE, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper
+                        .getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.DATA_METHOD__RETURN_TYPE, newReferenceText,
+                        usedNames);
 
             } else if (referringElement instanceof Declaration) {
                 String newReferenceText = ((DataClass) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.DECLARATION__TYPE, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper
+                        .getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.DECLARATION__TYPE, newReferenceText, usedNames);
 
             } else if (referringElement instanceof MessageParameter) {
                 String newReferenceText = ((DataClass) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.MESSAGE_PARAMETER__TYPE, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper
+                        .getDataClassNames(referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.MESSAGE_PARAMETER__TYPE, newReferenceText,
+                        usedNames);
 
                 // --- Variable References -------
 
             } else if (referringElement instanceof OutputVariable) {
                 String newReferenceText = ((Variable) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getVariableNames((OutputVariable) referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.OUTPUT_VARIABLE__VARIABLE, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper.getVariableNames(
+                        (OutputVariable) referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.OUTPUT_VARIABLE__VARIABLE, newReferenceText,
+                        usedNames);
 
             } else if (referringElement instanceof VariableExpression) {
                 String newReferenceText = ((Variable) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getVariableNames((VariableExpression) referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.VARIABLE_EXPRESSION__VARIABLE, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper.getVariableNames(
+                        (VariableExpression) referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.VARIABLE_EXPRESSION__VARIABLE, newReferenceText,
+                        usedNames);
 
             } else if (referringElement instanceof AssignmentExpression) {
                 String newReferenceText = ((Variable) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getVariableNames((AssignmentExpression) referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.ASSIGNMENT_EXPRESSION__VARIABLE, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper.getVariableNames(
+                        (AssignmentExpression) referringElement,
+                        EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.ASSIGNMENT_EXPRESSION__VARIABLE, newReferenceText,
+                        usedNames);
 
             } else if (referringElement instanceof InstanceParameter) {
                 String newReferenceText = ((Variable) newTargetElement).getName();
-                Iterable<String> usedNames = PooslReferenceHelper.getVariableNames((InstanceParameter) referringElement, EcoreUtil2.getURI(newTargetElement));
-                createTextChange(referringElement, referringResourceURI, indexInList, updateAcceptor, Literals.INSTANCE_PARAMETER__PARAMETER, newReferenceText, usedNames);
+                Iterable<String> usedNames = PooslReferenceHelper.getVariableNames(
+                        (InstanceParameter) referringElement, EcoreUtil2.getURI(newTargetElement));
+                createTextChange(referringElement, referringResourceURI, indexInList,
+                        updateAcceptor, Literals.INSTANCE_PARAMETER__PARAMETER, newReferenceText,
+                        usedNames);
             }
 
         } else {
-            super.createReferenceUpdate(referringElement, referringResourceURI, reference, indexInList, newTargetElement, updateAcceptor);
+            super.createReferenceUpdate(referringElement, referringResourceURI, reference,
+                    indexInList, newTargetElement, updateAcceptor);
         }
     }
 
-    private void createTextChange(EObject referringElement, URI referringResourceURI, int indexInList, IRefactoringUpdateAcceptor updateAcceptor, EAttribute structFeature, String newReferenceText,
-            Iterable<String> usedNames) {
-        if (!getTransientValueService().isValueInListTransient(referringElement, indexInList, structFeature)) {
-            ITextRegion referenceTextRegion = getLocationInFileProvider().getFullTextRegion(referringElement, structFeature, indexInList);
+    private void createTextChange(
+            EObject referringElement, URI referringResourceURI, int indexInList,
+            IRefactoringUpdateAcceptor updateAcceptor, EAttribute structFeature,
+            String newReferenceText, Iterable<String> usedNames) {
+        if (!getTransientValueService().isValueInListTransient(referringElement, indexInList,
+                structFeature)) {
+            ITextRegion referenceTextRegion = getLocationInFileProvider()
+                    .getFullTextRegion(referringElement, structFeature, indexInList);
             String temp = verifyUniqueName(usedNames, newReferenceText);
 
             if (temp == null) {
-                updateAcceptor.getRefactoringStatus().add(RefactoringStatus.ERROR, "Refactoring introduces a name conflict.", referringElement, referenceTextRegion);
+                updateAcceptor.getRefactoringStatus().add(RefactoringStatus.ERROR,
+                        "Refactoring introduces a name conflict.", referringElement,
+                        referenceTextRegion);
             }
 
-            TextEdit referenceEdit = new ReplaceEdit(referenceTextRegion.getOffset(), referenceTextRegion.getLength(), newReferenceText);
+            TextEdit referenceEdit = new ReplaceEdit(referenceTextRegion.getOffset(),
+                    referenceTextRegion.getLength(), newReferenceText);
             updateAcceptor.accept(referringResourceURI, referenceEdit);
         }
     }
@@ -192,13 +250,16 @@ public class PooslReferenceUpdater extends DefaultReferenceUpdater {
     }
 
     @Override
-    protected List<IReferenceDescription> resolveReferenceProxies(ResourceSet resourceSet, Collection<IReferenceDescription> values, StatusWrapper status, IProgressMonitor monitor) {
+    protected List<IReferenceDescription> resolveReferenceProxies(
+            ResourceSet resourceSet, Collection<IReferenceDescription> values, StatusWrapper status,
+            IProgressMonitor monitor) {
         List<IReferenceDescription> unresolvedDescriptions = null;
         for (IReferenceDescription referenceDescription : values) {
             if (monitor.isCanceled()) {
                 throw new OperationCanceledException();
             }
-            EObject sourceEObject = resourceSet.getEObject(referenceDescription.getSourceEObjectUri(), true);
+            EObject sourceEObject = resourceSet
+                    .getEObject(referenceDescription.getSourceEObjectUri(), true);
             if (sourceEObject == null) {
                 handleCannotLoadReferringElement(referenceDescription, status);
             } else {
@@ -216,7 +277,8 @@ public class PooslReferenceUpdater extends DefaultReferenceUpdater {
 
                 EObject resolvedReference = resolveReference(sourceEObject, referenceDescription);
                 if (resolvedReference == null || resolvedReference.eIsProxy())
-                    handleCannotResolveExistingReference(sourceEObject, referenceDescription, status);
+                    handleCannotResolveExistingReference(sourceEObject, referenceDescription,
+                            status);
                 else
                     continue;
             }
@@ -224,6 +286,7 @@ public class PooslReferenceUpdater extends DefaultReferenceUpdater {
                 unresolvedDescriptions = newArrayList();
             unresolvedDescriptions.add(referenceDescription);
         }
-        return (unresolvedDescriptions == null) ? Collections.<IReferenceDescription> emptyList() : unresolvedDescriptions;
+        return (unresolvedDescriptions == null)
+            ? Collections.<IReferenceDescription> emptyList() : unresolvedDescriptions;
     }
 }

@@ -47,27 +47,54 @@ public class PooslOverwriteRunnable implements Runnable {
     @Override
     public void run() {
         String message;
-        int[] resultId = { IDialogConstants.YES_ID, IDialogConstants.YES_TO_ALL_ID, IDialogConstants.NO_ID, IDialogConstants.CANCEL_ID };
-        String[] labels = new String[] { IDialogConstants.YES_LABEL, IDialogConstants.YES_TO_ALL_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL };
+        int[] resultId = {
+                IDialogConstants.YES_ID,
+                IDialogConstants.YES_TO_ALL_ID,
+                IDialogConstants.NO_ID,
+                IDialogConstants.CANCEL_ID };
+        String[] labels = new String[] {
+                IDialogConstants.YES_LABEL,
+                IDialogConstants.YES_TO_ALL_LABEL,
+                IDialogConstants.NO_LABEL,
+                IDialogConstants.CANCEL_LABEL };
 
         if (destination.getType() == IResource.FOLDER) {
             if (homogenousResources(source, destination)) {
-                message = NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteMergeQuestion, destination.getFullPath().makeRelative());
+                message = NLS.bind(
+                        IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteMergeQuestion,
+                        destination.getFullPath().makeRelative());
             } else {
                 if (destination.isLinked()) {
-                    message = NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteNoMergeLinkQuestion, destination.getFullPath().makeRelative());
+                    message = NLS.bind(
+                            IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteNoMergeLinkQuestion,
+                            destination.getFullPath().makeRelative());
                 } else {
-                    message = NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteNoMergeNoLinkQuestion, destination.getFullPath().makeRelative());
+                    message = NLS.bind(
+                            IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteNoMergeNoLinkQuestion,
+                            destination.getFullPath().makeRelative());
                 }
-                resultId = new int[] { IDialogConstants.YES_ID, IDialogConstants.NO_ID, IDialogConstants.CANCEL_ID };
-                labels = new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL };
+                resultId = new int[] {
+                        IDialogConstants.YES_ID,
+                        IDialogConstants.NO_ID,
+                        IDialogConstants.CANCEL_ID };
+                labels = new String[] {
+                        IDialogConstants.YES_LABEL,
+                        IDialogConstants.NO_LABEL,
+                        IDialogConstants.CANCEL_LABEL };
             }
         } else {
-            String[] bindings = new String[] { IDEResourceInfoUtils.getLocationText(destination), IDEResourceInfoUtils.getDateStringValue(destination), IDEResourceInfoUtils.getLocationText(source),
+            String[] bindings = new String[] {
+                    IDEResourceInfoUtils.getLocationText(destination),
+                    IDEResourceInfoUtils.getDateStringValue(destination),
+                    IDEResourceInfoUtils.getLocationText(source),
                     IDEResourceInfoUtils.getDateStringValue(source) };
-            message = NLS.bind(IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteWithDetailsQuestion, bindings);
+            message = NLS.bind(
+                    IDEWorkbenchMessages.CopyFilesAndFoldersOperation_overwriteWithDetailsQuestion,
+                    bindings);
         }
-        MessageDialog dialog = new MessageDialog(messageShell, IDEWorkbenchMessages.CopyFilesAndFoldersOperation_resourceExists, null, message, MessageDialog.QUESTION, labels, 0) {
+        MessageDialog dialog = new MessageDialog(messageShell,
+                IDEWorkbenchMessages.CopyFilesAndFoldersOperation_resourceExists, null, message,
+                MessageDialog.QUESTION, labels, 0) {
             @Override
             protected int getShellStyle() {
                 return super.getShellStyle() | SWT.SHEET;
@@ -88,13 +115,15 @@ public class PooslOverwriteRunnable implements Runnable {
     }
 
     /**
-     * Returns whether the given resources are either both linked or both unlinked.
+     * Returns whether the given resources are either both linked or both
+     * unlinked.
      *
      * @param source
-     *            source resource
+     *     source resource
      * @param destination
-     *            destination resource
-     * @return boolean <code>true</code> if both resources are either linked or unlinked. <code>false</code> otherwise.
+     *     destination resource
+     * @return boolean <code>true</code> if both resources are either linked or
+     *     unlinked. <code>false</code> otherwise.
      */
     public static boolean homogenousResources(IResource source, IResource destination) {
         boolean isSourceLinked = source.isLinked();

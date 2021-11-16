@@ -78,7 +78,8 @@ public class PooslValue extends PooslDebugElement implements IValue {
         if (var.getVariables() == null) {
             return null;
         } else {
-            return (getLocalHandle().compareTo(BigInteger.ZERO) == 0) ? getGlobalHandle() : getLocalHandle();
+            return (getLocalHandle().compareTo(BigInteger.ZERO) == 0)
+                ? getGlobalHandle() : getLocalHandle();
         }
     }
 

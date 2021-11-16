@@ -62,7 +62,8 @@ public final class PooslDescription {
             for (Import pImport : poosl.getImports()) {
                 String importString = ImportingHelper.importToString(pImport);
                 if (importString != null) {
-                    URI resolved = ImportingHelper.resolveImportUri(poosl.eResource().getURI(), URI.createURI(importString));
+                    URI resolved = ImportingHelper.resolveImportUri(poosl.eResource().getURI(),
+                            URI.createURI(importString));
                     String resolvedString = (resolved == null) ? "" : resolved.toString(); //$NON-NLS-1$
                     addImportSeperator(importBuilder);
                     importBuilder.append(resolvedString);
@@ -78,7 +79,8 @@ public final class PooslDescription {
             for (Import pImport : poosl.getImportLibs()) {
                 String importString = ImportingHelper.importToString(pImport);
                 if (importString != null) {
-                    URI resolved = ImportingHelper.resolveImportLibUri(poosl.eResource(), URI.createURI(importString));
+                    URI resolved = ImportingHelper.resolveImportLibUri(poosl.eResource(),
+                            URI.createURI(importString));
                     String resolvedString = (resolved == null) ? "" : resolved.toString(); //$NON-NLS-1$
                     addImportSeperator(importlibBuilder);
                     addImportSeperator(importlibRawBuilder);
@@ -112,8 +114,10 @@ public final class PooslDescription {
     }
 
     /**
-     * Returns a list of resolved/unresolved importlib pairs. Pair.getFirst() contains the resolved importlib location,
-     * Pair.getSecond() contains the unresolved. If the importlib could not be resolved Pair.getFirst() is empty.
+     * Returns a list of resolved/unresolved importlib pairs. Pair.getFirst()
+     * contains the resolved importlib location,
+     * Pair.getSecond() contains the unresolved. If the importlib could not be
+     * resolved Pair.getFirst() is empty.
      * 
      * @param descr
      * @return a list of resolved/unresolved importlib pairs.

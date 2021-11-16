@@ -73,14 +73,16 @@ public class NewVariableDialog extends TitleAreaDialog {
 
     private Combo cbVarType;
 
-    public NewVariableDialog(Shell parentShell, Resource resource, List<String> variableNames, String typeVariable) {
+    public NewVariableDialog(Shell parentShell, Resource resource, List<String> variableNames,
+            String typeVariable) {
         super(parentShell);
         this.dialogVarType = typeVariable;
         this.variableNames = variableNames;
         dataclasses = PooslCache.get(resource).getDataClassMap().keySet().toArray(new String[0]);
     }
 
-    public NewVariableDialog(Shell parentShell, String[] dataclasses, String typeVariable, List<String> variableNames) {
+    public NewVariableDialog(Shell parentShell, String[] dataclasses, String typeVariable,
+            List<String> variableNames) {
         super(parentShell);
         this.dialogVarType = typeVariable;
         this.dataclasses = dataclasses;
@@ -172,7 +174,9 @@ public class NewVariableDialog extends TitleAreaDialog {
     protected void okPressed() {
         saveInput();
         if (getName().isEmpty() || !doubleName(getName()) || !variableNameAvailable(getName())) {
-            MessageDialog.openError(Display.getDefault().getActiveShell(), String.format(ERROR_TITLE_INSTANCE, dialogVarType), String.format(ERROR_MESSAGE_INSTANCE, dialogVarType));
+            MessageDialog.openError(Display.getDefault().getActiveShell(),
+                    String.format(ERROR_TITLE_INSTANCE, dialogVarType),
+                    String.format(ERROR_MESSAGE_INSTANCE, dialogVarType));
         } else {
             super.okPressed();
         }

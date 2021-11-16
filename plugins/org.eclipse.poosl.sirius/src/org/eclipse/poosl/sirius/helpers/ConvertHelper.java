@@ -52,9 +52,12 @@ public final class ConvertHelper {
     public static Resource convertIFileToResource(IFile file) {
         String fileExtension = file.getFileExtension();
         if (fileExtension != null && fileExtension.equals(GlobalConstants.FILE_EXTENSION)) {
-            URI uri = URI.createPlatformResourceURI(file.getFullPath().toString().substring(1), true);
+            URI uri = URI.createPlatformResourceURI(file.getFullPath().toString().substring(1),
+                    true);
             ResourceSet resourceSet = new ResourceSetImpl();
-            resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(), org.eclipse.poosl.PooslPackage.eINSTANCE);
+            resourceSet.getPackageRegistry().put(
+                    org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(),
+                    org.eclipse.poosl.PooslPackage.eINSTANCE);
             return resourceSet.getResource(uri, true);
         }
         return null;

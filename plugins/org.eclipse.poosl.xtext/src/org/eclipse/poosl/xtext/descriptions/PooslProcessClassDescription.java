@@ -67,25 +67,30 @@ public final class PooslProcessClassDescription {
     public static Map<String, String> createUserData(ProcessClass pClass) {
         Map<String, String> userData = new HashMap<>();
         PooslSuperClassDescription.setSuperClass(userData, pClass.getSuperClass());
-        userData.put(STR_INITIAL_METHOD, PooslProcessMethodParser.getProcessMethodID(pClass.getInitialMethodCall()));
+        userData.put(STR_INITIAL_METHOD,
+                PooslProcessMethodParser.getProcessMethodID(pClass.getInitialMethodCall()));
 
         Set<String> usedMethods = new HashSet<>();
         Set<String> usedPorts = new HashSet<>();
         Set<String> usedReceive = new HashSet<>();
         Set<String> usedSend = new HashSet<>();
         Set<String> usedVariables = new HashSet<>();
-        getProcessUsedElements(usedMethods, usedPorts, usedReceive, usedSend, usedVariables, pClass);
+        getProcessUsedElements(usedMethods, usedPorts, usedReceive, usedSend, usedVariables,
+                pClass);
         if (!usedMethods.isEmpty()) {
-            userData.put(STR_USED_PROCESS_METHODS, PooslSuperClassDescription.formatUsedElements(usedMethods));
+            userData.put(STR_USED_PROCESS_METHODS,
+                    PooslSuperClassDescription.formatUsedElements(usedMethods));
         }
         if (!usedPorts.isEmpty()) {
             userData.put(STR_USED_PORTS, PooslSuperClassDescription.formatUsedElements(usedPorts));
         }
         if (!usedReceive.isEmpty()) {
-            userData.put(STR_USED_RECEIVE_STATEMENTS, PooslSuperClassDescription.formatUsedElements(usedReceive));
+            userData.put(STR_USED_RECEIVE_STATEMENTS,
+                    PooslSuperClassDescription.formatUsedElements(usedReceive));
         }
         if (!usedSend.isEmpty()) {
-            userData.put(STR_USED_SEND_STATEMENTS, PooslSuperClassDescription.formatUsedElements(usedSend));
+            userData.put(STR_USED_SEND_STATEMENTS,
+                    PooslSuperClassDescription.formatUsedElements(usedSend));
         }
         PooslSuperClassDescription.setUsedVariables(userData, usedVariables);
         return userData;
@@ -101,7 +106,9 @@ public final class PooslProcessClassDescription {
      * @param usedVariables
      * @param pClass
      */
-    private static void getProcessUsedElements(Set<String> usedMethods, Set<String> usedPorts, Set<String> usedReceive, Set<String> usedSend, Set<String> usedVariables, ProcessClass pClass) {
+    private static void getProcessUsedElements(
+            Set<String> usedMethods, Set<String> usedPorts, Set<String> usedReceive,
+            Set<String> usedSend, Set<String> usedVariables, ProcessClass pClass) {
         for (MessageSignature messageSignature : pClass.getReceiveMessages()) {
             usedPorts.add(messageSignature.getPort().getPort());
         }
@@ -109,17 +116,20 @@ public final class PooslProcessClassDescription {
             usedPorts.add(messageSignature.getPort().getPort());
         }
 
-        findUsedElements(null, usedReceive, usedSend, usedVariables, Collections.<String> emptySet(), pClass.getInitialMethodCall());
+        findUsedElements(null, usedReceive, usedSend, usedVariables,
+                Collections.<String> emptySet(), pClass.getInitialMethodCall());
 
         for (ProcessMethod processMethod : pClass.getMethods()) {
             Set<String> locallyUsedMethods = new HashSet<>();
-            findUsedElements(locallyUsedMethods, usedReceive, usedSend, usedVariables, getLocalVariables(processMethod), processMethod.getBody());
+            findUsedElements(locallyUsedMethods, usedReceive, usedSend, usedVariables,
+                    getLocalVariables(processMethod), processMethod.getBody());
             usedMethods.add(createUsedMethodsString(processMethod, locallyUsedMethods));
         }
     }
 
     /**
-     * Find the used elements contained in the eobject and eobject itself wil also be checked
+     * Find the used elements contained in the eobject and eobject itself wil
+     * also be checked
      * 
      * @param usedMethods
      * @param usedReceive
@@ -127,18 +137,23 @@ public final class PooslProcessClassDescription {
      * @param usedVariables
      * @param localVariables
      * @param startObject
-     *            The container to check for used elements
+     *     The container to check for used elements
      */
-    private static void findUsedElements(Set<String> usedMethods, Set<String> usedReceive, Set<String> usedSend, Set<String> usedVariables, Set<String> localVariables, EObject startObject) {
+    private static void findUsedElements(
+            Set<String> usedMethods, Set<String> usedReceive, Set<String> usedSend,
+            Set<String> usedVariables, Set<String> localVariables, EObject startObject) {
         if (startObject == null)
             return;
 
-        TreeIterator<EObject> allProperContents = EcoreUtil.getAllProperContents(startObject, false);
-        addUsedElement(usedMethods, usedReceive, usedSend, usedVariables, startObject, localVariables);
+        TreeIterator<EObject> allProperContents = EcoreUtil.getAllProperContents(startObject,
+                false);
+        addUsedElement(usedMethods, usedReceive, usedSend, usedVariables, startObject,
+                localVariables);
         if (allProperContents != null) {
             while (allProperContents.hasNext()) {
                 EObject contentObject = allProperContents.next();
-                addUsedElement(usedMethods, usedReceive, usedSend, usedVariables, contentObject, localVariables);
+                addUsedElement(usedMethods, usedReceive, usedSend, usedVariables, contentObject,
+                        localVariables);
             }
 
         }
@@ -152,22 +167,26 @@ public final class PooslProcessClassDescription {
      * @param usedSend
      * @param usedVariables
      * @param object
-     *            element to add to the usedelements
+     *     element to add to the usedelements
      * @param localVariables
      */
-    private static void addUsedElement(Set<String> usedMethods, Set<String> usedReceive, Set<String> usedSend, Set<String> usedVariables, EObject object, Set<String> localVariables) {
+    private static void addUsedElement(
+            Set<String> usedMethods, Set<String> usedReceive, Set<String> usedSend,
+            Set<String> usedVariables, EObject object, Set<String> localVariables) {
         PooslSuperClassDescription.addUsedVariables(usedVariables, localVariables, object);
 
         if (object instanceof ProcessMethodCall) {
             if (usedMethods != null) {
-                usedMethods.add(PooslProcessMethodParser.getProcessMethodID((ProcessMethodCall) object));
+                usedMethods.add(
+                        PooslProcessMethodParser.getProcessMethodID((ProcessMethodCall) object));
             }
         }
 
         if (object instanceof ReceiveStatement) {
             ReceiveStatement stat = (ReceiveStatement) object;
             if (stat.getName() != null) {
-                PooslMessageSignatureCallHelper usedMessageDescription = new PooslMessageSignatureCallHelper(stat);
+                PooslMessageSignatureCallHelper usedMessageDescription = new PooslMessageSignatureCallHelper(
+                        stat);
                 usedReceive.add(usedMessageDescription.toString());
             }
         }
@@ -175,7 +194,8 @@ public final class PooslProcessClassDescription {
         if (object instanceof SendStatement) {
             SendStatement stat = (SendStatement) object;
             if (stat.getName() != null) {
-                PooslMessageSignatureCallHelper usedMessageDescription = new PooslMessageSignatureCallHelper(stat);
+                PooslMessageSignatureCallHelper usedMessageDescription = new PooslMessageSignatureCallHelper(
+                        stat);
                 usedSend.add(usedMessageDescription.toString());
             }
         }
@@ -206,7 +226,8 @@ public final class PooslProcessClassDescription {
         return localVariables;
     }
 
-    private static void addVariableNames(List<Declaration> declarations, Set<String> localVariables) {
+    private static void addVariableNames(
+            List<Declaration> declarations, Set<String> localVariables) {
         for (Declaration decl : declarations) {
             for (Variable variable : decl.getVariables()) {
                 localVariables.add(variable.getName());
@@ -234,14 +255,16 @@ public final class PooslProcessClassDescription {
         if (!checkValidity(descr))
             return Collections.emptyList();
 
-        return PooslSuperClassDescription.parseUsedElements(descr.getUserData(STR_USED_SEND_STATEMENTS));
+        return PooslSuperClassDescription
+                .parseUsedElements(descr.getUserData(STR_USED_SEND_STATEMENTS));
     }
 
     public static List<String> getUsedReceiveStatements(IEObjectDescription descr) {
         if (!checkValidity(descr))
             return Collections.emptyList();
 
-        return PooslSuperClassDescription.parseUsedElements(descr.getUserData(STR_USED_RECEIVE_STATEMENTS));
+        return PooslSuperClassDescription
+                .parseUsedElements(descr.getUserData(STR_USED_RECEIVE_STATEMENTS));
     }
 
     public static String getInitialMethodCall(IEObjectDescription descr) {
@@ -276,7 +299,9 @@ public final class PooslProcessClassDescription {
             if (open != -1) {
                 String callingMethod = method.substring(0, open);
                 String usedNamesString = method.substring(open + 1);
-                List<String> methodNames = (usedNamesString.isEmpty()) ? Collections.<String> emptyList() : PooslSuperClassDescription.parseUsedElements(usedNamesString, PARSER_METHOD_SEPARATOR);
+                List<String> methodNames = (usedNamesString.isEmpty())
+                    ? Collections.<String> emptyList() : PooslSuperClassDescription
+                            .parseUsedElements(usedNamesString, PARSER_METHOD_SEPARATOR);
 
                 method2UsedMethods.put(callingMethod, methodNames);
             }

@@ -44,11 +44,14 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
- * This class is used by the poosl.odesign file to have more advanced queries on the model that are called by Acceleo3
+ * This class is used by the poosl.odesign file to have more advanced queries on
+ * the model that are called by Acceleo3
  * expressions.
  * 
- * According to sirius documentation this class needs to be stateless and have a constructor without any arguments.
- * There is no guarantee that the same instance will be used when a function is called twice.
+ * According to sirius documentation this class needs to be stateless and have a
+ * constructor without any arguments.
+ * There is no guarantee that the same instance will be used when a function is
+ * called twice.
  * 
  * @author Koen Staal
  */
@@ -81,39 +84,45 @@ public class ClassDiagramServices {
     }
 
     public List<DataClass> getAllDataClasses(final Poosl poosl) {
-        return Lists.newArrayList(Iterables.transform(PooslCache.cleanGet(poosl.eResource()).getAllRelevantDataClasses(), new Function<IEObjectDescription, DataClass>() {
-            @Override
-            public DataClass apply(IEObjectDescription descr) {
-                EObject o = descr.getEObjectOrProxy();
-                if (o.eIsProxy())
-                    o = EcoreUtil2.resolve(o, poosl);
-                return (DataClass) o;
-            }
-        }));
+        return Lists.newArrayList(Iterables.transform(
+                PooslCache.cleanGet(poosl.eResource()).getAllRelevantDataClasses(),
+                new Function<IEObjectDescription, DataClass>() {
+                    @Override
+                    public DataClass apply(IEObjectDescription descr) {
+                        EObject o = descr.getEObjectOrProxy();
+                        if (o.eIsProxy())
+                            o = EcoreUtil2.resolve(o, poosl);
+                        return (DataClass) o;
+                    }
+                }));
     }
 
     public List<ProcessClass> getAllProcessClasses(final Poosl poosl) {
-        return Lists.newArrayList(Iterables.transform(PooslCache.cleanGet(poosl.eResource()).getAllRelevantProcessClasses(), new Function<IEObjectDescription, ProcessClass>() {
-            @Override
-            public ProcessClass apply(IEObjectDescription descr) {
-                EObject o = descr.getEObjectOrProxy();
-                if (o.eIsProxy())
-                    o = EcoreUtil2.resolve(o, poosl);
-                return (ProcessClass) o;
-            }
-        }));
+        return Lists.newArrayList(Iterables.transform(
+                PooslCache.cleanGet(poosl.eResource()).getAllRelevantProcessClasses(),
+                new Function<IEObjectDescription, ProcessClass>() {
+                    @Override
+                    public ProcessClass apply(IEObjectDescription descr) {
+                        EObject o = descr.getEObjectOrProxy();
+                        if (o.eIsProxy())
+                            o = EcoreUtil2.resolve(o, poosl);
+                        return (ProcessClass) o;
+                    }
+                }));
     }
 
     public List<ClusterClass> getAllClusterClasses(final Poosl poosl) {
-        return Lists.newArrayList(Iterables.transform(PooslCache.cleanGet(poosl.eResource()).getAllRelevantClusterClasses(), new Function<IEObjectDescription, ClusterClass>() {
-            @Override
-            public ClusterClass apply(IEObjectDescription descr) {
-                EObject o = descr.getEObjectOrProxy();
-                if (o.eIsProxy())
-                    o = EcoreUtil2.resolve(o, poosl);
-                return (ClusterClass) o;
-            }
-        }));
+        return Lists.newArrayList(Iterables.transform(
+                PooslCache.cleanGet(poosl.eResource()).getAllRelevantClusterClasses(),
+                new Function<IEObjectDescription, ClusterClass>() {
+                    @Override
+                    public ClusterClass apply(IEObjectDescription descr) {
+                        EObject o = descr.getEObjectOrProxy();
+                        if (o.eIsProxy())
+                            o = EcoreUtil2.resolve(o, poosl);
+                        return (ClusterClass) o;
+                    }
+                }));
     }
 
     public Boolean isImportedClass(EObject object) {
@@ -135,7 +144,8 @@ public class ClassDiagramServices {
         if (object.getTargetNode() instanceof DNodeList) {
             EObject targetN = ((DNodeList) object.getTargetNode()).getTarget();
 
-            if (targetN instanceof InstantiableClass && object.getTarget() instanceof ClusterClass) {
+            if (targetN instanceof InstantiableClass
+                    && object.getTarget() instanceof ClusterClass) {
                 InstantiableClass target = (InstantiableClass) targetN;
                 ClusterClass source = (ClusterClass) object.getTarget();
 
@@ -231,7 +241,8 @@ public class ClassDiagramServices {
     }
 
     public boolean isMethod(EObject object) {
-        return (object instanceof ProcessMethod || object instanceof DataMethod) && !AbstractServices.isBundleResource(object);
+        return (object instanceof ProcessMethod || object instanceof DataMethod)
+                && !AbstractServices.isBundleResource(object);
     }
 
     public boolean isVariable(EObject object) {
@@ -270,9 +281,11 @@ public class ClassDiagramServices {
     public EObject getInheritance(EObject object) {
         IEObjectDescription description = null;
         if (object instanceof DataClass) {
-            description = PooslCache.cleanGet(object.eResource()).getDataClass(((DataClass) object).getSuperClass());
+            description = PooslCache.cleanGet(object.eResource())
+                    .getDataClass(((DataClass) object).getSuperClass());
         } else if (object instanceof ProcessClass) {
-            description = PooslCache.cleanGet(object.eResource()).getProcessClass(((ProcessClass) object).getSuperClass());
+            description = PooslCache.cleanGet(object.eResource())
+                    .getProcessClass(((ProcessClass) object).getSuperClass());
         }
         if (description != null) {
             EObject referencedElement = description.getEObjectOrProxy();
@@ -292,7 +305,8 @@ public class ClassDiagramServices {
     }
 
     public boolean canBeContained(EObject object) {
-        return object instanceof InstantiableClass && ((InstantiableClass) object).getName() != null;
+        return object instanceof InstantiableClass
+                && ((InstantiableClass) object).getName() != null;
     }
 
     public static String getUniqueClusterName(EObject container, String original) {

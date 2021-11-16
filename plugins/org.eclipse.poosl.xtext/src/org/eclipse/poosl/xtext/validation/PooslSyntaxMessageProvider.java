@@ -33,11 +33,13 @@ public class PooslSyntaxMessageProvider extends SyntaxErrorMessageProvider {
     @Override
     public SyntaxErrorMessage getSyntaxErrorMessage(IParserErrorContext context) {
         if (context.getDefaultMessage().startsWith(MISSING_EOF)) {
-            String message = UNEXPECTED_INPUT + context.getDefaultMessage().substring(MISSING_EOF.length());
+            String message = UNEXPECTED_INPUT
+                    + context.getDefaultMessage().substring(MISSING_EOF.length());
             return new SyntaxErrorMessage(message, Diagnostic.SYNTAX_DIAGNOSTIC);
         }
         if (context.getDefaultMessage().startsWith(NO_VIABLE_ALTERNATIVE)) {
-            String message = UNEXPECTED_INPUT + context.getDefaultMessage().substring(NO_VIABLE_ALTERNATIVE.length());
+            String message = UNEXPECTED_INPUT
+                    + context.getDefaultMessage().substring(NO_VIABLE_ALTERNATIVE.length());
             return new SyntaxErrorMessage(message, Diagnostic.SYNTAX_DIAGNOSTIC);
         }
         return super.getSyntaxErrorMessage(context);

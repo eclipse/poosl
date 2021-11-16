@@ -198,8 +198,10 @@ public class PooslThread extends PooslDebugElement implements IThread {
 
     public void setExecutiontree(TExecutiontree executiontree) {
         this.executiontree = executiontree;
-        if (executiontree != null && !this.executiontree.getSequentialOrMethodCallOrParallel().isEmpty()) {
-            globalHandle = this.executiontree.getSequentialOrMethodCallOrParallel().get(0).getValue().getGlobal();
+        if (executiontree != null
+                && !this.executiontree.getSequentialOrMethodCallOrParallel().isEmpty()) {
+            globalHandle = this.executiontree.getSequentialOrMethodCallOrParallel().get(0)
+                    .getValue().getGlobal();
         }
         if (executiontree != null) {
             target.getPooslSourceMap().checkExecutionTreeForExternalMapping(executiontree);

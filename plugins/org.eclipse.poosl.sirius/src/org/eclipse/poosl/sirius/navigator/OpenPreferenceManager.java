@@ -18,11 +18,11 @@ import org.eclipse.poosl.sirius.navigator.PooslEditorPreferenceDialog.OpenStrate
 import org.eclipse.swt.widgets.Display;
 
 public /**
- * The OpenPreferenceManager.
- * 
- * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
- *
- */
+        * The OpenPreferenceManager.
+        * 
+        * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+        *
+        */
 abstract class OpenPreferenceManager {
     protected String diagramDescription;
 
@@ -33,7 +33,9 @@ abstract class OpenPreferenceManager {
     }
 
     protected OpenStrategy showEditorPreferenceDialog(boolean showClassDiagram) {
-        PooslEditorPreferenceDialog dialog = new PooslEditorPreferenceDialog(Display.getDefault().getActiveShell(), getDialogLabel(), diagramDescription, showClassDiagram);
+        PooslEditorPreferenceDialog dialog = new PooslEditorPreferenceDialog(
+                Display.getDefault().getActiveShell(), getDialogLabel(), diagramDescription,
+                showClassDiagram);
         if (dialog.open() == Window.OK) {
             return dialog.getSelection();
         } else {

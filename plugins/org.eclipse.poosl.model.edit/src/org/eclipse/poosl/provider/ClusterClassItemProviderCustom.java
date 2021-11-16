@@ -13,8 +13,8 @@ public class ClusterClassItemProviderCustom extends ClusterClassItemProvider {
     public Object getImage(Object object) {
         ClusterClass element = (ClusterClass) object;
         String image = element.getName() == null || element.getName().isEmpty() //
-                ? "full/custo16/System.gif" //$NON-NLS-1$
-                : "full/obj16/ClusterClass"; //$NON-NLS-1$
+            ? "full/custo16/System.gif" //$NON-NLS-1$
+            : "full/obj16/ClusterClass"; //$NON-NLS-1$
 
         return overlayImage(object, getResourceLocator().getImage(image));
     }

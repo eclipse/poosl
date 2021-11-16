@@ -44,26 +44,32 @@ public final class ConnectedPortsHelper {
         List<InstanceAndPort> newAncestorChain = Collections.<InstanceAndPort> emptyList();
         PooslChannelHelper channelHelper = new PooslChannelHelper(channel);
         Set<PooslInstanceHelper> history = new HashSet<>();
-        getConnectedProcessPorts(connectedProcessPorts, resource, newAncestorChain, channelHelper, history);
+        getConnectedProcessPorts(connectedProcessPorts, resource, newAncestorChain, channelHelper,
+                history);
         return connectedProcessPorts;
     }
 
-    public static List<InstanceAndPort> getConnectedProcessPorts(Instance instance, String portName) {
+    public static List<InstanceAndPort> getConnectedProcessPorts(
+            Instance instance, String portName) {
         List<InstanceAndPort> connectedProcessPorts = new ArrayList<>();
         IEObjectDescription iClass = PooslReferenceHelper.getInstantiableClassDescription(instance);
         if (iClass != null) {
             String className = HelperFunctions.getName(iClass);
             List<InstanceAndPort> ancestorChain = Collections.<InstanceAndPort> emptyList();
-            InstanceAndPort node = new InstanceAndPort(ancestorChain, instance.getName(), className, portName);
+            InstanceAndPort node = new InstanceAndPort(ancestorChain, instance.getName(), className,
+                    portName);
             if (iClass.getEClass() == Literals.PROCESS_CLASS) {
                 connectedProcessPorts.add(node);
             } else if (iClass.getEClass() == Literals.CLUSTER_CLASS) {
                 Resource resource = instance.eResource();
-                List<InstanceAndPort> newAncestorChain = Collections.<InstanceAndPort> singletonList(node);
-                PooslChannelHelper channelHelper = PooslClusterClassDescription.getChannelDescription(iClass, portName);
+                List<InstanceAndPort> newAncestorChain = Collections
+                        .<InstanceAndPort> singletonList(node);
+                PooslChannelHelper channelHelper = PooslClusterClassDescription
+                        .getChannelDescription(iClass, portName);
                 Set<PooslInstanceHelper> history = new HashSet<>();
                 if (channelHelper != null) {
-                    getConnectedProcessPorts(connectedProcessPorts, resource, newAncestorChain, channelHelper, history);
+                    getConnectedProcessPorts(connectedProcessPorts, resource, newAncestorChain,
+                            channelHelper, history);
                 }
             }
         }
@@ -71,20 +77,27 @@ public final class ConnectedPortsHelper {
     }
 
     /**
-     * Adds all process ports connected to the channel to the connectedPorts. If an instance of the port is a Cluster it
-     * will add the instance ports from the channel in that cluster, if an instance of the ports in this is a cluster
+     * Adds all process ports connected to the channel to the connectedPorts. If
+     * an instance of the port is a Cluster it
+     * will add the instance ports from the channel in that cluster, if an
+     * instance of the ports in this is a cluster
      * these will also be added etc.
      * 
      * @param connectedProcessPorts
-     *            {@link List} to which all process ports are added as {@link InstanceAndPort}
+     *     {@link List} to which all process ports are added as
+     *     {@link InstanceAndPort}
      * @param channelHelper
-     *            the {@link PooslChannelHelper} from which the instance port will be retrieved
+     *     the {@link PooslChannelHelper} from which the instance port will be
+     *     retrieved
      * @param history
-     *            to avoid cyclic channels {@link PooslInstanceHelper} will get added to history {@link Set}
+     *     to avoid cyclic channels {@link PooslInstanceHelper} will get added
+     *     to history {@link Set}
      * @param resource
      * @param ancestorChain
      */
-    private static void getConnectedProcessPorts(List<InstanceAndPort> connectedProcessPorts, Resource resource, List<InstanceAndPort> ancestorChain, PooslChannelHelper channelHelper,
+    private static void getConnectedProcessPorts(
+            List<InstanceAndPort> connectedProcessPorts, Resource resource,
+            List<InstanceAndPort> ancestorChain, PooslChannelHelper channelHelper,
             Set<PooslInstanceHelper> history) {
         for (PooslInstancePortHelper instancePort : channelHelper.getInstancePorts()) {
             String portName = instancePort.getPortName();
@@ -93,11 +106,13 @@ public final class ConnectedPortsHelper {
             IEObjectDescription iClass = HelperFunctions.getInstantiableClass(resource, iClassName);
             if (instanceHelper != null && iClass != null) {
                 String instanceName = instanceHelper.getInstanceName();
-                InstanceAndPort node = new InstanceAndPort(ancestorChain, instanceName, iClassName, portName);
+                InstanceAndPort node = new InstanceAndPort(ancestorChain, instanceName, iClassName,
+                        portName);
                 if (iClass.getEClass().equals(Literals.PROCESS_CLASS)) {
                     connectedProcessPorts.add(node);
                 } else if (iClass.getEClass().equals(Literals.CLUSTER_CLASS)) {
-                    PooslChannelHelper extChannelHelper = PooslClusterClassDescription.getChannelDescription(iClass, portName);
+                    PooslChannelHelper extChannelHelper = PooslClusterClassDescription
+                            .getChannelDescription(iClass, portName);
                     if (extChannelHelper != null) {
                         if (!history.add(instanceHelper)) {
                             return;
@@ -107,7 +122,8 @@ public final class ConnectedPortsHelper {
                         newAncestorChain.addAll(ancestorChain);
                         newAncestorChain.add(node);
 
-                        getConnectedProcessPorts(connectedProcessPorts, resource, newAncestorChain, extChannelHelper, history);
+                        getConnectedProcessPorts(connectedProcessPorts, resource, newAncestorChain,
+                                extChannelHelper, history);
                         history.remove(instanceHelper);
                     }
                 }
@@ -124,7 +140,8 @@ public final class ConnectedPortsHelper {
 
         private final String portName;
 
-        public InstanceAndPort(List<InstanceAndPort> ancestorChain, String localInstanceName, String instantiableClassName, String portName) {
+        public InstanceAndPort(List<InstanceAndPort> ancestorChain, String localInstanceName,
+                String instantiableClassName, String portName) {
             this.ancestorChain = ancestorChain;
             this.localInstanceName = localInstanceName;
             this.instantiableClassName = instantiableClassName;
@@ -165,7 +182,8 @@ public final class ConnectedPortsHelper {
             for (int i = 0; i < commonSize; i++) {
                 InstanceAndPort element1 = chain1.get(i);
                 InstanceAndPort element2 = chain2.get(i);
-                if (!(element1.localInstanceName.equals(element2.localInstanceName) && element1.portName.equals(element2.portName))) {
+                if (!(element1.localInstanceName.equals(element2.localInstanceName)
+                        && element1.portName.equals(element2.portName))) {
                     return !element1.localInstanceName.equals(element2.localInstanceName);
                 }
             }

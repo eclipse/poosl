@@ -45,13 +45,15 @@ public class CloseDiagramRunnable implements IRunnableWithProgress {
     public void run(final IProgressMonitor monitor) {
         try {
             monitor.beginTask(CLOSING_EDITORS, 1);
-            for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors.entrySet()) {
+            for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors
+                    .entrySet()) {
                 Session session = entry.getKey();
                 Set<DRepresentationDescriptor> descriptors = entry.getValue();
                 IEditingSession editingSession = SessionUIManager.INSTANCE.getUISession(session);
                 if (editingSession != null) {
                     for (DRepresentationDescriptor descriptor : descriptors) {
-                        DialectEditor editor = editingSession.getEditor(descriptor.getRepresentation());
+                        DialectEditor editor = editingSession
+                                .getEditor(descriptor.getRepresentation());
                         if (editor != null) {
                             DialectUIManager.INSTANCE.closeEditor(editor, false);
                             editingSession.detachEditor(editor);

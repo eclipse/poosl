@@ -60,7 +60,8 @@ public class PooslBreakpointManager {
 
     private BigInteger modelHandle;
 
-    public void configureBreakpointManager(Client pClient, Map<String, BigInteger> pFilesToHandle, BigInteger pModelHandle) {
+    public void configureBreakpointManager(
+            Client pClient, Map<String, BigInteger> pFilesToHandle, BigInteger pModelHandle) {
         this.client = pClient;
         this.filesToHandle = pFilesToHandle;
         this.modelHandle = pModelHandle;
@@ -69,7 +70,8 @@ public class PooslBreakpointManager {
     }
 
     private void addAllBreakpoints() {
-        IBreakpoint[] pooslBreakpoints = DebugPlugin.getDefault().getBreakpointManager().getBreakpoints(PooslConstants.DEBUG_MODEL_ID);
+        IBreakpoint[] pooslBreakpoints = DebugPlugin.getDefault().getBreakpointManager()
+                .getBreakpoints(PooslConstants.DEBUG_MODEL_ID);
         for (IBreakpoint breakpoint : pooslBreakpoints) {
             addBreakpoint(breakpoint);
             try {
@@ -94,7 +96,10 @@ public class PooslBreakpointManager {
             breakpointRequests.put(file + "|" + lineNr, breakpoint); //$NON-NLS-1$
             client.createBreakpoint(BigInteger.ZERO, file, lineNr);
         } else {
-            LOGGER.log(Level.SEVERE, "Could not set breakpoint for file " + breakpoint.getMarker().getResource().getLocation().toOSString() + ". (" + file + ", " + lineNr + ")");
+            LOGGER.log(Level.SEVERE,
+                    "Could not set breakpoint for file "
+                            + breakpoint.getMarker().getResource().getLocation().toOSString()
+                            + ". (" + file + ", " + lineNr + ")");
         }
     }
 
@@ -129,19 +134,25 @@ public class PooslBreakpointManager {
             LOGGER.warning(Messages.DIALOG_CREATE_BREAKPOINT_FAILED_MESSAGE);
             if (breakpoint != null) {
                 try {
-                    String fileString = breakpoint.getMarker().getResource().getLocationURI().toString();
+                    String fileString = breakpoint.getMarker().getResource().getLocationURI()
+                            .toString();
                     int lineNr = breakpoint.getMarker().getAttribute(IMarker.LINE_NUMBER, -1);
-                    PooslDebugHelper.showErrorMessage(Messages.DIALOG_CREATE_BREAKPOINT_TITLE, MessageFormat.format(Messages.DIALOG_CREATE_BREAKPOINT_FAILED_LOCATION, lineNr, fileString));
+                    PooslDebugHelper.showErrorMessage(Messages.DIALOG_CREATE_BREAKPOINT_TITLE,
+                            MessageFormat.format(Messages.DIALOG_CREATE_BREAKPOINT_FAILED_LOCATION,
+                                    lineNr, fileString));
                     breakpoint.delete();
                 } catch (CoreException e) {
-                    LOGGER.log(Level.WARNING, "Breakpoint could not automatically be deleted." + id, e);
+                    LOGGER.log(Level.WARNING, "Breakpoint could not automatically be deleted." + id,
+                            e);
                 }
             } else {
-                PooslDebugHelper.showErrorMessage(Messages.DIALOG_CREATE_BREAKPOINT_TITLE, Messages.DIALOG_CREATE_BREAKPOINT_FAILED_MESSAGE + id);
+                PooslDebugHelper.showErrorMessage(Messages.DIALOG_CREATE_BREAKPOINT_TITLE,
+                        Messages.DIALOG_CREATE_BREAKPOINT_FAILED_MESSAGE + id);
             }
         } else {
             if (breakpoint == null) {
-                LOGGER.severe("Breakpoint create response returned unmatched location" + id + ". Open requests: " + breakpointRequests.keySet());
+                LOGGER.severe("Breakpoint create response returned unmatched location" + id
+                        + ". Open requests: " + breakpointRequests.keySet());
                 return;
             }
             breakpoints.put(breakpoint, createBreakpoint.getStmtHandle());
@@ -155,32 +166,38 @@ public class PooslBreakpointManager {
         }
     }
 
-    public void handleBreakpointHit(final PooslDebugTarget pooslDebugTarget, final TExecutionStateChangeResponse state, PooslSourceMap pooslSourceMap) {
+    public void handleBreakpointHit(
+            final PooslDebugTarget pooslDebugTarget, final TExecutionStateChangeResponse state,
+            PooslSourceMap pooslSourceMap) {
         TBreakpointInfo breakpoint = state.getBreakpoints().getBreakpoint().get(0);
-        pooslSourceMap.getSourceMapping(breakpoint.getStmtHandle(), new PooslSourceMappingListener(false) {
+        pooslSourceMap.getSourceMapping(breakpoint.getStmtHandle(),
+                new PooslSourceMappingListener(false) {
 
-            @Override
-            public void requestedSourceMapping(PooslSourceMapping mapping) {
-                LOGGER.fine("Execution state response has breakpoint: " + mapping);
-                TTransition transition = state.getTransition();
+                    @Override
+                    public void requestedSourceMapping(PooslSourceMapping mapping) {
+                        LOGGER.fine("Execution state response has breakpoint: " + mapping);
+                        TTransition transition = state.getTransition();
 
-                try {
-                    PooslThread breakpointThread = getBreakpointThread(pooslDebugTarget.getThreads(), mapping, transition);
+                        try {
+                            PooslThread breakpointThread = getBreakpointThread(
+                                    pooslDebugTarget.getThreads(), mapping, transition);
 
-                    // Get the possible transitions
-                    client.getTransitions();
+                            // Get the possible transitions
+                            client.getTransitions();
 
-                    // Fire a debug event to inform other views of the breakpoint hit
-                    pooslDebugTarget.fireEvent(new DebugEvent(breakpointThread, DebugEvent.MODEL_SPECIFIC, PooslConstants.BREAKPOINT_HIT));
-                } catch (DebugException e) {
-                    LOGGER.warning("Couldnt find breakpoint thread " + mapping);
-                }
-            }
-        });
+                            // Fire a debug event to inform other views of the breakpoint hit
+                            pooslDebugTarget.fireEvent(new DebugEvent(breakpointThread,
+                                    DebugEvent.MODEL_SPECIFIC, PooslConstants.BREAKPOINT_HIT));
+                        } catch (DebugException e) {
+                            LOGGER.warning("Couldnt find breakpoint thread " + mapping);
+                        }
+                    }
+                });
     }
 
     /**
-     * Gets the thread from the array of threads that has the transition inside. Also sets the active breakpoint node
+     * Gets the thread from the array of threads that has the transition inside.
+     * Also sets the active breakpoint node
      * that corresponds with the given modelElement on this thread.
      * 
      * @param threads
@@ -188,9 +205,11 @@ public class PooslBreakpointManager {
      * @param transition
      * @return the poosl thread
      * @throws DebugException
-     *             if the thread could not be found by name
+     *     if the thread could not be found by name
      */
-    public static PooslThread getBreakpointThread(IThread[] threads, PooslSourceMapping sourceMapping, TTransition transition) throws DebugException {
+    public static PooslThread getBreakpointThread(
+            IThread[] threads, PooslSourceMapping sourceMapping, TTransition transition)
+            throws DebugException {
         String processPath = ""; //$NON-NLS-1$
         BigInteger node = null;
         if (transition.getProcessStep() != null) {

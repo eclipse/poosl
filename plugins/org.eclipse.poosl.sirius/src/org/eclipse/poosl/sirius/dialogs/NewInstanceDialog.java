@@ -346,23 +346,30 @@ public class NewInstanceDialog extends TitleAreaDialog {
         saveInput();
         boolean ok = true;
         if (getHasNewClass()) {
-            if (getNewClassName().isEmpty() || !NameHelper.isNameAvailable(getNewClassName(), getCurrentNames())) {
-                MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE_CLASS, ERROR_MESSAGE_CLASS);
+            if (getNewClassName().isEmpty()
+                    || !NameHelper.isNameAvailable(getNewClassName(), getCurrentNames())) {
+                MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE_CLASS,
+                        ERROR_MESSAGE_CLASS);
                 ok = false;
 
             }
         } else {
             if (btnSelectClass.getSelectionIndex() == -1) {
-                MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE_CONTAINER, ERROR_MESSAGE_NO_CLASS);
+                MessageDialog.openError(Display.getDefault().getActiveShell(),
+                        ERROR_TITLE_CONTAINER, ERROR_MESSAGE_NO_CLASS);
                 ok = false;
-            } else if (selectedType == Type.CLUSTERCLASS && btnSelectClass.getItems()[btnSelectClass.getSelectionIndex()].equalsIgnoreCase(containerName)) {
-                MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE_CONTAINER, ERROR_MESSAGE_CONTAINER);
+            } else if (selectedType == Type.CLUSTERCLASS
+                    && btnSelectClass.getItems()[btnSelectClass.getSelectionIndex()]
+                            .equalsIgnoreCase(containerName)) {
+                MessageDialog.openError(Display.getDefault().getActiveShell(),
+                        ERROR_TITLE_CONTAINER, ERROR_MESSAGE_CONTAINER);
                 ok = false;
             }
         }
 
         if (getName().isEmpty() || !NameHelper.isNameAvailable(getName(), instances)) {
-            MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE_INSTANCE, ERROR_MESSAGE_INSTANCE);
+            MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE_INSTANCE,
+                    ERROR_MESSAGE_INSTANCE);
             ok = false;
         }
 

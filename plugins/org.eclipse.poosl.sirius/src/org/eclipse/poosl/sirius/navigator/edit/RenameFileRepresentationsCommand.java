@@ -40,7 +40,8 @@ public class RenameFileRepresentationsCommand extends RecordingCommand {
 
     private List<DRepresentationDescriptor> descriptors;
 
-    public RenameFileRepresentationsCommand(Session destSession, Resource newResource, List<DRepresentationDescriptor> descriptors) {
+    public RenameFileRepresentationsCommand(Session destSession, Resource newResource,
+            List<DRepresentationDescriptor> descriptors) {
         super(destSession.getTransactionalEditingDomain());
         this.destSession = destSession;
         this.newResource = newResource;
@@ -51,12 +52,16 @@ public class RenameFileRepresentationsCommand extends RecordingCommand {
     public void doExecute() {
         for (DRepresentationDescriptor descriptor : descriptors) {
             DRepresentation diagram = descriptor.getRepresentation();
-            EObject diagramObject = diagram instanceof DSemanticDiagram ? ((DSemanticDiagram) diagram).getTarget() : diagram.getOwnedRepresentationElements().get(0).getTarget();
+            EObject diagramObject = diagram instanceof DSemanticDiagram
+                ? ((DSemanticDiagram) diagram).getTarget()
+                : diagram.getOwnedRepresentationElements().get(0).getTarget();
             String objFragment = EcoreUtil.getURI(diagramObject).fragment();
-            EObject newDiagramTarget = GraphicalEditorHelper.getSiriusObject(newResource.getEObject(objFragment), destSession);
+            EObject newDiagramTarget = GraphicalEditorHelper
+                    .getSiriusObject(newResource.getEObject(objFragment), destSession);
             String label = DiagramNameHelper.getDiagramName(newDiagramTarget);
             descriptor.setName(label);
-            PooslDiagramRefactorHelper.copyDiagramElements(diagram, EcoreUtil.getURI(diagramObject).trimFragment(), newDiagramTarget);
+            PooslDiagramRefactorHelper.copyDiagramElements(diagram,
+                    EcoreUtil.getURI(diagramObject).trimFragment(), newDiagramTarget);
         }
     }
 

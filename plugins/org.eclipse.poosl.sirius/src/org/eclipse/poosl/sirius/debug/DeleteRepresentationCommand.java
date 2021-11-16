@@ -35,13 +35,16 @@ public class DeleteRepresentationCommand extends RecordingCommand {
      * Specific command to delete the given representations.
      * 
      * @param session
-     *            the session on which to delete the {@link DRepresentationDescriptor} s. WARNING : can only delete
-     *            {@link DRepresentationDescriptor}s owned by this {@link Session} because we have one
-     *            TransactionalEditingDomain per {@link Session}.
+     *     the session on which to delete the {@link DRepresentationDescriptor}
+     *     s. WARNING : can only delete
+     *     {@link DRepresentationDescriptor}s owned by this {@link Session}
+     *     because we have one
+     *     TransactionalEditingDomain per {@link Session}.
      * @param descriptors
-     *            {@link Set} of {@link DRepresentationDescriptor}s to delete.
+     *     {@link Set} of {@link DRepresentationDescriptor}s to delete.
      */
-    public DeleteRepresentationCommand(Session session, Set<DRepresentationDescriptor> descriptors) {
+    public DeleteRepresentationCommand(Session session,
+            Set<DRepresentationDescriptor> descriptors) {
         super(session.getTransactionalEditingDomain(), "Delete representations");
         this.session = session;
         this.descriptors = descriptors;

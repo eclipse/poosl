@@ -99,7 +99,8 @@ public final class PooslDataMethodDescription {
             return Collections.emptyList();
 
         List<String> dataNames = new ArrayList<>();
-        List<String> declarations = FormattingHelper.unformatDeclarationsToTypeNames(descr.getUserData(STR_PARAMETERS));
+        List<String> declarations = FormattingHelper
+                .unformatDeclarationsToTypeNames(descr.getUserData(STR_PARAMETERS));
         for (String decl : declarations) {
             dataNames.add(decl);
         }
@@ -121,71 +122,87 @@ public final class PooslDataMethodDescription {
     }
 
     private static boolean checkValidity(IEObjectDescription descr) {
-        return PooslValidationHelper.checkValidity(descr, Literals.DATA_METHOD_NAMED, Literals.DATA_METHOD_UNARY_OPERATOR, Literals.DATA_METHOD_BINARY_OPERATOR);
+        return PooslValidationHelper.checkValidity(descr, Literals.DATA_METHOD_NAMED,
+                Literals.DATA_METHOD_UNARY_OPERATOR, Literals.DATA_METHOD_BINARY_OPERATOR);
 
     }
 
     // --- Predicates -------
 
-    public static Predicate<IEObjectDescription> predicateDataMethod(final String name, final Iterable<String> classes) {
+    public static Predicate<IEObjectDescription> predicateDataMethod(
+            final String name, final Iterable<String> classes) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
                 String className = getClassName(input);
-                return name.equals(HelperFunctions.getName(input)) && className != null && Iterables.contains(classes, className);
+                return name.equals(HelperFunctions.getName(input)) && className != null
+                        && Iterables.contains(classes, className);
             }
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateDataMethod(final String name, final int numberOfArguments) {
+    public static Predicate<IEObjectDescription> predicateDataMethod(
+            final String name, final int numberOfArguments) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
                 int numberOfParameters = getParameterTypeNames(input).size();
-                return name.equals(HelperFunctions.getName(input)) && numberOfArguments == numberOfParameters;
+                return name.equals(HelperFunctions.getName(input))
+                        && numberOfArguments == numberOfParameters;
             }
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateDataMethod(final int numberOfArguments, final String returnType, final Iterable<String> classes) {
+    public static Predicate<IEObjectDescription> predicateDataMethod(
+            final int numberOfArguments, final String returnType, final Iterable<String> classes) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
                 int numberOfParameters = getParameterTypeNames(input).size();
                 String className = getClassName(input);
                 String type = getReturnType(input);
-                return numberOfArguments == numberOfParameters && type != null && type.equals(returnType) && className != null && Iterables.contains(classes, className);
+                return numberOfArguments == numberOfParameters && type != null
+                        && type.equals(returnType) && className != null
+                        && Iterables.contains(classes, className);
             }
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateDataMethod(final String name, final int numberOfArguments, final Collection<String> notInClasses) {
+    public static Predicate<IEObjectDescription> predicateDataMethod(
+            final String name, final int numberOfArguments, final Collection<String> notInClasses) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
                 int numberOfParameters = getParameterTypeNames(input).size();
-                return name.equals(HelperFunctions.getName(input)) && numberOfArguments == numberOfParameters && !notInClasses.contains(getClassName(input));
+                return name.equals(HelperFunctions.getName(input))
+                        && numberOfArguments == numberOfParameters
+                        && !notInClasses.contains(getClassName(input));
             }
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateDataMethod(final Iterable<String> classes, final EClass eClass) {
+    public static Predicate<IEObjectDescription> predicateDataMethod(
+            final Iterable<String> classes, final EClass eClass) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
                 String className = getClassName(input);
-                return className != null && Iterables.contains(classes, className) && input.getEClass() == eClass;
+                return className != null && Iterables.contains(classes, className)
+                        && input.getEClass() == eClass;
             }
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateDataMethod(final String methodName, final Iterable<String> classes, final int parameters) {
+    public static Predicate<IEObjectDescription> predicateDataMethod(
+            final String methodName, final Iterable<String> classes, final int parameters) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
                 String className = getClassName(input);
-                return className != null && Iterables.contains(classes, className) && methodName.equals(HelperFunctions.getName(input))
-                        && PooslDataMethodDescription.getParameterTypeNames(input).size() == parameters;
+                return className != null && Iterables.contains(classes, className)
+                        && methodName.equals(HelperFunctions.getName(input))
+                        && PooslDataMethodDescription.getParameterTypeNames(input).size()
+                                == parameters;
             }
         };
     }

@@ -24,7 +24,8 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 /**
- * This is a wrapper class for a diagram message to add a property descriptor to it.
+ * This is a wrapper class for a diagram message to add a property descriptor to
+ * it.
  * 
  * @author Jeroen van Schelven
  *
@@ -73,9 +74,11 @@ public class PooslDiagramMessage implements IPropertySource {
         if (id.equals(PROPERTY_TIMESTAMP)) {
             return communicationEvent.getSimulationTime().toString();
         } else if (id.equals(PROPERTY_SEND_PORT)) {
-            return communicationEvent.getSender().getProcessPath() + "." + communicationEvent.getSender().getPortName(); //$NON-NLS-1$
+            return communicationEvent.getSender().getProcessPath() + "." //$NON-NLS-1$
+                    + communicationEvent.getSender().getPortName();
         } else if (id.equals(PROPERTY_RECEIVE_PORT)) {
-            return communicationEvent.getReceiver().getProcessPath() + "." + communicationEvent.getReceiver().getPortName(); //$NON-NLS-1$
+            return communicationEvent.getReceiver().getProcessPath() + "." //$NON-NLS-1$
+                    + communicationEvent.getReceiver().getPortName();
         } else if (id.equals(PROPERTY_MESSAGE)) {
             return communicationEvent.getMessage().getName();
         }
@@ -148,7 +151,9 @@ public class PooslDiagramMessage implements IPropertySource {
 
         @Override
         public IPropertyDescriptor[] getPropertyDescriptors() {
-            return new IPropertyDescriptor[] { new PropertyDescriptor(PROPERTY_MESSAGE_PARAMETER_VALUE, "Value"), new PropertyDescriptor(PROPERTY_MESSAGE_PARAMETER_TYPE, "Type") };
+            return new IPropertyDescriptor[] {
+                    new PropertyDescriptor(PROPERTY_MESSAGE_PARAMETER_VALUE, "Value"),
+                    new PropertyDescriptor(PROPERTY_MESSAGE_PARAMETER_TYPE, "Type") };
         }
 
         @Override

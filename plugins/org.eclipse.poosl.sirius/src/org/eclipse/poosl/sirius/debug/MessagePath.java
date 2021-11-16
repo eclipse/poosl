@@ -41,9 +41,11 @@ public class MessagePath {
         String[] sendLocation = getProcessAsArray(this.sender);
         String[] receiveLocation = getProcessAsArray(this.receiver);
         if (sendLocation.length == receiveLocation.length) {
-            this.owner = this.sender.substring(0, this.sender.lastIndexOf(PooslConstants.PATH_SEPARATOR));
+            this.owner = this.sender.substring(0,
+                    this.sender.lastIndexOf(PooslConstants.PATH_SEPARATOR));
         } else {
-            this.owner = (sendLocation.length > receiveLocation.length) ? this.receiver : this.sender;
+            this.owner = (sendLocation.length > receiveLocation.length)
+                ? this.receiver : this.sender;
         }
     }
 

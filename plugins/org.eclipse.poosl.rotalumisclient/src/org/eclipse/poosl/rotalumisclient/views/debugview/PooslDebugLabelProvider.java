@@ -45,9 +45,11 @@ import org.eclipse.swt.widgets.Display;
 public class PooslDebugLabelProvider extends StyledCellLabelProvider {
     private static final Logger LOGGER = Logger.getLogger(PooslDebugLabelProvider.class.getName());
 
-    private static final Color EXECUTABLE_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_RED);
+    private static final Color EXECUTABLE_COLOR = Display.getDefault()
+            .getSystemColor(SWT.COLOR_RED);
 
-    private static final Color EXECUTABLE_DELAY_COLOR = Display.getDefault().getSystemColor(SWT.COLOR_BLUE);
+    private static final Color EXECUTABLE_DELAY_COLOR = Display.getDefault()
+            .getSystemColor(SWT.COLOR_BLUE);
 
     private static final String TERMINATED = "<terminated> "; //$NON-NLS-1$
 
@@ -80,12 +82,24 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
     public PooslDebugLabelProvider() {
         super();
         try {
-            threadRunImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/thread_obj.png")).createImage(); //$NON-NLS-1$
-            threadSuspendedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/threads_obj.png")).createImage(); //$NON-NLS-1$
-            threadTerminatedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/threads_obj.png")).createImage(); //$NON-NLS-1$
-            debugTargetRunImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugt_obj.png")).createImage(); //$NON-NLS-1$
-            debugTargetSuspendedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugts_obj.png")).createImage(); //$NON-NLS-1$
-            debugTargetTerminatedImage = ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugtt_obj.png")).createImage(); //$NON-NLS-1$
+            threadRunImage = ImageDescriptor.createFromURL(new URL(
+                    "platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/thread_obj.png")) //$NON-NLS-1$
+                    .createImage();
+            threadSuspendedImage = ImageDescriptor.createFromURL(new URL(
+                    "platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/threads_obj.png")) //$NON-NLS-1$
+                    .createImage();
+            threadTerminatedImage = ImageDescriptor.createFromURL(new URL(
+                    "platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/threads_obj.png")) //$NON-NLS-1$
+                    .createImage();
+            debugTargetRunImage = ImageDescriptor.createFromURL(new URL(
+                    "platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugt_obj.png")) //$NON-NLS-1$
+                    .createImage();
+            debugTargetSuspendedImage = ImageDescriptor.createFromURL(new URL(
+                    "platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugts_obj.png")) //$NON-NLS-1$
+                    .createImage();
+            debugTargetTerminatedImage = ImageDescriptor.createFromURL(new URL(
+                    "platform:/plugin/org.eclipse.debug.ui/icons/full/obj16/debugtt_obj.png")) //$NON-NLS-1$
+                    .createImage();
         } catch (MalformedURLException e) {
             LOGGER.log(Level.WARNING, e.getMessage(), e);
         }
@@ -118,9 +132,11 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
 
     private StyledString getStyledString(Object element) throws DebugException {
         if (element instanceof PooslThread) {
-            PooslDebugTarget debugTarget = (PooslDebugTarget) ((PooslThread) element).getDebugTarget();
+            PooslDebugTarget debugTarget = (PooslDebugTarget) ((PooslThread) element)
+                    .getDebugTarget();
             List<TTransition> transitions = debugTarget.getPossibleTransitions();
-            TransitionType hasTransition = hasPossibleTransition(transitions, ((PooslThread) element).getName());
+            TransitionType hasTransition = hasPossibleTransition(transitions,
+                    ((PooslThread) element).getName());
             if (!hasTransition.equals(TransitionType.NONE)) {
                 if (hasTransition.equals(TransitionType.DELAY)) {
                     return new StyledString(getText(element), executableDelayColorStyler);
@@ -129,10 +145,12 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
                 }
             }
         } else if (element instanceof PooslDebugTreeItem) {
-            PooslDebugTarget debugTarget = (PooslDebugTarget) ((PooslDebugTreeItem) element).getDebugTarget();
+            PooslDebugTarget debugTarget = (PooslDebugTarget) ((PooslDebugTreeItem) element)
+                    .getDebugTarget();
             List<TTransition> transitions = debugTarget.getPossibleTransitions();
             for (IThread iThread : ((PooslDebugTreeItem) element).getThreads()) {
-                TransitionType hasTransition = hasPossibleTransition(transitions, iThread.getName());
+                TransitionType hasTransition = hasPossibleTransition(transitions,
+                        iThread.getName());
                 if (!hasTransition.equals(TransitionType.NONE)) {
                     if (hasTransition.equals(TransitionType.DELAY)) {
                         return new StyledString(getText(element), executableDelayColorStyler);
@@ -199,7 +217,8 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
         } else if (element instanceof PooslThread) {
             try {
                 IThread thread = (PooslThread) element;
-                String threadName = thread.getName().substring(thread.getName().lastIndexOf('/') + 1);
+                String threadName = thread.getName()
+                        .substring(thread.getName().lastIndexOf('/') + 1);
 
                 if (((PooslThread) element).isTerminated()) {
                     return TERMINATED + threadName;
@@ -225,19 +244,23 @@ public class PooslDebugLabelProvider extends StyledCellLabelProvider {
         NONE, NORMAL, COMM_SEND, COMM_RECV, DELAY
     }
 
-    public TransitionType hasPossibleTransition(List<TTransition> possibleTransitions, String processPath) {
+    public TransitionType hasPossibleTransition(
+            List<TTransition> possibleTransitions, String processPath) {
         for (TTransition transition : possibleTransitions) {
             if (transition.getProcessStep() != null) {
                 if (transition.getProcessStep().getProcessPath().equals(processPath)) {
                     return TransitionType.NORMAL;
                 }
             } else if (transition.getCommunication() != null) {
-                if (transition.getCommunication().getSender().getProcessPath().equals(processPath)) {
+                if (transition.getCommunication().getSender().getProcessPath()
+                        .equals(processPath)) {
                     return TransitionType.COMM_SEND;
-                } else if (transition.getCommunication().getReceiver().getProcessPath().equals(processPath)) {
+                } else if (transition.getCommunication().getReceiver().getProcessPath()
+                        .equals(processPath)) {
                     return TransitionType.COMM_RECV;
                 }
-            } else if (transition.getDelay() != null && transition.getDelay().getProcessPath().equals(processPath)) {
+            } else if (transition.getDelay() != null
+                    && transition.getDelay().getProcessPath().equals(processPath)) {
                 return TransitionType.DELAY;
             }
         }

@@ -60,7 +60,8 @@ public class NewMethodProcessDialog extends NewMethodDialog {
         lblInput.setLayoutData(getLabelGrid());
         lblInput.setText("Output Variables:");
 
-        mOutputTable = new Table(composite, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+        mOutputTable = new Table(composite,
+                SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
         createTable(mOutputTable, composite, outputVariables);
     }
 
@@ -102,10 +103,12 @@ public class NewMethodProcessDialog extends NewMethodDialog {
         for (TextDeclaration textDeclaration : outputVariables.keySet()) {
             Declaration declaration = outputVariables.get(textDeclaration);
             if (declaration == null && !textDeclaration.getVariables().isEmpty()) {
-                declaration = CreationHelper.createDeclaration(textDeclaration.getVariables(), textDeclaration.getType());
+                declaration = CreationHelper.createDeclaration(textDeclaration.getVariables(),
+                        textDeclaration.getType());
                 outputVariables.put(textDeclaration, declaration);
             } else if (declaration != null) {
-                CreationHelper.editDeclarationVariables(declaration, textDeclaration.getVariables());
+                CreationHelper.editDeclarationVariables(declaration,
+                        textDeclaration.getVariables());
             }
         }
     }

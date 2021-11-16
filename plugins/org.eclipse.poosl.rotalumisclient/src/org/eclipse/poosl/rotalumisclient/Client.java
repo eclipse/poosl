@@ -110,7 +110,8 @@ public class Client {
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e1) {
-                    LOGGER.log(Level.WARNING, "Thread.sleep failed: " + e.getMessage(), e.getSuppressed());
+                    LOGGER.log(Level.WARNING, "Thread.sleep failed: " + e.getMessage(),
+                            e.getSuppressed());
                     throw e1;
                 }
                 LOGGER.log(Level.INFO, "Failed to connect to retalumis: retry [" + i + "/10]");
@@ -125,12 +126,14 @@ public class Client {
         objFactory = new ObjectFactory();
         try {
             // Define JAXB context and marshaller/unmarshaller
-            final JAXBContext context = JAXBContext.newInstance(Request.class.getPackageName(), Request.class.getClassLoader());
+            final JAXBContext context = JAXBContext.newInstance(Request.class.getPackageName(),
+                    Request.class.getClassLoader());
             marshaller = context.createMarshaller();
             marshaller.setEventHandler(new DefaultValidationEventHandler());
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.setProperty(Marshaller.JAXB_ENCODING, CHARSET.toString());
-            final JAXBContext jaxbContext = JAXBContext.newInstance(Response.class.getPackageName(), Response.class.getClassLoader());
+            final JAXBContext jaxbContext = JAXBContext.newInstance(Response.class.getPackageName(),
+                    Response.class.getClassLoader());
             unmarshaller = jaxbContext.createUnmarshaller();
             unmarshaller.setEventHandler(new DefaultValidationEventHandler());
             // Create a permanent listener for responses from the server
@@ -182,12 +185,14 @@ public class Client {
                     }
 
                     if (LOGGER.isLoggable(Level.FINEST)) {
-                        LOGGER.finest("Receiving response with length: " + headerBuilder.toString());
+                        LOGGER.finest(
+                                "Receiving response with length: " + headerBuilder.toString());
                     }
 
                     String trimmedheader = headerBuilder.toString().trim();
                     if (!trimmedheader.startsWith("ROT ")) { //$NON-NLS-1$
-                        LOGGER.log(Level.SEVERE, "Rotalumis message contains wrong format, is it up to date?");
+                        LOGGER.log(Level.SEVERE,
+                                "Rotalumis message contains wrong format, is it up to date?");
                         return;
                     }
 
@@ -211,7 +216,8 @@ public class Client {
                         }
                     }
                 } catch (JAXBException e) {
-                    LOGGER.log(Level.SEVERE, "Response listener was unable to parse the received response.", e);
+                    LOGGER.log(Level.SEVERE,
+                            "Response listener was unable to parse the received response.", e);
                 } catch (DebugException e) {
                     LOGGER.log(Level.SEVERE, "Could not dispatch response.", e);
                 } catch (IOException e) {
@@ -230,7 +236,8 @@ public class Client {
         Request instantiateRequest = objFactory.createRequest();
         instantiateRequest.setInstantiate(objFactory.createTInstantiateRequest());
         instantiateRequest.getInstantiate().setPooslSpecification(handle);
-        instantiateRequest.getInstantiate().setExternalPortDescriptionFilename(externalPortDescription);
+        instantiateRequest.getInstantiate()
+                .setExternalPortDescriptionFilename(externalPortDescription);
         sendRequest(instantiateRequest);
     }
 
@@ -318,7 +325,8 @@ public class Client {
     public void performTransition(BigInteger handle) {
         LOGGER.fine("Perform transition on handle: " + handle);
         Request request = objFactory.createRequest();
-        TPerformTransitionRequest performTransitionRequest = objFactory.createTPerformTransitionRequest();
+        TPerformTransitionRequest performTransitionRequest = objFactory
+                .createTPerformTransitionRequest();
         performTransitionRequest.setHandle(handle);
         request.setPerformTransition(performTransitionRequest);
         sendRequest(request);
@@ -327,7 +335,8 @@ public class Client {
     public void processStepModel(String path) {
         LOGGER.fine("Perform process step until: " + path);
         Request request = objFactory.createRequest();
-        TPerformProcessStepRequest performProcessStepRequest = objFactory.createTPerformProcessStepRequest();
+        TPerformProcessStepRequest performProcessStepRequest = objFactory
+                .createTPerformProcessStepRequest();
         performProcessStepRequest.setProcessPath(path);
         request.setPerformProcessStep(performProcessStepRequest);
         sendRequest(request);
@@ -345,7 +354,8 @@ public class Client {
         LOGGER.fine("Set sequence diagram view settings to: " + enabled);
         TEengineEventSetupRequest communicationEventSetupRequest = new TEengineEventSetupRequest();
         communicationEventSetupRequest.setCommunicationMessagesEnable(enabled);
-        communicationEventSetupRequest.setCommunicationMessagesCredits(BigInteger.valueOf(creditMax));
+        communicationEventSetupRequest
+                .setCommunicationMessagesCredits(BigInteger.valueOf(creditMax));
         communicationEventSetupRequest.setCommunicationMessagesCreditsEnable(true);
         Request request = new Request();
         request.setEengineEventSetup(communicationEventSetupRequest);
@@ -414,7 +424,8 @@ public class Client {
 
     public <T> T unmarshal(Class<T> docClass, StringBuilder stringBuilder) throws JAXBException {
         try {
-            JAXBElement<T> returnVal = unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())), docClass);
+            JAXBElement<T> returnVal = unmarshaller.unmarshal(
+                    new StreamSource(new StringReader(stringBuilder.toString())), docClass);
             return returnVal.getValue();
         } catch (ClassCastException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
@@ -434,14 +445,17 @@ public class Client {
             requestMessage = marshal(request);
         } catch (JAXBException e) {
             LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_MARSHAL_FAILED, e.getCause());
-            return new Status(Status.ERROR, Activator.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_MARSHAL_FAILED, e.getCause());
+            return new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    Messages.ROTALUMIS_REQUEST_MARSHAL_FAILED, e.getCause());
         }
         LOGGER.finest("Message length: " + requestMessage.length());
         LOGGER.finer("<pre>" + requestMessage + "</pre>"); //$NON-NLS-1$ //$NON-NLS-2$
 
         if (requestMessage.length() > MAX_REQUEST_SIZE) {
             LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_TOO_LARGE);
-            return new Status(Status.ERROR, Activator.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_TOO_LARGE + Messages.ROTALUMIS_REQUEST_TOO_LARGE_USER_INFO);
+            return new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    Messages.ROTALUMIS_REQUEST_TOO_LARGE
+                            + Messages.ROTALUMIS_REQUEST_TOO_LARGE_USER_INFO);
         }
 
         byte[] msg = requestMessage.getBytes(CHARSET);
@@ -454,13 +468,20 @@ public class Client {
                 socket.getOutputStream().write(msg);
                 socketOutWriter.flush();
             } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_NOT_SEND + " --- " + requestMessage, e.getCause());
-                return new Status(Status.ERROR, Activator.PLUGIN_ID, MessageFormat.format(Messages.ROTALUMIS_REQUEST_NOT_SEND + Messages.ROTALUMIS_REQUEST_NOT_SEND_USER_INFO, socket.getPort()),
+                LOGGER.log(Level.SEVERE,
+                        Messages.ROTALUMIS_REQUEST_NOT_SEND + " --- " + requestMessage,
+                        e.getCause());
+                return new Status(Status.ERROR, Activator.PLUGIN_ID,
+                        MessageFormat.format(
+                                Messages.ROTALUMIS_REQUEST_NOT_SEND
+                                        + Messages.ROTALUMIS_REQUEST_NOT_SEND_USER_INFO,
+                                socket.getPort()),
                         e.getCause());
             }
         } else {
             LOGGER.log(Level.SEVERE, Messages.ROTALUMIS_REQUEST_SOCKET_CLOSED);
-            return new Status(Status.ERROR, Activator.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_SOCKET_CLOSED);
+            return new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    Messages.ROTALUMIS_REQUEST_SOCKET_CLOSED);
         }
 
         return new Status(Status.OK, Activator.PLUGIN_ID, Messages.ROTALUMIS_REQUEST_SEND);
@@ -528,7 +549,8 @@ public class Client {
         sendRequest(request);
     }
 
-    public void setVariable(BigInteger handle, BigInteger listHandle, TConstantType type, String literal) {
+    public void setVariable(
+            BigInteger handle, BigInteger listHandle, TConstantType type, String literal) {
         Request request = objFactory.createRequest();
         TSetVariableRequest variableRequest = objFactory.createTSetVariableRequest();
         variableRequest.setVarHandle(handle);

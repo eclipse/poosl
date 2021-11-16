@@ -48,7 +48,8 @@ public final class DiagramNameHelper {
         return getCommunicationDiagramNameFromOriginal(normal, instance);
     }
 
-    public static String getCommunicationDiagramNameFromOriginal(String originalName, String instance) {
+    public static String getCommunicationDiagramNameFromOriginal(
+            String originalName, String instance) {
         return COMMUNICATION_DIAGRAM_PREFIX + originalName + getInstanceLabel(instance);
     }
 
@@ -56,8 +57,10 @@ public final class DiagramNameHelper {
         String filename = target.eResource().getURI().lastSegment();
         String name;
         if (target instanceof ClusterClass) {
-            name = (((ClusterClass) target).getName() != null) ? MessageFormat.format(CLUSTER_DIAGRAM_LABEL, ((ClusterClass) target).getName(), filename)
-                    : MessageFormat.format(SYSTEM_DIAGRAM_LABEL, filename);
+            name = (((ClusterClass) target).getName() != null)
+                ? MessageFormat.format(CLUSTER_DIAGRAM_LABEL, ((ClusterClass) target).getName(),
+                        filename)
+                : MessageFormat.format(SYSTEM_DIAGRAM_LABEL, filename);
         } else {
             name = MessageFormat.format(CLASS_DIAGRAM_LABEL, filename);
         }
@@ -67,7 +70,8 @@ public final class DiagramNameHelper {
     private static String getInstanceLabel(String instance) {
         String coreInstanceLabel;
         if (instance.length() > 25) {
-            coreInstanceLabel = INSTANCE_LABEL_BREAKOFF + instance.substring(instance.length() - 25);
+            coreInstanceLabel = INSTANCE_LABEL_BREAKOFF
+                    + instance.substring(instance.length() - 25);
         } else {
             coreInstanceLabel = instance;
         }

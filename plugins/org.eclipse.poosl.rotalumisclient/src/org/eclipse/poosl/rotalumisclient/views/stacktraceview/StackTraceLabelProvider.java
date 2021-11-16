@@ -40,12 +40,14 @@ public class StackTraceLabelProvider extends LabelProvider {
                 PooslSourceMapping mapping = frameMapping.getMapping();
                 if (mapping != null && mapping != PooslSourceMap.EMPTY_MAPPING) {
                     Path path = new Path(mapping.getFilePath());
-                    mappingInfo = "(" + path.segment(path.segmentCount() - 1) + ":" + mapping.getLineNumber() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    mappingInfo = "(" + path.segment(path.segmentCount() - 1) + ":" //$NON-NLS-1$//$NON-NLS-2$
+                            + mapping.getLineNumber() + ")"; //$NON-NLS-1$
                 }
             } catch (Exception e) {
                 // do nothing
             }
-            return frameMapping.getFrame().getId().toString() + ' ' + frameMapping.getFrame().getMethod() + ' ' + mappingInfo;
+            return frameMapping.getFrame().getId().toString() + ' '
+                    + frameMapping.getFrame().getMethod() + ' ' + mappingInfo;
         }
         return super.getText(element);
     }

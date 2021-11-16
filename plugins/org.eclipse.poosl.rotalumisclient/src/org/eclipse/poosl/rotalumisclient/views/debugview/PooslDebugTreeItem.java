@@ -25,7 +25,8 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslDebugElement;
 import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
 
 /**
- * The {@link PooslDebugTreeItem} are items shown in the tree of the {@link PooslDebugView}. The tree items represent
+ * The {@link PooslDebugTreeItem} are items shown in the tree of the
+ * {@link PooslDebugView}. The tree items represent
  * either a cluster or a process of the Poosl model.
  * 
  * @author Koen Staal
@@ -44,7 +45,8 @@ public class PooslDebugTreeItem extends PooslDebugElement implements IThread {
 
     private final Viewer outerType;
 
-    public PooslDebugTreeItem(Viewer viewer, String name, List<IThread> threads, int level, Object parent, PooslDebugTarget target) {
+    public PooslDebugTreeItem(Viewer viewer, String name, List<IThread> threads, int level,
+            Object parent, PooslDebugTarget target) {
         super(target);
         this.name = name;
         this.threads = threads;

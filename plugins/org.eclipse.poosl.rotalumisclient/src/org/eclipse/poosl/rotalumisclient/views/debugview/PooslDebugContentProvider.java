@@ -34,8 +34,10 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
 import org.eclipse.poosl.rotalumisclient.debug.PooslThread;
 
 /**
- * This is the Tree Content Provider for the {@link PooslDebugView} Uses the lauchmanager to show PooslDebugTargets.
- * Creates parent {@link PooslDebugView.TreeItem} of the clusterclasses based on the thread names. The treeitems are
+ * This is the Tree Content Provider for the {@link PooslDebugView} Uses the
+ * lauchmanager to show PooslDebugTargets.
+ * Creates parent {@link PooslDebugView.TreeItem} of the clusterclasses based on
+ * the thread names. The treeitems are
  * created when new launches are added or removed.
  * 
  * @author Koen Staal
@@ -44,7 +46,8 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslThread;
 public class PooslDebugContentProvider implements ITreeContentProvider {
     private static final String SLASH = "/"; //$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(PooslDebugContentProvider.class.getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(PooslDebugContentProvider.class.getName());
 
     private Map<Object, List<Object>> parentchildren;
 
@@ -71,7 +74,8 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
      * Finds the Tree item parent of the thread
      * 
      * @param thread
-     * @return the parent {@link PooslDebugView.TreeItem}, returns null if none exists
+     * @return the parent {@link PooslDebugView.TreeItem}, returns null if none
+     *     exists
      * @throws DebugException
      */
     private PooslDebugTreeItem findTreeParent(PooslThread thread) throws DebugException {
@@ -132,7 +136,9 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
                         debugtargets.add(newTarget);
                         addTreeItems(viewer, newTarget, (PooslDebugTarget) newTarget);
                     } catch (DebugException e) {
-                        LOGGER.log(Level.SEVERE, "Failed to create tree items in the debug view. " + e.getMessage(), e.getSuppressed());
+                        LOGGER.log(Level.SEVERE,
+                                "Failed to create tree items in the debug view. " + e.getMessage(),
+                                e.getSuppressed());
                     }
                 }
 
@@ -141,17 +147,19 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
     }
 
     /**
-     * Creates {@link PooslDebugView.TreeItem} if the parent is {@link PooslDebugTarget} or
+     * Creates {@link PooslDebugView.TreeItem} if the parent is
+     * {@link PooslDebugTarget} or
      * {@link PooslDebugView.TreeItem} and adds them to parentchildren.
      * 
      * @param viewer
      * @param parent
-     *            {@link PooslDebugTarget} or {@link PooslDebugView.TreeItem}
+     *     {@link PooslDebugTarget} or {@link PooslDebugView.TreeItem}
      * @param target
-     *            the current {@link IDebugTarget}
+     *     the current {@link IDebugTarget}
      * @throws DebugException
      */
-    private void addTreeItems(Viewer viewer, Object parent, PooslDebugTarget target) throws DebugException {
+    private void addTreeItems(Viewer viewer, Object parent, PooslDebugTarget target)
+            throws DebugException {
         IThread[] threads;
         int level;
         if (parent instanceof PooslDebugTarget) {
@@ -182,7 +190,8 @@ public class PooslDebugContentProvider implements ITreeContentProvider {
                             List<IThread> list = new ArrayList<>();
                             list.add(iThread);
                             sameparent.put(levelstring, list);
-                            PooslDebugTreeItem treeitem = new PooslDebugTreeItem(viewer, levelstring, list, level + 1, parent, target);
+                            PooslDebugTreeItem treeitem = new PooslDebugTreeItem(viewer,
+                                    levelstring, list, level + 1, parent, target);
                             children.add(treeitem);
                         }
                     }

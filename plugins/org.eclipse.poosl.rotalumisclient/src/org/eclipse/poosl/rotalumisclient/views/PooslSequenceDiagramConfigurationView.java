@@ -55,7 +55,8 @@ public class PooslSequenceDiagramConfigurationView extends CheckedTreeSelectionD
 
     private CheckboxTreeViewer treeViewer;
 
-    public PooslSequenceDiagramConfigurationView(Shell shell, ILabelProvider labelProvider, ITreeContentProvider contentProvider) {
+    public PooslSequenceDiagramConfigurationView(Shell shell, ILabelProvider labelProvider,
+            ITreeContentProvider contentProvider) {
         super(shell, labelProvider, contentProvider);
         setHelpAvailable(false);
     }
@@ -75,7 +76,8 @@ public class PooslSequenceDiagramConfigurationView extends CheckedTreeSelectionD
             }
 
             private void setParentCheckedStateRecursivly(Object element) {
-                PooslTreeContentProvider contentProvider = (PooslTreeContentProvider) treeViewer.getContentProvider();
+                PooslTreeContentProvider contentProvider = (PooslTreeContentProvider) treeViewer
+                        .getContentProvider();
                 Object parent = contentProvider.getParent(element);
                 if (parent != null) {
                     treeViewer.setChecked(parent, false);
@@ -84,7 +86,8 @@ public class PooslSequenceDiagramConfigurationView extends CheckedTreeSelectionD
             }
 
             private void setChildCheckedStateRecursivly(Object element) {
-                PooslTreeContentProvider contentProvider = (PooslTreeContentProvider) treeViewer.getContentProvider();
+                PooslTreeContentProvider contentProvider = (PooslTreeContentProvider) treeViewer
+                        .getContentProvider();
                 if (contentProvider.hasChildren(element)) {
                     Object[] children = contentProvider.getChildren(element);
                     for (Object child : children) {
@@ -121,23 +124,29 @@ public class PooslSequenceDiagramConfigurationView extends CheckedTreeSelectionD
         GridLayout layout = new GridLayout();
         layout.numColumns = 0;
         layout.marginWidth = 0;
-        layout.horizontalSpacing = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
+        layout.horizontalSpacing = convertHorizontalDLUsToPixels(
+                IDialogConstants.HORIZONTAL_SPACING);
         buttonComposite.setLayout(layout);
         buttonComposite.setFont(composite.getFont());
         GridData data = new GridData(GridData.HORIZONTAL_ALIGN_END | GridData.GRAB_HORIZONTAL);
         data.grabExcessHorizontalSpace = true;
         buttonComposite.setLayoutData(data);
-        Button selectButton = createButton(buttonComposite, IDialogConstants.SELECT_ALL_ID, "Select all instances", false);
+        Button selectButton = createButton(buttonComposite, IDialogConstants.SELECT_ALL_ID,
+                "Select all instances", false);
         SelectionListener listener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                Object[] checkedElements = getLeafs(((PooslTreeContentProvider) fViewer.getContentProvider()).getElements(fViewer.getInput()), (PooslTreeContentProvider) fViewer.getContentProvider());
+                Object[] checkedElements = getLeafs(
+                        ((PooslTreeContentProvider) fViewer.getContentProvider())
+                                .getElements(fViewer.getInput()),
+                        (PooslTreeContentProvider) fViewer.getContentProvider());
                 fViewer.setCheckedElements(checkedElements);
                 updateOKStatus();
             }
         };
         selectButton.addSelectionListener(listener);
-        Button deselectButton = createButton(buttonComposite, IDialogConstants.DESELECT_ALL_ID, "Deselect all", false);
+        Button deselectButton = createButton(buttonComposite, IDialogConstants.DESELECT_ALL_ID,
+                "Deselect all", false);
         listener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -180,9 +189,12 @@ public class PooslSequenceDiagramConfigurationView extends CheckedTreeSelectionD
 
     @Override
     protected void okPressed() {
-        if (filterSettingButton.getSelection() != initialFilterSetting || filterSettingButton.getSelection() && messageSerialNumber > 0) {
-            MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(), "Clear messages", null,
-                    "This change in the filter settings will clear all stored messages.\nAre you sure you want to continue?", MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
+        if (filterSettingButton.getSelection() != initialFilterSetting
+                || filterSettingButton.getSelection() && messageSerialNumber > 0) {
+            MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(),
+                    "Clear messages", null,
+                    "This change in the filter settings will clear all stored messages.\nAre you sure you want to continue?",
+                    MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
             if (dialog.open() != MessageDialog.OK) {
                 return;
             }

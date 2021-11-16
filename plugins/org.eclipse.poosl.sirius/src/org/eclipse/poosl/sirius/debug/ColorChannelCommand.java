@@ -45,22 +45,26 @@ public class ColorChannelCommand extends RecordingCommand {
      * Specific command to delete the given representations.
      * 
      * @param session
-     *            the session on which to delete the {@link DRepresentationDescriptor} s. WARNING : can only delete
-     *            {@link DRepresentationDescriptor}s owned by this {@link Session} because we have one
-     *            TransactionalEditingDomain per {@link Session}.
+     *     the session on which to delete the {@link DRepresentationDescriptor}
+     *     s. WARNING : can only delete
+     *     {@link DRepresentationDescriptor}s owned by this {@link Session}
+     *     because we have one
+     *     TransactionalEditingDomain per {@link Session}.
      * @param descriptors
-     *            {@link Set} of {@link DRepresentationDescriptor}s to delete.
+     *     {@link Set} of {@link DRepresentationDescriptor}s to delete.
      * @param pathCalculators
      * @param messages
      */
-    public ColorChannelCommand(Session session, List<DRepresentationDescriptor> descriptors, Map<String, PooslDrawMessage> messages, Map<String, PathCalculator> pathCalculators) {
+    public ColorChannelCommand(Session session, List<DRepresentationDescriptor> descriptors,
+            Map<String, PooslDrawMessage> messages, Map<String, PathCalculator> pathCalculators) {
         super(session.getTransactionalEditingDomain(), COMMAND_LABEL);
         this.descriptors = descriptors;
         this.messages = messages;
         this.pathCalculators = pathCalculators;
     }
 
-    public ColorChannelCommand(Session session, DRepresentationDescriptor descriptor, Map<String, PooslDrawMessage> messages, Map<String, PathCalculator> pathCalculators) {
+    public ColorChannelCommand(Session session, DRepresentationDescriptor descriptor,
+            Map<String, PooslDrawMessage> messages, Map<String, PathCalculator> pathCalculators) {
         this(session, new ArrayList<DRepresentationDescriptor>(), messages, pathCalculators);
         this.descriptors.add(descriptor);
     }
@@ -71,9 +75,11 @@ public class ColorChannelCommand extends RecordingCommand {
     @Override
     protected void doExecute() {
         for (DRepresentationDescriptor descriptor : descriptors) {
-            String launchId = GraphicalEditorHelper.getLaunchIdFromDocumentation(descriptor.getDocumentation());
+            String launchId = GraphicalEditorHelper
+                    .getLaunchIdFromDocumentation(descriptor.getDocumentation());
             PooslDrawMessage drawMessage = messages.get(launchId);
-            PathCalculator pathCalculator = (pathCalculators.get(launchId) == null) ? (new PathCalculator("")) : pathCalculators.get(launchId); //$NON-NLS-1$
+            PathCalculator pathCalculator = (pathCalculators.get(launchId) == null)
+                ? (new PathCalculator("")) : pathCalculators.get(launchId); //$NON-NLS-1$
             DRepresentation representation = descriptor.getRepresentation();
             ColorGraphHelper.colorChannel(representation, drawMessage, pathCalculator);
             DiagramDebugNote debugNote = new DiagramDebugNote(representation);

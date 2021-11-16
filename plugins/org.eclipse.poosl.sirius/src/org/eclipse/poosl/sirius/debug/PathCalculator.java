@@ -33,8 +33,11 @@ public class PathCalculator {
 
     public void addMessage(PooslDrawMessage drawMessage) {
         for (MessagePath paths : drawMessage.getMessagePaths().values()) {
-            getPathCounter(getPathId(paths.getOwner(), paths.getSender(), paths.getSenderPort())).addOutgoing();
-            getPathCounter(getPathId(paths.getOwner(), paths.getReceiver(), paths.getReceiverPort())).addIncoming();
+            getPathCounter(getPathId(paths.getOwner(), paths.getSender(), paths.getSenderPort()))
+                    .addOutgoing();
+            getPathCounter(
+                    getPathId(paths.getOwner(), paths.getReceiver(), paths.getReceiverPort()))
+                            .addIncoming();
         }
     }
 

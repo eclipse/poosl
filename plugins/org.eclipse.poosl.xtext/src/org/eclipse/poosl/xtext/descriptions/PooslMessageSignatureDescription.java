@@ -142,20 +142,24 @@ public final class PooslMessageSignatureDescription {
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateMessage(final String portName, final String messageName) {
+    public static Predicate<IEObjectDescription> predicateMessage(
+            final String portName, final String messageName) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
-                return portName.equals(getPort(input)) && messageName.equals(HelperFunctions.getName(input));
+                return portName.equals(getPort(input))
+                        && messageName.equals(HelperFunctions.getName(input));
             }
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateMessage(final String portName, final int vars, final URI excludedObjectURI) {
+    public static Predicate<IEObjectDescription> predicateMessage(
+            final String portName, final int vars, final URI excludedObjectURI) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
-                return portName.equals(getPort(input)) && vars == getParameterTypes(input).size() && !input.getEObjectURI().equals(excludedObjectURI);
+                return portName.equals(getPort(input)) && vars == getParameterTypes(input).size()
+                        && !input.getEObjectURI().equals(excludedObjectURI);
             }
         };
     }

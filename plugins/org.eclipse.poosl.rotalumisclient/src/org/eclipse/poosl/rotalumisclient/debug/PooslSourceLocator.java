@@ -23,7 +23,8 @@ import org.eclipse.debug.core.sourcelookup.ISourceLookupParticipant;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
-public class PooslSourceLocator extends AbstractSourceLookupDirector implements IPersistableSourceLocator {
+public class PooslSourceLocator extends AbstractSourceLookupDirector implements
+        IPersistableSourceLocator {
 
     @Override
     public void initializeParticipants() {

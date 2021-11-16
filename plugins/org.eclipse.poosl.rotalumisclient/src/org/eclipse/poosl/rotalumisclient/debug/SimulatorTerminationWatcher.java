@@ -29,7 +29,8 @@ import org.eclipse.debug.core.DebugException;
  *
  */
 public class SimulatorTerminationWatcher implements Runnable {
-    private static final Logger LOGGER = Logger.getLogger(SimulatorTerminationWatcher.class.getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(SimulatorTerminationWatcher.class.getName());
 
     private final PooslDebugTarget debugTarget;
 
@@ -37,7 +38,8 @@ public class SimulatorTerminationWatcher implements Runnable {
 
     private final String projectName;
 
-    public SimulatorTerminationWatcher(PooslDebugTarget debugTarget, Process simulationProcess, String projectName) {
+    public SimulatorTerminationWatcher(PooslDebugTarget debugTarget, Process simulationProcess,
+            String projectName) {
         this.debugTarget = debugTarget;
         this.simulationProcess = simulationProcess;
         this.projectName = projectName;
@@ -63,7 +65,9 @@ public class SimulatorTerminationWatcher implements Runnable {
                 project.refreshLocal(IResource.DEPTH_INFINITE, null);
             }
         } catch (CoreException e) {
-            LOGGER.log(Level.WARNING, "Could not get project name from launch configuration.\nWill not be able to refresh the project.", e);
+            LOGGER.log(Level.WARNING,
+                    "Could not get project name from launch configuration.\nWill not be able to refresh the project.",
+                    e);
         }
     }
 }

@@ -40,7 +40,8 @@ public class PooslSourceMapping {
 
     private String singleLine;
 
-    public PooslSourceMapping(String filePath, int lineNumber, int offset, int length, int totalOffset, int totalEndOffset, String sourceText) {
+    public PooslSourceMapping(String filePath, int lineNumber, int offset, int length,
+            int totalOffset, int totalEndOffset, String sourceText) {
         this.filePath = filePath;
         this.lineNumber = lineNumber;
         this.offset = offset;
@@ -90,9 +91,11 @@ public class PooslSourceMapping {
             }
             singleLine = sourceText;
             // replace comments, source http://ostermiller.org/findcomment.html
-            singleLine = singleLine.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", WHITESPACE); //$NON-NLS-1$
+            singleLine = singleLine.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", //$NON-NLS-1$
+                    WHITESPACE);
             // replace whitespaces
-            singleLine = singleLine.replaceAll("\\n", WHITESPACE).replaceAll("\\t", WHITESPACE).replaceAll("\\r", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            singleLine = singleLine.replaceAll("\\n", WHITESPACE).replaceAll("\\t", WHITESPACE) //$NON-NLS-1$//$NON-NLS-2$
+                    .replaceAll("\\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
             // remove unnecessary whitespaces
             singleLine = singleLine.trim().replaceAll(" +", WHITESPACE); //$NON-NLS-1$
         }

@@ -56,7 +56,8 @@ public class PooslTreeLabelProvider implements ILabelProvider {
     public String getText(Object element) {
         if (element instanceof Entry<?, ?>) {
             String instanceName = (String) ((Entry<?, ?>) element).getKey();
-            instanceName = instanceName.substring(instanceName.lastIndexOf('/'), instanceName.length());
+            instanceName = instanceName.substring(instanceName.lastIndexOf('/'),
+                    instanceName.length());
             return instanceName;
         }
         return ""; //$NON-NLS-1$

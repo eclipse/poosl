@@ -27,7 +27,8 @@ public class PooslDiagramLifeline implements IPropertySource {
     private static final String PROPERTY_NAME = "poosldiagramlifeline.name"; //$NON-NLS-1$
 
     // class definition
-    private static final IPropertyDescriptor[] PROPERTIES = new IPropertyDescriptor[] { new PropertyDescriptor(PROPERTY_NAME, "Hierarchical name") };
+    private static final IPropertyDescriptor[] PROPERTIES = new IPropertyDescriptor[] {
+            new PropertyDescriptor(PROPERTY_NAME, "Hierarchical name") };
 
     private final String name;
 

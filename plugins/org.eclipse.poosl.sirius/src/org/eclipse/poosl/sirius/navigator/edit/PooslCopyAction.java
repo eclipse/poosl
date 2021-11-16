@@ -33,7 +33,8 @@ import org.eclipse.ui.actions.SelectionListenerAction;
 import org.eclipse.ui.part.ResourceTransfer;
 
 /**
- * Action to copy the resource and its sirius diagrams Based on the not extendable
+ * Action to copy the resource and its sirius diagrams Based on the not
+ * extendable
  * org.eclipse.ui.internal.navigator.resources.actions.CopyAction.
  * 
  * @author Koen Staal
@@ -68,9 +69,9 @@ public class PooslCopyAction extends SelectionListenerAction {
      * Creates a new action.
      *
      * @param shell
-     *            the shell for any dialogs
+     *     the shell for any dialogs
      * @param clipboard
-     *            a platform clipboard
+     *     a platform clipboard
      */
     public PooslCopyAction(Shell shell, Clipboard clipboard) {
         super(LABEL);
@@ -87,11 +88,11 @@ public class PooslCopyAction extends SelectionListenerAction {
      * Creates a new action.
      *
      * @param shell
-     *            the shell for any dialogs
+     *     the shell for any dialogs
      * @param clipboard
-     *            a platform clipboard
+     *     a platform clipboard
      * @param pasteAction
-     *            a paste action
+     *     a paste action
      *
      * @since 2.0
      */
@@ -101,7 +102,8 @@ public class PooslCopyAction extends SelectionListenerAction {
     }
 
     /**
-     * The <code>CopyAction</code> implementation of this method defined on <code>IAction</code> copies the selected
+     * The <code>CopyAction</code> implementation of this method defined on
+     * <code>IAction</code> copies the selected
      * resources to the clipboard.
      */
     @Override
@@ -146,19 +148,26 @@ public class PooslCopyAction extends SelectionListenerAction {
      * Set the clipboard contents. Prompt to retry if clipboard is busy.
      *
      * @param resources
-     *            the resources to copy to the clipboard
+     *     the resources to copy to the clipboard
      * @param fileNames
-     *            file names of the resources to copy to the clipboard
+     *     file names of the resources to copy to the clipboard
      * @param names
-     *            string representation of all names
+     *     string representation of all names
      */
     private void setClipboard(IResource[] resources, String[] fileNames, String names) {
         try {
             // set the clipboard contents
             if (fileNames.length > 0) {
-                clipboard.setContents(new Object[] { resources, fileNames, names }, new Transfer[] { ResourceTransfer.getInstance(), FileTransfer.getInstance(), TextTransfer.getInstance() });
+                clipboard.setContents(new Object[] { resources, fileNames, names },
+                        new Transfer[] {
+                                ResourceTransfer.getInstance(),
+                                FileTransfer.getInstance(),
+                                TextTransfer.getInstance() });
             } else {
-                clipboard.setContents(new Object[] { resources, names }, new Transfer[] { ResourceTransfer.getInstance(), TextTransfer.getInstance() });
+                clipboard.setContents(new Object[] { resources, names },
+                        new Transfer[] {
+                                ResourceTransfer.getInstance(),
+                                TextTransfer.getInstance() });
             }
         } catch (SWTError e) {
             if (e.code != DND.ERROR_CANNOT_SET_CLIPBOARD) {
@@ -172,7 +181,8 @@ public class PooslCopyAction extends SelectionListenerAction {
     }
 
     /**
-     * The <code>CopyAction</code> implementation of this <code>SelectionListenerAction</code> method enables this
+     * The <code>CopyAction</code> implementation of this
+     * <code>SelectionListenerAction</code> method enables this
      * action if one or more resources of compatible types are selected.
      */
     @Override

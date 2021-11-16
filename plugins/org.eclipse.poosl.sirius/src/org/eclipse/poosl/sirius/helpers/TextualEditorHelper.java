@@ -75,16 +75,18 @@ public final class TextualEditorHelper {
      * Opens the texteditor and selects the corresponding EObject if needed.
      * 
      * @param sourceObject
-     *            The object to be shown in the texteditor
+     *     The object to be shown in the texteditor
      * @param selectTarget
-     *            Set false if you dont want to search and highlight the eobject
+     *     Set false if you dont want to search and highlight the eobject
      * @param showInstance
      * @return succeeded
      */
-    public static boolean openTextualEditor(EObject sourceObject, boolean selectTarget, boolean showInstance) {
+    public static boolean openTextualEditor(
+            EObject sourceObject, boolean selectTarget, boolean showInstance) {
         EObject correctedSourceObject;
         if (!showInstance && sourceObject instanceof Instance) {
-            correctedSourceObject = PooslReferenceHelper.getInstantiableClassEObject((Instance) sourceObject);
+            correctedSourceObject = PooslReferenceHelper
+                    .getInstantiableClassEObject((Instance) sourceObject);
         } else {
             correctedSourceObject = sourceObject;
         }
@@ -93,7 +95,8 @@ public final class TextualEditorHelper {
             IEditorPart openedEditor = getOpenedEditor(correctedSourceObject);
             if (openedEditor != null && selectTarget) {
                 EObject freshSourceObject = findFreshEObject(correctedSourceObject);
-                if (freshSourceObject instanceof ClusterClass && ((ClusterClass) freshSourceObject).getName() == null) {
+                if (freshSourceObject instanceof ClusterClass
+                        && ((ClusterClass) freshSourceObject).getName() == null) {
                     ICompositeNode nod = NodeModelUtils.findActualNodeFor(freshSourceObject);
                     if (nod != null && openedEditor instanceof ITextEditor) {
                         ((ITextEditor) openedEditor).selectAndReveal(nod.getOffset(), 6);
@@ -101,9 +104,11 @@ public final class TextualEditorHelper {
                 } else {
                     EAttribute feature = getFeatureDescription(freshSourceObject);
                     if (feature != null) {
-                        List<INode> nodes = NodeModelUtils.findNodesForFeature(freshSourceObject, feature);
+                        List<INode> nodes = NodeModelUtils.findNodesForFeature(freshSourceObject,
+                                feature);
                         if (!nodes.isEmpty() && openedEditor instanceof ITextEditor) {
-                            ((ITextEditor) openedEditor).selectAndReveal(nodes.get(0).getOffset(), nodes.get(0).getLength());
+                            ((ITextEditor) openedEditor).selectAndReveal(nodes.get(0).getOffset(),
+                                    nodes.get(0).getLength());
                         }
                     }
                 }
@@ -121,7 +126,9 @@ public final class TextualEditorHelper {
             URI uri = originalResource.getURI();
 
             ResourceSet resourceSet = new ResourceSetImpl();
-            resourceSet.getPackageRegistry().put(org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(), org.eclipse.poosl.PooslPackage.eINSTANCE);
+            resourceSet.getPackageRegistry().put(
+                    org.eclipse.poosl.PooslPackage.eINSTANCE.getNsURI(),
+                    org.eclipse.poosl.PooslPackage.eINSTANCE);
             Resource resource = resourceSet.getResource(uri, true);
 
             return ImportingHelper.toPoosl(resource);
@@ -166,10 +173,15 @@ public final class TextualEditorHelper {
             String name = ((ProcessMethod) old).getName();
             if (name != null) {
                 ProcessClass processClass = (ProcessClass) findFreshEObject(old.eContainer());
-                int numberOfInputs = HelperFunctions.declarationsToVariables(((ProcessMethod) old).getInputParameters()).size();
-                int numberOfOutputs = HelperFunctions.declarationsToVariables(((ProcessMethod) old).getOutputParameters()).size();
+                int numberOfInputs = HelperFunctions
+                        .declarationsToVariables(((ProcessMethod) old).getInputParameters()).size();
+                int numberOfOutputs = HelperFunctions
+                        .declarationsToVariables(((ProcessMethod) old).getOutputParameters())
+                        .size();
                 for (ProcessMethod pMethod : processClass.getMethods()) {
-                    if (name.equals(pMethod.getName()) && numberOfInputs == pMethod.getInputParameters().size() && numberOfOutputs == pMethod.getOutputParameters().size()) {
+                    if (name.equals(pMethod.getName())
+                            && numberOfInputs == pMethod.getInputParameters().size()
+                            && numberOfOutputs == pMethod.getOutputParameters().size()) {
                         return pMethod;
                     }
                 }
@@ -178,10 +190,12 @@ public final class TextualEditorHelper {
         if (old instanceof DataMethodNamed) {
             String name = ((DataMethodNamed) old).getName();
             if (name != null) {
-                int numberOfInputs = HelperFunctions.declarationsToVariables(((DataMethodNamed) old).getParameters()).size();
+                int numberOfInputs = HelperFunctions
+                        .declarationsToVariables(((DataMethodNamed) old).getParameters()).size();
                 DataClass dClass = (DataClass) findFreshEObject(old.eContainer());
                 for (DataMethodNamed dMethod : dClass.getDataMethodsNamed()) {
-                    if (name.equals(dMethod.getName()) && numberOfInputs == dMethod.getParameters().size()) {
+                    if (name.equals(dMethod.getName())
+                            && numberOfInputs == dMethod.getParameters().size()) {
                         return dMethod;
                     }
                 }
@@ -189,10 +203,12 @@ public final class TextualEditorHelper {
         } else if (old instanceof DataMethodUnaryOperator) {
             OperatorUnary name = ((DataMethodUnaryOperator) old).getName();
             if (name != null) {
-                int numberOfInputs = HelperFunctions.declarationsToVariables(((DataMethodNamed) old).getParameters()).size();
+                int numberOfInputs = HelperFunctions
+                        .declarationsToVariables(((DataMethodNamed) old).getParameters()).size();
                 DataClass dClass = (DataClass) findFreshEObject(old.eContainer());
                 for (DataMethodUnaryOperator dMethod : dClass.getDataMethodsUnaryOperator()) {
-                    if (name.equals(dMethod.getName()) && numberOfInputs == dMethod.getParameters().size()) {
+                    if (name.equals(dMethod.getName())
+                            && numberOfInputs == dMethod.getParameters().size()) {
                         return dMethod;
                     }
                 }
@@ -200,10 +216,12 @@ public final class TextualEditorHelper {
         } else if (old instanceof DataMethodBinaryOperator) {
             OperatorBinary name = ((DataMethodBinaryOperator) old).getName();
             if (name != null) {
-                int numberOfInputs = HelperFunctions.declarationsToVariables(((DataMethodNamed) old).getParameters()).size();
+                int numberOfInputs = HelperFunctions
+                        .declarationsToVariables(((DataMethodNamed) old).getParameters()).size();
                 DataClass dClass = (DataClass) findFreshEObject(old.eContainer());
                 for (DataMethodBinaryOperator dMethod : dClass.getDataMethodsBinaryOperator()) {
-                    if (name.equals(dMethod.getName()) && numberOfInputs == dMethod.getParameters().size()) {
+                    if (name.equals(dMethod.getName())
+                            && numberOfInputs == dMethod.getParameters().size()) {
                         return dMethod;
                     }
                 }
@@ -219,8 +237,10 @@ public final class TextualEditorHelper {
                 } else if (container instanceof ClusterClass) {
                     return findVariable(((ClusterClass) container).getParameters(), name);
                 } else if (container instanceof ProcessClass) {
-                    if (declaration.eContainingFeature() == Literals.PROCESS_CLASS__INSTANCE_VARIABLES) {
-                        return findVariable(((ProcessClass) container).getInstanceVariables(), name);
+                    if (declaration.eContainingFeature()
+                            == Literals.PROCESS_CLASS__INSTANCE_VARIABLES) {
+                        return findVariable(((ProcessClass) container).getInstanceVariables(),
+                                name);
                     } else {
                         return findVariable(((ProcessClass) container).getParameters(), name);
                     }
@@ -257,7 +277,7 @@ public final class TextualEditorHelper {
      * Open Text Editor which contains the given object
      * 
      * @param object
-     *            The {@link EObject} to show
+     *     The {@link EObject} to show
      * @return The editor if available
      * @throws PartInitException
      */
@@ -268,15 +288,19 @@ public final class TextualEditorHelper {
         IEditorPart openedEditor = null;
         if (eUri.isPlatformResource()) {
             String platformString = eUri.toPlatformString(true);
-            IFile file = (IFile) ResourcesPlugin.getWorkspace().getRoot().findMember(platformString);
+            IFile file = (IFile) ResourcesPlugin.getWorkspace().getRoot()
+                    .findMember(platformString);
 
-            openedEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), "org.eclipse.poosl.xtext.Poosl"); //$NON-NLS-1$
+            openedEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                    .openEditor(new FileEditorInput(file), "org.eclipse.poosl.xtext.Poosl"); //$NON-NLS-1$
 
         } else {
             Display.getDefault().asyncExec(new Runnable() {
                 @Override
                 public void run() {
-                    MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Poosl Editor", "Can not open a Poosl editor for a file outside of the workspace.");
+                    MessageDialog.openInformation(Display.getDefault().getActiveShell(),
+                            "Poosl Editor",
+                            "Can not open a Poosl editor for a file outside of the workspace.");
                 }
             });
         }

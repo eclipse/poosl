@@ -79,7 +79,8 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.progress.WorkbenchJob;
 
 /**
- * Action to delete the resource and its sirius diagrams Based on {@link DeleteResourceAction}.
+ * Action to delete the resource and its sirius diagrams Based on
+ * {@link DeleteResourceAction}.
  * 
  * @author Koen Staal
  */
@@ -103,7 +104,8 @@ public class PooslDeleteAction extends SelectionListenerAction {
     private boolean deleteContent;
 
     /**
-     * Flag that allows testing mode ... it won't pop up the project delete dialog, and will return "delete all
+     * Flag that allows testing mode ... it won't pop up the project delete
+     * dialog, and will return "delete all
      * content".
      */
     private boolean fTestingMode;
@@ -132,16 +134,21 @@ public class PooslDeleteAction extends SelectionListenerAction {
 
                 if (!pooslFiles.isEmpty()) {
                     String projectName = pooslFiles.get(0).getFullPath().segment(0);
-                    IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
-                    final Session session = GraphicalEditorHelper.getSession(project, null, false, true, monitor);
+                    IProject project = ResourcesPlugin.getWorkspace().getRoot()
+                            .getProject(projectName);
+                    final Session session = GraphicalEditorHelper.getSession(project, null, false,
+                            true, monitor);
 
                     List<DRepresentationDescriptor> allDiagrams = new ArrayList<>();
 
                     for (IResource source : pooslFiles) {
-                        final Resource resource = ConvertHelper.convertIPathToResource(source.getFullPath());
-                        allDiagrams.addAll(PooslDiagramRefactorHelper.getAllResourceDiagrams(session, resource));
+                        final Resource resource = ConvertHelper
+                                .convertIPathToResource(source.getFullPath());
+                        allDiagrams.addAll(PooslDiagramRefactorHelper
+                                .getAllResourceDiagrams(session, resource));
                     }
-                    PooslDiagramDeleteHelper.closeAndDeleteDiagrams(shellProvider.getShell(), session, allDiagrams);
+                    PooslDiagramDeleteHelper.closeAndDeleteDiagrams(shellProvider.getShell(),
+                            session, allDiagrams);
                 }
             } catch (Exception e) {
                 LOGGER.warn("Diagram deletion failed", e);
@@ -161,7 +168,8 @@ public class PooslDeleteAction extends SelectionListenerAction {
 
     public static void getResources(IResource source, List<IResource> pooslFiles) {
 
-        if (source.getType() == IResource.FILE && GlobalConstants.FILE_EXTENSION.equals(source.getFileExtension())) {
+        if (source.getType() == IResource.FILE
+                && GlobalConstants.FILE_EXTENSION.equals(source.getFileExtension())) {
             pooslFiles.add(source);
         }
 
@@ -188,7 +196,8 @@ public class PooslDeleteAction extends SelectionListenerAction {
         private boolean deleteContent;
 
         /**
-         * Control testing mode. In testing mode, it returns true to delete contents and does not pop up the dialog.
+         * Control testing mode. In testing mode, it returns true to delete
+         * contents and does not pop up the dialog.
          */
         private boolean fIsTesting;
 
@@ -210,10 +219,11 @@ public class PooslDeleteAction extends SelectionListenerAction {
             super(parentShell, getTitle(projects), null, // accept the
                     // default window
                     // icon
-                    getMessage(projects), MessageDialog.QUESTION, new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL }, 0); // yes
+                    getMessage(projects), MessageDialog.QUESTION,
+                    new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL }, 0); // yes
                                                                                                                                               // is
                                                                                                                                               // the
-            // default
+                                                                                                                                              // default
             this.projects = projects;
             setShellStyle(getShellStyle() | SWT.SHEET);
         }
@@ -228,15 +238,18 @@ public class PooslDeleteAction extends SelectionListenerAction {
         static String getMessage(List<? extends IResource> projects) {
             if (projects.size() == 1) {
                 IProject project = (IProject) projects.get(0);
-                return NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmProject1, project.getName());
+                return NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmProject1,
+                        project.getName());
             }
-            return NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmProjectN, Integer.valueOf(projects.size()));
+            return NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmProjectN,
+                    Integer.valueOf(projects.size()));
         }
 
         @Override
         protected void configureShell(Shell newShell) {
             super.configureShell(newShell);
-            PlatformUI.getWorkbench().getHelpSystem().setHelp(newShell, IIDEHelpContextIds.DELETE_PROJECT_DIALOG);
+            PlatformUI.getWorkbench().getHelpSystem().setHelp(newShell,
+                    IIDEHelpContextIds.DELETE_PROJECT_DIALOG);
         }
 
         @Override
@@ -251,7 +264,8 @@ public class PooslDeleteAction extends SelectionListenerAction {
                 if (project == null || project.getLocation() == null) {
                     text1 = IDEWorkbenchMessages.DeleteResourceAction_deleteContentsN;
                 } else {
-                    text1 = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_deleteContents1, project.getLocation().toOSString());
+                    text1 = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_deleteContents1,
+                            project.getLocation().toOSString());
                 }
             } else {
                 text1 = IDEWorkbenchMessages.DeleteResourceAction_deleteContentsN;
@@ -311,10 +325,11 @@ public class PooslDeleteAction extends SelectionListenerAction {
         }
 
         /**
-         * Set this delete dialog into testing mode. It won't pop up, and it returns true for deleteContent.
+         * Set this delete dialog into testing mode. It won't pop up, and it
+         * returns true for deleteContent.
          *
          * @param t
-         *            the testing mode
+         *     the testing mode
          */
         void setTestingMode(boolean t) {
             fIsTesting = t;
@@ -326,7 +341,8 @@ public class PooslDeleteAction extends SelectionListenerAction {
      */
     private void initAction() {
         setToolTipText(IDEWorkbenchMessages.DeleteResourceAction_toolTip);
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(this, IIDEHelpContextIds.DELETE_RESOURCE_ACTION);
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(this,
+                IIDEHelpContextIds.DELETE_RESOURCE_ACTION);
         setId(ID);
     }
 
@@ -338,9 +354,10 @@ public class PooslDeleteAction extends SelectionListenerAction {
      * Returns whether delete can be performed on the current selection.
      *
      * @param resources
-     *            the selected resources
-     * @return <code>true</code> if the resources can be deleted, and <code>false</code> if the selection contains
-     *         non-resources or phantom resources
+     *     the selected resources
+     * @return <code>true</code> if the resources can be deleted, and
+     *     <code>false</code> if the selection contains
+     *     non-resources or phantom resources
      */
     private boolean canDelete(List<? extends IResource> resources) {
         // allow only projects or only non-projects to be selected.
@@ -366,8 +383,9 @@ public class PooslDeleteAction extends SelectionListenerAction {
      * Returns whether the selection contains linked resources.
      *
      * @param resources
-     *            the selected resources
-     * @return <code>true</code> if the resources contain linked resources, and <code>false</code> otherwise
+     *     the selected resources
+     * @return <code>true</code> if the resources contain linked resources, and
+     *     <code>false</code> otherwise
      */
     private boolean containsLinkedResource(List<? extends IResource> resources) {
         for (int i = 0; i < resources.size(); i++) {
@@ -383,8 +401,9 @@ public class PooslDeleteAction extends SelectionListenerAction {
      * Returns whether the selection contains only non-projects.
      *
      * @param resources
-     *            the selected resources
-     * @return <code>true</code> if the resources contains only non-projects, and <code>false</code> otherwise
+     *     the selected resources
+     * @return <code>true</code> if the resources contains only non-projects,
+     *     and <code>false</code> otherwise
      */
     private boolean containsOnlyNonProjects(List<? extends IResource> resources) {
         int types = getSelectedResourceTypes(resources);
@@ -400,8 +419,9 @@ public class PooslDeleteAction extends SelectionListenerAction {
      * Returns whether the selection contains only projects.
      *
      * @param resources
-     *            the selected resources
-     * @return <code>true</code> if the resources contains only projects, and <code>false</code> otherwise
+     *     the selected resources
+     * @return <code>true</code> if the resources contains only projects, and
+     *     <code>false</code> otherwise
      */
     private boolean containsOnlyProjects(List<? extends IResource> resources) {
         int types = getSelectedResourceTypes(resources);
@@ -413,9 +433,10 @@ public class PooslDeleteAction extends SelectionListenerAction {
      * Asks the user to confirm a delete operation.
      *
      * @param resources
-     *            the selected resources
-     * @return <code>true</code> if the user says to go ahead, and <code>false</code> if the deletion should be
-     *         abandoned
+     *     the selected resources
+     * @return <code>true</code> if the user says to go ahead, and
+     *     <code>false</code> if the deletion should be
+     *     abandoned
      */
     private boolean confirmDelete(List<? extends IResource> resources) {
         if (containsOnlyProjects(resources)) {
@@ -426,12 +447,14 @@ public class PooslDeleteAction extends SelectionListenerAction {
     }
 
     /**
-     * Asks the user to confirm a delete operation, where the selection contains no projects.
+     * Asks the user to confirm a delete operation, where the selection contains
+     * no projects.
      *
      * @param resources
-     *            the selected resources
-     * @return <code>true</code> if the user says to go ahead, and <code>false</code> if the deletion should be
-     *         abandoned
+     *     the selected resources
+     * @return <code>true</code> if the user says to go ahead, and
+     *     <code>false</code> if the deletion should be
+     *     abandoned
      */
     private boolean confirmDeleteNonProjects(List<? extends IResource> resources) {
         String title;
@@ -440,29 +463,35 @@ public class PooslDeleteAction extends SelectionListenerAction {
             title = IDEWorkbenchMessages.DeleteResourceAction_title1;
             IResource resource = resources.get(0);
             if (resource.isLinked()) {
-                msg = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmLinkedResource1, resource.getName());
+                msg = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmLinkedResource1,
+                        resource.getName());
             } else {
-                msg = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirm1, resource.getName());
+                msg = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirm1,
+                        resource.getName());
             }
         } else {
             title = IDEWorkbenchMessages.DeleteResourceAction_titleN;
             if (containsLinkedResource(resources)) {
-                msg = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmLinkedResourceN, Integer.valueOf(resources.size()));
+                msg = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmLinkedResourceN,
+                        Integer.valueOf(resources.size()));
             } else {
-                msg = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmN, resources.size());
+                msg = NLS.bind(IDEWorkbenchMessages.DeleteResourceAction_confirmN,
+                        resources.size());
             }
         }
         return MessageDialog.openQuestion(shellProvider.getShell(), title, msg);
     }
 
     /**
-     * Asks the user to confirm a delete operation, where the selection contains only projects. Also remembers whether
+     * Asks the user to confirm a delete operation, where the selection contains
+     * only projects. Also remembers whether
      * project content should be deleted.
      *
      * @param resources
-     *            the selected resources
-     * @return <code>true</code> if the user says to go ahead, and <code>false</code> if the deletion should be
-     *         abandoned
+     *     the selected resources
+     * @return <code>true</code> if the user says to go ahead, and
+     *     <code>false</code> if the deletion should be
+     *     abandoned
      */
     private boolean confirmDeleteProjects(List<? extends IResource> resources) {
         DeleteProjectDialog dialog = new DeleteProjectDialog(shellProvider.getShell(), resources);
@@ -476,7 +505,7 @@ public class PooslDeleteAction extends SelectionListenerAction {
      * Returns a bit-mask containing the types of resources in the selection.
      *
      * @param resources
-     *            the selected resources
+     *     the selected resources
      */
     private int getSelectedResourceTypes(List<? extends IResource> resources) {
         int types = 0;
@@ -538,8 +567,10 @@ public class PooslDeleteAction extends SelectionListenerAction {
             @Override
             public IStatus run(final IProgressMonitor monitor) {
                 try {
-                    final DeleteResourcesOperation op = new DeleteResourcesOperation(resourcesToDelete.toArray(new IResource[resourcesToDelete.size()]),
-                            IDEWorkbenchMessages.DeleteResourceAction_operationLabel, deleteContent);
+                    final DeleteResourcesOperation op = new DeleteResourcesOperation(
+                            resourcesToDelete.toArray(new IResource[resourcesToDelete.size()]),
+                            IDEWorkbenchMessages.DeleteResourceAction_operationLabel,
+                            deleteContent);
                     op.setModelProviderIds(getModelProviderIds());
                     // If we are deleting projects and their content, do not
                     // execute the operation in the undo history, since it cannot be
@@ -567,16 +598,20 @@ public class PooslDeleteAction extends SelectionListenerAction {
                         }
 
                         if (statusJob.getResult().isOK()) {
-                            return op.execute(monitor, WorkspaceUndoUtil.getUIInfoAdapter(shellProvider.getShell()));
+                            return op.execute(monitor,
+                                    WorkspaceUndoUtil.getUIInfoAdapter(shellProvider.getShell()));
                         }
                         return statusJob.getResult();
                     }
-                    return PlatformUI.getWorkbench().getOperationSupport().getOperationHistory().execute(op, monitor, WorkspaceUndoUtil.getUIInfoAdapter(shellProvider.getShell()));
+                    return PlatformUI.getWorkbench().getOperationSupport().getOperationHistory()
+                            .execute(op, monitor,
+                                    WorkspaceUndoUtil.getUIInfoAdapter(shellProvider.getShell()));
                 } catch (ExecutionException e) {
                     if (e.getCause() instanceof CoreException) {
                         return ((CoreException) e.getCause()).getStatus();
                     }
-                    return new Status(IStatus.ERROR, IDEWorkbenchPlugin.IDE_WORKBENCH, e.getMessage(), e);
+                    return new Status(IStatus.ERROR, IDEWorkbenchPlugin.IDE_WORKBENCH,
+                            e.getMessage(), e);
                 }
             }
 
@@ -594,7 +629,8 @@ public class PooslDeleteAction extends SelectionListenerAction {
     }
 
     /**
-     * The <code>DeleteResourceAction</code> implementation of this <code>SelectionListenerAction</code> method disables
+     * The <code>DeleteResourceAction</code> implementation of this
+     * <code>SelectionListenerAction</code> method disables
      * the action if the selection contains phantom resources or non-resources.
      */
     @Override
@@ -603,35 +639,40 @@ public class PooslDeleteAction extends SelectionListenerAction {
     }
 
     /**
-     * Returns the model provider ids that are known to the client that instantiated this operation.
+     * Returns the model provider ids that are known to the client that
+     * instantiated this operation.
      *
-     * @return the model provider ids that are known to the client that instantiated this operation.
+     * @return the model provider ids that are known to the client that
+     *     instantiated this operation.
      */
     public String[] getModelProviderIds() {
         return modelProviderIds;
     }
 
     /**
-     * Sets the model provider ids that are known to the client that instantiated this operation. Any potential side
+     * Sets the model provider ids that are known to the client that
+     * instantiated this operation. Any potential side
      * effects reported by these models during validation will be ignored.
      *
      * @param modelProviderIds
-     *            the model providers known to the client who is using this operation.
+     *     the model providers known to the client who is using this operation.
      */
     public void setModelProviderIds(String[] modelProviderIds) {
         this.modelProviderIds = modelProviderIds;
     }
 
     /**
-     * Tries to find opened editors matching given resource roots. The editors will be closed without confirmation and
+     * Tries to find opened editors matching given resource roots. The editors
+     * will be closed without confirmation and
      * only if the editor resource does not exists anymore.
      *
      * @param resourceRoots
-     *            non null array with deleted resource tree roots
+     *     non null array with deleted resource tree roots
      * @param deletedOnly
-     *            true to close only editors on resources which do not exist
+     *     true to close only editors on resources which do not exist
      */
-    static void closeMatchingEditors(final List<? extends IResource> resourceRoots, final boolean deletedOnly) {
+    static void closeMatchingEditors(
+            final List<? extends IResource> resourceRoots, final boolean deletedOnly) {
         if (resourceRoots.isEmpty()) {
             return;
         }
@@ -643,7 +684,8 @@ public class PooslDeleteAction extends SelectionListenerAction {
                     public void run() {
                         IWorkbenchWindow w = getActiveWindow();
                         if (w != null) {
-                            List<IEditorReference> toClose = getMatchingEditors(resourceRoots, w, deletedOnly);
+                            List<IEditorReference> toClose = getMatchingEditors(resourceRoots, w,
+                                    deletedOnly);
                             if (toClose.isEmpty()) {
                                 return;
                             }
@@ -667,7 +709,9 @@ public class PooslDeleteAction extends SelectionListenerAction {
         return w;
     }
 
-    private static List<IEditorReference> getMatchingEditors(final List<? extends IResource> resourceRoots, IWorkbenchWindow w, boolean deletedOnly) {
+    private static List<IEditorReference> getMatchingEditors(
+            final List<? extends IResource> resourceRoots, IWorkbenchWindow w,
+            boolean deletedOnly) {
         List<IEditorReference> toClose = new ArrayList<>();
         IEditorReference[] editors = getEditors(w);
         for (IEditorReference ref : editors) {

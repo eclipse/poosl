@@ -68,7 +68,8 @@ public class PooslFileChange extends Change {
         renameResourceDiagrams(monitor, file.getProject(), fullPath);
     }
 
-    private void copyFolderChangeToNewResource(IFile file, IFolder folder, IProgressMonitor monitor) {
+    private void copyFolderChangeToNewResource(
+            IFile file, IFolder folder, IProgressMonitor monitor) {
         IPath folderPath = createNewPath(folder.getFullPath());
         IPath filePath = file.getFullPath();
         filePath = filePath.removeFirstSegments(folderPath.segmentCount());
@@ -82,7 +83,8 @@ public class PooslFileChange extends Change {
         return oldPath.append(newName);
     }
 
-    private void renameResourceDiagrams(IProgressMonitor monitor, IProject project, IPath fullPath) {
+    private void renameResourceDiagrams(
+            IProgressMonitor monitor, IProject project, IPath fullPath) {
         Resource newResource = ConvertHelper.convertIPathToResource(fullPath);
         session = GraphicalEditorHelper.getSession(project, null, false, true, monitor);
 

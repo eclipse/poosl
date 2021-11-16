@@ -35,7 +35,8 @@ public class PooslHiddenRegionReplacer extends HiddenRegionReplacer {
     }
 
     @Override
-    protected WhitespaceReplacer findWhitespaceThatSeparatesSemanticRegions(List<ITextReplacer> replacers) {
+    protected WhitespaceReplacer findWhitespaceThatSeparatesSemanticRegions(
+            List<ITextReplacer> replacers) {
         WhitespaceReplacer whitespaceReplacer = null;
         for (ITextReplacer replacer : replacers) {
             if (replacer instanceof PooslMultilineCommentReplacer) {

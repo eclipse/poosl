@@ -28,7 +28,8 @@ public class ExternDebugItem {
 
     private final String launchID;
 
-    public ExternDebugItem(String diagram, String relativeModelPath, String projectName, String launchID) {
+    public ExternDebugItem(String diagram, String relativeModelPath, String projectName,
+            String launchID) {
         this.diagram = diagram;
         this.relativeModelPath = relativeModelPath;
         this.projectName = projectName;

@@ -45,7 +45,8 @@ public final class PooslDeclarationDescription {
 
     // --- Set -------
 
-    public static Map<String, String> createUserData(String type, String className, boolean isFromDataClass, boolean isParameter) {
+    public static Map<String, String> createUserData(
+            String type, String className, boolean isFromDataClass, boolean isParameter) {
         Map<String, String> userData = new HashMap<>();
         userData.put(STR_TYPE, type);
         userData.put(STR_CLASS, className);
@@ -94,27 +95,32 @@ public final class PooslDeclarationDescription {
 
     // --- Predicates -------
 
-    public static Predicate<IEObjectDescription> predicateParameterFromNonDataClass(final String className) {
+    public static Predicate<IEObjectDescription> predicateParameterFromNonDataClass(
+            final String className) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
                 String cName = getClassName(input);
-                return cName != null && cName.equals(className) && !isFromDataClass(input) && isParameter(input);
+                return cName != null && cName.equals(className) && !isFromDataClass(input)
+                        && isParameter(input);
             }
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateParameterFromNonDataClass(final List<String> classes) {
+    public static Predicate<IEObjectDescription> predicateParameterFromNonDataClass(
+            final List<String> classes) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
                 String cName = getClassName(input);
-                return cName != null && classes.contains(cName) && !isFromDataClass(input) && isParameter(input);
+                return cName != null && classes.contains(cName) && !isFromDataClass(input)
+                        && isParameter(input);
             }
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateParameterAndVariableFromNonDataClass(final List<String> classes) {
+    public static Predicate<IEObjectDescription> predicateParameterAndVariableFromNonDataClass(
+            final List<String> classes) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
@@ -124,7 +130,8 @@ public final class PooslDeclarationDescription {
         };
     }
 
-    public static Predicate<IEObjectDescription> predicateVariableFromDataClass(final List<String> classes) {
+    public static Predicate<IEObjectDescription> predicateVariableFromDataClass(
+            final List<String> classes) {
         return new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {

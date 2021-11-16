@@ -55,7 +55,8 @@ public class ProjectExplorerHandler extends AbstractHandler {
                 IWorkbenchSite site = HandlerUtil.getActiveSite(event);
                 IDE.openEditor(site.getPage(), ConvertHelper.convertISelectionToIFile(selection));
             } catch (PartInitException e) {
-                LOGGER.warn("Could not open the texual editor of the selected file: " + e.getMessage());
+                LOGGER.warn(
+                        "Could not open the texual editor of the selected file: " + e.getMessage());
             }
         } else {
             LOGGER.warn("Command id is unknown, opening default diagram.");

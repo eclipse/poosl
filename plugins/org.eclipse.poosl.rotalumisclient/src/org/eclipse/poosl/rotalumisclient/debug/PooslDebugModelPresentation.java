@@ -56,7 +56,8 @@ public class PooslDebugModelPresentation implements IDebugModelPresentation {
             return new FileEditorInput((IFile) element);
         }
         if (element instanceof ILineBreakpoint) {
-            return new FileEditorInput((IFile) ((ILineBreakpoint) element).getMarker().getResource());
+            return new FileEditorInput(
+                    (IFile) ((ILineBreakpoint) element).getMarker().getResource());
         }
         return null;
     }

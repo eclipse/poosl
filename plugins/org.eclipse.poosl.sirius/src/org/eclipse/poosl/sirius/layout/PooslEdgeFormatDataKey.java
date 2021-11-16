@@ -22,7 +22,8 @@ import org.eclipse.sirius.diagram.ui.tools.internal.format.semantic.SemanticEdge
 import org.eclipse.sirius.viewpoint.DSemanticDecorator;
 
 /**
- * A key that can be used for storing EdgeFormatData. It avoids duplicate keys by adding the name of the instance when
+ * A key that can be used for storing EdgeFormatData. It avoids duplicate keys
+ * by adding the name of the instance when
  * the connected object is an {@link InstancePort}
  * 
  * @author Koen Staal
@@ -65,7 +66,8 @@ public class PooslEdgeFormatDataKey extends SemanticEdgeFormatDataKey {
 
     @Override
     public int hashCode() {
-        return getSemanticElementURIFragment().hashCode() + sourceNode.hashCode() + targetNode.hashCode();
+        return getSemanticElementURIFragment().hashCode() + sourceNode.hashCode()
+                + targetNode.hashCode();
     }
 
     @Override

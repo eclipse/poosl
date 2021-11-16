@@ -40,7 +40,8 @@ import org.eclipse.poosl.rotalumisclient.Client;
  *
  */
 public class PooslSourceMap {
-    public static final PooslSourceMapping EMPTY_MAPPING = new PooslSourceMapping("", -1, -1, -1, -1, -1, "..."); //$NON-NLS-1$ //$NON-NLS-2$
+    public static final PooslSourceMapping EMPTY_MAPPING = new PooslSourceMapping("", -1, -1, -1, //$NON-NLS-1$
+            -1, -1, "..."); //$NON-NLS-1$
 
     private static final Logger LOGGER = Logger.getLogger(PooslSourceMap.class.getName());
 
@@ -86,7 +87,8 @@ public class PooslSourceMap {
         }
     }
 
-    private PooslSourceMapping convertResponseToSourceMap(TGetPositionResponse response, int handle) {
+    private PooslSourceMapping convertResponseToSourceMap(
+            TGetPositionResponse response, int handle) {
         TSourcePosition begin = response.getBegin();
         TSourcePosition end = response.getEnd();
 
@@ -100,11 +102,13 @@ public class PooslSourceMap {
 
         String filePath = handle2Files.get(begin.getFile());
 
-        return createSourceMapping(handle, filePath, bLine, bColumn, bOffset, eLine, eColumn, eOffset);
+        return createSourceMapping(handle, filePath, bLine, bColumn, bOffset, eLine, eColumn,
+                eOffset);
     }
 
     /**
-     * Returns the text from the file on the specified line and offset. Rotalumis can only provide the source location
+     * Returns the text from the file on the specified line and offset.
+     * Rotalumis can only provide the source location
      * and not the text.
      * 
      * @param handle
@@ -117,12 +121,16 @@ public class PooslSourceMap {
      * @param eOffset
      * @return PooslSourceMapping or EMPTY_MAPPING when anything fails
      */
-    private PooslSourceMapping createSourceMapping(int handle, String filePath, int bLine, int bColumn, int bOffset, int eLine, int eColumn, int eOffset) {
+    private PooslSourceMapping createSourceMapping(
+            int handle, String filePath, int bLine, int bColumn, int bOffset, int eLine,
+            int eColumn, int eOffset) {
 
         String text = ""; //$NON-NLS-1$
-        if (bLine == 0 && bColumn == 0 && bOffset == 0 && eLine == 0 && eColumn == 0 && eOffset == 0) {
+        if (bLine == 0 && bColumn == 0 && bOffset == 0 && eLine == 0 && eColumn == 0
+                && eOffset == 0) {
             return EMPTY_MAPPING;
-        } else if (filePath != null && bLine != -1 && bColumn != -1 && bOffset != -1 && eLine != -1 && eColumn != -1 && eOffset != -1) {
+        } else if (filePath != null && bLine != -1 && bColumn != -1 && bOffset != -1 && eLine != -1
+                && eColumn != -1 && eOffset != -1) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(filePath));
                 try {
@@ -132,12 +140,15 @@ public class PooslSourceMap {
                     reader.read(buff);
                     text = new String(buff);
                 } catch (IOException e1) {
-                    Logger.getGlobal().severe("PooslSourceMap: Could not get the text: " + filePath);
+                    Logger.getGlobal()
+                            .severe("PooslSourceMap: Could not get the text: " + filePath);
                 } finally {
                     try {
                         reader.close();
                     } catch (IOException e) {
-                        Logger.getGlobal().severe("PooslSourceMap: Could not close reader for lookup in file: " + filePath);
+                        Logger.getGlobal().severe(
+                                "PooslSourceMap: Could not close reader for lookup in file: "
+                                        + filePath);
                     }
                 }
             } catch (FileNotFoundException e1) {
@@ -145,10 +156,12 @@ public class PooslSourceMap {
                 return EMPTY_MAPPING;
             }
         } else {
-            Logger.getGlobal().warning("PooslSourceMap: Returned location is not valid, for handle:" + handle);
+            Logger.getGlobal().warning(
+                    "PooslSourceMap: Returned location is not valid, for handle:" + handle);
             return EMPTY_MAPPING;
         }
-        return new PooslSourceMapping(filePath, bLine, bColumn, text.length(), bOffset, eOffset, text);
+        return new PooslSourceMapping(filePath, bLine, bColumn, text.length(), bOffset, eOffset,
+                text);
     }
 
     public Map<BigInteger, String> convertToHandleFiles(Map<String, BigInteger> filesToHandle) {
@@ -169,15 +182,18 @@ public class PooslSourceMap {
     }
 
     public void checkExecutionTreeForExternalMapping(TExecutiontree executionTree) {
-        for (JAXBElement<? extends TExecutiontreeBase> element : executionTree.getSequentialOrMethodCallOrParallel()) {
+        for (JAXBElement<? extends TExecutiontreeBase> element : executionTree
+                .getSequentialOrMethodCallOrParallel()) {
             TExecutiontreeBase val = element.getValue();
             int stmtHandle = val.getStmtHandle();
             if (val instanceof TExecutiontreeMessageReceive) {
                 TExecutiontreeMessageReceive message = (TExecutiontreeMessageReceive) val;
-                requestMappingWithBackup(stmtHandle, message.getPort() + "?" + message.getMessage()); //$NON-NLS-1$
+                requestMappingWithBackup(stmtHandle,
+                        message.getPort() + "?" + message.getMessage()); //$NON-NLS-1$
             } else if (val instanceof TExecutiontreeMessageSend) {
                 TExecutiontreeMessageSend message = (TExecutiontreeMessageSend) val;
-                requestMappingWithBackup(stmtHandle, message.getPort() + "!" + message.getMessage()); //$NON-NLS-1$
+                requestMappingWithBackup(stmtHandle,
+                        message.getPort() + "!" + message.getMessage()); //$NON-NLS-1$
             }
         }
     }
@@ -187,7 +203,8 @@ public class PooslSourceMap {
             @Override
             public void requestedSourceMapping(PooslSourceMapping mapping) {
                 if (mapping == EMPTY_MAPPING) {
-                    sourceMappings.put(stmtHandle, new PooslSourceMapping("", -1, -1, -1, -1, -1, backupText)); //$NON-NLS-1$
+                    sourceMappings.put(stmtHandle,
+                            new PooslSourceMapping("", -1, -1, -1, -1, -1, backupText)); //$NON-NLS-1$
                 }
             }
         });

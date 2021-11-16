@@ -140,7 +140,8 @@ public class NameDialog extends TitleAreaDialog {
         if (name != null) {
             txtName.setText(name);
         } else {
-            txtName.setText(NameHelper.getUniqueName(String.format(TXT_NAME, nameString), existingnames));
+            txtName.setText(
+                    NameHelper.getUniqueName(String.format(TXT_NAME, nameString), existingnames));
         }
     }
 
@@ -148,7 +149,8 @@ public class NameDialog extends TitleAreaDialog {
     protected void okPressed() {
         saveInput();
         if (getName().isEmpty() || !NameHelper.isNameAvailable(getName(), existingnames)) {
-            MessageDialog.openError(Display.getDefault().getActiveShell(), String.format(ERROR_TITLE_INSTANCE, typeToString(typeClass)),
+            MessageDialog.openError(Display.getDefault().getActiveShell(),
+                    String.format(ERROR_TITLE_INSTANCE, typeToString(typeClass)),
                     String.format(ERROR_MESSAGE_INSTANCE, typeToString(typeClass)));
         } else {
             super.okPressed();

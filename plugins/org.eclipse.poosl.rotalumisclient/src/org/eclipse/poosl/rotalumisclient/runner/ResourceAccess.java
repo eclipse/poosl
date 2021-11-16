@@ -59,8 +59,11 @@ public final class ResourceAccess {
         }
 
         @Override
-        public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
-            String archiveFileName = URI.createURI(location.authority().substring(0, location.authority().length() - 1)).toFileString();
+        public List<URI> find(
+                Context context, String path, Predicate<String> matcher, String... fileExtensions) {
+            String archiveFileName = URI
+                    .createURI(location.authority().substring(0, location.authority().length() - 1))
+                    .toFileString();
             List<URI> result = Lists.newArrayList();
             try {
                 JarFile jarFile = new JarFile(new File(archiveFileName));
@@ -110,7 +113,8 @@ public final class ResourceAccess {
         }
 
         @Override
-        public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
+        public List<URI> find(
+                Context context, String path, Predicate<String> matcher, String... fileExtensions) {
             File root = new File(location.toFileString());
             List<URI> result = Lists.newArrayList();
             collect(root, root, result, matcher, fileExtensions);
@@ -162,13 +166,15 @@ public final class ResourceAccess {
             for (URI uri : find(context)) {
                 File parent = new File(uri.toFileString());
                 if (new File(parent, fileName).exists())
-                    return URI.createURI(fileName).resolve(uri.hasTrailingPathSeparator() ? uri : uri.appendSegment("")); //$NON-NLS-1$
+                    return URI.createURI(fileName)
+                            .resolve(uri.hasTrailingPathSeparator() ? uri : uri.appendSegment("")); //$NON-NLS-1$
             }
             return null;
         }
 
         @Override
-        public List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions) {
+        public List<URI> find(
+                Context context, String path, Predicate<String> matcher, String... fileExtensions) {
             List<URI> result = Lists.newArrayList();
             for (URI uri : find(context)) {
                 File folder = new File(new File(uri.toFileString()), path);
@@ -201,7 +207,9 @@ public final class ResourceAccess {
             this.location = location;
         }
 
-        protected void collect(File root, File file, List<URI> result, Predicate<String> matcher, String... fileExtensions) {
+        protected void collect(
+                File root, File file, List<URI> result, Predicate<String> matcher,
+                String... fileExtensions) {
             if (file.isFile()) {
                 if (matches(file.getName(), fileExtensions)) {
                     URI uri = URI.createFileURI(file.getAbsolutePath());
@@ -221,18 +229,20 @@ public final class ResourceAccess {
         /**
          * Provides a URI for provided filename.
          * <p>
-         * Depending to the implementation, uri maybe null if resource does not exit but there is no warranty.
+         * Depending to the implementation, uri maybe null if resource does not
+         * exit but there is no warranty.
          * </p>
          * 
          * @param context
-         *            to search in
+         *     to search in
          * @param fileName
-         *            of resource
+         *     of resource
          * @return URI or null if path is
          */
         public abstract URI find(Context context, String fileName);
 
-        public abstract List<URI> find(Context context, String path, Predicate<String> matcher, String... fileExtensions);
+        public abstract List<URI> find(
+                Context context, String path, Predicate<String> matcher, String... fileExtensions);
 
         public URI getLocation() {
             return location;
@@ -264,7 +274,8 @@ public final class ResourceAccess {
             File dot = new File(uri.toFileString() + ".classpath"); //$NON-NLS-1$
             if (dot.isFile()) {
                 DotClasspath dotClasspath = new DotClasspath(dot);
-                return new JavaProjectInfo(uri, dotClasspath.getSources(), dotClasspath.getOutput());
+                return new JavaProjectInfo(uri, dotClasspath.getSources(),
+                        dotClasspath.getOutput());
             }
             return new GeneralProjectInfo(uri);
         }

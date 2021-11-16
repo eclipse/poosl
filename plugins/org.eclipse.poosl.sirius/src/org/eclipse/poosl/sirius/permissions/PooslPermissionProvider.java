@@ -30,7 +30,7 @@ public class PooslPermissionProvider implements IPermissionProvider {
      * Default constructor.
      * 
      * @param permissionAuthority
-     *            {@link IPermissionAuthority}
+     *     {@link IPermissionAuthority}
      */
     public PooslPermissionProvider(IPermissionAuthority permissionAuthority) {
         this.permissionAuthority = permissionAuthority;

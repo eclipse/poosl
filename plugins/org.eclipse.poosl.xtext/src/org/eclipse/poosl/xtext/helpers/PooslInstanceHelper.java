@@ -41,7 +41,8 @@ public class PooslInstanceHelper {
     public boolean equals(Object obj) {
         if (obj instanceof PooslInstanceHelper) {
             PooslInstanceHelper instance = (PooslInstanceHelper) obj;
-            return instance.getArchitecturalClassName().equals(this.getArchitecturalClassName()) && instance.getInstanceName().equals(this.getInstanceName());
+            return instance.getArchitecturalClassName().equals(this.getArchitecturalClassName())
+                    && instance.getInstanceName().equals(this.getInstanceName());
         }
         return super.equals(obj);
     }

@@ -69,7 +69,8 @@ public final class ColorGraphHelper {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void changeColor(Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
+    public static void changeColor(
+            Collection<? extends EObject> eobjects, Map<String, Object> parameters) {
         if (parameters.get(PARAMETER_VIEW) instanceof ArrayList<?>) {
             ArrayList<?> views = (ArrayList<?>) parameters.get(PARAMETER_VIEW);
             if (!views.isEmpty()) {
@@ -86,7 +87,8 @@ public final class ColorGraphHelper {
     }
 
     private static RGB getColor() {
-        final ColorSelector colorSelector = new ColorSelector(Display.getDefault().getActiveShell());
+        final ColorSelector colorSelector = new ColorSelector(
+                Display.getDefault().getActiveShell());
         colorSelector.addListener(new IPropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
@@ -135,7 +137,8 @@ public final class ColorGraphHelper {
                     }
                 } else {
                     if (color == null) {
-                        toggleColor(edge, rgbCompare(edge.getOwnedStyle(), DEFAULT_LINE_COLOR), DEFAULT_LINE_HIGHLIGHT_COLOR);
+                        toggleColor(edge, rgbCompare(edge.getOwnedStyle(), DEFAULT_LINE_COLOR),
+                                DEFAULT_LINE_HIGHLIGHT_COLOR);
                     } else {
                         toggleColor(edge, true, color);
                     }
@@ -150,9 +153,11 @@ public final class ColorGraphHelper {
         if (color == null) {
             calculatedColor = DEFAULT_LINE_HIGHLIGHT_COLOR;
             if (!nodeSpec.getIncomingEdges().isEmpty()) {
-                customcolor = rgbCompare(nodeSpec.getIncomingEdges().get(0).getOwnedStyle(), DEFAULT_LINE_COLOR);
+                customcolor = rgbCompare(nodeSpec.getIncomingEdges().get(0).getOwnedStyle(),
+                        DEFAULT_LINE_COLOR);
             } else if (!nodeSpec.getOutgoingEdges().isEmpty()) {
-                customcolor = rgbCompare(nodeSpec.getOutgoingEdges().get(0).getOwnedStyle(), DEFAULT_LINE_COLOR);
+                customcolor = rgbCompare(nodeSpec.getOutgoingEdges().get(0).getOwnedStyle(),
+                        DEFAULT_LINE_COLOR);
             } else {
                 return;
             }
@@ -173,7 +178,8 @@ public final class ColorGraphHelper {
 
     private static boolean rgbCompare(EdgeStyle style, RGB color) {
         RGBValues values = style.getStrokeColor();
-        return (values.getRed() == color.red) && (values.getGreen() == color.green) && (values.getBlue() == color.blue);
+        return (values.getRed() == color.red) && (values.getGreen() == color.green)
+                && (values.getBlue() == color.blue);
     }
 
     private static void toggleColor(DEdge dEdge, boolean customColor, RGB color) {
@@ -233,21 +239,27 @@ public final class ColorGraphHelper {
             style = adjustChannelColor(style, color);
         } else {
             style.getCustomFeatures().remove(DiagramPackage.Literals.SQUARE__COLOR.getName());
-            style.getCustomFeatures().remove(DiagramPackage.Literals.BORDERED_STYLE__BORDER_COLOR.getName());
+            style.getCustomFeatures()
+                    .remove(DiagramPackage.Literals.BORDERED_STYLE__BORDER_COLOR.getName());
         }
         channel.setOwnedStyle(style);
     }
 
-    public static void colorChannel(DRepresentation representation, PooslDrawMessage message, PathCalculator pathCalculator) {
-        String owner = GraphicalEditorHelper.getInstanceFromDocumentation(representation.getDocumentation());
+    public static void colorChannel(
+            DRepresentation representation, PooslDrawMessage message,
+            PathCalculator pathCalculator) {
+        String owner = GraphicalEditorHelper
+                .getInstanceFromDocumentation(representation.getDocumentation());
 
         MessagePath drawPath = (message == null) ? null : message.getMessagePaths().get(owner);
         for (DRepresentationElement element : representation.getRepresentationElements()) {
             if (element instanceof DEdge) {
                 DEdge edge = (DEdge) element;
 
-                ConnectionDescription sourceDescription = createConnectionDescription(owner, edge.getSourceNode());
-                ConnectionDescription targetDescription = createConnectionDescription(owner, edge.getTargetNode());
+                ConnectionDescription sourceDescription = createConnectionDescription(owner,
+                        edge.getSourceNode());
+                ConnectionDescription targetDescription = createConnectionDescription(owner,
+                        edge.getTargetNode());
 
                 switch (getEdgePathType(drawPath, sourceDescription, targetDescription)) {
                 case NONE:
@@ -286,36 +298,43 @@ public final class ColorGraphHelper {
                 }
 
                 if (sourceDescription != null) {
-                    edge.setBeginLabel(pathCalculator.getPathCounterLabel(owner, sourceDescription.getParent(), sourceDescription.getPort()));
+                    edge.setBeginLabel(pathCalculator.getPathCounterLabel(owner,
+                            sourceDescription.getParent(), sourceDescription.getPort()));
                 }
                 if (targetDescription != null) {
-                    edge.setEndLabel(pathCalculator.getPathCounterLabel(owner, targetDescription.getParent(), targetDescription.getPort()));
+                    edge.setEndLabel(pathCalculator.getPathCounterLabel(owner,
+                            targetDescription.getParent(), targetDescription.getPort()));
                 }
             }
         }
     }
 
-    private static EdgeType getEdgePathType(MessagePath drawPath, ConnectionDescription source, ConnectionDescription target) {
+    private static EdgeType getEdgePathType(
+            MessagePath drawPath, ConnectionDescription source, ConnectionDescription target) {
         if (drawPath == null) {
             return EdgeType.NONE;
         }
 
         if (source != null && source.getPort() != null && source.getParent() != null) {
             Boolean channelConnection = target == null;
-            if (source.getPort().equals(drawPath.getReceiverPort()) && source.getParent().equals(drawPath.getReceiver())) {
+            if (source.getPort().equals(drawPath.getReceiverPort())
+                    && source.getParent().equals(drawPath.getReceiver())) {
                 return channelConnection ? EdgeType.TOCHANNELRECEIVER : EdgeType.RECEIVER;
 
-            } else if (source.getPort().equals(drawPath.getSenderPort()) && source.getParent().equals(drawPath.getSender())) {
+            } else if (source.getPort().equals(drawPath.getSenderPort())
+                    && source.getParent().equals(drawPath.getSender())) {
                 return channelConnection ? EdgeType.TOCHANNELSENDER : EdgeType.SENDER;
             }
         }
         if (target != null && target.getPort() != null && target.getParent() != null) {
             Boolean channelConnection = source == null;
-            if (target.getPort().equals(drawPath.getReceiverPort()) && target.getParent().equals(drawPath.getReceiver())) {
+            if (target.getPort().equals(drawPath.getReceiverPort())
+                    && target.getParent().equals(drawPath.getReceiver())) {
 
                 return channelConnection ? EdgeType.FROMCHANNELSENDER : EdgeType.SENDER;
 
-            } else if (target.getPort().equals(drawPath.getSenderPort()) && target.getParent().equals(drawPath.getSender())) {
+            } else if (target.getPort().equals(drawPath.getSenderPort())
+                    && target.getParent().equals(drawPath.getSender())) {
                 return channelConnection ? EdgeType.FROMCHANNELRECEIVER : EdgeType.RECEIVER;
             }
         }
@@ -369,8 +388,7 @@ public final class ColorGraphHelper {
                 portName = port.getName();
                 if (port.eContainer() instanceof ClusterClass) {
                     parentName = (((ClusterClass) port.eContainer()).getName() == null) //
-                            ? SEPARATOR + GlobalConstants.POOSL_SYSTEM
-                            : owner;
+                        ? SEPARATOR + GlobalConstants.POOSL_SYSTEM : owner;
                 }
 
             } else if (target instanceof Channel) {

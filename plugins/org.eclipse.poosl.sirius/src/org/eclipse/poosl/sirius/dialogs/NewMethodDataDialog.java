@@ -111,11 +111,13 @@ public class NewMethodDataDialog extends NewMethodDialog {
             methods.add(dataMethodNamed.getName());
         }
 
-        for (DataMethodUnaryOperator dataMethodUnaryOperator : dataClass.getDataMethodsUnaryOperator()) {
+        for (DataMethodUnaryOperator dataMethodUnaryOperator : dataClass
+                .getDataMethodsUnaryOperator()) {
             methods.add(dataMethodUnaryOperator.getName().getName());
         }
-        
-        for (DataMethodBinaryOperator dataMethodBinaryOperator : dataClass.getDataMethodsBinaryOperator()) {
+
+        for (DataMethodBinaryOperator dataMethodBinaryOperator : dataClass
+                .getDataMethodsBinaryOperator()) {
             methods.add(dataMethodBinaryOperator.getName().getName());
         }
         return methods;

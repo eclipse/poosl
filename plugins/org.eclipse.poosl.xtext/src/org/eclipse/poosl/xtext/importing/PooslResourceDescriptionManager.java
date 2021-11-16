@@ -49,7 +49,8 @@ public class PooslResourceDescriptionManager extends DefaultResourceDescriptionM
     private final IResourceScopeCache cache = IResourceScopeCache.NullImpl.INSTANCE;
 
     @Override
-    protected IResourceDescription internalGetResourceDescription(Resource resource, IDefaultResourceDescriptionStrategy strategy) {
+    protected IResourceDescription internalGetResourceDescription(
+            Resource resource, IDefaultResourceDescriptionStrategy strategy) {
         return new PooslResourceDescription(resource, strategy, cache);
     }
 
@@ -91,7 +92,9 @@ public class PooslResourceDescriptionManager extends DefaultResourceDescriptionM
     }
 
     @Override
-    public boolean isAffected(Collection<Delta> deltas, IResourceDescription candidate, IResourceDescriptions context) {
+    public boolean isAffected(
+            Collection<Delta> deltas, IResourceDescription candidate,
+            IResourceDescriptions context) {
         if (candidate.getURI().toString().endsWith(POOSL_EXTENSION)) {
             Set<URI> dependencies = computeAllDependencies(candidate, context);
 
@@ -110,8 +113,10 @@ public class PooslResourceDescriptionManager extends DefaultResourceDescriptionM
         return super.isAffected(deltas, candidate, context);
     }
 
-    public Set<URI> computeAllDependencies(IResourceDescription candidate, IResourceDescriptions context) {
-        if (candidate instanceof PooslResourceDescription && (((PooslResourceDescription) candidate).getRecursiveDependencies() != null)) {
+    public Set<URI> computeAllDependencies(
+            IResourceDescription candidate, IResourceDescriptions context) {
+        if (candidate instanceof PooslResourceDescription
+                && (((PooslResourceDescription) candidate).getRecursiveDependencies() != null)) {
             return ((PooslResourceDescription) candidate).getRecursiveDependencies();
         } else {
             Set<URI> dependencies = new LinkedHashSet<>();
@@ -126,24 +131,29 @@ public class PooslResourceDescriptionManager extends DefaultResourceDescriptionM
         }
     }
 
-    private void computeAllDependencies(Set<URI> dependencies, IResourceDescription candidate, IResourceDescriptions context) {
+    private void computeAllDependencies(
+            Set<URI> dependencies, IResourceDescription candidate, IResourceDescriptions context) {
         if (candidate != null) {
             URI candidateUri = decode(candidate.getURI());
             if (candidateUri != null && !dependencies.contains(candidateUri)) {
                 dependencies.add(candidateUri);
 
-                for (IEObjectDescription obj : candidate.getExportedObjectsByType(PooslPackage.Literals.POOSL)) {
+                for (IEObjectDescription obj : candidate
+                        .getExportedObjectsByType(PooslPackage.Literals.POOSL)) {
                     for (String importString : PooslDescription.getImports(obj)) {
-                        URI importedURI = ImportingHelper.resolveImportUri(candidateUri, URI.createURI(importString));
+                        URI importedURI = ImportingHelper.resolveImportUri(candidateUri,
+                                URI.createURI(importString));
                         if (importedURI != null && !dependencies.contains(importedURI)) {
-                            IResourceDescription importedCandidate = uriToResourceDescription(importedURI, context);
+                            IResourceDescription importedCandidate = uriToResourceDescription(
+                                    importedURI, context);
                             computeAllDependencies(dependencies, importedCandidate, context);
                         }
                     }
                     for (String importString : PooslDescription.getImportLibs(obj)) {
                         URI importedURI = URI.createURI(importString);
                         if (importedURI != null && !dependencies.contains(importedURI)) {
-                            IResourceDescription importedCandidate = uriToResourceDescription(importedURI, context);
+                            IResourceDescription importedCandidate = uriToResourceDescription(
+                                    importedURI, context);
                             computeAllDependencies(dependencies, importedCandidate, context);
                         }
                     }

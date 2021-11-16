@@ -61,7 +61,8 @@ import org.eclipse.xtext.util.CancelIndicator;
 public class PooslHighlightingCalculator implements ISemanticHighlightingCalculator {
 
     @Override
-    public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor, CancelIndicator cancel) {
+    public void provideHighlightingFor(
+            XtextResource resource, IHighlightedPositionAcceptor acceptor, CancelIndicator cancel) {
         if (resource == null || resource.getParseResult() == null) {
             return;
         }
@@ -73,66 +74,100 @@ public class PooslHighlightingCalculator implements ISemanticHighlightingCalcula
             // IDENTIFIER
             if (element instanceof Annotation) {
                 // note: non-default style
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.ANNOTATION__NAME), HighlightingStyles.NUMBER_ID);
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.ANNOTATION__NAME),
+                        HighlightingStyles.NUMBER_ID);
             } else if (element instanceof Channel) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.CHANNEL__EXTERNAL_PORT));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.CHANNEL__EXTERNAL_PORT));
             } else if (element instanceof InstantiableClass) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.INSTANTIABLE_CLASS__NAME));
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.PROCESS_CLASS__SUPER_CLASS));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.INSTANTIABLE_CLASS__NAME));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.PROCESS_CLASS__SUPER_CLASS));
             } else if (element instanceof DataClass) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.DATA_CLASS__NAME));
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.DATA_CLASS__SUPER_CLASS));
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.DATA_CLASS__NAME));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.DATA_CLASS__SUPER_CLASS));
             } else if (element instanceof DataMethod) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.DATA_METHOD_NAMED__NAME));
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.DATA_METHOD__RETURN_TYPE));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.DATA_METHOD_NAMED__NAME));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.DATA_METHOD__RETURN_TYPE));
             } else if (element instanceof Declaration) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.DECLARATION__TYPE));
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.DECLARATION__TYPE));
             } else if (element instanceof AssignmentExpression) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.ASSIGNMENT_EXPRESSION__VARIABLE));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.ASSIGNMENT_EXPRESSION__VARIABLE));
             } else if (element instanceof DataMethodCallExpression) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.DATA_METHOD_CALL_EXPRESSION__NAME));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.DATA_METHOD_CALL_EXPRESSION__NAME));
             } else if (element instanceof InstanceParameter) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.INSTANCE_PARAMETER__PARAMETER));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.INSTANCE_PARAMETER__PARAMETER));
             } else if (element instanceof Instance) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.INSTANCE__NAME));
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.INSTANCE__CLASS_DEFINITION));
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.INSTANCE__NAME));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.INSTANCE__CLASS_DEFINITION));
             } else if (element instanceof InstancePort) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.INSTANCE_PORT__INSTANCE));
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.INSTANCE_PORT__PORT));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.INSTANCE_PORT__INSTANCE));
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.INSTANCE_PORT__PORT));
             } else if (element instanceof MessageParameter) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.MESSAGE_PARAMETER__TYPE));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.MESSAGE_PARAMETER__TYPE));
             } else if (element instanceof MessageSignature) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.MESSAGE_SIGNATURE__PORT));
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.MESSAGE_SIGNATURE__NAME));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.MESSAGE_SIGNATURE__PORT));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.MESSAGE_SIGNATURE__NAME));
             } else if (element instanceof NewExpression) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.NEW_EXPRESSION__DATA_CLASS));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.NEW_EXPRESSION__DATA_CLASS));
             } else if (element instanceof OutputVariable) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.OUTPUT_VARIABLE__VARIABLE));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.OUTPUT_VARIABLE__VARIABLE));
             } else if (element instanceof PortReference) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.PORT_REFERENCE__PORT));
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.PORT_REFERENCE__PORT));
             } else if (element instanceof Port) {
                 process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.PORT__NAME));
             } else if (element instanceof ProcessMethodCall) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.PROCESS_METHOD_CALL__METHOD));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.PROCESS_METHOD_CALL__METHOD));
             } else if (element instanceof ProcessMethod) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.PROCESS_METHOD__NAME));
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.PROCESS_METHOD__NAME));
             } else if (element instanceof ReceiveStatement) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.RECEIVE_STATEMENT__NAME));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.RECEIVE_STATEMENT__NAME));
             } else if (element instanceof SendStatement) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.SEND_STATEMENT__NAME));
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.SEND_STATEMENT__NAME));
             } else if (element instanceof VariableExpression) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.VARIABLE_EXPRESSION__VARIABLE));
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.VARIABLE_EXPRESSION__VARIABLE));
             } else if (element instanceof Variable) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.VARIABLE__NAME));
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.VARIABLE__NAME));
             }
 
             // Float, Integer and Real
             else if (element instanceof FloatConstant) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.FLOAT_CONSTANT__VALUE), HighlightingStyles.NUMBER_ID);
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.FLOAT_CONSTANT__VALUE),
+                        HighlightingStyles.NUMBER_ID);
             } else if (element instanceof IntegerConstant) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.INTEGER_CONSTANT__VALUE), HighlightingStyles.NUMBER_ID);
+                process(acceptor, NodeModelUtils.findNodesForFeature(element,
+                        Literals.INTEGER_CONSTANT__VALUE), HighlightingStyles.NUMBER_ID);
             } else if (element instanceof RealConstant) {
-                process(acceptor, NodeModelUtils.findNodesForFeature(element, Literals.REAL_CONSTANT__VALUE), HighlightingStyles.NUMBER_ID);
+                process(acceptor,
+                        NodeModelUtils.findNodesForFeature(element, Literals.REAL_CONSTANT__VALUE),
+                        HighlightingStyles.NUMBER_ID);
             }
         }
     }
@@ -141,7 +176,8 @@ public class PooslHighlightingCalculator implements ISemanticHighlightingCalcula
         process(acceptor, actualNodes, HighlightingStyles.DEFAULT_ID);
     }
 
-    private void process(IHighlightedPositionAcceptor acceptor, List<INode> actualNodes, String highlighting) {
+    private void process(
+            IHighlightedPositionAcceptor acceptor, List<INode> actualNodes, String highlighting) {
         for (INode actualNode : actualNodes) {
             acceptor.addPosition(actualNode.getOffset(), actualNode.getLength(), highlighting);
         }

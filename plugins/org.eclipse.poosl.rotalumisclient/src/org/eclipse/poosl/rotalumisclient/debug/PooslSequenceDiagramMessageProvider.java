@@ -73,11 +73,19 @@ public class PooslSequenceDiagramMessageProvider {
         this.target = target;
         diagramUpdateJob = new UpdateDiagramViewJob("Updating sequence diagam", target);
 
-        ILaunchConfigurationWorkingCopy launchConfigurationWorkingCopy = target.getLaunch().getLaunchConfiguration().getWorkingCopy();
-        Set<String> visibleInstances = launchConfigurationWorkingCopy.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_VISIBLE, new HashSet<String>());
-        Set<String> invisibleInstances = launchConfigurationWorkingCopy.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_INVISIBLE, new HashSet<String>());
-        messageOrder = launchConfigurationWorkingCopy.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_ORDER, new ArrayList<String>());
-        filterSetting = launchConfigurationWorkingCopy.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_SETTING, true);
+        ILaunchConfigurationWorkingCopy launchConfigurationWorkingCopy = target.getLaunch()
+                .getLaunchConfiguration().getWorkingCopy();
+        Set<String> visibleInstances = launchConfigurationWorkingCopy.getAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_VISIBLE,
+                new HashSet<String>());
+        Set<String> invisibleInstances = launchConfigurationWorkingCopy.getAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_INVISIBLE,
+                new HashSet<String>());
+        messageOrder = launchConfigurationWorkingCopy.getAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_ORDER,
+                new ArrayList<String>());
+        filterSetting = launchConfigurationWorkingCopy.getAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_SETTING, true);
 
         Map<String, TInstanceType> allInstances = target.getInstances();
 
@@ -120,7 +128,8 @@ public class PooslSequenceDiagramMessageProvider {
             // add new instances of the model to the visible filter
             for (Entry<String, TInstanceType> entry : allInstances.entrySet()) {
                 String instance = entry.getKey();
-                if (!visibleInstances.contains(instance) && !invisibleInstances.contains(instance)) {
+                if (!visibleInstances.contains(instance)
+                        && !invisibleInstances.contains(instance)) {
                     if (entry.getValue() == TInstanceType.PROCESS) {
                         visibleInstances.add(instance);
                         messageOrder.add(instance);
@@ -132,12 +141,18 @@ public class PooslSequenceDiagramMessageProvider {
             }
         }
 
-        launchConfigurationWorkingCopy.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_INVISIBLE, invisibleInstances);
-        launchConfigurationWorkingCopy.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_VISIBLE, visibleInstances);
-        launchConfigurationWorkingCopy.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_ORDER, messageOrder);
+        launchConfigurationWorkingCopy.setAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_INVISIBLE,
+                invisibleInstances);
+        launchConfigurationWorkingCopy.setAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_VISIBLE,
+                visibleInstances);
+        launchConfigurationWorkingCopy.setAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_ORDER, messageOrder);
         launchConfigurationWorkingCopy.doSave();
 
-        int maxMessageBufferSize = Platform.getPreferencesService().getInt(Activator.PLUGIN_ID, PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE, DEFAULT_MESSAGE_BUFFER_SIZE, null);
+        int maxMessageBufferSize = Platform.getPreferencesService().getInt(Activator.PLUGIN_ID,
+                PooslConstants.PREFERENCES_MESSAGE_BUFFER_SIZE, DEFAULT_MESSAGE_BUFFER_SIZE, null);
         messageArray = new PooslDiagramMessage[maxMessageBufferSize];
     }
 
@@ -147,7 +162,8 @@ public class PooslSequenceDiagramMessageProvider {
             public void run() {
                 IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 ICommandService commandService = window.getService(ICommandService.class);
-                Command command = commandService.getCommand("org.eclipse.poosl.rotalumisclient.views.diagram.setupaction"); //$NON-NLS-1$
+                Command command = commandService
+                        .getCommand("org.eclipse.poosl.rotalumisclient.views.diagram.setupaction"); //$NON-NLS-1$
                 State state = command.getState("org.eclipse.ui.commands.toggleState"); //$NON-NLS-1$
                 boolean enabled = (target == null) || target.isCommEventsEnabled();
                 state.setValue(enabled);
@@ -238,12 +254,17 @@ public class PooslSequenceDiagramMessageProvider {
                 messageFilter.put((String) entry.getKey(), (TInstanceType) entry.getValue());
             }
         }
-        ILaunchConfigurationWorkingCopy launchConfigurationWorkingCopy = target.getLaunch().getLaunchConfiguration().getWorkingCopy();
-        launchConfigurationWorkingCopy.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_VISIBLE, messageFilter.keySet());
+        ILaunchConfigurationWorkingCopy launchConfigurationWorkingCopy = target.getLaunch()
+                .getLaunchConfiguration().getWorkingCopy();
+        launchConfigurationWorkingCopy.setAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_VISIBLE,
+                messageFilter.keySet());
         Set<String> invisibleInstances = new HashSet<>();
         invisibleInstances.addAll(target.getInstances().keySet());
         invisibleInstances.removeAll(messageFilter.keySet());
-        launchConfigurationWorkingCopy.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_INVISIBLE, invisibleInstances);
+        launchConfigurationWorkingCopy.setAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_INVISIBLE,
+                invisibleInstances);
         launchConfigurationWorkingCopy.doSave();
 
         Display.getDefault().asyncExec(new Runnable() {
@@ -260,8 +281,10 @@ public class PooslSequenceDiagramMessageProvider {
     public void setMessageOrder(List<String> messageOrder) throws CoreException {
         this.messageOrder.clear();
         this.messageOrder.addAll(messageOrder);
-        ILaunchConfigurationWorkingCopy launchConfigurationWorkingCopy = target.getLaunch().getLaunchConfiguration().getWorkingCopy();
-        launchConfigurationWorkingCopy.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_ORDER, messageOrder);
+        ILaunchConfigurationWorkingCopy launchConfigurationWorkingCopy = target.getLaunch()
+                .getLaunchConfiguration().getWorkingCopy();
+        launchConfigurationWorkingCopy.setAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_ORDER, messageOrder);
         launchConfigurationWorkingCopy.doSave();
     }
 
@@ -275,7 +298,8 @@ public class PooslSequenceDiagramMessageProvider {
 
         @Override
         public IStatus runInUIThread(IProgressMonitor monitor) {
-            if (target != null && PooslDebugHelper.isActiveDebugTarget(target) && !target.isTerminated()) {
+            if (target != null && PooslDebugHelper.isActiveDebugTarget(target)
+                    && !target.isTerminated()) {
                 PooslSequenceDiagramView view = findSequenceView();
                 if (view != null) {
                     view.update(messageArray, false, messageSerialNumber);
@@ -290,7 +314,8 @@ public class PooslSequenceDiagramMessageProvider {
         final IWorkbench workbench = PlatformUI.getWorkbench();
         IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
         if (window != null) {
-            IViewPart view = window.getActivePage().findView(PooslConstants.ID_POOSL_SEQUENCEDIAGRAMVIEW);
+            IViewPart view = window.getActivePage()
+                    .findView(PooslConstants.ID_POOSL_SEQUENCEDIAGRAMVIEW);
             if (view instanceof PooslSequenceDiagramView) {
                 return (PooslSequenceDiagramView) view;
             }
@@ -314,8 +339,11 @@ public class PooslSequenceDiagramMessageProvider {
         // Changing the filter setting will clear all messages first.
         clearMessages();
         this.filterSetting = filterSetting;
-        ILaunchConfigurationWorkingCopy launchConfigurationWorkingCopy = target.getLaunch().getLaunchConfiguration().getWorkingCopy();
-        launchConfigurationWorkingCopy.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_SETTING, filterSetting);
+        ILaunchConfigurationWorkingCopy launchConfigurationWorkingCopy = target.getLaunch()
+                .getLaunchConfiguration().getWorkingCopy();
+        launchConfigurationWorkingCopy.setAttribute(
+                PooslConstants.CONFIGURATION_ATTRIBUTE_SEQUENCE_DIAGRAM_FILTER_SETTING,
+                filterSetting);
         launchConfigurationWorkingCopy.doSave();
     }
 

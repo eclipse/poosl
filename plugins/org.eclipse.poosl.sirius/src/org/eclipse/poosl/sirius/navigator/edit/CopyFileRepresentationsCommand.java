@@ -45,7 +45,9 @@ public class CopyFileRepresentationsCommand extends RecordingCommand {
 
     private IProgressMonitor monitor;
 
-    public CopyFileRepresentationsCommand(TransactionalEditingDomain domain, Session destSession, Resource newResource, List<DRepresentationDescriptor> descriptors, IProgressMonitor monitor) {
+    public CopyFileRepresentationsCommand(TransactionalEditingDomain domain, Session destSession,
+            Resource newResource, List<DRepresentationDescriptor> descriptors,
+            IProgressMonitor monitor) {
         super(domain);
         this.destSession = destSession;
         this.newResource = newResource;
@@ -57,12 +59,17 @@ public class CopyFileRepresentationsCommand extends RecordingCommand {
     public void doExecute() {
         for (DRepresentationDescriptor descriptor : descriptors) {
             DRepresentation diagram = descriptor.getRepresentation();
-            EObject diagramObject = diagram instanceof DSemanticDiagram ? ((DSemanticDiagram) diagram).getTarget() : diagram.getOwnedRepresentationElements().get(0).getTarget();
+            EObject diagramObject = diagram instanceof DSemanticDiagram
+                ? ((DSemanticDiagram) diagram).getTarget()
+                : diagram.getOwnedRepresentationElements().get(0).getTarget();
             String objFragment = EcoreUtil.getURI(diagramObject).fragment();
-            EObject newDiagramTarget = GraphicalEditorHelper.getSiriusObject(newResource.getEObject(objFragment), destSession);
+            EObject newDiagramTarget = GraphicalEditorHelper
+                    .getSiriusObject(newResource.getEObject(objFragment), destSession);
             String label = DiagramNameHelper.getDiagramName(newDiagramTarget);
-            DRepresentation newRepresentation = DialectManager.INSTANCE.copyRepresentation(descriptor, label, destSession, monitor);
-            PooslDiagramRefactorHelper.copyDiagramElements(newRepresentation, EcoreUtil.getURI(diagramObject).trimFragment(), newDiagramTarget);
+            DRepresentation newRepresentation = DialectManager.INSTANCE
+                    .copyRepresentation(descriptor, label, destSession, monitor);
+            PooslDiagramRefactorHelper.copyDiagramElements(newRepresentation,
+                    EcoreUtil.getURI(diagramObject).trimFragment(), newDiagramTarget);
         }
     }
 

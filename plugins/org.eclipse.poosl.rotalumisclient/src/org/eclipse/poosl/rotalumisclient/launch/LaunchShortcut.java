@@ -82,13 +82,16 @@ public class LaunchShortcut implements ILaunchShortcut {
             for (ILaunchConfiguration iLaunchConfiguration : options) {
                 if (isLaunchConfiguration(file, iLaunchConfiguration)) {
                     configuration = iLaunchConfiguration;
-                    LOGGER.info("Found an existing configuration for the model: " + file.getLocation().toString());
+                    LOGGER.info("Found an existing configuration for the model: "
+                            + file.getLocation().toString());
                 }
             }
             if (configuration == null) {
-                ILaunchConfigurationWorkingCopy tempConfiguration = createLaunchConfiguration(mgr, lct, file, file.getName());
+                ILaunchConfigurationWorkingCopy tempConfiguration = createLaunchConfiguration(mgr,
+                        lct, file, file.getName());
                 configuration = tempConfiguration.doSave();
-                LOGGER.info("Created a new configuration for the model: " + file.getLocation().toString());
+                LOGGER.info("Created a new configuration for the model: "
+                        + file.getLocation().toString());
             } else {
                 validateNewAttributes(configuration, file);
             }
@@ -98,24 +101,33 @@ public class LaunchShortcut implements ILaunchShortcut {
         }
     }
 
-    private boolean isLaunchConfiguration(IFile file, ILaunchConfiguration iLaunchConfiguration) throws CoreException {
-        return iLaunchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, "") // $NON-NLS-1$
+    private boolean isLaunchConfiguration(IFile file, ILaunchConfiguration iLaunchConfiguration)
+            throws CoreException {
+        return iLaunchConfiguration
+                .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, "") // $NON-NLS-1$
                 .equals(file.getFullPath().toPortableString());
     }
 
-    private ILaunchConfigurationWorkingCopy createLaunchConfiguration(ILaunchManager mgr, ILaunchConfigurationType lct, IFile file, String name) throws CoreException {
+    private ILaunchConfigurationWorkingCopy createLaunchConfiguration(
+            ILaunchManager mgr, ILaunchConfigurationType lct, IFile file, String name)
+            throws CoreException {
 
         ILaunchConfigurationWorkingCopy result = lct.newInstance(null, name);
 
         String externalConfigPath = findExternalConfigPath(file);
         if (externalConfigPath != null) {
-            result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH, externalConfigPath);
+            result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_EXTERNAL_CONFIG_PATH,
+                    externalConfigPath);
         }
 
-        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, file.getProject().getName());
-        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, file.getFullPath().toPortableString());
-        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
-        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_TEST_CONF, isTestConfiguration());
+        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT,
+                file.getProject().getName());
+        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH,
+                file.getFullPath().toPortableString());
+        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT,
+                PooslConstants.CONFIGURATION_ATTRIBUTE_DEFAULT_SERVER_PORT);
+        result.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_TEST_CONF,
+                isTestConfiguration());
 
         String type = result.getType().getSourceLocatorId();
         IPersistableSourceLocator locator = mgr.newSourceLocator(type);
@@ -123,7 +135,8 @@ public class LaunchShortcut implements ILaunchShortcut {
             AbstractSourceLookupDirector director = (AbstractSourceLookupDirector) locator;
             director.setSourceContainers(createSourceContainers(file.getProject()));
 
-            result.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_MEMENTO, director.getMemento());
+            result.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_MEMENTO,
+                    director.getMemento());
             result.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_ID, director.getId());
         }
         return result;
@@ -140,7 +153,8 @@ public class LaunchShortcut implements ILaunchShortcut {
             IPath includePath = new Path(include);
             if (!includePath.isAbsolute()) {
                 IProject iProject = root.getProject(includePath.segment(0));
-                ProjectSourceContainer includedContainer = new ProjectSourceContainer(iProject, false);
+                ProjectSourceContainer includedContainer = new ProjectSourceContainer(iProject,
+                        false);
                 sourceContainers.add(includedContainer);
             }
         }
@@ -148,29 +162,36 @@ public class LaunchShortcut implements ILaunchShortcut {
     }
 
     /**
-     * Validates if the configuration contains the "new" attributes, if not set them
+     * Validates if the configuration contains the "new" attributes, if not set
+     * them
      * 
      * @param configuration
      * @param file
      * @throws CoreException
      */
-    private void validateNewAttributes(ILaunchConfiguration configuration, IFile file) throws CoreException {
-        String projectName = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
-        String relativePath = configuration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
+    private void validateNewAttributes(ILaunchConfiguration configuration, IFile file)
+            throws CoreException {
+        String projectName = configuration
+                .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""); //$NON-NLS-1$
+        String relativePath = configuration
+                .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""); //$NON-NLS-1$
         if (file != null && (projectName.isEmpty() || relativePath.isEmpty())) {
             ILaunchConfigurationWorkingCopy tempConfiguration = configuration.getWorkingCopy();
             if (relativePath.isEmpty()) {
-                tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, file.getFullPath().toOSString());
+                tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH,
+                        file.getFullPath().toOSString());
             }
             if (projectName.isEmpty()) {
-                tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, file.getProject().getName());
+                tempConfiguration.setAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT,
+                        file.getProject().getName());
             }
             tempConfiguration.doSave();
         }
     }
 
     /**
-     * Returns the path of an ini file in the same directory as the provided file
+     * Returns the path of an ini file in the same directory as the provided
+     * file
      * 
      * @param file
      * @return Absolute path as String to the ini file

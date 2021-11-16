@@ -33,11 +33,12 @@ public final class PooslCache {
 
     public static PooslCacheEntry get(final Resource resource) {
         if (resource instanceof XtextResource) {
-            return ((XtextResource) resource).getCache().get(PooslCache.class.getName(), resource, new Provider<PooslCacheEntry>() {
-                public PooslCacheEntry get() {
-                    return new PooslCacheEntry(resource);
-                }
-            });
+            return ((XtextResource) resource).getCache().get(PooslCache.class.getName(), resource,
+                    new Provider<PooslCacheEntry>() {
+                        public PooslCacheEntry get() {
+                            return new PooslCacheEntry(resource);
+                        }
+                    });
         } else {
             return new PooslCacheEntry(resource);
         }

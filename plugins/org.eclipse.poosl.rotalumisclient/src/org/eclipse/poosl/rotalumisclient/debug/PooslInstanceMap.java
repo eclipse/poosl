@@ -60,7 +60,8 @@ public class PooslInstanceMap {
         return instancePortMap;
     }
 
-    private void computeInstancesAndPorts(TInspectInstance instance, Map<String, String> channel2External) {
+    private void computeInstancesAndPorts(
+            TInspectInstance instance, Map<String, String> channel2External) {
         instances.put(instance.getProcessPath(), instance.getType());
 
         String pPath = instance.getProcessPath() + INSTANCE_PORT_SEPERATOR;
@@ -82,7 +83,8 @@ public class PooslInstanceMap {
         }
     }
 
-    private void storePortToExt(TInspectPort iPort, String pPath, Map<String, String> channel2External) {
+    private void storePortToExt(
+            TInspectPort iPort, String pPath, Map<String, String> channel2External) {
         if (iPort.getUpChannel() != null) {
             String portPath = pPath + iPort.getName();
             String extPort = channel2External.get(iPort.getUpChannel().getName());
@@ -94,7 +96,7 @@ public class PooslInstanceMap {
      * Creates an array of threads based on the instances of the provided model.
      * 
      * @param target
-     *            The requesting PooslDebugTarget that wants to create threads.
+     *     The requesting PooslDebugTarget that wants to create threads.
      * @return A new array with PooslThreads
      */
     public PooslThread[] createThreads(PooslDebugTarget target) {

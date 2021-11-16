@@ -59,11 +59,13 @@ public class PooslHtmlFormatter extends Formatter {
         if (message.startsWith("<pre>") && message.endsWith("</pre>")) { //$NON-NLS-1$ //$NON-NLS-2$
             buf.append("<pre>"); //$NON-NLS-1$
             message = message.substring("<pre>".length(), message.length() - "</pre>".length()); //$NON-NLS-1$ //$NON-NLS-2$
-            buf.append(StringUtils.replaceEach(message, new String[] { "&", "\"", "<", ">" }, new String[] { "&amp;", "&quot;", "&lt;", "&gt;" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+            buf.append(StringUtils.replaceEach(message, new String[] { "&", "\"", "<", ">" }, //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$
+                    new String[] { "&amp;", "&quot;", "&lt;", "&gt;" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             buf.append("</pre>"); //$NON-NLS-1$
         } else {
             buf.append("<pre>"); //$NON-NLS-1$
-            buf.append(StringUtils.replaceEach(message, new String[] { "&", "\"", "<", ">" }, new String[] { "&amp;", "&quot;", "&lt;", "&gt;" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+            buf.append(StringUtils.replaceEach(message, new String[] { "&", "\"", "<", ">" }, //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$
+                    new String[] { "&amp;", "&quot;", "&lt;", "&gt;" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             buf.append("</pre>"); //$NON-NLS-1$
         }
         buf.append("</td></tr>\n"); //$NON-NLS-1$
@@ -72,7 +74,8 @@ public class PooslHtmlFormatter extends Formatter {
     }
 
     private String calcDate(long millisecs) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS", Locale.getDefault()); //$NON-NLS-1$
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS", //$NON-NLS-1$
+                Locale.getDefault());
         Date resultdate = new Date(millisecs);
         return dateFormat.format(resultdate);
     }
@@ -90,7 +93,8 @@ public class PooslHtmlFormatter extends Formatter {
         buf.append("</HEAD>\n"); //$NON-NLS-1$
         buf.append("<BODY>\n"); //$NON-NLS-1$
         buf.append("<table width=\"100%\" border>\n"); //$NON-NLS-1$
-        buf.append("<tr><th width=\"150px\">Time</th><th>Level</th><th>Source</th><th>Log Message</th></tr>\n"); //$NON-NLS-1$
+        buf.append(
+                "<tr><th width=\"150px\">Time</th><th>Level</th><th>Source</th><th>Log Message</th></tr>\n"); //$NON-NLS-1$
         return buf.toString();
     }
 

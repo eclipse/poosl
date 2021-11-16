@@ -202,8 +202,10 @@ public class PooslTypeSystem {
 
     private String caseVariable(VariableExpression variableExpression) {
         if (variableExpression.getVariable() != null) {
-            String type = PooslVariableTypeHelper.getVariableType(variableExpression, variableExpression.getVariable());
-            if (type != null && PooslCache.get(variableExpression.eResource()).getDataClassMap().containsKey(type)) {
+            String type = PooslVariableTypeHelper.getVariableType(variableExpression,
+                    variableExpression.getVariable());
+            if (type != null && PooslCache.get(variableExpression.eResource()).getDataClassMap()
+                    .containsKey(type)) {
                 return type;
             }
         }
@@ -224,12 +226,16 @@ public class PooslTypeSystem {
 
     private String caseAssignmentExpression(AssignmentExpression assignmentExpression) {
         Resource resource = assignmentExpression.eResource();
-        String typeOfVariableName = PooslVariableTypeHelper.getVariableType(assignmentExpression, assignmentExpression.getVariable());
-        String typeOfExpressionName = getAndCheckExpressionType(assignmentExpression.getExpression());
+        String typeOfVariableName = PooslVariableTypeHelper.getVariableType(assignmentExpression,
+                assignmentExpression.getVariable());
+        String typeOfExpressionName = getAndCheckExpressionType(
+                assignmentExpression.getExpression());
 
         if (PooslCache.get(resource).getDataClassMap().containsKey(typeOfVariableName)) {
             if (!TypingHelper.isCompatible(resource, typeOfExpressionName, typeOfVariableName)) {
-                warning("Expression of type " + typeOfExpressionName + " is not compatible with variable of type " + typeOfVariableName, assignmentExpression, PooslIssueCodes.INVALID_ASSIGNMENT_TYPE,
+                warning("Expression of type " + typeOfExpressionName
+                        + " is not compatible with variable of type " + typeOfVariableName,
+                        assignmentExpression, PooslIssueCodes.INVALID_ASSIGNMENT_TYPE,
                         typeOfExpressionName, typeOfVariableName);
             } else {
                 return typeOfExpressionName;
@@ -243,7 +249,9 @@ public class PooslTypeSystem {
         Expression condition = ifExpression.getCondition();
         String typeName = getAndCheckExpressionType(condition);
         if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-            warning("Condition of type " + typeName + " is not compatible with type Boolean", condition, PooslIssueCodes.INCOMPATIBLE_TYPE, typeName, HelperFunctions.CLASS_NAME_BOOLEAN);
+            warning("Condition of type " + typeName + " is not compatible with type Boolean",
+                    condition, PooslIssueCodes.INCOMPATIBLE_TYPE, typeName,
+                    HelperFunctions.CLASS_NAME_BOOLEAN);
         }
 
         String typeOfThenClauseName = getAndCheckExpressionType(ifExpression.getThenClause());
@@ -254,7 +262,8 @@ public class PooslTypeSystem {
         } else {
             String typeOfElseClauseName = getAndCheckExpressionType(ifExpression.getElseClause());
             if (typeOfThenClauseName != null && typeOfElseClauseName != null) {
-                return TypingHelper.greatestCommonAncestor(resource, typeOfThenClauseName, typeOfElseClauseName);
+                return TypingHelper.greatestCommonAncestor(resource, typeOfThenClauseName,
+                        typeOfElseClauseName);
             }
         }
         return null;
@@ -278,7 +287,9 @@ public class PooslTypeSystem {
             String caseValueType = getAndCheckExpressionType(caseValue);
 
             if (!TypingHelper.isCompatible(resource, caseValueType, expressionType)) {
-                warning("Case condition of type " + caseValueType + " is not compatible with switch expression of type " + expressionType, caseValue, PooslIssueCodes.INCOMPATIBLE_TYPE, caseValueType,
+                warning("Case condition of type " + caseValueType
+                        + " is not compatible with switch expression of type " + expressionType,
+                        caseValue, PooslIssueCodes.INCOMPATIBLE_TYPE, caseValueType,
                         expressionType);
             }
 
@@ -295,7 +306,8 @@ public class PooslTypeSystem {
         Expression condition = whileExpression.getCondition();
         String typeName = getAndCheckExpressionType(condition);
         if (!TypingHelper.isCompatible(resource, typeName, HelperFunctions.CLASS_NAME_BOOLEAN)) {
-            warning("Condition of type " + typeName + " is not compatible with type Boolean", condition, PooslIssueCodes.INCOMPATIBLE_TYPE, typeName, "Boolean");
+            warning("Condition of type " + typeName + " is not compatible with type Boolean",
+                    condition, PooslIssueCodes.INCOMPATIBLE_TYPE, typeName, "Boolean");
         }
 
         getAndCheckExpressionType(whileExpression.getBody());
@@ -307,18 +319,24 @@ public class PooslTypeSystem {
         String runningClass = getAndCheckExpressionType(expr.getTarget());
         List<String> argumentTypes = getAndCheckExpressionsType(expr.getArguments());
 
-        if (expr.isOnSuperClass() && runningClass != null && !HelperFunctions.CLASS_NAME_OBJECT.equals(runningClass)) {
-            runningClass = HelperFunctions.getCorrectedDataClassExtendsAsString(resource, runningClass);
+        if (expr.isOnSuperClass() && runningClass != null
+                && !HelperFunctions.CLASS_NAME_OBJECT.equals(runningClass)) {
+            runningClass = HelperFunctions.getCorrectedDataClassExtendsAsString(resource,
+                    runningClass);
         }
 
         if (runningClass != null) {
             String dMethodName = expr.getName();
-            List<IEObjectDescription> dMethods = PooslCache.get(resource).getDataMethods(dMethodName, argumentTypes.size(), Literals.DATA_CLASS__DATA_METHODS_NAMED);
-            List<String> resultTypeNames = TypingHelper.getReturnTypesDataMethodNamed(resource, dMethods, runningClass, argumentTypes);
+            List<IEObjectDescription> dMethods = PooslCache.get(resource).getDataMethods(
+                    dMethodName, argumentTypes.size(), Literals.DATA_CLASS__DATA_METHODS_NAMED);
+            List<String> resultTypeNames = TypingHelper.getReturnTypesDataMethodNamed(resource,
+                    dMethods, runningClass, argumentTypes);
 
             if (resultTypeNames.isEmpty()) {
                 if (dMethods.isEmpty()) {
-                    error("No method '" + dMethodName + "' with  " + argumentTypes.size() + " parameters defined for any data class", expr, PooslIssueCodes.UNDECLARED_DATA_METHOD_NAMED);
+                    error("No method '" + dMethodName + "' with  " + argumentTypes.size()
+                            + " parameters defined for any data class", expr,
+                            PooslIssueCodes.UNDECLARED_DATA_METHOD_NAMED);
                 } else {
                     String strResult = ""; //$NON-NLS-1$
                     if (!argumentTypes.isEmpty()) {
@@ -329,7 +347,8 @@ public class PooslTypeSystem {
                         }
                         strResult = buf.toString().substring(2);
                     }
-                    warning("No method '" + dMethodName + "' defined for left expression of type " + runningClass + " with parameters of types (" + strResult + ")", expr,
+                    warning("No method '" + dMethodName + "' defined for left expression of type "
+                            + runningClass + " with parameters of types (" + strResult + ")", expr,
                             PooslIssueCodes.UNDECLARED_DATA_METHOD_NAMED);
                 }
             } else {
@@ -346,14 +365,21 @@ public class PooslTypeSystem {
 
         if (runningClass != null && argumentType != null) {
             String dMethodName = binaryOperatorExpression.getName().getLiteral();
-            List<IEObjectDescription> dMethods = PooslCache.get(resource).getDataMethods(dMethodName, 1, Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR);
-            List<String> resultTypeNames = TypingHelper.getReturnTypesDataMethodNamed(resource, dMethods, runningClass, Collections.singletonList(argumentType));
+            List<IEObjectDescription> dMethods = PooslCache.get(resource).getDataMethods(
+                    dMethodName, 1, Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR);
+            List<String> resultTypeNames = TypingHelper.getReturnTypesDataMethodNamed(resource,
+                    dMethods, runningClass, Collections.singletonList(argumentType));
 
             if (resultTypeNames.isEmpty()) {
                 if (dMethods.isEmpty()) {
-                    error("No binary operation '" + dMethodName + "' defined for any data class", binaryOperatorExpression, PooslIssueCodes.UNDECLARED_DATA_METHOD_BINARY);
+                    error("No binary operation '" + dMethodName + "' defined for any data class",
+                            binaryOperatorExpression,
+                            PooslIssueCodes.UNDECLARED_DATA_METHOD_BINARY);
                 } else {
-                    warning("No binary operation '" + dMethodName + "' defined for left expression of type " + runningClass + " and right expression of type " + argumentType, binaryOperatorExpression,
+                    warning("No binary operation '" + dMethodName
+                            + "' defined for left expression of type " + runningClass
+                            + " and right expression of type " + argumentType,
+                            binaryOperatorExpression,
                             PooslIssueCodes.UNDECLARED_DATA_METHOD_BINARY);
                 }
             } else {
@@ -369,14 +395,19 @@ public class PooslTypeSystem {
 
         if (runningClass != null) {
             String dMethodName = unaryOperatorExpression.getName().getLiteral();
-            List<IEObjectDescription> dMethods = PooslCache.get(resource).getDataMethods(dMethodName, 0, Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR);
-            List<String> resultTypeNames = TypingHelper.getReturnTypesDataMethodNamed(resource, dMethods, runningClass, Collections.<String> emptyList());
+            List<IEObjectDescription> dMethods = PooslCache.get(resource).getDataMethods(
+                    dMethodName, 0, Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR);
+            List<String> resultTypeNames = TypingHelper.getReturnTypesDataMethodNamed(resource,
+                    dMethods, runningClass, Collections.<String> emptyList());
 
             if (resultTypeNames.isEmpty()) {
                 if (dMethods.isEmpty()) {
-                    error("No unary operation '" + dMethodName + "' defined for any data class", unaryOperatorExpression, PooslIssueCodes.UNDECLARED_DATA_METHOD_UNARY);
+                    error("No unary operation '" + dMethodName + "' defined for any data class",
+                            unaryOperatorExpression, PooslIssueCodes.UNDECLARED_DATA_METHOD_UNARY);
                 } else {
-                    warning("No unary operation '" + dMethodName + "' defined for expression of type " + runningClass, unaryOperatorExpression, PooslIssueCodes.UNDECLARED_DATA_METHOD_UNARY);
+                    warning("No unary operation '" + dMethodName
+                            + "' defined for expression of type " + runningClass,
+                            unaryOperatorExpression, PooslIssueCodes.UNDECLARED_DATA_METHOD_UNARY);
                 }
             } else {
                 return TypingHelper.greatestCommonAncestor(resource, resultTypeNames);

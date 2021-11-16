@@ -80,7 +80,8 @@ public final class PooslReferenceHelper {
         int statementSize = statement.getArguments().size();
         String pName = pClass.getName();
 
-        return getSignatureDescription(resource, pName, statementPortName, statementMsgName, statementSize, PooslMessageType.SEND);
+        return getSignatureDescription(resource, pName, statementPortName, statementMsgName,
+                statementSize, PooslMessageType.SEND);
     }
 
     public static IEObjectDescription getReceiveSignatureDescription(ReceiveStatement statement) {
@@ -91,12 +92,16 @@ public final class PooslReferenceHelper {
         int statementSize = statement.getVariables().size();
         String pName = pClass.getName();
 
-        return getSignatureDescription(resource, pName, statementPortName, statementMsgName, statementSize, PooslMessageType.RECEIVE);
+        return getSignatureDescription(resource, pName, statementPortName, statementMsgName,
+                statementSize, PooslMessageType.RECEIVE);
     }
 
-    private static IEObjectDescription getSignatureDescription(Resource resource, String pClass, String portName, String messageName, int vars, PooslMessageType type) {
+    private static IEObjectDescription getSignatureDescription(
+            Resource resource, String pClass, String portName, String messageName, int vars,
+            PooslMessageType type) {
         for (IEObjectDescription input : PooslCache.get(resource).getMessages(pClass, type)) {
-            if (portName.equals(PooslMessageSignatureDescription.getPort(input)) && messageName.equals(HelperFunctions.getName(input))
+            if (portName.equals(PooslMessageSignatureDescription.getPort(input))
+                    && messageName.equals(HelperFunctions.getName(input))
                     && vars == PooslMessageSignatureDescription.getParameterTypes(input).size())
                 return input;
         }
@@ -107,7 +112,8 @@ public final class PooslReferenceHelper {
 
     public static IEObjectDescription getProcessMethodDescription(ProcessMethodCall call) {
         String methodName = call.getMethod();
-        Map<String, IEObjectDescription> methods = PooslScopeProvider.getScopeProcessMethodsWithInputAndOuputArguments(call);
+        Map<String, IEObjectDescription> methods = PooslScopeProvider
+                .getScopeProcessMethodsWithInputAndOuputArguments(call);
         return methods.get(methodName);
     }
 
@@ -118,7 +124,8 @@ public final class PooslReferenceHelper {
         Instance instance = iPort.getInstance();
         String classDef = instance.getClassDefinition();
         if (classDef != null) {
-            return PooslCache.get(resource).getInstantiableClassPorts(classDef).get((iPort.getPort() != null) ? iPort.getPort().getPort() : ""); //$NON-NLS-1$
+            return PooslCache.get(resource).getInstantiableClassPorts(classDef)
+                    .get((iPort.getPort() != null) ? iPort.getPort().getPort() : ""); //$NON-NLS-1$
         }
         return null;
     }
@@ -130,20 +137,25 @@ public final class PooslReferenceHelper {
         EObject container = portRef.eContainer();
         if (container instanceof InstancePort) {
             InstancePort iPort = (InstancePort) container;
-            return PooslCache.get(resource).getInstantiableClassPorts(iPort.getInstance().getClassDefinition()).get(portName);
+            return PooslCache.get(resource)
+                    .getInstantiableClassPorts(iPort.getInstance().getClassDefinition())
+                    .get(portName);
         } else {
             ProcessClass pClass = HelperFunctions.getContainingProcessClass(portRef);
             if (pClass != null) {
                 if (pClass.getName() != null) {
-                    return PooslCache.get(resource).getInstantiableClassPorts(pClass.getName()).get(portName);
+                    return PooslCache.get(resource).getInstantiableClassPorts(pClass.getName())
+                            .get(portName);
                 } else {
                     for (Port localPort : pClass.getPorts()) {
                         if (localPort.getName().equals(portName))
-                            return EObjectDescription.create(portName, localPort, PooslPortDescription.createUserData("")); //$NON-NLS-1$
+                            return EObjectDescription.create(portName, localPort,
+                                    PooslPortDescription.createUserData("")); //$NON-NLS-1$
                     }
                     String superClass = pClass.getSuperClass();
                     if (superClass != null) {
-                        return PooslCache.get(resource).getInstantiableClassPorts(pClass.getName()).get(portName);
+                        return PooslCache.get(resource).getInstantiableClassPorts(pClass.getName())
+                                .get(portName);
                     }
                 }
             }
@@ -200,7 +212,8 @@ public final class PooslReferenceHelper {
 
     public static IEObjectDescription getVariableDescription(AssignmentExpression assignExpr) {
         if (assignExpr.getVariable() != null) {
-            return PooslScopeProvider.getScopeExpressionVariable(assignExpr).getSingleElement(HelperFunctions.toQualifiedNameName(assignExpr.getVariable()));
+            return PooslScopeProvider.getScopeExpressionVariable(assignExpr).getSingleElement(
+                    HelperFunctions.toQualifiedNameName(assignExpr.getVariable()));
         } else {
             return null;
         }
@@ -208,7 +221,8 @@ public final class PooslReferenceHelper {
 
     public static IEObjectDescription getVariableDescription(VariableExpression varExpr) {
         if (varExpr.getVariable() != null) {
-            return PooslScopeProvider.getScopeExpressionVariable(varExpr).getSingleElement(HelperFunctions.toQualifiedNameName(varExpr.getVariable()));
+            return PooslScopeProvider.getScopeExpressionVariable(varExpr)
+                    .getSingleElement(HelperFunctions.toQualifiedNameName(varExpr.getVariable()));
         } else {
             return null;
         }
@@ -216,7 +230,8 @@ public final class PooslReferenceHelper {
 
     public static IEObjectDescription getVariableDescription(InstanceParameter iParam) {
         if (iParam.getParameter() != null) {
-            return PooslScopeProvider.getScopeInstanceParameterParameter(iParam).getSingleElement(HelperFunctions.toQualifiedNameName(iParam.getParameter()));
+            return PooslScopeProvider.getScopeInstanceParameterParameter(iParam)
+                    .getSingleElement(HelperFunctions.toQualifiedNameName(iParam.getParameter()));
         } else {
             return null;
         }
@@ -224,7 +239,8 @@ public final class PooslReferenceHelper {
 
     public static IEObjectDescription getVariableDescription(OutputVariable outVar) {
         if (outVar.getVariable() != null) {
-            return PooslScopeProvider.getScopeOutputVariableVariable(outVar).getSingleElement(HelperFunctions.toQualifiedNameName(outVar.getVariable()));
+            return PooslScopeProvider.getScopeOutputVariableVariable(outVar)
+                    .getSingleElement(HelperFunctions.toQualifiedNameName(outVar.getVariable()));
         } else {
             return null;
         }
@@ -232,37 +248,46 @@ public final class PooslReferenceHelper {
 
     // --- DataMethod References -------
 
-    public static IEObjectDescription getDataMethodUnaryDescription(UnaryOperatorExpression expr, PooslTypeSystem pooslTypeSystem) {
+    public static IEObjectDescription getDataMethodUnaryDescription(
+            UnaryOperatorExpression expr, PooslTypeSystem pooslTypeSystem) {
         String runningClassName = pooslTypeSystem.getAndCheckExpressionType(expr.getOperand());
         String methodName = expr.getName().getLiteral();
         if (runningClassName != null && methodName != null) {
-            return getDataMethod(expr.eResource(), runningClassName, methodName, 0, Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR);
+            return getDataMethod(expr.eResource(), runningClassName, methodName, 0,
+                    Literals.DATA_CLASS__DATA_METHODS_UNARY_OPERATOR);
 
         }
         return null;
     }
 
-    public static IEObjectDescription getDataMethodBinaryDescription(BinaryOperatorExpression expr, PooslTypeSystem pooslTypeSystem) {
+    public static IEObjectDescription getDataMethodBinaryDescription(
+            BinaryOperatorExpression expr, PooslTypeSystem pooslTypeSystem) {
         String runningClassName = pooslTypeSystem.getAndCheckExpressionType(expr.getLeftOperand());
         String methodName = expr.getName().getLiteral();
         String argumentType = pooslTypeSystem.getAndCheckExpressionType(expr.getRightOperand());
         if (runningClassName != null && methodName != null && argumentType != null) {
-            return getDataMethod(expr.eResource(), runningClassName, methodName, 1, Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR);
+            return getDataMethod(expr.eResource(), runningClassName, methodName, 1,
+                    Literals.DATA_CLASS__DATA_METHODS_BINARY_OPERATOR);
         }
         return null;
     }
 
-    public static IEObjectDescription getDataMethodNamedDescription(DataMethodCallExpression expr, PooslTypeSystem pooslTypeSystem) {
+    public static IEObjectDescription getDataMethodNamedDescription(
+            DataMethodCallExpression expr, PooslTypeSystem pooslTypeSystem) {
         Resource resource = expr.eResource();
         String runningClassName = pooslTypeSystem.getAndCheckExpressionType(expr.getTarget());
-        if (expr.isOnSuperClass() && runningClassName != null && !HelperFunctions.CLASS_NAME_OBJECT.equals(runningClassName)) {
-            runningClassName = HelperFunctions.getCorrectedDataClassExtendsAsString(resource, runningClassName);
+        if (expr.isOnSuperClass() && runningClassName != null
+                && !HelperFunctions.CLASS_NAME_OBJECT.equals(runningClassName)) {
+            runningClassName = HelperFunctions.getCorrectedDataClassExtendsAsString(resource,
+                    runningClassName);
         }
 
         String methodName = expr.getName();
-        List<String> argumentTypeNames = pooslTypeSystem.getAndCheckExpressionsType(expr.getArguments());
+        List<String> argumentTypeNames = pooslTypeSystem
+                .getAndCheckExpressionsType(expr.getArguments());
         if (runningClassName != null && methodName != null && argumentTypeNames != null) {
-            return getDataMethod(resource, runningClassName, methodName, argumentTypeNames.size(), Literals.DATA_CLASS__DATA_METHODS_NAMED);
+            return getDataMethod(resource, runningClassName, methodName, argumentTypeNames.size(),
+                    Literals.DATA_CLASS__DATA_METHODS_NAMED);
 
         }
         return null;
@@ -271,22 +296,27 @@ public final class PooslReferenceHelper {
     // --- Find all Identifiers -------
 
     /**
-     * Find existing process method names with the same number of input and output arguments. This method is used for
-     * renaming process methods. It returns names that are already in use (thus not allowed) and excludes the name of
+     * Find existing process method names with the same number of input and
+     * output arguments. This method is used for
+     * renaming process methods. It returns names that are already in use (thus
+     * not allowed) and excludes the name of
      * the method that is being renamed
      * 
      * @param call
-     *            the method call
+     *     the method call
      * @param excludedObjectURI
-     *            the renamed method uri
+     *     the renamed method uri
      * @return names already in use
      */
-    public static Iterable<String> getProcessMethodNamesByNumberOfInputAndOutputArguments(ProcessMethodCall call, final URI excludedObjectURI) {
-        Iterable<IEObjectDescription> methods = PooslScopeProvider.helperscope_ProcessMethodCall_method(call).getAllElements();
+    public static Iterable<String> getProcessMethodNamesByNumberOfInputAndOutputArguments(
+            ProcessMethodCall call, final URI excludedObjectURI) {
+        Iterable<IEObjectDescription> methods = PooslScopeProvider
+                .helperscope_ProcessMethodCall_method(call).getAllElements();
         return HelperFunctions.getNames(removeDescriptionWithURI(excludedObjectURI, methods));
     }
 
-    private static Iterable<IEObjectDescription> removeDescriptionWithURI(final URI excludedObjectURI, Iterable<IEObjectDescription> iterable) {
+    private static Iterable<IEObjectDescription> removeDescriptionWithURI(
+            final URI excludedObjectURI, Iterable<IEObjectDescription> iterable) {
         return Iterables.filter(iterable, new Predicate<IEObjectDescription>() {
             @Override
             public boolean apply(IEObjectDescription input) {
@@ -296,71 +326,92 @@ public final class PooslReferenceHelper {
     }
 
     /**
-     * Find existing send signature names with the same port and number of parameters. This method is used for renaming
-     * signatures. It returns names that are already in use (thus not allowed) and excludes the name of the signature
+     * Find existing send signature names with the same port and number of
+     * parameters. This method is used for renaming
+     * signatures. It returns names that are already in use (thus not allowed)
+     * and excludes the name of the signature
      * that is being renamed
      * 
      * @param statement
      * @param excludedObject
      * @return the signature names
      */
-    public static Iterable<String> getExistingSendSignatureNamesByPortAndNumberOfParameters(SendStatement statement, URI excludedObject) {
+    public static Iterable<String> getExistingSendSignatureNamesByPortAndNumberOfParameters(
+            SendStatement statement, URI excludedObject) {
         Resource resource = statement.eResource();
         ProcessClass pClass = HelperFunctions.getContainingProcessClass(statement);
         String statementPortName = ((PortReference) statement.getPortDescriptor()).getPort();
         int nrArguments = statement.getArguments().size();
-        return getExistingSignatureNamesByPortAndNumberOfParameters(resource, pClass, statementPortName, nrArguments, PooslMessageType.SEND, excludedObject);
+        return getExistingSignatureNamesByPortAndNumberOfParameters(resource, pClass,
+                statementPortName, nrArguments, PooslMessageType.SEND, excludedObject);
     }
 
     /**
-     * Find existing receive signature names with the same port and number of parameters. This method is used for
-     * renaming signatures. It returns names that are already in use (thus not allowed) and excludes the name of the
+     * Find existing receive signature names with the same port and number of
+     * parameters. This method is used for
+     * renaming signatures. It returns names that are already in use (thus not
+     * allowed) and excludes the name of the
      * signature that is being renamed
      * 
      * @param statement
      * @param excludedObject
      * @return the signature names
      */
-    public static Iterable<String> getExistingReceiveSignatureNamesByPortAndNumberOfParameters(ReceiveStatement statement, URI excludedObject) {
+    public static Iterable<String> getExistingReceiveSignatureNamesByPortAndNumberOfParameters(
+            ReceiveStatement statement, URI excludedObject) {
         Resource resource = statement.eResource();
         ProcessClass pClass = HelperFunctions.getContainingProcessClass(statement);
         String statementPortName = ((PortReference) statement.getPortDescriptor()).getPort();
         int nrArguments = statement.getVariables().size();
-        return getExistingSignatureNamesByPortAndNumberOfParameters(resource, pClass, statementPortName, nrArguments, PooslMessageType.RECEIVE, excludedObject);
+        return getExistingSignatureNamesByPortAndNumberOfParameters(resource, pClass,
+                statementPortName, nrArguments, PooslMessageType.RECEIVE, excludedObject);
     }
 
-    private static Iterable<String> getExistingSignatureNamesByPortAndNumberOfParameters(Resource resource, ProcessClass pClass, String statementPortName, int nrArguments, PooslMessageType type,
-            URI excludedObjectURI) {
-        List<IEObjectDescription> messages = PooslCache.get(resource).getMessages(pClass.getName(), type);
-        return HelperFunctions.getNames(Iterables.filter(messages, PooslMessageSignatureDescription.predicateMessage(statementPortName, nrArguments, excludedObjectURI)));
+    private static Iterable<String> getExistingSignatureNamesByPortAndNumberOfParameters(
+            Resource resource, ProcessClass pClass, String statementPortName, int nrArguments,
+            PooslMessageType type, URI excludedObjectURI) {
+        List<IEObjectDescription> messages = PooslCache.get(resource).getMessages(pClass.getName(),
+                type);
+        return HelperFunctions.getNames(Iterables.filter(messages, PooslMessageSignatureDescription
+                .predicateMessage(statementPortName, nrArguments, excludedObjectURI)));
     }
 
     public static Iterable<String> getPortNames(EObject referringElement, URI excludedObjectURI) {
-        return HelperFunctions.getNames(removeDescriptionWithURI(excludedObjectURI, PooslScopeProvider.getScopePortDescriptions(referringElement)));
+        return HelperFunctions.getNames(removeDescriptionWithURI(excludedObjectURI,
+                PooslScopeProvider.getScopePortDescriptions(referringElement)));
     }
 
     public static Iterable<String> getInstantiableClassNames(EObject referringElement, URI uri) {
-        return HelperFunctions.getNames(removeDescriptionWithURI(uri, HelperFunctions.getAllRelevantInstantiableClasses(referringElement.eResource())));
+        return HelperFunctions.getNames(removeDescriptionWithURI(uri,
+                HelperFunctions.getAllRelevantInstantiableClasses(referringElement.eResource())));
     }
 
     public static Iterable<String> getDataClassNames(EObject referringElement, URI uri) {
-        return HelperFunctions.getNames(removeDescriptionWithURI(uri, PooslCache.get(referringElement.eResource()).getAllRelevantDataClasses()));
+        return HelperFunctions.getNames(removeDescriptionWithURI(uri,
+                PooslCache.get(referringElement.eResource()).getAllRelevantDataClasses()));
     }
 
-    public static Iterable<String> getVariableNames(AssignmentExpression assignExpr, final URI excludedURI) {
-        return HelperFunctions.getNames(removeDescriptionWithURI(excludedURI, PooslScopeProvider.getScopeExpressionVariable(assignExpr).getAllElements()));
+    public static Iterable<String> getVariableNames(
+            AssignmentExpression assignExpr, final URI excludedURI) {
+        return HelperFunctions.getNames(removeDescriptionWithURI(excludedURI,
+                PooslScopeProvider.getScopeExpressionVariable(assignExpr).getAllElements()));
     }
 
-    public static Iterable<String> getVariableNames(VariableExpression varExpr, final URI excludedURI) {
-        return HelperFunctions.getNames(removeDescriptionWithURI(excludedURI, PooslScopeProvider.getScopeExpressionVariable(varExpr).getAllElements()));
+    public static Iterable<String> getVariableNames(
+            VariableExpression varExpr, final URI excludedURI) {
+        return HelperFunctions.getNames(removeDescriptionWithURI(excludedURI,
+                PooslScopeProvider.getScopeExpressionVariable(varExpr).getAllElements()));
     }
 
-    public static Iterable<String> getVariableNames(InstanceParameter iParam, final URI excludedURI) {
-        return HelperFunctions.getNames(removeDescriptionWithURI(excludedURI, PooslScopeProvider.getScopeInstanceParameterParameter(iParam).getAllElements()));
+    public static Iterable<String> getVariableNames(
+            InstanceParameter iParam, final URI excludedURI) {
+        return HelperFunctions.getNames(removeDescriptionWithURI(excludedURI,
+                PooslScopeProvider.getScopeInstanceParameterParameter(iParam).getAllElements()));
     }
 
     public static Iterable<String> getVariableNames(OutputVariable outVar, final URI excludedURI) {
-        return HelperFunctions.getNames(removeDescriptionWithURI(excludedURI, PooslScopeProvider.getScopeOutputVariableVariable(outVar).getAllElements()));
+        return HelperFunctions.getNames(removeDescriptionWithURI(excludedURI,
+                PooslScopeProvider.getScopeOutputVariableVariable(outVar).getAllElements()));
     }
 
     // ----------- Additional Helpers
@@ -377,9 +428,12 @@ public final class PooslReferenceHelper {
         }
     }
 
-    public static IEObjectDescription getDataMethod(Resource resource, String dClassName, String dMethodName, int args, EReference literal) {
+    public static IEObjectDescription getDataMethod(
+            Resource resource, String dClassName, String dMethodName, int args,
+            EReference literal) {
         final List<String> classChain = HelperFunctions.computeDataClassChain(resource, dClassName);
-        List<IEObjectDescription> methods = PooslCache.get(resource).getDataMethods(dClassName, dMethodName, args, literal);
+        List<IEObjectDescription> methods = PooslCache.get(resource).getDataMethods(dClassName,
+                dMethodName, args, literal);
         int i = -1;
         IEObjectDescription methodDescription = null;
         for (IEObjectDescription descr : methods) {
@@ -405,11 +459,13 @@ public final class PooslReferenceHelper {
             obj = obj.eContainer();
         }
         if (obj instanceof InstancePort) {
-            return PooslCache.get(resource).getInstantiableClassPorts(((InstancePort) obj).getInstance().getClassDefinition()).keySet();
+            return PooslCache.get(resource).getInstantiableClassPorts(
+                    ((InstancePort) obj).getInstance().getClassDefinition()).keySet();
         } else if (obj instanceof ProcessClass) {
             ProcessClass pClass = (ProcessClass) obj;
             if (pClass.getName() != null) {
-                return PooslCache.get(resource).getInstantiableClassPorts(pClass.getName()).keySet();
+                return PooslCache.get(resource).getInstantiableClassPorts(pClass.getName())
+                        .keySet();
             } else {
                 Set<String> portNames = new HashSet<>();
                 for (Port port : pClass.getPorts()) {
@@ -417,7 +473,8 @@ public final class PooslReferenceHelper {
                 }
                 String superClass = pClass.getSuperClass();
                 if (superClass != null)
-                    portNames.addAll(PooslCache.get(resource).getInstantiableClassPorts(superClass).keySet());
+                    portNames.addAll(PooslCache.get(resource).getInstantiableClassPorts(superClass)
+                            .keySet());
                 return portNames;
             }
         }

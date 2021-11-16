@@ -33,7 +33,8 @@ public class PooslChannelHelper {
 
     private List<PooslInstancePortHelper> instancePorts = new ArrayList<>();
 
-    public PooslChannelHelper(String aClassName, String stringDescription, Map<String, String> instances) {
+    public PooslChannelHelper(String aClassName, String stringDescription,
+            Map<String, String> instances) {
         String[] ports = stringDescription.split(COMMA);
         if (ports != null && ports.length != 0) {
             for (int i = 0; i < ports.length; i++) {
@@ -47,7 +48,8 @@ public class PooslChannelHelper {
     }
 
     public PooslChannelHelper(Channel channel) {
-        externalPortName = (channel.getExternalPort() != null) ? channel.getExternalPort().getName() : ""; //$NON-NLS-1$
+        externalPortName = (channel.getExternalPort() != null)
+            ? channel.getExternalPort().getName() : ""; //$NON-NLS-1$
         for (InstancePort iPort : channel.getInstancePorts()) {
             if (iPort.getInstance() != null && iPort.getPort() != null) {
                 instancePorts.add(new PooslInstancePortHelper(iPort));

@@ -35,7 +35,8 @@ public class ExternLaunchStartMessage {
 
     private final List<URI> files;
 
-    public ExternLaunchStartMessage(String launchID, String modelPath, String projectName, Map<String, String> instancePortMap, List<URI> files) {
+    public ExternLaunchStartMessage(String launchID, String modelPath, String projectName,
+            Map<String, String> instancePortMap, List<URI> files) {
         super();
         this.launchID = launchID;
         this.projectName = projectName;

@@ -47,7 +47,7 @@ public class AbstractServices {
      * Verify if an object comes from a built-in model.
      * 
      * @param object
-     *            to test
+     *     to test
      * @return true if built-in
      */
     public static boolean isBundleResource(EObject object) {
@@ -59,12 +59,13 @@ public class AbstractServices {
     }
 
     /**
-     * Triggers a validation on associated representation when change is detected.
+     * Triggers a validation on associated representation when change is
+     * detected.
      * 
      * @param element
-     *            edited
+     *     edited
      * @param view
-     *            to validate
+     *     to validate
      */
     public static void validateRepresentation(Object element, Object view) {
         DRepresentation representation = getRepresentation(view);
@@ -77,7 +78,8 @@ public class AbstractServices {
             return; // nothing to validate
         }
 
-        IEditorPart part = DialectUIManager.INSTANCE.openEditor(session, representation, new NullProgressMonitor());
+        IEditorPart part = DialectUIManager.INSTANCE.openEditor(session, representation,
+                new NullProgressMonitor());
         if (!(part instanceof DialectEditor)) {
             return; // not applicable.
         }
@@ -109,7 +111,8 @@ public class AbstractServices {
     private static Session getSession(Object element) {
         Resource resource = ((EObject) element).eResource();
         Session session = SessionManager.INSTANCE.getSession((EObject) element);
-        session = (session == null && resource != null) ? SessionManager.INSTANCE.getSession(resource) : session;
+        session = (session == null && resource != null)
+            ? SessionManager.INSTANCE.getSession(resource) : session;
         if (session == null) {
             // XXX This fallback makes no sense.
             Collection<Session> sessions = SessionManager.INSTANCE.getSessions();
@@ -124,9 +127,9 @@ public class AbstractServices {
      * Deletes an element.
      * 
      * @param it
-     *            to delete
+     *     to delete
      * @param containerView
-     *            of deleted element
+     *     of deleted element
      */
     public static void deletePooslObject(EObject it, EObject containerView) {
         SiriusUtil.delete(it);

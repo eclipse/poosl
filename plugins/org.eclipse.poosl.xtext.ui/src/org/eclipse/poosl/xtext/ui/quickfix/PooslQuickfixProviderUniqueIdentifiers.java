@@ -39,7 +39,8 @@ public class PooslQuickfixProviderUniqueIdentifiers extends PooslQuickfixProvide
                 null, // description
                 null, // icon
                 new ISemanticModification() {
-                    public void apply(EObject element, IModificationContext context) throws BadLocationException {
+                    public void apply(EObject element, IModificationContext context)
+                            throws BadLocationException {
                         ICompositeNode node = NodeModelUtils.getNode(element);
                         int offset = node.getOffset();
                         int length = node.getLength();
@@ -55,7 +56,8 @@ public class PooslQuickfixProviderUniqueIdentifiers extends PooslQuickfixProvide
                 null, // description
                 null, // icon
                 new ISemanticModification() {
-                    public void apply(EObject element, IModificationContext context) throws BadLocationException {
+                    public void apply(EObject element, IModificationContext context)
+                            throws BadLocationException {
                         ICompositeNode node = NodeModelUtils.getNode(element);
                         int offset = node.getOffset();
                         int length = node.getLength();

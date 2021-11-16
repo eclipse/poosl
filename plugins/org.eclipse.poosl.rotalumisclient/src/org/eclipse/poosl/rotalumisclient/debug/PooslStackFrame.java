@@ -53,7 +53,8 @@ public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
 
     private int charEnd;
 
-    public PooslStackFrame(PooslDebugTarget target, PooslThread thread, String name, List<TVariable> vars, BigInteger globalHandle) throws DebugException {
+    public PooslStackFrame(PooslDebugTarget target, PooslThread thread, String name,
+            List<TVariable> vars, BigInteger globalHandle) throws DebugException {
         super(target);
         this.thread = thread;
         this.name = name;
@@ -207,7 +208,8 @@ public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
         variables = originalVariables;
     }
 
-    public void addLocalVariables(List<TVariable> vars, BigInteger listHandle) throws DebugException {
+    public void addLocalVariables(List<TVariable> vars, BigInteger listHandle)
+            throws DebugException {
         PooslVariable[] localVariables = new PooslVariable[vars.size()];
         for (int i = 0; i < vars.size(); i++) {
             localVariables[i] = new PooslVariable(target, vars.get(i), listHandle);
@@ -220,7 +222,9 @@ public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
         }
     }
 
-    public boolean updateSubVariables(PooslDebugTarget target, BigInteger listHandle, List<TVariable> variableList) throws DebugException {
+    public boolean updateSubVariables(
+            PooslDebugTarget target, BigInteger listHandle, List<TVariable> variableList)
+            throws DebugException {
         boolean updated = false;
         for (PooslValue pooslValue : getSubValuesByListHandle(listHandle)) {
             if (pooslValue.getVariables().length == 0) {
@@ -235,7 +239,9 @@ public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
         return updated;
     }
 
-    public boolean updateVariable(PooslDebugTarget target, BigInteger objectHandle, List<TVariable> variableList) throws DebugException {
+    public boolean updateVariable(
+            PooslDebugTarget target, BigInteger objectHandle, List<TVariable> variableList)
+            throws DebugException {
         boolean updated = false;
         for (PooslValue pooslValue : getValuesByObjectHandle(objectHandle)) {
             if (pooslValue.getVariables().length == 0) {
@@ -270,7 +276,8 @@ public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
         return values;
     }
 
-    private static List<PooslValue> getSubValuesByListHandle(BigInteger listHandle, PooslValue value) throws DebugException {
+    private static List<PooslValue> getSubValuesByListHandle(
+            BigInteger listHandle, PooslValue value) throws DebugException {
         List<PooslValue> values = new ArrayList<>();
         for (IVariable variable : value.getVariables()) {
             if (variable.getValue() instanceof PooslValue) {
@@ -287,7 +294,8 @@ public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
         return values;
     }
 
-    private List<PooslValue> getValuesByObjectHandle(BigInteger objectHandle) throws DebugException {
+    private List<PooslValue> getValuesByObjectHandle(BigInteger objectHandle)
+            throws DebugException {
         List<PooslValue> values = new ArrayList<>();
         for (IVariable variable : getVariables()) {
             if (variable.getValue() instanceof PooslValue) {
@@ -304,7 +312,8 @@ public class PooslStackFrame extends PooslDebugElement implements IStackFrame {
         return values;
     }
 
-    private static List<PooslValue> getValuesByObjectHandle(BigInteger objectHandle, PooslValue value) throws DebugException {
+    private static List<PooslValue> getValuesByObjectHandle(
+            BigInteger objectHandle, PooslValue value) throws DebugException {
         List<PooslValue> values = new ArrayList<>();
         for (IVariable variable : value.getVariables()) {
             if (variable.getValue() instanceof PooslValue) {

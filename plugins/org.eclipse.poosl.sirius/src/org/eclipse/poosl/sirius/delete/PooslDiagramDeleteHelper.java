@@ -53,27 +53,33 @@ public final class PooslDiagramDeleteHelper {
      * @param session
      * @param allResourceDiagrams
      */
-    public static void closeAndDeleteDiagrams(Shell shell, Session session, Collection<DRepresentationDescriptor> allResourceDiagrams) {
+    public static void closeAndDeleteDiagrams(
+            Shell shell, Session session,
+            Collection<DRepresentationDescriptor> allResourceDiagrams) {
         Map<Session, Set<DRepresentationDescriptor>> session2Descriptors = new HashMap<>();
         session2Descriptors.put(session, new HashSet<>(allResourceDiagrams));
         closeAndDeleteDiagrams(shell, session2Descriptors);
     }
 
     /**
-     * Close any open diagrams and delete them using {@link CloseAndDeleteDiagramRunnable} and
+     * Close any open diagrams and delete them using
+     * {@link CloseAndDeleteDiagramRunnable} and
      * {@link DeleteDiagramRunnable}.
      * 
      * @param shell
      * @param session2Descriptors
      */
 
-    public static void closeAndDeleteDiagrams(Shell shell, final Map<Session, Set<DRepresentationDescriptor>> session2Descriptors) {
+    public static void closeAndDeleteDiagrams(
+            Shell shell, final Map<Session, Set<DRepresentationDescriptor>> session2Descriptors) {
         try {
             if (containsRepresentations(session2Descriptors)) {
                 IRunnableContext context = new ProgressMonitorDialog(shell);
                 ISchedulingRule scheduler = new DiagramEditScheduler();
-                PlatformUI.getWorkbench().getProgressService().runInUI(context, new CloseDiagramRunnable(session2Descriptors), scheduler);
-                PlatformUI.getWorkbench().getProgressService().runInUI(context, new DeleteDiagramRunnable(session2Descriptors), scheduler);
+                PlatformUI.getWorkbench().getProgressService().runInUI(context,
+                        new CloseDiagramRunnable(session2Descriptors), scheduler);
+                PlatformUI.getWorkbench().getProgressService().runInUI(context,
+                        new DeleteDiagramRunnable(session2Descriptors), scheduler);
             }
         } catch (InvocationTargetException | InterruptedException e) {
             LOGGER.warn(DELETE_DIAGRAMS_FAILED, e);
@@ -86,8 +92,10 @@ public final class PooslDiagramDeleteHelper {
      * @param session2Descriptors
      * @return true if the maps contains representations
      */
-    private static boolean containsRepresentations(Map<Session, Set<DRepresentationDescriptor>> session2Descriptors) {
-        for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors.entrySet()) {
+    private static boolean containsRepresentations(
+            Map<Session, Set<DRepresentationDescriptor>> session2Descriptors) {
+        for (Entry<Session, Set<DRepresentationDescriptor>> entry : session2Descriptors
+                .entrySet()) {
             Set<DRepresentationDescriptor> descriptors = entry.getValue();
             if (descriptors != null && !descriptors.isEmpty())
                 return true;

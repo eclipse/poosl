@@ -115,7 +115,8 @@ public class NewPortDialog extends TitleAreaDialog {
         this.name = txtName.getText();
 
         if (getName().isEmpty() || !nameIsAvailable(name)) {
-            MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE, ERROR_MESSAGE);
+            MessageDialog.openError(Display.getDefault().getActiveShell(), ERROR_TITLE,
+                    ERROR_MESSAGE);
         } else {
             super.okPressed();
         }

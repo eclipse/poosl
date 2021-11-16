@@ -54,7 +54,8 @@ public final class PooslDataClassDescription {
         Set<String> usedVariables = new HashSet<>();
         for (DataMethod dataMethod : getDataMethods(dClass)) {
             if (dataMethod.getBody() != null) {
-                findUsedElements(usedVariables, getLocalVariables(dataMethod), dataMethod.getBody());
+                findUsedElements(usedVariables, getLocalVariables(dataMethod),
+                        dataMethod.getBody());
             }
         }
         PooslSuperClassDescription.setUsedVariables(userData, usedVariables);
@@ -62,20 +63,24 @@ public final class PooslDataClassDescription {
     }
 
     /**
-     * Find the used elements contained in the eobject and eobject itself wil also be checked
+     * Find the used elements contained in the eobject and eobject itself wil
+     * also be checked
      * 
      * @param usedVariables
-     *            elements created with {@link #initUsedElements()}
+     *     elements created with {@link #initUsedElements()}
      * @param startObject
-     *            The container to check for used elements
+     *     The container to check for used elements
      * @param localVariables
      */
-    private static void findUsedElements(Set<String> usedVariables, Set<String> localVariables, EObject startObject) {
-        TreeIterator<EObject> allProperContents = EcoreUtil.getAllProperContents(startObject, false);
+    private static void findUsedElements(
+            Set<String> usedVariables, Set<String> localVariables, EObject startObject) {
+        TreeIterator<EObject> allProperContents = EcoreUtil.getAllProperContents(startObject,
+                false);
         PooslSuperClassDescription.addUsedVariables(usedVariables, localVariables, startObject);
         while (allProperContents.hasNext()) {
             EObject contentObject = allProperContents.next();
-            PooslSuperClassDescription.addUsedVariables(usedVariables, localVariables, contentObject);
+            PooslSuperClassDescription.addUsedVariables(usedVariables, localVariables,
+                    contentObject);
         }
     }
 
@@ -86,7 +91,8 @@ public final class PooslDataClassDescription {
         return localVariables;
     }
 
-    private static void addDeclarationsToVariableNames(Set<String> variableNames, List<Declaration> declarations) {
+    private static void addDeclarationsToVariableNames(
+            Set<String> variableNames, List<Declaration> declarations) {
         for (Declaration decl : declarations) {
             for (Variable variable : decl.getVariables()) {
                 variableNames.add(variable.getName());
@@ -95,7 +101,8 @@ public final class PooslDataClassDescription {
     }
 
     private static Iterable<DataMethod> getDataMethods(DataClass dClass) {
-        return Iterables.concat(dClass.getDataMethodsBinaryOperator(), dClass.getDataMethodsUnaryOperator(), dClass.getDataMethodsNamed());
+        return Iterables.concat(dClass.getDataMethodsBinaryOperator(),
+                dClass.getDataMethodsUnaryOperator(), dClass.getDataMethodsNamed());
     }
 
     // --- Get -------

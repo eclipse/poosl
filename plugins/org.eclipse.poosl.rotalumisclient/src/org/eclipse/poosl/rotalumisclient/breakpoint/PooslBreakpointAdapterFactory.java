@@ -34,7 +34,8 @@ public class PooslBreakpointAdapterFactory implements IAdapterFactory {
             IResource resource = editorPart.getEditorInput().getAdapter(IResource.class);
             if (resource != null) {
                 String extension = resource.getFileExtension();
-                if (extension != null && "poosl".equals(extension) && IToggleBreakpointsTarget.class.equals(adapterType)) { //$NON-NLS-1$
+                if (extension != null && "poosl".equals(extension) //$NON-NLS-1$
+                        && IToggleBreakpointsTarget.class.equals(adapterType)) {
                     return adapterType.cast(new PooslLineBreakpointTarget());
                 }
             }

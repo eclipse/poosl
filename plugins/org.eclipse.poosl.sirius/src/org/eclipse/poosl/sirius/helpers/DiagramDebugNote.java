@@ -56,7 +56,8 @@ public class DiagramDebugNote {
     private final String owner;
 
     public DiagramDebugNote(DRepresentation representation) {
-        owner = GraphicalEditorHelper.getInstanceFromDocumentation(representation.getDocumentation());
+        owner = GraphicalEditorHelper
+                .getInstanceFromDocumentation(representation.getDocumentation());
         note = findNote(representation);
     }
 
@@ -91,7 +92,8 @@ public class DiagramDebugNote {
             if (message != null && owner != null) {
                 empty = message.getMessagePath(owner) == null;
             }
-            note.setDescription(empty ? createNoteMessage(null) : createNoteMessage(message.getMessage()));
+            note.setDescription(
+                    empty ? createNoteMessage(null) : createNoteMessage(message.getMessage()));
         }
     }
 
@@ -163,7 +165,9 @@ public class DiagramDebugNote {
             }
         }
 
-        LayoutConstraint location = GMFNotationHelper.createLayoutPosition(BigInteger.valueOf(noteLocation), BigInteger.valueOf(10), BigInteger.valueOf(noteWidth),
+        LayoutConstraint location = GMFNotationHelper.createLayoutPosition(
+                BigInteger.valueOf(noteLocation), BigInteger.valueOf(10),
+                BigInteger.valueOf(noteWidth),
                 BigInteger.valueOf(GMFNotationHelper.getHeight(node)));
 
         node.setLayoutConstraint(location);
@@ -182,7 +186,8 @@ public class DiagramDebugNote {
         for (Object object : diagram.getChildren()) {
             if (object instanceof Shape) {
                 Shape shape = (Shape) object;
-                if (GMFNotationHelper.isNote(shape) && shape.getDescription().startsWith(MESSAGE_DESCRIPTION)) {
+                if (GMFNotationHelper.isNote(shape)
+                        && shape.getDescription().startsWith(MESSAGE_DESCRIPTION)) {
                     return shape;
                 }
             }

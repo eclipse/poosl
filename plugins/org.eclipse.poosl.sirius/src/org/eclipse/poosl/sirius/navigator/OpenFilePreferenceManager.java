@@ -65,9 +65,12 @@ public class OpenFilePreferenceManager extends OpenPreferenceManager {
         } else if (target instanceof ClusterClass) {
             ClusterClass cluster = (ClusterClass) target;
             if (cluster.getName() == null) {
-                return PooslEditorPreferenceDialog.COMPOSITE_STRUCTURE_DIAGRAM + PooslEditorPreferenceDialog.DIAGRAM_NAME_SYSTEM;
+                return PooslEditorPreferenceDialog.COMPOSITE_STRUCTURE_DIAGRAM
+                        + PooslEditorPreferenceDialog.DIAGRAM_NAME_SYSTEM;
             } else {
-                return PooslEditorPreferenceDialog.COMPOSITE_STRUCTURE_DIAGRAM + PooslEditorPreferenceDialog.DIAGRAM_NAME_CLUSTER + getClusterName(cluster);
+                return PooslEditorPreferenceDialog.COMPOSITE_STRUCTURE_DIAGRAM
+                        + PooslEditorPreferenceDialog.DIAGRAM_NAME_CLUSTER
+                        + getClusterName(cluster);
             }
         }
         return ""; //$NON-NLS-1$
@@ -87,12 +90,14 @@ public class OpenFilePreferenceManager extends OpenPreferenceManager {
 
     public String getEditorPreference() {
         IPreferencesService preferencesService = Platform.getPreferencesService();
-        Boolean dontask = preferencesService.getBoolean(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK, false, null);
+        Boolean dontask = preferencesService.getBoolean(IPreferenceConstants.PREFERENCE_PLUGIN_ID,
+                IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_DONT_ASK, false, null);
         String currentPref = getCurrentPreference(Platform.getPreferencesService());
         if (!dontask) {
             currentPref = askPreference();
         }
-        if (currentPref != null && currentPref.equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM)) {
+        if (currentPref != null && currentPref
+                .equals(IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_CLASS_DIAGRAM)) {
             mainTarget = poosl;
         }
         return currentPref;
@@ -100,10 +105,12 @@ public class OpenFilePreferenceManager extends OpenPreferenceManager {
 
     private String getCurrentPreference(IPreferencesService preferencesService) {
         if (hasMainClass) {
-            return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PROJECT_EXPLORER, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL,
-                    null);
+            return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID,
+                    IPreferenceConstants.PROJECT_EXPLORER,
+                    IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL, null);
         } else {
-            return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID, IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_NO_SYSTEM,
+            return preferencesService.getString(IPreferenceConstants.PREFERENCE_PLUGIN_ID,
+                    IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_NO_SYSTEM,
                     IPreferenceConstants.PREFERENCE_PROJECT_EXPLORER_TEXTUAL, null);
         }
     }

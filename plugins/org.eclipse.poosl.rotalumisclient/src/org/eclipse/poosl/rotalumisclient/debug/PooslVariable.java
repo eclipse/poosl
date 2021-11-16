@@ -66,7 +66,9 @@ public class PooslVariable extends PooslDebugElement implements IVariable {
 
     class PooslDebugElementLabelProvider extends VariableLabelProvider {
         @Override
-        protected String getValueText(IVariable variable, IValue pValue, IPresentationContext context) throws CoreException {
+        protected String getValueText(
+                IVariable variable, IValue pValue, IPresentationContext context)
+                throws CoreException {
             return pValue.getValueString();
         }
     }
@@ -148,7 +150,8 @@ public class PooslVariable extends PooslDebugElement implements IVariable {
                 if (value.getObject() != null) {
                     target.getClient().inspectByHandle(value.getObject(), TInspectType.DATA);
                 } else {
-                    LOGGER.log(Level.SEVERE, "Could not perform a request for variable" + value.getLiteral());
+                    LOGGER.log(Level.SEVERE,
+                            "Could not perform a request for variable" + value.getLiteral());
                 }
             }
         }

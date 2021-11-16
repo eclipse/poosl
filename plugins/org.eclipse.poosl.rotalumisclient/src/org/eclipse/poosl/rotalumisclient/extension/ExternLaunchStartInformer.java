@@ -33,7 +33,8 @@ import org.eclipse.poosl.rotalumisclient.debug.PooslDebugTarget;
  *
  */
 public class ExternLaunchStartInformer {
-    private static final Logger LOGGER = Logger.getLogger(ExternLaunchStartInformer.class.getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(ExternLaunchStartInformer.class.getName());
 
     @Execute
     public void executeInformDebugSelection(PooslDebugTarget pooslTarget, List<URI> files) {
@@ -41,9 +42,12 @@ public class ExternLaunchStartInformer {
         ILaunchConfiguration launchConfiguration = pooslTarget.getLaunch().getLaunchConfiguration();
         try {
             ExternLaunchStartMessage message = new ExternLaunchStartMessage(//
-                    launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""), //$NON-NLS-1$
-                    launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), //$NON-NLS-1$
-                    launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT, ""), //$NON-NLS-1$
+                    launchConfiguration
+                            .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_SERVER_PORT, ""), //$NON-NLS-1$
+                    launchConfiguration
+                            .getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_RELATIVE_PATH, ""), //$NON-NLS-1$
+                    launchConfiguration.getAttribute(PooslConstants.CONFIGURATION_ATTRIBUTE_PROJECT,
+                            ""), //$NON-NLS-1$
                     pooslTarget.getInstancePortMap(), files);
             for (IPooslDebugInformer extension : ExtensionHelper.getExtensions()) {
                 executeLaunchStart(extension, message);
@@ -53,7 +57,8 @@ public class ExternLaunchStartInformer {
         }
     }
 
-    private void executeLaunchStart(final IPooslDebugInformer extension, final ExternLaunchStartMessage message) {
+    private void executeLaunchStart(
+            final IPooslDebugInformer extension, final ExternLaunchStartMessage message) {
         ISafeRunnable runnable = new ISafeRunnable() {
             @Override
             public void handleException(Throwable e) {

@@ -34,10 +34,13 @@ public final class PooslDataMethodParser {
         throw new IllegalStateException("Utility class");
     }
 
-    public static Iterable<String> getDataMethodStrings(Iterable<IEObjectDescription> descriptions) {
+    public static Iterable<String> getDataMethodStrings(
+            Iterable<IEObjectDescription> descriptions) {
         return Iterables.transform(descriptions, new Function<IEObjectDescription, String>() {
             public String apply(IEObjectDescription descr) {
-                return HelperFunctions.getName(descr) + SEPARATOR + PooslDataMethodDescription.getParameters(descr) + SEPARATOR + ": " + PooslDataMethodDescription.getReturnType(descr); //$NON-NLS-1$
+                return HelperFunctions.getName(descr) + SEPARATOR
+                        + PooslDataMethodDescription.getParameters(descr) + SEPARATOR + ": " //$NON-NLS-1$
+                        + PooslDataMethodDescription.getReturnType(descr);
             }
         });
     }
@@ -51,6 +54,7 @@ public final class PooslDataMethodParser {
     }
 
     public static Integer getNumberArgs(String dataMethodString) {
-        return FormattingHelper.unformatDeclarationsToTypeNames(dataMethodString.split(SEPARATOR)[1]).size();
+        return FormattingHelper
+                .unformatDeclarationsToTypeNames(dataMethodString.split(SEPARATOR)[1]).size();
     }
 }

@@ -42,7 +42,8 @@ public class DotClasspath {
 
     private class Handler extends DefaultHandler {
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        public void startElement(String uri, String localName, String qName, Attributes attributes)
+                throws SAXException {
             if ("classpathentry".equals(qName)) { //$NON-NLS-1$
                 String kind = attributes.getValue("kind"); //$NON-NLS-1$
                 String path = attributes.getValue("path"); //$NON-NLS-1$
