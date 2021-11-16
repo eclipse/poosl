@@ -71,155 +71,149 @@ import org.eclipse.xtext.service.SingletonBinding;
 @SuppressWarnings("all")
 public abstract class AbstractPooslRuntimeModule extends DefaultRuntimeModule {
 
-    protected Properties properties = null;
+	protected Properties properties = null;
 
-    @Override
-    public void configure(Binder binder) {
-        properties = tryBindProperties(binder, "org/eclipse/poosl/xtext/Poosl.properties");
-        super.configure(binder);
-    }
-
-    public void configureLanguageName(Binder binder) {
-        binder.bind(String.class).annotatedWith(Names.named(Constants.LANGUAGE_NAME))
-                .toInstance("org.eclipse.poosl.xtext.Poosl");
-    }
-
-    public void configureFileExtensions(Binder binder) {
-        if (properties == null || properties.getProperty(Constants.FILE_EXTENSIONS) == null)
-            binder.bind(String.class).annotatedWith(Names.named(Constants.FILE_EXTENSIONS))
-                    .toInstance("poosl");
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
-    public ClassLoader bindClassLoaderToInstance() {
-        return getClass().getClassLoader();
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
-    public Class<? extends IGrammarAccess> bindIGrammarAccess() {
-        return PooslGrammarAccess.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.ecore2xtext.Ecore2XtextValueConverterServiceFragment2
-    public Class<? extends IValueConverterService> bindIValueConverterService() {
-        return Ecore2XtextTerminalConverters.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-    public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
-        return PooslSemanticSequencer.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-    public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
-        return PooslSyntacticSequencer.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-    public Class<? extends ISerializer> bindISerializer() {
-        return Serializer.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-    public Class<? extends IParser> bindIParser() {
-        return PooslParser.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-    public Class<? extends ITokenToStringConverter> bindITokenToStringConverter() {
-        return AntlrTokenToStringConverter.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-    public Class<? extends IAntlrTokenFileProvider> bindIAntlrTokenFileProvider() {
-        return PooslAntlrTokenFileProvider.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-    public Class<? extends Lexer> bindLexer() {
-        return InternalPooslLexer.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-    public Class<? extends ITokenDefProvider> bindITokenDefProvider() {
-        return AntlrTokenDefProvider.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-    public Provider<? extends InternalPooslLexer> provideInternalPooslLexer() {
-        return LexerProvider.create(InternalPooslLexer.class);
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-    public void configureRuntimeLexer(Binder binder) {
-        binder.bind(Lexer.class).annotatedWith(Names.named(LexerBindings.RUNTIME))
-                .to(InternalPooslLexer.class);
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-    @SingletonBinding(eager = true)
-    public Class<? extends PooslValidator> bindPooslValidator() {
-        return PooslValidator.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
-    public Class<? extends IScopeProvider> bindIScopeProvider() {
-        return PooslScopeProvider.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
-    public void configureIScopeProviderDelegate(Binder binder) {
-        binder.bind(IScopeProvider.class)
-                .annotatedWith(Names.named(AbstractDeclarativeScopeProvider.NAMED_DELEGATE))
-                .to(ImportedNamespaceAwareLocalScopeProvider.class);
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
-    public Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
-        return DefaultGlobalScopeProvider.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
-    public void configureIgnoreCaseLinking(Binder binder) {
-        binder.bindConstant().annotatedWith(IgnoreCaseLinking.class).to(false);
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.exporting.SimpleNamesFragment2
-    public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
-        return SimpleNameProvider.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
-    public Class<? extends IContainer.Manager> bindIContainer$Manager() {
-        return StateBasedContainerManager.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
-    public Class<? extends IAllContainersState.Provider> bindIAllContainersState$Provider() {
-        return ResourceSetBasedAllContainersStateProvider.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
-    public void configureIResourceDescriptions(Binder binder) {
-        binder.bind(IResourceDescriptions.class).to(ResourceSetBasedResourceDescriptions.class);
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
-    public void configureIResourceDescriptionsPersisted(Binder binder) {
-        binder.bind(IResourceDescriptions.class)
-                .annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS))
-                .to(ResourceSetBasedResourceDescriptions.class);
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
-    public Class<? extends IFormatter2> bindIFormatter2() {
-        return PooslFormatter.class;
-    }
-
-    // contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
-    public void configureFormatterPreferences(Binder binder) {
-        binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class)
-                .to(FormatterPreferenceValuesProvider.class);
-    }
-
+	@Override
+	public void configure(Binder binder) {
+		properties = tryBindProperties(binder, "org/eclipse/poosl/xtext/Poosl.properties");
+		super.configure(binder);
+	}
+	
+	public void configureLanguageName(Binder binder) {
+		binder.bind(String.class).annotatedWith(Names.named(Constants.LANGUAGE_NAME)).toInstance("org.eclipse.poosl.xtext.Poosl");
+	}
+	
+	public void configureFileExtensions(Binder binder) {
+		if (properties == null || properties.getProperty(Constants.FILE_EXTENSIONS) == null)
+			binder.bind(String.class).annotatedWith(Names.named(Constants.FILE_EXTENSIONS)).toInstance("poosl");
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
+	public ClassLoader bindClassLoaderToInstance() {
+		return getClass().getClassLoader();
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
+	public Class<? extends IGrammarAccess> bindIGrammarAccess() {
+		return PooslGrammarAccess.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.ecore2xtext.Ecore2XtextValueConverterServiceFragment2
+	public Class<? extends IValueConverterService> bindIValueConverterService() {
+		return Ecore2XtextTerminalConverters.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
+		return PooslSemanticSequencer.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
+		return PooslSyntacticSequencer.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	public Class<? extends ISerializer> bindISerializer() {
+		return Serializer.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends IParser> bindIParser() {
+		return PooslParser.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends ITokenToStringConverter> bindITokenToStringConverter() {
+		return AntlrTokenToStringConverter.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends IAntlrTokenFileProvider> bindIAntlrTokenFileProvider() {
+		return PooslAntlrTokenFileProvider.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends Lexer> bindLexer() {
+		return InternalPooslLexer.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Class<? extends ITokenDefProvider> bindITokenDefProvider() {
+		return AntlrTokenDefProvider.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public Provider<? extends InternalPooslLexer> provideInternalPooslLexer() {
+		return LexerProvider.create(InternalPooslLexer.class);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	public void configureRuntimeLexer(Binder binder) {
+		binder.bind(Lexer.class)
+			.annotatedWith(Names.named(LexerBindings.RUNTIME))
+			.to(InternalPooslLexer.class);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
+	@SingletonBinding(eager=true)
+	public Class<? extends PooslValidator> bindPooslValidator() {
+		return PooslValidator.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	public Class<? extends IScopeProvider> bindIScopeProvider() {
+		return PooslScopeProvider.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	public void configureIScopeProviderDelegate(Binder binder) {
+		binder.bind(IScopeProvider.class).annotatedWith(Names.named(AbstractDeclarativeScopeProvider.NAMED_DELEGATE)).to(ImportedNamespaceAwareLocalScopeProvider.class);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	public Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
+		return DefaultGlobalScopeProvider.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	public void configureIgnoreCaseLinking(Binder binder) {
+		binder.bindConstant().annotatedWith(IgnoreCaseLinking.class).to(false);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.exporting.SimpleNamesFragment2
+	public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
+		return SimpleNameProvider.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	public Class<? extends IContainer.Manager> bindIContainer$Manager() {
+		return StateBasedContainerManager.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	public Class<? extends IAllContainersState.Provider> bindIAllContainersState$Provider() {
+		return ResourceSetBasedAllContainersStateProvider.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	public void configureIResourceDescriptions(Binder binder) {
+		binder.bind(IResourceDescriptions.class).to(ResourceSetBasedResourceDescriptions.class);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	public void configureIResourceDescriptionsPersisted(Binder binder) {
+		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	public Class<? extends IFormatter2> bindIFormatter2() {
+		return PooslFormatter.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	public void configureFormatterPreferences(Binder binder) {
+		binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
+	}
+	
 }

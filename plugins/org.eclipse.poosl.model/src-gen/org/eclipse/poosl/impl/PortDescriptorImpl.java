@@ -21,29 +21,33 @@ import org.eclipse.poosl.PooslPackage;
 import org.eclipse.poosl.PortDescriptor;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Port Descriptor</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Port Descriptor</b></em>'.
+ * <!-- end-user-doc -->
  *
  * @generated
  */
-public abstract class PortDescriptorImpl extends EObjectImpl implements PortDescriptor {
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    protected PortDescriptorImpl() {
-        super();
-    }
+public abstract class PortDescriptorImpl extends EObjectImpl implements PortDescriptor
+{
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PortDescriptorImpl()
+	{
+		super();
+	}
 
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return PooslPackage.Literals.PORT_DESCRIPTOR;
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass()
+	{
+		return PooslPackage.Literals.PORT_DESCRIPTOR;
+	}
 
-} // PortDescriptorImpl
+} //PortDescriptorImpl

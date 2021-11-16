@@ -21,20 +21,19 @@ import org.osgi.framework.Bundle;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass.
+ * introduced subclass. 
  */
 public class PooslExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
-    @Override
-    protected Bundle getBundle() {
-        return Platform.getBundle(PooslActivator.PLUGIN_ID);
-    }
-
-    @Override
-    protected Injector getInjector() {
-        PooslActivator activator = PooslActivator.getInstance();
-        return activator != null
-            ? activator.getInjector(PooslActivator.ORG_ECLIPSE_POOSL_XTEXT_POOSL) : null;
-    }
+	@Override
+	protected Bundle getBundle() {
+		return Platform.getBundle(PooslActivator.PLUGIN_ID);
+	}
+	
+	@Override
+	protected Injector getInjector() {
+		PooslActivator activator = PooslActivator.getInstance();
+		return activator != null ? activator.getInjector(PooslActivator.ORG_ECLIPSE_POOSL_XTEXT_POOSL) : null;
+	}
 
 }

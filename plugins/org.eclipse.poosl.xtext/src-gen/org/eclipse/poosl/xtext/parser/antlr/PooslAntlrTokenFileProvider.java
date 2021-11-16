@@ -18,10 +18,9 @@ import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class PooslAntlrTokenFileProvider implements IAntlrTokenFileProvider {
 
-    @Override
-    public InputStream getAntlrTokenFile() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        return classLoader.getResourceAsStream(
-                "org/eclipse/poosl/xtext/parser/antlr/internal/InternalPoosl.tokens");
-    }
+	@Override
+	public InputStream getAntlrTokenFile() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		return classLoader.getResourceAsStream("org/eclipse/poosl/xtext/parser/antlr/internal/InternalPoosl.tokens");
+	}
 }

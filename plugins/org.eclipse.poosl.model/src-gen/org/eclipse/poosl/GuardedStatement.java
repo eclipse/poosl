@@ -13,67 +13,68 @@
  */
 package org.eclipse.poosl;
 
+
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Guarded Statement</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Guarded Statement</b></em>'.
+ * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.poosl.GuardedStatement#getGuard <em>Guard</em>}</li>
- * <li>{@link org.eclipse.poosl.GuardedStatement#getStatement <em>Statement</em>}</li>
+ *   <li>{@link org.eclipse.poosl.GuardedStatement#getGuard <em>Guard</em>}</li>
+ *   <li>{@link org.eclipse.poosl.GuardedStatement#getStatement <em>Statement</em>}</li>
  * </ul>
  *
  * @see org.eclipse.poosl.PooslPackage#getGuardedStatement()
  * @model
  * @generated
  */
-public interface GuardedStatement extends Statement {
-    /**
-     * Returns the value of the '<em><b>Guard</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
-     * -->
-     * 
-     * @return the value of the '<em>Guard</em>' containment reference.
-     * @see #setGuard(Expression)
-     * @see org.eclipse.poosl.PooslPackage#getGuardedStatement_Guard()
-     * @model containment="true"
-     * @generated
-     */
-    Expression getGuard();
+public interface GuardedStatement extends Statement
+{
+	/**
+	 * Returns the value of the '<em><b>Guard</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Guard</em>' containment reference.
+	 * @see #setGuard(Expression)
+	 * @see org.eclipse.poosl.PooslPackage#getGuardedStatement_Guard()
+	 * @model containment="true"
+	 * @generated
+	 */
+	Expression getGuard();
 
-    /**
-     * Sets the value of the '{@link org.eclipse.poosl.GuardedStatement#getGuard <em>Guard</em>}' containment reference.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @param value
-     *            the new value of the '<em>Guard</em>' containment reference.
-     * @see #getGuard()
-     * @generated
-     */
-    void setGuard(Expression value);
+	/**
+	 * Sets the value of the '{@link org.eclipse.poosl.GuardedStatement#getGuard <em>Guard</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Guard</em>' containment reference.
+	 * @see #getGuard()
+	 * @generated
+	 */
+	void setGuard(Expression value);
 
-    /**
-     * Returns the value of the '<em><b>Statement</b></em>' containment reference. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @return the value of the '<em>Statement</em>' containment reference.
-     * @see #setStatement(Statement)
-     * @see org.eclipse.poosl.PooslPackage#getGuardedStatement_Statement()
-     * @model containment="true"
-     * @generated
-     */
-    Statement getStatement();
+	/**
+	 * Returns the value of the '<em><b>Statement</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Statement</em>' containment reference.
+	 * @see #setStatement(Statement)
+	 * @see org.eclipse.poosl.PooslPackage#getGuardedStatement_Statement()
+	 * @model containment="true"
+	 * @generated
+	 */
+	Statement getStatement();
 
-    /**
-     * Sets the value of the '{@link org.eclipse.poosl.GuardedStatement#getStatement <em>Statement</em>}' containment
-     * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @param value
-     *            the new value of the '<em>Statement</em>' containment reference.
-     * @see #getStatement()
-     * @generated
-     */
-    void setStatement(Statement value);
+	/**
+	 * Sets the value of the '{@link org.eclipse.poosl.GuardedStatement#getStatement <em>Statement</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Statement</em>' containment reference.
+	 * @see #getStatement()
+	 * @generated
+	 */
+	void setStatement(Statement value);
 
 } // GuardedStatement

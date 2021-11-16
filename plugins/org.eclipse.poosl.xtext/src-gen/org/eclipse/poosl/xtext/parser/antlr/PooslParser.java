@@ -21,29 +21,30 @@ import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
 public class PooslParser extends AbstractAntlrParser {
 
-    @Inject
-    private PooslGrammarAccess grammarAccess;
+	@Inject
+	private PooslGrammarAccess grammarAccess;
 
-    @Override
-    protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
-        tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
-    }
+	@Override
+	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
+		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
+	}
+	
 
-    @Override
-    protected InternalPooslParser createParser(XtextTokenStream stream) {
-        return new InternalPooslParser(stream, getGrammarAccess());
-    }
+	@Override
+	protected InternalPooslParser createParser(XtextTokenStream stream) {
+		return new InternalPooslParser(stream, getGrammarAccess());
+	}
 
-    @Override
-    protected String getDefaultRuleName() {
-        return "Poosl";
-    }
+	@Override 
+	protected String getDefaultRuleName() {
+		return "Poosl";
+	}
 
-    public PooslGrammarAccess getGrammarAccess() {
-        return this.grammarAccess;
-    }
+	public PooslGrammarAccess getGrammarAccess() {
+		return this.grammarAccess;
+	}
 
-    public void setGrammarAccess(PooslGrammarAccess grammarAccess) {
-        this.grammarAccess = grammarAccess;
-    }
+	public void setGrammarAccess(PooslGrammarAccess grammarAccess) {
+		this.grammarAccess = grammarAccess;
+	}
 }
