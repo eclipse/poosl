@@ -168,6 +168,22 @@ At least, every class must have a description of its role and the behavior it en
 
 'public' methods should also have a description unless inherited documentation is enough.
 
+=== Modeling approach
+
+The EMF+Xtext architecture is using code generation through MWE2.
+
+* When updating _org.eclipse.poosl.model/model/poosl.ecore_, workflow 
+_org.eclipse.poosl.xtext.tooling/workflow/GenerateModel.mwe2_ must be executed.
+
+* When updating _org.eclipse.poosl.xtext/src/org/eclipse/poosl/xtext/Poosl.xtext_, workflow 
+_org.eclipse.poosl.xtext.tooling/workflow/GeneratePoosl.mwe2_ must be executed.
+
+[WARNING]
+====
+Code formatting must NOT be performed on 'src-gen' folder.
+====
+
+
 === Encoding, formatting and source paths
 
 ==== In-short
@@ -234,7 +250,20 @@ _org.eclipse.poosl.sirius/plugin.properties_ must be updated accordingly.
 
 == RCPTT guideline
 
-* All tests must be listed in suites 
+=== Execution
+
+To run RCPTT tests, the configuration "Eclipse RCPTT AUT" is defined in _org.eclipse.poosl.rcptt.shared/launch_.
+
+[IMPORTANT]
+====
+When starting "Eclipse RCPTT AUT" from 'RCPTT Application' or RCPTT tests, the JVM is NOT in debug mode.
+
+On-fly code modification will be ignored.
+====
+
+=== Editing
+
+* All tests must be listed in suites.
 
 * All suite must be listed directly or indirectly in __org.eclipse.poosl.rcptt.allinone/AllTests.suite__.
 
