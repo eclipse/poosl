@@ -78,7 +78,9 @@ import com.google.inject.Inject;
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
+//CHECKSTYLE.OFF: ClassDataAbstractionCoupling:Eclipse API
 public class IncludePropertyPage extends PreferencePage implements IWorkbenchPropertyPage {
+    //CHECKSTYLE.ON: ClassDataAbstractionCoupling
     /** The HELP_ID. */
     public static final String HELP_ID = "org.eclipse.poosl.help.help_properties_includepaths"; //$NON-NLS-1$
 
@@ -143,10 +145,60 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
         table.addControlListener(ControlListener
                 .controlResizedAdapter(evt -> locationColumn.setWidth(table.getSize().x)));
 
+        createAddButton(mainComp);
+        createAddExternalButton(mainComp);
+        createRemoveButton(mainComp);
+        createMoveButton(mainComp, "Up", SWT.CENTER, false);
+        createMoveButton(mainComp, "Down", SWT.TOP, true);
+        updateTable();
+
+        Label labelRecommendation = new Label(mainComp, SWT.WRAP);
+        labelRecommendation.setText(PAGE_RECOMMENDATION);
+        return mainComp;
+    }
+
+    private void createMoveButton(
+            Composite mainComp, String text, int verticalAlignment, boolean down) {
+        Button btn = new Button(mainComp, SWT.NONE);
+        btn.setLayoutData(new GridData(SWT.FILL, verticalAlignment, false, false, 1, 1));
+        btn.setText(text);
+        btn.addSelectionListener(
+                SelectionListener.widgetSelectedAdapter(evt -> moveTableSelection(down)));
+    }
+
+    private void createRemoveButton(Composite mainComp) {
+        Button btnRemove = new Button(mainComp, SWT.NONE);
+        btnRemove.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        btnRemove.setText("Remove");
+        btnRemove.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
+            int index = table.getSelectionIndex();
+            locations.remove(table.getSelectionIndex());
+            updateTable();
+            table.setSelection((index > locations.size() - 1) ? locations.size() - 1 : index);
+        }));
+    }
+
+    private void createAddExternalButton(Composite mainComp) {
+        Button btnExternal = new Button(mainComp, SWT.NONE);
+        btnExternal.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        btnExternal.setText("Add External");
+        btnExternal.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
+            DirectoryDialog dialog = new DirectoryDialog(getShell());
+            dialog.setFilterPath(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
+            dialog.setText("Select path to include");
+            dialog.setMessage(DIALOG_EXTERNAL_WARNING);
+            String path = dialog.open();
+
+            if (path != null) {
+                addLocation(path);
+            }
+        }));
+    }
+
+    private void createAddButton(Composite mainComp) {
         Button btnAdd = new Button(mainComp, SWT.NONE);
         btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         btnAdd.setText("Add");
-
         btnAdd.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
             ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(getShell(),
                     new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
@@ -169,48 +221,6 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
                 }
             }
         }));
-
-        Button btnExternal = new Button(mainComp, SWT.NONE);
-        btnExternal.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        btnExternal.setText("Add External");
-        btnExternal.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
-            DirectoryDialog dialog = new DirectoryDialog(getShell());
-            dialog.setFilterPath(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
-            dialog.setText("Select path to include");
-            dialog.setMessage(DIALOG_EXTERNAL_WARNING);
-            String path = dialog.open();
-
-            if (path != null) {
-                addLocation(path);
-            }
-        }));
-
-        Button btnRemove = new Button(mainComp, SWT.NONE);
-        btnRemove.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        btnRemove.setText("Remove");
-        btnRemove.addSelectionListener(SelectionListener.widgetSelectedAdapter(evt -> {
-            int index = table.getSelectionIndex();
-            locations.remove(table.getSelectionIndex());
-            updateTable();
-            table.setSelection((index > locations.size() - 1) ? locations.size() - 1 : index);
-        }));
-
-        Button btnUp = new Button(mainComp, SWT.NONE);
-        btnUp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        btnUp.setText("Up");
-        btnUp.addSelectionListener(
-                SelectionListener.widgetSelectedAdapter(evt -> moveTableSelection(false)));
-
-        Button btnDown = new Button(mainComp, SWT.NONE);
-        btnDown.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-        btnDown.setText("Down");
-        btnDown.addSelectionListener(
-                SelectionListener.widgetSelectedAdapter(evt -> moveTableSelection(true)));
-        updateTable();
-
-        Label labelRecommendation = new Label(mainComp, SWT.WRAP);
-        labelRecommendation.setText(PAGE_RECOMMENDATION);
-        return mainComp;
     }
 
     private void moveTableSelection(boolean down) {

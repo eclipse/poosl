@@ -26,16 +26,18 @@ import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal;
 
 /**
  * The HtmlConfigurableCompletionProposal.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 @SuppressWarnings("restriction")
 public class HtmlConfigurableCompletionProposal extends ConfigurableCompletionProposal {
 
+    // CHECKSTYLE.OFF: ParameterNumber:inherited from XText
     public HtmlConfigurableCompletionProposal(String proposal, int replacementOffset,
             int replacementLength, int length, Image image, StyledString displayString,
             IContextInformation contextInformation, String additionalProposalInfo) {
+        // CHECKSTYLE.ON: ParameterNumber
         super(proposal, replacementOffset, replacementLength, length, image, displayString,
                 contextInformation, additionalProposalInfo);
     }

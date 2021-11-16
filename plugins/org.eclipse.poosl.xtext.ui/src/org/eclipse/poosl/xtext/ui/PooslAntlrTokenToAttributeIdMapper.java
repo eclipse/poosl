@@ -13,26 +13,40 @@
  *******************************************************************************/
 package org.eclipse.poosl.xtext.ui;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 
 /**
  * The PooslAntlrTokenToAttributeIdMapper.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
 public class PooslAntlrTokenToAttributeIdMapper extends DefaultAntlrTokenToAttributeIdMapper {
 
+    private static final List<String> STRING_TOKENS = Arrays.asList(//
+            "RULE_CHARACTER", //$NON-NLS-1$
+            "RULE_POOSL_STRING" //$NON-NLS-1$
+    );
+
+    private static final List<String> NUMBER_TOKENS = Arrays.asList(//
+            "RULE_BINARY", //$NON-NLS-1$
+            "RULE_OCTAL", //$NON-NLS-1$
+            "RULE_HEXADECIMAL", //$NON-NLS-1$
+            "RULE_DECIMAL_CORE", //$NON-NLS-1$
+            "RULE_REAL_CORE" //$NON-NLS-1$
+    );
+
     @Override
     protected String calculateId(String tokenName, int tokenType) {
-        if ("RULE_CHARACTER".equals(tokenName) || "RULE_POOSL_STRING".equals(tokenName)) { //$NON-NLS-1$ //$NON-NLS-2$
+        if (STRING_TOKENS.contains(tokenName)) {
             return DefaultHighlightingConfiguration.STRING_ID;
         }
 
-        if ("RULE_BINARY".equals(tokenName) || "RULE_OCTAL".equals(tokenName) //$NON-NLS-1$//$NON-NLS-2$
-                || "RULE_HEXADECIMAL".equals(tokenName) || "RULE_DECIMAL_CORE".equals(tokenName) //$NON-NLS-1$//$NON-NLS-2$
-                || "RULE_REAL_CORE".equals(tokenName)) { //$NON-NLS-1$
+        if (NUMBER_TOKENS.contains(tokenName)) {
             return DefaultHighlightingConfiguration.NUMBER_ID;
         }
         return super.calculateId(tokenName, tokenType);
