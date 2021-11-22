@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Debug view</title>
+	</head>
+	<body>
+		<h1>Debug view</h1>
+		<img src="img/debug_view.png"/>
+		<p>
+		The Debug view is used when <a href="debug.html">debugging a POOSL model</a>. It shows all instances of the model that you are debugging, organized in two groups:
+		<ul>
+			<li><b>system</b>: instances from the POOSL model itself</li>
+			<li><b>adapters</b>: instances of external adapters (only if <a href="../language/Cosimulation.html">Co-simulation</a> is used)</li>
+		</ul>
+		Instances are colored based on the execution state of that instance. <font color="red">Red</font> means that the instance can do a step, <font color="blue">blue</font> means the instance can perform a time step, and black means the instance cannot make any steps.
+		</p>
+		<p>
+		When selecting a node in the Debug view, the <a href="execution_tree_view.html">Execution Tree view</a> is updated. When double clicking on a process instance (a leaf of the tree), a process step is performed, which advances the simulation to the next transition of the process, and executes a single next transition.
+		</p>
+
+		<p>
+		<img src="img/icon_close_process_windows.png"/> The button "Close All Process Windows" at the top of the Debug view closes all open <a href="process_window.html">Process windows</a>.
+		</p>
+
+		<h2>Features for process instances</h2>
+		<img src="img/debug_view_ProcessStep.png"/>
+		<p>Right click on a process in the debug view to access the following features:</p>
+		<ol>
+			<li><img src="img/icon_process_step.png"/><b>Perform Process Step</b>
+			<br>Advance the simulation to a next transition of this process, and execute the transition. (Compare the <a href="debug.html#control">step buttons</a>.)
+			<li><img src="img/icon_open_process_window.png"/><b>Open in New Window</b>
+			<br>This option opens a <a href="process_window.html">Process window</a> (combination of Execution Tree view and Variables view) to monitor the selected process.
+			</li>
+		</ol>
+
+		<h2>Features for system and cluster instances</h2>
+		<img src="img/debug_view_communication_diagram.png"/>
+		<p>Right click on the system or cluster instance in the debug view to access the following feature:</p>
+		<ol>
+			<li><img src="img/icon_open_communication_diagram.png"/><b>Open Communication Diagram</b>
+			<br>Open the <a href="communication_diagram.html">communication diagram</a> of the selected system or cluster instance.			
+			</li>
+		</ol>
+	</body>
+</html>

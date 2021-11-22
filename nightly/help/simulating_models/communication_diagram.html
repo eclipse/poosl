@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Communication Diagram</title>
+	</head>
+	<body>
+		<h1>Communication Diagram</h1>
+		<p>
+			Communication diagrams can be created from the <a href="debug_view.html">Debug view</a> and are closed automatically when the debug session is terminated.
+			Each communication diagram is specific for a single system or cluster instance, and displays message communications on top of a <a href="../creating_models/graphical_models.html#composite_structure_diagram">Composite Structure Diagram</a>.
+			They are particularly useful in combination with communication steps (&lt;F7>). In play/resume mode, the visualization may not show every intermediate communication step, but this does not have an impact on the data that is finally displayed. 
+		</p>
+		<p> 
+			The location of the graphical elements can be changed using the <a href="../creating_models/graphical_models.html#composite_structure_diagram">Composite Structure Diagram editor</a>.
+			However, the graphical editors are locked during a debug session. If the model is edited during a debug session, then the communication diagram is closed and cannot be reopened anymore during this debug session.
+		</p>		
+
+		<img src="img/communication_diagram_arrow.png"/>
+		
+		<h2>Cumulative number of communications</h2>
+		<p>		
+		 	 Each port is annotated with a label that indicates the cumulative number of incoming (?) and outgoing (!) messages. 
+		</p>
+		
+		<h2>Last message communication</h2>
+		<p>		
+			The last message communication is highlighted in the diagram. The used communication channel is colored red, and the direction of the communication is shown using arrows near the ports. 
+			More detailed information of the communicated message is shown in the message description note.
+			The displayed parameters are computed using the corresponding data method printString.
+		</p>
+		
+		<img src="img/communication_diagram_note.png"/>
+	</body>
+</html>

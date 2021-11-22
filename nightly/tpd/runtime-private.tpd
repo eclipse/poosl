@@ -1,0 +1,29 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
+target "Poosl runtime: private part" 
+
+//
+// This target platform list dependencies to build project components.
+//
+
+with requirements
+// do not include source for this target
+// it should be used only by compiler
+
+// Feature to run simulations.
+location rotalumis "http://www.es.ele.tue.nl/rotalumis/repository/integration/" {
+	// MacOS exe in 'release' is broken.
+	nl.tue.rotalumis.sdk.feature.group
+}
+
