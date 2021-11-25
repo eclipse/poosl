@@ -1,4 +1,5 @@
-[![gh-actions status](https://github.com/eclipse/poosl/workflows/Java%20CI/badge.svg](https://github.com/eclipse/poosl/actions/workflows/maven.yml)
+[![gh-actions status](https://github.com/eclipse/poosl/workflows/Java%20CI/badge.svg)](https://github.com/eclipse/poosl/actions/workflows/maven.yml)
+
 
 
 # Brief introduction to the POOSL project
