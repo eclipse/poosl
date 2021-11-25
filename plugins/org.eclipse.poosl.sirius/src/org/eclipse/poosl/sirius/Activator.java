@@ -41,6 +41,7 @@ public class Activator extends AbstractUIPlugin {
     // The shared instance
     private static Activator plugin;
 
+    // The registered viewpoints
     private static Set<Viewpoint> viewpoints;
 
     private static GraphicalDebugUpdater updaterInstance;
