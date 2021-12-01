@@ -82,6 +82,8 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
 
     private static final String OPTION_QUIET = "--quiet"; //$NON-NLS-1$
 
+    private static final String OPTION_STDLIB = "--stdlib"; //$NON-NLS-1$
+
     private static final Logger LOGGER = Logger.getLogger(LaunchDelegate.class.getName());
 
     private static final Random RANDOM = new Random();
@@ -184,6 +186,8 @@ public class LaunchDelegate implements ILaunchConfigurationDelegate {
             if (confIsQuiet) {
                 args.add(OPTION_QUIET);
             }
+
+            args.add(OPTION_STDLIB); // Temporarily, until this becomes the default in Rotalumis.
 
             LOGGER.info("Starting Rotalumis process: " + args);
 

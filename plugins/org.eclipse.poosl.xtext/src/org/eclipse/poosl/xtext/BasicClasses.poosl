@@ -5,51 +5,6 @@
 // (See org.eclipse.poosl.transformations plugin)
 // and copy this to org.eclipse.poosl.help\html\language\BasicClasses.html
 
-/* This permanent, native class extends Object. It represents an indexed list of (arbitrary typed) objects. Creating a new Array yields an indexed list of size 0 (empty Array). Valid indices for non-empty Arrays range from 1 to the size of the Array. */
-native data class Array extends Object
-variables
-
-methods
-	/* Returns true in case o is an Array of the same size as the receiver and for each index, the objects both Arrays refer to are equal (in terms of =). Otherwise, it returns false. */
-	native =(o : Object) : Boolean
-
-	/* Returns a new Array object with the same size as the receiver and at each index, a recursive deepCopy of the object referred to by the receiver at that index. */
-	native deepCopy : Object
-
-	/* Returns a new Array object with the same size as the receiver and at each index, it refers to the same object referred to by the receiver at that index. */
-	native shallowCopy : Object
-
-	/* Returns a String equal to "Empty Array" in case the receiver has size 0. Otherwise, it consists of String "Array(" followed by a comma separated list of Strings, the result s of calling printString on the objects from index 1 to the size of the receiver, followed by ")". */
-	native printString : String
-
-	/* Returns the object located at index i in case i ranges between 1 and the size the receiver. Otherwise, an index out-of-bounds error is generated. */
-	native at(i : Integer) : Object
-
-	/* Returns the size of the receiver. */
-	native size : Integer
-
-	/* Replaces the object at index i with o in case i ranges between 1 and the size of the receiver. Otherwise, an index out-of-bounds error is generated. It returns the receiver. */
-	native putAt(i : Integer, o : Object) : Array
-
-	/* Makes all indices in the receiver refer to object o (without making copies). It returns the receiver. */
-	native putAll(o : Object) : Array
-
-	/* Modifies the size of the receiver to i (in case i >= 0). In case i < 0, an error is generated. When i is larger than the original size of the receiver, all new locations are filled with nil. When i is smaller than the original size of the receiver, the objects at indices between i+1 and the original size will no longer be contained. It returns the receiver. */
-	native resize(i : Integer) : Array
-
-	/* Returns a new Array consisting of a copy of the receiver that has the size of the receiver plus the size of a, where the indices between 1 and the size of the receiver are filled with the objects in the receiver (in the same order) and the indices between the size of the receiver + 1 and the size of the returned Array contain the objects in a (in the same order). It has a special syntax of the form a1 + a2, where a1 acts as the receiver and a2 as the argument. */
-	native +(a : Array) : Array
-
-	/* Modifies the receiver by increasing its size with the size of a, where the indices between the size of the receiver + 1 and the size of the returned Array contain the objects in a (in the same order). */
-	native concat(a : Array) : Array
-
-	/* This method searches the receiver for object o, starting from index i. If an object equal to o is found, the index (between 1 and the size of the receiver) at which o is located is returned. In case i is smaller than 1 or larger than the size of the receiver, an index out-of-bounds error is generated. In all other cases, it returns 0. */
-	native find(i : Integer, o : Object) : Integer
-
-	/* Returns a new Array of size l containing a copy of the objects in the receiver starting at index i in case i is between 1 and the size of the receiver, l is non-negative and i + l-1 is at most equal to the size of the receiver. Otherwise, an index out-of-bounds error is generated. */
-	native subArray(i, l : Integer) : Array
-
-
 /* This primitive, permanent, native class extends Object. It represents the class of Booleans. This class has two instances represented with the constants true and false. */
 native data class Boolean extends Object
 variables
@@ -70,6 +25,9 @@ methods
 	/* Using prefix notation, operator ! returns the logical inverse of the receiver. It is equivalent to b not, where b acts as the receiver. */
 	native !() : Boolean
 
+	/* Returns the receiver as a valid JSON (single line) string. */
+	native asJSON : String
+
 
 /* This primitive, permanent, native class extends Object. It represents the class of individual Extended ASCII characters and therefore has 256 instances representing each of the extended ASCII characters. */
 native data class Char extends Object
@@ -81,6 +39,9 @@ methods
 
 	/* Returns a new String consisting of the single receiver character. */
 	native asString : String
+
+	/* Returns the receiver as a valid JSON (single line) string. */
+	native asJSON : String
 
 
 /* This native class extends Object. It provides a means to write information to the console. */
@@ -355,6 +316,9 @@ methods
 	/* Returns true if the receiver is a positive or negative infinity. */
 	native isinf() : Boolean
 
+	/* Returns the receiver as a valid JSON (single line) string. */
+	native asJSON : String
+
 
 /* This primitive, permanent, native class extends Object. It represents the class of (unbounded) integer numbers. */
 native data class Integer extends Object
@@ -439,12 +403,17 @@ methods
 	/* Returns the bit-wise xor of the receiver and i. */
 	native xor(i : Integer) : Integer
 
+	/* Returns the receiver as a valid JSON (single line) string. */
+	native asJSON : String
+
 
 /* This primitive, permanent, native class extends Object. It represents the class of instance nil. */
 native data class Nil extends Object
 variables
 
 methods
+	/* Returns the receiver as a valid JSON (single line) string. */
+	native asJSON : String
 
 
 /* This permanent, native class represents the root superclass of any other data class. It therefore provides generic methods that are applicable to all data objects. */
@@ -635,6 +604,9 @@ methods
 	/* Returns the minimum of the receiver and r. */
 	native min(r : Real) : Real
 
+	/* Returns the receiver as a valid JSON (single line) string. */
+	native asJSON : String
+
 
 /* This native class extends Object. It provides a means to communicate via TCP/IP through sockets. Creating a new Socket yields an unconnected TCP/IP socket. For simplicity reasons, a Socket supports at most one connection between a server and client. */
 native data class Socket extends Object
@@ -805,3 +777,546 @@ methods
 
 	/* If the receiver is the String representation of a Real object (in line with the isReal method), this object is returned. Otherwise, nil is returned. */
 	native toReal : Real
+
+	/* If the receiver denotes a valid JSON string, a POOSL object for the JSON string is returned. Otherwise, nil is returned. */
+	native parseJSON : Object
+
+	/* Returns the receiver as a valid JSON (single line) string. */
+	native asJSON : String
+
+
+/* This permanent, native class extends Object. It represents an indexed list of (arbitrary typed) objects. Creating a new Array yields an indexed list of size 0 (empty Array). Valid indices for non-empty Arrays range from 1 to the size of the Array. */
+native data class Array extends Object
+variables
+
+methods
+	/* Returns true in case o is an Array of the same size as the receiver and for each index, the objects both Arrays refer to are equal (in terms of =). Otherwise, it returns false. */
+	native =(o : Object) : Boolean
+
+	/* Returns a new Array object with the same size as the receiver and at each index, a recursive deepCopy of the object referred to by the receiver at that index. */
+	native deepCopy : Object
+
+	/* Returns a new Array object with the same size as the receiver and at each index, it refers to the same object referred to by the receiver at that index. */
+	native shallowCopy : Object
+
+	/* Returns a String equal to "Empty Array" in case the receiver has size 0. Otherwise, it consists of String "Array(" followed by a comma separated list of Strings, the result s of calling printString on the objects from index 1 to the size of the receiver, followed by ")". */
+	native printString : String
+
+	/* Returns the object located at index i in case i ranges between 1 and the size the receiver. Otherwise, an index out-of-bounds error is generated. */
+	native at(i : Integer) : Object
+
+	/* Returns the size of the receiver. */
+	native size : Integer
+
+	/* Replaces the object at index i with o in case i ranges between 1 and the size of the receiver. Otherwise, an index out-of-bounds error is generated. It returns the receiver. */
+	native putAt(i : Integer, o : Object) : Array
+
+	/* Makes all indices in the receiver refer to object o (without making copies). It returns the receiver. */
+	native putAll(o : Object) : Array
+
+	/* Modifies the size of the receiver to i (in case i >= 0). In case i < 0, an error is generated. When i is larger than the original size of the receiver, all new locations are filled with nil. When i is smaller than the original size of the receiver, the objects at indices between i+1 and the original size will no longer be contained. It returns the receiver. */
+	native resize(i : Integer) : Array
+
+	/* Returns a new Array consisting of a copy of the receiver that has the size of the receiver plus the size of a, where the indices between 1 and the size of the receiver are filled with the objects in the receiver (in the same order) and the indices between the size of the receiver + 1 and the size of the returned Array contain the objects in a (in the same order). It has a special syntax of the form a1 + a2, where a1 acts as the receiver and a2 as the argument. */
+	native +(a : Array) : Array
+
+	/* Modifies the receiver by increasing its size with the size of a, where the indices between the size of the receiver + 1 and the size of the returned Array contain the objects in a (in the same order). */
+	native concat(a : Array) : Array
+
+	/* This method searches the receiver for object o, starting from index i. If an object equal to o is found, the index (between 1 and the size of the receiver) at which o is located is returned. In case i is smaller than 1 or larger than the size of the receiver, an index out-of-bounds error is generated. In all other cases, it returns 0. */
+	native find(i : Integer, o : Object) : Integer
+
+	/* Returns a new Array of size l containing a copy of the objects in the receiver starting at index i in case i is between 1 and the size of the receiver, l is non-negative and i + l-1 is at most equal to the size of the receiver. Otherwise, an index out-of-bounds error is generated. */
+	native subArray(i, l : Integer) : Array
+
+	/* Returns the receiver as a valid JSON (single line) string. It will throw an exception when it contains a non-serializable object. */
+	native asJSON : String
+
+
+/* Collection - Super class for Bag, Set, Map, Stack, Queue and Sequence */
+native data class Collection extends Object
+variables
+
+methods
+  /* Clears the contents of the Collection (by removing all elements) */
+  native clear : Collection
+
+  /* Returns true in case the Collection does not contain any elements. Otherwise, it returns false */
+  native isEmpty : Boolean
+
+  /* Returns the number of elements in the Collection */
+  native size : Integer
+
+  /* Returns true in case O is not contained in the Collection. Otherwise, it returns false */
+  native excludes(O : Object) : Boolean
+
+  /* Returns true in case (no instance of) each element in C is not contained in the Collection. Otherwise, it  returns false. In case C is not a Collection, an error is generated */
+  native excludesAll(C : Collection) : Boolean
+
+  /* Returns true in case O is contained in the Collection. Otherwise, it returns false */
+  native includes(O : Object) : Boolean
+
+  /* Returns true in case ( all instances of) each element in C is contained in the Collection. Otherwise, it  returns false. In case C is not a Collection, an error is generated */
+  native includessAll(C : Collection) : Boolean
+
+  /* Returns an Array that contains the elements in the Collection (with duplicate instances). In case the Collection is a Sequence, the ordering of the elements (and indices of the elements) is preserved */
+  native toArray : Array
+
+  /* Returns a Bag that contains all elements in the Collection (with duplicate instances) */
+  native toBag : Bag
+
+  /* Returns a Sequence that contains all elements in the Collection (with duplicate instances). In case the collection is a Sequence, the ordering of the elements (and indices of the elements) is preserved */
+  native toSequence : Sequence
+
+  /* Returns the number of duplicate instances of O in the Bag */
+  native count(O : Object) : Integer
+
+
+/* Bag (Unordered Multi-Set) - Creating a Bag yields an empty Unordered Collection (Possibly With Duplicate Instances) */
+native data class Bag extends Collection
+variables
+
+methods
+	/* Returns an iterator for traversing the Bag */
+	native iterator : BagIterator
+
+	/* Modifies the Bag by clearing its contents and subsequently adding all elements of Array A */
+	native fromArray(A : Array) : Bag
+
+	/* Returns true in case B is a Bag and the Bag and B contain the same objects in equal numbers. Otherwise, false is returned */
+	native =(B : Object) : Boolean
+
+	/* Returns !(self = B) */
+	native !=(B : Object) : Boolean
+
+	/* Returns true in case the Bag does not contain duplicate instances. Otherwise, false is returned */
+	native isUnique : Boolean
+
+	/* Returns the number of duplicate instances of O in the Bag */
+	native count(O : Object) : Integer
+
+	/* Modifies and returns the Bag after adding object O */
+	native add(O : Object) : Bag
+
+	/* Modifies and returns the Bag after adding N duplicate instances of O if N is a non-negative integer. Otherwise, an error is generated */
+	native addMultiple(O : Object, N : Integer) : Bag
+
+	/* Removes one instance of O from the Bag (if such instance is included). It returns the Bag */
+	native remove(O : Object) : Bag
+
+	/* Removes N instances of O from the Bag (if such instances are included) if N is a non-negative Integer. If N is larger than the number of duplicate instances of O in the Bag, all duplicate instances of O are removed. It returns the Bag */
+	native removeMultiple(O : Object, N : Integer) : Bag
+
+	/* Returns the Bag after removing all duplicate instances of elements (if any) */
+	native removeDuplicates : Bag
+
+	/* Returns a new Bag that contains those elements included in both the receiver and B. The number of duplicate instances becomes the sum of the number of the duplicate instances in the receiver and B. In case B is not a Bag, an error is generated */
+	native +(B : Bag) : Bag
+
+	/* Modifies the Bag by adding all elements from B. The number of duplicate instances becomes the sum of the number of the duplicate instances in the Bag and B. In case B is not a Bag, an error is generated */
+	native union(B : Bag) : Bag
+
+	/* Returns a new Bag that only contains those elements of the receiver that are not included in B. The number of duplicate instances becomes the number of the duplicate instances in the receiver minus the number of duplicate instances in B (if larger than 0, otherwise they are all removed). In case B is not a Bag, an error is generated */
+	native -(B : Bag) : Bag
+
+	/* Modifies the Bag by removing all elements from B. The number of duplicate instances becomes the number of the duplicate instances in the Bag minus the number of duplicate instances in B (if larger than 0, otherwise they are all removed). In case B is not a Bag, an error is generated */
+	native subtract(B : Bag) : Bag
+
+	/* Modifies the Bag to become the symmetric difference of the Bag and B. This means that those elements of the Bag that are in B are removed (such that a minimum number of duplicate instances remains, if positive) and those elements in B that are not in the Bag are added (including duplicate instances). In case B is not a Bag, an error is generated */
+	native difference(B : Bag) : Bag
+
+	/* Modifies the Bag to contain only those elements that are contained in both the Bag and B. The number of duplicate instances becomes the minimum of the number of the duplicate instances included in the Bag and B. In case B is not a Bag, an error is generated */
+	native intersection(B : Bag) : Bag
+
+	/* Returns a pretty print */
+	native printString : String
+
+	/* Returns true in case the Bag is a strict super bag of B, where the number of duplicate instances (for each least one element) in the Bag must be strictly larger than the number of duplicate instances in B. Otherwise, false is returned. In case B is not a Bag, an error is generated */
+	native >(B : Bag) : Boolean
+
+	/* Returns true in case the Bag is a super bag of B, where the number of duplicate instances in the Bag must be larger than or equal to the number of duplicate instances in B. Otherwise, false is returned. In case B is not a Bag, an error is generated */
+	native >=(B : Bag) : Boolean
+
+	/* Returns true in case the Bag is a strict sub bag of B, where the number of duplicate instances (for each least one element) in the Bag must be strictly smaller than the number of duplicate instances in B. Otherwise, false is returned. In case B is not a Bag, an error is generated */
+	native <(B : Bag) : Boolean
+
+	/* Returns true in case the Bag is a sub bag of B, where the number of duplicate instances in the Bag must be smaller than or equal to the number of duplicate instances in B. Otherwise, false is returned. In case B is not a Bag, an error is generated */
+	native <=(B : Bag) : Boolean
+
+
+/* Sequence (Bi-Directional List) - Creating a Sequence yields an empty Ordered Collection (Possibly With Duplicate Instances). Valid indices for non-empty Sequences range from 1 to the size of the Sequence */
+native data class Sequence extends Collection
+variables
+
+methods
+	/* Returns a (forward directed) iterator for traversing the Sequence */
+	native iterator : SequenceIterator
+
+	/* Modifies the Sequence by clearing its contents and subsequently appending all elements of Array A (with duplicate instances and preserving the ordering) */
+	native fromArray(A : Array) : Sequence
+
+	/* Returns true in case the Sequence does not contain any duplicate instances. Otherwise, false is returned */
+	native isUnique : Boolean
+
+	/* Returns the number of duplicate instances of O in the Sequence */
+	native count(O : Object) : Integer
+
+	/* Adds O to the Sequence after the last position */
+	native append(O : Object) : Sequence
+
+	/* Adds O to the Sequence before the first position */
+	native prepend(O : Object) : Sequence
+
+	/* Modifies the Sequence by replacing the element at index I with O. In case I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence, an error is generated */
+	native putAt(I : Integer, O : Object) : Sequence
+
+	/* Modifies the Sequence by inserting element O at index I. In case I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence, an error is generated */
+	native insertAt(I : Integer, O : Object) : Sequence
+
+	/* Returns the element at index I. In case I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence, an error is generated */
+	native at(I : Integer) : Object
+
+	/* Returns the first element in the Sequence (or nil if it is empty) */
+	native first : Object
+
+	/* Returns the last element in the Sequence (or nil if it is empty) */
+	native last : Object
+
+	/* Modifies the Sequence by removing the element at index I. In case I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence, an error is generated */
+	native removeAt(I : Integer) : Sequence
+
+	/* Returns the Sequence after removing the first element (if not empty) */
+	native removeFirst : Sequence
+
+	/* Returns the Sequence after removing the last element (if not empty) */
+	native removeLast : Sequence
+
+	/* Returns a new Sequence containing all elements in the receiver succeeded by all elements of S. In case S is not a Sequence, an error is generated */
+	native +(S : Sequence) : Sequence
+
+	/* Modifies the Sequence by appending all elements of S. In case S is not a Sequence, an error is generated */
+	native concat(S : Sequence) : Sequence
+
+	/* Modifies the Sequence by reversing the order of the elements */
+	native reverse : Sequence
+
+	/* Modifies the Sequence by inserting all elements of S from index I onwards. In case the Sequence is not empty, an error is generated if S is not a Sequence, if I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence */
+	native splice(I : Integer, S : Sequence) : Sequence
+
+	/* Modifies the Sequence by swapping the elements at index I and J. In case the Sequence is not empty and I differs from J then an error is generated if either I or J is not an Integer or if I and J are smaller than 1 or greater than the size of the Sequence */
+	native swap(I, J : Integer) : Sequence
+
+	/* Returns a new Sequence that will contain the elements of the receiver from and including index I until and including index I + L. In case the receiver is not empty, an error is generated in case I and L are not Integers, if L is negative or if I and I + L + 1 range outside the index range of the Sequence */
+	native subSequence(I, L : Integer) : Sequence
+
+	/* This method searches the Sequence for the first instance of O, starting from index I. If an instance of O is found, the index (between 1 and the size of the Sequence) at which O is located is returned. In all other cases, it returns 0. In case the Sequence is not empty, an error is generated if I is not an Integer or if it is smaller than 1 or greater than the size of the Sequence */
+	native find(I : Integer, O : Object) : Integer
+
+	/* Returns a (forward directed) Iterator to the element at index I of the Sequence if I is an Integer not smaller than 1 and not greater than the size of the Sequence. Otherwise, either an error is generated in case the Sequence is not empty or a finalized Iterator is returned  in case the Sequence is empty */
+	native iteratorAt(I : Integer) : SequenceIterator
+
+	/* Returns a pretty print */
+	native printString : String
+
+
+/* Queue (First-In-First-Out Ordering) of Unbounded or Finite Size - Creating a new Queue yields a Queue of unbounded size (capacity) */
+native data class Queue extends Collection
+variables
+
+methods
+	/* Clears the contents of the Queue (by removing all elements) */
+	native clear : Queue
+
+	/* Modifies the size (capacity) of the Queue. If S is smaller than the current size (capacity), elements at the tail of the Queue are removed. If S equals nil then the size (capacity) is set to unbounded. If S is not nil or an Integer smaller than 1, an error is generated */
+	native resize(S : Integer) : Queue
+
+	/* Returns the size (capacity) of the Queue or nil if unbounded */
+	native size : Integer
+
+	/* Returns the number of elements in the Queue */
+	native occupation : Integer
+
+	/* Returns true in case the Queue does not contain any elements. Otherwise, it returns false */
+	native isEmpty : Boolean
+
+	/* Returns true in case the size (capacity) of the Queue is bounded and equals its capacity. Otherwise, it returns false */
+	native isFull : Boolean
+
+	/* Returns true in case there are no instances of O contained in the Queue. Otherwise, it returns false */
+	native excludes(O : Object) : Boolean
+
+	/* Returns true in case at least one instance of O is contained in the Queue. Otherwise, it returns false */
+	native includes(O : Object) : Boolean
+
+	/* Returns the number of instances of O in the Queue */
+	native count(O : Object) : Integer
+
+	/* Adds object O to the end (tail) of the Queue in case it is not full */
+	native add(O : Object) : Queue
+
+	/* Returns the first element (head) in the Queue if it is not empty. Otherwise, it returns nil. It does not modify the Queue */
+	native inspect : Object
+
+	/* Returns the first element (head) in the Queue and removes it from the Queue if not empty. Otherwise, it returns nil */
+	native remove : Object
+
+	/* Returns a pretty print */
+	native printString : String
+
+
+/* Stack (Last-In-First-Out Ordering) of Unbounded or Finite Size - Creating a new Stack yields a Stack of unbounded size (capacity) */
+native data class Stack extends Collection
+variables
+
+methods
+	/* Clears the contents of the Stack (by removing all elements) */
+	native clear : Stack
+
+	/* Modifies the size (capacity) of the Stack. If S is smaller than the current size (capacity), elements at the tail of the Stack are removed. If S equals nil then the size (capacity) is set to unbounded. If S is not nil or an Integer smaller than 1, an error is generated */
+	native resize(S : Integer) : Stack
+
+	/* Returns the size (capacity) of the Stack or nil if unbounded */
+	native size : Integer
+
+	/* Returns the number of elements in the Stack */
+	native occupation : Integer
+
+	/* Returns true in case the Stack does not contain any elements. Otherwise, it returns false */
+	native isEmpty : Boolean
+
+	/* Returns true in case the size (capacity) of the Stack is bounded and equals its capacity. Otherwise, it returns false */
+	native isFull : Boolean
+
+	/* Returns true in case there are no instances of O contained in the Stack. Otherwise, it returns false */
+	native excludes(O : Object) : Boolean
+
+	/* Returns true in case at least one instance of O is contained in the Stack. Otherwise, it returns false */
+	native includes(O : Object) : Boolean
+
+	/* Returns the number of instances of O in the Stack */
+	native count(O : Object) : Integer
+
+	/* Adds object O to the end (tail) of the Stack in case it is not full */
+	native push(O : Object) : Stack
+
+	/* Returns the last element (tail) in the Stack if it is not empty. Otherwise, it returns nil. It does not modify the Stack */
+	native inspect : Object
+
+	/* Returns the last element (tail) in the Stack and removes it in case the Stack is not empty. Otherwise, it returns nil */
+	native pop : Object
+
+	/* Returns a pretty print */
+	native printString : String
+
+
+/* Set (Unordered Set) - Creating a new Set yields an empty Unordered Collection (Without Duplicate Instances)*/
+native data class Set extends Collection
+variables
+
+methods
+	/* Returns an iterator for traversing the Set */
+	native iterator : Iterator
+
+	/* Modifies the Set by clearing its contents and subsequently adding all elements of Array A (without duplicate instances) */
+	native fromArray(A : Array) : Set
+
+	/* Returns true in case S is a Set and the receiver and S contain the same objects. Otherwise, false is returned */
+	native =(S : Object) : Boolean
+
+	/* Returns !(self = S) */
+	native !=(S : Object) : Boolean
+
+	/* Returns 1 in case O is included in the Set. Otherwise, 0 is returned */
+	native count(O : Object) : Integer
+
+	/* Adds O to the Set if it was not yet included. Otherwise, the Set remains unchanged */
+	native add(O : Object) : Set
+
+	/* Removes O from the Set if it was included. Otherwise, the Set remains unchanged */
+	native remove(O : Object) : Set
+
+	/* Returns a new Set containing all elements of both the receiver and S (without duplicate instances). In case S is not a Set, an error is generated */
+	native +(S : Set) : Set
+
+	/* Modifies the Set by adding all elements of S to it (without duplicate instances). In case S is not a Set, an error is generated */
+	native union(S : Set) : Set
+
+	/* Returns a new Set that contains only elements that are contained in the receiver but not in S (Set Difference). In case S is not a Set, an error is generated */
+	native -(S : Set) : Set
+
+	/* Modifies the Set to no longer include the elements in S. In case S is not a Set, an error is generated */
+	native subtract(S : Set) : Set
+
+	/* Modifies the Set to become the symmetric difference of the Set and S. This means that those elements of the Set that are also in S are removed and those elements in S that are not in the Set are added. In case S is not a Set, an error is generated */
+	native difference(S : Set) : Set
+
+	/* Modifies the Set to contain only those elements that are contained in both the Set and S. In case S is not a Set, an error is generated */
+	native intersection(S : Set) : Set
+
+	/* Returns a pretty print */
+	native printString : String
+
+	/* Returns true in case the Set is a strict super set of S (i.e., the Set includes all elements of S and at least one other element). Otherwise, false is returned. In case S is not a Set, an error is generated */
+	native >(S : Set) : Boolean
+
+	/* Returns true in case the Set is a super set of S (i.e., the Set includes all elements of S). Otherwise, false is returned. In case S is not a Set, an error is generated */
+	native >=(S : Set) : Boolean
+
+	/* Returns true in case the Set is a strict sub set of S. Otherwise, false is returned. In case S is not a Set, an error is generated */
+	native <(S : Set) : Boolean
+
+	/* Returns true in case the Set is a sub set of S (i.e., S includes all elements of the Set and at least one other element). Otherwise, false is returned. In case S is not a Set, an error is generated */
+	native <=(S : Set) : Boolean
+
+
+/* Map (Key-Value Dictionary) - Creating a new Map yields an empty Key-Value Dictionary */
+native data class Map extends Collection
+variables
+
+methods
+	// Methods for end-users
+	/* Clears the contents of the Map (by removing all key-value pairs) */
+	native clear : Map
+
+	/* Returns true in case the Map does not contain any key-value pairs. Otherwise, it returns false */
+	native isEmpty : Boolean
+
+	/* Returns the number of key-value pairs in the Map */
+	native size : Integer
+
+	/* Returns an iterator for traversing the Map */
+	native iterator : MapIterator
+
+	/* Returns true in case key K is included in the Map. Otherwise, it returns false */
+	native includesKey(K : Object) : Boolean
+
+	/* Returns true in case at least one instance of value V is included in the Map. Otherwise, it returns false */
+	native includesValue(V : Object) : Boolean
+
+	/* Returns a Set with all keys in the Map */
+	native keys : Set
+
+	/* Returns a Bag with all values corresponding to all keys (which may contain duplicate instances) */
+	native values : Bag
+
+	/* Returns true if M is a Map and the receiver and M contain the same key-value pairs. Otherwise, it returns false */
+	native =(M : Object) : Boolean
+
+	/* Returns !(self = M) */
+	native !=(M : Object) : Boolean
+
+	/* Modifies the Map to store value V at key K. In case key K was not yet included, it is added */
+	native putAt(Key, Value : Object) : Map
+
+	/* Returns the value at key K if such key is included in the Map. Otherwise, it returns nil */
+	native at(Key : Object) : Object
+
+	/* Modifies the Map by removing the key-value pair with key K (if it was included) */
+	native removeAt(Key : Object) : Map
+
+	/* Returns a pretty print */
+	native printString : String
+
+	/* Returns the receiver as a valid JSON (single line) string. It will throw an exception when it contains a non-serializable object. */
+	native asJSON : String
+
+
+/* Iterator (Abstract super class used by MapIterator, BagIterator, SetIterator, SequenceIterator)*/
+native data class Iterator extends Object
+variables
+
+methods
+	// Methods for end-users
+	/* Returns true in case all elements in the structure have been referred to. Otherwise, false is returned */
+	native isDone : Boolean
+
+	/* Modifies the Iterator to refer to the next element if there is still such element. Otherwise, the Iterator remains unchanged */
+	native advance : Iterator
+
+	/* Modifies the underlying structure by removing the element to which the Iterator is pointing (if it was not yet removed). It does not modify the Iterator */
+	native remove : Iterator
+
+	/* Returns a pretty print */
+	native printString : String
+
+    /* Returns the key (on map) */
+	native key : Object
+
+    /* Returns the value */
+	native value : Object
+
+	/* Returns the value */
+	native element : Object
+
+
+/* MapIterator - Iterator for stepping through a map */
+native data class MapIterator extends Iterator
+variables
+
+methods
+	// Methods for end-users
+	/* Returns the key of the key-value pair to which the iterator is pointing in the Map in case the Map is not empty. Otherwise, nil is returned */
+	native key : Object
+
+	/* Returns true in case all elements in the structure have been referred to. Otherwise, false is returned */
+	native isDone : Boolean
+
+	/* Returns the value of the key-value pair to which the iterator is pointing in the Map in case the Map is not empty. Otherwise, nil is returned */
+	native value : Object
+
+	/* Modifies the underlying structure by removing the element to which the Iterator is pointing (if it was not yet removed). It does not modify the Iterator */
+	native remove : Iterator
+
+	/* Modifies the Iterator to refer to the next element if there is still such element. Otherwise, the Iterator remains unchanged */
+	native advance : Iterator
+
+
+/* BagIterator - Iterator for stepping through a bag */
+native data class BagIterator extends Iterator
+variables
+
+methods
+	/* Modifies the Iterator to refer to the next element in the Bag if there is still such element. Otherwise, the Iterator remains unchanged */
+	native advance : BagIterator
+
+	/* Modifies the underlying Bag by removing (one duplicate instance of) the element to which the Iterator is pointing (if it was not yet removed). It does not modify the Iterator */
+	native remove : BagIterator
+
+	/* Returns a pretty print */
+	native printString : String
+
+  /* returns the count (# of times the object exists in the bag ) */
+	native count : Object
+
+
+/* SetIterator - Iterator for stepping through a set */
+native data class SetIterator extends Iterator
+variables
+
+methods
+
+
+/* SequenceIterator - Iterator for stepping through a sequence */
+native data class SequenceIterator extends Iterator
+variables
+
+methods
+	// Methods for end-users
+	/* Modifies the Iterator to point to the first element in the Sequence */
+	native first : SequenceIterator
+
+	/* Modifies the Iterator to point to the last element in the Sequence */
+	native last : SequenceIterator
+
+	/* Modifies the Iterator to refer to the next element (for forward directed iterators) or previous element (for reversely directed iterators) in the Sequence if there is still such element. Otherwise, the Iterator remains unchanged */
+	native advance : SequenceIterator
+
+	/* Modifies the underlying sequence by inserting an element referring to the specified object. The element is inserted in the sequence before the currently referred element, not considering whether the direction of the iterator is reversed.
+	 * If isDone holds for the iterator or the referred element is removed, an error is triggered. The iterator is not modified.
+	 */
+	native addBefore(O : Object) : SequenceIterator
+
+	/* Modifies the underlying sequence by inserting an element referring to the specified object. The element is inserted in the sequence after the currently referred element, not considering whether the direction of the iterator is reversed.
+	 * If isDone holds or the referred element is removed, an error is triggered. The iterator is not modified.
+	 */
+	native addAfter(O : Object) : SequenceIterator
