@@ -1,6 +1,5 @@
 importlib "distributions.poosl"
 importlib "performance.poosl"
-importlib "structures.poosl"
 
 data class Packet extends Object
 variables

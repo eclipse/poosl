@@ -1,5 +1,3 @@
-importlib "structures.poosl"
-
 data class LatencyObserver extends Observer
 variables
 	count : Integer
