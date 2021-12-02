@@ -18,7 +18,7 @@ methods
 	sample : Boolean
 		return true  
 	
-data class Collection extends Object 
+data class Collection2 extends Object 
 	variables
 	methods
 	//XPECT noIssues
@@ -30,10 +30,10 @@ data class Collection extends Object
 		
 // Collection Classes
 
-data class Bag extends Collection
+data class Bag2 extends Collection2
 	variables
 	methods
 	//XPECT noIssues
-	add(O: Object) : Bag || 
+	add(O: Object) : Bag2 || 
 	O;
 		return self
