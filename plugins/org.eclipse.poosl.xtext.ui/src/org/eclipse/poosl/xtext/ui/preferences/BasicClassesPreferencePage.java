@@ -302,7 +302,7 @@ public class BasicClassesPreferencePage extends PreferencePage implements IWorkb
             return false;
         } else {
             String extension = location.substring(location.lastIndexOf('.') + 1);
-            return extension.equals("." + GlobalConstants.FILE_EXTENSION); //$NON-NLS-1$
+            return extension.equals(GlobalConstants.FILE_EXTENSION);
         }
     }
 

@@ -231,7 +231,11 @@ public final class ImportingHelper {
                     GlobalConstants.PREFERENCES_CUSTOM_BASIC_CLASS_PATH, null, null);
             if (path != null) {
                 try {
-                    return URI.createFileURI(path);
+                    if (!path.startsWith("platform")) { //$NON-NLS-1$
+                        return URI.createFileURI(path);
+                    } else {
+                        return URI.createURI(path);
+                    }
                 } catch (IllegalArgumentException e) {
                     LOGGER.warn("Illegal basic classes path, fallback to default.", e);
                 }
