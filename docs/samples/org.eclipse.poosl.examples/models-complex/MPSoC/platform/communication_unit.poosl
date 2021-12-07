@@ -1,0 +1,142 @@
+importlib "performance.poosl"
+
+data class CommunicationStatus extends Object
+variables
+	AverageNumberOfConcurrentConnections : LongRunTimeAverage,
+	NumberOfConcurrentConnections : Integer,
+	AchievedMaximumNumberOfConcurrentConnections : Integer,
+	ActiveConnections : Set
+methods
+	@Init
+	init : CommunicationStatus
+		ActiveConnections := new(Set);
+		NumberOfConcurrentConnections := 0;
+		AchievedMaximumNumberOfConcurrentConnections := 0;
+		AverageNumberOfConcurrentConnections := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+		return self
+
+	inactive(Connection : String) : Boolean
+		return ActiveConnections excludes(Connection)
+
+	deactivate(Connection : String, CurrentTime : Real) : CommunicationStatus
+		ActiveConnections remove(Connection);
+		NumberOfConcurrentConnections := NumberOfConcurrentConnections - 1;
+		AverageNumberOfConcurrentConnections rewardBM(NumberOfConcurrentConnections asReal, CurrentTime);
+		return self
+
+	activate(Connection : String, CurrentTime : Real) : String
+		ActiveConnections add(Connection);
+		NumberOfConcurrentConnections := NumberOfConcurrentConnections + 1;
+		if NumberOfConcurrentConnections > AchievedMaximumNumberOfConcurrentConnections then
+			AchievedMaximumNumberOfConcurrentConnections := NumberOfConcurrentConnections
+		fi;
+		AverageNumberOfConcurrentConnections rewardBM(NumberOfConcurrentConnections asReal, CurrentTime);
+		return Connection
+
+	log(Name, MemoryResults : String) : CommunicationStatus | LogFile : FileOut |
+		LogFile := new(FileOut) destination("Communication" + Name + ".log") open;
+		LogFile write("Interconnect Utilisation Results:" cr cr + "Achieved Maximum Number of Concurrent Connections: "
+			+ AchievedMaximumNumberOfConcurrentConnections printString cr cr +
+			"Statistics for Average Number of Concurrent Connections:" cr + AverageNumberOfConcurrentConnections
+				logStatistics cr cr + "Buffer Memory Results: " cr cr + MemoryResults);
+		LogFile close;
+		return self
+
+	printString : String
+		return "Number of Concurrent Connections: " + NumberOfConcurrentConnections printString cr cr +
+			"Active Connections:" cr + ActiveConnections printString cr cr +
+			"Achieved Maximum Number of Concurrent Connections: " + AchievedMaximumNumberOfConcurrentConnections
+				printString cr cr + "Statistics for Average Number of Concurrent Connections:" cr +
+			AverageNumberOfConcurrentConnections printStatistics
+
+	accurate : Boolean
+		return AverageNumberOfConcurrentConnections accurate
+
+process class CommunicationUnit(BandwidthPerConnection : Real, ConnectionSetUpLatency : Real, NodeName : String,
+	PowerPerByte : Real)
+ports
+	Monitor,
+	Power,
+	Communications,
+	Memory
+messages
+	Communications!TransferCompleted(String, Integer),
+	Communications!TransferInitiated(String),
+	Communications?InitialiseTokens(String, Integer, Integer),
+	Communications?ReleaseRoom(String, Integer, Integer),
+	Communications?ReserveRoom(String, String, Integer, Integer),
+	Communications?Transfer(String, String, Integer),
+	Communications?Use(String),
+	Memory!Allocate(Integer),
+	Memory!Free(Integer),
+	Memory!Status(),
+	Memory!Use(Boolean),
+	Memory?AccuracyStatus(Boolean),
+	Memory?SimulationResults(String),
+	Monitor!AccuracyStatus(Boolean),
+	Monitor!InitialiseMonitor(String),
+	Monitor?Status(String),
+	Monitor?StopSimulation(),
+	Power!StartConsumption(Real),
+	Power!StopConsumption(Real)
+variables
+	Status : CommunicationStatus
+init
+	Initialise()()
+methods
+	Initialise()() | MapTo, Results : String, InUse : Boolean, NumberOfTokens, TokenSize : Integer |
+		InUse := false;
+		abort
+			while true do
+				Communications?Use(MapTo | MapTo = NodeName) {InUse := true}
+			od
+		with delay (1.0e-12);
+		if InUse then
+			Memory!Use(InUse);
+			Monitor!InitialiseMonitor("Communication" + NodeName);
+			Status := new(CommunicationStatus) init;
+			abort
+				while true do
+					Communications?InitialiseTokens(MapTo, NumberOfTokens, TokenSize | MapTo = NodeName);
+					Memory!Allocate(NumberOfTokens * TokenSize)
+				od
+			with delay 1.0e-12;
+			abort
+				par
+					Transfer()()
+				and
+					ReleaseBufferSpace()()
+				and
+					CheckAccuracyStatus()()
+				rap
+			with Monitor?StopSimulation;
+			Memory?SimulationResults(Results) {Status log(NodeName, Results)}
+		fi
+
+	Transfer()() | Channel, Connection, MapTo : String, NumberOfTokens, TokenSize, TransferID : Integer |
+		Communications?ReserveRoom(Channel, MapTo, NumberOfTokens, TokenSize |(Status inactive(Channel)) & (MapTo =
+			NodeName)) {Status activate(Channel, currentTime)};
+		par
+			Memory!Allocate(NumberOfTokens * TokenSize);
+			Communications!TransferInitiated(Channel);
+			delay ConnectionSetUpLatency;
+			Communications?Transfer(Connection, MapTo, TransferID |(Connection = Channel) & (MapTo = NodeName));
+			Power!StartConsumption(PowerPerByte * NumberOfTokens asReal * TokenSize asReal);
+			delay (NumberOfTokens * TokenSize) asReal / BandwidthPerConnection;
+			Communications!TransferCompleted(Channel, TransferID) {Status deactivate(Channel, currentTime)};
+			Power!StopConsumption(PowerPerByte * NumberOfTokens asReal * TokenSize asReal)
+		and
+			Transfer()()
+		rap
+
+	ReleaseBufferSpace()() | MapTo : String, NumberOfTokens, TokenSize : Integer |
+		Communications?ReleaseRoom(MapTo, NumberOfTokens, TokenSize | MapTo = NodeName);
+		Memory!Free(NumberOfTokens * TokenSize);
+		ReleaseBufferSpace()()
+
+	CheckAccuracyStatus()() | ID : String, Accurate : Boolean |
+		Monitor?Status(ID | ID = ("Communication" + NodeName));
+		Memory!Status;
+		Memory?AccuracyStatus(Accurate);
+		Monitor!AccuracyStatus(Accurate & Status accurate);
+		CheckAccuracyStatus()()

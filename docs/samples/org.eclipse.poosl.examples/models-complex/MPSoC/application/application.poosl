@@ -1,0 +1,95 @@
+import "control_buffer.poosl"
+import "data_buffer.poosl"
+import "task_first.poosl"
+import "task_others.poosl"
+import "task_last.poosl"
+
+cluster class Application(
+		DesiredLatency : Real,
+		DesiredThroughput : Real,
+		Iterate : Boolean,
+		MapTask1To : String,
+		MapTask2To : String,
+		MapTask3To : String,
+		MapTask4To : String,
+		MapTask5To : String,
+		MapTask6To : String,
+		MapTask7To : String,
+		PriorityTask1 : Integer,
+		PriorityTask2 : Integer,
+		PriorityTask3 : Integer,
+		PriorityTask4 : Integer,
+		PriorityTask5 : Integer,
+		PriorityTask6 : Integer,
+		PriorityTask7 : Integer)
+ports
+	Tasks,
+	Buffers,
+	SimulationController
+instances
+	Task1 : TaskFirst(Iterate := Iterate, MapTo := MapTask1To, Name := "Task1", Priority := PriorityTask1)
+	Task2 : Task2(MapTo := MapTask2To, Name := "Task2", Priority := PriorityTask2)
+	Task3 : Task3(MapTo := MapTask3To, Name := "Task3", Priority := PriorityTask3)
+	Task4 : Task4(MapTo := MapTask4To, Name := "Task4", Priority := PriorityTask4)
+	Task5 : Task5(MapTo := MapTask5To, Name := "Task5", Priority := PriorityTask5)
+	Task6 : Task6(MapTo := MapTask6To, Name := "Task6", Priority := PriorityTask6)
+	Task7 : TaskLast(DesiredLatency := DesiredLatency, DesiredThroughput := DesiredThroughput, Iterate := Iterate, MapTo
+		:= MapTask7To, Name := "Task7", Priority := PriorityTask7)
+	F1 : DataBuffer(Name := "F1", NumberOfInitialTokens := 0, TokenSize := 1)
+	F2 : DataBuffer(Name := "F2", NumberOfInitialTokens := 0, TokenSize := 1)
+	F3 : DataBuffer(Name := "F3", NumberOfInitialTokens := 0, TokenSize := 1)
+	F4 : DataBuffer(Name := "F4", NumberOfInitialTokens := 0, TokenSize := 1)
+	F5 : DataBuffer(Name := "F5", NumberOfInitialTokens := 0, TokenSize := 1)
+	F6 : DataBuffer(Name := "F6", NumberOfInitialTokens := 0, TokenSize := 1)
+	F7 : DataBuffer(Name := "F7", NumberOfInitialTokens := 0, TokenSize := 1)
+	F8 : DataBuffer(Name := "F8", NumberOfInitialTokens := 0, TokenSize := 1)
+	F9 : DataBuffer(Name := "F9", NumberOfInitialTokens := 0, TokenSize := 1)
+	F10 : DataBuffer(Name := "F10", NumberOfInitialTokens := 0, TokenSize := 1)
+	F11 : DataBuffer(Name := "F11", NumberOfInitialTokens := 4, TokenSize := 1)
+	G2 : ControlBuffer(Name := "G2", TokenSize := 1)
+	G3 : ControlBuffer(Name := "G3", TokenSize := 1)
+	G4 : ControlBuffer(Name := "G4", TokenSize := 1)
+	G5 : ControlBuffer(Name := "G5", TokenSize := 1)
+	G6 : ControlBuffer(Name := "G6", TokenSize := 1)
+	G7 : ControlBuffer(Name := "G7", TokenSize := 1)
+channels
+	{ SimulationController, Task1.Monitor, Task7.Monitor }
+	{ Tasks, Task1.Computation, Task2.Computation, Task3.Computation, Task4.Computation, Task5.Computation,
+		Task6.Computation, Task7.Computation }
+	{ Buffers, F1.Communication, F2.Communication, F3.Communication, F4.Communication, F5.Communication,
+		F6.Communication, F7.Communication, F8.Communication, F9.Communication, F10.Communication, F11.Communication,
+		G2.Communication, G3.Communication, G4.Communication, G5.Communication, G6.Communication, G7.Communication }
+	{ Task1.Control2, G2.In }
+	{ G2.Out, Task2.Control }
+	{ Task1.Control3, G3.In }
+	{ G3.Out, Task3.Control }
+	{ Task1.Control4, G4.In }
+	{ G4.Out, Task4.Control }
+	{ Task1.Control5, G5.In }
+	{ G5.Out, Task5.Control }
+	{ Task1.Control6, G6.In }
+	{ G6.Out, Task6.Control }
+	{ Task1.Control7, G7.In }
+	{ G7.Out, Task7.Control }
+	{ Task1.Out1, F1.In }
+	{ F1.Out, Task2.In }
+	{ Task1.Out2, F2.In }
+	{ F2.Out, Task3.In }
+	{ Task1.Out3, F3.In }
+	{ F3.Out, Task4.In }
+	{ Task2.Out1, F4.In }
+	{ F4.Out, Task7.In1 }
+	{ Task2.Out2, F5.In }
+	{ F5.Out, Task5.In1 }
+	{ Task3.Out1, F6.In }
+	{ F6.Out, Task5.In2 }
+	{ Task3.Out2, F7.In }
+	{ F7.Out, Task6.In1 }
+	{ Task4.Out, F8.In }
+	{ F8.Out, Task6.In2 }
+	{ Task5.Out, F9.In }
+	{ F9.Out, Task7.In2 }
+	{ Task6.Out, F10.In }
+	{ F10.Out, Task7.In3 }
+	{ Task7.Out, F11.In }
+	{ F11.Out, Task1.In }
