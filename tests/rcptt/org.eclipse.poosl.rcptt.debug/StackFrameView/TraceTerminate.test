@@ -22,7 +22,10 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 click-terminate
-assertNoStackTrace
+with [get-view StackTrace] {
+    get-editbox -after [get-label "Error Message:"] | get-property text | equals "" | verify-false
+    get-list | get-property "getItems().length" | equals 0 | verify-false
+}
 get-view StackTrace | get-list | select "1 .*"
 with [get-view "StackTrace Variables"] {
     get-tree | get-property itemCount | equals 0 | verify-false    
