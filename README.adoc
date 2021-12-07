@@ -1,9 +1,6 @@
 [link=https://github.com/eclipse/poosl/actions/workflows/maven.yml]
 image::https://github.com/eclipse/poosl/workflows/Java%20CI/badge.svg[gh-actions status]
 
-This is a temporary repository to prepare POOSL IDE to go to the Eclipse Foundation. 
-Be aware this repository as it will soon disappear.
-
 = Brief introduction to the POOSL project
 
 The Parallel Object-Oriented Specification Language (POOSL) is a very expressive language to model 
