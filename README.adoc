@@ -17,7 +17,7 @@ helps you to install Eclipse and POOSL features.
 
 == How to download Eclipse Features
 
-Update site and help are accessible on https://obeonetwork.github.io/POOSL[gh-pages site].
+Update site and help are accessible on https://eclipse.github.io/poosl[gh-pages site].
 
 
 == How to build
