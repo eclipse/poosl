@@ -50,7 +50,7 @@ methods
 
 data class ExistingMethodNameCallClass extends Object 
 variables
-	ExecutionTimes : Map 
+	ExecutionTimes : Map2 
 methods
 	update(Task : StackedDataCallsClass) : ExistingMethodNameCallClass
 		// No warning when calling a method that exists in other data classes 	 
@@ -81,7 +81,7 @@ methods
 
 data class CallingStackedDataCallsClass extends Object
 variables
-	ExecutionTimes : Map, 
+	ExecutionTimes : Map2, 
 	Frequency : Real 
 methods
 	
@@ -100,10 +100,10 @@ methods
 		Task setRemainingExecutionTime((ExecutionTimes at(Task getScenario) at(Task getScenario) / Frequency) - RunTime); 	  	      	    
 		return self  
 		
-data class Map extends Object
+data class Map2 extends Object
 variables
 methods
-	/* Returns the value at key K if such key is included in the Map. Otherwise, it returns nil */
+	/* Returns the value at key K if such key is included in the Map2. Otherwise, it returns nil */
 	at(Key: Object) : Object ||	
 		return Key
 		

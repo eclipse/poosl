@@ -1,5 +1,3 @@
-importlib "structures.poosl"
-
 data class SequenceTester extends Object
 variables
 methods
@@ -25,16 +23,15 @@ methods
 		new(Console) writeLine("Iterator points to: " + iterator element printString() + "\n");
 
 		// Remove 1
-		iterator remove(); // // {2}, still points to 1
+		iterator remove(); // {2}, iterator becomes invalid
 		self assert(seq size() = 1, "size error");
-		self assert(iterator element = 1, "Iterator should point to 1"); // Should still point to 1
+		self assert(iterator element = nil, "Iterator should point to a removed element");
 
 		iterator addBefore(3); // Should trigger error
 
 		return self
 
 	@Test
-	@Error("Cannot addBefore when isDone holds.")
 	addInEmptyList() : SequenceTester | seq : Sequence, iterator : Iterator |
 		seq := new(Sequence);
 		iterator := seq iterator();
@@ -48,7 +45,7 @@ methods
 
 		new(Console) writeLine("Original sequence: " + original printString());
 
-		iterator := original iterator reverse last; // {1, 2, 3}, should point to 3
+		iterator := original iterator last; // {1, 2, 3}, should point to 3
 		self assert(iterator element = 3, "Iterator should point to 3");
 		new(Console) writeLine("Iterator points to: " + iterator element printString() + "\n");
 

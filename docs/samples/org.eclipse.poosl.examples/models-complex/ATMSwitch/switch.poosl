@@ -1,7 +1,6 @@
 /* ATM Switch
  *
  */
-importlib "structures.poosl"
 importlib "distributions.poosl"
 
 data class Cell extends Object

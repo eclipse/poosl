@@ -1,4 +1,5 @@
 import "../common.poosl"
+importlib "structures.poosl"
 
 data class Flit extends Object
 variables

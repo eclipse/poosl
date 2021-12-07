@@ -3,7 +3,7 @@
 /* Data class that models a stack of carts. It isolates the data processing from process class CartShed. */
 data class CartStack
 variables
-	Carts : Stack
+	Carts : Stack2
 methods
 	init() : CartStack | |
 		// Shopping Carts should extend Object even if not defined and no warning should show
@@ -11,10 +11,10 @@ methods
 		Carts push(new(ShoppingCart) init()) ;
 		return self
 
-data class Stack extends Object
+data class Stack2 extends Object
 variables
 methods
-	push(O : Object) : Stack | |
+	push(O : Object) : Stack2 | |
 		O + 1 ;  
 		return self
   

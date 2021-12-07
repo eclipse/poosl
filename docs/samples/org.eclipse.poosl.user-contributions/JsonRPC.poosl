@@ -1,6 +1,3 @@
-importlib "structures.poosl"
-importlib "json.poosl"
-
 /** This file contains two data classes, Request and Response, that implements
  *  remote procedure calls (RPCs) following a subset of the JSON-RPC 2.0 standard:
  *  http://www.jsonrpc.org/specification
@@ -23,15 +20,14 @@ variables
 	parameters : Array
 methods
 	/* Serializes the request into a JSON string, following the JSON-RPC 2.0 standard */
-	toJSON() : String | map : Map, json : JSON |
+	toJSON() : String | map : Map |
 		map := new(Map);
-		json := new(JSON);
 		/* Necessary fields prescribed by the standard.*/
 		map putAt("id", 1); // Ideally, this should be a globally incrementing ID.
 		map putAt("jsonrpc", "2.0");
 		map putAt("method", method);
 		map putAt("params", parameters);
-		return json convert(map)
+		return map asJSON
 
 	/* Sets the name of the method to invoke in the RPC to be the string passed as a parameter. */
 	setMethod(Method : String) : Request | str : String |
@@ -57,9 +53,8 @@ variables
 	result : Map
 methods
 	/* Parses the string passed as a parameter and returns a JSON object */
-	fromJSON(Result : String) : Response | json : JSON |
-		json := new(JSON);
-		result := json parse(Result);
+	fromJSON(Result : String) : Response
+		result := Result parseJSON;
 		return self
 
 	/* Returns a boolean indicated whether or not an error has occurred during the RPC. */

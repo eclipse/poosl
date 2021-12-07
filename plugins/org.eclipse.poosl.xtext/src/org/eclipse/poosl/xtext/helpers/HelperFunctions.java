@@ -106,6 +106,28 @@ public final class HelperFunctions {
 
     public static final String CLASS_NAME_OBSERVER = "Observer"; //$NON-NLS-1$
 
+    public static final String CLASS_NAME_COLLECTION = "Collection"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_ITERATOR = "Iterator"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_BAG = "Bag"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_BAG_ITERATOR = "BagIterator"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_MAP = "Map"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_MAP_ITERATOR = "MapIterator"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_SEQUENCE = "Sequence"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_SEQUENCE_ITERATOR = "SequenceIterator"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_QUEUE = "Queue"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_STACK = "Stack"; //$NON-NLS-1$
+
+    public static final String CLASS_NAME_SET = "Set"; //$NON-NLS-1$
+
     public static final List<String> PRIMITIVE_DATA_CLASSES = Collections
             .unmodifiableList(Arrays.asList(CLASS_NAME_BOOLEAN, CLASS_NAME_CHAR, CLASS_NAME_FLOAT,
                     CLASS_NAME_INTEGER, CLASS_NAME_NIL, CLASS_NAME_REAL));
@@ -120,7 +142,10 @@ public final class HelperFunctions {
                     CLASS_NAME_CHAR, CLASS_NAME_FLOAT, CLASS_NAME_INTEGER, CLASS_NAME_NIL,
                     CLASS_NAME_REAL, CLASS_NAME_STRING, CLASS_NAME_FILEIN, CLASS_NAME_FILEOUT,
                     CLASS_NAME_RANDOMGENERATOR, CLASS_NAME_SOCKET, CLASS_NAME_CONSOLE,
-                    CLASS_NAME_OBSERVER));
+                    CLASS_NAME_OBSERVER, CLASS_NAME_COLLECTION, CLASS_NAME_ITERATOR, CLASS_NAME_BAG,
+                    CLASS_NAME_BAG_ITERATOR, CLASS_NAME_MAP, CLASS_NAME_MAP_ITERATOR,
+                    CLASS_NAME_SEQUENCE, CLASS_NAME_SEQUENCE_ITERATOR, CLASS_NAME_QUEUE,
+                    CLASS_NAME_STACK, CLASS_NAME_SET));
 
     // === GetName =======
 

@@ -3,7 +3,6 @@
  * The assignment can be found in the accompanying pdf file
  *
  */
-importlib "structures.poosl"
 importlib "distributions.poosl"
 
 /* Packet */

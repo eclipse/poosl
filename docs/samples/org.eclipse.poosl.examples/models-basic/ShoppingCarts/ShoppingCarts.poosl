@@ -8,7 +8,6 @@
  *   * multiple customers (parallel behavior inside a process class).
  *
  */
-importlib "structures.poosl"
 
 // -----------------------------------------------------------------------------
 //

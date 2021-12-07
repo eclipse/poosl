@@ -1,7 +1,5 @@
-importlib "structures.poosl"
 importlib "distributions.poosl"
 importlib "performance.poosl"
-importlib "json.poosl"
 
 /* Data Classes */
 data class ScheduledTask extends Object
@@ -134,7 +132,7 @@ methods
 		while File atEndOfFile not do
 			Task concat(File readLine)
 		od;
-		CalibrationData := new(JSON) parse(Task);
+		CalibrationData := Task parseJSON();
 		Frequency := CalibrationData at("Frequency") asReal;
 		ContextSwitchingTime := CalibrationData at("ContextSwitchingTime") asReal;
 		PowerConsumption := CalibrationData at("PowerConsumption");

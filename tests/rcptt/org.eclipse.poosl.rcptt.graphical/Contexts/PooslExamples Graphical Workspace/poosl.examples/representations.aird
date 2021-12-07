@@ -3,7 +3,6 @@
   <viewpoint:DAnalysis xmi:id="_h-oLcOmcEeSVbbLTqQQ2UQ" selectedViews="_jBL0oOmcEeSVbbLTqQQ2UQ" version="12.1.0.201708031200">
     <semanticResources>libraries/SocketProcess.poosl</semanticResources>
     <semanticResources>libraries/distributions.poosl</semanticResources>
-    <semanticResources>libraries/json.poosl</semanticResources>
     <semanticResources>libraries/structures.poosl</semanticResources>
     <semanticResources>libraries/performance.poosl</semanticResources>
     <semanticResources>models-basic/HelloWorld/hello_world.poosl</semanticResources>

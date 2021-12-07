@@ -1,5 +1,4 @@
 importlib "UnitTester.poosl"
-importlib "structures.poosl"
 
 data class MyDataClassStringAttribute extends Object
 variables

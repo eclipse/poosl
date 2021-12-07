@@ -87,7 +87,6 @@
  *    - Trace?Dependency(FromClaim, ToClaim, Type, Context, AttributeValues) -> Adds a dependency (and writes it to file / streams it through the socket). Note that visualization of dependencies is not yet supported in case of using a socket
  * 
  */
-import "structures.poosl"
 
 /* This process class allows for a streaming Socket connection to TRACE or the use of files. Using the streaming approach requires to specify a PortNumber (POOSL Model acts as Server) or both a HostName and PortNumber (POOSL Model acts as Client). In case both are nil, files are to be used  */
 process class TraceProcess(HostName : String, PortNumber : Integer)
