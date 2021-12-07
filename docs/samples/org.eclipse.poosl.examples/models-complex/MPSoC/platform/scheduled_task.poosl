@@ -1,0 +1,33 @@
+data class ScheduledTask extends Object
+variables
+	Scenario : String,
+	Priority : Integer,
+	RemainingExecutionTime : Real,
+	Name : String
+methods
+	getRemainingExecutionTime : Real
+		return RemainingExecutionTime
+
+	@Init
+	init(N, S : String, P : Integer) : ScheduledTask
+		Name := N;
+		Scenario := S;
+		Priority := P;
+		return self
+
+	getName : String
+		return Name
+
+	printString : String
+		return "Task " + Name printString + " in Scenario " + Scenario printString + " with Priority " + Priority
+			printString
+
+	getScenario : String
+		return Scenario
+
+	setRemainingExecutionTime(T : Real) : ScheduledTask
+		RemainingExecutionTime := T;
+		return self
+
+	getPriority : Integer
+		return Priority

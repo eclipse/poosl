@@ -1,0 +1,297 @@
+import "task.poosl"
+
+process class Task2 extends Task
+ports
+	In,
+	Out1,
+	Out2
+messages
+	Control!MappedTo(String),
+	In!InspectTokenAvailability(Integer),
+	In!MappedTo(String),
+	In!ReleaseRoom(),
+	In?TokensAvailable(),
+	Out1!MappedTo(String),
+	Out1!ReserveRoom(Integer),
+	Out1!WriteTokens(),
+	Out1?ReservationSuccessful(),
+	Out2!MappedTo(String),
+	Out2!ReserveRoom(Integer),
+	Out2!WriteTokens(),
+	Out2?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	NotifyBuffersAboutMapping()()
+		par
+			In!MappedTo(MapTo)
+		and
+			Out1!MappedTo(MapTo)
+		and
+			Out2!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	@SuppressWarnings("unused")
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		In!InspectTokenAvailability(2048);
+		In?TokensAvailable
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		In!ReleaseRoom
+
+	ReserveSpaceForWrites(Scenario : String)()
+		if Scenario = "S1" then
+			Out1!ReserveRoom(1024);
+			Out1?ReservationSuccessful;
+			Out2!ReserveRoom(4096);
+			Out2?ReservationSuccessful
+		fi;
+		if Scenario = "S2" then
+			Out1!ReserveRoom(2048);
+			Out1?ReservationSuccessful
+		fi
+
+	PerformWrites(Scenario : String)()
+		Out1!WriteTokens;
+		if Scenario = "S1" then
+			Out2!WriteTokens
+		fi
+
+process class Task3 extends Task
+ports
+	In,
+	Out1,
+	Out2
+messages
+	Control!MappedTo(String),
+	In!InspectTokenAvailability(Integer),
+	In!MappedTo(String),
+	In!ReleaseRoom(),
+	In?TokensAvailable(),
+	Out1!MappedTo(String),
+	Out1!ReserveRoom(Integer),
+	Out1!WriteTokens(),
+	Out1?ReservationSuccessful(),
+	Out2!MappedTo(String),
+	Out2!ReserveRoom(Integer),
+	Out2!WriteTokens(),
+	Out2?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	NotifyBuffersAboutMapping()()
+		par
+			In!MappedTo(MapTo)
+		and
+			Out1!MappedTo(MapTo)
+		and
+			Out2!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	@SuppressWarnings("unused")
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		In!InspectTokenAvailability(1024);
+		In?TokensAvailable
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		In!ReleaseRoom
+
+	ReserveSpaceForWrites(Scenario : String)()
+		Out1!ReserveRoom(2048);
+		Out1?ReservationSuccessful;
+		if Scenario = "S2" then
+			Out2!ReserveRoom(4096);
+			Out2?ReservationSuccessful
+		fi
+
+	PerformWrites(Scenario : String)()
+		Out1!WriteTokens;
+		if Scenario = "S2" then
+			Out2!WriteTokens
+		fi
+
+process class Task4 extends Task
+ports
+	In,
+	Out
+messages
+	Control!MappedTo(String),
+	In!InspectTokenAvailability(Integer),
+	In!MappedTo(String),
+	In!ReleaseRoom(),
+	In?TokensAvailable(),
+	Out!MappedTo(String),
+	Out!ReserveRoom(Integer),
+	Out!WriteTokens(),
+	Out?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	NotifyBuffersAboutMapping()()
+		par
+			In!MappedTo(MapTo)
+		and
+			Out!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In!InspectTokenAvailability(2048);
+			In?TokensAvailable
+		fi
+
+	ReleaseSpaceForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In!ReleaseRoom
+		fi
+
+	ReserveSpaceForWrites(Scenario : String)()
+		if Scenario = "S1" then
+			Out!ReserveRoom(4096);
+			Out?ReservationSuccessful
+		fi
+
+	PerformWrites(Scenario : String)()
+		if Scenario = "S1" then
+			Out!WriteTokens
+		fi
+
+	Execute(Scenario : String)() | N : String |
+		if Scenario = "S1" then
+			Computation!Execute(Name, Scenario, Priority, MapTo);
+			Computation?ExecutionCompleted(N | N = Name)
+		fi
+
+process class Task5 extends Task
+ports
+	In1,
+	In2,
+	Out
+messages
+	Control!MappedTo(String),
+	In1!InspectTokenAvailability(Integer),
+	In1!MappedTo(String),
+	In1!ReleaseRoom(),
+	In1?TokensAvailable(),
+	In2!InspectTokenAvailability(Integer),
+	In2!MappedTo(String),
+	In2!ReleaseRoom(),
+	In2?TokensAvailable(),
+	Out!MappedTo(String),
+	Out!ReserveRoom(Integer),
+	Out!WriteTokens(),
+	Out?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	NotifyBuffersAboutMapping()()
+		par
+			In1!MappedTo(MapTo)
+		and
+			In2!MappedTo(MapTo)
+		and
+			Out!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In1!InspectTokenAvailability(4096);
+			In1?TokensAvailable
+		fi;
+		In2!InspectTokenAvailability(2048);
+		In2?TokensAvailable
+
+	ReleaseSpaceForReads(Scenario : String)()
+		if Scenario = "S1" then
+			In1!ReleaseRoom
+		fi;
+		In2!ReleaseRoom
+
+	@SuppressWarnings("unused")
+	ReserveSpaceForWrites(Scenario : String)()
+		Out!ReserveRoom(3072);
+		Out?ReservationSuccessful
+
+	@SuppressWarnings("unused")
+	PerformWrites(Scenario : String)()
+		Out!WriteTokens
+
+process class Task6 extends Task
+ports
+	In1,
+	In2,
+	Out
+messages
+	Control!MappedTo(String),
+	In1!InspectTokenAvailability(Integer),
+	In1!MappedTo(String),
+	In1!ReleaseRoom(),
+	In1?TokensAvailable(),
+	In2!InspectTokenAvailability(Integer),
+	In2!MappedTo(String),
+	In2!ReleaseRoom(),
+	In2?TokensAvailable(),
+	Out!MappedTo(String),
+	Out!ReserveRoom(Integer),
+	Out!WriteTokens(),
+	Out?ReservationSuccessful()
+variables
+
+init
+	Initialise()()
+methods
+	NotifyBuffersAboutMapping()()
+		par
+			In1!MappedTo(MapTo)
+		and
+			In2!MappedTo(MapTo)
+		and
+			Out!MappedTo(MapTo)
+		and
+			Control!MappedTo(MapTo)
+		rap
+
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		if Scenario = "S2" then
+			In1!InspectTokenAvailability(4096);
+			In1?TokensAvailable
+		fi;
+		if Scenario = "S1" then
+			In2!InspectTokenAvailability(4096);
+			In2?TokensAvailable
+		fi
+
+	ReleaseSpaceForReads(Scenario : String)()
+		if Scenario = "S2" then
+			In1!ReleaseRoom
+		fi;
+		if Scenario = "S1" then
+			In2!ReleaseRoom
+		fi
+
+	@SuppressWarnings("unused")
+	ReserveSpaceForWrites(Scenario : String)()
+		Out!ReserveRoom(1024);
+		Out?ReservationSuccessful
+
+	@SuppressWarnings("unused")
+	PerformWrites(Scenario : String)()
+		Out!WriteTokens

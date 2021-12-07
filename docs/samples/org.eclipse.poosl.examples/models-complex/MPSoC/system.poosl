@@ -1,5 +1,5 @@
-import "application.poosl"
-import "platform.poosl"
+import "application/application.poosl"
+import "platform/platform.poosl"
 
 /* Process Classes */
 process class SimulationController(AccuracyCheckInterval : Real, MaximumSimulationTime : Real)
@@ -57,4 +57,4 @@ instances
 channels
 	{ Application.Tasks, MPSoC.ComputationResources }
 	{ Application.Buffers, MPSoC.CommunicationResources }
-	{ Application.SimulationController, MPSoC.SimulationController, SimulationController.Monitor }  
+	{ Application.SimulationController, MPSoC.SimulationController, SimulationController.Monitor }

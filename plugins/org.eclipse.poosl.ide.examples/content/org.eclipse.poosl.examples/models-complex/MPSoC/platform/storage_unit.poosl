@@ -1,0 +1,87 @@
+importlib "performance.poosl"
+
+data class MemoryStatus extends Object
+variables
+	Occupation : Integer,
+	MaximumOccupation : Integer,
+	AverageOccupation : LongRunTimeAverage
+methods
+	@Init
+	init : MemoryStatus
+		Occupation := 0;
+		MaximumOccupation := 0;
+		AverageOccupation := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+		return self
+
+	logString : String
+		return "Maximum Occupation: " + MaximumOccupation printString cr cr + "Statistics for Average Occupation:" cr +
+			AverageOccupation logStatistics
+
+	free(NumberOfBytes : Integer, CurrentTime : Real) : MemoryStatus
+		Occupation := Occupation - NumberOfBytes;
+		AverageOccupation rewardBM(Occupation asReal, CurrentTime);
+		return self
+
+	printString : String
+		return "Occupation: " + Occupation printString cr cr + "Maximum Occupation: " + MaximumOccupation printString cr
+			cr + "Statistics for Average Occupation:" cr + AverageOccupation printStatistics
+
+	allocate(NumberOfBytes : Integer, CurrentTime : Real) : MemoryStatus
+		Occupation := Occupation + NumberOfBytes;
+		if Occupation > MaximumOccupation then
+			MaximumOccupation := Occupation
+		fi;
+		AverageOccupation rewardBM(Occupation asReal, CurrentTime);
+		return self
+
+	accurate : Boolean
+		return AverageOccupation accurate
+
+process class StorageUnit(PowerPerByte : Real)
+ports
+	Monitor,
+	Power,
+	Access
+messages
+	Access!AccuracyStatus(Boolean),
+	Access!SimulationResults(String),
+	Access?Allocate(Integer),
+	Access?Free(Integer),
+	Access?Status(),
+	Access?Use(Boolean),
+	Monitor?StopSimulation(),
+	Power!StartConsumption(Real),
+	Power!StopConsumption(Real)
+variables
+	Status : MemoryStatus
+init
+	Initialise()()
+methods
+	Initialise()() | InUse : Boolean |
+		Access?Use(InUse);
+		if InUse then
+			Status := new(MemoryStatus) init;
+			abort
+				par
+					HandleAccesses()()
+				and
+					CheckAccuracyStatus()()
+				rap
+			with Monitor?StopSimulation;
+			Access!SimulationResults(Status logString)
+		fi
+
+	HandleAccesses()() | NumberOfBytes : Integer |
+		sel
+			Access?Allocate(NumberOfBytes) {Status allocate(NumberOfBytes, currentTime)};
+			Power!StartConsumption(PowerPerByte * NumberOfBytes asReal)
+		or
+			Access?Free(NumberOfBytes) {Status free(NumberOfBytes, currentTime)};
+			Power!StopConsumption(PowerPerByte * NumberOfBytes asReal)
+		les;
+		HandleAccesses()()
+
+	CheckAccuracyStatus()()
+		Access?Status;
+		Access!AccuracyStatus(Status accurate);
+		CheckAccuracyStatus()()

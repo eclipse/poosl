@@ -1,0 +1,172 @@
+importlib "performance.poosl"
+
+data class DataBufferMonitor extends Object
+variables
+	ReservedLocations : Integer,
+	PreviousTime : Real,
+	AverageOccupation : LongRunTimeAverage,
+	BufferSize : Integer,
+	Name : String,
+	TraceFile : FileOut,
+	Trace : Boolean,
+	AvailableTokens : Integer,
+	Monitor : Boolean,
+	MaximumOccupation : Integer,
+	TokenSize : Integer,
+	VarianceOccupation : LongRunTimeVariance
+methods
+	remove(NumberOfTokens : Integer, CurrentTime : Real) : DataBufferMonitor | Occupation : Integer |
+		Occupation := ReservedLocations + AvailableTokens;
+		if Trace & (CurrentTime > PreviousTime) then
+			TraceFile write("At time: " + PreviousTime printString + " Occupation: " + (Occupation * TokenSize)
+				printString cr)
+		fi;
+		AvailableTokens := AvailableTokens - NumberOfTokens;
+		Occupation := Occupation - NumberOfTokens;
+		if Monitor then
+			AverageOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime);
+			VarianceOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime)
+		fi;
+		PreviousTime := CurrentTime;
+		return self
+
+	room(NumberOfTokens : Integer) : Boolean
+		if BufferSize > 0 then
+			return (ReservedLocations + AvailableTokens + NumberOfTokens) <= BufferSize
+		else
+			return true
+		fi
+
+	@Init
+	init(N : String, BS, IT, TS : Integer, M : Boolean, T : Boolean) : DataBufferMonitor
+		Name := N;
+		BufferSize := BS;
+		TokenSize := TS;
+		AvailableTokens := 0;
+		ReservedLocations := 0;
+		PreviousTime := 0.0;
+		Monitor := M;
+		if Monitor then
+			MaximumOccupation := 0;
+			AverageOccupation := new(LongRunTimeAverage) withParameters(0.95, 0.95);
+			VarianceOccupation := new(LongRunTimeVariance) withParameters(0.95, 0.95)
+		fi;
+		Trace := T;
+		if Trace then
+			TraceFile := new(FileOut) destination("Channel_" + Name + ".trace") open;
+			TraceFile write("Traced Buffer Occupancy for Channel: " + Name cr cr)
+		fi;
+		self reserve(IT, 0.0);
+		self write(IT);
+		return self
+
+	reserve(NumberOfTokens : Integer, CurrentTime : Real) : DataBufferMonitor | Occupation : Integer |
+		Occupation := ReservedLocations + AvailableTokens;
+		if Trace & (CurrentTime > PreviousTime) then
+			TraceFile write("At time: " + PreviousTime printString + " Occupation: " + (Occupation * TokenSize)
+				printString cr)
+		fi;
+		ReservedLocations := ReservedLocations + NumberOfTokens;
+		Occupation := Occupation + NumberOfTokens;
+		if Monitor then
+			if (Occupation * TokenSize) > MaximumOccupation then
+				MaximumOccupation := Occupation * TokenSize
+			fi;
+			AverageOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime);
+			VarianceOccupation rewardBM((Occupation * TokenSize) asReal, CurrentTime)
+		fi;
+		PreviousTime := CurrentTime;
+		return self
+
+	write(NumberOfTokens : Integer) : DataBufferMonitor
+		ReservedLocations := ReservedLocations - NumberOfTokens;
+		AvailableTokens := AvailableTokens + NumberOfTokens;
+		return self
+
+	available(NumberOfTokens : Integer) : Boolean
+		return AvailableTokens >= NumberOfTokens
+
+	getResults : String | Result : String |
+		Result := "-------------------------------" cr + "Statistics for Channel: " + Name cr cr;
+		Result concat("Observed Maximum Buffer Occupancy: " + MaximumOccupation printString cr cr);
+		Result concat("Average Buffer Occupancy:" cr + AverageOccupation logStatistics cr cr);
+		Result concat("Variance in Buffer Occupancy:" cr + VarianceOccupation logStatistics cr cr);
+		return Result
+
+	accurate : Boolean
+		return AverageOccupation accurate
+
+process class DataBuffer(Name : String, NumberOfInitialTokens : Integer, TokenSize : Integer)
+ports
+	Out,
+	Communication,
+	In
+messages
+	Communication!InitialiseTokens(String, Integer, Integer),
+	Communication!ReleaseRoom(String, Integer, Integer),
+	Communication!ReserveRoom(String, String, Integer, Integer),
+	Communication!Transfer(String, String, Integer),
+	Communication!Use(String),
+	Communication?TransferCompleted(String, Integer),
+	Communication?TransferInitiated(String),
+	In!ReservationSuccessful(),
+	In?MappedTo(String),
+	In?ReserveRoom(Integer),
+	In?WriteTokens(),
+	Out!TokensAvailable(),
+	Out?InspectTokenAvailability(Integer),
+	Out?MappedTo(String),
+	Out?ReleaseRoom()
+variables
+	Status : DataBufferMonitor,
+	TransferID : Integer,
+	MapTo : String
+init
+	Initialise()()
+methods
+	HandleInput()() | NumberOfTokens, ID : Integer, Connection : String |
+		In?ReserveRoom(NumberOfTokens | Status room(NumberOfTokens));
+		Communication!ReserveRoom(Name, MapTo, NumberOfTokens, TokenSize);
+		Communication?TransferInitiated(Connection | Connection = Name) {Status reserve(NumberOfTokens, currentTime)};
+		In!ReservationSuccessful;
+		In?WriteTokens {TransferID := TransferID + 1};
+		par
+			Communication!Transfer(Name, MapTo, TransferID);
+			Communication?TransferCompleted(Connection, ID |(Connection = Name) & (ID = TransferID)) {Status
+				write(NumberOfTokens)}
+		and
+			HandleInput()()
+		rap
+
+	HandleOutput()() | NumberOfTokens : Integer |
+		Out?InspectTokenAvailability(NumberOfTokens | Status available(NumberOfTokens));
+		Out!TokensAvailable;
+		Out?ReleaseRoom;
+		Communication!ReleaseRoom(MapTo, NumberOfTokens, TokenSize) {Status remove(NumberOfTokens, currentTime)};
+		HandleOutput()()
+
+	Initialise()()
+		TransferID := 0;
+		Status := new(DataBufferMonitor) init(Name, -1, NumberOfInitialTokens, TokenSize, false, false);
+		DetermineMapping()();
+		NotifyPlatformAboutMapping()();
+		if NumberOfInitialTokens > 0 then
+			Communication!InitialiseTokens(MapTo, NumberOfInitialTokens, TokenSize)
+		fi;
+		par
+			HandleInput()()
+		and
+			HandleOutput()()
+		rap
+
+	DetermineMapping()() | InputTask, OutputTask : String |
+		In?MappedTo(InputTask);
+		Out?MappedTo(OutputTask);
+		if InputTask = OutputTask then
+			MapTo := InputTask
+		else
+			MapTo := "NoC"
+		fi
+
+	NotifyPlatformAboutMapping()()
+		Communication!Use(MapTo)

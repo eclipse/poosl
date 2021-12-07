@@ -1,0 +1,57 @@
+process class Task(MapTo : String, Name : String, Priority : Integer)
+ports
+	Computation,
+	Control
+messages
+	Computation!Execute(String, String, Integer, String),
+	Computation!Use(String),
+	Computation?ExecutionCompleted(String),
+	Control!InspectTokenAvailability(),
+	Control!ReleaseRoom(),
+	Control?TokenAvailable(String)
+variables
+
+init
+	Initialise()()
+methods
+	Initialise()()
+		NotifyBuffersAboutMapping()();
+		NotifyPlatformAboutMapping()();
+		Fire()()
+
+	NotifyBuffersAboutMapping()()
+		skip
+
+	NotifyPlatformAboutMapping()()
+		Computation!Use(MapTo)
+
+	Fire()() | Scenario : String |
+		Control!InspectTokenAvailability;
+		Control?TokenAvailable(Scenario);
+		CheckTokenAvailabilityForReads(Scenario)();
+		ReserveSpaceForWrites(Scenario)();
+		Execute(Scenario)();
+		ReleaseSpaceForReads(Scenario)();
+		PerformWrites(Scenario)();
+		Control!ReleaseRoom;
+		Fire()()
+
+	Execute(Scenario : String)() | N : String |
+		Computation!Execute(Name, Scenario, Priority, MapTo);
+		Computation?ExecutionCompleted(N | N = Name)
+
+	@SuppressWarnings("unused")
+	CheckTokenAvailabilityForReads(Scenario : String)()
+		skip
+
+	@SuppressWarnings("unused")
+	ReleaseSpaceForReads(Scenario : String)()
+		skip
+
+	@SuppressWarnings("unused")
+	ReserveSpaceForWrites(Scenario : String)()
+		skip
+
+	@SuppressWarnings("unused")
+	PerformWrites(Scenario : String)()
+		skip		
