@@ -1,5 +1,5 @@
-import "../Vector.poosl"
-import "../UnitTester.poosl"
+import "../libraries/Vector.poosl"
+import "../libraries/UnitTester.poosl"
 
 system
 instances

@@ -5,7 +5,7 @@
  **/
 
 importlib "SocketProcess.poosl"
-import "../../../JsonRPC.poosl"
+import "../../../libraries/JsonRPC.poosl"
 
 process class Model()
 ports
