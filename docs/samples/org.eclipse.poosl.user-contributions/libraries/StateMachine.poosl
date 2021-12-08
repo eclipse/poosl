@@ -1,0 +1,50 @@
+data class StateMachine
+variables
+	States : Map,
+	CurrentState : String
+methods
+	@Init
+	initial(State : String) : StateMachine
+		if States = nil then
+			States := new(Map)
+		fi;
+		if States at(State) = nil then
+			States putAt(State, new(Map))
+		fi;
+		CurrentState := State;
+		return self
+
+	add(From, Event, To : String) : StateMachine
+		if States at(From) = nil then
+			States putAt(From, new(Map))
+		fi;
+		if States at(From) at(Event) = nil then
+			States at(From) putAt(Event, To)
+		else
+			self error("Multiple transitions defined for event \"" + Event + "\" from state \"" + From + "\"")
+		fi;
+		if States at(To) = nil then
+			States putAt(To, new(Map))
+		fi;
+		return self
+
+	next(Event : String) : String
+		if States at(CurrentState) != nil then
+			if States at(CurrentState) at(Event) != nil then
+				CurrentState := States at(CurrentState) at(Event)
+			fi
+		fi;
+		return CurrentState
+
+	printString : String | Out : String, I, J : MapIterator |
+		Out := "Current State = " concat(CurrentState) cr lf;
+		I := States iterator;
+		while !(I isDone) do
+			J := I value iterator;
+			while !(J isDone) do
+				Out concat(I key) concat(" : ") concat(J key) concat(" -> ") concat(J value) cr lf;
+				J advance
+			od;
+			I advance
+		od;
+		return Out
