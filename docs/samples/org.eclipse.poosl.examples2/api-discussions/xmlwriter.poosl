@@ -1,0 +1,74 @@
+import "basic.poosl"
+import "collections.poosl"
+
+// Inspired by: http://www.es.ele.tue.nl/~mgeilen/shesim/lib/xml/xmlwriter.zip
+// Text and Attribute values are not checked for illegal characters (nor converted to legal replacements)
+
+data class XMLDocument extends Object
+variables
+Element: XMLElement
+methods
+init(): XMLDocument
+return self
+
+printString: String
+return self xmlString
+
+setElement(E: XMLElement): XMLDocument
+Element := E;
+return self
+
+xmlString(): String
+return "<?xml version='1.0' encoding='ISO-8859-1'?>" cr + Element xmlString(0)
+
+
+data class XMLElement extends Object
+variables
+Attributes: Map, Children: Sequence, Tag: String, Text: String
+methods
+init(T: String): XMLElement
+Tag := T;
+Attributes := new(Map) init();
+Children := new(Sequence) init();
+return self
+
+addAttribute(Name: String, Value: String): XMLElement
+Attributes putAt(Name, Value);
+return self
+
+addElement(E: XMLElement): XMLElement
+if Text != "" then self error("Both text and children set for XML element") fi;
+Children put(E);
+return self
+
+setText(T: String): XMLElement
+if Children notEmpty then self error("Both text and children set for XML element") fi;
+Text := T;
+return self
+
+printString(): String
+return self xmlString(0)
+
+xmlString(Level: Integer): String |Result, Indent: String, Keys: Array, i: Integer|
+Indent := ""; i := 0;
+while i < Level do
+	Indent concat("  ");
+	i := i + 1
+od;
+Result := Indent + "<" + Tag;
+Keys := Attributes keys; i := 1;
+while i <= Keys size do
+	Result := Result + " " + Keys at(i) + "='" + Attributes at(i) + "'";
+	i := i + 1
+od;
+Result := Result + ">\n";
+if Children notEmpty then
+	i := 1;
+	while i <= Children size do
+		Result := Result + Children at(i) xmlString(Level + 1);
+		i := i + 1
+	od
+else
+	Result := Result + Text + "\n"
+fi;
+return Result + Indent + "</" + Tag + ">\n"

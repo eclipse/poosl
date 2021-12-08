@@ -1,0 +1,310 @@
+import "../common.poosl"
+
+data class BusRequests extends Object
+variables
+	Requests : Array
+methods
+	clear(n : Integer) : BusRequests
+		Requests putAt(n, false);
+		return self
+
+	notIdle : Boolean | i : Integer, RequestAvailable : Boolean |
+		i := 1;
+		RequestAvailable := false;
+		while (RequestAvailable not) & (i <= Requests size) do
+			RequestAvailable := Requests at(i);
+			i := i + 1
+		od;
+		return RequestAvailable
+
+	@Init
+	init(n : Integer) : BusRequests
+		Requests := new(Array) resize(n) putAll(false);
+		return self
+
+	getSize : Integer
+		return Requests size
+
+	check(n : Integer) : Boolean
+		return Requests at(n)
+
+	add(n : Integer) : BusRequests
+		Requests putAt(n, true);
+		return self
+
+data class ArbiterPolicy extends Object
+variables
+	LastGranted : Integer
+methods
+	next(d : BusRequests) : Integer | i : Integer |
+		// Assumes that at least one NI demands the bus
+		// Round Robin order of granting access requests
+		if LastGranted == nil then
+			i := 1
+		else
+			i := (LastGranted modulo(d getSize)) + 1
+		fi;
+		while d check(i) not do
+			i := (i modulo(d getSize)) + 1
+		od;
+		LastGranted := i;
+		return i
+
+process class NetworkInterface_Bus(BufferCapacity : Integer, MyID : Integer, TransferDelay : Real)
+ports
+	Node,
+	Arbiter,
+	Bus
+messages
+	Node?Packet(Packet),
+	Node!Packet(Packet),
+	Arbiter?Grant(Integer),
+	Arbiter!Release,
+	Arbiter!Request(Integer),
+	Bus?Packet(Integer, Packet),
+	Bus!Packet(Integer, Packet)
+variables
+	InputBuffer : Queue
+init
+	Initialise()()
+methods
+	TransferBus2Node()() | p : Packet, Destination : Integer |
+		// Transfers a packet destined for this network interface to corresponding node
+		Bus?Packet(Destination, p | Destination = MyID);
+		Node!Packet(p);
+		TransferBus2Node()()
+
+	ForwardToBus()() | ID : Integer, p : Packet |
+		// Forwards a packet in the input buffer to the bus whenever access is granted
+		[ InputBuffer isEmpty not ] Arbiter!Request(MyID);
+		Arbiter?Grant(ID | ID = MyID) {p := InputBuffer inspect};
+		Bus!Packet(p getDestination, p);
+		delay TransferDelay;
+		InputBuffer remove;
+		Arbiter!Release;
+		ForwardToBus()()
+
+	Initialise()()
+		InputBuffer := new(Queue) resize(BufferCapacity);
+		par
+			ReceiveFromNode()()
+		and
+			ForwardToBus()()
+		and
+			TransferBus2Node()()
+		rap
+
+	ReceiveFromNode()() | p : Packet |
+		// Receives a packet from node and put it into the input buffer as long as the buffer is not full
+		[ InputBuffer isFull not ] Node?Packet(p) {InputBuffer add(p setEntranceTime(currentTime))};
+		ReceiveFromNode()()
+
+process class
+	Node_Bus(AccuracyCheckInterval : Real, LinkCapacity : Real, Load : Real, MeanBurstSize : Real, MyID : Integer, NumberOfNodes : Integer)
+ports
+	NI,
+	Monitor
+messages
+	NI?Packet(Packet),
+	NI!Packet(Packet),
+	Monitor?StopSimulation,
+	Monitor!Accurate(Integer)
+variables
+	Monitors : NIMonitors,
+	PacketNumber : Integer,
+	IdleTimeDistribution : Exponential,
+	ArrayOfDestinations : Array,
+	TransitionDistribution : Bernoulli,
+	DestinationIndexDistribution : DiscreteUniform
+init
+	Initialise()()
+methods
+	ReceivePacket()() | p : Packet |
+		// Receives a packet destined for this network interface
+		NI?Packet(p) {Monitors rewardLatency(currentTime - p getEntranceTime)};
+		// Check on correctness of behavior
+		if p getDestination != MyID then
+			p error("Packet " + p printString + " arrived at wrong destination")
+		fi;
+		ReceivePacket()()
+
+	CheckAccuracy()()
+		delay AccuracyCheckInterval;
+		if Monitors accurate then
+			Monitor!Accurate(MyID) // Notify simulation controller about accuracy status of performance monitors
+		else
+			CheckAccuracy()() // Otherwise check again
+		fi
+
+	Initialise()() | P, Lambda : Real, i, j : Integer |
+		// Initialize variables for packet generation
+		P := (MeanBurstSize - 1.0) / MeanBurstSize;
+		Lambda := Load * (1.0 - P) * LinkCapacity / (1.0 - Load);
+		TransitionDistribution := new(Bernoulli) withParameter(P);
+		IdleTimeDistribution := new(Exponential) withParameter(Lambda);
+		PacketNumber := 1;
+		ArrayOfDestinations := new(Array) resize(NumberOfNodes - 1);
+		// Need to ensure that no packets for this NI are generated
+		i := 1;
+		j := 1;
+		// i denotes the identities of the potential destinations, j denoted the indices of the ArrayOfDestinations
+		while i < NumberOfNodes do
+			if j != MyID then
+				ArrayOfDestinations putAt(i, j);
+				i := i + 1
+			fi;
+			j := j + 1
+		od;
+		DestinationIndexDistribution := new(DiscreteUniform) withParameters(1, NumberOfNodes - 1); // Ensures fair distribution over the allowed destinations
+		// Initialize performance monitors 
+		Monitors := new(NIMonitors) init(MyID);
+		// Initialize actual behavior
+		abort
+			par
+				Idle()()
+			and
+				ReceivePacket()()
+			and
+				CheckAccuracy()() // Notify simulation controller about accuracy status of performance monitors
+			rap
+		with Monitor?StopSimulation {Monitors log}
+
+	Burst(Destination : Integer)() | p : Packet |
+		// Generate and send one packet of a burst
+		p := new(Packet) setNumber(PacketNumber) setSource(MyID) setDestination(Destination);
+		NI!Packet(p) {PacketNumber := PacketNumber + 1};
+		Monitors rewardSendRate(LinkCapacity, currentTime);
+		delay 1.0 / LinkCapacity;
+		Monitors rewardSendRate(0.0, currentTime);
+		// Decide whether another packet must be sent in this burst
+		if TransitionDistribution yieldsSuccess then
+			Burst(Destination)() // Send another packet
+		else
+			Idle()() // Insert an Idle period
+		fi
+
+	Idle()()
+		// Insert a period of no traffic
+		delay IdleTimeDistribution sample;
+		// Now start the generation of traffic again
+		Burst(ArrayOfDestinations at(DestinationIndexDistribution sample))()
+
+process class Arbiter(NumberOfNIs : Integer, ProcessingTime : Real)
+ports
+	NI
+messages
+	NI?Release,
+	NI?Request(Integer),
+	NI!Grant(Integer)
+variables
+	Policy : ArbiterPolicy,
+	Requests : BusRequests
+init
+	Initialise()()
+methods
+	HandleRequests()() | NI_ID : Integer |
+		// Register incoming requests from network interfaces
+		NI?Request(NI_ID) {Requests add(NI_ID)};
+		HandleRequests()()
+
+	Initialise()()
+		Requests := new(BusRequests) init(NumberOfNIs);
+		Policy := new(ArbiterPolicy);
+		par
+			HandleRequests()()
+		and
+			Arbitrate()()
+		rap
+
+	Arbitrate()() | NI_ID : Integer |
+		// Arbitrate between registered requests
+		[ Requests notIdle ] NI_ID := Policy next(Requests);
+		delay ProcessingTime;
+		NI!Grant(NI_ID) {Requests clear(NI_ID)};
+		NI?Release;
+		Arbitrate()()
+
+process class
+	SimulationController_Bus(AccuracyCheckInterval : Real, MaximumSimulatedTime : Real, NumberOfNodes : Integer)
+ports
+	Monitor
+messages
+	Monitor?Accurate(Integer),
+	Monitor!StopSimulation
+variables
+	Status : AccuracyStatus
+init
+	Initialise()()
+methods
+	CheckAccuracy()() | i : Integer |
+		delay AccuracyCheckInterval;
+		if (Status check | (currentTime > MaximumSimulatedTime)) then
+			i := 1;
+			// Terminate behavior of all nodes when performance estimations are accurate
+			while i <= NumberOfNodes + 1 do
+				Monitor!StopSimulation;
+				i := i + 1
+			od
+		fi
+
+	ReceiveStatusInformation()() | NI_ID : Integer |
+		Monitor?Accurate(NI_ID) {Status putAt(NI_ID, true)};
+		ReceiveStatusInformation()()
+
+	Initialise()()
+		Status := new(AccuracyStatus) resize(NumberOfNodes) putAll(false);
+		interrupt
+			ReceiveStatusInformation()()
+		with CheckAccuracy()()
+
+cluster class BusBasedNetwork(ArbiterProcessingTime : Real, BusTransferDelay : Real, NIBufferCapacity : Integer,
+	NumberOfNodes : Integer)
+ports
+	Node1,
+	Node2,
+	Node3,
+	Node4
+instances
+	Arbiter : Arbiter(NumberOfNIs := NumberOfNodes, ProcessingTime := ArbiterProcessingTime)
+	NI1 : NetworkInterface_Bus(BufferCapacity := NIBufferCapacity, MyID := 1, TransferDelay := BusTransferDelay)
+	NI2 : NetworkInterface_Bus(BufferCapacity := NIBufferCapacity, MyID := 2, TransferDelay := BusTransferDelay)
+	NI3 : NetworkInterface_Bus(BufferCapacity := NIBufferCapacity, MyID := 3, TransferDelay := BusTransferDelay)
+	NI4 : NetworkInterface_Bus(BufferCapacity := NIBufferCapacity, MyID := 4, TransferDelay := BusTransferDelay)
+channels
+	{ NI1.Arbiter, NI2.Arbiter, NI3.Arbiter, NI4.Arbiter, Arbiter.NI }
+	{ NI1.Bus, NI2.Bus, NI3.Bus, NI4.Bus }
+	{ Node1, NI1.Node }
+	{ Node2, NI2.Node }
+	{ Node3, NI3.Node }
+	{ Node4, NI4.Node }
+
+cluster class SoC_Bus(AccuracyCheckInterval : Real, ArbiterProcessingTime : Real, BusTransferDelay : Real,
+	LinkCapacity : Real, Load : Real, MeanBurstSize : Real, NIBufferCapacity : Integer, NumberOfNodes : Integer)
+ports
+	Monitor
+instances
+	N1 : Node_Bus(AccuracyCheckInterval := AccuracyCheckInterval, LinkCapacity := LinkCapacity, Load := Load,
+		MeanBurstSize := MeanBurstSize, MyID := 1, NumberOfNodes := NumberOfNodes)
+	N2 : Node_Bus(AccuracyCheckInterval := AccuracyCheckInterval, LinkCapacity := LinkCapacity, Load := Load,
+		MeanBurstSize := MeanBurstSize, MyID := 2, NumberOfNodes := NumberOfNodes)
+	N3 : Node_Bus(AccuracyCheckInterval := AccuracyCheckInterval, LinkCapacity := LinkCapacity, Load := Load,
+		MeanBurstSize := MeanBurstSize, MyID := 3, NumberOfNodes := NumberOfNodes)
+	N4 : Node_Bus(AccuracyCheckInterval := AccuracyCheckInterval, LinkCapacity := LinkCapacity, Load := Load,
+		MeanBurstSize := MeanBurstSize, MyID := 4, NumberOfNodes := NumberOfNodes)
+	Network : BusBasedNetwork(ArbiterProcessingTime := ArbiterProcessingTime, BusTransferDelay := BusTransferDelay,
+		NIBufferCapacity := NIBufferCapacity, NumberOfNodes := NumberOfNodes)
+channels
+	{ Monitor, N1.Monitor, N2.Monitor, N3.Monitor, N4.Monitor }
+	{ N1.NI, Network.Node1 }
+	{ N2.NI, Network.Node2 }
+	{ N3.NI, Network.Node3 }
+	{ N4.NI, Network.Node4 }
+
+system
+instances
+	SoC_Bus : SoC_Bus(AccuracyCheckInterval := 1.0, ArbiterProcessingTime := 0.001, BusTransferDelay := 0.001,
+		LinkCapacity := 150.0, Load := 0.5, MeanBurstSize := 5.0, NIBufferCapacity := 2, NumberOfNodes := 4)
+	SimulationController : SimulationController_Bus(AccuracyCheckInterval := 1.0, MaximumSimulatedTime := 1.0 * 10.0
+		power(6.0), NumberOfNodes := 4)
+channels
+	{ SoC_Bus.Monitor, SimulationController.Monitor }

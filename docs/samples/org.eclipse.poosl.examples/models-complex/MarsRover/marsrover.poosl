@@ -1,0 +1,217 @@
+/* Mars rover priority inversion bug
+ *
+ */
+process class Mutex
+ports
+	tsk
+messages
+	tsk?request(Integer),
+	tsk!acquire,
+	tsk?release,
+	tsk!suspend,
+	tsk!resume(Integer)
+variables
+
+init
+	available()()
+methods
+	available()() | withId : Integer |
+		tsk?request(withId);
+		tsk!acquire;
+		taken()();
+		available()()
+
+	taken()() | withId : Integer |
+		sel
+			tsk?release
+		or
+			tsk?request(withId);
+			tsk!suspend;
+			takenAndRequestedBy(withId)()
+		les
+
+	takenAndRequestedBy(anId : Integer)()
+		tsk?release;
+		tsk!resume(anId);
+		taken()()
+
+process class Processor
+ports
+	tsk
+messages
+	tsk?start(Integer),
+	tsk?stop(Integer),
+	tsk!suspend(Integer),
+	tsk!resume(Integer)
+variables
+	currentTask : Integer, // at most one task can be running
+	taskList : Array // tasks can be "idle", "runnable" or "running"
+init
+	init()()
+methods
+	init()()
+		taskList := new(Array) resize(3);
+		taskList putAt(1, "idle");
+		taskList putAt(2, "idle");
+		taskList putAt(3, "idle");
+		currentTask := 0; // no task is running
+		schedule()()
+
+	schedule()() | prio : Integer |
+		sel
+			tsk?start(prio);
+			taskList putAt(prio, "runnable")
+		or
+			tsk?stop(prio);
+			taskList putAt(prio, "idle");
+			currentTask := 0
+		les;
+		selectTask()();
+		schedule()()
+
+	selectTask()() | prio, newPrio : Integer |
+		// look for task that is ready to run
+		prio := 1;
+		newPrio := 0;
+		while prio <= taskList size do
+			if taskList at(prio) != "idle" then
+				newPrio := prio
+			fi;
+			prio := prio + 1
+		od;
+		if newPrio = 0 then
+			// there is no runnable task
+			currentTask := 0
+		else // newPrio is selected to run
+		if taskList at(newPrio) != "running" then
+			startTask(newPrio)()
+		fi fi
+
+	startTask(prio : Integer)()
+		// suspend curent task
+		if currentTask > 0 then
+			tsk!suspend(currentTask);
+			taskList putAt(currentTask, "runnable")
+		fi;
+		// start task prio
+		taskList putAt(prio, "running");
+		currentTask := prio;
+		tsk!resume(prio)
+
+process class Task(interTime : Real, priority : Integer, processTime : Real)
+ports
+	p
+messages
+	p!start(Integer),
+	p?resume(Integer),
+	p!stop(Integer),
+	p?suspend(Integer)
+variables
+	randomgen : RandomGenerator
+init
+	init()()
+methods
+	init()()
+		randomgen := new(RandomGenerator);
+		run()()
+
+	run()()
+		delay randomgen random * interTime;
+		runTask()();
+		run()()
+
+	runTask()() | taskPriority : Integer |
+		p!start(priority);
+		p?resume(taskPriority | taskPriority = priority);
+		interrupt
+			task()();
+			p!stop(priority)
+		with (
+			p?suspend(taskPriority | taskPriority = priority);
+			p?resume(taskPriority | taskPriority = priority)
+		)
+
+	task()()
+		delay randomgen random * processTime
+
+process class MutexTask(mutexTime : Real) extends Task
+ports 
+	mtx
+messages
+	mtx!request(Integer),
+	mtx?suspend,
+	mtx?resume(Integer),
+	mtx?acquire,
+	mtx!release
+variables
+
+init
+	init()()
+methods
+	task()()
+		acquireMutex()();
+		delay randomgen random * mutexTime;
+		mtx!release;
+		delay randomgen random * processTime
+
+	acquireMutex()() | anId : Integer |
+		mtx!request(priority);
+		sel
+			mtx?suspend;
+			p!stop(priority);
+			mtx?resume(anId | anId = priority);
+			p!start(priority);
+			p?resume(anId | anId = priority)
+		or
+			mtx?acquire
+		les
+
+process class WatchDogTask extends MutexTask
+ports
+	wd
+messages
+	wd!taskok
+variables
+
+init
+	init()()
+methods
+	task()()
+		acquireMutex()();
+		delay randomgen random * mutexTime;
+		mtx!release;
+		delay randomgen random * processTime;
+		wd!taskok
+
+process class WatchDog(cycleTime : Real)
+ports
+	st
+messages
+	st?taskok
+variables
+
+init
+	watch()()
+methods
+	watch()() | x : Object |
+		abort
+			delay cycleTime;
+			// generate error
+			x := nil error("Watchdog expired")
+		with (
+			st?taskok;
+			watch()()
+		)
+
+system
+instances
+	low : MutexTask(priority := 1, interTime := 100.0, mutexTime := 5.0, processTime := 27.0)
+	medium : Task(priority := 2, interTime := 500.0, processTime := 300.0)
+	high : WatchDogTask(priority := 3, interTime := 120.0, mutexTime := 5.0, processTime := 20.0)
+	processor : Processor()
+	mutex : Mutex()
+	watchDog : WatchDog(cycleTime := 150.0)
+channels
+	{ low.mtx, high.mtx, mutex.tsk }
+	{ low.p, medium.p, high.p, processor.tsk }
+	{ high.wd, watchDog.st }

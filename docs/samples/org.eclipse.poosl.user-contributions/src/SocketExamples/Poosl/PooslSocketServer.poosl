@@ -1,0 +1,49 @@
+/* This example demonstrates how processes can communicate via external socket connections.
+ * It models a Client and a Server that communicate messages via an external socket connection.
+ * 
+ */
+importlib "SocketProcess.poosl"
+
+// -----------------------------------------------------------------------------
+//
+/* Example server process */
+process class Server()
+ports
+	/* This is the only port; it is used for sending and receiving messages over the socket. */
+	Port
+messages
+	/* Received message over the socket. */
+	Port?Received(String),
+	/* Message to be send over the socket. */
+	Port!Send(String)
+variables
+	console : Console
+init
+	Init()()
+methods
+	/* Initializes the process class. */
+	Init()()
+		console := new(Console);
+		Iterate()()
+
+	/* Perform one iteration of the communication protocol. */
+	Iterate()() | valueAsInteger : Integer, valueAsString : String |
+		Port?Received(valueAsString);
+		console writeLine("Read: " + valueAsString);
+		valueAsInteger := valueAsString parseAsInteger();
+		valueAsInteger := valueAsInteger - 1;
+		Port!Send(valueAsInteger printString);
+		console writeLine("Send: " + valueAsInteger printString);
+		Iterate()()
+
+// -----------------------------------------------------------------------------
+//
+/* Top-level system specification */
+system
+instances
+	/* Socket connection for the Server process. */
+	ServerSocket : SocketProcess(HostName := nil, PortNumber := 9090)
+	/* Server side of the protocol. */
+	Server : Server()
+channels
+	{ Server.Port, ServerSocket.Port }

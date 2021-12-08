@@ -1,0 +1,83 @@
+/* This example gives an approach to model arbitrary state machines. The model consists of a System (representing the state machine)
+ * and a Tester, which exercises the state machine by sending events and logging the result state 
+ */
+
+importlib "structures.poosl"
+
+data class StateMachine
+variables States: Map, CurrentState: String
+methods
+	initial(State: String) : StateMachine
+		if States = nil then States := new(Map) fi;
+		if States at(State) = nil then States putAt(State, new(Map)) fi;
+		CurrentState := State;
+		return self
+	add(From, Event, To: String) : StateMachine
+		if States = nil then States := new(Map) fi;
+		if States at(From) = nil then States putAt(From, new(Map)) fi;
+		if States at(From) at(Event) = nil then
+			States at(From) putAt(Event, To)
+		else
+			self error("Multiple transitions defined for event \"" + Event + "\" from state \"" + From + "\"")
+		fi;
+		if States at(To) = nil then States putAt(To, new(Map)) fi;
+		return self
+	next(Event: String) : String
+		if States at(CurrentState) != nil then
+			if States at(CurrentState) at(Event) != nil then
+				CurrentState := States at(CurrentState) at(Event)
+			fi
+		fi;
+		return CurrentState
+	printString : String |Out: String, I, J: MapIterator|
+		Out := "Current State = " concat(CurrentState) cr;
+		I := States iterator;
+		while !(I isDone) do
+			J := I value iterator;
+			while !(J isDone) do
+				Out concat(I key) concat(" : ") concat(J key) concat(" -> ") concat(J value) cr;
+				J advance
+			od;
+			I advance
+		od;
+		return Out
+	 
+process class System(Status: StateMachine)
+ports Tester, Input
+messages Tester!State(String), Input?Event(String)
+variables
+init Run()()
+methods
+	Run()() |Event, NextState: String|
+		Input?Event(Event){NextState := Status next(Event)};
+		Tester!State(NextState);
+		Run()()
+
+process class Tester
+ports System
+messages System!Event(String), System?State(String)
+variables
+init Test()()
+methods
+	Test()() |Out: FileOut, State: String|
+		Out := new(FileOut) destination("results.txt") open;
+		System!Event("XMovementNurseSide");
+		System?State(State){Out writeString(State)}
+		
+system
+instances
+	System: System(Status := new(StateMachine) 
+					initial("StandbyOff") 
+					add("StandbyOff", "XMovementNurseSide", "EnteringStandbyNurseSide")
+					add("EnteringStandbyNurseSide", "XMovementNurseSide", "StandbyNurseSide")
+					add("EnteringStandbyNurseSide", "XMovementDoctorSide", "StandbyOff")
+					add("StandbyNurseSide", "XMovementDoctorSide", "ExitingStandbyNurseSide")
+					add("ExitingStandbyNurseSide", "XMovementDoctorSide", "StandbyOff")
+					add("StandbyOff", "XMovementDoctorSide", "EnteringStandbyDoctorSide")
+					add("EnteringStandbyDoctorSide", "XMovementDoctorSide", "StandbyDoctorSide")
+					add("EnteringStandbyDoctorSide", "XMovementNurseSide", "StandbyOff")
+					add("StandbyDoctorSide", "XMovementNurseSide", "ExitingStandbyDoctorSide")
+					add("ExitingStandbyDoctorSide", "XMovementNurseSide", "StandbyOff"))
+	Tester: Tester()				
+channels
+	{Tester.System, System.Tester, System.Input}

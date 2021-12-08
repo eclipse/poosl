@@ -1,0 +1,213 @@
+/** This class represents a vector of real numbers, and supports basic linear algebra.
+ * 
+ *  For questions and feedback contact:
+ *  benny.akesson@tno.nl
+ **/
+data class Vector
+variables
+	array : Array
+methods
+	@Init
+	/* Initializes the vector */
+	init() : Vector
+		array := new(Array);
+		return self
+
+	/* Replaces the object at index i with o in case i ranges between 1 and the
+	 * size of the receiver. Otherwise, an index out-of-bounds error is generated.
+	 * It returns the receiver. Note that o must be either a Real or an Integer;
+	 * otherwise, an error is generated. o is converted to a Real on insertion.
+	 */
+	putAt(i : Integer, o : Object) : Vector
+		if !(o isOfType("Integer") | o isOfType("Real")) then
+			self error("Elements inserted in Vector must be either Integer or Real.")
+		fi;
+		array putAt(i, o asReal);
+		return self
+
+	/* Returns the real-valued element located at index i in case i ranges between 1 and the size the receiver.
+	 * Otherwise, an index out-of-bounds error is generated.
+	 */
+	at(i : Integer) : Real
+		return array at(i)
+
+	/* Returns the size of the receiver. */
+	size() : Integer
+		return array size
+
+	/* Modifies the size of the receiver to i (in case i >= 0).
+	 * In case i < 0, an error is generated. When i is larger than the original
+	 * size of the receiver, all new locations are filled with nil. When i is smaller
+	 * than the original size of the receiver, the objects at indices between i+1 and
+	 * the original size will no longer be contained. It returns the receiver.
+	 */
+	resize(i : Integer) : Vector
+		array resize(i);
+		return self
+
+	/* Returns a String representation of the Vector. */
+	printString() : String | arrayStr : String |
+		arrayStr := array printString;
+		return "Vector" + arrayStr subString(6, arrayStr size - 5)
+
+	/* Returns a new Vector containing the element-wise addition of elements of the receiver and the argument vector. */
+	+(v : Vector) : Vector
+		return self deepCopy add_vector(v)
+
+	/* Returns a new Vector containing the element-wise subtraction of elements of the receiver and the argument vector. */
+	-(v : Vector) : Vector
+		return self deepCopy subtract_vector(v)
+
+	/* Returns a new Vector containing the element-wise multiplication of the elements of
+	 * the receiver with a real-valued scalar. */
+	*(r : Real) : Vector
+		return self deepCopy multiply_scalar(r)
+
+	/* Returns a new Vector containing the element-wise division of the elements of
+	 * the receiver with a real-valued scalar. */
+	/(r : Real) : Vector
+		return self deepCopy divide_scalar(r)
+
+	/* Helper method for implementation of element-wise vector arithmetic. Not intended to be used directly. */
+	vector_operation(v : Vector, op : String) : Vector | i : Integer, tmp : Real |
+		if array size != v size then
+			self error("Cannot perform element-wise arithmetic on vectors with different dimensions")
+		fi;
+		i := 1;
+		while i <= array size do
+			tmp := switch (op) do
+				case "add" then
+					array at(i) + v at(i)
+				case "sub" then
+					array at(i) - v at(i)
+				case "mul" then
+					array at(i) * v at(i)
+				case "div" then
+					array at(i) / v at(i)
+				default
+					self error("Unsupported case in vector_operation.")
+			od;
+			array putAt(i, tmp);
+			i := i + 1
+		od;
+		return self
+
+	/* Helper method for implementation of element-wise scalar arithmetic. Not intended to be used directly. */
+	scalar_operation(r : Real, op : String) : Vector | i : Integer, tmp : Real |
+		i := 1;
+		while i <= array size do
+			tmp := switch (op) do
+				case "add" then
+					array at(i) + r
+				case "sub" then
+					array at(i) - r
+				case "mul" then
+					array at(i) * r
+				case "div" then
+					array at(i) / r
+				default
+					self error("Unsupported case in scalar_operation.")
+			od;
+			array putAt(i, tmp);
+			i := i + 1
+		od;
+		return self
+
+	/* Modifies the Vector by performing element-wise addition with the argument vector.
+	 * If the sizes of the two vectors are not the same, an error is generated. */
+	add_vector(v : Vector) : Vector
+		return self vector_operation(v, "add")
+
+	/* Modifies the Vector by performing element-wise subtraction with the argument vector.
+	 * If the sizes of the two vectors are not the same, an error is generated. */
+	subtract_vector(v : Vector) : Vector
+		return self vector_operation(v, "sub")
+
+	/* Modifies the Vector by performing element-wise multiplication with the argument vector.
+	 * If the sizes of the two vectors are not the same, an error is generated. */
+	multiply_vector(v : Vector) : Vector
+		return self vector_operation(v, "mul")
+
+	/* Modifies the Vector by performing element-wise division with the argument vector.
+	 * If the sizes of the two vectors are not the same, an error is generated. */
+	divide_vector(v : Vector) : Vector
+		return self vector_operation(v, "div")
+
+	/* Modifies the Vector by performing element-wise addition with a real-valued scalar. */
+	add_scalar(r : Real) : Vector
+		return self scalar_operation(r, "add")
+
+	/* Modifies the Vector by performing element-wise subtraction with a real-valued scalar. */
+	subtract_scalar(r : Real) : Vector
+		return self scalar_operation(r, "sub")
+
+	/* Modifies the Vector by performing element-wise multiplication with a real-valued scalar. */
+	multiply_scalar(r : Real) : Vector
+		return self scalar_operation(r, "mul")
+
+	/* Modifies the Vector by performing element-wise division with a real-valued scalar. */
+	divide_scalar(r : Real) : Vector
+		return self scalar_operation(r, "div")
+
+	/* Returns the strictly positive Euclidian norm of the receiver. */
+	norm() : Real | i : Integer, tmp : Real |
+		i := 1;
+		tmp := 0.0;
+		while i <= array size do
+			tmp := tmp + array at(i) * array at(i);
+			i := i + 1
+		od;
+		return tmp sqrt
+
+	/* Returns the dot product (scalar product) of the receiver and the argument Vector.
+	 * If the sizes of the two vectors are not the same, an error is generated.
+	 */
+	dot(v : Vector) : Real | i : Integer, sum : Real |
+		if array size != v size then
+			self error("Cannot compute dot product for two vectors with different dimensions")
+		fi;
+		i := 1;
+		sum := 0.0;
+		while i <= array size do
+			sum := sum + array at(i) * v at(i);
+			i := i + 1
+		od;
+		return sum
+
+	/* Returns the angle in radians between the receiver and the argument Vector.
+	 * If the sizes of the two vectors are not the same, an error is generated.
+	 */
+	angle(v : Vector) : Real
+		if array size != v size then
+			self error("Cannot compute angle for two vectors with different dimensions")
+		fi;
+		return (self dot(v) / (self norm * v norm)) acos
+
+	/* Returns the cross product (vector product) between the receiver and the argument Vector.
+	 * Both vectors are assumed to be three dimensional.
+	 */
+	cross(v : Vector) : Vector | result : Vector |
+		if (array size != 3) | (v size != 3) then
+			self error("Cross product can only be computed for two vectors of three dimensions.")
+		fi;
+		result := new(Vector) init() resize(array size);
+		result putAt(1, array at(2) * v at(3) - array at(3) * v at(2));
+		result putAt(2, array at(3) * v at(1) - array at(1) * v at(3));
+		result putAt(3, array at(1) * v at(2) - array at(2) * v at(1));
+		return result
+
+	/* Modifies the receiver by setting its elements to be equal to those of the argument
+	 * array. If elements are not reals or integers, an error is generated. Returns the receiver.
+	 */
+	fromArray(a : Array) : Vector | i : Integer |
+		array resize(a size);
+		i := 1;
+		while i <= a size do
+			self putAt(i, a at(i)); // Ensures that element is real or integer
+			i := i + 1
+		od;
+		return self
+
+	/* Returns the Vector as an Array */
+	toArray : Array
+		return array

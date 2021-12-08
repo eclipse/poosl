@@ -1,0 +1,30 @@
+// one process executing a data loop with 10000000 iterations, in each iteration 10 times x:=x init statement, where x:B and init returning self.
+
+data class B extends Object
+variables
+	
+methods
+init: B
+	return self
+
+
+process class A ()
+ports
+	
+messages
+
+variables
+	x: B
+init
+	start()()
+methods
+start()() | i: Integer |
+ 	{i:=0;x:=new(B);
+	while i<10000000 do i:=i+1;x:=x init;x:=x init;x:=x init;x:=x init;x:=x init;x:=x init;x:=x init;x:=x init;x:=x init;x:=x init od}
+
+
+system
+instances
+	A: A()
+channels
+

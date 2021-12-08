@@ -1,0 +1,428 @@
+/* Everything is fine if
+ * - "all tests passed!" appears on the console, and
+ * - an error "Test procedures done!" is reported.
+*/
+
+importlib "UnitTester.poosl"
+
+data class testCustomDataClass extends Array
+variables
+methods
+
+process class Tester
+ports
+messages
+variables
+	sock : Socket,
+	w : UnitTester
+init
+	test()()
+methods
+	test()()
+	/* run the testing procedures in data class Test */
+		w := new(UnitTester) init();
+		testObject()() ;
+		w writeLine("all Object tests done!");
+		testArray()() ;
+		w writeLine("all Array tests done!");
+		testString()() ;
+		w writeLine("all String tests done!");
+		testChar()() ;
+		w writeLine("all Char tests done!");
+		testBoolean()() ;
+		w writeLine("all Boolean tests done!");
+		testInteger()() ;
+		w writeLine("all Integer tests done!");
+		testReal()() ;
+		w writeLine("all Real tests done!");
+		testRandomGenerator()() ;
+		w writeLine("all RandomGenerator tests done!");
+		testFileIn()() ;
+		w writeLine("all FileIn tests done!");
+		testFileOut()() ;
+		w writeLine("all FileOut tests done!");
+		testSocket()() ;
+		w writeLine("all Socket tests done!");
+		w writeLine("all tests passed!");
+		w report();
+		nil error("Test procedures done!")
+	
+	testSocket()() | s : String |
+		sock := new(Socket) ;
+		// give the socket test server a chance to start
+		while !(sock isConnected) do
+			sock connectTo("127.0.0.1", 4242)
+		od ;
+		if sock isConnected not then
+			sock error("Failed to connect to socket")
+		fi ;
+		sock writeLine("Hello") ;
+		while !(sock hasLine()) do
+			delay 1
+		od ;
+		s := sock readLine() ;
+		if s != "Hello" then
+			sock error("Failed to read line 'Hello'")
+		fi ;
+		sock writeLine("Hello!") ;
+		while !(sock hasCharacter('!')) do
+			delay 1
+		od ;
+		s := sock readUntil('!') ;
+		if s != "Hello" then
+			sock error("Failed to read until ! got '" + s + "' instead.")
+		fi ;
+		s := sock read(1) ;
+		sock writeLine("Two Words") ;
+		while !(sock hasWord()) do
+			delay 1
+		od ;
+		s := sock readWord() ;
+		if s != "Two" then
+			sock error("Failed to read word 'Two'. Got '" + s + "' instead.")
+		fi ;
+		while !(sock hasWord()) do
+			delay 1
+		od ;
+		s := sock read(1) ;
+		if s != "W" then
+			sock error("Failed to read 1 char 'W'. Got '" + s + "' instead.")
+		fi ;
+		s := sock readWord() ;
+		if s != "ords" then
+			sock error("Failed to read word 'ords'. Got '" + s + "' instead.")
+		fi ;
+		sock close()
+	testObject()() | a, b : Array, o : Object, c : testCustomDataClass |
+		a := new(Array) resize(2) putAt(1, 1) ;
+		a putAt(2, a) ;
+		b := a deepCopy() ;
+		w assertFalse((a = b) not, "Object->testDeepCopy: test failed: 1");
+		w assertFalse(a == b, "Object->testDeepCopy: test failed: 2");
+		w assertFalse(b at(1) !== 1, "Object->testDeepCopy: test failed: 3");
+		w assertFalse(b at(2) !== b, "Object->testDeepCopy: test failed: 4");
+		a := new(Array) resize(2) putAt(1, 1) ;
+		a putAt(2, a) ;
+		b := a shallowCopy() ;
+		w assertFalse(a = b, "Object->testShallowCopy: test failed: 1");
+		w assertFalse(a at(2) !== b at(2), "Object->testShallowCopy: test failed: 2");
+		w assertFalse(b at(1) !== 1, "Object->testShallowCopy: test failed: 3");
+		w assertFalse(b at(2) !== a, "Object->testShallowCopy: test failed: 4");
+		/* testing =, !=, == and !== */
+		a := new(Array) resize(1) putAt(1, 1) ;
+		b := new(Array) resize(1) putAt(1, 2) ;
+		w assertFalse((a != b) not, "Object->testEq: test failed: 1");
+		w assertFalse(a = b, "Object->testEq: test failed: 2");
+		b putAt(1, 1) ;
+		w assertFalse(a != b, "Object->testEq: test failed: 3");
+		w assertFalse((a = b) not, "Object->testEq: test failed: 4");
+		w assertFalse((a !== b) not, "Object->testEq: test failed: 5");
+		w assertFalse(a == b, "Object->testEq: test failed: 6");
+		o := new(Object) ;
+		w assertFalse(o printString != "Object", "Object->testPrintString: Expected 'Object' got " + o printString);
+		w assertFalse(!('a' isOfType("Char")), "Object->testIsOfType: test failed: Char");
+		w assertFalse(!('a' isOfType("Object")), "Object->testIsOfType: test failed: Char isOfType Object");
+		w assertFalse(!("aap" isOfType("String")), "Object->testIsOfType: test failed: String");
+		w assertFalse(!(2 isOfType("Integer")), "Object->testIsOfType: test failed: Integer");
+		w assertFalse(!(2.0 isOfType("Real")), "Object->testIsOfType: test failed: Real");
+		w assertFalse(2.0 isOfType("Char"), "Object->testIsOfType: test failed: Real isOfType Char");
+		a := new(Array) ;
+		w assertFalse(!(a isOfType("Array")), "Object->testIsOfType: test failed: Array");
+		w assertFalse(!(a isOfType("Object")), "Object->testIsOfType: test failed: Array isOfType Object");
+		w assertFalse(a isOfType("Char"), "Object->testIsOfType: test failed: Array isOfType Char");
+		c := new(testCustomDataClass) ;
+		w assertFalse(!(c isOfType("testCustomDataClass")), "Object->testIsOfType: test failed: testCustomDataClass");
+		w assertFalse(!(c isOfType("Array")),  "Object->testIsOfType: test failed: testCustomDataClass isOfType Array");
+		w assertFalse(!(c isOfType("Object")), "Object->testIsOfType: test failed: testCustomDataClass isOfType Object");
+		w assertFalse(c isOfType("Char"), "Object->testIsOfType: test failed: testCustomDataClass isOfType Char")
+	testArray()()| a, b : Array |
+		a := new(Array) resize(3) putAt(1, 0);
+		w assertFalse(a at(1) !== 0, "Array->testPutAt: test failed: 1");
+		w assertFalse(a at(2) !== nil, "Array->testPutAt: test failed: 2");
+		a := new(Array) resize(3) putAt(1, 1) putAt(2, 2) putAt(3, 3) ;
+		b := a concat(a) ;
+		w assertFalse(b size !== 6, "Array->testConcat: test failed: 1");
+		w assertFalse(a !== b, "Array->testConcat: test failed: 2");
+		w assertFalse(b at(5) !== 2, "Array->testConcat: test failed: 3");
+		a := new(Array) resize(3) putAll(2) ;
+		w assertFalse(a at(1) != 2, "Array->testPutAll: test failed: 1");
+		w assertFalse(a at(3) != 2, "Array->testPutAll: test failed: 2");
+		a := new(Array) resize(3) putAt(1, 1) putAt(2, 2) putAt(3, 3) ;
+		b := a + a ;
+		w assertFalse(b size !== 6, "Array->testPlus: test failed: 1");
+		w assertFalse(a size !== 3, "Array->testPlus: test failed: 2");
+		w assertFalse(a == b, "Array->testPlus: test failed: 3");
+		w assertFalse(b at(5) !== 2, "Array->testPlus: test failed: 4");
+		a := new(Array) resize(3) putAt(1, 1) putAt(2, 2) putAt(3, 3) ;
+		w assertFalse(a find(2, 1) != 0, "Array->testFind: test failed: 1");
+		w assertFalse(a find(3, 3) != 3, "Array->testFind: test failed: 2");
+		a := new(Array) ;
+		w assertFalse(a size !== 0, "Array->testSize: test failed: 1");
+		a resize(7) ;
+		w assertFalse(a size !== 7, "Array->testSize: test failed: 2");
+		a resize(2) ;
+		w assertFalse(a size !== 2, "Array->testSize: test failed: 3");
+		a resize(0) ;
+		w assertFalse(a size !== 0, "Array->testSize: test failed: 4");
+		a := new(Array) resize(5) putAt(1, 1) putAt(2, 2) putAt(3, 3) putAt(4, 4)
+		putAt(5, 5) ;
+		b := a subArray(2, 4) ;
+		w assertFalse(b == a, "Array->testSubArray: test failed: 0");
+		w assertFalse(b size !== 4, "Array->testSubArray: test failed: 1");
+		w assertFalse(b at(1) !== 2, "Array->testSubArray: test failed: 2");
+		w assertFalse(b at(4) !== 5, "Array->testSubArray: test failed: 3");
+		b := a subArray(1, 0) ;
+		w assertFalse(b size !== 0, "Array->testSubArray: test failed: 4");
+		a := new(Array) resize(3) putAll(0) ;
+		a resize(2) resize(7) ;
+		w assertFalse(a size !== 7, "Array->testResize: test failed: 1");
+		w assertFalse(a at(2) !== 0, "Array->testResize: test failed: 2");
+		w assertFalse(a at(3) !== nil, "Array->testResize: test failed: 3");
+		a := new(Array);
+		w assertFalse(a printString != "Empty Array", "Array->testPrintString: expected 'Empty Array' but got " + a printString);
+		a resize(3) putAll(2);
+		w assertFalse(a printString != "Array(2, 2, 2)", "Array->testPrintString: expected 'Array(2, 2, 2)' but got " + a printString);
+		a := new(Array) resize(2) putAt(2,2.0);
+		b := new(Array) resize(2) putAt(2,2);
+		w assertFalse(a = b, "Array->testEq: test failed: 1");
+		b := new(Array) resize(2) putAt(2,2.0);
+		w assertFalse(!(a = b), "Array->testEq: test failed: 2")
+	testString()() | s : String, a : Array|
+		s := "aap noot?mies";
+		a := s splitOn('?');
+		w assertFalse(!(a at(1) = "aap noot"), "String->testSplit: test failed: 1");
+		w assertFalse(!(a at(2) = "mies"), "String->testSplit: test failed: 2");
+		s := "aap noot mies";
+		a := s splitOn('?');
+		w assertFalse(!(a at(1) = "aap noot mies"), "String->testSplit: test failed: 3");
+		s:= "aap??noot";
+		a := s splitOn('?');
+		w assertFalse(!(a size == 3), "String->testSplit: test failed: 4");
+		s := "aap noot	mies";
+		a := s splitOnWhiteSpace;
+		w assertFalse(!(a at(1) = "aap"), "String->testSplit: test failed: 5");
+		w assertFalse(!(a at(3) = "mies"), "String->testSplit: test failed: 6");
+		s := "aap";
+		a := s splitOnWhiteSpace;
+		w assertFalse(!(a at(1) = "aap"), "String->testSplit: test failed: 7");
+		s := "	 ";
+		a := s splitOnWhiteSpace;
+		w assertFalse(!(a size == 0), "String->testSplit: test failed: 8");
+		w assertFalse(!("'a'" isChar), "String->testIsTypes: test failed: 1");
+		w assertFalse(!("'\\x00'" isChar),"String->testIsTypes: test failed: 2");
+		w assertFalse(!("1" isInteger), "String->testIsTypes: test failed: 3");
+		w assertFalse(!("1e6" isInteger), "String->testIsTypes: test failed: 4");
+		w assertFalse(!("-1E6" isInteger), "String->testIsTypes: test failed: 5");
+		w assertFalse(!("1e+6" isInteger), "String->testIsTypes: test failed: 6");
+		w assertFalse(!("-1E+6" isInteger), "String->testIsTypes: test failed: 7");
+		w assertFalse(!("0b10101" isInteger), "String->testIsTypes: test failed: 8");
+		w assertFalse(!("0xdeadbeef" isInteger), "String->testIsTypes: test failed: 9");
+		w assertFalse(!("0xDEADBEEF" isInteger), "String->testIsTypes: test failed: 9a");
+		w assertFalse(!("1.0" isReal), "String->testIsTypes: test failed: 10");
+		w assertFalse(!("1.0e6" isReal), "String->testIsTypes: test failed: 11");
+		w assertFalse(!("-1.0E6" isReal), "String->testIsTypes: test failed: 12");
+		w assertFalse(!("1.0e+6" isReal), "String->testIsTypes: test failed: 13"); 
+		w assertFalse(!("-1.0E+6" isReal), "String->testIsTypes: test failed: 14");
+		w assertFalse(!("true" isBoolean), "String->testIsTypes: test failed: 15");
+		w assertFalse(!("false" isBoolean), "String->testIsTypes: test failed: 16");
+		w assertEquals('a', "'a'" toChar, "String->testToTypes: test failed: 1");
+		w assertEquals('\x01', "'\\x01'" toChar, "String->testToTypes: test failed: 2");
+		w assertEquals(1, "1" toInteger, "String->testToTypes: test failed: 3");
+		w assertEquals(1e6, "1e6" toInteger, "String->testToTypes: test failed: 4");
+		w assertEquals(-1E6, "-1E6" toInteger, "String->testToTypes: test failed: 5");
+		w assertEquals(1e+6, "1e+6" toInteger, "String->testToTypes: test failed: 6");
+		w assertEquals(-1E+6, "-1E+6" toInteger, "String->testToTypes: test failed: 7");
+		w assertEquals(0b10101, "0b10101" toInteger, "String->testToTypes: test failed: 8");
+		w assertEquals(0xdeadbeef, "0xdeadbeef" toInteger, "String->testToTypes: test failed: 9");
+		w assertEquals(0xDEADBEEF, "0xDEADBEEF" toInteger, "String->testToTypes: test failed: 9a");
+		w assertEquals(1.0, "1.0" toReal, "String->testToTypes: test failed: 10");
+		w assertEquals(1.0e6, "1.0e6" toReal, "String->testToTypes: test failed: 11");
+		w assertEquals(-1.0E6, "-1.0E6" toReal, "String->testToTypes: test failed: 12");
+		w assertEquals(1.0e+6, "1.0e+6" toReal, "String->testToTypes: test failed: 13");
+		w assertEquals(-1.0E+6, "-1.0E+6" toReal, "String->testToTypes: test failed: 14");
+		w assertEquals(true, "true" toBoolean, "String->testToTypes: test failed: 15");
+		w assertEquals(false, "false" toBoolean, "String->testToTypes: test failed: 16")
+	testChar()()
+		w assertEquals('a' asString at(1), 'a', "Char->testAsString: test failed.");
+		w assertEquals('\n' asciiIndex, 10, "Char->test: test failed: \n");
+		w assertEquals('\\' asciiIndex, 92, "Char->test: test failed: \\");
+		w assertEquals('\?' asciiIndex, 63, "Char->test: test failed: \?");
+		w assertEquals('\"' asciiIndex, 34, "Char->test: test failed: \"");
+		w assertEquals('\'' asciiIndex, 39, "Char->test: test failed: \'");
+		w assertEquals('\x20', ' ', "Char->test: test failed: \x20")
+	testBoolean()()
+		w assertFalse(! true, "Boolean->test: test failed: ! operator");
+		w assertFalse(true not, "Boolean->test: test failed: not operator");
+		w assertFalse(!(false not), "Boolean->test: test failed: ! and not operator");
+		w assertFalse(false & false, "Boolean->test: test failed: false & false");
+		w assertFalse(true & false, "Boolean->test: test failed: true & false");
+		w assertFalse(false & true, "Boolean->test: test failed: false & true");
+		w assertFalse(!(true & true), "Boolean->test: test failed: ! (true & true)");
+		w assertFalse(false | false, "Boolean->test: test failed: false | false");
+		w assertFalse(!(true | false), "Boolean->test: test failed: !(true | false)");
+		w assertFalse(!(false | true), "Boolean->test: test failed: !(false | true)");
+		w assertFalse(!(true | true), "Boolean->test: test failed: ! (true | true)");
+		w assertFalse(false xor(false), "Boolean->test: test failed: false xor(false)");
+		w assertFalse(!(true xor(false)), "Boolean->test: test failed: !(true xor( false))");
+		w assertFalse(!(false xor(true)), "Boolean->test: test failed: !(false xor( true))");
+		w assertFalse(true xor(true), "Boolean->test: test failed: true xor( true)")
+	testInteger()()
+		w assertFalse(5 +(-(5)) !== 0, "Integer->test: test failed: addition and unary negate");
+		w assertFalse(10 - 10 !== 0, "Integer->test: test failed: minus");
+		w assertFalse(42 * 42 !== 1764, "Integer->test: test failed: multiplication");
+		w assertFalse(255 & 15 !== 15, "Integer->test: test failed: bitwise and 1");
+		w assertFalse(-1 & 15 !== 15, "Integer->test: test failed: bitwise and 2");
+		w assertFalse(-1 & -7 !== -7, "Integer->test: test failed: bitwise and 3");
+		w assertFalse(1 | 8 !== 9, "Integer->test: test failed: bitwise or 1"); 
+		w assertFalse(-8 | 1 !== -7, "Integer->test: test failed: bitwise or 2");
+		w assertFalse(-1 > 1, "Integer->test: test failed: comparison >");
+		w assertFalse(!(5 >= 5), "Integer->test: test failed: comparison >=");
+		w assertFalse(1 < 0, "Integer->test: test failed: comparison <");
+		w assertFalse(!(5 <= 5), "Integer->test: test failed: comparison <=");
+		w assertFalse((-5) abs() !== 5, "Integer->test: test failed: absolute value");
+		w assertFalse(65 asAsciiChar() != 'A', "Integer->test: test failed: asAsciiChar returned " + 65 asAsciiChar printString);
+		w assertFalse(1 asReal() <= 0.0, "Integer->test: test failed: asReal");
+		w assertFalse(5 div(3) !== 1, "Integer->test: test failed: div 1");
+		w assertFalse(-5 div(3) !== -2, "Integer->test: test failed: div 2");
+		w assertFalse(5 div(-3) !== -2, "Integer->test: test failed: div 3");
+		w assertFalse(-5 div(-3) !== 1, "Integer->test: test failed: div 4");
+		w assertFalse(5 modulo(3) !== 2, "Integer->test: test failed: mod 1");
+		w assertFalse(-5 modulo(3) !== 1, "Integer->test: test failed: mod 2");
+		w assertFalse(5 modulo(-3) !== -1, "Integer->test: test failed: mod 3");
+		w assertFalse(-5 modulo(-3) !== -2, "Integer->test: test failed: mod 4");
+		w assertFalse(5 fac() !== 120, "Integer->test: test failed: fac");
+		w assertFalse(5 monus(4) !== 1, "Integer->test: test failed: monus 1");
+		w assertFalse(5 monus(6) !== 0, "Integer->test: test failed: monus 2");
+		w assertFalse(5 max(4) !== 5, "Integer->test: test failed: max min 1");
+		w assertFalse(5 min(4) !== 4, "Integer->test: test failed: max min 2");
+		w assertFalse(-2 power(3) !== -8, "Integer->test: test failed: power");
+		w assertFalse(-2 sqr() !== 4, "Integer->test: test failed: sqr")
+	testReal()()
+		w assertFalse((5.0 +(-(5.0)) < -0.001) | (5.0 +(-(5.0)) > 0.001), "Real->test: test failed: addition and unary negate");
+		w assertFalse(10.0 - 11.0 >= 0.0, "Real->test: test failed: minus");
+		w assertFalse(2.0 * 3.14 <= 6.0, "Real->test: test failed: multiplication");
+		w assertFalse((-6.0 / 3.0 + 2.0) abs > 0.001, "Real->test: test failed: division");
+		w assertFalse(-1.0 > 1.0, "Real->test: test failed: comparison >");
+		w assertFalse(!(5.0 >= 5.0), "Real->test: test failed: comparison >=");
+		w assertFalse((1.0 < 0.0), "Real->test: test failed: comparison <");
+		w assertFalse(!(5.0 <= 5.0), "Real->test: test failed: comparison <=");
+		w assertFalse((-5.0) abs() <= 0.0, "Real->test: test failed: absolute value");
+		w assertFalse((1.5 cos() acos() - 1.5) abs > 0.001, "Real->test: test failed: acos, cos");
+		w assertFalse((1.5 sin() asin() - 1.5) abs > 0.001, "Real->test: test failed: asin, sin");
+		w assertFalse((1.5 tan() atan() - 1.5) abs > 0.001, "Real->test: test failed: atan, tan");
+		w assertFalse((1.0 atan2(1.0) - 0.785) abs > 0.01, "Real->test: test failed: atan2");
+		w assertFalse(1.0 asInteger() !== 1, "Real->test: test failed: asInteger");
+		w assertFalse(5.0 monus(4.0) <= 0.0, "Real->test: test failed: monus 1");
+		w assertFalse(5.0 monus(6.0) !== 0.0, "Real->test: test failed: monus 2");
+		w assertFalse(5.0 max(4.0) !== 5.0, "Real->test: test failed: max min 1");
+		w assertFalse(5.0 min(4.0) !== 4.0, "Real->test: test failed: max min 2");
+		w assertFalse((-2.0 power(3.0) + 8.0) abs() > 0.001, "Real->test: test failed: power");
+		w assertFalse((-2.0 sqr() sqrt() - 2.0) abs() > 0.001, "Real->test: test failed: sqr, sqrt");
+		w assertFalse((-2.4 ceiling() + 2.0) abs() > 0.001, "Real->test: test failed: ceiling");
+		w assertFalse((-2.4 floor() + 3.0) abs() > 0.001, "Real->test: test failed: floor");
+		w assertFalse((-1.0 exp() ln + 1.0) abs() > 0.001, "Real->test: test failed: exp, ln");
+		w assertFalse((0.1 log + 1.0) abs() > 0.001, "Real->test: test failed: log");
+		w assertFalse((-5.5 round() + 6.0) abs() > 0.001, "Real->test: test failed: round")
+	testRandomGenerator()() | r : RandomGenerator, i : Integer |
+		r := new (RandomGenerator) ;
+		i := r randomInt(100) ;
+		w assertFalse((i < 0) |(i >= 100), "RandomGenerator->test: test failed: 1");
+		r randomiseSeed() ;
+		r seed(10) ;
+		i := r randomInt(1000) ;
+		r seed(10) ;
+		i := i - r randomInt(1000) ;
+		w assertFalse(i != 0, "RandomGenerator->test: test failed: 2")
+	testFileIn()() |  f_o : FileOut, f_i : FileIn |
+		f_o := new(FileOut) destination("./testFileIn.txt") open() ;
+		f_o writeLine("test123X Hi\tABCD\r\nEFGH\r\n\"String\\\\\\\"A\\\"\"") ;
+		f_o writeString("String\\\"A\"") ;
+		f_o close() ;
+		f_i := new(FileIn) source(".\\testFileIn.txt") open() ;
+		w assertFalse(f_i atEndOfFile(), "FileIn->test: test failed:1");
+		w assertEquals(f_i read(4), "test", "FileIn->test: test failed:2");
+		w assertEquals(f_i readUntil('X'), "123", "FileIn->test: test failed:3");
+		w assertEquals(f_i readWord(), "Hi", "FileIn->test: test failed:4");
+		w assertEquals(f_i readLine(), "ABCD", "FileIn->test: test failed:5");
+		w assertEquals(f_i readLine(), "EFGH", "FileIn->test: test failed:6");
+		w assertEquals(f_i readString(), "String\\\"A\"", "FileIn->test: test failed:7");
+		w assertEquals(f_i readString(), "String\\\"A\"", "FileIn->test: test failed:8");
+		f_i readLine() ;
+		w assertFalse(!(f_i atEndOfFile), "FileIn->test: test failed:9");
+		f_i close()
+	testFileOut()() | f_o : FileOut, f_i : FileIn, s : String, i : Integer |
+		// Write to a test file and read to check.
+		f_o := new(FileOut) destination("./testFileOut.txt") open() ;
+		f_o write("ABC") ;
+		f_o writeLine("") ;
+		f_o close() ;
+		f_o := new(FileOut) destination("./testFileOut.txt") append() ;
+		f_o writeString("\"DEF\"") ;
+		f_o flush() ;
+		// Make a nice string to escape
+		s := "" ;
+		i := 0 ;
+		while i < 256 do
+			s concat(i asAsciiChar asString) ;
+			i := i + 1
+		od ;
+		f_o writeString(s) ;
+		f_o close() ;
+		f_i := new(FileIn) source(".\\testFileOut.txt") open() ;
+		w assertEquals(f_i read(3), "ABC", "FileOut->test: test failed: 1");
+		w assertEquals(f_i read(1), "\n", "FileOut->test: test failed: 2");
+		w assertEquals(f_i readString(), "\"DEF\"", "FileOut->test: test failed: 3");
+		s := f_i readString() ;
+		i := 0 ;
+		while i < 256 do
+			w assertEquals(s at(i + 1) asciiIndex, i, "FileOut->test: test failed for character " + i printString);
+			i := i + 1
+		od ;
+		f_i close() 
+
+
+process class TestSocketServer()
+ports
+messages
+variables
+	sock : Socket
+init
+	init()()
+methods
+	init()()
+		sock := new(Socket) ;
+		par
+			keepAlive()()
+		and
+			connect()()
+		rap
+	keepAlive()()
+		delay 1 ;
+		keepAlive()()
+	connect()()
+		sock acceptFrom(4242) ;
+		sel
+			[ sock isConnected ] skip ;
+			abort
+				connected()()
+			with [ !(sock isConnected) ] skip ;
+			connect()()
+		or
+			[ !(sock isConnected) ] skip ;
+			delay 1 ;
+			connect()()
+		les
+	connected()() | s : String |
+		[ sock hasCharacters(1) ] s := sock read(1) ;
+		if s size != 1 then
+			sock error("Socket server stopped receiving")
+		fi ;
+		sock write(s) ;
+		connected()()
+
+
+system
+instances
+	TestSocketServer : TestSocketServer()
+	Tester : Tester()
+channels
