@@ -24,11 +24,6 @@ http://blog.vogella.com/2015/12/15/pom-less-tycho-builds-for-structured-environm
 
 |===
 
-=== Features
-They are functional groups for users. +
-Plugins are organized by technical constraints: role and dependencies. +
-Features provide consistency for target deployment.
-
 === Tests
 In Eclipse development, unlike classical Maven project, tests are located in a 
 separated compilation unit. +
@@ -44,7 +39,7 @@ Detailed in link:TargetPlaform.adoc[Target platform].
 
 `(*)` is a shortcut for `org.eclipse.poosl` prefix.
 
-[cols="2,1,4", options="header"]
+[cols="1,2", options="header"]
 .Components
 |===
 | Name                  | Description
@@ -52,14 +47,14 @@ Detailed in link:TargetPlaform.adoc[Target platform].
 | `(*).model`           | Ecore model. (mostly generated)
 | `(*).model.edit`      | Ecore service to edit model. (mostly generated)
 | `(*).model.editor`    | UI to edit abstract model, required by framework. (generated)
-| `(*).pooslproject`    | Functions to manage Poosl project edition.
+| `(*).pooslproject`    | Functions to manage Poosl project editing.
 | `(*).generatedxmlclasses` 
                         | Codec of exchange content with Rotalumis.
 | `(*).rotalumisclient` | Wrapping Rotalumis executable to run models.
-| `(*).sirius`          | Graphical edition of model and execution display.
-| `(*).xtext`           | Textual edition model
+| `(*).sirius`          | Graphical editing of model and execution display.
+| `(*).xtext`           | Textual editing model
 | `(*).xtext.ide`       | Textual parse and save 
-| `(*).xtext.ui`        | Textual edition actions
+| `(*).xtext.ui`        | Textual editing actions
 | `(*).transformations` | Generation of documentation for model
 | `(*).help`            | Embedded and on-line help.
 | `(*).ide.examples`    | Sample user can deploy at runtime.
@@ -80,13 +75,6 @@ Default command is:
 [source,bash]
 ----
 mvn clean verify
-----
-
-To use partial build in local (for testing), launch:
-
-[source,bash]
-----
-mvn clean install
 ----
 
 In continuous integration, use batch mode: `-B`
@@ -138,7 +126,16 @@ If remote debugging is required, use 'debugPort' option.
 
 NOTE: If a plugin source is changed between execution, both command must launched.
 
-== Maven edition guideline
+=== RCPTT bash testing
+
+To launch RCPTT tests in batch mode, use maven command:
+
+[source,bash]
+----
+mvn verify -P integration-tests
+----
+
+== Maven editing guideline
 
 * Modules must be listed in root container POM.
 
@@ -196,7 +193,7 @@ from an existing one:
 * __build.properties__ (requires adaptations on _bin.includes_ list)
 * __pom.xml__ (requires adaptation on _packaging_ and _artifactId_)
 
-==== Classpath configuation
+==== Classpath configuration
 
 To ensure a proper behavior of 'Maven clean' command, eclipse output folder of java build is+
 'target/jdt-classes'
@@ -207,7 +204,7 @@ Using local configuration prevents border effects when having external project i
 
 ==== Code style 
 
-Like Checkstyle, to prevent border effects and to follow modication, configurations are declared
+Like Checkstyle, to prevent border effects and to follow modification, configurations are declared
 in folder:
 org.eclipse.poosl.parent/preferences
 
@@ -221,10 +218,11 @@ org.eclipse.poosl.parent/preferences
 
 == Sirius Design guideline
 
-Edition is performed though 'Sirius.tooling' project.
+Editing is performed though 'Sirius.tooling' project.
 
 This allows :
-* concurrent edition 
+
+* concurrent editing 
 * better history management
 * simplification of mapping style 
 
@@ -258,7 +256,7 @@ To run RCPTT tests, the configuration "Eclipse RCPTT AUT" is defined in _org.ecl
 ====
 When starting "Eclipse RCPTT AUT" from 'RCPTT Application' or RCPTT tests, the JVM is NOT in debug mode.
 
-On-fly code modification will be ignored.
+On-the-fly code modification will be ignored.
 ====
 
 === Editing
