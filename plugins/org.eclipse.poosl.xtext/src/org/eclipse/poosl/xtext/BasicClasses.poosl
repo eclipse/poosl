@@ -1233,7 +1233,7 @@ methods
 	/* Modifies the Iterator to refer to the next element if there is still such element. Otherwise, the Iterator remains unchanged */
 	native advance : Iterator
 
-	/* Modifies the underlying structure by removing the element to which the Iterator is pointing (if it was not yet removed). It does not modify the Iterator */
+	/* Modifies the underlying structure by removing the element to which the Iterator is pointing. The iterator advances to the next element in the underlying structure */
 	native remove : Iterator
 
 	/* Returns a pretty print */
@@ -1264,7 +1264,7 @@ methods
 	/* Returns the value of the key-value pair to which the iterator is pointing in the Map in case the Map is not empty. Otherwise, nil is returned */
 	native value : Object
 
-	/* Modifies the underlying structure by removing the element to which the Iterator is pointing (if it was not yet removed). It does not modify the Iterator */
+	/* Modifies the underlying structure by removing the element to which the Iterator is pointing. The iterator advances to the next element in the underlying structure */
 	native remove : Iterator
 
 	/* Modifies the Iterator to refer to the next element if there is still such element. Otherwise, the Iterator remains unchanged */
@@ -1276,16 +1276,16 @@ native data class BagIterator extends Iterator
 variables
 
 methods
-	/* Modifies the Iterator to refer to the next element in the Bag if there is still such element. Otherwise, the Iterator remains unchanged */
+	/* Modifies the Iterator to refer to the next instance of the element in the Bag if there is still a next instance. Otherwise, the Iterator advances to the next element */
 	native advance : BagIterator
 
-	/* Modifies the underlying Bag by removing (one duplicate instance of) the element to which the Iterator is pointing (if it was not yet removed). It does not modify the Iterator */
+	/* Modifies the underlying Bag by removing one instance of the element to which the Iterator is pointing */
 	native remove : BagIterator
 
 	/* Returns a pretty print */
 	native printString : String
 
-  /* returns the count (# of times the object exists in the bag ) */
+	/* returns the count (number of times the object exists in the bag) */
 	native count : Object
 
 
@@ -1311,8 +1311,7 @@ methods
 	/* Modifies the Iterator to refer to the next element (for forward directed iterators) or previous element (for reversely directed iterators) in the Sequence if there is still such element. Otherwise, the Iterator remains unchanged */
 	native advance : SequenceIterator
 
-	/* Modifies the underlying sequence by inserting an element referring to the specified object. The element is inserted in the sequence before the currently referred element, not considering whether the direction of the iterator is reversed.
-	 * If isDone holds for the iterator or the referred element is removed, an error is triggered. The iterator is not modified.
+	/* Modifies the underlying sequence by inserting an element referring to the specified object. The element is inserted in the sequence before the currently referred element, not considering whether the direction of the iterator is reversed
 	 */
 	native addBefore(O : Object) : SequenceIterator
 
