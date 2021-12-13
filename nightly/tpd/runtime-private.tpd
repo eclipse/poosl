@@ -22,7 +22,7 @@ with requirements
 // it should be used only by compiler
 
 // Feature to run simulations.
-location rotalumis "http://www.es.ele.tue.nl/rotalumis/repository/integration/" {
+location rotalumis "http://www.es.ele.tue.nl/rotalumis/repository/release/" {
 	// MacOS exe in 'release' is broken.
 	nl.tue.rotalumis.sdk.feature.group
 }
