@@ -179,31 +179,6 @@ org.eclipse.poosl.xtext.util
 						<artifacts>container,parent</artifacts>
 					</configuration>
 				</plugin>
-				<plugin>
-					<!-- Configuration to update version -->
-					<!-- Command reminder:
-					
-					mvn -B gitflow:release -DpushRemote=false
-					option: -DversionDigitToIncrement=0  'increase major
-					option: -DversionDigitToIncrement=1  'increase minor
-					option: -DversionDigitToIncrement=2  'increase patch
-					option: (no versionDigitToIncrement) 'Last part increment
-					option: -DskipTag=true 'when tag cannot be pushed
-					
-					 -->
-					<groupId>com.amashchenko.maven.plugin</groupId>
-					<artifactId>gitflow-maven-plugin</artifactId>
-					<version>1.9.0</version>
-					<configuration>
-						<tychoBuild>true</tychoBuild>
-						<gitFlowConfig>
-							<productionBranch>master</productionBranch>
-							<developmentBranch>master</developmentBranch>
-						</gitFlowConfig>
-						<releaseRebase>true</releaseRebase>
-						<origin>origin</origin>
-					</configuration>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 		
