@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Frequently Asked Questions (FAQ)</title>
+	</head>
+	<body>
+		<h1>Frequently Asked Questions (FAQ)</h1>
+
+		<p>
+		<b>Q:</b> Running or debugging a model gives validation errors, but they are not shown in the editor.
+		<br>
+		<b>A:</b> If the editor reports no validation errors, but running or debugging the model reports errors, then there might be a problem with the line endings of the files. To solve this problem, save the file with windows line endings. This problem is often caused by Linux line endings.
+		</p>
+
+		<p>
+		<b>Q:</b> Why does the type system produce warnings instead of errors?
+		<br>
+		<b>A:</b> In POOSL models, the types of variables and parameters have no formal meaning; basically they are just pieces of documentation. When invoking a data method or operation, at simulation time the types of variables are determined. This means that it is impossible to perform a 100% correct type check while editing; therefore any data type related issues are reported while editing as warnings.
+		</p>
+
+		<p>
+		<b>Q:</b> Why are some obvious suggestions missing in the content assist?
+		<br>
+		<b>A:</b> The content assist depends on the current context, which may be wrong if the model contains grammatical errors (such as a missing semi-colon ';'). Solve these errors before using the content assist.
+		</p>
+
+		<p>
+		<b>Q:</b> Why does a certain quick-fix have no effect?
+		<br>
+		<b>A:</b> Executing a quick-fix sometimes has no effect on the model. This can be caused by other errors that are still present in the model that are related to applied quick-fix. Solve these errors before executing the quick-fix.
+		</p>
+
+		<p>
+		<b>Q:</b> Why does "Help -> Check for Updates" not show any updates for Rotalumis?
+		<br>
+		<b>A:</b> Updates for the POOSL IDE and Rotalumis plugins are released independently. To make sure that you are notified of Rotalumis updates, check that Rotalumis occurs in Help -> About Eclipse -> Installation Details -> Installed Software. If Rotalumis does not occur, please explicitly install Rotalumis (from the POOSL IDE update site); see the installation manual.
+		</p>
+
+		<p>
+		<b>Q:</b> What can I do about "OutOfMemoryError: Java heap space" or "GC overhead limit exceeded"?
+		<br>
+		<b>A:</b> The Eclipse installation folder contains a file eclipse.ini, which most likely contains a fragment like "-Xmx512m". This indicates that the maximum Java heap size is 512 megabyte. Increasing this amount (e.g., doubling it) should solve this problem. 
+		</p>
+		
+		<p>
+		<b>Q:</b> What can I do about "java.lang.StackOverflowError"?
+		<br>
+		<b>A:</b> The Eclipse installation folder contains a file eclipse.ini, which can be extended with a fragment like "-Xss4m". This indicates that the Java stack size is 4 megabyte. Adding this fragment, or increasing the amount (e.g., doubling it) should solve this problem. 
+		</p>	
+
+		<p>
+		<b>Q:</b> What can I do if the step buttons are disabled during a debug session?
+		<br>
+		<b>A:</b> Select a process or cluster in the <a href="simulating_models/debug_view.html">Debug View</a>. Or, reset the POOSL Debug perspective, by right-clicking in the top-right corner on the "POOSL Debug" perspective and selecting Reset.
+		</p>
+		
+		<p>
+		<b>Q:</b> What can I do if the step buttons are invisible during a debug session?
+		<br>
+		<b>A:</b> Reset the POOSL Debug perspective, by right-clicking in the top-right corner on the "POOSL Debug" perspective and selecting Reset. Or, switch to the "POOSL Edit" perspective and afterwards back to the "POOSL Debug" perspective.
+		</p>
+		
+		<p>
+		<b>Q:</b> What can I do about "Zero representations file found in "...". A modeling project must contain one."?
+		<br>
+		<b>A:</b> This means that the project has a modeling nature but does not contain an .aird file. The Modeling nature and .aird file are needed for graphical editing and are automatically added when opening a graphical editor.
+		</br>There are 2 ways to fix this error:
+		<ol>
+			<li>Remove the representations.aird: 
+			<br>See the next question <a href="faq.html#removeaird">What is the file representations.aird, and how can I remove it?</a>.
+			<li>Open a graphical editor:
+			<br>It doesn't matter which diagram you open, the representations.aird file will automatically be generated. To open a class diagram right click a .poosl file and select "Open Class Diagram". 
+			</li>			
+		</ol>
+		</p>
+
+		<p>
+		<b id="removeaird">Q:</b> What is the file representations.aird, and how can I remove it?
+		<br>
+		<b>A:</b> The .aird file stores the graphical model information, and is automatically added when opening a graphical editor. To remove this file, first remove the Modeling nature from the project by right clicking the project in the Project Explorer -> Configure -> Remove Modeling Project Nature. If "Remove Modeling Project Nature" is not present, then the Modeling nature has already been removed.
+		Once the Modeling nature is removed, you can safely remove the representations.aird file: right click the representation.aird and select delete.
+		</p>
+		
+		<p>
+		<b>Q:</b> What can I do about "The system cannot find the path specified" when trying to run or debug a model?
+		<br>
+		<b>A:</b> This can mean that Eclipse has restricted access in the Eclipse installation folder. To solve this issue, either run Eclipse as administrator (Right-click on eclipse.exe, select "Run as administrator"), or move the Eclipse installation folder to a location where it has full read and write access.`
+		</p>
+
+		<p>
+		<b>Q:</b> What can I do about a grey or red cross in the editor's sidebar or project explorer, when there is no error shown in the file (editor)?
+		<br>
+		<b>A:</b> This can happen when the validation mechanisms of Eclipse are out of sync. Forcing a new validation of the file can solve this issue. 
+		This can be done by making a small adjustment (like adding a space) to the file and then save it. If this does not solve the problem, go to Project -> Clean -> select your project -> OK, which will force a validation of the whole project.
+		</p>	
+		
+		<p>
+		<b>Q:</b> What can I do about errors and warnings that seem not correct, or opening the declaration of an object (&lt;F3>) navigates to the wrong object?
+		<br>
+		<b>A:</b> This can happen when the validation and linking mechanisms of Eclipse are out of sync.
+		Open the Project menu, and make sure that the option "Build Automatically" is activated (indicated by a checkmark in front of it). If it is not activated, click on "Build Automatically" to activate it.
+		</p>			
+		
+		<p>
+		<b>Q:</b> Why can't I find the importing and exporting functionality for legacy (SHESim) XML files?
+		<br>
+		<b>A:</b> The legacy support is part of a <a href="export_functionality/legacy.html#install-legacy">separate plugin</a>, which may not have installed. 
+		</p>
+		
+		<p>
+		<b>Q:</b> How can I run a POOSL model from the command line?
+		<br>
+		<b>A:</b> This is explained at <a href="http://poosl.esi.nl/download/">http://poosl.esi.nl/download/</a>.
+		</p>
+	
+		<p>
+		<b>Q:</b> Are there any known issues with the POOSL IDE?
+		<br>
+		<b>A:</b> To access our issue tracker, please consult the <a href="http://poosl.esi.nl/support">support</a> page on our website.
+		</br>The main known issues are:
+		<ul>
+			<li>when connecting an instance port to a channel, the location of the port in the graphical editor is not preserved;
+			<li>when reordering elements in the textual editor, the layout in the graphical editor is not preserved;
+			<li>when using automatic layout in the graphical editor, the channel trajectory is usually non-optimal.
+			<li>on some machines the Composite Structure Diagram only shows the port names after changing the size of the port in the diagram.
+		</ul>
+		</p>
+		
+		<p>
+		<b>Q:</b> Why do I have an 'incorrect' error on my import that shows that classes are already imported?
+		<br>
+		<b>A:</b> This can happen when importing the same file with a relative and an absolute path. 
+		The model will see this as two different files which then import the same classes. To avoid the issue use the same format throughout the model.
+		</p>
+		
+		<p>
+		<b>Q:</b> Why can't I use &lt;F3> or &lt;CTRL> + left-mouse-click in the textual editor to navigate to certain data classes or methods?
+		<br>
+		<b>A:</b> Navigation is not possible to files that do not exist in the project. 
+		In particular this may happen when trying to navigate to data classes or methods from <a href="language/BasicClasses.html">BasicClasses.poosl</a>. 
+		</p>
+		
+		<p>
+		<b>Q:</b> Why can't I see the Poosl Include Paths in the Project Properties?
+		<br>
+		<b>A:</b>This can happen when the project is not configured as an Xtext project. 
+		To add the Xtext configuration to the project, right click the project in the Project Explorer -> Configure -> Convert to Xtext Project. 
+		The Poosl Include Paths should now be visible in the Project properties.
+		</p>
+
+	</body>
+</html>

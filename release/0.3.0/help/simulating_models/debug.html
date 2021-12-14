@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Debugging Models</title>
+	</head>
+	<body>
+		<h1>Debugging Models</h1>
+		
+		<a id="launch"/><h2>Launch</h2>
+		<p>
+		Follow one of these steps:
+		<ul>
+			<li>Right click in an open editor, or on a .poosl file in the Project Explorer. Select "Run As" -> "POOSL Simulation".</li>
+			<li>If the POOSL Model is opened in the editor, click on the small arrow next to the Debug button and select "Debug as..." -> "POOSL Simulation".</li>
+			<img src="img/right_click_debug.png"/>
+			
+			<li>Click on the small arrow next to the Debug button, and select the POOSL Model (if present).</li>
+			<img src="img/run_previous_launch.png"/>
+			<li>Click on the Debug button, or use keyboard shortcut &lt;F11>, to debug the most recently launched simulation.</li>			
+		</ul>
+		The launch configuration will be automatically created. You can change the launch settings in the <a href="launch_configuration.html#change_settings">launch configuration</a>.
+		</p>
+		<p>
+		Then Eclipse switches to the POOSL Debug perspective, and the model will start in the paused state. To return to the POOSL Edit perspective, click on the POOSL Edit perspective button in the top right corner.
+		If this button is not visible, then it can be added via Window -> Perspective -> Open Perspective -> Other... -> POOSL Edit.
+		</p>
+		<img src="img/perspectives.png"/>
+		
+		<a id="control"/><h2>Control</h2>
+		<p>
+		The debugging starts the simulation in the paused state. The following buttons in the Eclipse tool-bar change the state of the simulation:
+		<ul>
+			<li>Click the play button (&lt;F8>) to resume simulation.</li>
+			<img src="img/resume.png"/></p>
+			<li>Click the pause button (&lt;F9>) to suspend simulation.</li>
+			<img src="img/suspend.png"/></p>
+			<li>Click the terminate button (&lt;CTRL&gt;-&lt;F2>) to terminate the simulation.</li>
+			<img src="img/terminate.png"/></p>
+			<li>Click the step button (&lt;F5>) to execute a single transition in one of the processes of the simulation.</li>
+			<img src="img/step.png"/></p>
+			<li>Click the time step button (&lt;F6>) to advance the simulation to the next possible delay transition, and execute a single delay transition.</li>
+			<img src="img/timestep.png"/></p>
+			<li>Click the communication step button (&lt;F7>) to advance the simulation to the next communication transition, and execute a single communication transition.</li>
+			<img src="img/commstep.png"/></p>
+			<li>Click the "Record Communications (for Sequence Diagram and Communication Diagram)" button in the toolbar to enable/disable the display of communication messages in the <a href="sequence_diagram_view.html">Sequence Diagram</a> and the <a href="communication_diagram.html">Communication Diagrams</a>. Enabled provides more debugging information, whereas disabled improves the speed of the simulation.</li>
+			<img src="img/message_record.png"/>
+		</ul>
+		
+		</p>
+		A process step (any transition for a specific process) can be performed using the <a href="debug_view.html">Debug view</a> and the <a href="execution_tree_view.html">Execution Tree view</a>. A specific transition of a process can be performed using the <a href="execution_tree_view.html">Execution Tree view</a>.
+		</p>
+		<p>
+		It is possible that the simulator encounters a runtime exception during simulation. This will pause the model, such that the user can still inspect the processes, and report the exception in a pop-up. When the simulation is in this error state, clicking any of these control buttons will only show the pop-up with the exception again; no transitions are performed anymore. 
+		</p>
+		<p>
+		To switch back to the POOSL Edit perspective, use the buttons described earlier on this page under the header "Launch".
+		</p>
+		
+		<a id="monitor"/><h2>Monitor</h2>
+		<p>
+		The progress of the simulation can be monitored using multiple views:
+		<ul>
+			<li>Console view
+			<li><a href="debug_view.html">Debug view</a>
+			<li><a href="execution_tree_view.html">Execution Tree view</a>
+			<li><a href="variables_view.html">Variables view</a>
+			<li><a href="communication_diagram.html">Communication Diagram view</a>
+			<li><a href="sequence_diagram_view.html">Sequence Diagram view</a>
+			<li><a href="process_window.html">Process window</a>
+			<li><a href="breakpoints.html">Breakpoints</a>
+			<li><a href="stacktrace_window.html">StackTrace Window</a>
+		</ul>
+		For non-interactive simulation, use <a href="run.html">Run a POOSL Model</a> instead.
+		</p>
+		
+		<a id="advanced"/><h2>Advanced features</h2>
+		<p>
+		<ul>
+			<li><a href="launch_configuration.html#debugging_multiple">Debugging multiple models simultaneously</a>
+			<li><a href="launch_configuration.html#setting_seed">Setting a seed for resolving non-determinism</a>
+		</ul>
+		</p>
+	</body>
+</html>

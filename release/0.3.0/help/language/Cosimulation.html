@@ -1,0 +1,242 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Co-simulation</title>
+	</head>
+	<body>
+		<h1>Co-simulation</h1>
+
+		<p>
+			Co-simulation allows the simulation of a POOSL model to interact with the outside world, and to synchronize multiple simulations. 
+			The POOSL mechanism for co-simulation is based on external system ports.
+			Each external system port is implemented via an adapter that is specified in an external port configuration file (.ini).
+			The examples bundle (<a href="http://poosl.esi.nl/downloads/examples/examples-latest.zip">download</a>) contain three examples (FileCopy, SocketExample, and SocketExampleDistributed) that use co-simulation.
+		</p>
+		<p>		
+			When <a href="../simulating_models/debug.html">debugging a POOSL model</a>, the adapter instances are visible in the <a href="../simulating_models/debug_view.html">Debug View</a> and in the <a href="../simulating_models/sequence_diagram_view.html">Sequence Diagram</a>. Moreover they can be inspected in the <a href="../simulating_models/execution_tree_view.html">Execution Tree View</a> after selecting one:
+		</p>
+		<img src="img/cosim_debug_pet.png"/>
+
+		<h2>External System Ports: Model Syntax</h2>
+		<p>
+			External system ports are defined in the optional ports section of the system definition.
+			The syntax for this section is identical to the syntax for ports of a cluster or process class.
+		</p>
+
+		<h3>Example</h3>
+		<p>
+			The following example POOSL model has 4 external system ports: 
+		</p>
+		<p>
+			<pre>
+        <b><span style="color:DarkRed">system</span></b>
+        <b><span style="color:DarkRed">ports</span></b>
+            ep1
+            ep2
+            ep3
+            ep4
+        <b><span style="color:DarkRed">instances</span></b>
+            proc : MyProcess()
+        <b><span style="color:DarkRed">channels</span></b>
+            { ep1, proc.port1 }
+            { ep2, proc.port2 }
+            { ep3, proc.port3 }
+            { ep4, proc.port4 }
+			</pre>
+			<img src="img/cosim_externalport.png"/>
+		</p>
+
+		<h2>External System Ports: Configuration File</h2>
+		<p>
+			External system ports are connected to adapters as specified in the external port configuration file. This file is in the INI file format:
+			<pre>
+	[section]
+	key1=value1
+	key2=value2
+			</pre>
+			Each external system port is described in one section of the file, where the name of the section is equal to the name of the external system port in the model. 
+			Each section has one mandatory key, namely the key "type", which defines the type of adapter for the external system port.
+		</p>
+		<p>
+			When launching a new POOSL model with an INI file in the same directory, this INI file will automatically be used.
+			To manually select a different INI file, or adding one later on, the <a href="../simulating_models/launch_configuration.html#setting_external_conf">Launch Configuration settings</a> can be used.
+		</p>
+
+		<h3>Example</h3>
+		<p>
+			The following example .ini file describes four external system ports of different types:
+			<pre>
+	[ep1]
+	type=SocketClient
+	hostname=localhost
+	port_number=9060
+
+	[ep2]
+	type=SocketServer
+	port_number=9060
+	
+	[ep3]
+	type=FileIn
+	filename=../FileToCopy.txt
+
+	[ep4]
+	type=FileOut
+	filename=../CopiedFile.txt
+			</pre>
+		</p>
+
+		<h2>External System Ports: Supported Adapter Types</h2>
+			<p>			
+			The following list describes the currently supported adapter types, and their keys for specifying additional properties (if any):
+			<ul>
+				<li>SocketClient
+					<ul>
+						<li>port_number: The port that the socket should connect to.</li>
+						<li>hostname: The server that the socket should connect to.</li>
+						<li>read_buffer_size: An optional field to specify the size (in bytes) of the internal read-ahead buffer.*</li>
+					</ul>
+				</li>
+				<li>SocketServer
+					<ul>
+						<li>port_number: The port that the socket should listen on.</li>
+						<li>read_buffer_size: An optional field to specify the size (in bytes) of the internal read-ahead buffer.*</li>
+					</ul>
+				</li>
+				<li>FileIn
+					<ul>
+						<li>filename: Path to the text file to read from. The path can be absolute, or relative to the "simulator" directory in which the POOSL model is simulated.</li>
+						<li>read_buffer_size: An optional field to specify the size (in bytes) of the internal read-ahead buffer.*</li>
+					</ul>
+				</li>
+				<li>FileOut
+					<ul>
+						<li>filename: Path to the text file to write into. The path can be absolute, or relative to the "simulator" directory in which the POOSL model is simulated.</li>
+						<li>mode: This optional field can be 'open' or 'append'; the default value is 'open'.
+							<ul>
+								<li>open: If the file does not exist, it is created. If the file already exists, the existing content is cleared.</li>
+								<li>append: If the file does not exist, it is created. If the file already exists, the existing content is preserved.</li>
+							</ul>
+					</ul>
+				</li>
+				<li>Console
+				</li>
+			</ul>
+			<b>*</b> : The size of the buffer determines the maximum number of bytes can be received in one message. 
+			The default value is 10kbyte. Only adjust this option if you need to read more then 10kbyte of data in one receive statement.
+		</p>
+
+		<h3>Connection Status</h3>
+		<p>
+		When starting the simulation of a POOSL model, these adapters will automatically try to set-up their file or socket connection.
+		If afterwards the file or socket connection is lost or closed, the adapter will not try to reconnect.
+		</p>
+		<p>
+		After the connection has been lost or closed, the adapter blocks all messages except for status messages like isConnected(Boolean) as specified below.
+		Thus the simulation engine can determine that the model has terminated if the model is only waiting for external input.
+		</p>
+
+		<h3>Supported messages on external ports</h3>
+		<p>
+			The following lists contain the messages that can be send and received by the various adapters.
+			The supported messages can also be observed in the Execution Tree view by selecting an adapter instance in the <a href="../simulating_models/debug_view.html">Debug View</a>; see the earlier screenshot on this page.
+			Note that the messages that can be received by the adapter need to be send by the rest of the model, for example, ep!writeString("word"). 
+		</p>
+		<p>
+			Be aware that the IDE does not validate whether the used external port messages in the POOSL model are supported by the adapter selected in the INI file.
+		</p>
+
+		<h4>SocketClient and SocketServer messages</h4>
+		<p>
+			<ul>
+				<li>Messages that can be received by the adapter:
+					<ul>
+						<li><b>writeLine(String)</b>: Write the String to the socket (its characters, not its syntactic representation) followed by new line character LF(10).</li>
+						<li><b>writeString(String)</b>: Write a syntactic representation of the String to the socket.</li>						
+						<li><b>write(String)</b>: Write the String to the socket (not its syntactic representation).</li>
+						<li><b>writeCharacters(Array)</b>: Write the characters in the Array to the socket. The Array is only allowed to contain characters.</li>
+						<li><b>close()</b>: Close the open socket and clear the internal buffers. Afterwards the adapter for this external port is terminated.</li>
+						<li><b>setReadSize(Integer)</b>: Set the number of characters to read using readCharacters(Array).</li>
+						<li><b>setReadUntilSeparator(Char)</b>: Set the 'readUntil' character that is used by readUntil(String).</li>
+					</ul>
+				</li>
+			</ul>
+		</p>
+		<p>
+			<ul>
+				<li>Messages that can be send by the adapter:
+					<ul>
+						<li><b>readLine(String)</b>: Read from the socket a full line. It returns the sequence of non-new line characters (as a String) until the first new-line character sequence after this sequence. The read pointer has been advanced till after the longest new-line character sequence immediately following the non-newline characters (if the line ends in CR(13) followed by LF(10) it advances till after the LF(10)). The new line characters are not part of the returned String.</li>
+						<li><b>readString(String)</b>: Read from the socket an escaped string. In case the character sequence starting from the double quote character is a valid syntactical representation of a String, then this String is returned. The read pointer has advanced till after the end of the String representation. In case the character sequence is not a valid syntactical representation of a String and cannot be completed to a valid String, an error is generated.</li>
+						<li><b>readWord(String)</b>: Read from the socket and return the sequence of non-white space characters (as a String). The read starts after a possibly empty sequence of white-space characters until the first white space character after this sequence. The read pointer has been advanced till immediately after the first white space character after the sequence of non-white space characters. None of the white space characters before or after the word are part of the returned String.</li>
+						<li><b>readCharacters(Array)</b>: Read from the socket the number of characters configured by setReadSize(Integer). It returns the sequence of characters as an Array containing Char elements. The read pointer has been advanced till after the last read character.</li>
+						<li><b>readUntil(String)</b>: Read from the socket until the first occurrence of character set by setReadUntilSeparator(Char). It returns the sequence of characters (as a String). 
+						The read pointer has been advanced till after the last read character. The character is not returned as part of the String. This method returns nil if there is no character set by setReadUntilSeparator(Char).</li>
+						<li><b>isConnected(Boolean)</b>: Indicate in the parameter whether the socket is connected.</li>
+					</ul>
+				</li>
+			</ul>
+		</p>
+
+		<h4>FileOut messages</h4>
+		<p>
+			<ul>
+				<li>Messages that can be received by the adapter:
+					<ul>
+						<li><b>write(String)</b>: Write the String to the file (not its syntactic representation).</li>
+						<li><b>writeLine(String)</b>: Write the String to the file (its characters, not its syntactic representation) followed by new line character LF(10).</li>
+						<li><b>writeString(String)</b>: Write a syntactic representation of the String to the file.</li>						
+						<li><b>writeCharacters(Array)</b>: Write the characters in the Array to the file. The Array is only allowed to contain characters.</li>
+						<li><b>close()</b>: Close the open file and clear the internal buffers. Afterwards the adapter for this external port is terminated.</li>
+					</ul>
+				</li>
+			</ul>
+		</p>
+
+		<h4>FileIn messages</h4>
+		<p>
+			<ul>
+				<li>Messages that can be received by the adapter:
+					<ul>
+						<li><b>setReadUntilSeparator(Char)</b>: Set the 'readUntil' character that is used by readUntil(String).</li>
+						<li><b>setReadSize(Integer)</b>: Set the number of characters to read using readCharacters(Array).</li>
+						<li><b>close()</b>: Close the open file and clear the internal buffers. Afterwards the adapter for this external port is terminated.</li>
+					</ul>
+				</li>
+			</ul>
+		</p>
+		<p>
+			<ul>
+				<li>Messages that can be send by the adapter:
+					<ul>
+						<li><b>readLine(String)</b>: Read from the file a full line. It returns the sequence of non-new line characters (as a String) until the first new-line character sequence after this sequence. The read pointer has been advanced till after the longest new-line character sequence immediately following the non-newline characters (if the line ends in CR(13) followed by LF(10) it advances till after the LF(10)). The new line characters are not part of the returned String.</li>
+						<li><b>readString(String)</b>: Read from the file an escaped string. In case the character sequence starting from the double quote character is a valid syntactical representation of a String, then this String is returned. The read pointer has advanced till after the end of the String representation. In case the character sequence is not a valid syntactical representation of a String and cannot be completed to a valid String, an error is generated.</li>
+						<li><b>readUntil(String)</b>: Read from the file until the first occurrence of character set by setReadUntilSeparator(Char). It returns the sequence of characters (as a String). 
+						The read pointer has been advanced till after the last read character. The character is not returned as part of the String. This method returns nil if there is no character set by setReadUntilSeparator(Char).</li>
+						<li><b>readWord(String)</b>: Read from the file and return the sequence of non-white space characters (as a String). The read starts after a possibly empty sequence of white-space characters until the first white space character after this sequence. The read pointer has been advanced till immediately after the first white space character after the sequence of non-white space characters. None of the white space characters before or after the word are part of the returned String.</li>
+						<li><b>readCharacters(Array)</b>: Read from the file the number of characters configured by setReadSize(Integer). It returns the sequence of characters as an Array containing Char elements. The read pointer has been advanced till after the last read character.</li>
+						<li><b>atEndOfFile(Boolean)</b>: Indicate in the parameter whether the read pointer in the file points at the end of the file.</li>
+					</ul>
+				</li>
+			</ul>
+		</p>
+
+		<h4>Console messages</h4>
+		<p>
+			<ul>
+				<li>Messages that can be received by the adapter:
+					<ul>
+						<li><b>write(String)</b>: Write the String to stdout (not its syntactic representation).</li>
+						<li><b>writeLine(String)</b>: Write the String to stdout (its characters, not its syntactic representation) followed by new line character LF(10).</li>
+						<li><b>writeString(String)</b>: Write a syntactic representation of the String to stdout.</li>						
+						<li><b>writeCharacters(Array)</b>: Write the characters in the Array to stdout. The Array is only allowed to contain characters.</li>
+						<li><b>writeError(String)</b>: Write the String to stderr (not its syntactic representation).</li>
+						<li><b>writeErrorLine(String)</b>: Write the String to stderr (its characters, not its syntactic representation) followed by new line character LF(10).</li>
+						<li><b>writeErrorString(String)</b>: Write a syntactic representation of the String to stderr.</li>						
+						<li><b>writeErrorCharacters(Array)</b>: Write the characters in the Array to stderr. The Array is only allowed to contain characters.</li>
+					</ul>
+				</li>
+			</ul>
+		</p>
+	</body>
+</html>
