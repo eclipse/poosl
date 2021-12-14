@@ -17,7 +17,7 @@
 		<groupId>org.eclipse.poosl</groupId>
 		<artifactId>parent</artifactId>
 		<!-- You should change this and the MANIFEST.MF to your versioning scheme -->
-		<version>0.2.0-SNAPSHOT</version>
+		<version>0.3.0-SNAPSHOT</version>
 		<relativePath>../../parent</relativePath>
 	</parent>
 	<artifactId>org.eclipse.poosl.transformations</artifactId>
