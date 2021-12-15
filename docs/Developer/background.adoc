@@ -1,0 +1,6 @@
+== Background material
+
+=== Launch and Debug Framework
+
+https://www.eclipse.org/articles/Article-Debugger/how-to.html
+https://www.eclipse.org/articles/Article-Launch-Framework/launch.html
