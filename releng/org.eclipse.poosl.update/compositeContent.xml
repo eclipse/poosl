@@ -7,6 +7,6 @@
   </properties>
   <children size='2'>
 	<child location="target/repository/"/>
-    <child location="http://www.es.ele.tue.nl/rotalumis/repository/integration/"/>
+    <child location="http://www.es.ele.tue.nl/rotalumis/repository/release/"/>
   </children>
 </repository>

@@ -26,7 +26,7 @@
 	    <tp.version>1.0.0-SNAPSHOT</tp.version>
 		<tp.mode>build</tp.mode>
 		<!-- was: 1.7.0 : issue with unexpected a.jre.javase[16.0.0,16.0.0] dependency -->
-		<tycho.version>2.3.0</tycho.version>
+		<tycho.version>2.4.0</tycho.version>
 		<xtend.version>2.25.0</xtend.version>
 
 		<!-- Xtend plugin does not take source version from TPD  -->

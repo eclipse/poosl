@@ -16,4 +16,5 @@
    </feature>
    <feature id="org.eclipse.poosl.dependencies.feature"/>
    <category-def name="org.eclipse.poosl" label="Poosl"/>
+   <repository-reference location="http://www.es.ele.tue.nl/rotalumis/repository/release/" enabled="true" />
 </site>
