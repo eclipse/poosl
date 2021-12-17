@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.window.Window;
 import org.eclipse.poosl.pooslproject.PooslProjectConstant;
 import org.eclipse.poosl.rotalumisclient.Activator;
 import org.eclipse.swt.widgets.Display;
@@ -40,7 +41,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
-import org.eclipse.ui.dialogs.SelectionDialog;
 import org.eclipse.ui.model.WorkbenchPartLabelProvider;
 import org.eclipse.ui.progress.UIJob;
 
@@ -51,7 +51,7 @@ import org.eclipse.ui.progress.UIJob;
  * effort to avoid user-surprise on simple
  * cases.
  * </p>
- * 
+ *
  * @author Obeo
  */
 public class ExecutableResourceVerification {
@@ -59,9 +59,13 @@ public class ExecutableResourceVerification {
     private static final String CHARSET_FORCE_TITLE = "Unsupported Charset";
 
     private static final String CHARSET_FORCE_MESSAGE = //
-            "Only " + PooslProjectConstant.SUPPORTED_CHARSET.displayName() + " is supported.\n"//
+            "Only " + PooslProjectConstant.SUPPORTED_CHARSET.displayName() + " is supported.\n" //
                     + "This has no impact when only Latin Characters are used in models.\n" //
-                    + "(You can turn off this warning in Execution Configuration)\n"//
+                    + "\n" //
+                    + "To avoid this warning, you can either:\n"
+                    + "- change the text file encoding in the project properties. When doing so, you might have to fix the file content using the \"Edit > Set encoding\" action\n" //
+                    + "- turn off this warning in the launch configuration\n" //
+                    + "\n" //
                     + "Continue execution ?";
 
     private static final Logger LOGGER = Logger
@@ -75,14 +79,14 @@ public class ExecutableResourceVerification {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param model
      *     to verify
      * @param forceCharset
      *     assume compatible and ignore charset setting
      */
     public ExecutableResourceVerification(IFile model, boolean forceCharset) {
-        this.project = model.getProject();
+        project = model.getProject();
         this.model = model;
         this.forceCharset = forceCharset;
     }
@@ -128,7 +132,7 @@ public class ExecutableResourceVerification {
                         new ArrayContentProvider(), new WorkbenchPartLabelProvider(),
                         "The following file(s) contain unsaved changes.\nSelect files to save.");
                 resourceSelectionDialog.setInitialSelections((Object[]) dirtyEditorParts);
-                if (resourceSelectionDialog.open() != SelectionDialog.OK) {
+                if (resourceSelectionDialog.open() != Window.OK) {
                     return new Status(IStatus.CANCEL, Activator.PLUGIN_ID, ""); //$NON-NLS-1$
                 }
 
