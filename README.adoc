@@ -79,6 +79,8 @@ Commit must start with '[#<issue-number>] ' tag.
 
 - Wait for team review: a feedback will be provided or the commit will be merged.
 
+- Contributions like libraries, examples are welcomed. Some already appear in https://github.com/eclipse/poosl/tree/main/docs/samples[the samples/ folder].
+
 
 == Automatic Tests via RCPTT
 
