@@ -16,11 +16,12 @@ package org.eclipse.poosl.sirius.navigator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.poosl.sirius.IPreferenceConstants;
+import org.eclipse.poosl.sirius.Messages;
 import org.eclipse.poosl.sirius.navigator.PooslEditorPreferenceDialog.OpenStrategy;
 
 /**
  * The GraphicalPreferenceManager.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
