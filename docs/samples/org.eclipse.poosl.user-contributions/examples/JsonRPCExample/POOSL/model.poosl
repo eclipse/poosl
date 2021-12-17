@@ -4,7 +4,6 @@
  *  benny.akesson@tno.nl
  **/
 
-importlib "SocketProcess.poosl"
 import "../../../libraries/JsonRPC.poosl"
 
 process class Model()
@@ -13,9 +12,9 @@ ports
 	Port
 messages
 	/* Received message over the socket. */
-	Port?Received(String),
+	Port?readLine(String),
 	/* Message to be sent over the socket. */
-	Port!Send(String)
+	Port!writeLine(String)
 variables
 	console : Console
 	observer : Observer
@@ -54,9 +53,9 @@ methods
 		rpc setMethod(method);
 		rpc setParameters(parameters);
 
-		Port!Send(rpc toJSON);
+		Port!writeLine(rpc toJSON);
 		/* Note that SocketProcess adds an additional newline. */
-		Port?Received(received);
+		Port?readLine(received);
 		response fromJSON(received);
 		if response isError then
 			console writeLine(response getErrorMessage)
@@ -67,10 +66,9 @@ methods
 
 /* Top-level system specification */
 system
+ports
+	Socket
 instances
-	/* Model side of the protocol. */
 	Model : Model()
-	/* Socket connection for the Model process. */
-	ModelSocket : SocketProcess(HostName := "localhost", PortNumber := 9999)
 channels
-	{ Model.Port, ModelSocket.Port }
+	{ Socket, Model.Port }

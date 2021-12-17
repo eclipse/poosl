@@ -20,7 +20,7 @@ import java.util.*;
 /**
  * Planning service implementation, to be used with the JSON-RPC server.
  * 
- * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ * @author <a href="mailto:benny.akesson@tno.nl">Benny Akesson</a>
  */
 public class Service {
     /**

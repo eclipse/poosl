@@ -26,7 +26,7 @@ import java.net.UnknownHostException;
  *
  * It will expose all public method in `com.example.org.Service`, that have JSON compatible arguments.
  * 
- * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
+ * @author <a href="mailto:benny.akesson@tno.nl">Benny Akesson</a>
  */
 public class Main {
     public static void main(String[] args) {
