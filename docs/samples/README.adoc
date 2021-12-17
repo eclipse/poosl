@@ -1,0 +1,6 @@
+= POOSL Samples
+
+This folder contains POOSL examples and libraries that have been contributed over time. They are not maintained and could require adaptations.
+
+* https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/examples/JsonRPCExample[JSON-RPC Example], an example showing how to call methods written in Python or Java from POOSL using remote procedure calls (RPC) based on JSON-RPC.
+* https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/libraries[A set of libraries], to manipulate vectors, matrix, state machines, XML.
