@@ -11,7 +11,7 @@
  *    TNO/ESI - initial API and implementation
  *    Obeo - refactoring
  *******************************************************************************/
-/* API version 3.0 - Library of Random Distributions - Embedded Systems Innovations by TNO
+/* API version 3.1 - Library of Random Distributions - Embedded Systems Innovations by TNO
  * 
  * This library provides several random distributions. Each of them provides method "withParameter" or withParameters
  * to initialize the distribution, while method "sample" returns a value from the sample space of the distribution
@@ -37,6 +37,7 @@ variables
 	SuccessProbability : Real
 methods
 	/* Initializes the success probability S for the Bernoulli distribution */
+	@Init
 	withParameter(S : Object) : Bernoulli
 		self initialise;
 		if (S = nil) | ((S isOfType("Integer") not) & (S isOfType("Real") not)) then
@@ -78,6 +79,7 @@ variables
 	Alpha, Beta : Real
 methods
 	/* Initializes the shape parameters A and B for the Beta distribution */
+	@Init
 	withParameters(A, B : Object) : Beta
 		self initialise;
 		if (A = nil) | ((A isOfType("Integer") not) & (A isOfType("Real") not)) | (B = nil) | ((B isOfType("Integer")
@@ -124,6 +126,7 @@ variables
 	Fixed : Boolean
 methods
 	/* Initializes the shape parameters A and B, the lower bound L and upper bound U for the Beta distribution */
+	@Init
 	withParameters(A, B, L, U : Object) : Beta4 | Temp : Real |
 		self initialise;
 		if (A = nil) | ((A isOfType("Integer") not) & (A isOfType("Real") not)) | (B = nil) | ((B isOfType("Integer")
@@ -188,6 +191,7 @@ variables
 	Fixed : Boolean
 methods
 	/* Initializes the lower bound L and upper bound U for the Uniform distribution */
+	@Init
 	withParameters(L, U : Object) : DiscreteUniform | Temp : Integer |
 		self initialise;
 		Fixed := L = U;
@@ -229,6 +233,7 @@ variables
 	Lambda : Real
 methods
 	/* Initializes the parameter L for the Exponential distribution */
+	@Init
 	withParameter(L : Object) : Exponential
 		self initialise;
 		if (L = nil) | ((L isOfType("Integer") not) & (L isOfType("Real") not)) then
@@ -270,6 +275,7 @@ variables
 	Alpha, Beta : Real
 methods
 	/* Initializes the shape parameter A and scale parameter B for the Gamma distribution */
+	@Init
 	withParameters(A, B : Object) : Gamma
 		self initialise;
 		if (A = nil) | ((A isOfType("Integer") not) & (A isOfType("Real") not)) then
@@ -364,6 +370,7 @@ variables
 	Samples, LowerBounds, UpperBounds, Weights : Array
 methods
 	/* Adds Value to the sample space with weight Weight for the Discrete distribution. In case a specific Value is added multiple times, the effective probability on generating Value as sample depends on the total Weight */
+	@Init
 	withParameters(Value : Object, Weight : Object) : Discrete | Index, Size : Integer, CumulativeWeight, Total : Real |
 		if Random = nil then
 			self initialise;
@@ -439,6 +446,7 @@ variables
 	Mean, StandardDeviation : Real
 methods
 	/* Initializes the mean M and variance V parameters for the Normal distribution */
+	@Init
 	withParameters(M, V : Object) : Normal
 		self initialise;
 		if (M = nil) | ((M isOfType("Integer") not) & (M isOfType("Real") not)) then
@@ -486,6 +494,7 @@ variables
 	Mode : Real
 methods
 	/* Initializes the lower bound L, mode M and upper bound U for the PERT distribution */
+	@Init
 	withParameters(L, M, U : Object) : PERT | Mean, Std, Temp : Real |
 		self initialise;
 		if (L = nil) | ((L isOfType("Integer") not) & (L isOfType("Real") not)) then
@@ -545,6 +554,7 @@ variables
 	Fixed : Boolean
 methods
 	/* Initializes the lower bound L, mode M and upper bound U for the Trangle distribution */
+	@Init
 	withParameters(L, M, U : Object) : Triangle | Temp : Real |
 		self initialise;
 		if (L = nil) | ((L isOfType("Integer") not) & (L isOfType("Real") not)) then
@@ -613,6 +623,7 @@ variables
 	LowerBound, IntervalLength : Real
 methods
 	/* Initializes the lower bound L and upper bound U for the Uniform distribution */
+	@Init
 	withParameters(L, U : Object) : Uniform | Temp : Real |
 		self initialise;
 		if (L = nil) | ((L isOfType("Integer") not) & (L isOfType("Real") not)) then
@@ -658,6 +669,7 @@ variables
 	Shape, Scale : Real
 methods
 	/* Initializes the scale K and shape L for the Weibull distribution */
+	@Init
 	withParameters(K, L : Object) : Weibull
 		self initialise;
 		if (K = nil) | ((K isOfType("Integer") not) & (K isOfType("Real") not)) then
@@ -730,6 +742,7 @@ variables
 	Start : Real
 methods
 	/* Initializes the Histogram to range from lower bound L to upper bound U using N bins */
+	@Init
 	withParameters(L, U : Object, N : Integer) : Histogram | Temp : Real |
 		if (L = nil) | ((L isOfType("Integer") not) & (L isOfType("Real") not)) | (U = nil) | ((U isOfType("Integer")
 				not) & (U isOfType("Real") not)) then
