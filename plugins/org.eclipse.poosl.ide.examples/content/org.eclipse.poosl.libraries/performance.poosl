@@ -741,6 +741,7 @@ methods
 			return UpperBound > 0.0
 		fi
 
+	@Init
 	withParameters(Lower, Upper, Level : Real) : ConfidenceInterval
 		LowerBound := Lower;
 		UpperBound := Upper;
