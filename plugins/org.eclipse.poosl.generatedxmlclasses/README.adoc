@@ -1,0 +1,22 @@
+== How to regenerate Java classes
+
+=== Generation tool installation
+
+* From http://download.eclipse.org/releases/latest, install "Dali Java Persistence Tools - JAXB Support" ("under Web, XML, Java EE and OSGi Enterprise Development" category).
+
+The generation tool sometimes cannot work straight away. To fix potential issues:
+
+* Download JAXB from https://javaee.github.io/jaxb-v2/ 
+* Extract JAXB, copy all the jars from mod/ into org.eclipse.poosl.generatedxmlclasses/lib
+* Right click on those jars, select "Build Path > Add to build path"
+* Do not commit the changes on the build path: Those jars are only used for the generation and are not intended to be hosted on POOSL github
+
+=== Generation
+
+* Right-click on org.eclipse.poosl.generatedxmlclasses/schema/total.xsd, select "Generate>JAXB Classes"
+* In the wizard, use:
+** Package: org.eclipse.poosl.generatedxmlclasses
+** Bindings files: add schema/bindings.xml
+ 
+NOTE: if the language in comments is not english, you have to set the following environment variable in your operating system:
+JAVA_TOOL_OPTIONS=-Duser.language=en 
