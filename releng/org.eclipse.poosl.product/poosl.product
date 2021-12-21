@@ -11,7 +11,7 @@
      TNO/ESI - initial API and implementation
      Obeo - refactoring
 -->
-<product name="POOSL Architect" uid="org.eclipse.poosl.product" id="com.eclipse.poosl.product" application="org.eclipse.ui.ide.workbench" version="0.3.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="POOSL Architect" uid="org.eclipse.poosl.product" id="com.eclipse.poosl.product" application="org.eclipse.ui.ide.workbench" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <text>

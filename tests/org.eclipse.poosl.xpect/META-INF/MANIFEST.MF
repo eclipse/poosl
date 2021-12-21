@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: POOSL Xpect tests
 Bundle-SymbolicName: org.eclipse.poosl.xpect
 Automatic-Module-Name: org.eclipse.poosl.xpect
-Bundle-Version: 0.3.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.core.runtime,
  org.xpect.xtext.lib,
  org.eclipse.emf.codegen,
