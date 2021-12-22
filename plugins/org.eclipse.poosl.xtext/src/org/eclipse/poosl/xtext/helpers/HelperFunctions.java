@@ -120,6 +120,8 @@ public final class HelperFunctions {
 
     public static final String CLASS_NAME_SEQUENCE = "Sequence"; //$NON-NLS-1$
 
+    public static final String CLASS_NAME_SET_ITERATOR = "SetIterator"; //$NON-NLS-1$
+
     public static final String CLASS_NAME_SEQUENCE_ITERATOR = "SequenceIterator"; //$NON-NLS-1$
 
     public static final String CLASS_NAME_QUEUE = "Queue"; //$NON-NLS-1$
@@ -144,8 +146,8 @@ public final class HelperFunctions {
                     CLASS_NAME_RANDOMGENERATOR, CLASS_NAME_SOCKET, CLASS_NAME_CONSOLE,
                     CLASS_NAME_OBSERVER, CLASS_NAME_COLLECTION, CLASS_NAME_ITERATOR, CLASS_NAME_BAG,
                     CLASS_NAME_BAG_ITERATOR, CLASS_NAME_MAP, CLASS_NAME_MAP_ITERATOR,
-                    CLASS_NAME_SEQUENCE, CLASS_NAME_SEQUENCE_ITERATOR, CLASS_NAME_QUEUE,
-                    CLASS_NAME_STACK, CLASS_NAME_SET));
+                    CLASS_NAME_SEQUENCE, CLASS_NAME_SET_ITERATOR, CLASS_NAME_SEQUENCE_ITERATOR,
+                    CLASS_NAME_QUEUE, CLASS_NAME_STACK, CLASS_NAME_SET));
 
     // === GetName =======
 
