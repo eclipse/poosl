@@ -21,7 +21,8 @@
  * "rewardBM" methods conform the approach of regenerative cycles respectively the batch-means approach. (Intermediate) results can be logged to a file by
  * using optional method "logTo" to initialize logging and method "log" to write a new line with the status of the estimation to the file.
  * 
- * For more information about the techniques underlying this library, see: ftp://ftp.ics.ele.tue.nl/pub/users/btheelen/Publications/Thesis/thesis.pdf
+ * For more information about the techniques underlying this library, see:
+ * B.D. Theelen: "Performance Modelling for System-Level Design", PhD thesis, Eindhoven University of Technology, 2004, https://doi.org/10.6100/IR581220
  * 
  */
 /* Super Class Performance Monitor */
