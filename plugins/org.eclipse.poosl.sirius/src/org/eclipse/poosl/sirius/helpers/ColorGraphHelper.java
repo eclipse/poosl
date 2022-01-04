@@ -19,10 +19,9 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.preference.ColorSelector;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.poosl.Channel;
 import org.eclipse.poosl.ClusterClass;
+import org.eclipse.poosl.Instance;
 import org.eclipse.poosl.InstancePort;
 import org.eclipse.poosl.Port;
 import org.eclipse.poosl.impl.ChannelImpl;
@@ -45,7 +44,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * The ColorGraphHelper.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -89,12 +88,7 @@ public final class ColorGraphHelper {
     private static RGB getColor() {
         final ColorSelector colorSelector = new ColorSelector(
                 Display.getDefault().getActiveShell());
-        colorSelector.addListener(new IPropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-                mColor = (RGB) event.getNewValue();
-            }
-        });
+        colorSelector.addListener(event -> mColor = (RGB) event.getNewValue());
         colorSelector.open();
         return mColor;
     }
@@ -386,7 +380,16 @@ public final class ColorGraphHelper {
             } else if (target instanceof Port) {
                 Port port = (Port) target;
                 portName = port.getName();
-                if (port.eContainer() instanceof ClusterClass) {
+
+                if (object.eContainer() instanceof DNode) {
+                    EObject containerTarget = ((DNode) object.eContainer()).getTarget();
+                    if (containerTarget instanceof ClusterClass) {
+                        parentName = (((ClusterClass) port.eContainer()).getName() == null) //
+                            ? SEPARATOR + GlobalConstants.POOSL_SYSTEM : owner;
+                    } else if (containerTarget instanceof Instance) {
+                        parentName = owner + SEPARATOR + ((Instance) containerTarget).getName();
+                    }
+                } else if (port.eContainer() instanceof ClusterClass) {
                     parentName = (((ClusterClass) port.eContainer()).getName() == null) //
                         ? SEPARATOR + GlobalConstants.POOSL_SYSTEM : owner;
                 }
