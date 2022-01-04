@@ -23,11 +23,12 @@ import org.eclipse.poosl.sirius.helpers.CreationHelper;
 import org.eclipse.sirius.business.api.session.SessionManager;
 import org.eclipse.sirius.diagram.AbstractDNode;
 import org.eclipse.sirius.diagram.DDiagramElement;
+import org.eclipse.sirius.diagram.DNode;
 import org.eclipse.sirius.viewpoint.impl.DRepresentationElementImpl;
 
 /**
  * Services used in diagrams to edit composite structures.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">arjan mooij</a>
  *
  */
@@ -60,6 +61,11 @@ public class CompositeStructureEditServices {
             return (model instanceof EObject) ? (EObject) model : null;
         }
 
+        Channel existingChannel = findExistingChannel(diagramelement);
+        if (existingChannel != null) {
+            return existingChannel;
+        }
+
         EObject sourceContainer = null;
         if (diagramelement instanceof EObject) {
             EObject containerElement = diagramelement.eContainer();
@@ -80,5 +86,18 @@ public class CompositeStructureEditServices {
         SessionManager.INSTANCE.getSession(sourceContainer).save(new NullProgressMonitor());
         return newinstanceport;
 
+    }
+
+    private static Channel findExistingChannel(EObject diagramElement) {
+        if (diagramElement instanceof DNode) {
+            DNode dNode = (DNode) diagramElement;
+            if (!dNode.getOutgoingEdges().isEmpty()) {
+                return (Channel) dNode.getOutgoingEdges().get(0).getTarget();
+            }
+            if (!dNode.getIncomingEdges().isEmpty()) {
+                return (Channel) dNode.getIncomingEdges().get(0).getTarget();
+            }
+        }
+        return null;
     }
 }
