@@ -5,7 +5,7 @@ Element-Type: verification
 Element-Version: 2.0
 Id: _3fvNkOdZEeS02qlAIvBOkg
 Runtime-Version: 2.5.1.M3
-Save-Time: 12/6/21, 12:34 PM
+Save-Time: 1/5/22, 9:09 AM
 Verification-Type: org.eclipse.rcptt.verifications.log
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
@@ -25,7 +25,7 @@ ALLOWED:
 7 2 org.eclipse.core.resources Message:Problems occurred when invoking code from plug-in: "org.eclipse.core.resources".
 7 0 org.eclipse.rcptt.tesla.core Message:
 7 0 org.eclipse.equinox.preferences Message:Exception loading preferences from: .
-7 4 org.eclipse.sirius Message:.*
+6 4 org.eclipse.sirius Message:.*
 7 4 org.eclipse.equinox.preferences Message:.*
 7 2 org.eclipse.equinox.preferences Message:.*
 7 2 org.eclipse.ui.workbench.texteditor Message:.*
@@ -36,6 +36,7 @@ ALLOWED:
 1 0 org.eclipse.sirius Message:.*Migration done for.*Representation.*
 2 0 .* Message:FIXME test.*
 2 0 org.eclipse.ui Message:Invalid property category path: org\.eclipse\.rcptt\.ui\.views\..*
+4 0 org.eclipse.sirius Message:Impossible to find an interpreter - Could not find a session for model element :.*
 DENIED:
 7 0 .* Message:.*
 
