@@ -14,6 +14,7 @@
 package org.eclipse.poosl.sirius.debug;
 
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 
 /**
  * The GraphicalDebugListener.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -140,8 +141,9 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
                             .getInstantiableClassDescription(instance);
                     if (descr.getEClass() == Literals.CLUSTER_CLASS) {
                         EObject obj = descr.getEObjectOrProxy();
-                        if (obj.eIsProxy())
+                        if (obj.eIsProxy()) {
                             obj = EcoreUtil.resolve(obj, cluster);
+                        }
                         return (ClusterClass) obj;
                     }
                 }
@@ -170,7 +172,7 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     /**
      * Finds main file (used to start the debug session), IDE no longer controls
      * the location in the list.
-     * 
+     *
      * @param relativeModelPath
      *     from project
      * @param files
@@ -178,20 +180,31 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
      * @return the main file path of null
      */
     private String getMainFile(String relativeModelPath, List<URI> files) {
+        // format for comparison
+        String formattedRelativePath = Paths.get(relativeModelPath).toString();
+
         // first or last are most likely to be main file.
+
         String main = files.get(files.size() - 1).toFileString();
-        if (main != null && main.endsWith(relativeModelPath)) {
-            return main;
+        if (main != null) {
+            String formattedMain = Paths.get(main).toString();
+            if (formattedMain.endsWith(formattedRelativePath)) {
+                return main;
+            }
         } else {
             main = files.get(0).toFileString();
-            if (main != null && main.endsWith(relativeModelPath)) {
-                return main;
+            if (main != null) {
+                String formattedMain = Paths.get(main).toString();
+                if (formattedMain.endsWith(formattedRelativePath)) {
+                    return main;
+                }
             }
         }
         // if still not found check all
         for (int i = 1; i < files.size() - 1; i++) {
             main = files.get(i).toFileString();
-            if (main.endsWith(relativeModelPath)) {
+            String formattedMain = Paths.get(main).toString();
+            if (formattedMain.endsWith(formattedRelativePath)) {
                 return main;
             }
         }
@@ -201,7 +214,7 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
     /**
      * Get Session without having to provide the monitor and still use the
      * Progress Service from non gui context.
-     * 
+     *
      * @param activeProject
      * @param editor
      * @param create

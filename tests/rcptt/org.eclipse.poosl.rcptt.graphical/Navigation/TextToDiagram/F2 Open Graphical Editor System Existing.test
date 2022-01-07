@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _IT-vUP4uEeSf_PFiy2GHdA
 Runtime-Version: 2.5.1.M3
-Save-Time: 1/5/22, 8:55 AM
+Save-Time: 1/7/22, 11:35 AM
 Tags: Graphical, Class Diagram
 Testcase-Type: ecl
 
@@ -21,7 +21,7 @@ with [get-editor "producer_consumer.poosl" | get-text-viewer] {
 }
 get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
     -name "System (producer_consumer.poosl)" | mouse-move 390 483 -height 530 -width 1042
-get-tab-folder -index 2 | get-property activePage | equals "*System (producer_consumer.poosl)" | verify-true
+get-tab-folder -index 2 | get-property activePage | contains "System (producer_consumer.poosl)" | verify-true
 with [get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
     -name "System (producer_consumer.poosl)"] {
     get-property childrenCount | equals 1 | verify-true

@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _MFA_0Mm0EeWBFNGtI_hPDw
 Runtime-Version: 2.5.1.M3
-Save-Time: 1/5/22, 11:51 AM
+Save-Time: 1/6/22, 5:47 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -17,7 +17,7 @@ Entry-Name: .content
 get-tab-folder -index 3 | get-property activePage | equals "producer_consumer.poosl" | verify-true
 
 get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
-    -name "System (producer_consumer.poosl)" | get-property "isEditModeEnabled()" | equals true | verify-true
+    -name "System (producer_consumer.poosl)" | get-property "isEditModeEnabled()" | equals false | verify-true
 
 click-terminate
 get-editor "producer_consumer.poosl" | click
