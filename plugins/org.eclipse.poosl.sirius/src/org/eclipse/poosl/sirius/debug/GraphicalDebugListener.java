@@ -162,7 +162,7 @@ public class GraphicalDebugListener implements IPooslDebugInformer {
             for (URI absolute : files) {
                 if (absolute.isFile() && absolute.toFileString().startsWith(base)) {
                     relatives.add(URI.createPlatformResourceURI(
-                            absolute.toFileString().replace(base, "\\" + projectName), true)); //$NON-NLS-1$
+                            absolute.toFileString().replace(base, projectName), true));
                 }
             }
         }
