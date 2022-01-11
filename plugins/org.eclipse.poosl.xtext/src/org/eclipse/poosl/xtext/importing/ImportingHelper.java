@@ -41,7 +41,7 @@ import org.osgi.service.prefs.Preferences;
 
 /**
  * The ImportingHelper.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -98,7 +98,7 @@ public final class ImportingHelper {
             String firstSegment = segments.get(0);
             if (!segments.contains("..") //$NON-NLS-1$ relative
                     && firstSegment != null //
-                    && !firstSegment.startsWith("~")) { //$NON-NLS-2$ home
+                    && !firstSegment.startsWith("~")) { //$NON-NLS-1$ // home
                 URI location = resolveImportLibUri(base, importURI);
                 return location != null;
             }
@@ -221,7 +221,7 @@ public final class ImportingHelper {
      * function from commandline) the function will return the relative path to
      * the basicClasses file inside the
      * poosl2xml.jar
-     * 
+     *
      * @return The basic classes path
      */
     public static URI getBasicClassesURI() {
@@ -304,13 +304,15 @@ public final class ImportingHelper {
         if (project != null) {
             IPreferencesService service = Platform.getPreferencesService();
             Preferences[] prefs = new Preferences[] {
-                    new ProjectScope(project).getNode("org.eclipse.poosl.xtext.Poosl") }; //$NON-NLS-1$
+                    new ProjectScope(project)
+                            .getNode(GlobalConstants.PREFERENCES_INCLUDE_LOCATION) };
             String version = service.get(GlobalConstants.PREFERENCES_INCLUDE_VERSION, "0", prefs); //$NON-NLS-1$
             String key = getIncludeKey(Integer.parseInt(version), project);
             int i = 0;
             String result = service.get(key + i, null, prefs);
 
             while (result != null && !result.isEmpty()) {
+                result = result.replace("\\", "/");
                 includes.add(result);
                 result = service.get(key + ++i, null, prefs);
             }
@@ -423,8 +425,8 @@ public final class ImportingHelper {
         if (Character.isDigit(c)) {
             return true;
         }
-        for (int i = 0; i < HEX_CHARS.length; i++) {
-            if (c == HEX_CHARS[i]) {
+        for (char element : HEX_CHARS) {
+            if (c == element) {
                 return true;
             }
         }

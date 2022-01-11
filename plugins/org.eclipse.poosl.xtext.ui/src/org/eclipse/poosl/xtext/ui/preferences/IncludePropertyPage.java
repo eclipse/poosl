@@ -217,7 +217,7 @@ public class IncludePropertyPage extends PreferencePage implements IWorkbenchPro
                 Object result = dialog.getFirstResult();
                 if (result instanceof IResource) {
                     IPath path = ((IResource) result).getFullPath().makeRelative();
-                    addLocation(path.toOSString());
+                    addLocation(path.toOSString().replace("/", "\\"));
                 }
             }
         }));
