@@ -32,7 +32,7 @@ import org.eclipse.poosl.rotalumisclient.runner.IBundleInfo.Context;
 
 /**
  * The RotalumisRunner.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -79,8 +79,8 @@ public final class RotalumisRunner {
             throw new IOException(MessageFormat.format(Messages.RUNNER_NO_ENGINE_ERROR, detail));
         }
         File result = new File(rotLocation.toFileString());
+        // PLUGIN_ID_ROTALUMIS_EXECUTABLES should set the file as executable. The following code is a fallsafe in case it is not the case.
         if (!result.canExecute() && !result.setExecutable(true)) {
-            // FIXME: PLUGIN_ID_ROTALUMIS_EXECUTABLES should set the file as executable
             throw new IOException(
                     MessageFormat.format(Messages.RUNNER_NOT_EXECUTABLE_ERROR, rotLocation));
         }
@@ -125,7 +125,7 @@ public final class RotalumisRunner {
     }
 
     private static CoreException toNoSupportFailure(String value) {
-        IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, //
+        IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, //
                 MessageFormat.format(Messages.RUNNER_NO_SUPPORT, value), null);
         LOGGER.log(Level.SEVERE, status.getMessage(), status);
         return new CoreException(status);

@@ -13,13 +13,6 @@ var projectName = "org.eclipse.poosl.xtext"
 // var rootPath = ".."
 // var testRootPath = "../../tests"
 
-/* 
- * OBEO: TODO move out of business plugin
- * This file should not be here.
- * It is a generation descriptor.
- * It should be in 'org.eclipse.poosl.xtext.util'
- * and the module should be in 'tools' named 'org.eclipse.poosl.xtext.tool'.
- */
 /**
  * Generation of org.eclipse.poosl.xtext.** plugin.
  * Requires GenerateModels.mwe2 to be perform as it uses org.eclipse.poosl.model/model/poosl.genmodel.

@@ -100,7 +100,7 @@ import com.google.inject.Inject;
 
 /**
  * The PooslFormatter.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -139,22 +139,22 @@ public class PooslFormatter extends AbstractFormatter2 {
 
     private static final String KEYWORD_VARIABLES = "variables"; //$NON-NLS-1$
 
-    private static final Procedure1<IHiddenRegionFormatter> NO_SPACE = it -> it.noSpace();
+    private static final Procedure1<IHiddenRegionFormatter> NO_SPACE = IHiddenRegionFormatter::noSpace;
 
     private static final Procedure1<IHiddenRegionFormatter> ONE_SPACE = it -> {
         it.oneSpace();
         it.autowrap();
     };
 
-    private static final Procedure1<IHiddenRegionFormatter> ONE_SPACE_NO_WRAP = it -> it.oneSpace();
+    private static final Procedure1<IHiddenRegionFormatter> ONE_SPACE_NO_WRAP = IHiddenRegionFormatter::oneSpace;
 
-    private static final Procedure1<IHiddenRegionFormatter> NEW_LINE = it -> it.newLine();
+    private static final Procedure1<IHiddenRegionFormatter> NEW_LINE = IHiddenRegionFormatter::newLine;
 
     private static final Procedure1<IHiddenRegionFormatter> EMPTY_LINE = it -> it.setNewLines(2);
 
     private static final Procedure1<IHiddenRegionFormatter> EMPTY_LINES = it -> it.setNewLines(3);
 
-    private static final Procedure1<IHiddenRegionFormatter> INDENT = it -> it.indent();
+    private static final Procedure1<IHiddenRegionFormatter> INDENT = IHiddenRegionFormatter::indent;
 
     private static final Procedure1<IHiddenRegionFormatter> DOUBLE_INDENT = it -> {
         it.indent();
@@ -173,8 +173,9 @@ public class PooslFormatter extends AbstractFormatter2 {
         EObject grammarElement = comment.getGrammarElement();
         if (grammarElement instanceof AbstractRule) {
             String ruleName = ((AbstractRule) grammarElement).getName();
-            if (ruleName.startsWith("ML")) //$NON-NLS-1$
+            if (ruleName.startsWith("ML")) {
                 return new PooslMultilineCommentReplacer(comment, '*');
+            }
         }
         return super.createCommentReplacer(comment);
     }
@@ -489,9 +490,6 @@ public class PooslFormatter extends AbstractFormatter2 {
         curlyBracketPairSpacing(regionFinder, document);
 
         Procedure1<IHiddenRegionFormatter> oneSpaceWrap = createOneSpaceWrap(channel);
-        // XXX commaspacing needs to use oneSpaceWrap, atm causes an extra indent,
-        // fixed in xtext 2.13
-        // https://esi-redmine.tno.nl/issues/2605
         commaSpacing(regionFinder, oneSpaceWrap, document);
 
         for (InstancePort instancePort : channel.getInstancePorts()) {
@@ -1116,7 +1114,7 @@ public class PooslFormatter extends AbstractFormatter2 {
      * it only needs the first and last of the
      * list as they are also the first and last in the document. (Example: send
      * and receive messages)
-     * 
+     *
      * @param document
      * @param lists
      * @return can return null if the lists
@@ -1222,7 +1220,7 @@ public class PooslFormatter extends AbstractFormatter2 {
 
     /**
      * return true if multiline formatting is applied.
-     * 
+     *
      * @param fromRegion
      * @param toRegion
      * @param declarations
@@ -1412,12 +1410,9 @@ public class PooslFormatter extends AbstractFormatter2 {
     private Procedure1<IHiddenRegionFormatter> getOneSpaceWrapper(
             final IHiddenRegion last, Procedure1<IHiddenRegionFormatter> proc) {
         final PooslAutoWrapper wrapper = new PooslAutoWrapper(last, proc);
-        return new Procedure1<IHiddenRegionFormatter>() {
-            @Override
-            public void apply(final IHiddenRegionFormatter it) {
-                it.oneSpace();
-                it.setOnAutowrap(wrapper);
-            }
+        return it -> {
+            it.oneSpace();
+            it.setOnAutowrap(wrapper);
         };
     }
 }
