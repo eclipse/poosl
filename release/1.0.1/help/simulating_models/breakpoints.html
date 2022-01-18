@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Breakpoints</title>
+	</head>
+	<body>
+		<h1>Breakpoints</h1>
+		<p>
+		A good way to debug problems is by adding breakpoints to the code. The POOSL IDE supports line breakpoints in process methods (Debugging of data methods is not yet supported). A breakpoint cannot be added on a statement of these types:
+		<ul>
+			<li>Abort statement (abort .. with)</li>
+			<li>Interrupt statement (interrupt .. with)</li>
+			<li>Parallel statement (par .. and .. rap)</li>
+			<li>Select statement (sel .. or .. les)</li>
+		</ul>
+		A breakpoint can however be set to the constituents of these statements.
+		</p>
+		
+		<h2>Adding/Removing breakpoints</h2>
+		<p>
+		Adding a breakpoint can be done in 3 different ways:
+		<ol>
+			<li>Double click the ruler in front of the line in the editor.</li> 
+			<li>Right click the ruler in front of the line and select Toggle Breakpoint.</li>
+			<li>Use the shortcut Ctrl+Shift+B to set/remove a breakpoint on the current line.</li>
+		</ol>
+		If a breakpoint is set, a blue dot appears in front of the line. When there are multiple statements on one line, the breakpoint will always be set to the first statement on that line.
+		</p>
+		
+		<h2>Enable/Disable breakpoints</h2>
+		<p>
+		Breakpoints will be listed in the Breakpoints view that is visible in the bottom of the Edit/Debug perspectives. (If the Breakpoints view is not visible, then reset the perspective by right clicking the perspective in the upper right hand corner and selecting Reset).
+		</p>
+		<img src="img/breakpoints.png"/>
+		<p>
+		The checkbox in front of a breakpoint can be used to enable or disable a breakpoint so that the breakpoint remains set but can be deactivated or activated when needed. To Enable or disable all breakpoints at the same time use button in the top of the view.
+		</p>
+		
+		<h2>Breakpoint hits</h2>
+		<p>
+		When a breakpoint is hit during simulation, the simulation will suspend. The breakpoint that was hit will be highlighted in the Execution Tree view and highlighted in the editor.
+		</p>		
+	</body>
+</html>

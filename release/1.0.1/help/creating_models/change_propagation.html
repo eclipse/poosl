@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Change Propagation</title>
+	</head>
+	<body>
+		<h1>Change Propagation</h1>
+		<p>
+		Change propagation across <a href="../language/Imports.html">imports</a> provides the following features:
+		<ul>
+			<li>When a file is edited, any depending files are re-validated;</li>
+			<li>When an element is renamed, any depending files are updated accordingly.</li>
+		</ul>
+		The effectiveness of these mechanisms depends on whether all files are in open Eclipse projects.
+		</p>
+
+		<h2>All files are in open Eclipse projects</h2>
+		<p>
+		Change propagation works on such files as long as all changes are made using the Poosl IDE.
+		After any changes made outside of the Poosl IDE, please refresh (F5) the corresponding project in Eclipse to re-validate any depending files.
+		</p>
+
+		<h2>Some files are outside open Eclipse projects</h2>
+		<p>
+		Such files are not tracked by the Poosl IDE.
+		After any changes, please perform Project -> Clean...  to re-validate any depending files.
+		</p>
+	</body>
+</html>

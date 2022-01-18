@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Execution Tree</title>
+	</head>
+	<body>
+		<h1>Execution Tree</h1>
+		<p>
+		The Execution Tree view is used when <a href="debug.html">debugging a POOSL model</a>. When the simulation is suspended, the local state of the process that is selected in the <a href="debug_view.html">Debug view</a> is shown in the Execution Tree view. Nodes are colored based on whether they can perform a transition. <font color="red">Red</font> means that the node can do a step, <font color="blue">blue</font> means the node can perform a time step, and black means the node is blocked. In addition <font color="grey">grey</font> means that sub-statements can be executed, or another statement must first be executed.
+		</p>
+		<img src="img/pet_view.png"/>
+		<p>
+		When selecting a node in the Execution Tree view, the corresponding statement is highlighted in the editor, and the <a href="variables_view.html">Variables view</a> is updated. After selecting the top element of the tree, the shortcuts Ctrl+Up and Ctrl+Down can be used to navigate to the next or the previous enabled transition in the tree.
+		</p>
+		<p>
+		Highlighting does not work when an external adapter instance is selected in the debug view. The first line in the Execution Tree indicates what is selected. When the line starts with <b>adapters</b> an external port instance is selected. When the line starts with <b>system</b> a Poosl instance from the model is selected.
+		</p>
+
+		<p>
+		<img src="img/icon_process_step.png"/> The button <b>Perform Process Step</b> advances the simulation to a next transition of this process, and execute the transition. (Compare the <a href="debug.html#control">step buttons</a>.)
+		</p>
+			
+		<h2>Execute an enabled transition</h2>
+		<p>
+		To execute a transition from the Execution Tree view, perform one of the steps below:
+		<ul>
+			<li>Double click the transition</li>
+			<li>Select the transition and hit enter</li>
+			<li>Use the keyboard keys 1..9, to execute the first..ninth enabled transition in the tree.</li>
+		</ul>
+		</p>
+	</body>
+</html>
