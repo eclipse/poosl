@@ -1,4 +1,4 @@
-= POOSL Samples
+= POOSL User contributions
 
 This folder contains POOSL examples and libraries that have been contributed over time. They are not maintained and could require adaptations.
 
