@@ -1,0 +1,3 @@
+= POOSL Examples
+
+This folder contains POOSL examples and libraries that can be directly deployed within the POOSL IDE, using the "New > Examples > POOSL Examples" Wizard. Those examples are maintained and fully tested.
