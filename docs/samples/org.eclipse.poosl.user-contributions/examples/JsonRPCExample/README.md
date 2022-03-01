@@ -12,4 +12,4 @@ In the POOSL part, JSON-RPC messages are exchanged using the Request and Respons
 ## How to run
 
 1) Go to the Python or Java directory and start a JSON-RPC server, following the instructions in the file README.md in that directory.
-2) Start the POOSL IDE and simulate `model.poosl` located in the POOSL directory. When you simulate this program, you will see that it prints the results of the RPC calls to the console.
+2) Start Eclipse POOSL and simulate `model.poosl` located in the POOSL directory. When you simulate this program, you will see that it prints the results of the RPC calls to the console.

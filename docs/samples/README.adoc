@@ -7,7 +7,7 @@ This folder contains POOSL examples and libraries that have been contributed ove
 
 = Usage
 
-To integrate any of the examples presented here, you can simply copy the .poosl files into a POOSL project (using the POOSL IDE). To get the .poosl file from github, open the file page then click on the "raw" button. You can then save the .poosl file from your browser.
+To integrate any of the examples presented here, you can simply copy the .poosl files into a POOSL project (using Eclipse POOSL). To get the .poosl file from github, open the file page then click on the "raw" button. You can then save the .poosl file from your browser.
 
 = How to contribute
 
