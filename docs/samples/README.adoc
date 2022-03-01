@@ -1,14 +1,13 @@
-= POOSL User contributions
+= Samples
 
-This folder contains POOSL examples and libraries that have been contributed over time. They are not maintained and could require adaptations.
+In addition to the https://github.com/eclipse/poosl/tree/main/plugins/org.eclipse.poosl.ide.examples/content[main POOSL examples and libraries], this folder contains an https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/[Eclipse project with samples] that have been contributed by users over time.
 
-* https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/examples/JsonRPCExample[JSON-RPC Example], an example showing how to call methods written in Python or Java from POOSL using remote procedure calls (RPC) based on JSON-RPC.
-* https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/libraries[A set of libraries], to manipulate vectors, matrix, state machines, XML.
+== Usage
 
-= Usage
+To use any of these samples, you can simply copy the files into a POOSL project (using Eclipse POOSL). To get the files from github, open the file page then click on the "raw" button. You can then save the file from your browser.
 
-To integrate any of the examples presented here, you can simply copy the .poosl files into a POOSL project (using Eclipse POOSL). To get the .poosl file from github, open the file page then click on the "raw" button. You can then save the .poosl file from your browser.
+Alternatively, clone or download the full https://github.com/eclipse/poosl[repository], and import the user-contributions project within Eclipse POOSL, using the "File > Import... > Existing Projects into Workspace" Wizard.
 
-= How to contribute
+== How to contribute
 
-Contributions are very welcomed, if you think your code could be a good addition for POOSL, feel free to open a pull request containing your samples. It will be reviewed by the POOSL team and integrated into this page.
+Additional user contributions are very welcome: feel free to open a https://github.com/eclipse/poosl/pulls[pull request] containing your samples. It will be reviewed by the POOSL team and integrated into this page.
