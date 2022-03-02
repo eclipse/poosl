@@ -1,4 +1,4 @@
-= Architecture of POOSL IDE
+= Architecture of Eclipse POOSL
 
 :toc: left
 

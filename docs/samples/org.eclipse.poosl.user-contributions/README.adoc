@@ -1,0 +1,17 @@
+= POOSL User contributions
+
+This folder contains samples that have been contributed by users over time. These samples are not maintained and could require adaptations.
+
+== Data structures
+
+* https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/libraries/Matrix.poosl[Matrix]
+
+* https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/libraries/StateMachine.poosl[StateMachine]
+
+* https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/libraries/Vector.poosl[Vector] of real numbers with basic linear algebra. Some https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/tests/VectorTest.poosl[Vector tests] are available to test the functionality.
+
+== External interaction
+
+* Co-simulation via https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/libraries/JsonRPC.poosl[JSON-RPC], including https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/examples/JsonRPCExample[JSON-RPC examples] that demonstrate how POOSL models can interact with Java and Python code.
+
+* https://github.com/eclipse/poosl/tree/main/docs/samples/org.eclipse.poosl.user-contributions/libraries/XmlWriter.poosl[XmlWriter] to create text in XML format.
