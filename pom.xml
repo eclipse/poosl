@@ -16,7 +16,7 @@
 
 	<groupId>org.eclipse.poosl</groupId>
 	<artifactId>container</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>POM Container</name>
