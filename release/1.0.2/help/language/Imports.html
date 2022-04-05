@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Imports</title>
+</head>
+<body>
+	<h1>Imports</h1>
+	<p>
+	Imports can be defined with the keyword "<a href="#import">import</a>" or "<a href="#importlib">importlib</a>" at the beginning of a .poosl file (before any class or system).
+	To enable <a href="../creating_models/change_propagation.html">change propagation</a>, it is recommended that all imported files are inside an opened Eclipse project.
+	</p>
+	
+	<a id="import"/><h2>Keyword "import"</h2>
+	<p>
+	Imports with the keyword "import" can be declared relative to the current file or absolute.
+	</p>
+	<p>
+	Relative examples (recommended):
+	<ul>
+	<li><b>import</b> "example.poosl"</li>
+	<li><b>import</b> "models/example.poosl"</li>
+	<li><b>import</b> "../../models/example.poosl"</li>
+	</ul>
+	</p>
+	<p>
+	Absolute examples:
+	<ul>
+	<li><b>import</b> "file:///C:/imports/model.poosl" </li>
+	<li><b>import</b> "file:///C:/Users/guest/EclipsePoosl/model.poosl" </li>
+	</ul>
+	</p>
+	
+	<a id="importlib"/><h2>Keyword "importlib"</h2>
+	<p>
+	Imports declared with the keyword "importlib" are relative to the first <a href="#Poosl-Include-Paths">Poosl include path</a> that contains the specified file.
+	Going backwards in the path (using "..\") is not allowed.
+	</p>
+	<p>
+	Examples:
+	<ul>
+	<li><b>importlib</b> "example.poosl"</li>
+	<li><b>importlib</b> "models/example.poosl"</li>
+	</ul>
+	</p>
+	
+	<h2><a id="Poosl-Include-Paths"/>Poosl include paths</h2>
+	<p>
+	The list of Poosl include paths is defined in the Poosl properties of a project (Project -> Properties -> Poosl).
+	There are two types of include paths:
+	<ul>
+	<li>Workspace (recommended): click on the "Add" button to open up a window in which only folders of the workspace can be selected.</li>
+	<li>External: click on the "Add External" button to open up a window in which folders from the whole file system can be selected.</li>
+	</ul>
+	The list of Poosl include paths is saved in a file "org.eclipse.poosl.xtext.Poosl.prefs", which can be found inside the project's ".settings" folder.
+	The "Up" and "Down" buttons move the paths up and down in the list.
+	</p>
+</body>
+</html>

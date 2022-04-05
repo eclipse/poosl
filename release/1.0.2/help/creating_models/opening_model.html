@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Open POOSL Models</title>
+	</head>
+	<body>
+		<h1>Open POOSL Models</h1>
+		POOSL models can be opened using the Project Explorer in two ways: <a href="opening_model.html#explorer_double_click">double click on the file</a> or use the <a href="opening_model.html#explorer_context_menu">context menu</a>.
+		Information on how to create new Poosl models can be found <a href="creating_models.html">here.</a>
+		 	
+		<a id="explorer_double_click"/><h2>Project Explorer Double Click</h2>
+		<p>Double clicking on a ".poosl" file in the project explorer will open the file. The "Choose Editor" window may open (otherwise, see the note below).
+		</p>
+		<img src="img/open_preference_window.png"/>
+		<p>This window gives at most three options to open the file:
+		<ol>
+			<li><b>Textual Editor</b>
+			<br>Opens the <a href="editing_models.html">Textual Editor</a> for the poosl model.		
+			</li>			
+			<li><b>Graphical Editor (Composite Structure Diagram)</b>
+			<br>Opens a graphical <a href="graphical_models.html#composite_structure_diagram">Composite Structure Diagram</a> for the poosl model.
+			If the model contains a system, then the opened diagram describes the system.
+			If the model contains no system, but there is exactly one cluster class that is not instantiated in the file, then the opened diagram describes this cluster class.
+			In all other cases, this option is not offered. 
+			</li>
+			<li><b>Graphical Editor (Class Diagram)</b>
+			<br>Opens the graphical <a href="graphical_models.html#class_diagram">Class Diagram</a> for the poosl model.
+			</li>				
+		</ol>
+		Afterwards, it is possible to navigate from the <a href="editing_models.html">textual editor</a> to the <a href="graphical_models.html">graphical editors</a>, and the other way around.
+		</p>		
+		<p>
+		By ticking "Remember my decision", the selection is remembered, and this window will not appear anymore.
+        In this case, the selection can be changed in the preferences: Window > Preferences > Poosl > Graphical Behavior. 
+		</p>
+	
+		<a id="explorer_context_menu"/><h2>Project Explorer Context Menu</h2>		
+		<p>
+		In the project explorer, right click on a poosl file to open the context menu for that file.
+		The context menu contains 3 Poosl specific options. 
+		<ol>
+			<li><b>Open Textual Editor</b>
+			<br>Opens the <a href="editing_models.html">Textual Editor</a> for the poosl model.		
+			</li>
+			<li><b>Open Composite Structure Diagram</b>
+			<br>Opens a graphical <a href="graphical_models.html#composite_structure_diagram">Composite Structure Diagram</a> for the poosl model.
+			If the model contains a system, then the opened diagram describes the system.
+			If the model contains no system, but there is exactly one cluster class that is not instantiated in the file, then the opened diagram describes this cluster class.
+			In all other cases, an error message is displayed.
+			</li>
+			<li><b>Open Class Diagram</b>
+			<br>Opens the graphical <a href="graphical_models.html#class_diagram">Class Diagram</a> for the poosl model.
+			</li>
+		</ol>
+	
+	</body>
+</html>

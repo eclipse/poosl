@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Suppress Warnings</title>
+	</head>
+	<body>
+		<h1>Suppress Warnings</h1>
+
+		<p>
+			Annotations can be used to suppress some of the warnings.
+		</p>
+
+
+		<h2>Annotation</h2>
+		<p>
+			The annotation starts with @SuppressWarnings followed by the warning type to be suppressed between quotes:			
+		</p>
+		<pre>	@SuppressWarnings("unused")</pre>
+		<p>
+			In addition, a comma-separated list of warning types can be provided:
+		</p>
+		<pre>	@SuppressWarnings("unused", "unconnected")</pre>		
+		<p>
+			This annotation can only be placed above the following elements:
+		</p>		
+		<ul>
+		<li><b>Classes</b> - Process, Data and Cluster Class
+		<li><b>Methods</b> - Data and Process methods
+		<li><b>Channels</b>
+		<li><b>Instances</b>
+		</ul>
+
+
+		<h2>Warning Types</h2>
+		<p>
+			The next paragraphs explain the warning types that can be suppressed and give an example.
+			If you are not sure to which type the warning belongs (if one at all), you can use the quickfix (&lt;CTRL&gt + &lt;1&gt) on a warning to give you the correct suppress warnings annotation.
+		</p>		
+
+		<h3>Unused</h3>
+		<p>Any warnings about elements that are not used can be suppressed with the type "unused".</p>
+		<pre>
+        <b><span style="color:DarkRed">process class</span></b> TaskChild <b><span style="color:DarkRed">extends</span></b> Task
+        <b><span style="color:DarkRed">ports</span></b>
+            Out
+        <b><span style="color:DarkRed">messages</span></b>	
+            Out!ReserveRoom(Integer)
+        <b><span style="color:DarkRed">variables</span></b>
+            s : String
+        <b><span style="color:DarkRed">init</span></b>
+            Initialise()()
+        <b><span style="color:DarkRed">methods</span></b>
+            Initialise()()
+                s := "Ready"
+
+            @SuppressWarnings("unused")
+            PerformWrites(Scenario : String)()
+                Out!ReserveRoom(1)
+		</pre>
+
+		<h3>Unconnected</h3>
+		<p>Any warnings about connectivity issues (e.g., certain message types are not being send or received) can be suppressed with the type "unconnected". </p>		
+		<pre>
+        <b><span style="color:DarkRed">cluster class</span></b> ClusterClass()
+        <b><span style="color:DarkRed">ports</span></b>
+
+        <b><span style="color:DarkRed">instances</span></b>
+            instance: someClass()
+            instance2: someClass()
+        <b><span style="color:DarkRed">channels</span></b>
+            @SuppressWarnings("unconnected")
+            { instance.s, instance2.s }
+		</pre>
+
+		<h3>Typecheck</h3>
+		<p>Any warnings about incorrect types of variables can be suppressed with the type "typecheck". </p>		
+		
+		<pre>
+        <b><span style="color:DarkRed">data class</span></b> Packet <b><span style="color:DarkRed">extends</span></b> Object
+        <b><span style="color:DarkRed">variables</span></b>
+        <b><span style="color:DarkRed">methods</span></b>
+            @SuppressWarnings("typecheck")
+            getCounter() : Integer | s : String |
+                s := new(Integer);
+                return s
+		</pre>
+
+		<h3>Return</h3>
+		<p>Any warnings about the location of return in data methods can be suppressed with the type "return". </p>		
+		<pre>
+        <b><span style="color:DarkRed">data class</span></b> SomeCounter <b><span style="color:DarkRed">extends</span></b> Object
+        <b><span style="color:DarkRed">variables</span></b>
+
+        <b><span style="color:DarkRed">methods</span></b>
+            @SuppressWarnings("return")
+            getCounter() : Integer | i : Integer |
+                i := 1;
+                if true then
+                    return i
+                else
+                    i := i + 1
+                fi;
+                return i
+		</pre>
+	</body>
+</html>

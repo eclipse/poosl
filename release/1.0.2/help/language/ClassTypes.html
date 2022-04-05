@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Types of Data Classes</title>
+	</head>
+	<body>
+		<h1>Types of Data Classes</h1>
+
+		<img src="img/class_types.png" width=736/>
+
+		<p>
+		Four types of data classes are distinguished:
+		<ul>
+		<li><b><a href="BasicClasses.html">Native classes</a></b>: data classes with methods that are directly (natively) provided by the simulator.
+		<li><b>Permanent classes</b>: native classes that must be part of any POOSL model, because they are used in native methods of primitive classes (see below). Permanent classes do not have instance variables. For example, class Object cannot have instance variables, because they would be inherited by primitive classes, which is not possible. Subclasses of permanent classes can be defined by the user to create extensions with instance variables. Class String is a permanent class that has syntactic representations of its instances (see below).
+		<li><b>Primitive classes</b>: permanent classes with a fixed (possibly infinite) collection of instances, that have syntactic representations of their instances and whose behavior is defined in the formal semantics of the language. Primitive classes cannot have subclasses. Instances of primitive classes are called primitive objects. Primitive objects do not have state, in particular they have no references to other objects.
+		<li><b>User-defined class</b>: non-native classes.
+		</ul>
+		</p>
+		
+		<p>
+		User-defined methods can be added for any data class, while user-defined instance variables are not allowed for permanent classes. Subclasses are not allowed for primitive classes. Instances of data classes can be created using new, except in case of primitive classes. For primitive classes and Strings, the <a href="SyntaxConstants.html#String">syntactic representation</a> allows identifying, respectively creating new instances.
+		</p>
+		
+		<p>
+		A type <i>C</i> associated with data class <i>C</i> consists of the constant nil and all instances of data class <i>C</i> and all its subclasses.
+		</p>
+	</body>
+</html>
