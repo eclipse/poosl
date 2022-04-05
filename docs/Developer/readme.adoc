@@ -215,23 +215,6 @@ org.eclipse.poosl.parent/preferences
 
 * Conform to checkstyle metrics about complexity.
 
-
-== Sirius Design guideline
-
-Editing is performed though 'Sirius.tooling' project.
-
-This allows :
-
-* concurrent editing 
-* better history management
-* simplification of mapping style 
-
-To generate, use 'DesignGeneration' run configuration.
-
-If you edit directly _org.eclipse.poosl.sirius/description/poosl.odesign_ for test purpose, launch
-'DesignReverse' and extract properties from xtend file at 
-_org.eclipse.poosl.sirius.tooling/target/rvs_
-
 === Code upgrading
 
 When editing Sirius Design, following must be apply to improve code readability. 

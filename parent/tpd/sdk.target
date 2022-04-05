@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Poosl SDK" sequenceNumber="1639408604">
+<target name="Poosl SDK" sequenceNumber="1649148165">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.persistence.moxy.feature.group" version="2.7.7.v20200504-69f2c2b80d"/>
@@ -25,7 +25,7 @@
       <repository id="EPL" location="http://download.eclipse.org/cbi/updates/license"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.3.0.202112131450"/>
+      <unit id="nl.tue.rotalumis.sdk.feature.group" version="4.3.0.202112210930"/>
       <repository id="rotalumis" location="http://www.es.ele.tue.nl/rotalumis/repository/release/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
@@ -87,11 +87,6 @@
       <unit id="org.eclipse.sirius.interpreter.feature.feature.group" version="6.5.1.202106111115"/>
       <unit id="org.eclipse.sirius.diagram.elk.feature.feature.group" version="6.5.1.202106111115"/>
       <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-03/"/>
-    </location>
-    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.mypsycho.emf.modit_feature.feature.group" version="0.7.2.v20211115-1325"/>
-      <unit id="org.mypsycho.emf.modit.sirius_feature.feature.group" version="0.7.2.v20211115-1325"/>
-      <repository id="modit" location="https://mypsycho.github.io/ModIt/releases/v0.7/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.nebula.feature.feature.group" version="2.5.0.202106201019"/>
