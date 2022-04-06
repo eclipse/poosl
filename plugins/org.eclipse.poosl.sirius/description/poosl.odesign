@@ -9,6 +9,10 @@
           <values name="INSIDE"/>
           <values name="NEXT_TO_PORT_IF_POSSIBLE"/>
         </layoutOptions>
+        <layoutOptions xsi:type="description_1:EnumLayoutOption" id="org.eclipse.elk.edgeRouting">
+          <targets>PARENT</targets>
+          <value name="ORTHOGONAL"/>
+        </layoutOptions>
       </layout>
       <defaultLayer name="Default">
         <edgeMappings name="edge_SimpleChannel" preconditionExpression="aql:self.isInstanceSimpleConnected(sourceView, targetView)" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Reused%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='del_pooslElement']" semanticCandidatesExpression="aql:self.channels->select(it | it.isSimpleChannel())" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Edge']" sourceMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='node_ClusterClass']/@subNodeMappings[name='node_ClusterInstance']/@borderedNodeMappings[name='node_InstancePort'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='node_ClusterClass']/@borderedNodeMappings[name='node_ExternalPort']" targetMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='node_ClusterClass']/@subNodeMappings[name='node_ClusterInstance']/@borderedNodeMappings[name='node_InstancePort']" targetFinderExpression="aql:self.getSimpleChannelEnd(true)" sourceFinderExpression="aql:self.getSimpleChannelEnd(false)" domainClass="poosl.Channel" useDomainElement="true" reconnections="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='reconnect_channel']">
