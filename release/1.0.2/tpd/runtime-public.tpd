@@ -1,0 +1,127 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
+ target "Poosl runtime: open part" 
+
+//
+// This target platform list dependencies to build project components.
+//
+
+with requirements
+// do not include source for this target
+// it should be used only by compiler
+
+// This target platform declare dependencies of components to be release
+
+location eclipse_core "https://download.eclipse.org/releases/2020-03/" {
+	
+	 org.eclipse.platform.feature.group
+	// +-> org.eclipse.ui.ide.application (default of sure-fire)
+	// +-> equinox.app
+	// +-> org.eclipse.rcp.feature.group
+	// +-> org.eclipse.e4.core.tools.feature.feature.group
+	
+	
+	javax.activation
+	
+	org.eclipse.xtext.redist.feature.group 
+	org.antlr.runtime [3.2.0,3.2.1) // xtext 2.21 requires a strict version
+	org.apache.commons.cli
+	org.eclipse.jdt.feature.group // required by xtext.redist for type indexing.
+	    
+    org.eclipse.emf.feature.group
+    // This drags org.eclipse.emf.codegen and then JDT.
+    org.eclipse.emf.transaction.feature.group
+	org.eclipse.emf.query.feature.group
+	org.eclipse.emf.validation.feature.group
+
+	// no need to declare SDK as 'source' properties if equivalent (only no examples)
+	// maybe epp.package is enough ?
+	org.eclipse.gef.feature.group
+    
+    org.eclipse.acceleo.feature.group
+    org.eclipse.acceleo.query.feature.group
+    org.eclipse.ocl.feature.group
+    // (Required by %.acceleo.common)
+
+    org.eclipse.egit.feature.group // egit is required in runtime as:
+    // - test projects are committed,
+    // - eclipse.platform includes team,
+    // - team detect egit but cannot deal with it.
+    org.eclipse.platform.ide
+    org.eclipse.equinox.executable.feature.group // implicit dependency of product.
+
+	org.eclipse.platform.sdk // required ??
+}
+
+
+location eclipselink "https://download.eclipse.org/rt/eclipselink/updates/" {
+   // This site is accumulative
+   // Thus 'Create target definition' is not repeatable unless specific version is defined
+   org.eclipse.persistence.moxy.feature.group  [2.7.7, 2.7.8) // fix version required for TPD
+   // +-> org.eclipse.persistence.moxy
+   // +-> jakarta.xml.bind-api
+}
+
+location gmf_runtime "http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/" {
+	org.eclipse.gmf.feature.group [1.13.0,1.14.0)
+	// Requires by EEF, not available in eclipse 2020-03
+}
+
+location gmf_notation "http://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/" {
+   org.eclipse.gmf.runtime.notation.feature.group 1.10
+   // Requires by sirius runtime, not available in eclipse 2020-03
+}
+
+
+// Those feature could be find in eclipse release 
+// but eclipse release does not contain sources required in SDK
+location sirius "https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-03/" {
+	
+	org.eclipse.sirius.runtime.feature.group
+	org.eclipse.sirius.runtime.aql.feature.group
+	org.eclipse.sirius.properties.feature.feature.group
+	
+	org.eclipse.sirius.runtime.ide.ui.feature.group
+	org.eclipse.sirius.runtime.ide.eef.feature.group
+
+	// Acceleo3 is still in use in ODesign
+	// this should be removed when updated.
+	org.eclipse.sirius.runtime.acceleo.feature.group
+
+	org.eclipse.sirius.runtime.ide.xtext.feature.group
+	// +-> org.eclipse.sirius.common.xtext
+
+	// EEF and ELK are not currently in used
+	// but propects are high.
+	org.eclipse.eef.sdk.feature.feature.group // only EEF feature is SDK
+	org.eclipse.eef.ext.widgets.reference.feature.feature.group
+	org.eclipse.sirius.interpreter.feature.feature.group
+	
+	org.eclipse.sirius.diagram.elk.feature.feature.group
+}
+
+
+location ELK "https://download.eclipse.org/elk/updates/releases/0.7.1/" {
+	// This is included in org.eclipse.sirius.diagram.elk.feature.feature.group
+	// but not the last version or source
+    org.eclipse.elk.feature.feature.group lazy
+    org.eclipse.elk.algorithms.feature.feature.group lazy
+    // graphviz algos requires tool installation
+    // org.eclipse.elk.graphviz.feature.feature.group
+}
+
+// EPL feature
+location EPL "http://download.eclipse.org/cbi/updates/license" {
+	org.eclipse.license.feature.group
+}

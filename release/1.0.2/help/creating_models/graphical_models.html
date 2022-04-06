@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Edit POOSL Models Graphically</title>
+	</head>
+	<body>
+		<h1>Edit POOSL models graphically</h1>
+		<p>
+		There are multiple graphical views on a POOSL model, which can be opened from the <a href="opening_model.html">Project Explorer</a> or the <a href="editing_models.html"> textual editor</a>.
+		All graphical (layout) information is stored in the project's representations.aird file, which is automatically created when opening a graphical editor.
+		</p>
+		
+		<a id="class_diagram"/><h2>Class Diagram</h2>
+		<p>
+		A class diagram shows the inheritance structure of the data and process classes, including their parameters, variables and methods.
+		In addition it shows the containment structure of the system and cluster classes.
+		The following features are useful:
+		<ol>
+			<li><b>Show the model in a textual editor</b>
+			<br>How? Right-mouse click outside any class and select "Open Textual Editor", or keyboard shortcut <b>&lt;F2&gt;</b> (and press <b>&lt;F2&gt;</b> again to switch back).
+			</li>
+			<li><b>Show an element in a textual editor</b>
+			<br>How? Double-click on the element, or right-mouse click and select "Open Textual Editor".
+			</li>
+			<li><b>Show a Composite Structure Diagram of a system or cluster class</b>
+			<br>How? Double-click on the system or cluster class, or right-mouse click and select "Open Composite Structure Diagram".
+			</li>
+			<li><b>Filter Classes</b>
+			<br>How? In the top bar select the filter icon (looks like 2 funnels), select "Hide Basic Classes" to hide only the basic classes. Select "Hide Imports" to hide all classes imported from a different file.
+			</li>
+			<li><b>Add a new element</b>
+			<br>How? First click on a Creation tool in the Palette at the right-hand side, and then click on the graphical location where this element must be added.
+			</li>
+			<li><b>Change an element</b>
+			<br>How? First click on the element, and then either use the "Properties" view, or right-click and select "Edit Method/Variable/Parameter". 
+			</li>
+			<li><b>Delete an element</b>
+			<br>How? First click on the element, and then either right-click and select "Edit" and "Delete From Model", or use keyboard shortcut &lt;DEL&gt;.
+			</li>
+
+		</ol>
+		Note: Graphical editing is incomplete; sometimes textual editing is needed.
+		</p>
+
+		<a id="composite_structure_diagram"/><h2>Composite Structure Diagram</h2>
+		<p>
+		A Composite Structure Diagram shows the ports and instances of a single system or cluster class, in combination with the channels that connect them.
+		The following features are useful:
+		<ol>
+			<li><b>Show the system or cluster in a textual editor (e.g., to edit the cluster parameters)</b>
+			<br>How? Right-mouse click outside any instance and select "Open Textual Editor", or keyboard shortcut <b>&lt;F2&gt;</b> (and press <b>&lt;F2&gt;</b> again to switch back).
+			</li>
+			<li><b>Show an instance in the textual editor (e.g., to edit the instantiation parameters)</b>
+			<br>How? Right-mouse click on the instance and select "Open Instance in Textual Editor".
+			</li>
+			<li><b>Show the class of an instance in a textual editor</b>
+			<br>How? Right-mouse click on the instance and select "Open Textual Editor". Double-click the instance may show the "Choose Editor" window depending on your settings, more information about similar behavior can be found under <a href="opening_model.html#explorer_double_click">Project Explorer double click</a> 
+			</li>
+			<li><b>Show a Composite Structure Diagram of the class of a cluster instance</b>
+			<br>How? Right-mouse click on the instance and select "Open Composite Structure Diagram". Double-click the instance may show the "Choose Editor" window depending on your settings, more information about similar behavior can be found under <a href="opening_model.html#explorer_double_click">Project Explorer double click</a> 
+			</li>
+			<li><b>Add a new element</b>
+			<br>How? First click on a Creation tool in the Palette at the right-hand side, and then click on the graphical location where this element must be added. Channels can be drawn between two ports, and between a port and an existing channel. 
+			</li>
+			<li><b>Change an element</b>
+			<br>How? First click on the element, and then use the "Properties" view.
+			</li>
+			<li><b>Delete an element</b>
+			<br>How? First click on the element, and then either right-click and select "Edit" and "Delete From Model", or use keyboard shortcut &lt;DEL&gt;.
+			</li>
+			<li><b>Change the color of a channel</b>
+			<br>How? Double-click on the channel, and pick a color.
+			</li>
+			<li><b>Show and change the location of specific Communication Diagram elements</b>
+			<br>How? Right click in the diagram and select "Show/Hide Communication Elements" to show specific elements for the <a href ="../simulating_models/communication_diagram.html">Communication Diagrams</a> (viz., the message counters for the ports and the general message description note).
+			</li>
+		</ol>
+		Note: Graphical editing is incomplete; sometimes textual editing is needed.
+		</p>
+
+	</body>
+</html>
