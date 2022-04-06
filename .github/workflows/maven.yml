@@ -30,7 +30,9 @@ jobs:
           # RCPTT takes too long, limit to tags
           MVN_IT_PROFILE: ${{ startsWith(github.ref, 'refs/tags/') && '-P integration-tests' || '' }}
         # xvfb-run enables XDisplay
-        run: xvfb-run mvn --batch-mode verify $MVN_IT_PROFILE
+        # Note: integration tests are desactivated for now. TODO make them run on linux/windows then reactivate the following line:
+        # run: xvfb-run mvn --batch-mode verify $MVN_IT_PROFILE
+        run: xvfb-run mvn --batch-mode verify
       
       - name: RCPTT Logs 📝
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
