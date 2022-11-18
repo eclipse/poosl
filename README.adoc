@@ -55,18 +55,39 @@ Development guidelines are described at https://github.com/eclipse/poosl/tree/ma
 
 === Development environment
 
-With Eclipse instal, use following Oomph setup to have a proper tool set (in Advanced mode).
+==== Install eclipse
+
+. Download OOMPH: https://projects.eclipse.org/projects/tools.oomph/downloads
+. Launch OOMPH, switch to "advanced mode"
+. Click on the "plus" button to add the following resource
 
 [source]
 ----
 https://raw.githubusercontent.com/eclipse/poosl/main/parent/oomph/org.eclipse.setup
 ----
 
-Once the repository is cloned, following preferences should be set:
+[start=4]
+. If you intend to contribute to POOSL (thus run the RCPTT tests), select version "2020-03"
+. Proceed with the installation
 
-- *Java/Code style/Formatter*: import _org.eclipse.poosl.parent/preferences/JavaFormatter.xml_
-- *Java/Code style/Clean Up*: import _org.eclipse.poosl.parent/preferences/CleanupProfile.xml_
-- *Java/Code style/Code Templates*: import _/org.eclipse.poosl.parent/preferences/java-codetemplates.xml_
+===== Import POOSL source code
+
+. Clone https://github.com/eclipse/poosl.git
+. Import the repository in eclipse
+. Unfold the repository and under "Working Tree", select the following projects:
+* _docs_
+* _plugins/*_
+* _releng/*_
+* _tests/*_
+* _tests/rcptt/*_
+* _tooling/org.eclipse.poosl.xtext.tooling_
+. _Right-click > Import_
+. In the Java Perspective, activate working sets (_Package Explorer > ... menu > Top-level elements > Working Sets_)
+. In _Window > Preferences > Plug-in development > Target Platform_, select & apply POOSL SDK Target platform
+. Check that the following preferences are set: 
+* *Java/Code style/Formatter*: import _org.eclipse.poosl.parent/preferences/JavaFormatter.xml_
+* *Java/Code style/Clean Up*: import _org.eclipse.poosl.parent/preferences/CleanupProfile.xml_
+* *Java/Code style/Code Templates*: import _/org.eclipse.poosl.parent/preferences/java-codetemplates.xml_
 
 === Contributing
 
@@ -85,6 +106,7 @@ Commit must start with '[#<issue-number>] ' tag.
 == Automatic Tests via RCPTT
 
 - In Eclipse environment, all tests are grouped in __org.eclipse.poosl.rcptt.allinone/AllTests.suite__
+_Note: at the moment, POOSL RCPTT tests only works on Windows with Eclipse 2020-03._
 
 - In bash mode, use maven command:
 
