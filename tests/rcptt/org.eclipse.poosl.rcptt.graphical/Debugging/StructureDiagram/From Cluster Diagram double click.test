@@ -14,8 +14,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-tab-folder -index 3 | get-property activePage | equals "producer_consumer.poosl" | verify-true
-
+get-tab-folder -index 3 | get-property activePage | equals "System (producer_consumer.poosl)" | verify-true
 get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 
     -name "System (producer_consumer.poosl)" | get-property "isEditModeEnabled()" | equals false | verify-true
 with [get-editor "System (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part 

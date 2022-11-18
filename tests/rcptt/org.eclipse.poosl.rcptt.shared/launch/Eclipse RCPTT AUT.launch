@@ -25,6 +25,7 @@
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m -Xmx4096m -Xss8m"/>
     <stringAttribute key="pde.version" value="3.3"/>
     <stringAttribute key="product" value="org.eclipse.platform.ide"/>
+    <booleanAttribute key="restart" value="true"/>
     <booleanAttribute key="show_selected_only" value="false"/>
     <stringAttribute key="target-configuration" value="POOSL for RCPTT"/>
     <stringAttribute key="templateConfig" value="${target_home}/configuration/config.ini"/>
