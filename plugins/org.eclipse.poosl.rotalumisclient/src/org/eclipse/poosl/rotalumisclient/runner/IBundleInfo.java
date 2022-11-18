@@ -129,7 +129,7 @@ public interface IBundleInfo {
         }
     }
 
-    public interface Registry {
+    interface Registry {
         Registry INSTANCE = EcorePlugin.IS_ECLIPSE_RUNNING
             ? new Delegate() : new StandaloneBundleRegistry();
 
