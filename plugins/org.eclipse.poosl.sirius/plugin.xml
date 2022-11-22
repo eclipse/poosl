@@ -129,11 +129,6 @@
         point="org.eclipse.ui.commands">
      <command
            defaultHandler="org.eclipse.poosl.sirius.handlers.GraphicalEditorHandler"
-           id="org.eclipse.poosl.commands.sirius.editor.opengraphicaleditor"
-           name="Open Graphical Editor">
-     </command>
-     <command
-           defaultHandler="org.eclipse.poosl.sirius.handlers.GraphicalEditorHandler"
            id="org.eclipse.poosl.commands.sirius.editor.opencompositestructurediagram"
            name="Open Composite Structure Diagram">
      </command>
@@ -141,11 +136,6 @@
            defaultHandler="org.eclipse.poosl.sirius.handlers.GraphicalEditorHandler"
            id="org.eclipse.poosl.commands.sirius.editor.openclassdiagram"
            name="Open Class Diagram">
-     </command>
-     <command
-           defaultHandler="org.eclipse.poosl.sirius.handlers.TextualEditorHandler"
-           id="org.eclipse.poosl.commands.sirius.opentextualeditor"
-           name="Open Textual Editor">
      </command>
      <command
            defaultHandler="org.eclipse.poosl.sirius.handlers.ProjectExplorerHandler"
@@ -177,11 +167,40 @@
             id="org.eclipse.poosl.sirius.edit.delete"
             name="Delete (including Diagrams)">
      </command> 
+     <command
+           id="org.eclipse.poosl.commands.sirius.editor.opengraphicaleditor"
+           name="Open Graphical Editor">
+     </command>
+     <command
+           id="org.eclipse.poosl.commands.sirius.opentextualeditor"
+           name="Open Textual Editor">
+     </command>
   </extension>
   <extension
         point="org.eclipse.ui.handlers">
      <handler
+           class="org.eclipse.poosl.sirius.handlers.GraphicalEditorHandler"
            commandId="org.eclipse.poosl.commands.sirius.editor.opengraphicaleditor">
+        <enabledWhen>
+            <with variable="activeEditor">
+                <test
+                      forcePluginActivation="true"
+                      property="org.eclipse.poosl.sirius.isPooslEditor">
+                </test>
+            </with>
+        </enabledWhen>
+     </handler>
+     <handler
+           class="org.eclipse.poosl.sirius.handlers.TextualEditorHandler"
+           commandId="org.eclipse.poosl.commands.sirius.opentextualeditor">
+        <enabledWhen>
+			<with variable="activeEditor">
+                <test
+                      forcePluginActivation="true"
+                      property="org.eclipse.poosl.sirius.isPooslEditor">
+                </test>
+            </with>
+        </enabledWhen>
      </handler>
   </extension>
   <extension
@@ -310,4 +329,15 @@
           </enablement>
     </renameParticipant>
  </extension>
+ 
+  <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.poosl.sirius.PropertyTester"
+            id="org.eclipse.poosl.sirius.PropertyTester"
+            namespace="org.eclipse.poosl.sirius"
+            properties="isPooslEditor"
+            type="org.eclipse.ui.IEditorPart">
+      </propertyTester>
+   </extension>
 </plugin>
