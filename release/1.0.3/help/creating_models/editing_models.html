@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Edit POOSL Models Textually</title>
+	</head>
+	<body>
+		<a id="edit_model"/><h1>Edit POOSL models textually</h1>
+		<p>
+		After <a href="opening_model.html">opening a POOSL Model</a> or <a href="creating_models.html#create_model">creating a POOSL Model</a>, the following features are useful during editing:
+		<ol>
+			<li><b>Content assist</b>
+			<br>This shows the templates for typical POOSL constructs and the elements (e.g., class, method, message, parameter, variable, port, instance) that can be referenced, at a particular position in the model.
+			<br>How? Keyboard shortcut &lt;CTRL&gt;-&lt;SPACE&gt;.
+			</li>
+			<li><b>Quick-fix</b>
+			<br>This provides common solutions for typical validation warnings (icon: exclamation mark in a yellow triangle) and errors (icon: cross in a red box). It is available if a light-bulb is displayed next to the error/warning icon.
+			<br>How? Mouse click on the light-bulb next to the error/warning icon, or keyboard shortcut &lt;CTRL&gt;-1.
+			</li>
+			<li><b>Graphical viewing and editing</b>
+			<br>There are two types of graphical views on a POOSL model:
+				<ul><li><a href="graphical_models.html#composite_structure_diagram">Composite Structure Diagram</a>: available when the cursor is at a system or cluster.</li>
+				<li><a href="graphical_models.html#class_diagram">Class diagram</a>: accessible when the cursor is at any other position in the file.</li></ul>
+			How? Right mouse click in the text editor and select "Open Composite Structure Diagram" or "Open Class Diagram", or use the keyboard shortcut <b>&lt;F2&gt;</b> (and press <b>&lt;F2&gt;</b> again to switch back).
+			</li>
+
+			<li><b>Rename element</b>
+			<br>This consistently renames an element and all references to the element (also across files).
+			<br>How? Keyboard shortcut &lt;ALT&gt;-&lt;SHIFT&gt;-R.
+			</li>
+			<li><b>Formatter</b>
+			<br>This applies a default layout to the model.
+			<br>How? Keyboard shortcut &lt;CTRL&gt;-&lt;SHIFT&gt;-F.
+			</li>
+			<li><b>Auto-format on save</b>
+			<br>This applies a default layout to the model when it is saved. It is optional behavior that can be set in the <a href="../preferences/preferences.html#poosl">Poosl preferences</a>.
+			<br>How? If this option is turned on, save the model (for example using keyboard shortcut &lt;CTRL&gt;-&lt;S&gt).
+			</li>
+			<li><b>Model documentation</b>
+			<br>This is formed by the multi-line (/* ... */) comments (if any) before declarations (e.g., class, method, message, parameter, variable, port, instance).
+			<br>How? Hover over an element or a reference to an element, or right-click on a model and select "Generate Documentation" (the resulting HTML file appears in the documentation folder).
+			</li>
+			<li><b>Tasks view</b>
+			<br>This shows tags like TODO, FIXME, and XXX that are used in single-line (//) and multi-line (/* ... */) comments.
+			<br>How? Mouse click on Tasks view in the bottom of the POOSL Edit and Debug perspectives.
+			</li>
+			
+		</ol>
+		After editing the POOSL model, continue with <a href="../simulating_models/debug.html">debugging</a>. Various <a href="ide_shortcuts.html">Eclipse shortcuts</a> and <a href="change_propagation.html">change propagation</a> may also be interesting to look at.
+		</p>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Variables view</title>
+	</head>
+	<body>
+		<h1>Variables view</h1>
+		<p>
+		The Variables view is used when <a href="debug.html">debugging a POOSL model</a>. It shows all parameters and variables that are accessible by the selected node in the <a href="execution_tree_view.html">Execution Tree view</a>. When selecting a variable in the Variables view, the value may be expanded recursively with its internal variables.
+		</p>
+		<img src="img/variable_view.png"/>
+		<p>
+		The displayed string representation of each value is computed using the printString method from the data class of the value. 
+		If this data class is a <a href="../language/ClassTypes.html">non-primitive class</a>, then an integer ID is appended.
+		The IDs provide an object-oriented view that can be used to determine which variables refer to the same object.
+		Variables will not be shown when an external adapter instance is selected in the debug view (see <a href="../language/Cosimulation.html">Co-simulation</a> for more info). 
+		</p>
+		
+		<h1 href="set value">Set Value </h1>
+		<p>
+		The value of a variable can be changed during debugging.
+		To change the value, right click the variable and select "Change Value..."; in the opened window you can enter a new POOSL value.
+		Alternatively, click on the value in the second column, and directly enter a new POOSL value.
+		The integer ID for non-primitive classes should not be part of a new POOSL value.
+		</p>
+		<img src="img/change_value.png"/>
+	</body>
+</html>
