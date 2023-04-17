@@ -1,0 +1,376 @@
+importlib "distributions.poosl"
+import "tracing.poosl"
+import "data.poosl"
+
+/*
+ * A medical doctor takes 20 - 40 minutes per patient
+ * and triggers 1 - 5 3D reconstruction request per patient.
+ */
+process class MedicalDoctors(p : ModelParameters)
+ports
+	toScanner
+	toEdge
+	trace
+	observer
+messages
+	toEdge!selectPatient(Integer, Integer, Integer) // hid, rid, pid
+	toEdge!selectProtocol(Integer, Integer, XrayProtocol) // hid, rid, prot
+	toScanner!pressPedal(ReconstructionMetaData)
+	trace!event(Real, String)
+	trace!event(String, Real, String)
+	trace!registerResource(String, Real, String)
+	trace!eventToEvent(String, String, String)
+	trace!done()
+	observer!done()
+variables
+	treatmentDist : Uniform
+	requestDist : Uniform
+	pedalDist : Uniform
+init
+	initialize()()
+methods
+	initialize()()
+		treatmentDist := new(Uniform) withParameters(20 * 60, 40 * 60);
+		requestDist := new(Uniform) withParameters(5 * 60, 15 * 60);
+		pedalDist := new(Uniform) withParameters(1, 30);
+		spawnDoctors(1, 1)()
+
+	spawnDoctors(hid : Integer, rid : Integer)()
+		par
+			trace!registerResource("md" + hid asJSON + rid asJSON, 1.0, "name=medical doctor, hid=" + hid asJSON +
+				",rid=" + rid asJSON);
+			operate(hid, rid, 1, 1)()
+		and
+			if rid < p numRooms then
+				spawnDoctors(hid, rid + 1)()
+			else if hid < p numHospitals then
+				spawnDoctors(hid + 1, 1)()
+			fi fi
+		rap
+
+	operate(hid : Integer, rid : Integer, pid : Integer, day : Integer)() | md : ReconstructionMetaData, cid : Integer,
+			t0 : Real |
+		toEdge!selectPatient(hid, rid, pid);
+		trace!event(currentTime, "name=selectPatient, pid=" + pid asJSON + ", rid=" + rid asJSON + ", hid=" + hid
+			asJSON);
+		cid := 1;
+		t0 := currentTime;
+		interrupt
+			delay treatmentDist sample asInteger
+		with (
+			delay requestDist sample asInteger;
+			if cid <= 5 then
+				md := new(ReconstructionMetaData) withParameters(hid, rid, pid, cid, day, new(XrayProtocol) withType(1));
+				toEdge!selectProtocol(hid, rid, md protocol);
+				trace!event(md uid + "select", currentTime, "name=selectProtocol, " + md atts);
+				delay pedalDist sample asInteger;
+				toScanner!pressPedal(md);
+				trace!event(md uid + "press", currentTime, "name=pressPedal, " + md atts);
+				trace!eventToEvent(md uid + "select", md uid + "press", md atts);
+				cid := cid + 1
+			fi
+		);
+//		trace!claim(t0, currentTime, "md" + hid asJSON + rid asJSON, 1.0, "name=treatment, " + md attsNoCid);
+		nextPatient(hid, rid, pid, day)()
+
+	nextPatient(hid : Integer, rid : Integer, pid : Integer, day : Integer)() | dayRelTime : Real |
+		dayRelTime := currentTime - (((day - 1) asReal) * 86400.0);
+		if (pid modulo(p numPatients) != 0) then
+			if dayRelTime < 3600.0 then
+				delay 3600.0 - dayRelTime
+			else if dayRelTime < 7200.0 then
+				delay 7200.0 - dayRelTime
+			else if dayRelTime < 18000.0 then
+				delay 18000.0 - dayRelTime
+			else if dayRelTime < 21600.0 then
+				delay 21600.0 - dayRelTime
+			fi fi fi fi;
+			operate(hid, rid, pid + 1, day)()
+		else if day < p numDays then
+			// go to the next day:
+			delay ((day asReal) * 86400.0) - currentTime;
+			operate(hid, rid, 1, day + 1)()
+		else
+			// we are done
+			observer!done();
+			trace!done()
+		fi fi
+
+/*
+ * Model of the scanner that takes reconstruction requests
+ * and generates a start message that indicates that it
+ * started streaming images.
+ */
+process class Scanners(p : ModelParameters)
+ports
+	in
+	out
+	trace
+	observer
+messages
+	in?pressPedal(ReconstructionMetaData)
+	out!send(ReconstructionMetaData)
+	out!sendBatch(ReconstructionMetaData)
+	trace!event(Real, String)
+	trace!registerResource(String, Real, String)
+	trace!claim(String, Real, Real, String, Real, String)
+	trace!eventToClaim(String, String, String)
+	observer!start(ReconstructionMetaData)
+variables
+
+init
+	spawnScanners(1, 1)()
+methods
+	spawnScanners(hid : Integer, rid : Integer)()
+		par
+			trace!registerResource("scanner" + hid asJSON + rid asJSON, 1.0, "name=Scanner, hid=" + hid asJSON + ",rid="
+				+ rid asJSON);
+			handlePedalPress(hid, rid)()
+		and
+			if rid < p numRooms then
+				spawnScanners(hid, rid + 1)()
+			else if hid < p numHospitals then
+				spawnScanners(hid + 1, 1)()
+			fi fi
+		rap
+
+	handlePedalPress(hid : Integer, rid : Integer)() | md : ReconstructionMetaData, t0 : Real |
+		in?pressPedal(md | (md hid == hid) & (md rid == rid));
+		t0 := currentTime;
+		if p batchUpload then
+			delay (1.0 / md protocol fps) * (md protocol numImages asReal);
+			out!sendBatch(md)
+		else
+			delay (1.0 / md protocol fps); // start image stream after first image
+			out!send(md);
+			delay (md protocol numImages - 1) asReal * (1.0 / md protocol fps)
+		fi;
+		trace!event(currentTime, "name=capture_done, " + md atts);
+		trace!claim(md uid + "capture", t0, currentTime, "scanner" + hid asJSON + rid asJSON, 1.0, "name=capture, " + md
+			atts);
+		trace!eventToClaim(md uid + "press", md uid + "capture", md atts);
+		observer!start(md);
+		handlePedalPress(hid, rid)()
+
+/*
+ * Model of the edge system.
+ */
+process class Edges(p : ModelParameters)
+ports
+	in
+	in_from_cloud
+	nw
+	toOrchestrator
+	toWebApp
+messages
+	in?selectPatient(Integer, Integer, Integer)
+	in?selectProtocol(Integer, Integer, XrayProtocol)
+	in?send(ReconstructionMetaData)
+	in?sendBatch(ReconstructionMetaData)
+	in_from_cloud?notifyFinished(ReconstructionMetaData)
+	nw!upload(ReconstructionMetaData, Real, Real) // hid, rid, load, speed cap
+	nw?done(ReconstructionMetaData) // hid, rid
+	toOrchestrator!selectProtocol(XrayProtocol)
+	toOrchestrator!notify(ReconstructionMetaData)
+	toWebApp!resultAvailable(ReconstructionMetaData)
+variables
+
+init
+	spawnEdges(1, 1)()
+methods
+	spawnEdges(hid : Integer, rid : Integer)()
+		par
+			receiveControlFromHospital(hid, rid)()
+		and
+			receiveControlFromCloud(hid, rid)()
+		and
+			if p batchUpload then
+				receiveImagesBatch(hid, rid)()
+			else
+				receiveImagesStream(hid, rid)()
+			fi
+		and
+			if rid < p numRooms then
+				spawnEdges(hid, rid + 1)()
+			else if hid < p numHospitals then
+				spawnEdges(hid + 1, 1)()
+			fi fi
+		rap
+
+	receiveControlFromHospital(hid : Integer, rid : Integer)() | patientId : Integer, x : XrayProtocol, hi : Integer,
+			ri : Integer |
+		sel
+			in?selectPatient(hi, ri, patientId | (hi == hid) & (ri == rid))
+		or
+			in?selectProtocol(hi, ri, x | (hi == hid) & (ri == rid));
+			toOrchestrator!selectProtocol(x)
+		les;
+		receiveControlFromHospital(hid, rid)()
+
+	receiveImagesStream(hid : Integer, rid : Integer)() | md : ReconstructionMetaData |
+		in?send(md | (md hid == hid) & (md rid == rid)); // called for first image
+		nw!upload(md, md protocol totalSizeMB * 8.0, md protocol fps * md protocol imageSizeMB asReal * 8.0); // hid, rid, load, speed cap
+		nw?done(md | (md hid == hid) & (md rid == rid));
+		delay (0.1); // 100 ms
+		toOrchestrator!notify(md);
+		receiveImagesStream(hid, rid)()
+
+	receiveImagesBatch(hid : Integer, rid : Integer)() | md : ReconstructionMetaData |
+		in?sendBatch(md | (md hid == hid) & (md rid == rid)); // called when all images are present
+		nw!upload(md, md protocol totalSizeMB * 8.0, p bw); // hid, rid, load, speed cap
+		nw?done(md | (md hid == hid) & (md rid == rid));
+		delay (0.1); // 100 ms
+		toOrchestrator!notify(md);
+		receiveImagesBatch(hid, rid)()
+
+	receiveControlFromCloud(hid : Integer, rid : Integer)() | md : ReconstructionMetaData |
+		in_from_cloud?notifyFinished(md | (md hid == hid) & (md rid == rid));
+		delay (0.1); // 100 ms
+		toWebApp!resultAvailable(md);
+		receiveControlFromCloud(hid, rid)()
+
+process class Networks(p : ModelParameters)
+ports
+	p
+	s3
+	trace
+messages
+	p?upload(ReconstructionMetaData, Real, Real) // hid, rid, load, speed cap
+	p!done(ReconstructionMetaData) // hid, rid
+	s3!startStream(ReconstructionMetaData)
+	s3!stopStream(ReconstructionMetaData)
+	trace!registerResource(String, Real, String)
+	trace!claim(Real, Real, String, Real, String)
+	trace!claim(String, Real, Real, String, Real, String)
+	trace!claimStartToClaimStart(String, String, String)
+	trace!claimEndToClaimEnd(String, String, String)
+variables
+	numActive : Array // Integer counters, indexed by hid
+	speed : Map // maps hid to Array of speeds, indexed by rid
+	caps : Map // maps hid to Array of caps, indexed by rid
+init
+	initialize()()
+methods
+	initialize()()
+		numActive := new(Array) resize(p numHospitals);
+		speed := new(Map);
+		caps := new(Map);
+		spawnNetworks(1)()
+
+	spawnNetworks(hid : Integer)()
+		par
+			initializeNetwork(hid)()
+		and
+			if hid < p numHospitals then
+				spawnNetworks(hid + 1)()
+			fi
+		rap
+
+	initializeNetwork(hid : Integer)() | i : Integer |
+		trace!registerResource("nw" + hid asJSON, p bw, "name=network,hid=" + hid asJSON);
+		numActive putAt(hid, 0);
+		speed putAt(hid, new(Array) resize(p numRooms));
+		caps putAt(hid, new(Array) resize(p numRooms));
+		i := 1;
+		while i <= p numRooms do
+			speed at(hid) putAt(i, 0.0);
+			caps at(hid) putAt(i, 0.0);
+			i := i + 1
+		od;
+		receive(hid)()
+
+	receive(hid : Integer)() | md : ReconstructionMetaData, load : Real, speedCap : Real, i : Integer |
+		p?upload(md, load, speedCap | md hid == hid) {
+			numActive putAt(hid, numActive at(hid) + 1);
+			caps at(hid) putAt(md rid, speedCap);
+			i := 1;
+			while i <= p numRooms do
+				speed at(hid) putAt(i, caps at(hid) at(i) min(p bw / numActive at(hid) asReal));
+				i := i + 1
+			od
+		};
+		par
+			doUpload(md, load, caps at(hid) at(md rid) min(p bw / numActive at(hid) asReal))()
+		and
+			receive(hid)()
+		rap
+
+	doUpload(md : ReconstructionMetaData, initialLoad : Real, initialSpeed : Real)() | remainingLoad : Real,
+			currentSpeed : Real, t : Real, i : Integer, tmp : Real, firstClaim : Boolean |
+		s3!startStream(md);
+		remainingLoad := initialLoad;
+		currentSpeed := initialSpeed;
+		firstClaim := true;
+		while remainingLoad > 0.0 do
+			t := currentTime;
+			abort
+				(
+					delay remainingLoad / currentSpeed;
+					{
+						remainingLoad := 0.0;
+						tmp := currentSpeed;
+						numActive putAt(md hid, numActive at(md hid) - 1);
+						if numActive at(md hid) > 0 then // prevent division by 0
+							i := 1;
+							while i <= p numRooms do
+								speed at(md hid) putAt(i, caps at(md hid) at(i) min(p bw / numActive at(md hid)
+									asReal));
+								i := i + 1
+							od
+						fi
+					}
+				)
+			with (
+				[currentSpeed != speed at(md hid) at(md rid)] {
+					tmp := currentSpeed;
+					remainingLoad := remainingLoad - (currentTime - t) * currentSpeed;
+					currentSpeed := speed at(md hid) at(md rid)
+				};
+				if remainingLoad > 0.0 then
+					if firstClaim then
+						trace!claim("transfer-first" + md uid, t, currentTime, "nw" + md hid asJSON, tmp,
+								"name=transfer," + md atts);
+						firstClaim := false
+					else
+						trace!claim(t, currentTime, "nw" + md hid asJSON, tmp, "name=transfer," + md atts)
+					fi
+				fi
+			)
+		od;
+		trace!claim("transfer-last" + md uid, t, currentTime, "nw" + md hid asJSON, tmp, "name=transfer," + md atts);
+		if !firstClaim then
+			trace!claimStartToClaimStart(md uid + "capture", "transfer-first" + md uid, md atts)
+		else
+			trace!claimStartToClaimStart(md uid + "capture", "transfer-last" + md uid, md atts)
+		fi;
+		trace!claimEndToClaimEnd(md uid + "capture", "transfer-last" + md uid, md atts);
+		p!done(md);
+		s3!stopStream(md)
+
+/*
+ * A cluster that encapsulates the device and edge entities.
+ */
+cluster class Hospitals(p : ModelParameters)
+ports
+	toS3
+	toWebApp
+	toOrchestrator
+	inEdge
+	trace
+	observer
+instances
+	medicalDoctors : MedicalDoctors(p := p)
+	scanners : Scanners(p := p)
+	edges : Edges(p := p)
+	networks : Networks(p := p)
+channels
+	{ medicalDoctors.toScanner, scanners.in }
+	{ medicalDoctors.toEdge, scanners.out, edges.in }
+	{ edges.toOrchestrator, toOrchestrator }
+	{ edges.toWebApp, toWebApp }
+	{ edges.in_from_cloud, inEdge }
+	{ networks.s3, toS3 }
+	{ networks.p, edges.nw }
+	// Tracing and observation
+	{ medicalDoctors.trace, scanners.trace, networks.trace, trace }
+	{ medicalDoctors.observer, scanners.observer, observer }
