@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:filter="http://www.eclipse.org/sirius/diagram/description/filter/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" name="poosl" version="10.1.0.201507271600">
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:filter="http://www.eclipse.org/sirius/diagram/description/filter/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" name="poosl" version="12.0.0.2017041100">
   <ownedViewpoints name="POOSL viewpoint" label="%VP_name" modelFileExtension="poosl">
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Cluster diagram" label="%VP_def^ClusterDiagram.name" titleExpression="aql:self.name" domainClass="poosl.ClusterClass" enablePopupBars="true">
       <metamodel href="http://poosl.eclipse.org/poosl/3.0.0#/"/>
@@ -30,7 +30,7 @@
           </style>
         </edgeMappings>
         <edgeMappings name="edge_ChannelToEnd" preconditionExpression="aql:source.isInstanceConnected(targetView)" deletionDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='del_channelEnd']" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Edge']" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='node_ClusterClass']/@subNodeMappings[name='node_ChannelCluster']" targetMapping="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='node_ClusterClass']/@subNodeMappings[name='node_ClusterInstance']/@borderedNodeMappings[name='node_InstancePort'] //@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@containerMappings[name='node_ClusterClass']/@borderedNodeMappings[name='node_ExternalPort']" targetFinderExpression="aql:self.getChannelEnds()" reconnections="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='reconnect_channel']">
-          <style targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="tree" endsCentering="Both">
+          <style targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="tree" endsCentering="Target">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <beginLabelStyleDescription showIcon="false">
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -79,7 +79,7 @@
             </style>
           </borderedNodeMappings>
           <subNodeMappings name="node_ChannelCluster" preconditionExpression="aql:not self.isSimpleChannel()" semanticCandidatesExpression="feature:channels" doubleClickDescription="//@ownedViewpoints[name='POOSL%20viewpoint']/@ownedRepresentations[name='Cluster%20diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Channel']" synchronizationLock="true" domainClass="poosl.Channel">
-            <style xsi:type="style:SquareDescription" labelSize="9" showIcon="false" labelExpression="" sizeComputationExpression="1" width="1" height="1">
+            <style xsi:type="style:SquareDescription" labelSize="9" showIcon="false" labelExpression="" sizeComputationExpression="1" resizeKind="NSEW" width="1" height="1">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
