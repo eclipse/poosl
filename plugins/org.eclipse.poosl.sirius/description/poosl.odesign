@@ -4,14 +4,16 @@
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Cluster diagram" label="%VP_def^ClusterDiagram.name" titleExpression="aql:self.name" domainClass="poosl.ClusterClass" enablePopupBars="true">
       <metamodel href="http://poosl.eclipse.org/poosl/3.0.0#/"/>
       <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.layered" label="ELK Layered">
-        <layoutOptions xsi:type="description_1:EnumSetLayoutOption" id="org.eclipse.elk.portLabels.placement">
-          <targets>NODE</targets>
-          <values name="INSIDE"/>
-          <values name="NEXT_TO_PORT_IF_POSSIBLE"/>
-        </layoutOptions>
         <layoutOptions xsi:type="description_1:EnumLayoutOption" id="org.eclipse.elk.edgeRouting">
           <targets>PARENT</targets>
           <value name="ORTHOGONAL"/>
+        </layoutOptions>
+        <layoutOptions xsi:type="description_1:EnumSetLayoutOption" id="org.eclipse.elk.nodeSize.constraints">
+          <targets>NODE</targets>
+          <values name="PORTS"/>
+          <values name="PORT_LABELS"/>
+          <values name="NODE_LABELS"/>
+          <values name="MINIMUM_SIZE"/>
         </layoutOptions>
       </layout>
       <defaultLayer name="Default">

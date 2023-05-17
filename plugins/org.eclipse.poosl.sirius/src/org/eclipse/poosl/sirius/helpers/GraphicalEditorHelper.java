@@ -16,15 +16,15 @@ package org.eclipse.poosl.sirius.helpers;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.poosl.ClusterClass;
 import org.eclipse.poosl.Instance;
@@ -60,6 +59,9 @@ import org.eclipse.sirius.business.api.modelingproject.ModelingProject;
 import org.eclipse.sirius.business.api.query.EObjectQuery;
 import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManager;
+import org.eclipse.sirius.diagram.DDiagram;
+import org.eclipse.sirius.diagram.DDiagramElement;
+import org.eclipse.sirius.diagram.description.DiagramDescription;
 import org.eclipse.sirius.ecore.extender.business.api.permission.IPermissionAuthority;
 import org.eclipse.sirius.ecore.extender.business.api.permission.PermissionAuthorityRegistry;
 import org.eclipse.sirius.ecore.extender.business.internal.permission.ReadOnlyWrapperPermissionAuthority;
@@ -70,6 +72,7 @@ import org.eclipse.sirius.ui.business.api.session.UserSession;
 import org.eclipse.sirius.ui.tools.api.project.ModelingProjectManager;
 import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
+import org.eclipse.sirius.viewpoint.DSemanticDecorator;
 import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
 import org.eclipse.swt.widgets.Display;
@@ -85,7 +88,7 @@ import org.eclipse.ui.navigator.INavigatorContentService;
 
 /**
  * The GraphicalEditorHelper.
- * 
+ *
  * @author <a href="mailto:arjan.mooij@tno.nl">Arjan Mooij</a>
  *
  */
@@ -112,7 +115,7 @@ public final class GraphicalEditorHelper {
     /**
      * Add modeling nature to the project. If it fails, then an error message
      * dialog is opened.
-     * 
+     *
      * @param project
      *     The project to which the nature must be added
      * @param monitor
@@ -133,7 +136,7 @@ public final class GraphicalEditorHelper {
 
     /**
      * Gets the sirius eobject thats corresponds to the given eobject.
-     * 
+     *
      * @param target
      * @param session
      * @return the given object within the sirius session
@@ -172,7 +175,7 @@ public final class GraphicalEditorHelper {
 
     /**
      * Find the aird file the project or create one if none exists
-     * 
+     *
      * @param activeProject
      *     in which the aird file must exist
      * @return location of the aird file
@@ -180,14 +183,11 @@ public final class GraphicalEditorHelper {
      */
     private static URI findRepresentationFile(IProject activeProject) throws CoreException {
         final String[] airdlocation = { "" }; //$NON-NLS-1$
-        activeProject.accept(new IResourceVisitor() {
-            @Override
-            public boolean visit(IResource resource) throws CoreException {
-                if (AIRD_FILE_EXTENSION.equals(resource.getFileExtension())) {
-                    airdlocation[0] = resource.getFullPath().toString();
-                }
-                return false;
+        activeProject.accept(resource -> {
+            if (AIRD_FILE_EXTENSION.equals(resource.getFileExtension())) {
+                airdlocation[0] = resource.getFullPath().toString();
             }
+            return false;
         });
 
         if (!airdlocation[0].isEmpty()) {
@@ -199,7 +199,7 @@ public final class GraphicalEditorHelper {
 
     /**
      * Get description for the object that is used to make a new representation.
-     * 
+     *
      * @param object
      * @param vps
      * @return the representation description
@@ -218,7 +218,7 @@ public final class GraphicalEditorHelper {
 
     /**
      * find an existing representation for the target.
-     * 
+     *
      * @param session
      * @param target
      * @return the representation descriptor
@@ -307,7 +307,7 @@ public final class GraphicalEditorHelper {
      * is a project explorer already opened
      * nothing will change. Focus will always go to the editor provided if it is
      * in the active workbench.
-     * 
+     *
      * @param editor
      *     The editor to give focus
      * @throws PartInitException
@@ -351,7 +351,7 @@ public final class GraphicalEditorHelper {
     /**
      * This method is used to go from Graphical editor to another graphical
      * editor.
-     * 
+     *
      * @param target
      * @param documentation
      */
@@ -378,14 +378,9 @@ public final class GraphicalEditorHelper {
                         openGraphicalEditor(currentTarget, session, new NullProgressMonitor());
                     }
                 } else {
-                    Display.getDefault().asyncExec(new Runnable() {
-                        @Override
-                        public void run() {
-                            MessageDialog.openInformation(Display.getDefault().getActiveShell(),
-                                    "Poosl Editor",
-                                    "Can not open a Poosl editor for a file outside of the workspace.");
-                        }
-                    });
+                    Display.getDefault().asyncExec(() -> MessageDialog.openInformation(
+                            Display.getDefault().getActiveShell(), "Poosl Editor",
+                            "Can not open a Poosl editor for a file outside of the workspace."));
                 }
             }
         } catch (Exception e) {
@@ -415,7 +410,7 @@ public final class GraphicalEditorHelper {
      * system specification. When no system
      * exists and the poosl model contains only 1 clusterclass open the
      * composite structure diagram of that cluster.
-     * 
+     *
      * @param file
      *     {@link IFile} used to get graphical context
      * @param poosl
@@ -444,7 +439,7 @@ public final class GraphicalEditorHelper {
 
     /**
      * This method is used to go from textual editor to the graphical editor.
-     * 
+     *
      * @param target
      *     EObject from which the diagram must be shown
      * @param editor
@@ -516,7 +511,7 @@ public final class GraphicalEditorHelper {
 
     /**
      * Get a graphical {@link Session} for the project.
-     * 
+     *
      * @param activeProject
      *     the project to look at for a session
      * @param editor
@@ -629,32 +624,26 @@ public final class GraphicalEditorHelper {
             final ExternDebugItem selectedItem, final IProject project,
             final EObject diagramTarget) {
         try {
-            PlatformUI.getWorkbench().getProgressService().run(false, false,
-                    new IRunnableWithProgress() {
-                        @Override
-                        public void run(IProgressMonitor monitor)
-                                throws InvocationTargetException, InterruptedException {
-                            monitor.beginTask("Setup environment and open Communication Diagram "
-                                    + selectedItem.getDiagram(), 3);
-                            String launchID = selectedItem.getLaunchID();
-                            Session session = getSession(diagramTarget, project, null, true, true,
-                                    monitor);
-                            if (session != null) {
-                                if (!session.isOpen()) {
-                                    session.open(monitor);
-                                }
-                                monitor.worked(1);
-                                setupDebugSession(launchID, session);
-                                monitor.worked(1);
-                                openDebugDiagram(launchID, selectedItem.getDiagram(), diagramTarget,
-                                        session, monitor);
-                                monitor.worked(1);
-                            } else {
-                                monitor.worked(3);
-                                LOGGER.warn("Could not get session to open Communication Diagram");
-                            }
-                        }
-                    });
+            PlatformUI.getWorkbench().getProgressService().run(false, false, monitor -> {
+                monitor.beginTask("Setup environment and open Communication Diagram "
+                        + selectedItem.getDiagram(), 3);
+                String launchID = selectedItem.getLaunchID();
+                Session session = getSession(diagramTarget, project, null, true, true, monitor);
+                if (session != null) {
+                    if (!session.isOpen()) {
+                        session.open(monitor);
+                    }
+                    monitor.worked(1);
+                    setupDebugSession(launchID, session);
+                    monitor.worked(1);
+                    openDebugDiagram(launchID, selectedItem.getDiagram(), diagramTarget, session,
+                            monitor);
+                    monitor.worked(1);
+                } else {
+                    monitor.worked(3);
+                    LOGGER.warn("Could not get session to open Communication Diagram");
+                }
+            });
         } catch (InvocationTargetException | InterruptedException e) {
             LOGGER.warn("Could not open Communication Diagram", e);
         }
@@ -682,14 +671,10 @@ public final class GraphicalEditorHelper {
             } else {
                 LOGGER.error("Could not get permission authority for communication diagram "
                         + instanceLabel);
-                Display.getDefault().asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        MessageDialog.openError(Display.getDefault().getActiveShell(),
-                                "Communication Diagram",
-                                "Can not get permission to lock communication diagram.");
-                    }
-                });
+                Display.getDefault()
+                        .asyncExec(() -> MessageDialog.openError(
+                                Display.getDefault().getActiveShell(), "Communication Diagram",
+                                "Can not get permission to lock communication diagram."));
             }
             try {
                 debugDescriptor = createNewRepresentation(diagramTarget, session, launchID,
@@ -728,7 +713,7 @@ public final class GraphicalEditorHelper {
     /**
      * Getting a debug diagram by either getting an existing one or by copying a
      * normal diagram
-     * 
+     *
      * @param diagramTarget
      * @param session
      * @param launchID
@@ -765,7 +750,7 @@ public final class GraphicalEditorHelper {
     /**
      * find and remove any communication diagrams that were left over after a
      * sudden shutdown of eclipse
-     * 
+     *
      * @param launchID
      * @param session
      */
@@ -790,5 +775,26 @@ public final class GraphicalEditorHelper {
             }
         }
         return currentLaunches;
+    }
+
+    public static boolean isInPooslDiagram(DSemanticDecorator element, String... diagramNames) {
+        return GraphicalEditorHelper.getDiagramDescription(element)
+                .map(desc -> desc.eContainer() != null
+                        && "POOSL viewpoint".equals(((Viewpoint) desc.eContainer()).getName())
+                        && (diagramNames.length == 0 || Arrays.stream(diagramNames)
+                                .anyMatch(name -> desc.getName().equals(name))))
+                .orElse(false);
+    }
+
+    private static Optional<DiagramDescription> getDiagramDescription(DSemanticDecorator element) {
+        DDiagram diagram = null;
+        if (element instanceof DDiagram) {
+            diagram = (DDiagram) element;
+        } else if (element instanceof DDiagramElement) {
+            diagram = ((DDiagramElement) element).getParentDiagram();
+        } else {
+            return Optional.empty();
+        }
+        return Optional.of(diagram.getDescription());
     }
 }

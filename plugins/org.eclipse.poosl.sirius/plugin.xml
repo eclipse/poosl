@@ -340,4 +340,11 @@
             type="org.eclipse.ui.IEditorPart">
       </propertyTester>
    </extension>
+   
+  <extension
+        point="org.eclipse.sirius.diagram.elk.layout.extension">
+     <layoutExtension
+           class="org.eclipse.poosl.sirius.elk.PooslELKLayoutExtension">
+     </layoutExtension>
+  </extension>
 </plugin>
