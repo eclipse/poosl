@@ -49,7 +49,11 @@ Require-Bundle:
  org.eclipse.core.filesystem,
  org.eclipse.poosl.xtext.ui,
  javax.annotation,
- org.eclipse.core.expressions
+ org.eclipse.core.expressions,
+ org.eclipse.sirius.diagram.elk,
+ org.eclipse.elk.core.service,
+ org.eclipse.elk.graph,
+ org.eclipse.elk.alg.layered
 Import-Package: org.apache.commons.lang,
  org.eclipse.debug.ui.contexts
 Export-Package: 

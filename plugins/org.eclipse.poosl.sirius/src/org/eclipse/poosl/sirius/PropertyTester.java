@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.poosl.sirius;
 
-import org.eclipse.poosl.PooslPackage;
+import org.eclipse.poosl.sirius.helpers.GraphicalEditorHelper;
 import org.eclipse.sirius.diagram.DSemanticDiagram;
 import org.eclipse.sirius.diagram.ui.tools.api.editor.DDiagramEditor;
 import org.eclipse.ui.IEditorPart;
@@ -37,7 +37,7 @@ public class PropertyTester extends org.eclipse.core.expressions.PropertyTester 
                     .getRepresentation() instanceof DSemanticDiagram) {
                 DSemanticDiagram diagram = (DSemanticDiagram) ((DDiagramEditor) receiver)
                         .getRepresentation();
-                return diagram.getTarget().eClass().getEPackage() instanceof PooslPackage;
+                return GraphicalEditorHelper.isInPooslDiagram(diagram);
             }
         }
         return res;
