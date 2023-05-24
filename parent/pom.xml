@@ -34,7 +34,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- TODO turn into UTF-8 -->
 
 		<!-- supported: warning|error|ignore -->
-		<git.dirty>error</git.dirty>
+		<git.dirty>warning</git.dirty>
 		
 		<!-- 
         This is the default pattern: 

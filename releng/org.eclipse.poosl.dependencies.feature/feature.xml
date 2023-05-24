@@ -131,6 +131,14 @@
          id="org.eclipse.jdt"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.elk.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sirius.diagram.elk.feature"
+         version="0.0.0"/>
+
    <requires>
       <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipse.ocl.ecore"/>
