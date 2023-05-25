@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.eclipse.poosl.sirius.elk;singleton:=true
+Automatic-Module-Name: org.eclipse.poosl.sirius.elk
+Bundle-Version: 1.0.3.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Require-Bundle: 
+ org.eclipse.sirius.diagram.elk,
+ org.eclipse.elk.core.service,
+ org.eclipse.elk.graph,
+ org.eclipse.elk.alg.layered,
+ com.google.guava,
+ org.eclipse.poosl.sirius,
+ org.eclipse.poosl.model,
+ org.eclipse.sirius,
+ org.eclipse.gmf.runtime.notation,
+ org.eclipse.gef
+

@@ -14,7 +14,16 @@
    <feature id="org.eclipse.poosl.feature">
       <category name="org.eclipse.poosl"/>
    </feature>
-   <feature id="org.eclipse.poosl.dependencies.feature"/>
+   <feature id="org.eclipse.poosl.sirius.elk.feature">
+      <category name="org.eclipse.poosl"/>
+   </feature>
+   <feature id="org.eclipse.poosl.dependencies.feature"/>-->
    <category-def name="org.eclipse.poosl" label="Poosl"/>
    <repository-reference location="http://www.es.ele.tue.nl/rotalumis/repository/release/" enabled="true" />
+   
+   <!-- Supported Sirius versions update sites, allowing to install the right version of Sirius / ELK bridge (experimental feature not provided in Eclipse simrel -->
+   <repository-reference location="https://download.eclipse.org/sirius/updates/releases/7.1.0/2021-06/" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/sirius/updates/releases/7.0.7/2021-06/" enabled="true" />
+   <repository-reference location="https://archive.eclipse.org/sirius/updates/releases/6.6.0/2020-09/" enabled="true" />
+   <repository-reference location="https://archive.eclipse.org/sirius/updates/releases/6.5.1/2020-09/" enabled="true" />
 </site>

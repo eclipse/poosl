@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.poosl.sirius.elk.feature"
+      label="%featureName"
+      version="1.0.3.qualifier"
+      provider-name="%providerName"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.sirius.diagram.elk"/>
+      <import plugin="com.google.guava"/>
+      <import plugin="org.eclipse.poosl.sirius"/>
+      <import plugin="org.eclipse.poosl.model"/>
+      <import plugin="org.eclipse.sirius"/>
+      <import plugin="org.eclipse.gmf.runtime.notation"/>
+      <import plugin="org.eclipse.gef"/>
+      <import plugin="org.eclipse.elk.core.service"/>
+      <import plugin="org.eclipse.elk.graph"/>
+      <import plugin="org.eclipse.elk.alg.layered"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.poosl.sirius.elk"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
