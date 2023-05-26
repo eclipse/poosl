@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Sequence Diagram</title>
+	</head>
+	<body>
+		<h1>Sequence Diagram</h1>
+		<p>
+		The Sequence Diagram view is used when <a href="debug.html">debugging a POOSL model</a>. It displays message communications between processes and clusters in the form of a sequence diagram. The displayed values are computed using the corresponding data method printString. Message communications appear when the simulation makes a communication transition. This applies both to the resume mode, and the various kinds of steps; in particular communication steps (&lt;F7>) are useful.
+		</p>
+		<p>		
+		The Sequence Diagram view allows filtering out processes / cluster and collapsing clusters so that only communication outside the cluster is visible. Hovering over a lifeline, message or timestamp will provide additional information about it. Clicking messages updates the Eclipse properties view with all information about the message.
+		</p>
+		<p>
+		In a single simulation run, many message may be communicated. There are two important mechanisms to avoid memory problems:
+		<ul>
+			<li>Message filter, which by default only saves messages for the visible lifelines. This can be changed in the sequence diagram settings; see the description below.</li>
+			<li>Circular message buffer, which by default is set to contain at most 1000 messages. The maximum buffer size can be changed in "Window -> Preferences -> POOSL -> Sequence Diagram" as shown in the picture below.</li>
+		</ul>
+		</p>
+		<img src="img/preferences_sequence_diagram.png"/>
+				
+		<h2>Clear the sequence diagram view</h2>
+		<p>
+		Click the "Clear messages" button in the toolbar of the sequence diagram view.
+		</p>
+		<img src="img/sequence_message_clear.png"/>
+		 
+		<h2>Lock the position of the diagram timeline</h2>
+		<p>
+		This allows convenient scrolling through the sequence diagram during a running simulation. The displayed messages are not affected by new messages from the running simulation, until the moment that the displayed messages are removed from the buffer (because too many new messages have been received; to increase the buffer size, see the beginning of this section).
+		<ol>
+			<li>Click the "Scroll lock" button in the toolbar of the sequence diagram view.</li>
+		</ol>
+		</p>
+				
+		<h2>Filtering instances and collapsing clusters</h2>
+		<p>
+		<ol>
+			<li>Click the "Open settings" button in the toolbar of the sequence diagram view.</li>
+		 	<img src="img/sequence_message_settings.png"/>
+			<li>All instances are shown in a tree under system.</li>
+			<ul>
+				<li>Uncheck the instances that need to be filtered out.</li>
+				<li>Click a cluster to show messages on cluster level instead of containing instances.  </li>
+				<img src="img/sequence_message_filter.png"/>
+				<li>The filter will be saved in the launch configuration. This enables you to reuse the filter setting in subsequent simulations of the same model.</li>
+				<li>When the option "only save filtered messages" is/was switched on, any change in the filter requires the message buffer (with previously communicated messages) to be cleared to guarantee consistency.</li>
+			</ul>
+		</ol>
+		</p>
+		 
+		<h2>Reordering lifelines</h2>
+		<p>
+		When lifelines are visible in the sequence diagram view click and hold to drag the lifeline to a new position. The order of the lifelines will be saved in the launch configuration.
+		</p>
+		
+		<h2>CoSimulation</h2>
+		<p>
+		During <a href="../language/Cosimulation.html">Co-simulation</a> the root contains an additional group called <b>adapters</b>. 
+		This group shows the instances of external adapters. Using the filter option it is possible to only show the message going to external adapters.
+		</p>
+		<img src="img/sequence_message_external.png"/>
+	</body>
+</html>

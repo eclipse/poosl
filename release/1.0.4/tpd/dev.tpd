@@ -1,0 +1,70 @@
+/*******************************************************************************
+ * Copyright (c) 2021 TNO/ESI
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    TNO/ESI - initial API and implementation
+ *    Obeo - refactoring
+ *******************************************************************************/
+target "Poosl SDK" 
+
+//
+// Components used only in development env.
+// 
+
+with requirements
+
+environment JavaSE-11
+
+
+location eclipse_core "https://download.eclipse.org/releases/2020-03/" {	
+// Following dependencies are already required by runtime or tests
+// But they are also required for tools.
+
+//	org.junit
+//	org.eclipse.jdt.feature.group // already dragged by runtime
+//	org.eclipse.pde.feature.group
+//	org.eclipse.xtext.sdk.feature.group
+//	org.eclipse.emf.mwe2.launcher.feature.group
+//	org.eclipse.xpand.feature.group
+//	org.eclipse.xtend.feature.group
+	
+	org.eclipse.rcptt.core.feature.group
+	org.eclipse.rcptt.ecl.core.feature.group
+	// org.eclipse.rcptt.launching.feature.group // not for target
+	org.eclipse.rcptt.module.nebula.feature.group
+	org.eclipse.rcptt.platform.feature.group 
+	// Includes:
+	//  +-> updates,launching,watson,zephyr  features 
+	
+	// Note: zephyr is bugged (reference a missing propertyPage)
+	
+	org.eclipse.rcptt.updates.feature.group
+	// Include
+	//  org.eclipse.rcptt.external.dependencies feature
+	
+	org.eclipse.rcptt.watson.feature.group
+	
+}
+
+
+location sirius "https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-03/" {
+	
+	// Includes Odesign edit, Sirius interpreter view and Odesign reload 
+	org.eclipse.sirius.specifier.ide.ui.feature.group
+	org.eclipse.sirius.specifier.ide.ui.aql.feature.group
+	org.eclipse.sirius.specifier.properties.feature.feature.group
+	org.eclipse.sirius.diagram.elk.sdk.feature.feature.group	
+}
+
+location nebula "http://download.eclipse.org/nebula/releases/2.5.0/" {
+	// RCPTT requires nebula but fails to inject it
+	// This list is declared in Maven 'RCPTT-nature'
+	org.eclipse.nebula.feature.feature.group 
+}
+
