@@ -175,7 +175,7 @@
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
-      id="RCP Tests"
+      id="rcptt"
       label="RCP Tests">
     <requirement
         name="org.eclipse.rcptt.platform.feature.group"/>
@@ -194,16 +194,6 @@
         name="net.sourceforge.pmd.eclipse.feature.group"/>
     <requirement
         name="com.github.spotbugs.plugin.eclipse.feature.group"/>
-    <requirement
-        name="org.sf.feeling.decompiler.cfr.feature.group"/>
-    <requirement
-        name="org.sf.feeling.decompiler.feature.group"/>
-    <requirement
-        name="org.sf.feeling.decompiler.jad.feature.group"/>
-    <requirement
-        name="org.sf.feeling.decompiler.jd.feature.group"/>
-    <requirement
-        name="org.sf.feeling.decompiler.procyon.feature.group"/>
     <repository
         url="http://download.eclipse.org/releases/2022-06"/>
     <repository
@@ -212,8 +202,6 @@
         url="https://pmd.github.io/pmd-eclipse-plugin-p2-site/"/>
     <repository
         url="https://spotbugs.github.io/eclipse/"/>
-    <repository
-        url="https://ecd-plugin.github.io/update/"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
