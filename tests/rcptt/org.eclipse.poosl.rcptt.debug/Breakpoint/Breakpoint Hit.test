@@ -36,7 +36,7 @@ let [val time 50] {
 		get-property "selection[0].path[2]" | equals "p := new(Packet) setIdentity(ID)" | verify-true
 	}
 	with [get-editor "producer_consumer.poosl" | get-text-viewer] {
-		get-property "getSelectionRange().x" | equals 1346 | verify-true
+		get-property "getSelectionRange().x" | equals [get-by-os -win 1346 -linux 1300] | verify-true
 		get-property "getSelectionRange().y" | equals 32 | verify-true
 	}
 	click-terminate
