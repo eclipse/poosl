@@ -18,15 +18,17 @@ Entry-Name: .content
 get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0\\]/system/ProducerConsumer/Producer"
 with [get-window "producer_consumer.poosl /system/Bus"] {
 get-view "Execution Tree" -index 1 | get-tree | get-item "\\/system\\/Bus" | assert-non-empty
-	with [get-view Variables -index 1 | get-tree] {
-		get-items
-	    get-item p | get-property "values['Name']" | equals p | verify-true
-	    get-item p | get-property "values['Value']" | equals "nil" | verify-true
-	}
+    with [get-view Variables -index 1 | get-tree] {
+        get-items
+        wait 200
+        get-item p | get-property "values['Name']" | equals p | verify-true
+        wait 100
+        get-item p | get-property "values['Value']" | equals "nil" | verify-true
+    }
 }
 
 with [get-view Variables | get-tree] {
-	get-items
+    get-items
     get-property itemCount | equals 2 | verify-true
     get-property "columns[1].caption" | equals Value | verify-true
     get-property "getItems().TreeItem[0].getText()" | equals IdleTime | verify-true
