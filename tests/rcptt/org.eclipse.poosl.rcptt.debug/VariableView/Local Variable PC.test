@@ -27,7 +27,9 @@ get-view Debug | get-tree | select "producer_consumer.poosl \\[Simulated time: 0
     | click
 with [get-view "Execution Tree" | get-tree] {
     select "\\/system\\/ProducerConsumer\\/Producer/Initialise\\(\\)\\(\\)" | type-text 1
+    wait 50
     select "\\/system\\/ProducerConsumer\\/Producer/sequential/ID := 1" | type-text 1
+    wait 50
     select "\\/system\\/ProducerConsumer\\/Producer/SendPacket\\(\\)\\(\\)"
 }
 with [get-view Variables | get-tree] {
@@ -39,6 +41,7 @@ with [get-view Variables | get-tree] {
 }
 with [get-view "Execution Tree" | get-tree] {
     select "\\/system\\/ProducerConsumer\\/Producer/SendPacket\\(\\)\\(\\)" | type-text 1
+    wait 50
     select "\\/system\\/ProducerConsumer\\/Producer/sequential/p := new\\(Packet\\) setIdentity\\(ID\\)"
 }
 with [get-view Variables | get-tree] {

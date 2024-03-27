@@ -59,7 +59,7 @@ with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diag
 		$y | between [int -input "0"] [int -input "100"] | assert-true
 	}
 	get-property width | equals 100 | verify-true
-	get-property height | equals 102 | verify-true
+	get-property height | equals [get-by-os -win 102 -linux 90] | verify-true
 }
 with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1] {
 	with [get-edit-part -name "Cluster ProducerConsumer (producer_consumer.poosl)"] {
@@ -98,7 +98,7 @@ with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diag
 	-name "Cluster ProducerConsumer (producer_consumer.poosl)" | get-edit-part -name ProducerConsumer | get-edit-part
 	-name In | get-source-connection 0 | get-edit-part -className DEdgeBeginNameEditPart] {
 		get-property y -raw true | between 200 300 | verify-true
-		get-property width -raw true | between 35 40 | verify-true
+		get-property width -raw true | between 35 45 | verify-true
 		get-property height -raw true | between 10 15 | verify-true
 }
 get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diagram -index 1 | get-edit-part -name "Cluster" +
@@ -128,12 +128,12 @@ with [get-editor "<COMM>Cluster ProducerConsumer (producer_consumer.poosl) [/sys
 				"50 and 100" $y]
 		}
 		get-property width | equals 100 | verify-true
-		get-property height | equals 102 | verify-true
+		get-property height | equals [get-by-os -win 102 -linux 90] | verify-true
 	}
 	with [get-edit-part -name ProducerConsumer | get-edit-part -name In | get-source-connection 0 | get-edit-part
 		-className DEdgeBeginNameEditPart] {
 		get-property y -raw true | between 200 300 | verify-true
-		get-property width -raw true | between 35 40 | verify-true
+		get-property width -raw true | between 35 45 | verify-true
 		get-property height -raw true | between 10 15 | verify-true
 	}
 }

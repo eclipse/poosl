@@ -25,7 +25,7 @@ with [get-editor "Classes (producer_consumer.poosl)" | get-diagram -index 1] {
     get-menu "Open Textual Editor" | click
 }
 with [get-editor "producer_consumer.poosl" | get-text-viewer] {
-    get-property "getSelectionRange().x" | equals 940 | verify-true
+    get-property "getSelectionRange().x" | equals  [get-by-os -win 940 -linux 913] | verify-true
     get-property "getSelectionRange().y" | equals 8 | verify-true
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -16,7 +16,7 @@ _593Y4FpEEeWVIdXlfxjrJw	// kind: 'test' name: 'Fisher' path: 'Fisher.test'
 _63LmgFpEEeWVIdXlfxjrJw	// kind: 'test' name: 'MarsRover' path: 'MarsRover.test'
 _7urPMFpEEeWVIdXlfxjrJw	// kind: 'test' name: 'MPSoc' path: 'MPSoc.test'
 _90574FpEEeWVIdXlfxjrJw	// kind: 'test' name: 'PARProtocol' path: 'PARProtocol.test'
-_BPPUwFpFEeWVIdXlfxjrJw	// kind: 'test' name: 'SoCInterconnects' path: 'SoCInterconnects.test'
+_BPPUwFpFEeWVIdXlfxjrJw	// kind: 'test' name: 'SoCInterconnectsRun' path: 'SoCInterconnectsRun.test'
 _DGtzwFpFEeWVIdXlfxjrJw	// kind: 'test' name: 'TeenageHomework' path: 'TeenageHomework.test'
 _EUeAUFpFEeWVIdXlfxjrJw	// kind: 'test' name: 'Wireless' path: 'Wireless.test'
 

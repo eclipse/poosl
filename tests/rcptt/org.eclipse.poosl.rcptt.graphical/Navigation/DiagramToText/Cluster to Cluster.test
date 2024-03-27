@@ -28,7 +28,7 @@ with [get-editor "Cluster ProducerConsumer (producer_consumer.poosl)" | get-diag
 }
 
 with [get-editor "producer_consumer.poosl" | get-text-viewer] {
-    get-property "getSelectionRange().x" | equals 3204 | verify-true
+    get-property "getSelectionRange().x" | equals [get-by-os -win 3204 -linux 3082] | verify-true
     get-property "getSelectionRange().y" | equals 12 | verify-true
     get-property "getSelectionText()" | equals ExtraCluster | verify-true
 }

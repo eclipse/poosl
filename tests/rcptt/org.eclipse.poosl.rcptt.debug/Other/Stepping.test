@@ -27,9 +27,9 @@ get-view "Execution Tree" | get-tree | select "\\/system\\/Bus/Transfer\\(\\)\\(
 with [get-editor "producer_consumer.poosl" | get-text-viewer] {
     get-property "caretPosition.line" | equals 72 | verify-true
     get-property "caretPosition.column" | equals 17 | verify-true
-    get-property "styleAtCaret.start" | equals 1949 | verify-true
-    get-property "styleAtCaret.length" | equals 2 | verify-true
-    get-property "styleAtCaret.text" | equals "\r\n" | verify-true
+    get-property "styleAtCaret.start" | equals [get-by-os -win 1949 -linux 1878] | verify-true //eol are 1 char on linux, 2 on windows, 71 eol to line 72
+    get-property "styleAtCaret.length" | equals [get-by-os -win 2 -linux 1] | verify-true //eol are 1 char on linux, 2 on windows
+    get-property "styleAtCaret.text" | equals [get-by-os -win "\r\n" -linux "\n"] | verify-true
     get-property "styleAtCaret.fontStyle" | equals normal | verify-true
     get-property "styleAtCaret.startPos.line" | equals 72 | verify-true
     get-property "styleAtCaret.startPos.column" | equals 17 | verify-true
@@ -47,9 +47,9 @@ get-view "Execution Tree" | get-tree | select "\\/system\\/ProducerConsumer\\/Pr
 with [get-editor "producer_consumer.poosl" | get-text-viewer] {
     get-property "caretPosition.line" | equals 39 | verify-true
     get-property "caretPosition.column" | equals 19 | verify-true
-    get-property "styleAtCaret.start" | equals 1191 | verify-true
-    get-property "styleAtCaret.length" | equals 2 | verify-true
-    get-property "styleAtCaret.text" | equals "\r\n" | verify-true
+    get-property "styleAtCaret.start" | equals [get-by-os -win 1191 -linux 1153] | verify-true //eol are 1 char on linux, 2 on windows, 71 eol to line 72
+    get-property "styleAtCaret.length" | equals [get-by-os -win 2 -linux 1] | verify-true //eol are 1 char on linux, 2 on windows
+    get-property "styleAtCaret.text" | equals [get-by-os -win "\r\n" -linux "\n"] | verify-true
     get-property "styleAtCaret.fontStyle" | equals normal | verify-true
     get-property "styleAtCaret.startPos.line" | equals 39 | verify-true
     get-property "styleAtCaret.startPos.column" | equals 19 | verify-true

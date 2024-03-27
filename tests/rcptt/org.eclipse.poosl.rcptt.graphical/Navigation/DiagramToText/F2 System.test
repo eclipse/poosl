@@ -18,7 +18,7 @@ with [get-editor "System (producer_consumer.poosl)" | get-diagram -index 1] {
     key-type F2
 }
 with [get-editor "producer_consumer.poosl" | get-text-viewer] {
-    get-property "getSelectionRange().x" | equals 3724 | verify-true
+    get-property "getSelectionRange().x" | equals [get-by-os -win 3724 -linux 3582] | verify-true
     get-property "getSelectionRange().y" | equals 6 | verify-true
     get-property "getSelectionText()" | equals system | verify-true
 }
