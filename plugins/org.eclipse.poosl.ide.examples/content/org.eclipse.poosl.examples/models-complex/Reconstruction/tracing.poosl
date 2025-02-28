@@ -1,0 +1,355 @@
+/*
+ * This is a model component that allows tracing in the TRACE4CPS format.
+ * Also see https://www.eclipse.org/trace4cps/
+ */
+import "data.poosl"
+
+/*
+ * A gauge that gives a piecewise constant signal.
+ */
+data class Gauge extends Observer
+variables
+	t0 : Real
+	value : Real
+	maxValue : Real
+	sigId : Integer
+	area : Real // the total area under the gauge signal
+methods
+	@init
+	withParams(signalId : Integer, maxVal : Real) : Gauge
+		t0 := 0.0;
+		value := 0.0;
+		maxValue := maxVal;
+		area := 0.0;
+		sigId := signalId;
+		return self
+
+	set(t : Real, val : Real) : Gauge
+		area := area + ((t - t0) * value);
+		t0 := t;
+		value := val;
+		if maxValue != nil then
+			if value > maxValue then
+				self^ error("Gauge " + sigId asJSON + " exceed max value " + maxValue asJSON + " : " + value asJSON)
+			fi
+		fi;
+		return self
+
+	signalId() : Integer
+		return sigId
+
+	startTime() : Real
+		return t0
+
+	value() : Real
+		return value
+
+	area() : Real
+		return area
+
+/*
+ * Creates TRACE files.
+ *  
+ * The attributes are key-value mappings of Strings, e.g.,: name=process1,task=someAction
+ */
+process class TraceWriter(name : String, timeUnit : String, p : ModelParameters) // must be a java.util.concurrent.TimeUnit string (e.g., SECONDS)
+ports
+	in
+messages
+	in?registerResource(String, Real, String) // resource id, capacity, attributes
+	in?event(Real, String) // time and attributes of event
+	in?event(String, Real, String) // id, time and attributes of event
+	in?claim(Real, Real, String, Real, String) // start and end time of claim, resource id, amount, and attributes
+	in?claim(String, Real, Real, String, Real, String) // id, start and end time of claim, resource id, amount, and attributes
+	in?registerGauge(String, String) // gauge id, attributes
+	in?registerGauge(String, Real, String) // gauge id, max value, attributes
+	in?setGauge(String, Real) // gauge id, value
+	in?addToGauge(String, Real) // gauge id, delta
+	in?eventToEvent(String, String, String)
+	in?eventToClaim(String, String, String)
+	in?claimToClaim(String, String, String)
+	in?claimStartToClaimStart(String, String, String)
+	in?claimEndToClaimEnd(String, String, String)
+	in?claimToEvent(String, String, String)
+	in?done()
+variables
+	fileName : String
+	file : FileOut
+	resourceId : Integer
+	eventId : Integer
+	claimId : Integer
+	depId : Integer
+	signalId : Integer
+	numFrags : Integer
+	gaugeMap : Map // Gauge id string -> Gauge
+	resourceMap : Map // resource name string -> resource id
+	tidMap : Map // String tid -> Claim Id or Event Id
+	console : Console
+	doneCalls : Integer
+init
+	initialize()()
+methods
+	initialize()()
+		console := new(Console);
+		fileName := name + ".etf";
+		resourceId := 0;
+		eventId := 0;
+		claimId := 0;
+		depId := 0;
+		signalId := 0;
+		numFrags := 0;
+		doneCalls := 0;
+		gaugeMap := new(Map);
+		resourceMap := new(Map);
+		tidMap := new(Map);
+		if !(p tracing) then
+			nop()()
+		fi;
+		writeInitialTraceData()();
+		if p traceStartAfter != nil then
+			abort
+				nop()()
+			with delay p traceStartAfter
+		fi;
+		if p traceStopSize != nil then
+			abort
+				receive()()
+			with [eventId + claimId + numFrags > p traceStopSize] nop()()
+		else
+			receive()()
+		fi
+
+	nop()() | atts : String, t0 : Real, t1 : Real, id : String, val : Real, g : Gauge, delta : Real, tid : String,
+			tid2 : String |
+		sel
+			in?event(t0, atts)
+		or
+			in?event(tid, t0, atts)
+		or
+			in?claim(t0, t1, id, val, atts)
+		or
+			in?claim(tid, t0, t1, id, val, atts)
+		or
+			in?registerGauge(id, atts);
+			doRegisterGauge(id, nil, atts)()
+		or
+			in?registerGauge(id, val, atts);
+			doRegisterGauge(id, val, atts)()
+		or
+			in?registerResource(id, t0, atts);
+			doRegisterResource(id, t0, atts)()
+		or
+			in?setGauge(id, val);
+			{
+				g := gaugeMap at(id);
+				if (g != nil) then
+					g set(currentTime, val)
+				fi
+			}
+		or
+			in?addToGauge(id, delta);
+			{
+				g := gaugeMap at(id);
+				if (g != nil) then
+					g set(currentTime, g value + delta)
+				fi
+			}
+		or
+			in?done();
+			doDone()()
+		or
+			in?claimToClaim(tid, tid2, atts)
+		or
+			in?claimStartToClaimStart(tid, tid2, atts)
+		or
+			in?claimEndToClaimEnd(tid, tid2, atts)
+		or
+			in?claimToEvent(tid, tid2, atts)
+		or
+			in?eventToEvent(tid, tid2, atts)
+		or
+			in?eventToClaim(tid, tid2, atts)
+		les;
+		nop()()
+
+	writeInitialTraceData()()
+		file := new(FileOut) destination(fileName) open();
+		file writeLine("TU " + timeUnit);
+		file writeLine("O 0");
+		file close();
+		// Write the view configuration, specific for our POOSL model:
+		file := new(FileOut) destination("." + fileName + ".view") open;
+		file writeLine("showClaims : true");
+		file writeLine("showEvents : true");
+		file writeLine("showClaimEvents : false");
+		file writeLine("showDependencies : true");
+		file writeLine("showSignals : true");
+		file writeLine("showSignalMarkers : false");
+		file writeLine("activityView : true");
+		file writeLine("claimScaling : FULL");
+		file writeLine("showClaimLabels : false");
+		file writeLine("claimGrouping : hid , name");
+		file writeLine("eventGrouping : hid , name");
+		file writeLine("claimColoring : pid , rid");
+		file writeLine("eventColoring : pid , rid");
+		file writeLine("claimFiltering :");
+		file writeLine("eventFiltering :");
+		file writeLine("dependencyFiltering :");
+		file writeLine("resourceFiltering :");
+		file writeLine("signalFiltering : ");
+		file close
+
+	receive()() | atts : String, t0 : Real, t1 : Real, id : String, val : Real, delta : Real, tid : String,
+			tid2 : String |
+		sel
+			in?event(t0, atts);
+			doEvent(nil, t0, atts)()
+		or
+			in?event(tid, t0, atts);
+			doEvent(tid, t0, atts)()
+		or
+			in?registerResource(id, t0, atts);
+			doRegisterResource(id, t0, atts)()
+		or
+			in?claim(t0, t1, id, val, atts);
+			doClaim(nil, t0, t1, id, val, atts)()
+		or
+			in?claim(tid, t0, t1, id, val, atts);
+			doClaim(tid, t0, t1, id, val, atts)()
+		or
+			in?registerGauge(id, atts);
+			doRegisterGauge(id, nil, atts)()
+		or
+			in?registerGauge(id, val, atts);
+			doRegisterGauge(id, val, atts)()
+		or
+			in?setGauge(id, val);
+			doSetGauge(id, val)()
+		or
+			in?addToGauge(id, delta);
+			doAddToGauge(id, delta)()
+		or
+			in?done();
+			doDone()()
+		or
+			in?claimToClaim(tid, tid2, atts);
+			doDependency(tid, tid2, 2, atts)()
+		or
+			in?claimStartToClaimStart(tid, tid2, atts);
+			doDependency(tid, tid2, 0, atts)()
+		or
+			in?claimEndToClaimEnd(tid, tid2, atts);
+			doDependency(tid, tid2, 3, atts)()
+		or
+			in?claimToEvent(tid, tid2, atts);
+			doDependency(tid, tid2, 6, atts)()
+		or
+			in?eventToEvent(tid, tid2, atts);
+			doDependency(tid, tid2, 4, atts)()
+		or
+			in?eventToClaim(tid, tid2, atts);
+			doDependency(tid, tid2, 7, atts)()
+		les;
+		receive()()
+
+	doEvent(tid : String, t : Real, atts : String)()
+		{
+			file := new(FileOut) destination(fileName) append();
+			file writeLine("E " + eventId asJSON + " " + t printString + "; " + atts);
+			file close();
+			tidMap putAt(tid, eventId);
+			eventId := eventId + 1
+		}
+
+	doClaim(tid : String, t0 : Real, t1 : Real, rid : String, amount : Real, atts : String)() | id : Integer |
+		{
+			file := new(FileOut) destination(fileName) append();
+			id := resourceMap at(rid);
+			file writeLine("C " + claimId asJSON + " " + t0 printString + " " + t1 printString + " " + id asJSON + " " +
+				amount asJSON + "; " + atts);
+			file close();
+			tidMap putAt(tid, claimId);
+			claimId := claimId + 1
+		}
+
+	@SuppressWarnings("unused")
+	doDependency(tid1 : String, tid2 : String, type : Integer, atts : String)()
+		{
+//			file := new(FileOut) destination(fileName) append();
+//			file writeLine("D " + depId asJSON + " " + type asJSON + " " + tidMap at(tid1) printString + " " + tidMap
+//				at(tid2) printString + "; " + atts + ", color=dark_gray");
+//			file close();
+			depId := depId + 1
+		}
+
+	doRegisterGauge(gid : String, maxVal : Real, atts : String)()
+		{
+			file := new(FileOut) destination(fileName) append();
+			file writeLine("S " + signalId asJSON + " ; " + atts);
+			file close();
+			gaugeMap putAt(gid, new(Gauge) withParams(signalId, maxVal));
+			signalId := signalId + 1
+		}
+
+	doRegisterResource(rid : String, cap : Real, atts : String)()
+		{
+			file := new(FileOut) destination(fileName) append();
+			file writeLine("R " + resourceId asJSON + " " + cap asJSON + " false; " + atts);
+			file close();
+			resourceMap putAt(rid, resourceId);
+			resourceId := resourceId + 1
+		}
+
+	doSetGauge(gid : String, val : Real)() | g : Gauge |
+		{
+			g := gaugeMap at(gid);
+			if (g != nil) then
+				if g startTime < currentTime then
+					file := new(FileOut) destination(fileName) append();
+					file writeLine("F " + g signalId asJSON + " " + g startTime printString + " " + currentTime
+						printString + " " + g value printString + " 0.0 0.0");
+					file close();
+					numFrags := numFrags + 1
+				fi;
+				g set(currentTime, val)
+			fi
+		}
+
+	doAddToGauge(gid : String, delta : Real)() | g : Gauge |
+		{
+			g := gaugeMap at(gid);
+			if (g != nil) then
+				if g startTime < currentTime then
+					file := new(FileOut) destination(fileName) append();
+					file writeLine("F " + g signalId asJSON + " " + g startTime printString + " " + currentTime
+						printString + " " + g value printString + " 0.0 0.0");
+					file close();
+					numFrags := numFrags + 1
+				fi;
+				g set(currentTime, g value + delta)
+			fi
+		}
+
+	doDone()() | g : Gauge, it : MapIterator |
+		{
+			doneCalls := doneCalls + 1;
+			if doneCalls >= p numDoneMsgs then
+				// print all Gauge areas
+				it := gaugeMap iterator();
+				while !(it isDone) do
+					g := it value;
+					file := new(FileOut) destination(fileName) append();
+					file writeLine("F " + g signalId printString + " " + g startTime printString + " " + currentTime
+						printString + " " + g value printString + " 0.0 0.0");
+					// FIXME: BUG in TRACE: signals with a single fragment
+					// or constant fragments with equal value are not visualized..therefore we need the next line
+					file writeLine("F " + g signalId asJSON + " " + currentTime printString + " " + (currentTime +
+						0.00001) printString + " 0.0 0.0 0.0");
+					file close();
+					g set(currentTime, g value); // updates the area
+//					console writeLine("Gauge[name=" + it key printString + ", signalId=" + g signalId printString +
+//						", area=" + g area printString + "]");
+					it advance
+				od
+			fi
+		}

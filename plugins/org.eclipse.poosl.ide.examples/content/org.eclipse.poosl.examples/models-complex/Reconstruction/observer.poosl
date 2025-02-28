@@ -1,0 +1,127 @@
+import "data.poosl"
+importlib "performance.poosl"
+
+/*
+ *  X = response time of reconstruction
+ *  Y = 1 if X < T
+ *      0 otherwise
+ *  
+ *  E(Y) = 1 * P(X<T) + 0 * P(X>=T) = P(X<T)
+ *  ...
+ *  compute confidence interval for Y
+ *  ...
+ *  P(X<T) = \mu +/- absolute error met confidence \gamma (typically 0.95 or 0.99)
+
+ */
+/*
+ * Observer data class for response times
+ */
+data class ResponseTimes extends Observer
+variables
+	result : Map
+	minVal : Real
+	minUid : String
+	maxVal : Real
+	maxUid : String
+	sum : Real
+methods
+	@init
+	withParams() : ResponseTimes
+		result := new(Map);
+		sum := 0.0;
+		return self
+
+	addSample(uid : String, t : Real) : ResponseTimes
+		result putAt(uid, t);
+		sum := sum + t;
+		if (minVal == nil) then
+			minVal := t;
+			minUid := uid
+		else if (t < minVal) then
+			minVal := t;
+			minUid := uid
+		fi fi;
+		if (maxVal == nil) then
+			maxVal := t;
+			maxUid := uid
+		else if (t > maxVal) then
+			maxVal := t;
+			maxUid := uid
+		fi fi;
+		return self
+
+	printString() : String | avg : Real |
+		avg := sum / result size asReal;
+		return "[#samples=" + result size asJSON + ", min=" + minVal asJSON + ", max=" + maxVal asJSON
+
+
+/*
+ * Observer process for the response times of the 3D reconstruction.
+ */
+process class ResponseTimeObserver(p : ModelParameters)
+ports
+	in
+messages
+	in?start(ReconstructionMetaData)
+	in?end(ReconstructionMetaData)
+	in?done() // by MDs
+variables
+	console : Console
+	inProgress : Map
+	result : ResponseTimes
+	doneCalls : Integer
+	// Performance monitoring
+	pm : LongRunSampleAverage
+	theDay : Integer // recurrence condition
+init
+	initialize()()
+methods
+	initialize()()
+		pm := new(LongRunSampleAverage) withParameters(0.95, 0.99);
+		theDay := 1;
+		console := new(Console);
+		doneCalls := 0;
+		inProgress := new(Map);
+		result := new(ResponseTimes) withParams();
+		receive()()
+
+	receive()() | md : ReconstructionMetaData, t0 : Real, t : Real, y : Integer, lb : Real, ub : Real |
+		sel
+			in?start(md) {inProgress putAt(md uid, currentTime)}
+		or
+			in?end(md) {
+				t0 := inProgress at(md uid);
+				inProgress removeAt(md uid);
+				if (t0 != nil) then
+					t := currentTime - t0;
+					result addSample(md uid, t);
+					// Performance monitoring
+					y := 0;
+					if t <= p responseTimeThreshold then
+						y := 1
+					fi;
+					pm rewardRC(y, md did != theDay);
+					if md did != theDay then
+						console writeLine("day " + theDay asJSON + " : " + result printString)
+					fi;
+					theDay := md did
+				fi
+			}
+		or
+			in?done() {
+				doneCalls := doneCalls + 1;
+				if doneCalls == p numDoneMsgs then
+					console writeLine("day " + theDay asJSON + " : " + result printString);
+					lb := pm getIntervalEstimation getLowerBound;
+					ub := pm getIntervalEstimation getUpperBound;
+					if (lb != nil) & (ub != nil) then
+						console writeLine("\nProb(response time <= " + p responseTimeThreshold asJSON + " s) = " + ((lb
+							+ ub) * 0.5) asJSON + " +/- " + ((ub - lb) / 2.0) asJSON + " with confidence " + pm
+							getIntervalEstimation getConfidenceLevel asJSON + "\n")
+					else
+						console writeLine("\nNot enough data to report on Prob(response time <= " + p responseTimeThreshold asJSON + " s)\n")
+					fi
+				fi
+			}
+		les;
+		receive()()

@@ -1,0 +1,78 @@
+/*
+ * This is the entry point of the model.
+ * Parameters of the model can be specified in the system declaration below for
+ * design-space exploration purposes.
+ *
+ * Model output is written to the console. The purpose is to estimate the
+ * probability that the end-to-end response time of a 3D reconstruction request
+ * to the cloud is smaller than some threshold value.
+ */
+
+import "hospital.poosl"
+import "cloud.poosl"
+import "observer.poosl"
+import "tracing.poosl"
+
+/*
+ * Cluster with observation and tracing processes.
+ */
+cluster class Observation(p : ModelParameters)
+ports
+	trace
+	observer
+instances
+	obs : ResponseTimeObserver(p := p)
+	trace : TraceWriter(name := "trace", timeUnit := "SECONDS", p := p)
+channels
+	{ obs.in, observer }
+	{ trace.in, trace }
+
+/*
+ * Cluster of the system: hospitals and cloud. Ports for observation and tracing.
+ */
+cluster class System(p : ModelParameters)
+ports
+	trace
+	observer
+instances
+	cloud : Cloud(p := p)
+	hospitals : Hospitals(p := p)
+channels
+	{ hospitals.toS3, cloud.in_S3 }
+	{ hospitals.toOrchestrator, cloud.in_Orchestrator }
+	{ hospitals.toWebApp, cloud.in_WebApp }
+	{ hospitals.inEdge, cloud.toEdge }
+	{ cloud.observer, hospitals.observer, observer }
+	{ cloud.trace, hospitals.trace, trace }
+
+/*
+ * Connects system with observation so that we have only a single line with
+ * model parameters in the system definition below.
+ */
+cluster class Everything(p : ModelParameters)
+ports
+
+instances
+	s : System(p := p)
+	o : Observation(p := p)
+channels
+	{ s.observer, o.observer }
+	@SuppressWarnings("unconnected")
+	{ s.trace, o.trace }
+
+/*
+ * Below, the parameters of the model can be specified.
+ */
+system
+instances
+	e : Everything(p := new(ModelParameters)
+						setDefaults()
+//						setHospitals(1)
+//						setRoomsPerHospital(5)
+//						setMinReconstructors(1)
+//						setMaxReconstructors(1)
+//						setBwMbitperS(500.0)
+//						setDays(3)
+						setTracing(true, nil, nil)
+					)
+channels

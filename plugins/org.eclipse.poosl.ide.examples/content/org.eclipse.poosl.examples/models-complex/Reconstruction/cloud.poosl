@@ -1,0 +1,277 @@
+import "tracing.poosl"
+import "data.poosl"
+
+/*
+ * Model of an Amazon S3 bucket.
+ * Image reception takes 100 us: 10.000 Images/second
+ */
+@SuppressWarnings("unused")
+process class S3Bucket(p : ModelParameters)
+ports
+	in
+	in_fromWebApp
+messages
+	in?startStream(ReconstructionMetaData)
+	in?stopStream(ReconstructionMetaData)
+	in_fromWebApp?removeImages(ReconstructionMetaData)
+variables
+
+init
+	initialize()()
+methods
+	initialize()()
+		par
+			receiveStart()()
+		and
+			receiveStop()()
+		and
+			removeImages()()
+		rap
+
+	receiveStart()() | md : ReconstructionMetaData |
+		in?startStream(md);
+		delay (0.0001); // 100 us
+		receiveStart()()
+
+	receiveStop()() | md : ReconstructionMetaData |
+		in?stopStream(md);
+		receiveStop()()
+
+	removeImages()() | md : ReconstructionMetaData |
+		in_fromWebApp?removeImages(md);
+		removeImages()()
+
+/*
+ * The single orchestrator in the cloud.
+ * For now it doesn't do very much.
+ */
+process class Orchestrator()
+ports
+	in
+	toAlgoDist
+	toEdge
+messages
+	in?selectProtocol(XrayProtocol)
+	in?notify(ReconstructionMetaData)
+	in?notifyFinished(ReconstructionMetaData)
+	toAlgoDist!enqueue(ReconstructionMetaData)
+	toEdge!notifyFinished(ReconstructionMetaData)
+variables
+
+init
+	initialize()()
+methods
+	initialize()()
+		par
+			receiveFromHospitals()()
+		and
+			receiveFromReconstructors()()
+		rap
+
+	receiveFromHospitals()() | md : ReconstructionMetaData, p : XrayProtocol |
+		sel
+			in?selectProtocol(p)
+		or
+			in?notify(md);
+			delay(0.1); // 100 ms
+			toAlgoDist!enqueue(md)
+		les;
+		receiveFromHospitals()()
+
+	receiveFromReconstructors()() | md : ReconstructionMetaData |
+		in?notifyFinished(md);
+		delay(0.1); // 100 ms
+		toEdge!notifyFinished(md);
+		receiveFromReconstructors()()
+
+/*
+ * The distributor for the reconstruction
+ * algorithm instances. It enqueues reconstruction
+ * requests and pushes them to idle reconstruction
+ * instances.
+ * It has a simple strategy to scale up and down. 
+ */
+process class ReconstructionDistributor(p : ModelParameters)
+ports
+	in
+	in_from_reconstructor
+	out
+	trace
+messages
+	in?enqueue(ReconstructionMetaData)
+	in_from_reconstructor?scaledDown()
+	out!start()
+	out!reconstruct(ReconstructionMetaData)
+	out!stop()
+	trace!registerGauge(String, String) // gauge id, attributes
+	trace!setGauge(String, Real) // gauge id, value
+variables
+	queue : Queue
+	reconstructorInstances : Integer // the id of the next inactive reconstructor
+init
+	initialize()()
+methods
+	initialize()() | i : Integer |
+		queue := new(Queue);
+		reconstructorInstances := p minInstances;
+		i := 0;
+		while i < p minInstances do
+			out!start();
+			i := i + 1
+		od;
+		trace!registerGauge("reconstruction_queue", "name=Reconstruction queue");
+		par
+			enqueue()()
+		and
+			distribute()()
+		and
+			if p minInstances < p maxInstances then
+				scaleUp()()
+			fi
+		and
+			if p minInstances < p maxInstances then
+				scaleDown()()
+			fi
+		rap
+
+	enqueue()() | md : ReconstructionMetaData |
+		in?enqueue(md) {queue add(md)};
+		trace!setGauge("reconstruction_queue", queue occupation asReal);
+		enqueue()()
+
+	distribute()()
+		// Sending of messages should be side-effect free
+		[queue occupation > 0] out!reconstruct(queue inspect) {queue remove};
+		trace!setGauge("reconstruction_queue", queue occupation asReal);
+		distribute()()
+
+	scaleUp()()
+		[(queue occupation > 2) & (reconstructorInstances < p maxInstances)] out!start();
+		reconstructorInstances := reconstructorInstances + 1;
+		delay 10; // next scaleUp at least 10s away
+		scaleUp()()
+
+	scaleDown()()
+		[(queue occupation < 2) & (reconstructorInstances > 1) & (reconstructorInstances - 1 >= p minInstances)]
+				out!stop();
+		in_from_reconstructor?scaledDown();
+		reconstructorInstances := reconstructorInstances - 1;
+		delay 30; // next scaleDown at least 30s away
+		scaleDown()()
+
+/*
+ * A reconstruction instance that does the actual work.
+ */
+process class Reconstructors(p : ModelParameters)
+ports
+	in
+	out // to orchestrator
+	out_to_distributor
+	trace
+messages
+	in?start()
+	in?stop()
+	in?reconstruct(ReconstructionMetaData)
+	out!notifyFinished(ReconstructionMetaData)
+	out_to_distributor!scaledDown()
+	trace!registerResource(String, Real, String)
+	trace!claim(String, Real, Real, String, Real, String)
+	trace!claimToClaim(String, String, String)
+variables
+
+init
+	initialize()()
+methods
+	initialize()()
+		trace!registerResource("nodes", p maxInstances asReal, "name=reconstructor pool");
+		receive()()
+
+	executeInstance()() | md : ReconstructionMetaData, t0 : Real, stopReceived : Boolean |
+		stopReceived := false;
+		delay 5; // 5s spin-up time
+		par
+			while !stopReceived do
+				in?reconstruct(md);
+				t0 := currentTime;
+				delay p execTime;
+				trace!claim("reconstruct" + md uid, t0, currentTime, "nodes", 1.0, "name=reconstruct," + md atts);
+				trace!claimToClaim("transfer-last" + md uid, "reconstruct" + md uid, md atts);
+				out!notifyFinished(md)
+			od
+		and
+			in?stop();
+			stopReceived := true
+		rap;
+		delay 5; // 5s spin-down time
+		out_to_distributor!scaledDown()
+
+	receive()()
+		in?start();
+		par
+			executeInstance()()
+		and
+			receive()()
+		rap
+
+/*
+ * The web application that is the end of the response-time
+ * requirement. It starts when the pedal is pressed.
+ */
+process class WebApp()
+ports
+	in
+	out
+	trace
+	observer
+messages
+	in?resultAvailable(ReconstructionMetaData)
+	out!removeImages(ReconstructionMetaData)
+	trace!event(String, Real, String)
+	trace!claimToEvent(String, String, String)
+	observer!end(ReconstructionMetaData)
+variables
+
+init
+	execute()()
+methods
+	execute()() | md : ReconstructionMetaData |
+		in?resultAvailable(md);
+		trace!event("result" + md uid, currentTime, "name=resultAvailable," + md atts);
+		trace!claimToEvent("reconstruct" + md uid, "result" + md uid, md atts);
+		observer!end(md);
+		out!removeImages(md);
+		execute()()
+
+/*
+ * A cluster that encapsulates the cloud entities.
+ */
+cluster class Cloud(p : ModelParameters)
+ports
+	in_S3
+	in_WebApp
+	in_Orchestrator
+	toEdge
+	trace
+	observer
+instances
+	s3bucket : S3Bucket(p := p)
+	orchestrator : Orchestrator()
+	distributor : ReconstructionDistributor(p := p)
+	reconstructors : Reconstructors(p := p)
+	webApp : WebApp()
+channels
+	// Cloud internal
+	{ orchestrator.toAlgoDist, distributor.in }
+	{ distributor.out, reconstructors.in }
+	{ webApp.out, s3bucket.in_fromWebApp }
+	// Between hospital and cloud
+	{ orchestrator.in, in_Orchestrator, reconstructors.out }
+	{ s3bucket.in, in_S3 }
+	{ webApp.in, in_WebApp }
+	{ orchestrator.toEdge, toEdge }
+	// Scaling
+	{ distributor.in_from_reconstructor, reconstructors.out_to_distributor }
+	// Observing
+	{ webApp.observer, observer }
+	// Tracing
+	{ webApp.trace, distributor.trace, trace, reconstructors.trace }

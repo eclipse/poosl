@@ -1,0 +1,247 @@
+/*
+ * This class contains the parameters of X ray protocols that are available.
+ * Currently only a single protocol is modeled.
+ */
+data class XrayProtocol extends Object
+variables
+	numImages : Integer
+	imageSizeMB : Integer
+	fps : Real
+methods
+	@init
+	withType(i : Integer) : XrayProtocol
+		switch i do
+			case 1 then
+				numImages := 350;
+				imageSizeMB := 2;
+				fps := 30.0;
+				return self
+			default
+				// nil variables generate error
+				return self
+		od
+
+	numImages() : Integer
+		return numImages
+
+	imageSizeMB() : Integer
+		return imageSizeMB
+
+	totalSizeMB() : Real
+		return (numImages * imageSizeMB) asReal
+
+	fps() : Real
+		return fps
+
+	printString() : String
+		return "[#images=" + numImages printString + ",imageSizeMB=" + imageSizeMB printString + ",fps=" + fps printString + "]"
+
+/*
+ * Meta data for a 3D reconstruction request, contains all kinds of identifiers and the protocol.
+ */
+data class ReconstructionMetaData extends Object
+variables
+	prot : XrayProtocol
+	reconstructionId : Integer
+	patientId : Integer
+	roomId : Integer
+	hospitalId : Integer
+	dayId : Integer
+methods
+	@init
+	withParameters(hid : Integer, rid : Integer, pid : Integer, cid : Integer, did : Integer,
+			p : XrayProtocol) : ReconstructionMetaData
+		reconstructionId := cid;
+		patientId := pid;
+		roomId := rid;
+		hospitalId := hid;
+		dayId := did;
+		prot := p;
+		return self
+
+	cid() : Integer
+		return reconstructionId
+
+	pid() : Integer
+		return patientId
+
+	rid() : Integer
+		return roomId
+
+	hid() : Integer
+		return hospitalId
+
+	did() : Integer
+		return dayId
+
+	protocol() : XrayProtocol
+		return prot
+
+	uid() : String
+		return hospitalId printString + roomId printString + patientId printString + reconstructionId printString + dayId printString
+
+	attsNoCid() : String
+		return "hid=" + hospitalId printString + ",rid=" + roomId printString + ",pid=" + patientId printString + ",did=" + dayId
+			printString
+
+	atts() : String
+		return "hid=" + hospitalId printString + ",rid=" + roomId printString + ",pid=" + patientId printString + ",cid=" +
+			reconstructionId printString + ",uid=" + self uid + ",did=" + dayId printString
+
+	printString() : String
+		return "[" + self atts + ",protocol=" + prot printString + "]"
+
+/*
+ * An image with an identifier and meta data.
+ */
+data class Image extends Object
+variables
+	metaData : ReconstructionMetaData
+	id : Integer
+methods
+	@init
+	withParameters(md : ReconstructionMetaData, i : Integer) : Image
+		metaData := md;
+		id := i;
+		return self
+
+	metaData() : ReconstructionMetaData
+		return metaData
+
+	id() : Integer
+		return id
+
+	isFirst() : Boolean
+		return id == 0
+
+	isLast() : Boolean
+		return id == metaData protocol numImages - 1
+
+	printString() : String
+		return "[id=" + id printString + ",metadata=" + metaData printString + "]"
+
+/*
+ * This class contains parameters of the model that can be specified in the system declaration of the model.
+ */
+data class ModelParameters extends Object
+variables
+	h : Integer		// num hospitals
+	r : Integer		// num rooms per hospital
+	p : Integer		// num patients per room
+	t : Real		// 3D reconstruction time in s
+	minR : Integer	// minimum number of (parallel) 3D reconstructors in the cloud
+	maxR : Integer	// minimum number of (parallel) 3D reconstructors in the cloud
+	bw : Real		// bandwidth of a hospital to the cloud in MB/s  
+	batchUpload : Boolean	// whether images for a 3D reconstruction request are bufferd in the Edge for a batch upload to the cloud
+	numDays : Integer // number of days to simulate
+	// Observation
+	rtt : Real		// response-time threshold
+	// Tracing
+	traceEnabled : Boolean
+	traceStart : Real
+	traceStop : Integer
+methods
+	@init
+	setDefaults() : ModelParameters
+		h := 1;
+		r := 5;
+		p := 5;
+		t := 10.0;
+		minR := 1;
+		maxR := 5;
+		bw := 500.0;
+		batchUpload := false;
+		numDays := 15;
+		rtt := 12.0;
+		traceEnabled := false;
+		traceStart := nil;
+		traceStop := nil;
+		return self
+
+	setTracing(tracing : Boolean, traceStartAfter : Real, traceStopSize : Integer) : ModelParameters
+		traceEnabled := tracing;
+		traceStart := traceStartAfter;
+		traceStop := traceStopSize;
+		return self
+
+	setDays(d : Integer) : ModelParameters
+		numDays := d;
+		return self
+
+	numDays() : Integer
+		return numDays
+
+	batchUpload() : Boolean
+		return batchUpload
+
+	setBatchUpload(b : Boolean) : ModelParameters
+		batchUpload := b;
+		return self
+
+	setBwMbitperS(b : Real) : ModelParameters
+		bw := b;
+		return self
+
+	bw() : Real
+		return bw
+
+	setHospitals(n : Integer) : ModelParameters
+		h := n;
+		return self
+
+	numHospitals() : Integer
+		return h
+
+	setRoomsPerHospital(n : Integer) : ModelParameters
+		r := n;
+		return self
+
+	numRooms() : Integer
+		return r
+
+	numPatients() : Integer
+		return p
+
+	numDoneMsgs() : Integer
+		return h * r
+
+	setReconstructionTimeS(et : Real) : ModelParameters
+		t := et;
+		return self
+
+	execTime() : Real
+		return t
+
+	setMinReconstructors(n : Integer) : ModelParameters
+		minR := n;
+		return self
+
+	minInstances() : Integer
+		return minR
+
+	setMaxReconstructors(n : Integer) : ModelParameters
+		maxR := n;
+		return self
+
+	maxInstances() : Integer
+		return maxR
+
+	tracing() : Boolean
+		return traceEnabled
+
+	traceStartAfter() : Real
+		return traceStart
+
+	traceStopSize() : Integer
+		return traceStop
+
+	setResponseTimeThreshold(threshold : Real) : ModelParameters
+		rtt := threshold;
+		return self
+
+	responseTimeThreshold() : Real
+		return rtt
+
+	printString() : String
+		return "h" + h printString + "_r" + r printString + "_c" + minR printString + "-" + maxR printString + "_t" + t printString + "_batch-" +
+			batchUpload printString + "_bw" + bw printString
